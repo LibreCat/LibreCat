@@ -79,7 +79,8 @@ sub load {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|exists|get|add|delete|purge|export|import|thumbnail/;
+    my $commands
+        = qr/list|exists|get|add|delete|purge|export|import|thumbnail/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -270,7 +271,7 @@ sub _fetch {
 
     my $file = $container->get($filename);
 
-    binmode(STDOUT,':raw');
+    binmode(STDOUT, ':raw');
 
     # Avoid forking processes and check for callbacks
     if ($file->is_callback) {
@@ -389,7 +390,7 @@ sub _export {
         croak "Failed to remove existing $zip_file";
     }
 
-    $SIG{CHLD} = 'DEFAULT'; # required to avoid 'no child errors';
+    $SIG{CHLD} = 'DEFAULT';    # required to avoid 'no child errors';
     system("cd $workdir && $zipper -r $zip_file $export_name/*");
 
     if ($? == -1) {
@@ -432,7 +433,7 @@ sub _import {
 
     my $unzipper = $self->app->global_options->{unzipper};
 
-    $SIG{CHLD} = 'DEFAULT'; # required to avoid 'no child errors';
+    $SIG{CHLD} = 'DEFAULT';    # required to avoid 'no child errors';
     system("cd $workdir && $unzipper $zip_file");
 
     if ($? == -1) {
@@ -476,7 +477,8 @@ sub _thumbnail {
     my $thumbnailer_options
         = $h->config->{filestore}->{access_thumbnailer}->{options};
 
-    my $pkg    = Catmandu::Util::require_package($thumbnailer_package,'LibreCat::Worker');
+    my $pkg = Catmandu::Util::require_package($thumbnailer_package,
+        'LibreCat::Worker');
     my $worker = $pkg->new(%$thumbnailer_options);
 
     my $response = $worker->work({key => $key, filename => $filename,});

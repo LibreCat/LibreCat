@@ -114,32 +114,34 @@ sub _generate_package_json {
 }
 
 sub _generate_forms {
-    my $layers          = LibreCat->layers;
-    my $conf            = Catmandu->config;
-    my $forms           = $conf->{forms}{publication_types};
-    my $other_items     = $conf->{forms}{other_items};
-    my $template_paths  = $layers->template_paths;
-    my $output_path     = $template_paths->[0] . '/backend/forms';
+    my $layers         = LibreCat->layers;
+    my $conf           = Catmandu->config;
+    my $forms          = $conf->{forms}{publication_types};
+    my $other_items    = $conf->{forms}{other_items};
+    my $template_paths = $layers->template_paths;
+    my $output_path    = $template_paths->[0] . '/backend/forms';
 
     #-----------------
 
     print "[$output_path]\n";
     my $tt = Template->new(
-        START_TAG  => '{%',
-        END_TAG    => '%}',
+        START_TAG    => '{%',
+        END_TAG      => '%}',
         ENCODING     => 'utf8',
-        INCLUDE_PATH => [ map { "$_/backend/generator" } @$template_paths ],
+        INCLUDE_PATH => [map {"$_/backend/generator"} @$template_paths],
         OUTPUT_PATH  => $output_path,
     );
 
-    foreach my $type ( keys %$forms ) {
+    foreach my $type (keys %$forms) {
         my $type_hash = $forms->{$type};
         $type_hash->{field_order} = $conf->{forms}{field_order};
-        if($type_hash->{fields}){
+        if ($type_hash->{fields}) {
             print "Generating $output_path/$type.tt\n";
-            $tt->process( "master.tt", $type_hash, "$type.tt" ) || die $tt->error(), "\n";
+            $tt->process("master.tt", $type_hash, "$type.tt")
+                || die $tt->error(), "\n";
             print "Generating $output_path/expert/$type.tt\n";
-            $tt->process( "master_expert.tt", $type_hash, "expert/$type.tt" ) || die $tt->error(), "\n";
+            $tt->process("master_expert.tt", $type_hash, "expert/$type.tt")
+                || die $tt->error(), "\n";
         }
     }
 
@@ -150,27 +152,29 @@ sub _generate_forms {
     print "[$output_path]\n";
 
     my $tta = Template->new(
-        START_TAG  => '{%',
-        END_TAG    => '%}',
+        START_TAG    => '{%',
+        END_TAG      => '%}',
         ENCODING     => 'utf8',
-        INCLUDE_PATH => [ map { "$_/admin/generator" } @$template_paths ],
+        INCLUDE_PATH => [map {"$_/admin/generator"} @$template_paths],
         OUTPUT_PATH  => $output_path,
     );
 
     foreach my $item (keys %$other_items) {
         print "Generating $output_path/edit_$item page\n";
-        $tta->process( "master_$item.tt", $other_items->{$item}, "edit_$item.tt" ) || die $tta->error(), "\n";
+        $tta->process("master_$item.tt", $other_items->{$item},
+            "edit_$item.tt")
+            || die $tta->error(), "\n";
     }
 
     return 0;
 }
 
 sub _generate_departments {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
-    my $layers          = LibreCat->layers;
-    my $template_paths  = $layers->template_paths;
-    my $output_path     = $template_paths->[0] . '/department';
+    my $layers         = LibreCat->layers;
+    my $template_paths = $layers->template_paths;
+    my $output_path    = $template_paths->[0] . '/department';
 
     my $pubs = LibreCat::App::Helper::Helpers->new->publication;
     my $it   = LibreCat::App::Helper::Helpers->new->department->searcher();
@@ -196,7 +200,7 @@ sub _generate_departments {
             }
 
             my $id    = $item->{_id};
-            my $hits  = $pubs->search(cql_query => "department=$id" );
+            my $hits  = $pubs->search(cql_query => "department=$id");
             my $total = $hits->{total};
 
             $root->{tree}->{$id}->{name}    = $item->{name};
@@ -221,7 +225,8 @@ sub _generate_departments {
 
     open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt");
 
-    croak "error - views/department/nodes_backend.tt not writable!" unless $fh;
+    croak "error - views/department/nodes_backend.tt not writable!"
+        unless $fh;
 
     $self->_template_printer($HASH, "librecat", $fh);
 
@@ -239,15 +244,14 @@ sub _template_printer {
     return unless $nodes;
 
     print $io "<ul>\n";
-    for my $node (sort {$nodes->{$a}->{name} cmp $nodes->{$b}->{name}} keys %$nodes) {
-        print  $io "<li>\n";
-        printf $io "<a href=\"/%s?cql=department=%s\">%s</a> %d\n"
-                        , $path
-                        , $node
-                        , $nodes->{$node}->{display}
-                        , $nodes->{$node}->{total};
+    for my $node (sort {$nodes->{$a}->{name} cmp $nodes->{$b}->{name}}
+        keys %$nodes)
+    {
+        print $io "<li>\n";
+        printf $io "<a href=\"/%s?cql=department=%s\">%s</a> %d\n", $path,
+            $node, $nodes->{$node}->{display}, $nodes->{$node}->{total};
         $self->_template_printer($nodes->{$node}, $path, $io);
-        print  $io "</li>\n";
+        print $io "</li>\n";
     }
     print $io "</ul>\n";
 }

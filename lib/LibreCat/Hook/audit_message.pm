@@ -8,8 +8,8 @@ use Dancer qw(:syntax);
 use Catmandu;
 use Moo;
 
-has name => (is => 'ro', default => sub { '' });
-has type => (is => 'ro', default => sub { '' });
+has name => (is => 'ro', default => sub {''});
+has type => (is => 'ro', default => sub {''});
 
 sub fix {
     my ($self, $data) = @_;
@@ -24,13 +24,13 @@ sub fix {
         return $data;
     }
 
-    my $id          = $data->{_id}     // '<new>';
-    my $user_id     = $data->{user_id} // '<unknown>';
-    my $login       = '<unknown>';
+    my $id      = $data->{_id}     // '<new>';
+    my $user_id = $data->{user_id} // '<unknown>';
+    my $login   = '<unknown>';
 
     if (defined $data->{user_id}) {
-        my $person   = h->get_person($user_id);
-        $login       = $person->{login} if $person;
+        my $person = h->get_person($user_id);
+        $login = $person->{login} if $person;
     }
 
     my $action;
@@ -43,17 +43,18 @@ sub fix {
     }
 
     my $job = {
-        id      => $id ,
-        bag     => 'publication' ,
-        process => "hook($name)" ,
-        action  => "$action" ,
-        message => "activated by $login ($user_id)" ,
+        id      => $id,
+        bag     => 'publication',
+        process => "hook($name)",
+        action  => "$action",
+        message => "activated by $login ($user_id)",
     };
 
     h->log->debug("adding job: " . to_yaml($job));
     try {
         h->queue->add_job('audit', $job);
-    } catch {
+    }
+    catch {
         h->log->trace("caught a : $_");
     };
 

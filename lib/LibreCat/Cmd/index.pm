@@ -30,8 +30,8 @@ sub command {
     my $queue = LibreCat::JobQueue->new;
 
     if ($opts->id) {
-        my $job_id = $queue->add_job('indexer',
-            {bag => $bag, id => $opts->id});
+        my $job_id
+            = $queue->add_job('indexer', {bag => $bag, id => $opts->id});
         return $job_id if $opts->background;
         print "[$job_id]:";
         while (1) {

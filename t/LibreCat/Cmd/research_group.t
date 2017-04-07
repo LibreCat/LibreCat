@@ -90,8 +90,8 @@ Catmandu->store('search')->bag('research_group')->drop;
 
     my $record = $importer->first;
 
-    is $record->{_id}, 'RG999000999', 'got really a RG999000999 record';
-    is $record->{name}, 'TestGroup' , 'got a valid name';
+    is $record->{_id},  'RG999000999', 'got really a RG999000999 record';
+    is $record->{name}, 'TestGroup',   'got a valid name';
 }
 
 {

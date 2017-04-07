@@ -60,6 +60,6 @@ oai_provider '/oai', deleted => sub {
     }
 
     $specs;
-};
+    };
 
 1;

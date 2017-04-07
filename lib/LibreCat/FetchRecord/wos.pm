@@ -13,9 +13,8 @@ sub fetch {
 
     my $fixer = $self->create_fixer('wos_mapping.fix');
 
-    my $data = $fixer->fix(
-            Catmandu->importer('RIS',file => \$ris)
-        )->to_array;
+    my $data
+        = $fixer->fix(Catmandu->importer('RIS', file => \$ris))->to_array;
 
     unless (@$data) {
         $self->log->error("failed to import data from $ris");

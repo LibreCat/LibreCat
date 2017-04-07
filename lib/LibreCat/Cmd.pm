@@ -13,8 +13,8 @@ use parent 'App::Cmd::Command';
 sub prepare {
     my ($self, $app, @args) = @_;
     my $codeset = langinfo(CODESET);
-    my @utf8_args = map { decode $codeset, $_ } @args;
-    $self->SUPER::prepare($app,@utf8_args);
+    my @utf8_args = map {decode $codeset, $_} @args;
+    $self->SUPER::prepare($app, @utf8_args);
 }
 
 # Internal required by App::Cmd;

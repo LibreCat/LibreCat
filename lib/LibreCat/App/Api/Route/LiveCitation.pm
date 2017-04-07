@@ -27,17 +27,17 @@ get '/livecitation' => sub {
 
     my $pub = h->publication->get($params->{id});
 
-    my $response = LibreCat::Citation->new(
-        styles => [$params->{style}],
-    )->create($pub);
-return to_dumper $response;
+    my $response = LibreCat::Citation->new(styles => [$params->{style}],)
+        ->create($pub);
+    return to_dumper $response;
     my $citation = $response ? $response->{$params->{style}} : undef;
 
     if (!defined $citation) {
         content_type 'application/json';
-        return to_json { error => 'Null response from citation generator'};
+        return to_json {error => 'Null response from citation generator'};
     }
     else {
-        template "api/livecitation", {citation => $response->{$params->{style}}};
+        template "api/livecitation",
+            {citation => $response->{$params->{style}}};
     }
 };

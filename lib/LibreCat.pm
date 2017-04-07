@@ -45,7 +45,8 @@ sub import {
 }
 
 sub user {
-    state $user = require_package('LibreCat::User')->new($_[0]->config->{user});
+    state $user
+        = require_package('LibreCat::User')->new($_[0]->config->{user});
 }
 
 sub hook {
@@ -62,7 +63,8 @@ sub hook {
             my $fixes = $hook->{$key} || [];
             for my $fix (@$fixes) {
                 push @{$args->{$key}},
-                    require_package($fix, 'LibreCat::Hook')->new( name => $name , type => $key );
+                    require_package($fix, 'LibreCat::Hook')
+                    ->new(name => $name, type => $key);
             }
         }
 
@@ -71,7 +73,8 @@ sub hook {
 }
 
 sub searcher {
-    state $searcher = require_package('LibreCat::Search')->new(store => Catmandu->store('search'));
+    state $searcher = require_package('LibreCat::Search')
+        ->new(store => Catmandu->store('search'));
 }
 
 1;

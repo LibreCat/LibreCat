@@ -25,17 +25,17 @@ sub _authenticate {
 
     $self->log->debugf("authenticating: %s", $username);
 
-    $self->log->debugf("store: %s bag: %s $username_attr = $username"
-                        , $store_name
-                        , $bag_name);
+    $self->log->debugf("store: %s bag: %s $username_attr = $username",
+        $store_name, $bag_name);
 
-    my $bag  = Catmandu->store($store_name)->bag($bag_name);
+    my $bag = Catmandu->store($store_name)->bag($bag_name);
 
     my $user;
 
     if ($bag->does('Catmandu::Searchable')) {
-        # For now we assume the Searchable store are ElasticSearch implementations...
-        my $query = sprintf "%s:%s" , $username_attr , $username;
+
+ # For now we assume the Searchable store are ElasticSearch implementations...
+        my $query = sprintf "%s:%s", $username_attr, $username;
 
         $self->log->debug("..query $query");
         $user = $bag->search(query => $query)->first;

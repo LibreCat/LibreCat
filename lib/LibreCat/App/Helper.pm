@@ -121,13 +121,13 @@ sub research_group {
 sub within_ip_range {
     my ($self, $ip, $range) = @_;
 
-    $range = [] unless defined $range;
-    $range = [ $range ] unless is_array_ref($range);
+    $range = []       unless defined $range;
+    $range = [$range] unless is_array_ref($range);
 
     my $needle = NetAddr::IP::Lite->new($ip);
 
     for my $haystack (@$range) {
-        return 1 if $needle->within( NetAddr::IP::Lite->new($haystack) );
+        return 1 if $needle->within(NetAddr::IP::Lite->new($haystack));
     }
 
     return undef;
@@ -167,8 +167,8 @@ sub extract_params {
     $p->{start} = $params->{start} if is_natural $params->{start};
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
     $p->{lang}  = $params->{lang}  if $params->{lang};
-    $p->{q}     = $params->{q} if $params->{q};
-    $p->{cql}   = $self->string_array($params->{cql});
+    $p->{q}     = $params->{q}     if $params->{q};
+    $p->{cql} = $self->string_array($params->{cql});
 
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
@@ -226,11 +226,16 @@ sub get_publication {
 sub get_person {
     my ($self, $id) = @_;
     if ($id) {
-        my $hits = LibreCat->searcher->search('researcher', {cql => ["id=$id"]});
-        $hits = LibreCat->searcher->search('researcher', {cql => ["login=$id"]})
+        my $hits
+            = LibreCat->searcher->search('researcher', {cql => ["id=$id"]});
+        $hits
+            = LibreCat->searcher->search('researcher', {cql => ["login=$id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
-        if (my $user = LibreCat->user->get($id) || LibreCat->user->find_by_username($id)) {
+        if (my $user
+            = LibreCat->user->get($id)
+            || LibreCat->user->find_by_username($id))
+        {
             return $user;
         }
     }
@@ -243,7 +248,9 @@ sub get_project {
 sub get_department {
     if ($_[1] && length $_[1]) {
         my $result = $_[0]->department->get($_[1]);
-        $result = LibreCat->searcher->search('department', {q => ["name=\"$_[1]\""]})->first
+        $result
+            = LibreCat->searcher->search('department',
+            {q => ["name=\"$_[1]\""]})->first
             if !$result;
         return $result;
     }
@@ -273,19 +280,13 @@ sub get_statistics {
     my $reshits = LibreCat->searcher->search('publication',
         {cql => ["status=public", "type=research_data"]});
     my $oahits = LibreCat->searcher->search('publication',
-        {
-            cql => [
-                "status=public",      "fulltext=1",
-                "type<>research_data",
-            ]
-        }
-    );
+        {cql => ["status=public", "fulltext=1", "type<>research_data",]});
 
     return {
         publications => $hits->{total},
         researchdata => $reshits->{total},
         oahits       => $oahits->{total},
-        projects => $self->project->count(),
+        projects     => $self->project->count(),
     };
 
 }
@@ -337,8 +338,10 @@ sub store_record {
 
         # Set for every update the user-id of the last editor
         unless ($rec->{user_id}) {
+
             # Edit by a user via the command line?
-            my $super_id = $self->config->{store}->{builtin_users}->{options}->{init_data}->[0]->{_id};
+            my $super_id = $self->config->{store}->{builtin_users}->{options}
+                ->{init_data}->[0]->{_id};
             $rec->{user_id} = $super_id;
         }
     }
@@ -355,17 +358,20 @@ sub store_record {
 
     # clean all the fields that are not part of the JSON schema
     state $validators = {};
-    my $validator_pkg = $validators->{$bag} //= Catmandu::Util::require_package(ucfirst($bag),
-                                                        'LibreCat::Validator');
+    my $validator_pkg = $validators->{$bag}
+        //= Catmandu::Util::require_package(ucfirst($bag),
+        'LibreCat::Validator');
     if ($validator_pkg) {
         my @white_list = $validator_pkg->new->white_list;
 
-        $self->log->fatal("no white_list found for $validator_pkg ??!") unless @white_list;
+        $self->log->fatal("no white_list found for $validator_pkg ??!")
+            unless @white_list;
 
         for my $key (keys %$rec) {
             unless (grep(/^$key$/, @white_list)) {
                 $self->log->debug("deleting invalid key: $key");
-                delete $rec->{$key}
+                delete $rec->{
+                    $key};
             }
         }
     }
@@ -392,10 +398,10 @@ sub delete_record {
 
     my $del_record = $self->$bag->get($id);
 
-    if ($bag eq 'publication' &&
-            ($del_record->{oai_deleted} || $del_record->{status} eq 'public')
-            ) {
-        $del_record ->{oai_deleted}  = 1
+    if ($bag eq 'publication'
+        && ($del_record->{oai_deleted} || $del_record->{status} eq 'public'))
+    {
+        $del_record->{oai_deleted} = 1;
     }
 
     $del_record->{date_deleted} = $self->now;
@@ -488,12 +494,12 @@ sub get_access_store {
     my ($self) = @_;
 
     my $access_store = $self->config->{filestore}->{access}->{package};
-    my $access_opts  = $self->config->{filestore}->{access}->{options} // {};
+    my $access_opts = $self->config->{filestore}->{access}->{options} // {};
 
     return undef unless $access_store;
 
-    my $pkg
-        = Catmandu::Util::require_package($access_store, 'LibreCat::FileStore');
+    my $pkg = Catmandu::Util::require_package($access_store,
+        'LibreCat::FileStore');
     $pkg->new(%$access_opts);
 }
 

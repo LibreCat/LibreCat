@@ -13,12 +13,13 @@ sub fetch {
 
     $self->log->debug("requesting $id from epmc");
 
-    my $url = url_decode sprintf("http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&format=json", $id);
+    my $url
+        = url_decode
+        sprintf(
+        "http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&format=json",
+        $id);
 
-    my $data = Catmandu->importer(
-        'getJSON',
-        from => $url
-    )->to_array;
+    my $data = Catmandu->importer('getJSON', from => $url)->to_array;
 
     unless ($data->[0]{hitCount}) {
         $self->log->error("failed to request $url");

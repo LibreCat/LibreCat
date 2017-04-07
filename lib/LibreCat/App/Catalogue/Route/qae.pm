@@ -22,8 +22,9 @@ post '/librecat/upload/qae/submit' => sub {
         my $now = h->now();
 
         my $record = {
-            _id         => $id,
-            status      => "new", # new is the status of records not checked by users/reviewers
+            _id    => $id,
+            status => "new"
+            ,    # new is the status of records not checked by users/reviewers
             accept      => 1,
             title       => h->loc('add_new.qae_title'),
             publication => "Quick And Easy Journal Title",
@@ -41,8 +42,8 @@ post '/librecat/upload/qae/submit' => sub {
             department => $department || $person->{department},
             creator =>
                 {id => session->{personNumber}, login => session->{user}},
-            user_id => session->{personNumber} ,
-            file => [
+            user_id => session->{personNumber},
+            file    => [
                 {
                     # Required for managing the upload
                     file_name => params->{file_name},
@@ -65,10 +66,11 @@ post '/librecat/upload/qae/submit' => sub {
             }
         );
 
-        return template "backend/add_new",  {
-            ok => "Imported 1 record(s) from dropzone" ,
-            imported => [ $record ]
-        };
+        return template "backend/add_new",
+            {
+            ok       => "Imported 1 record(s) from dropzone",
+            imported => [$record]
+            };
     }
 
     return template "backend/add_new";

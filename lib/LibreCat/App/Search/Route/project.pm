@@ -19,16 +19,11 @@ Project splash page for :id.
 get qr{/project/([a-zA-Z])} => sub {
     my ($c) = splat;
 
-    my %search_params = (
-        query => {
-            prefix => {
-                'name.exact' => lc($c)
-            } 
-        } ,
-        limit => 1000
-    );
+    my %search_params
+        = (query => {prefix => {'name.exact' => lc($c)}}, limit => 1000);
 
-    h->log->debug("executing project->native_search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing project->native_search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->native_search('project', \%search_params);
 
@@ -40,11 +35,7 @@ get qr{/project/([a-zA-Z0-9-]{2,})} => sub {
     my $proj = h->project->get($id);
 
     my $pub = LibreCat->searcher->search('publication',
-        {
-            cql => ["project=$id", "status=public"],
-            limit => 100,
-        }
-    );
+        {cql => ["project=$id", "status=public"], limit => 100,});
     $proj->{project_publication} = $pub if $pub->{total} > 0;
 
     template 'project/record', $proj;

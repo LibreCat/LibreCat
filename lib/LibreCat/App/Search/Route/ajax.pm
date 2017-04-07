@@ -18,6 +18,7 @@ use LibreCat::App::Helper;
 Web of Science 'Times Cited' information
 
 =cut
+
 ajax '/metrics/:id' => sub {
     my $metrics = h->get_metrics('wos', params->{id});
     return to_json {
@@ -43,14 +44,18 @@ ajax '/ris/:id' => sub {
 =head2 AJAX /search_researcher
 
 =cut
+
 ajax '/search_researcher' => sub {
     my $cql;
     push @$cql, params->{'term'};
 
-    my %search_params = (cql => $cql, limit => 100 , sort => h->config->{default_person_sort});
-    h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
+    my %search_params = (cql => $cql, limit => 100,
+        sort => h->config->{default_person_sort});
+    h->log->debug(
+        "executing researcher->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('researcher', \%search_params)->{hits};
+    my $hits
+        = LibreCat->searcher->search('researcher', \%search_params)->{hits};
 
     return to_json $hits;
 };
@@ -58,6 +63,7 @@ ajax '/search_researcher' => sub {
 =head2 AJAX /authority_user/:id
 
 =cut
+
 ajax '/authority_user/:id' => sub {
     my $person = h->get_person(params->{id}) || {error => "No user found."};
     to_json $person;
@@ -67,7 +73,8 @@ ajax '/num_of_publ/:id' => sub {
     my $id = params->{id};
 
     my %search_params = (cql => ["person=$id"]);
-    h->log->debug("executing publication->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing publication->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('publication', \%search_params);
 
@@ -77,12 +84,14 @@ ajax '/num_of_publ/:id' => sub {
 =head2 AJAX /get_alias/:id/:alias
 
 =cut
+
 ajax '/get_alias/:id/:alias' => sub {
     my $term = params->{'alias'} || "";
-    my $id   = params->{'id'};
+    my $id = params->{'id'};
 
     my %search_params = (cql => ["alias=$term", "id<>$id"]);
-    h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing researcher->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params);
 
@@ -92,9 +101,10 @@ ajax '/get_alias/:id/:alias' => sub {
 =head2 AJAX /get_project
 
 =cut
+
 ajax '/get_project' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map { $_ . "*" } split(' ', params->{term});
+    my @q = map {$_ . "*"} split(' ', params->{term});
 
     my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
     h->log->debug("executing project->search: " . to_dumper(\%search_params));
@@ -116,12 +126,14 @@ ajax '/get_project' => sub {
 =head2 AJAX /get_department
 
 =cut
+
 ajax '/get_department' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q     = map { $_ . "*" } split(' ', params->{term});
+    my @q = map {$_ . "*"} split(' ', params->{term});
 
     my %search_params = (q => \@q, limit => $limit, sort => 'display.asc');
-    h->log->debug("executing department->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing department->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('department', \%search_params);
 
@@ -139,12 +151,14 @@ ajax '/get_department' => sub {
 =head2 AJAX /get_research_group
 
 =cut
+
 ajax '/get_research_group' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map { $_ . "*" } split(' ', params->{term});
+    my @q = map {$_ . "*"} split(' ', params->{term});
 
     my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
-    h->log->debug("executing research_group->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing research_group->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('research_group', \%search_params);
 

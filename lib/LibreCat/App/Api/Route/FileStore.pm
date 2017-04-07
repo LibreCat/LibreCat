@@ -322,7 +322,7 @@ E.g.
     get '/access/:key/:filename/thumbnail' => sub {
         my $key = param('key');
 
-        # For now stay backwards compatible and keep one thumbnail per container...
+   # For now stay backwards compatible and keep one thumbnail per container...
         my $filename = 'thumbnail.png';
 
         my $container = h->get_access_store()->get($key);
@@ -405,13 +405,14 @@ E.g.
         my $thumbnailer_options
             = h->config->{filestore}->{access_thumbnailer}->{options};
 
-        my $pkg    = Catmandu::Util::require_package($thumbnailer_package,'LibreCat::Worker');
+        my $pkg = Catmandu::Util::require_package($thumbnailer_package,
+            'LibreCat::Worker');
         my $worker = $pkg->new(%$thumbnailer_options);
 
         my $response = $worker->work({key => $key, filename => $filename,});
 
         $response;
-        };
+    };
 
 =head2 DEL /librecat/api/access/:key/:filename/thumbnail
 
@@ -424,11 +425,10 @@ E.g.
 
 =cut
 
-    del '/access/:key/:filename/thumbnail' =>
-        sub {
+    del '/access/:key/:filename/thumbnail' => sub {
         my $key = param('key');
 
-        # For now stay backwards compatible and keep one thumbnail per container...
+   # For now stay backwards compatible and keep one thumbnail per container...
         my $filename = 'thumbnail.png';
 
         content_type 'application/json';

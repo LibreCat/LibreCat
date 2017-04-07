@@ -14,13 +14,12 @@ sub fetch {
 
     $self->log->debug("requesting $id from crossref");
 
-    my $data = Catmandu->importer(
-        'getJSON',
-        from    => url_decode("http://api.crossref.org/works/$id"),
-    )->to_array;
+    my $data = Catmandu->importer('getJSON',
+        from => url_decode("http://api.crossref.org/works/$id"),)->to_array;
 
     unless (@$data) {
-        $self->log->error("failed to request http://api.crossref.org/works/$id");
+        $self->log->error(
+            "failed to request http://api.crossref.org/works/$id");
         return ();
     }
 

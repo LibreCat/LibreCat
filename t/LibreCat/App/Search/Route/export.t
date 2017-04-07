@@ -4,6 +4,7 @@ use Test::More;
 use Dancer::Test;
 
 my $pkg;
+
 BEGIN {
     $pkg = "LibreCat::App::Search::Route::export";
     use_ok $pkg;
@@ -11,15 +12,15 @@ BEGIN {
 require_ok $pkg;
 
 my $store = Catmandu->store('search');
-my $bag = $store->bag('publication');
+my $bag   = $store->bag('publication');
 $bag->delete_all;
-my $importer = Catmandu->importer('YAML', file => 't/records/valid-publication.yml');
+my $importer
+    = Catmandu->importer('YAML', file => 't/records/valid-publication.yml');
 $bag->add_many($importer);
 $bag->commit;
 
 {
-    route_exists [GET => '/export'],
-        "GET /export is handled";
+    route_exists       [GET => '/export'], "GET /export is handled";
     response_status_is [GET => '/export'], 406,
         "GET /export status without format is ok";
 }
@@ -36,19 +37,16 @@ $bag->commit;
         "GET /export?fmt=json looks like JSON";
 
     response_content_like [GET => '/export?fmt=yaml'],
-        qr/title: Valid Test Publication/,
-        "GET /export?fmt=yaml like YAML";
+        qr/title: Valid Test Publication/, "GET /export?fmt=yaml like YAML";
 
     response_content_like [GET => '/export?fmt=ris'],
-        qr/TI\s+-\s+Valid Test Publication/,
-        "GET /export?fmt=ris like RIS";
+        qr/TI\s+-\s+Valid Test Publication/, "GET /export?fmt=ris like RIS";
 
     response_content_like [GET => '/export?fmt=bibtex'],
         qr/title\s+=\s+\{+Valid Test Publication\}+/,
         "GET /export?fmt=bibtex like BIBTEX";
 
-    response_content_like [GET => '/export?fmt=rtf'],
-        qr/\{\\rtf1\\ansi/,
+    response_content_like [GET => '/export?fmt=rtf'], qr/\{\\rtf1\\ansi/,
         "GET /export?fmt=rtf like RTF";
 
     response_content_like [GET => '/export?fmt=aref'],
@@ -82,8 +80,7 @@ $bag->commit;
         "GET /export?fmt=json&cql=id%3D999999999json looks like JSON";
 
     response_content_like [GET => '/export?fmt=json&cql=id%3DBLABLABLA'],
-        qr/^\[\]$/,
-        "GET /export?fmt=json&cql=id%3DBLABLABLA looks like JSON";
+        qr/^\[\]$/, "GET /export?fmt=json&cql=id%3DBLABLABLA looks like JSON";
 }
 
 {

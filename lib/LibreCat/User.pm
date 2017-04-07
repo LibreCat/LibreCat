@@ -58,8 +58,9 @@ sub find_by_username {
         $self->log->debug("..probing $bag");
 
         if ($bag->does('Catmandu::Searchable')) {
-            # For now we assume the Searchable store are ElasticSearch implementations...
-            my $query = sprintf "%s:%s" , $attrs->[$i] , $username;
+
+ # For now we assume the Searchable store are ElasticSearch implementations...
+            my $query = sprintf "%s:%s", $attrs->[$i], $username;
 
             $self->log->debug("..query $query");
 

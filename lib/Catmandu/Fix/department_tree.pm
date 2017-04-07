@@ -13,7 +13,8 @@ sub fix {
 
     foreach my $d (@{$data->{department}}) {
         my $dep;
-        $dep = LibreCat->searcher->search('department', {q => [$d->{_id}]})->{hits}->[0];
+        $dep = LibreCat->searcher->search('department', {q => [$d->{_id}]})
+            ->{hits}->[0];
         $d->{tree}    = $dep->{tree};
         $d->{display} = $dep->{display};
 

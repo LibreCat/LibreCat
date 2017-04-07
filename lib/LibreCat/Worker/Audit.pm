@@ -20,11 +20,11 @@ sub work {
     $self->log->debugf("audit message: %s", $opts);
 
     my $rec = {
-        id      => $opts->{id} ,
-        bag     => $opts->{bag} ,
-        process => $opts->{process} ,
-        action  => $opts->{action} ,
-        message => $opts->{message} ,
+        id      => $opts->{id},
+        bag     => $opts->{bag},
+        process => $opts->{process},
+        action  => $opts->{action},
+        message => $opts->{message},
         time    => time
     };
 

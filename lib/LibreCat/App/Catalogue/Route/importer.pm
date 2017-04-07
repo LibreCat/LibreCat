@@ -28,12 +28,15 @@ sub _fetch_record {
             timeout => 10,
         )->first;
 
-        if ( $data->{message} && $data->{message}->{agency}->{id} eq "datacite" ) {
+        if (   $data->{message}
+            && $data->{message}->{agency}->{id} eq "datacite")
+        {
             $source = "datacite";
         }
     }
 
-    my $pkg = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
+    my $pkg
+        = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
 
     unless ($pkg) {
         h->log->error("failed to load LibreCat::FetchRecord::$source");
@@ -50,35 +53,38 @@ sub _fetch_record {
 Returns a form with imported data.
 
 =cut
+
 post '/librecat/record/import' => sub {
     my $p = params;
-    trim($p, 'id', 'whitespace');
+    trim($p, 'id',     'whitespace');
     trim($p, 'source', 'whitespace');
 
-    my $user   = h->get_person(session->{personNumber});
-    my $id     = $p->{id};
-    my $data   = request->upload('data') ? request->upload('data')->content : $p->{data};
+    my $user = h->get_person(session->{personNumber});
+    my $id   = $p->{id};
+    my $data
+        = request->upload('data')
+        ? request->upload('data')->content
+        : $p->{data};
     my $source = $p->{source};
 
     try {
-        my $imported_records = _fetch_record( $p->{id} // $data, $source );
+        my $imported_records = _fetch_record($p->{id} // $data, $source);
 
         die "no records imported" unless $imported_records;
 
         for my $pub (@$imported_records) {
-            $pub->{_id}        = h->new_record('publication');
-            $pub->{status}     = 'new'; # new is the status of records not checked by users/reviewers
-            $pub->{creator}    = {
-                    id    => session->{personNumber},
-                    login => session->{user}
-            };
+            $pub->{_id}    = h->new_record('publication');
+            $pub->{status} = 'new'
+                ; # new is the status of records not checked by users/reviewers
+            $pub->{creator}
+                = {id => session->{personNumber}, login => session->{user}};
             $pub->{user_id}    = session->{personNumber};
             $pub->{department} = $user->{department};
 
             # Use config/hooks.yml to register functions
             # that should run before/after uploading QAE publications
 
-            h->hook('import-new-'. $source)->fix_around(
+            h->hook('import-new-' . $source)->fix_around(
                 $pub,
                 sub {
                     h->update_record('publication', $pub);
@@ -86,17 +92,19 @@ post '/librecat/record/import' => sub {
             );
         }
 
-        return template "backend/add_new", {
-            ok => "Imported " . int(@$imported_records) . " record(s) from $source" ,
+        return template "backend/add_new",
+            {
+            ok => "Imported "
+                . int(@$imported_records)
+                . " record(s) from $source",
             imported => $imported_records
-        };
+            };
     }
     catch {
-        $id //= substr($data,0,40) . '...';
+        $id //= substr($data, 0, 40) . '...';
         h->log->error("import failed: $_");
         return template "backend/add_new",
-            {error =>
-                "Could not import $id from source $p->{source}."};
+            {error => "Could not import $id from source $p->{source}."};
     };
 
 };

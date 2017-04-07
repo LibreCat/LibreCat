@@ -159,7 +159,7 @@ sub pack_key {
 sub unpack_key {
     my $self = shift;
     my $key  = shift;
-    my $str = uri_unescape($key);
+    my $str  = uri_unescape($key);
     utf8::decode($str);
     $str;
 }

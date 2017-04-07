@@ -141,7 +141,7 @@ sub delete {
 }
 
 sub _generate_key {
-    my $ug = Data::UUID->new;
+    my $ug   = Data::UUID->new;
     my $uuid = $ug->create();
     return $ug->to_string($uuid);
 }

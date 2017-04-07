@@ -30,10 +30,7 @@ sub fetch {
 
     my $data = [];
     try {
-        $data = Catmandu->importer(
-            'XML',
-            file => \$xml,
-        )->to_array;
+        $data = Catmandu->importer('XML', file => \$xml,)->to_array;
     };
 
     unless (@$data) {

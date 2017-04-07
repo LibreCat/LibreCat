@@ -16,6 +16,7 @@ use URI::Escape;
 List persons alphabetically
 
 =cut
+
 get qr{/person/?([a-zA-Z]?)$} => sub {
     my ($c) = splat;
 
@@ -29,7 +30,8 @@ get qr{/person/?([a-zA-Z]?)$} => sub {
         limit => 1000
     );
 
-    h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing researcher->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('researcher', \%search_params);
 
@@ -48,7 +50,6 @@ get qr{/person/?([a-zA-Z]?)$} => sub {
     template 'person/list', $hits;
 };
 
-
 =head2 GET /person/:id
 
 Returns a person's profile page, including publications,
@@ -56,10 +57,9 @@ research data and author IDs.
 
 =cut
 
-get qr{/person/(.[^/]{2,})/?(\w+)?/?}
-    => sub {
+get qr{/person/(.[^/]{2,})/?(\w+)?/?} => sub {
     my ($id, $modus) = splat;
-    my $p      = h->extract_params();
+    my $p = h->extract_params();
     $p->{sort} = $p->{sort} // h->config->{default_sort};
 
     push @{$p->{cql}}, ("person=$id", "status=public");
@@ -71,14 +71,15 @@ get qr{/person/(.[^/]{2,})/?(\w+)?/?}
         push @{$p->{cql}}, "type<>research_data";
     }
 
-    $p->{limit}  = h->config->{maximum_page_size};
+    $p->{limit} = h->config->{maximum_page_size};
 
     h->log->debug("executing publication->search: " . to_dumper($p));
     my $hits = LibreCat->searcher->search('publication', $p);
 
     unless ($hits->total) {
         my %search_params = (cql => ["alias=$id"]);
-        h->log->debug("executing researcher->search: " . to_dumper(\%search_params));
+        h->log->debug(
+            "executing researcher->search: " . to_dumper(\%search_params));
 
         $hits = LibreCat->searcher->search('researcher', \%search_params);
         if (!$hits->{total}) {
@@ -109,24 +110,23 @@ get qr{/person/(.[^/]{2,})/?(\w+)?/?}
 
     template 'home', $hits;
 
-    };
+};
 
 =head2 GET /staffdirectory/:id
 
 Redirects the user to the local staff directory page
 
 =cut
+
 get '/staffdirectory/:id' => sub {
     my $id = param('id');
 
     if (h->config->{person} && h->config->{person}->{staffdirectory}) {
-        redirect sprintf "%s%s"
-                    , h->config->{person}->{staffdirectory}
-                    , uri_escape($id);
+        redirect sprintf "%s%s", h->config->{person}->{staffdirectory},
+            uri_escape($id);
     }
     else {
-        redirect sprintf "/person/%s"
-                    , uri_escape($id);
+        redirect sprintf "/person/%s", uri_escape($id);
     }
 };
 

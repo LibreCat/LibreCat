@@ -20,7 +20,6 @@ EOF
 sub command {
     my ($self, $opts, $args) = @_;
 
-
     my $commands = qr/get|set/;
 
     unless (@$args) {
@@ -47,7 +46,7 @@ sub _get {
     my $bag  = Catmandu->store('backup')->bag('info');
     my $data = $bag->get('publication_id');
 
-    printf "%s\n" , $data->{latest};
+    printf "%s\n", $data->{latest};
 
     return 0;
 }
@@ -59,13 +58,10 @@ sub _set {
 
     croak "id `$id` is not numeric" unless $id =~ /^\d+$/;
 
-    my $bag  = Catmandu->store('backup')->bag('info');
-    my $data = $bag->add({
-        _id => 'publication_id' ,
-        latest => $id
-    });
+    my $bag = Catmandu->store('backup')->bag('info');
+    my $data = $bag->add({_id => 'publication_id', latest => $id});
 
-    printf "%s\n" , $data->{latest};
+    printf "%s\n", $data->{latest};
 
     return 0;
 }

@@ -16,7 +16,7 @@ require_ok $pkg;
 
 my $x;
 
-lives_ok { $x = $pkg->new()} 'lives_ok';
+lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $pkg, $_ for qw(fetch);
 
@@ -31,8 +31,8 @@ SKIP: {
 
         ok $pub , 'got a publication';
 
-        like $pub->[0]->{title} , qr/Ugly of Gravity/, 'got correct title';
-        is $pub->[0]->{type} , 'preprint', 'type == preprint';
+        like $pub->[0]->{title}, qr/Ugly of Gravity/, 'got correct title';
+        is $pub->[0]->{type},    'preprint',          'type == preprint';
     };
 
     subtest 'orcid' => sub {
@@ -41,7 +41,7 @@ SKIP: {
         ok $pub , 'got some publications';
         ok $pub->[0];
         ok $pub->[1];
-        is $pub > 4, 1, 'more than one publication'
+        is $pub > 4, 1, 'more than one publication';
     };
 
     subtest 'empty' => sub {

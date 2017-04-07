@@ -15,10 +15,12 @@ use LibreCat::App::Helper;
 Splash page for :id.
 
 =cut
+
 get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
     my ($bag, $id) = splat;
 
     my $p = h->extract_params();
+
     # frontdoor: do not allow search queries for user
     delete $p->{q};
     delete $p->{cql};
@@ -35,7 +37,8 @@ get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
         push @{$p->{cql}},
             ($bag eq 'data') ? "type=research_data" : "type<>research_data";
         $hits = LibreCat->searcher->search('publication', $p);
-        return redirect "/" . $bag. "/" . $hits->first->{_id}, 301 if $hits->{total};
+        return redirect "/" . $bag . "/" . $hits->first->{_id}, 301
+            if $hits->{total};
     }
 
     $hits->{total} ? status 200 : status 404;
@@ -48,6 +51,7 @@ get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
 Search API to (data) publications.
 
 =cut
+
 get qr{/(data|publication)/*} => sub {
     my ($bag) = splat;
 
@@ -70,12 +74,13 @@ get qr{/(data|publication)/*} => sub {
 Embed API to (data) publications
 
 =cut
+
 get '/embed' => sub {
     my $p = h->extract_params();
 
     push @{$p->{cql}}, ("status=public");
 
-    $p->{sort} = $p->{sort} // h->config->{default_sort};
+    $p->{sort}  = $p->{sort} // h->config->{default_sort};
     $p->{start} = params->{start};
     $p->{limit} = h->config->{maximum_page_size};
 

@@ -32,11 +32,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (
-    ['total=i', ""] ,
-    ['start=i', ""] ,
-    ['sort=s', ""] ,
-    );
+    (['total=i', ""], ['start=i', ""], ['sort=s', ""],);
 }
 
 sub opts {
@@ -93,12 +89,16 @@ sub _list {
 
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->project->searcher(
-                cql_query => $query , total => $total , start => $start, sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_project;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $count = $it->each(
@@ -114,7 +114,8 @@ sub _list {
     print "count: $count\n";
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -131,12 +132,16 @@ sub _export {
 
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->project->searcher(
-                cql_query => $query , total => $total , start => $start, sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_project;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $exporter = Catmandu->exporter('YAML');
@@ -144,7 +149,8 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -209,14 +215,14 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag    = LibreCat::App::Helper::Helpers->new->backup_project;
+        my $bag = LibreCat::App::Helper::Helpers->new->backup_project;
         $bag->delete($id);
         $bag->commit;
     }
 
     # Deleting search
     {
-        my $bag    = LibreCat::App::Helper::Helpers->new->project;
+        my $bag = LibreCat::App::Helper::Helpers->new->project;
         $bag->delete($id);
         $bag->commit;
     }

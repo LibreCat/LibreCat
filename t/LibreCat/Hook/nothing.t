@@ -16,8 +16,8 @@ require_ok $pkg;
 my $x;
 lives_ok {$x = $pkg->new()} 'lives_ok';
 
-my $res = $x->fix({ foo => 'bar' });
+my $res = $x->fix({foo => 'bar'});
 
-is_deeply $res , { foo => 'bar' } , 'got a hooked result';
+is_deeply $res , {foo => 'bar'}, 'got a hooked result';
 
 done_testing;

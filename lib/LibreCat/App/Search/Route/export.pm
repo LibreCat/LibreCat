@@ -17,8 +17,9 @@ use LibreCat::App::Helper;
 Exports data.
 
 =cut
+
 get '/publication/:id.:fmt' => sub {
-    my $id  = params->{id};
+    my $id = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
     forward "/export", {cql => "id=$id", bag => 'publication', fmt => $fmt};
@@ -29,6 +30,7 @@ get '/publication/:id.:fmt' => sub {
 Exports data.
 
 =cut
+
 get '/export' => sub {
     unless (params->{fmt}) {
         content_type 'json';
@@ -43,7 +45,9 @@ get '/export' => sub {
     unless ($export_config->{$fmt}) {
         content_type 'json';
         status '406';
-        return to_json {error => sprintf("Export format '%s' not supported.", $fmt)};
+        return to_json {
+            error => sprintf("Export format '%s' not supported.", $fmt)
+        };
     }
 
     my $spec = $export_config->{$fmt};
@@ -68,11 +72,11 @@ get '/export' => sub {
 
     my $package = $spec->{package};
     my $options = $spec->{options} || {};
-    $options->{style}    = params->{style} if params->{style};
+    $options->{style}    = params->{style}    if params->{style};
     $options->{explinks} = params->{explinks} if params->{explinks};
 
     my $content_type = $spec->{content_type} || mime->for_name($fmt);
-    my $extension    = $spec->{extension} || $fmt;
+    my $extension    = $spec->{extension}    || $fmt;
 
     h->log->debug("exporting $package:" . Dancer::to_json($options));
     my $f = export_to_string($hits, $package, $options);

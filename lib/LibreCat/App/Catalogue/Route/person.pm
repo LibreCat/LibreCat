@@ -60,7 +60,8 @@ for his own publication list.
 
         if (params->{style}) {
             $person->{style} = params->{style}
-                if array_includes(keys %{h->config->{citation}->{csl}->{styles}},
+                if array_includes(
+                keys %{h->config->{citation}->{csl}->{styles}},
                 params->{style});
         }
         else {

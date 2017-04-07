@@ -22,7 +22,7 @@ use Moo;
 use Dancer qw(:syntax);
 
 sub route {
-    my ($self,$conf) = @_;
+    my ($self, $conf) = @_;
 
     sub {
         return redirect("http://www.google.com");

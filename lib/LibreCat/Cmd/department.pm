@@ -33,11 +33,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (
-    ['total=i', ""] ,
-    ['start=i',""] ,
-    ['sort=s',""] ,
-    );
+    (['total=i', ""], ['start=i', ""], ['sort=s', ""],);
 }
 
 sub opts {
@@ -97,12 +93,16 @@ sub _list {
 
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->department->searcher(
-                cql_query => $query , total => $total , start => $start, sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_department;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $count = $it->each(
@@ -113,21 +113,23 @@ sub _list {
             my $display = $item->{display};
             my $layer   = $item->{layer};
 
-            printf "%-2.2d %-40.40s %-40.40s %s\n", $layer, $id, $name, $display;
+            printf "%-2.2d %-40.40s %-40.40s %s\n", $layer, $id, $name,
+                $display;
         }
     );
 
     print "count: $count\n";
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
 }
 
 sub _tree {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
     if ($file) {
         $self->_tree_parse($file);
@@ -138,23 +140,26 @@ sub _tree {
 }
 
 sub _tree_parse {
-    my ($self,$file) = @_;
+    my ($self, $file) = @_;
 
     croak "usage: $0 tree <file>" unless defined($file) && -r $file;
 
-    my $importer  = Catmandu->importer('YAML', file => $file);
-    my $HASH      = $importer->first;
-    my $helper    = LibreCat::App::Helper::Helpers->new;
+    my $importer = Catmandu->importer('YAML', file => $file);
+    my $HASH     = $importer->first;
+    my $helper   = LibreCat::App::Helper::Helpers->new;
 
     print "deleting previous departments...\n";
     $helper->department->delete_all;
 
-    _tree_parse_parser($HASH->{tree}, sub {
-        my $rec = shift;
-        $helper->store_record('department', $rec);
-        $helper->index_record('department', $rec);
-        print "added $rec->{_id}\n";
-    });
+    _tree_parse_parser(
+        $HASH->{tree},
+        sub {
+            my $rec = shift;
+            $helper->store_record('department', $rec);
+            $helper->index_record('department', $rec);
+            print "added $rec->{_id}\n";
+        }
+    );
 }
 
 sub _tree_parse_parser {
@@ -169,15 +174,18 @@ sub _tree_parse_parser {
         my $display = $tree->{$node}->{display};
         my $name    = $tree->{$node}->{name};
 
-        $callback->({
-            _id     => $node ,
-            name    => $name ,
-            display => $display ,
-            layer   => $layer ,
-            tree    => $parents
-        });
+        $callback->(
+            {
+                _id     => $node,
+                name    => $name,
+                display => $display,
+                layer   => $layer,
+                tree    => $parents
+            }
+        );
 
-        _tree_parse_parser($tree->{$node}->{tree}, $callback, $layer + 1, [ { _id => $node } , @$parents ]);
+        _tree_parse_parser($tree->{$node}->{tree},
+            $callback, $layer + 1, [{_id => $node}, @$parents]);
     }
 }
 
@@ -227,12 +235,16 @@ sub _export {
 
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->department->searcher(
-                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_department;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $exporter = Catmandu->exporter('YAML');
@@ -240,7 +252,8 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -305,14 +318,14 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag    = LibreCat::App::Helper::Helpers->new->backup_department;
+        my $bag = LibreCat::App::Helper::Helpers->new->backup_department;
         $bag->delete($id);
         $bag->commit;
     }
 
     # Deleting search
     {
-        my $bag    = LibreCat::App::Helper::Helpers->new->department;
+        my $bag = LibreCat::App::Helper::Helpers->new->department;
         $bag->delete($id);
         $bag->commit;
     }

@@ -101,7 +101,9 @@ Deletes the account with ID :id.
 Input is person id. Returns warning if person is already in the database.
 
 =cut
+
     get '/account/import' => sub {
+
         # todo: was Bielefeld specific....
         template 'admin/account';
     };

@@ -72,8 +72,8 @@ Catmandu->store('search')->bag('department')->drop;
 
     my $record = $importer->first;
 
-    is $record->{_id}, 999000999, 'got really a 999000999 record';
-    is $record->{name}, 'Test faculty' , 'got a valid department';
+    is $record->{_id},  999000999,      'got really a 999000999 record';
+    is $record->{name}, 'Test faculty', 'got a valid department';
 }
 
 {

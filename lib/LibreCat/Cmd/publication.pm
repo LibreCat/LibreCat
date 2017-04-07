@@ -67,14 +67,14 @@ EOF
 sub command_opt_spec {
     my ($class) = @_;
     (
-        ['no-citation|nc', ""] ,
-        ['total=i', ""] ,
-        ['start=i',""] ,
-        ['sort=s',""] ,
-        ['log=s',""] ,
-        ['version=i', ""] ,
-        ['previous-version', ""] ,
-        ['history',""] ,
+        ['no-citation|nc',   ""],
+        ['total=i',          ""],
+        ['start=i',          ""],
+        ['sort=s',           ""],
+        ['log=s',            ""],
+        ['version=i',        ""],
+        ['previous-version', ""],
+        ['history',          ""],
     );
 }
 
@@ -87,7 +87,8 @@ sub command {
 
     $self->opts($opts);
 
-    my $commands = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo$/;
+    my $commands
+        = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -134,14 +135,17 @@ sub command {
 }
 
 sub audit_message {
-    my ($id,$action,$message) = @_;
-    LibreCat::App::Helper::Helpers->new->queue->add_job('audit',{
-        id      => $id ,
-        bag     => 'publication' ,
-        process => 'librecat publication' ,
-        action  => $action ,
-        message => $message ,
-    });
+    my ($id, $action, $message) = @_;
+    LibreCat::App::Helper::Helpers->new->queue->add_job(
+        'audit',
+        {
+            id      => $id,
+            bag     => 'publication',
+            process => 'librecat publication',
+            action  => $action,
+            message => $message,
+        }
+    );
 }
 
 sub _list {
@@ -155,12 +159,16 @@ sub _list {
 
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
-                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_publication;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $count = $it->each(
@@ -172,7 +180,8 @@ sub _list {
             my $status  = $item->{status};
             my $type    = $item->{type}             // '---';
 
-            printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n", " " # not use
+            printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n",
+                " "    # not use
                 , $id, $creator, $title, $status, $type;
         }
     );
@@ -180,7 +189,8 @@ sub _list {
     print "count: $count\n";
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -197,12 +207,16 @@ sub _export {
 
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
-                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_publication;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $exporter = Catmandu->exporter('YAML');
@@ -210,7 +224,8 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -229,16 +244,19 @@ sub _get {
         if ($rec && $rec->{_version} && $rec->{_version} > $version) {
             $rec = $bag->get_version($id, $version);
         }
-    } elsif ($self->opts->{'previous-version'}) {
+    }
+    elsif ($self->opts->{'previous-version'}) {
         $rec = $bag->get_previous_version($id);
-    } elsif ($self->opts->{'history'}) {
+    }
+    elsif ($self->opts->{'history'}) {
         $rec = $bag->get_history($id);
-    } else {
+    }
+    else {
         $rec = $bag->get($id);
     }
 
     if (my $msg = $self->opts->{log}) {
-        audit_message($id,'get',$msg);
+        audit_message($id, 'get', $msg);
     }
 
     Catmandu->export($rec, 'YAML') if $rec;
@@ -272,12 +290,13 @@ sub _add {
                 $helper->store_record('publication', $rec, $skip_citation);
                 if ($exporter) {
                     $exporter->add($rec);
-                } else {
+                }
+                else {
                     print "added $rec->{_id}\n";
                 }
 
                 if (my $msg = $self->opts->{log}) {
-                    audit_message($rec->{_id},'add',$msg);
+                    audit_message($rec->{_id}, 'add', $msg);
                 }
 
                 return 1;
@@ -315,7 +334,7 @@ sub _delete {
         $id);
 
     if (my $msg = $self->opts->{log}) {
-        audit_message($id,'delete',$msg);
+        audit_message($id, 'delete', $msg);
     }
 
     if ($result) {
@@ -338,7 +357,7 @@ sub _purge {
         $id);
 
     if (my $msg = $self->opts->{log}) {
-        audit_message($id,'purge',$msg);
+        audit_message($id, 'purge', $msg);
     }
 
     if ($result) {
@@ -377,7 +396,7 @@ sub _valid {
                 }
 
                 if (my $msg = $self->opts->{log}) {
-                    audit_message($id,'valid',$msg);
+                    audit_message($id, 'valid', $msg);
                 }
             }
 
@@ -392,9 +411,10 @@ sub _fetch {
     my ($self, $source, $id) = @_;
 
     croak "need a source (axiv,crossref,epmc,...)" unless defined($source);
-    croak "need an identifier" unless defined($id);
+    croak "need an identifier"                     unless defined($id);
 
-    my $pkg = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
+    my $pkg
+        = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
 
     unless ($pkg) {
         croak "failed to load LibreCat::FetchRecord::$source";
@@ -449,8 +469,7 @@ sub _embargo {
                 $item->{_id}, $file->{file_id},
                 $process ? $embargo_to : $file->{access_level},
                 $process ? 0           : $file->{request_a_copy},
-                $process ? 'NA' : $embargo // 'NA',
-                $file->{file_name};
+                $process ? 'NA' : $embargo // 'NA', $file->{file_name};
         }
     };
 
@@ -565,7 +584,7 @@ sub _files_load {
                 }
 
                 if (my $msg = $self->opts->{log}) {
-                    audit_message($id,'files',$msg);
+                    audit_message($id, 'files', $msg);
                 }
 
                 $files = [];
@@ -589,7 +608,7 @@ sub _files_load {
         }
 
         if (my $msg = $self->opts->{log}) {
-            audit_message($prev_id,'files',$msg);
+            audit_message($prev_id, 'files', $msg);
         }
     }
 }
@@ -649,43 +668,49 @@ sub _files_reporter {
         = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     my $files = $pkg->new(%$file_opt);
 
-    my $exporter = Catmandu->exporter('TSV'
-                            , header  => 1
-                            , fields => [qw(status container filename error)]);
+    my $exporter = Catmandu->exporter(
+        'TSV',
+        header => 1,
+        fields => [qw(status container filename error)]
+    );
 
-    LibreCat::App::Helper::Helpers->new->publication->each(sub {
-        my ($item) = @_;
-        return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
+    LibreCat::App::Helper::Helpers->new->publication->each(
+        sub {
+            my ($item) = @_;
+            return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
-        for my $file (@{$item->{file}}) {
-            my $pub_id    = $item->{_id};
-            my $file_name = $file->{file_name};
+            for my $file (@{$item->{file}}) {
+                my $pub_id    = $item->{_id};
+                my $file_name = $file->{file_name};
 
-            my $status = 'OK';
-            my $error  = '';
+                my $status = 'OK';
+                my $error  = '';
 
-            if (my $container = $files->get($pub_id)) {
-                if ($container->exists($file_name)) {
-                    $status = 'OK'
+                if (my $container = $files->get($pub_id)) {
+                    if ($container->exists($file_name)) {
+                        $status = 'OK';
+                    }
+                    else {
+                        $status = 'ERROR';
+                        $error  = 'no such file';
+                    }
                 }
                 else {
                     $status = 'ERROR';
-                    $error = 'no such file';
+                    $error  = 'no such container';
                 }
-            }
-            else {
-                $status = 'ERROR';
-                $error = 'no such container';
-            }
 
-            $exporter->add({
-                status    => $status ,
-                container => $pub_id ,
-                filename  => $file_name ,
-                error     => $error
-            });
+                $exporter->add(
+                    {
+                        status    => $status,
+                        container => $pub_id,
+                        filename  => $file_name,
+                        error     => $error
+                    }
+                );
+            }
         }
-    });
+    );
 
     $exporter->commit;
 }

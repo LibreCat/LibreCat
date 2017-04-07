@@ -59,25 +59,25 @@ sub _list {
     my $it = LibreCat::App::Helper::Helpers->new->backup_audit();
 
     if ($pid) {
-        $it = $it->select( id => $pid )->sorted(sub {
-            $_[0]->{time} cmp $_[1]->{time}
-        });
+        $it = $it->select(id => $pid)->sorted(
+            sub {
+                $_[0]->{time}
+                    cmp $_[1]->{time};
+            }
+        );
     }
 
     my $count = $it->each(
         sub {
-            my ($item)   = @_;
-            my $id       = $item->{id}      // '';
-            my $process  = $item->{process} // '';
-            my $message  = $item->{message} // '';
-            my $time     = strftime("%Y-%m-%dT%H:%M:%S",localtime($item->{time} // 0));
+            my ($item) = @_;
+            my $id      = $item->{id}      // '';
+            my $process = $item->{process} // '';
+            my $message = $item->{message} // '';
+            my $time    = strftime("%Y-%m-%dT%H:%M:%S",
+                localtime($item->{time} // 0));
 
-            printf "%s %s %s %s %s\n"
-                    , $item->{_id}
-                    , $time
-                    , $id
-                    , $process
-                    , $message;
+            printf "%s %s %s %s %s\n", $item->{_id}, $time, $id, $process,
+                $message;
         }
     );
 
@@ -97,7 +97,6 @@ sub _get {
 
     return $data ? 0 : 2;
 }
-
 
 1;
 

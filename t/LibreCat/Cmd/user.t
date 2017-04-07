@@ -75,7 +75,7 @@ Catmandu->store('search')->bag('researcher')->drop;
     my $record = $importer->first;
 
     is $record->{_id}, '999111999', 'got really a 999111999 record';
-    is $record->{email}, 'test.user@physics.com' , 'got correct email';
+    is $record->{email}, 'test.user@physics.com', 'got correct email';
 }
 
 {

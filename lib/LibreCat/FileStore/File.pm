@@ -40,7 +40,7 @@ sub is_url {
 
 sub is_callback {
     my $self = shift;
-    ref($self->data) eq 'CODE'
+    ref($self->data) eq 'CODE';
 }
 
 sub io_from_url {

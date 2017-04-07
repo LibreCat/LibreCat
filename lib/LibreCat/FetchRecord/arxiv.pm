@@ -14,10 +14,7 @@ sub fetch {
 
     $self->log->debug("requesting $id from arXiv");
 
-    my $data = Catmandu->importer(
-        'ArXiv',
-        query => $id,
-    )->to_array;
+    my $data = Catmandu->importer('ArXiv', query => $id,)->to_array;
 
     unless (@$data) {
         $self->log->error("failed query ArXiv");

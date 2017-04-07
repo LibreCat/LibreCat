@@ -16,7 +16,7 @@ require_ok $pkg;
 
 my $x;
 
-lives_ok { $x = $pkg->new()} 'lives_ok';
+lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $pkg, $_ for qw(fetch);
 
@@ -39,8 +39,8 @@ EOF
 
     ok $pub , 'got a publication';
 
-    is $pub->[0]->{title} , 'The title of the work' , 'got a title';
-    is $pub->[0]->{type} , 'book', 'type == book';
+    is $pub->[0]->{title}, 'The title of the work', 'got a title';
+    is $pub->[0]->{type}, 'book', 'type == book';
 };
 
 subtest 'more_recs' => sub {

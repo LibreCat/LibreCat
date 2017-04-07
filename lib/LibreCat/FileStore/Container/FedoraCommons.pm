@@ -234,7 +234,8 @@ sub _add_filename {
     my $response;
 
     if ($operation eq 'ADD') {
-        $self->log->debug("Add datastream $pid:$dsid $filename $key $mimeType");
+        $self->log->debug(
+            "Add datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->addDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -245,7 +246,8 @@ sub _add_filename {
         );
     }
     else {
-        $self->log->debug("Modify datastream $pid:$dsid $filename $key $mimeType");
+        $self->log->debug(
+            "Modify datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->modifyDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -257,7 +259,8 @@ sub _add_filename {
     }
 
     unless ($response->is_ok) {
-        $self->log->error("Failed to add/modify datastream history for $pid:$dsid");
+        $self->log->error(
+            "Failed to add/modify datastream history for $pid:$dsid");
         $self->log->error($response->error);
         return undef;
     }
@@ -309,7 +312,8 @@ sub _add_stream {
     my $response;
 
     if ($operation eq 'ADD') {
-        $self->log->debug("Add datastream $pid:$dsid $filename $key $mimeType");
+        $self->log->debug(
+            "Add datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->addDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -320,7 +324,8 @@ sub _add_stream {
         );
     }
     else {
-        $self->log->debug("Modify datastream $pid:$dsid $filename $key $mimeType");
+        $self->log->debug(
+            "Modify datastream $pid:$dsid $filename $key $mimeType");
         $response = $fedora->modifyDatastream(
             pid      => $pid,
             dsID     => $dsid,
@@ -334,7 +339,8 @@ sub _add_stream {
     unlink $filename;
 
     unless ($response->is_ok) {
-        $self->log->error("Failed to add/modify datastream history for $pid:$dsid");
+        $self->log->error(
+            "Failed to add/modify datastream history for $pid:$dsid");
         $self->log->error($response->error);
         return undef;
     }

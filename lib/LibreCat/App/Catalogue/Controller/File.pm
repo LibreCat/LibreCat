@@ -167,7 +167,8 @@ sub handle_file {
     for my $fi (@{$pub->{file}}) {
 
         # Generate a new file_id if not one existed
-        $fi->{file_id} = h->new_record('publication') if ! defined($fi->{file_id});
+        $fi->{file_id} = h->new_record('publication')
+            if !defined($fi->{file_id});
 
         h->log->debug("processing file-id: " . $fi->{file_id});
 
@@ -354,11 +355,14 @@ sub _update_tech_metadata {
     my $importer = Catmandu->importer('JSON', file => $config_file);
     my $data = $importer->first;
 
-    my $administrative_fields = h->config->{forms}->{dropzone_fields}->{administrative} // [];
+    my $administrative_fields
+        = h->config->{forms}->{dropzone_fields}->{administrative} // [];
 
     for my $name (@$administrative_fields) {
         my $value = $data->{$name};
-        h->log->debug("setting $name = " . ($value ? $value : 'null') . " for $filename");
+        h->log->debug("setting $name = "
+                . ($value ? $value : 'null')
+                . " for $filename");
         $fi->{$name} = $value if $value;
     }
 
@@ -375,12 +379,15 @@ sub _update_file_metadata {
 
     my ($prev_fi) = grep {$_->{file_id} eq $fi->{file_id}} @{$pub->{file}};
 
-    my $administrative_fields = h->config->{forms}->{dropzone_fields}->{administrative} // [];
-    my $descriptive_fields    = h->config->{forms}->{dropzone_fields}->{descriptive} // [];
+    my $administrative_fields
+        = h->config->{forms}->{dropzone_fields}->{administrative} // [];
+    my $descriptive_fields
+        = h->config->{forms}->{dropzone_fields}->{descriptive} // [];
 
     # Throw away the unimportant stuff
     for my $name (keys %$fi) {
         if (grep(/^$name$/, @$administrative_fields)) {
+
             # do nothing
         }
         elsif (!grep(/^$name$/, @$descriptive_fields)) {
@@ -400,7 +407,7 @@ sub _update_file_metadata {
         }
     }
 
-    $fi->{open_access}  = $fi->{access_level} eq 'open_access' ? 1 : 0;
+    $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = h->now unless $fi->{date_created};
     $fi->{date_updated} = h->now;
 }

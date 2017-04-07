@@ -51,56 +51,60 @@ sub command {
 }
 
 sub _daemon {
-    my ($self,$startstop) = @_;
+    my ($self, $startstop) = @_;
 
-     my $config = Catmandu->config->{queue} // {};
+    my $config = Catmandu->config->{queue} // {};
 
-     croak "no queue.workers configured" unless exists $config->{workers};
+    croak "no queue.workers configured" unless exists $config->{workers};
 
-     for my $worker (keys %{$config->{workers}}) {
-         my $count     = $config->{workers}->{$worker}->{count} // 0;
-         my $supervise = $config->{workers}->{$worker}->{supervise} // 0;
+    for my $worker (keys %{$config->{workers}}) {
+        my $count     = $config->{workers}->{$worker}->{count}     // 0;
+        my $supervise = $config->{workers}->{$worker}->{supervise} // 0;
 
-         next unless $count > 0;
+        next unless $count > 0;
 
-         my $cmd = "$0 worker $worker $startstop --workers $count";
-         $cmd .= " --supervise" if $supervise;
+        my $cmd = "$0 worker $worker $startstop --workers $count";
+        $cmd .= " --supervise" if $supervise;
 
-         printf STDERR "%s $worker..." , $startstop eq 'start' ? 'Starting' : 'Stopping';
-         system($cmd);
-         printf STDERR "OK\n";
-     }
+        printf STDERR "%s $worker...",
+            $startstop eq 'start' ? 'Starting' : 'Stopping';
+        system($cmd);
+        printf STDERR "OK\n";
+    }
 }
 
 sub _add_job {
-    my ($self,$worker,$file, %opts) = @_;
+    my ($self, $worker, $file, %opts) = @_;
 
-    croak "usage: $0 add_job <worker> <file>" unless defined($worker) && -r $file;
+    croak "usage: $0 add_job <worker> <file>"
+        unless defined($worker) && -r $file;
 
     my $importer = Catmandu->importer('YAML', file => $file);
     my $exporter = Catmandu->exporter('YAML');
     my $queue    = LibreCat::App::Helper::Helpers->new->queue;
 
-    $importer->each(sub {
-        my $job = $_[0];
+    $importer->each(
+        sub {
+            my $job = $_[0];
 
-        my $job_id = $queue->add_job($worker,$job);
+            my $job_id = $queue->add_job($worker, $job);
 
-        print "Adding job:\n";
+            print "Adding job:\n";
 
-        $exporter->add($job);
+            $exporter->add($job);
 
-        unless ($opts{background}) {
-            print "[$job_id]:";
-            while (1) {
-                print "+";
-                my $job = $queue->job_status($job_id);
-                last if $job->done;
-                sleep 1;
+            unless ($opts{background}) {
+                print "[$job_id]:";
+                while (1) {
+                    print "+";
+                    my $job = $queue->job_status($job_id);
+                    last if $job->done;
+                    sleep 1;
+                }
+                print "DONE\n";
             }
-            print "DONE\n";
         }
-    });
+    );
 
     $exporter->commit;
 }

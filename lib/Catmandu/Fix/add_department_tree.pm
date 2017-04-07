@@ -16,11 +16,13 @@ sub fix {
             delete $d->{id};
         }
         if (!$d->{_id} or $d->{_id} !~ /\d{1,}/) {
-            $dep = LibreCat->searcher->search('department', {q => ["display=\"$d->{name}\""]})
-                ->{hits}->[0];
+            $dep = LibreCat->searcher->search('department',
+                {q => ["display=\"$d->{name}\""]})->{hits}->[0];
         }
         else {
-            $dep = LibreCat->searcher->search('department', {q => [$d->{_id}]})->{hits}->[0];
+            $dep
+                = LibreCat->searcher->search('department', {q => [$d->{_id}]})
+                ->{hits}->[0];
         }
 
         delete $dep->{date_created};

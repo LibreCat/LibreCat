@@ -34,11 +34,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (
-    ['total=i', ""] ,
-    ['start=i',""] ,
-    ['sort=s',""]
-    );
+    (['total=i', ""], ['start=i', ""], ['sort=s', ""]);
 }
 
 sub opts {
@@ -97,22 +93,26 @@ sub _list {
     my $it;
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
-                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_researcher;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $count = $it->each(
         sub {
-            my ($item)   = @_;
-            my $id       = $item->{_id};
-            my $login    = $item->{login} // '---';
-            my $name     = $item->{full_name} // '---';
+            my ($item) = @_;
+            my $id = $item->{_id};
+            my $login    = $item->{login}          // '---';
+            my $name     = $item->{full_name}      // '---';
             my $status   = $item->{account_status} // '---';
-            my $is_admin = $item->{super_admin} // 0;
+            my $is_admin = $item->{super_admin}    // 0;
 
             printf "%-2.2s %-40.40s %-20.20s %-40.40s %-10.10s\n",
                 $is_admin ? "*" : " ", $id, $login, $name, $status;
@@ -121,7 +121,8 @@ sub _list {
     print "count: $count\n";
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -138,12 +139,16 @@ sub _export {
 
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
-                cql_query => $query , total => $total , start => $start , sru_sortkeys => $sort
-              );
+            cql_query    => $query,
+            total        => $total,
+            start        => $start,
+            sru_sortkeys => $sort
+        );
     }
     else {
         $it = LibreCat::App::Helper::Helpers->new->backup_researcher;
-        $it = $it->slice($start // 0, $total) if (defined($start) || defined($total));
+        $it = $it->slice($start // 0, $total)
+            if (defined($start) || defined($total));
     }
 
     my $exporter = Catmandu->exporter('YAML');
@@ -151,9 +156,10 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
-    
+
     return 0;
 }
 
@@ -218,14 +224,14 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag    = LibreCat::App::Helper::Helpers->new->backup_researcher;
+        my $bag = LibreCat::App::Helper::Helpers->new->backup_researcher;
         $bag->delete($id);
         $bag->commit;
     }
 
     # Deleting search
     {
-        my $bag    = LibreCat::App::Helper::Helpers->new->researcher;
+        my $bag = LibreCat::App::Helper::Helpers->new->researcher;
         $bag->delete($id);
         $bag->commit;
     }
@@ -278,12 +284,14 @@ sub _passwd {
 
     print "Password: ";
     system('/bin/stty', '-echo');
-    my $password1 = <STDIN> ; chop($password1);
+    my $password1 = <STDIN>;
+    chop($password1);
     system('/bin/stty', 'echo');
 
     print "\nRepeat password: ";
     system('/bin/stty', '-echo');
-    my $password2 = <STDIN> ; chop($password2);
+    my $password2 = <STDIN>;
+    chop($password2);
     system('/bin/stty', 'echo');
 
     unless ($password1 eq $password2) {

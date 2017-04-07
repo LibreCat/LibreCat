@@ -76,19 +76,14 @@ sub _build_csl_fixer {
 sub _request {
     my ($self, $data) = @_;
 
-    my $ua  = LWP::UserAgent->new();
+    my $ua = LWP::UserAgent->new();
 
     my $uri = URI->new($self->conf->{csl}->{url});
-    $uri->query_form({
-                    responseformat => 'html',
-                    linkwrap => 1,
-                    style => $data->{style}
-          });
+    $uri->query_form(
+        {responseformat => 'html', linkwrap => 1, style => $data->{style}});
 
-    my $res = $ua->post(
-                    $uri->as_string(),
-                    Content => encode_utf8($data->{content})
-            );
+    my $res = $ua->post($uri->as_string(),
+        Content => encode_utf8($data->{content}));
 
     if ($res->{_rc} eq '200') {
         $self->log->debug("200 OK for " . $uri->as_string());
@@ -96,6 +91,7 @@ sub _request {
         my $content = $res->{_content};
         $content =~ s/<div class="csl-left-margin">.*?<\/div>//g;
         $content =~ s/<div.*?>|<\/div>//g;
+
         # More regexes for backwards compatibility
         $content =~ s/^\s+//g;
         $content =~ s/\s+$//g;
@@ -116,22 +112,23 @@ sub create {
 
     my $engine = $self->conf->{engine} // 'none';
 
-    if (0) {}
+    if (0) { }
     elsif ($engine eq 'csl') {
         my $d         = clone $data;
         my $csl_fixer = $self->csl_fixer;
-        my $csl_json  = export_to_string($d, 'JSON',{
-                                line_delimited => 1, fix => $csl_fixer
-                        });
+        my $csl_json  = export_to_string($d, 'JSON',
+            {line_delimited => 1, fix => $csl_fixer});
 
         my $found = 0;
         foreach my $s (@{$self->styles}) {
-            my $locale  = ($s eq 'dgps') ? 'de' : $self->locale;
-            my $citation = $self->_request({
-                        locale  => $locale,
-                        style   => $self->conf->{csl}->{styles}->{$s},
-                        content => $csl_json,
-                    });
+            my $locale = ($s eq 'dgps') ? 'de' : $self->locale;
+            my $citation = $self->_request(
+                {
+                    locale  => $locale,
+                    style   => $self->conf->{csl}->{styles}->{$s},
+                    content => $csl_json,
+                }
+            );
 
             if ($citation) {
                 $cite->{$s} = $citation;

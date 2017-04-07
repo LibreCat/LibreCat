@@ -23,11 +23,11 @@ sub work {
 sub index_record {
     my ($self, $opts, $job) = @_;
 
-    my $bag        = $opts->{bag};
-    my $id         = $opts->{bag};
+    my $bag = $opts->{bag};
+    my $id  = $opts->{bag};
 
-    my $source     = Catmandu->store('backup')->bag($bag);
-    my $target     = Catmandu->store('search')->bag($bag);
+    my $source = Catmandu->store('backup')->bag($bag);
+    my $target = Catmandu->store('search')->bag($bag);
 
     $self->log->debug("index one $bag : $id");
 
@@ -35,7 +35,7 @@ sub index_record {
         $self->log->info("indexing $bag 1/1");
         $target->add($rec);
         $target->commit;
-        $job->send_status(1,1);
+        $job->send_status(1, 1);
         $self->log->info("indexed 1");
     }
     else {
@@ -46,13 +46,13 @@ sub index_record {
 sub index_all {
     my ($self, $opts, $job) = @_;
 
-    my $bag        = $opts->{bag};
-    my $id         = $opts->{bag};
+    my $bag = $opts->{bag};
+    my $id  = $opts->{bag};
 
-    my $source     = Catmandu->store('backup')->bag($bag);
-    my $target     = Catmandu->store('search')->bag($bag);
-    my $total      = $source->count;
-    my $n          = 0;
+    my $source = Catmandu->store('backup')->bag($bag);
+    my $target = Catmandu->store('search')->bag($bag);
+    my $total  = $source->count;
+    my $n      = 0;
 
     $self->log->debug("index all $bag");
 

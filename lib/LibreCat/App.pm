@@ -34,14 +34,14 @@ hook before => sub {
     my $routes    = $conf->{routes} // [];
 
     my $handlers = {
-            login      => _login_route($conf) ,
-            redirect   => _redirect_route($conf) ,
-            role       => _role_route($conf) ,
-            api_access => _api_route($conf) ,
-            no_access  => sub {
-                return redirect uri_for('/access_denied');
-            } ,
-            default    => sub { } ,
+        login      => _login_route($conf),
+        redirect   => _redirect_route($conf),
+        role       => _role_route($conf),
+        api_access => _api_route($conf),
+        no_access  => sub {
+            return redirect uri_for('/access_denied');
+        },
+        default => sub { },
     };
 
     for my $h (keys %{$conf->{handlers}}) {
@@ -56,12 +56,12 @@ hook before => sub {
         }
         else {
             h->log->error("failed to create a new $package_name permission");
-            $handlers->{$h} = sub {};
+            $handlers->{$h} = sub { };
         }
     }
 
     for my $route (@$routes) {
-        my ($_method,$_regex,$_role,@_params) = @$route;
+        my ($_method, $_regex, $_role, @_params) = @$route;
 
         $_role = 'default' unless defined($_role) && $_role =~ /\S+/;
 
@@ -81,17 +81,20 @@ hook before => sub {
 sub _login_route {
     my $conf = shift;
     sub {
-        if ( session $conf->{logged_in_key} ) {
+        if (session $conf->{logged_in_key}) {
+
             # ok
         }
         else {
-             my $query_params = params("query");
-             my $data =
-               { $conf->{callback_key} => uri_for( request->path, $query_params ) };
-             for my $k ( @{ $conf->{passthrough} } ) {
-               $data->{$k} = params->{$k} if params->{$k};
-             }
-             return redirect uri_for( $conf->{login_route}, $data );
+            my $query_params = params("query");
+            my $data
+                = {
+                $conf->{callback_key} => uri_for(request->path, $query_params)
+                };
+            for my $k (@{$conf->{passthrough}}) {
+                $data->{$k} = params->{$k} if params->{$k};
+            }
+            return redirect uri_for($conf->{login_route}, $data);
         }
     };
 }
@@ -108,8 +111,9 @@ sub _role_route {
     my $conf = shift;
     sub {
         my $role = shift;
-        if ( session $conf->{logged_in_key} ) {
+        if (session $conf->{logged_in_key}) {
             if (session->{role} && $role eq session->{role}) {
+
                 # ok
             }
             else {
@@ -117,13 +121,15 @@ sub _role_route {
             }
         }
         else {
-             my $query_params = params("query");
-             my $data =
-               { $conf->{callback_key} => uri_for( request->path, $query_params ) };
-             for my $k ( @{ $conf->{passthrough} } ) {
-               $data->{$k} = params->{$k} if params->{$k};
-             }
-             return redirect uri_for( $conf->{login_route}, $data );
+            my $query_params = params("query");
+            my $data
+                = {
+                $conf->{callback_key} => uri_for(request->path, $query_params)
+                };
+            for my $k (@{$conf->{passthrough}}) {
+                $data->{$k} = params->{$k} if params->{$k};
+            }
+            return redirect uri_for($conf->{login_route}, $data);
         }
     };
 }
@@ -133,9 +139,11 @@ sub _api_route {
     sub {
         my $role = shift // '';
         if (_ip_match(request->address)) {
+
             # ok
         }
         elsif (session->{role} && $role eq session->{role}) {
+
             # ok
         }
         else {
@@ -149,7 +157,7 @@ sub _ip_match {
     my $access    = h->config->{filestore}->{api}->{access} // {};
     my $ip_ranges = $access->{ip_ranges} // [];
 
-    h->within_ip_range($ip,$ip_ranges);
+    h->within_ip_range($ip, $ip_ranges);
 }
 
 # custom authenticate routine
@@ -161,7 +169,8 @@ sub _authenticate {
 
     my $auth = do {
         my $package_name = Catmandu->config->{authentication}->{package};
-        my $package_opts = Catmandu->config->{authentication}->{options} // {};
+        my $package_opts = Catmandu->config->{authentication}->{options}
+            // {};
 
         if ($package_name) {
             my $pkg = Catmandu::Util::require_package($package_name);
@@ -170,7 +179,8 @@ sub _authenticate {
                 $pkg->new($package_opts);
             }
             else {
-                h->log->error("failed to create a new $package_name authenticator");
+                h->log->error(
+                    "failed to create a new $package_name authenticator");
                 undef;
             }
         }
@@ -304,7 +314,8 @@ Throws 'page not found'.
 any qr{.*} => sub {
     if (session->{user}) {
         return redirect uri_for('/librecat');
-    } else {
+    }
+    else {
         status 'not_found';
         return template '404';
     }

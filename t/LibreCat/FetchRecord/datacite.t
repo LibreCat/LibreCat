@@ -15,7 +15,7 @@ require_ok $pkg;
 
 my $x;
 
-lives_ok { $x = $pkg->new()} 'lives_ok';
+lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $pkg, $_ for qw(fetch);
 
@@ -29,8 +29,9 @@ SKIP: {
 
     ok $pub , 'got a publication';
 
-    is $pub->[0]{title} , 'Gravity as Entanglement, and Entanglement as Gravity' , 'got a title';
-    is $pub->[0]{type} , 'research_data', 'type == research_data';
+    is $pub->[0]{title},
+        'Gravity as Entanglement, and Entanglement as Gravity', 'got a title';
+    is $pub->[0]{type}, 'research_data', 'type == research_data';
 
     $pub = $x->fetch('10.23432/3432');
 

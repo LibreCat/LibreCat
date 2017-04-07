@@ -12,7 +12,7 @@ sub fetch {
 
     my $fixer = $self->create_fixer('bibtex_mapping.fix');
 
-    my $data = Catmandu->importer('BibTeX',file => \$bibtex)->to_array;
+    my $data = Catmandu->importer('BibTeX', file => \$bibtex)->to_array;
 
     unless (@$data) {
         $self->log->error("failed to import bibtex from $bibtex");

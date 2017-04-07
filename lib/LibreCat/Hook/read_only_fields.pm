@@ -18,17 +18,16 @@ sub fix {
 
     my $read_only_fields;
 
-    if (
-       exists(h->config->{hook}) &&
-       exists(h->config->{hook}->{read_only_fields})
-    ) {
+    if (   exists(h->config->{hook})
+        && exists(h->config->{hook}->{read_only_fields}))
+    {
         $read_only_fields = h->config->{hook}->{read_only_fields};
     }
     else {
         $read_only_fields = [];
     }
 
-    if (my $rec = h->publication->get($id) ) {
+    if (my $rec = h->publication->get($id)) {
         for my $field (@$read_only_fields) {
             h->log->debug("updating field $field...");
             $data->{$field} = $rec->{$field} if $rec->{$field};
@@ -42,7 +41,7 @@ sub fix {
 }
 
 sub is_admin {
-    my ($self,$data) = @_;
+    my ($self, $data) = @_;
 
     h->log->debug("checking for admin rights");
 

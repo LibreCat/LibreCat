@@ -6,6 +6,7 @@ use App::Cmd::Tester;
 use LibreCat::CLI;
 
 my $pkg;
+
 BEGIN {
     $pkg = "LibreCat::App";
     use_ok $pkg;
@@ -17,8 +18,8 @@ Catmandu->store('backup')->bag('publication')->delete_all;
 Catmandu->store('search')->bag('publication')->drop;
 
 foreach my $obj (qw(publication project researcher)) {
-    my $result = test_app(qq|LibreCat::CLI| =>
-            [$obj, "add", "t/records/valid-$obj.yml"]);
+    my $result = test_app(
+        qq|LibreCat::CLI| => [$obj, "add", "t/records/valid-$obj.yml"]);
 }
 
 route_exists          [GET => '/'], "GET / is handled";

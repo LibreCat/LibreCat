@@ -33,7 +33,7 @@ Performs search for admin.
 
         my $hits = LibreCat->searcher->search('publication', $p);
 
-        $hits->{modus}         = "admin";
+        $hits->{modus} = "admin";
 
         template "home", $hits;
     };
@@ -49,30 +49,33 @@ Performs search for similar titles, admin only
         my $p = h->extract_params();
 
         # TODO filter out deleted recs
-        my $hits = LibreCat->searcher->native_search('publication',
-            {query => {
-                "bool" => {
-                    "must" => {
-                        "match" => {
-                            "title" => {
-                                "query"                => $p->{q},
-                                "minimum_should_match" => "70%"
+        my $hits = LibreCat->searcher->native_search(
+            'publication',
+            {
+                query => {
+                    "bool" => {
+                        "must" => {
+                            "match" => {
+                                "title" => {
+                                    "query"                => $p->{q},
+                                    "minimum_should_match" => "70%"
+                                }
+                            }
+                        },
+                        "should" => {
+                            "match_phrase" => {
+                                "title" =>
+                                    {"query" => $p->{q}, "slop" => "50"}
                             }
                         }
-                    },
-                    "should" => {
-                        "match_phrase" => {
-                            "title" =>
-                                {"query" => $p->{q}, "slop" => "50"}
-                        }
                     }
-                }
-            },
-            limit => $p->{limit} ||= h->config->{default_page_size},
-            start => $p->{start} ||= 0,
-        });
+                },
+                limit => $p->{limit} ||= h->config->{default_page_size},
+                start => $p->{start} ||= 0,
+            }
+        );
 
-        $hits->{modus}         = "admin";
+        $hits->{modus} = "admin";
 
         template "home", $hits;
 
@@ -152,12 +155,12 @@ Performs search for reviewer.
         push @{$p->{cql}}, $dep_query;
 
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{modus}         = "project_reviewer_" . params->{project_id};
-        $hits->{project_id}    = params->{project_id};
+        $hits->{modus}      = "project_reviewer_" . params->{project_id};
+        $hits->{project_id} = params->{project_id};
 
         template "home", $hits;
 
-        };
+    };
 
 =head2 GET /datamanager
 
@@ -187,7 +190,7 @@ Performs search for data manager.
 
         template "home", $hits;
 
-        };
+    };
 
 =head2 GET '/delegate'
 
@@ -215,8 +218,8 @@ publications.
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{modus}         = "delegate_" . $id;
-        $hits->{delegate_id}   = $id;
+        $hits->{modus}       = "delegate_" . $id;
+        $hits->{delegate_id} = $id;
 
         template "home", $hits;
 
@@ -229,8 +232,8 @@ Performs search for user.
 =cut
 
     get '/' => sub {
-        my $p      = h->extract_params();
-        my $id     = session 'personNumber';
+        my $p  = h->extract_params();
+        my $id = session 'personNumber';
 
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "type<>research_data";
@@ -247,7 +250,7 @@ Performs search for user.
         $researchhits = LibreCat->searcher->search('publication', $p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
-        $hits->{modus}         = "user";
+        $hits->{modus} = "user";
 
         template "home", $hits;
 
@@ -271,7 +274,7 @@ Performs search for user.
         $researchhits = LibreCat->searcher->search('publication', $p);
         $hits->{researchhits} = $researchhits if $researchhits;
 
-        $hits->{modus}         = "data";
+        $hits->{modus} = "data";
 
         template "home", $hits;
 

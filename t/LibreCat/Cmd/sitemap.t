@@ -10,10 +10,12 @@ use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Data::Dumper;
 
 my $pkg;
+
 BEGIN {
     if (-d 't/tmp/sitemap') {
         unlink glob "'t/tmp/sitemap/*.*'";
-    } else {
+    }
+    else {
         mkdir 't/tmp/sitemap';
     }
 
@@ -37,14 +39,14 @@ require_ok $pkg;
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['sitemap', '--dir', 't/tmp/sitemap']);
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['sitemap', '--dir', 't/tmp/sitemap']);
 
     ok !$result->error, 'ok threw no exception';
 
     ok !$result->stdout, 'silent';
 
-    ok -f 't/tmp/sitemap/siteindex.xml', 'index site exists';
+    ok -f 't/tmp/sitemap/siteindex.xml',     'index site exists';
     ok -f 't/tmp/sitemap/sitemap-00001.xml', 'first sitemap exists';
 }
 

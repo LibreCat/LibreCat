@@ -143,7 +143,8 @@ sub _add_cite {
 
     my $hyperlink;
     if ($cite =~ /<a href\=\"(.*?)\"(\starget\=\"_blank\")*>(.*?)<\/a>/) {
-        $cite =~ s/<a href\=\"(.*?)\"(\starget\=\"_blank\")*>(.*?)<\/a>/____/g;
+        $cite
+            =~ s/<a href\=\"(.*?)\"(\starget\=\"_blank\")*>(.*?)<\/a>/____/g;
         $hyperlink = "{\\field{\\*\\fldinst HYPERLINK $1}{\\fldrslt $3}}";
     }
 

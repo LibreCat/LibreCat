@@ -12,12 +12,9 @@ sub fetch {
 
     $self->log->debug("requesting $id from inspire");
 
-    my $url  = "http://inspirehep.net/record/$id?of=recjson";
+    my $url = "http://inspirehep.net/record/$id?of=recjson";
 
-    my $data = Catmandu->importer(
-        'getJSON',
-        from => $url
-    )->to_array;
+    my $data = Catmandu->importer('getJSON', from => $url)->to_array;
 
     unless (@$data) {
         $self->log->error("failed to request $url");

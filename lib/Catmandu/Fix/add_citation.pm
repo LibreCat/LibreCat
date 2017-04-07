@@ -14,7 +14,7 @@ sub fix {
     my ($self, $data) = @_;
 
     my $citation_engine = $self->citation_engine;
-    my $citation = $citation_engine->create($data);
+    my $citation        = $citation_engine->create($data);
 
     if ($citation) {
         $data->{citation} = $citation;

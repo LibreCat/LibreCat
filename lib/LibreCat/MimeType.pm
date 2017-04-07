@@ -20,10 +20,10 @@ sub content_type {
 
     my $type = 'application/octet-stream';
 
-    my $mime =  $self->types->mimeTypeOf($ext);
+    my $mime = $self->types->mimeTypeOf($ext);
 
     # Require explicit stringification!
-    $type = sprintf "%s" , $mime->type if $mime;
+    $type = sprintf "%s", $mime->type if $mime;
 
     return $type;
 }

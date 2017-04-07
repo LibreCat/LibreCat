@@ -11,17 +11,15 @@ use namespace::clean;
 
 with 'Catmandu::Logger';
 
-has store => (
-    is => 'ro',
-    required => 1,
-);
+has store => (is => 'ro', required => 1,);
 
 sub native_search {
     my ($self, $bag_name, $search_params) = @_;
 
     return undef unless $bag_name;
 
-    $self->log->debug("executing $bag_name->search: " . to_dumper($search_params));
+    $self->log->debug(
+        "executing $bag_name->search: " . to_dumper($search_params));
     my $hits;
 
     try {
@@ -29,13 +27,14 @@ sub native_search {
     }
     catch {
         $self->log->error($_);
-        $self->log->error("$bag_name->search failed: " . to_dumper($search_params));
+        $self->log->error(
+            "$bag_name->search failed: " . to_dumper($search_params));
         $hits = Catmandu::Hits->new(
-                    start => $search_params->{start},
-                    limit => $search_params->{limit},
-                    total => 0,
-                    hits  => [],
-                );
+            start => $search_params->{start},
+            limit => $search_params->{limit},
+            total => 0,
+            hits  => [],
+        );
     };
 
     $self->log->debug("found: " . $hits->total . " hits");
@@ -58,23 +57,25 @@ sub search {
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit        => $self->_set_limit($p->{limit}),
         start        => $p->{start} // 0,
-        facets       => merge($p->{facets}, Catmandu->config->{default_facets}),
+        facets => merge($p->{facets}, Catmandu->config->{default_facets}),
     );
 
-    $self->log->debug("executing $bag_name->search: " . to_dumper(\%search_params));
+    $self->log->debug(
+        "executing $bag_name->search: " . to_dumper(\%search_params));
     my $hits;
 
     try {
         $hits = $self->store->bag($bag_name)->search(%search_params);
     }
     catch {
-        $self->log->error("$bag_name->search failed: " . to_dumper(\%search_params));
+        $self->log->error(
+            "$bag_name->search failed: " . to_dumper(\%search_params));
         $hits = Catmandu::Hits->new(
-                    start => $search_params{start},
-                    limit => $search_params{limit},
-                    total => 0,
-                    hits  => [],
-                );
+            start => $search_params{start},
+            limit => $search_params{limit},
+            total => 0,
+            hits  => [],
+        );
     };
 
     $self->log->debug("found: " . $hits->total . " hits");
@@ -92,10 +93,11 @@ sub _cql_query {
 
     my @cql;
 
-    my $q = is_array_ref($p->{q}) ? $p->{q} : [ $p->{q} ];
+    my $q = is_array_ref($p->{q}) ? $p->{q} : [$p->{q}];
 
     for my $part (@$q) {
         if (defined($part) && length($part)) {
+
             # auto-escape wildcards
             my $mode   = '=';
             my $search = '';
@@ -124,9 +126,9 @@ sub _set_limit {
     my ($self, $limit) = @_;
 
     if ($limit) {
-        ($limit > Catmandu->config->{maximum_page_size}) ?
-            return Catmandu->config->{maximum_page_size} :
-                return $limit;
+        ($limit > Catmandu->config->{maximum_page_size})
+            ? return Catmandu->config->{maximum_page_size}
+            : return $limit;
     }
     else {
         return Catmandu->config->{default_page_size};
@@ -139,14 +141,17 @@ sub _sru_sort {
     return '' unless $sort;
     $sort = $self->_string_array($sort);
 
-    return join (' ', map {
-        my $s = trim $_;
-        unless ( $self->_is_sru_sort($s) ) {
-            if ($s =~ /(\w{1,})\.(asc|desc)/) {
-                "$1,," . ($2 eq "asc" ? "1" : "0");
+    return join(
+        ' ',
+        map {
+            my $s = trim $_;
+            unless ($self->_is_sru_sort($s)) {
+                if ($s =~ /(\w{1,})\.(asc|desc)/) {
+                    "$1,," . ($2 eq "asc" ? "1" : "0");
+                }
             }
-        }
-    } @$sort );
+        } @$sort
+    );
 }
 
 sub _string_array {
@@ -160,7 +165,8 @@ sub _is_sru_sort {
     my ($self, $s) = @_;
     if ($s && $s =~ /\w{1,},,(0|1)/) {
         return $s;
-    } else {
+    }
+    else {
         return undef;
     }
 }

@@ -21,7 +21,7 @@ SKIP: {
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue']);
-        ok ! $result->error, 'ok threw no exception';
+        ok !$result->error, 'ok threw no exception';
 
         my $output = $result->stdout;
         ok $output, 'got an output';
@@ -29,19 +29,22 @@ SKIP: {
     }
 
     {
-        my $worker = test_app(qq|LibreCat::CLI| =>
-            ['worker', 'mailer', 'start', '--workers', '2', '--supervise']);
+        my $worker = test_app(
+            qq|LibreCat::CLI| => [
+                'worker', 'mailer', 'start', '--workers', '2', '--supervise'
+            ]
+        );
 
         my $result = test_app(qq|LibreCat::CLI| => ['queue']);
-        ok ! $result->error, 'ok threw no exception';
+        ok !$result->error, 'ok threw no exception';
 
         my $output = $result->stdout;
         ok $output, 'got an output';
         like $output, qr/mailer/, 'got expected output';
 
         ok test_app(qq|LibreCat::CLI| =>
-            ['worker', 'mailer', 'stop', '--workers', '2', '--supervise']),
-            'stop workers';
+                ['worker', 'mailer', 'stop', '--workers', '2', '--supervise']
+        ), 'stop workers';
     }
 
 }

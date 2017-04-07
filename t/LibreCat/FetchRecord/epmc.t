@@ -16,7 +16,7 @@ require_ok $pkg;
 
 my $x;
 
-lives_ok { $x = $pkg->new()} 'lives_ok';
+lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $pkg, $_ for qw(fetch);
 
@@ -30,8 +30,10 @@ SKIP: {
 
     ok $pub , 'got a publication';
 
-    is $pub->[0]{title} , 'Numerical Evidence for a Phase Transition in 4D Spin-Foam Quantum Gravity.' , 'got a title';
-    is $pub->[0]{type} , 'journal_article', 'type == journal_article';
+    is $pub->[0]{title},
+        'Numerical Evidence for a Phase Transition in 4D Spin-Foam Quantum Gravity.',
+        'got a title';
+    is $pub->[0]{type}, 'journal_article', 'type == journal_article';
 
     $pub = $x->fetch('PMID: 12345678998765432123456');
 

@@ -21,10 +21,10 @@ use DateTime;
 sub _file_exists {
     my ($key, $filename, %opts) = @_;
 
-    my $store     = $opts{access} ? h->get_access_store() : h->get_file_store();
+    my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
 
     return undef unless $store;
-    
+
     my $container = $store->get($key);
 
     if (defined $container) {
@@ -39,7 +39,7 @@ sub _file_exists {
 sub _send_it {
     my ($key, $filename, %opts) = @_;
 
-    my $store     = $opts{access} ? h->get_access_store() : h->get_file_store();
+    my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
     my $container = $store->get($key);
 
     send_file(
@@ -53,8 +53,8 @@ sub _send_it {
 
                 my $http_status_code = 200;
 
-                # Tech.note: This is a hash of HTTP header/values, but the
-                #            function below requires an even-numbered array-ref.
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
                 my @http_headers = (
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
@@ -62,8 +62,8 @@ sub _send_it {
                     'Pragma' => 'no-cache'
                 );
 
-                # Send the HTTP headers
-                # (back to either the user or the upstream HTTP web-server front-end)
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
                 # Avoid creating forks whenever possible...
@@ -74,7 +74,8 @@ sub _send_it {
                 else {
                     my $io = $file->fh;
                     my $buffer_size
-                        = h->config->{filestore}->{api}->{buffer_size} // 1024;
+                        = h->config->{filestore}->{api}->{buffer_size}
+                        // 1024;
 
                     while (!$io->eof) {
                         my $buffer;

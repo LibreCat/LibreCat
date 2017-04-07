@@ -41,7 +41,7 @@ sub daemon {
         $self->usage_error("worker name missing");
     }
 
-    my $worker_name  = camelize($args->[0]);
+    my $worker_name = camelize($args->[0]);
     my $worker_class = require_package($worker_name, 'LibreCat::Worker');
 
     sub {

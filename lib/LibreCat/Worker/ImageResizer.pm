@@ -86,7 +86,6 @@ sub do_upload {
     $self->log->info("loading container $key");
     my $container = $self->file_store->get($key);
 
-
     unless (defined $container) {
         $self->log->error("no container $key found");
         return {error => 'no such container'};
@@ -109,8 +108,8 @@ sub do_upload {
     }
 
     # Calculate the thumbnail
-    my $max_size  = $self->thumbnail_size;
-    my $cmd       = "convert -resize x${max_size} ${tmpfile}[0] $tmpdir/thumb.png";
+    my $max_size = $self->thumbnail_size;
+    my $cmd = "convert -resize x${max_size} ${tmpfile}[0] $tmpdir/thumb.png";
     $self->log->debug($cmd);
     my $exit_code = system($cmd);
 
