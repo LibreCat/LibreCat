@@ -21,6 +21,10 @@ substring(published,0,4)
 move_field('published','year')
 
 # authors
+unless is_array(author)
+  move_field(author, author.0)
+end
+
 do list (path => author)
   do identity ()
 	remove_field('arxiv:affiliation')

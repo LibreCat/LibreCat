@@ -59,6 +59,13 @@ if all_match('type','proceedings-article')
     move_field('container-title.0','publication')
 end
 
+if exists(abstract)
+  unless is_array(abstract)
+    move_field(abstract, abstract.0.text)
+    add_field(abstract.0.lang, eng)
+  end
+end
+
 # cleaning record
 remove_field(score)
 remove_field(deposited)
