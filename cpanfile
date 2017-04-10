@@ -32,7 +32,7 @@ requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::Fix::Date';
 requires 'Catmandu::SRU';
-requires 'Catmandu::OAI';
+requires 'Catmandu::OAI' , '0.16';
 
 #Dancer
 requires 'Dancer';
