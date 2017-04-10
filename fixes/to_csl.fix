@@ -26,6 +26,10 @@ if any_match(type, 'conference_abstract|^conference$')
   end
 end
 
+# language
+move_field(language.0.iso, res.language)
+lookup(res.language, fixes/lookup/iso_mapping.csv)
+
 move_field(title, res.title)
 move_field(alternative_title.0, res.originalTitle)
 move_field(publication, res.container-title)
