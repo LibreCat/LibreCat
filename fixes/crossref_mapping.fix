@@ -78,3 +78,6 @@ remove_field(issued)
 remove_field(member)
 remove_field(container-title)
 remove_field(funder)
+if is_number(year)
+   capitalize(year)
+end
