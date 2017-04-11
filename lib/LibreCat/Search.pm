@@ -107,7 +107,7 @@ sub _cql_query {
                 $search = $1;
             }
             else {
-                $mode   = '=';
+                $mode   = 'all';
                 $search = $part;
             }
 
