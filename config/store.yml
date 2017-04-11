@@ -266,7 +266,7 @@ search:
                 '<>': true
               field: 'publication_identifier.issn'
               sort: true
-              description: "journal/series indentifier"
+              description: "journal/series identifier"
             eissn:
               op:
                 'any': true
@@ -275,7 +275,7 @@ search:
                 '<>': true
               field: 'publication_identifier.eissn'
               sort: true
-              description: "ejournal/series indentifier"
+              description: "ejournal/series identifier"
             isbn:
               op:
                 'any': true
