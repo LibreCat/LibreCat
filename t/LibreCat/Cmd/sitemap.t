@@ -42,6 +42,7 @@ require_ok $pkg;
     my $result = test_app(
         qq|LibreCat::CLI| => ['sitemap', '--dir', 't/tmp/sitemap']);
 
+warn $result->stderr;
     ok !$result->error, 'ok threw no exception';
 
     ok !$result->stdout, 'silent';
