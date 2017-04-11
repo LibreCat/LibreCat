@@ -27,10 +27,10 @@ require_ok $pkg;
 
 # add some data
 {
-    #Catmandu->store('backup')->bag('publication')->delete_all;
-    #Catmandu->store('search')->bag('publication')->delete_all;
+    Catmandu->store('backup')->bag('publication')->delete_all;
+    Catmandu->store('search')->bag('publication')->delete_all;
     my $result = test_app(qq|LibreCat::CLI| =>
-            ['publication', 'add', 't/records/valid-publication.yml']);
+            ['publication', 'add', 'devel/publications.yml']);
 }
 
 {
@@ -42,7 +42,6 @@ require_ok $pkg;
     my $result = test_app(
         qq|LibreCat::CLI| => ['sitemap', '--dir', 't/tmp/sitemap']);
 
-    warn Dumper($result->error);
     ok !$result->error, 'ok threw no exception';
 
     ok !$result->stdout, 'silent';
