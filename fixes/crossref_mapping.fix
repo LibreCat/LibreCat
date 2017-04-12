@@ -6,7 +6,7 @@ move_field('message','')
 add_field('status','new')
 
 # set default type
-add_field('type','journal_article')
+# add_field('type','journal_article')
 
 #title
 #move_field('subtitle.0','title.1')
@@ -35,6 +35,16 @@ do list (path => author)
   end
 end
 
+# editors
+do list (path => editor)
+  do identity ()
+    move_field('given', 'first_name')
+    move_field('family','last_name')
+    remove_field(affiliation)
+  end
+end
+
+
 add_field(publication_status, published)
 
 # type mapping
@@ -45,6 +55,15 @@ if all_match('type','journal_article')
       nothing()
     else
       move_field('page','article_number')
+    end
+end
+
+## book
+if all_match('type','book')
+    set_field('type','book')
+    move_field('publisher-location', 'place')
+    if exists('editor')
+      set_field('type','book_editor')
     end
 end
 
