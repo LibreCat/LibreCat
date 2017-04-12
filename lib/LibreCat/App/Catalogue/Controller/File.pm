@@ -387,7 +387,6 @@ sub _update_file_metadata {
     # Throw away the unimportant stuff
     for my $name (keys %$fi) {
         if (grep(/^$name$/, @$administrative_fields)) {
-
             # do nothing
         }
         elsif (!grep(/^$name$/, @$descriptive_fields)) {
@@ -401,15 +400,37 @@ sub _update_file_metadata {
     }
 
     # Keep important stuff that can be written only once
+    # and check for changes
+    my $is_updated;
+
     if ($prev_fi) {
         for my $name (@$administrative_fields) {
             $fi->{$name} = $prev_fi->{$name};
         }
+
+        for my $name (@$descriptive_fields) {
+            if (! exists $fi->{$name} && ! exists $prev_fi->{$name}) {
+                # nothing changed...
+            }
+            elsif (defined($fi->{$name}) && defined($prev_fi->{$name}) &&
+                    $fi->{$name} eq $prev_fi->{$name}) {
+                # nothing changed...
+            }
+            else {
+                $is_updated =1 ;
+                debug "FILE  $name changed!";
+            }
+        }
+    }
+    else {
+        $is_updated = 1;
     }
 
     $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = h->now unless $fi->{date_created};
-    $fi->{date_updated} = h->now;
+
+    $fi->{date_updated}   = h->now if $is_updated;
+    $fi->{date_updated} //= h->now;
 }
 
 # Find deleted files. Filter out the ones where more than one pub->file
