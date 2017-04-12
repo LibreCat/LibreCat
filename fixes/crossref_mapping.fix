@@ -101,10 +101,10 @@ remove_field(member)
 remove_field(container-title)
 remove_field(funder)
 
-# abstracts are sometimes fetched in JATS:XML, remove them until we have 
+# abstracts are sometimes fetched in JATS:XML, remove them until we have
 # a strategy how to get rid of html tags
 remove_field(abstract)
 
-# ref list is fetched, would be nice to re-use them in librecat in the 
+# ref list is fetched, would be nice to re-use them in librecat in the
 # near future
 remove_field(citation)
