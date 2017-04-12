@@ -235,6 +235,11 @@ Checks if the user has the rights to edit this record.
 
         my $rec = h->publication->get($id);
 
+        unless ($rec) {
+            return template 'error',
+                {message => "No publication found with ID $id."};
+        }
+
         $rec->{user_id} = session->{personNumber};
 
         # Use config/hooks.yml to register functions
@@ -257,14 +262,20 @@ Deletes record with id. For admins only.
 =cut
     get '/delete/:id' => sub {
         my $id     = params->{id};
-        my $record = h->publication->get($id);
 
-        $record->{user_id} = session->{personNumber};
+        my $rec    = h->publication->get($id);
+
+        unless ($rec) {
+            return template 'error',
+                {message => "No publication found with ID $id."};
+        }
+
+        $rec->{user_id} = session->{personNumber};
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications
         h->hook('publication-delete')->fix_around(
-            $record,
+            $rec,
             sub {
                 h->delete_record('publication', $id);
             }
@@ -300,9 +311,17 @@ For admins only!
 =cut
     get '/internal_view/:id' => sub {
         my $id = params->{id};
+
+        my $rec    = h->publication->get($id);
+
+        unless ($rec) {
+            return template 'error',
+                {message => "No publication found with ID $id."};
+        }
+
         my $export_string;
         my $exporter = Catmandu->exporter('YAML', file => \$export_string);
-        $exporter->add(h->publication->get($id));
+        $exporter->add($rec);
 
         return template 'backend/internal_view',
             {data => $export_string};
@@ -314,7 +333,13 @@ Clones the record with ID :id and returns a form with a different ID.
 
 =cut
     get '/clone/:id' => sub {
-        my $rec = h->publication->get(params->{id});
+        my $id  = params->{id};
+        my $rec = h->publication->get($id);
+
+        unless ($rec) {
+            return template 'error',
+                {message => "No publication found with ID $id."};
+        }
 
         delete $rec->{file};
         delete $rec->{related_material};
@@ -340,28 +365,34 @@ Publishes private records, returns to the list.
             forward '/access_denied';
         }
 
-        my $record     = h->publication->get($id);
-        my $old_status = $record->{status};
+        my $rec = h->publication->get($id);
+
+        unless ($rec) {
+            return template 'error',
+                {message => "No publication found with ID $id."};
+        }
+
+        my $old_status = $rec->{status};
 
         if (session->{role} eq "super_admin") {
-            $record->{status} = "public";
+            $rec->{status} = "public";
         }
-        elsif ($record->{type} eq "research_data") {
-            $record->{status} = "submitted" if $old_status eq "private";
+        elsif ($rec->{type} eq "research_data") {
+            $rec->{status} = "submitted" if $old_status eq "private";
         }
         else {
-            $record->{status} = "public";
+            $rec->{status} = "public";
         }
 
-        if ($record->{status} ne $old_status) {
+        if ($rec->{status} ne $old_status) {
 
             # Use config/hooks.yml to register functions
             # that should run before/after publishing publications
             state $hook = h->hook('publication-publish');
 
-            $hook->fix_before($record);
+            $hook->fix_before($rec);
 
-            my $res = h->update_record('publication', $record);
+            my $res = h->update_record('publication', $rec);
 
             $hook->fix_after($res);
         }
