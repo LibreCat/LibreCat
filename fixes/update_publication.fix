@@ -95,6 +95,10 @@ else
   remove_field(oai_deleted)
 end
 
+# Force the year field to be a string (see #267)
+replace_all(year,'\D+','')
+append(year,'')
+
 remove_field('idm')
 remove_field('editor_idm')
 remove_field('translator_idm')

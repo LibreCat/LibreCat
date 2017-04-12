@@ -4,9 +4,14 @@
 <ul id="year_[% tabmodus %][% menu %]" class="collapse">
   [%- FOREACH y IN facets.year.terms %]
     [%- year = (y.term) / 1000; -%]
-    [%- IF year == 0 -%] [%- yf = '1970' -%][%- ELSE -%][%- yf = date.format(year, format = '%Y') -%][%- END -%]
+    [%- IF year == 0 -%]
+        [%- yf = '1970' -%]
+    [%- ELSIF y.term.match('^\d{1,4}$') -%]
+        [%- yf = y.term -%]
+    [%- ELSE -%]
+        [%- yf = date.format(year, format = '%Y') -%]
+    [%- END -%]
     <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="year" data-value="[% yf %]" href="#" rel="nofollow">[% yf %] ([% y.count %])</a></li>
   [%- END %]
 </ul>
 </div>
-
