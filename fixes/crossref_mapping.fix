@@ -5,8 +5,8 @@ move_field('message','')
 
 add_field('status','new')
 
-# set default type
-# add_field('type','journal_article')
+# look up publication type
+lookup(type, fixes/lookup/cr_type_mapping.csv, default: journal_article)
 
 #title
 #move_field('subtitle.0','title.1')
@@ -48,8 +48,7 @@ end
 add_field(publication_status, published)
 
 # type mapping
-if all_match('type','journal-article')
-    set_field('type','journal_article')
+if all_match('type','journal_article')
     move_field('container-title.0','publication')
     if any_match(page, '-')
       nothing()
@@ -60,22 +59,26 @@ end
 
 ## book
 if all_match('type','book')
-    set_field('type','book')
     move_field('publisher-location', 'place')
     if exists('editor')
       set_field('type','book_editor')
     end
 end
 
-if all_match('type','book-chapter')
-    set_field('type','book_chapter')
+if all_match('type','book_chapter')
     move_field('container-title.0','publication')
-    move_field('container-title.0','series_title')
+    move_field('container-title.1','series_title')
 end
 
-if all_match('type','proceedings-article')
-    set_field('type','conference')
+if all_match('type','conference')
     move_field('container-title.0','publication')
+end
+
+if all_match('type','preprint')
+# CHP registers DOIs for bioRxiv via Crossref, eg 10.1101/005538
+  if all_match('member','246')
+    set_field('publication', 'bioRxiv')
+  end
 end
 
 if exists(abstract)
