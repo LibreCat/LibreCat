@@ -7,18 +7,12 @@ prepend(dini_type,'doc-type:')
 move_field(keyword, subject)
 move_field(year, date)
 
-if all_match(type,'^bi')
-    copy_field(type,thesis_level)
-    lookup(thesis_level, fixes/lookup/xmdp_thesis.csv)
-    set_field(thesis,1)
-end
+add_field(host,'http://www.librecat.org/');
 
-add_field(host,'https://pub.uni-bielefeld.de');
-
-add_field(institution.name_eng, 'Bielefeld University')
-add_field(institution.name, 'Universität Bielefeld')
-add_field(institution.nameLib, 'Universitätsbibliothek Bielefeld')
-add_field(institution.place, 'Bielefeld')
-add_field(institution.address, 'Universitätsstr. 25, 33615 Bielefeld')
-add_field(institution.dnbContactID, 'L6000-0538')
-add_field(institution.gndLib, '24060-6')
+add_field(institution.name_eng, 'Librecat University')
+add_field(institution.name, 'Universität Librecat')
+add_field(institution.nameLib, 'Universitätsbibliothek Librecat')
+add_field(institution.place, 'Librecat')
+add_field(institution.address, 'Universitätsstr. 1, Librecat')
+add_field(institution.dnbContactID, '000-000-000')
+add_field(institution.gndLib, '0000-0000')

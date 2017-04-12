@@ -29,7 +29,7 @@ do list (path => res.bibo_authorlist)
     move_field(first_name,foaf_Person.foaf_givenName)
     move_field(last_name,foaf_Person.foaf_surname)
     move_field(id,foaf_Person.foaf_workInfoHomepage)
-    prepend(foaf_Person.foaf_workInfoHomepage,'http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=')
+    prepend(foaf_Person.foaf_workInfoHomepage,'http://www.librecat.org/personId=')
   end
 end
 

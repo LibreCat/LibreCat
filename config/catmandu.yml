@@ -10,7 +10,7 @@ urn_prefix: 'urn:whatever-'
 # Use this link to lookup a personId in a staff directory. Required
 # to differentiate between different users with the same name (homonym,namesake)
 person:
-  staffdirectory: "https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId="
+  staffdirectory: "http://www.librecat.org/?personId="
 
 ## Uncomment when you want to send emails when new research data becomes available
 #research_data:
