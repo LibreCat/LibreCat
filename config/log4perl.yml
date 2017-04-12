@@ -13,9 +13,11 @@ log4perl: |
   log4perl.appender.STDERR.layout.ConversionPattern=%d %p [%P] - %c[%L] : %m%n
   log4perl.appender.FILE=Log::Log4perl::Appender::File
   log4perl.appender.FILE.filename=./logs/app.log
+  log4perl.appender.FILE.utf8=1
   log4perl.appender.FILE.layout=PatternLayout
   log4perl.appender.FILE.layout.ConversionPattern=%d %p [%P] - %c[%L] : %m%n
   log4perl.appender.FILE2=Log::Log4perl::Appender::File
   log4perl.appender.FILE2.filename=./logs/queue.log
+  log4perl.appender.FILE2.utf8=1
   log4perl.appender.FILE2.layout=PatternLayout
   log4perl.appender.FILE2.layout.ConversionPattern=%d %p [%P] - %c[%L] : %m%n
