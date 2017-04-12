@@ -186,13 +186,31 @@ sub handle_file {
             _update_tech_metadata($fi, $filename, $path);
         }
 
-        # Regenerate the first thumbnail...
-        if ($count == 0) {
-            _make_thumbnail($key, $fi->{file_name});
+        # Update the stored metadata fields with the new ones
+        # And, check if the first file changed...
+        my $has_first_changed = 0;
+        if ($prev_pub) {
+            my ($prev_fi) = grep {$_->{file_id} eq $fi->{file_id}} @{$prev_pub->{file}};
+
+            if (_is_file_metadata_changed($fi,$prev_fi)) {
+                _update_file_metadata($fi,$prev_fi);
+            }
+
+            # Check if a new file has been reordered to the first one
+            if ($count == 0 && $pub->{file}->[0] && $prev_pub->{file}->[0] &&
+                $pub->{file}->[0]->{file_id} ne $prev_pub->{file}->[0]->{file_id}) {
+                $has_first_changed = 1;
+            }
+        }
+        else {
+            # A new publication with files..
+            $has_first_changed = 1 if $count == 0;
         }
 
-        # Update the stored metadata fields with the new ones
-        _update_file_metadata($fi, $prev_pub);
+        # Regenerate the first thumbnail...
+        if ($has_first_changed) {
+            _make_thumbnail($key, $fi->{file_name});
+        }
 
         delete $fi->{tempid} if $fi->{tempid};
 
@@ -370,14 +388,12 @@ sub _update_tech_metadata {
 }
 
 sub _update_file_metadata {
-    my ($fi, $pub) = @_;
+    my ($fi, $prev_fi) = @_;
 
     h->log->debug("updating the file metadata");
 
     return unless $fi;
-    return unless $pub;
-
-    my ($prev_fi) = grep {$_->{file_id} eq $fi->{file_id}} @{$pub->{file}};
+    return unless $prev_fi;
 
     my $administrative_fields
         = h->config->{forms}->{dropzone_fields}->{administrative} // [];
@@ -400,37 +416,37 @@ sub _update_file_metadata {
     }
 
     # Keep important stuff that can be written only once
-    # and check for changes
+    for my $name (@$administrative_fields) {
+        $fi->{$name} = $prev_fi->{$name};
+    }
+
+    $fi->{open_access}    = $fi->{access_level} eq 'open_access' ? 1 : 0;
+    $fi->{date_created}   = h->now unless $fi->{date_created};
+
+    $fi->{date_updated}   = h->now;
+}
+
+sub _is_file_metadata_changed {
+    my ($fi, $prev_fi) = @_;
     my $is_updated;
 
-    if ($prev_fi) {
-        for my $name (@$administrative_fields) {
-            $fi->{$name} = $prev_fi->{$name};
-        }
+    my $descriptive_fields
+        = h->config->{forms}->{dropzone_fields}->{descriptive} // [];
 
-        for my $name (@$descriptive_fields) {
-            if (! exists $fi->{$name} && ! exists $prev_fi->{$name}) {
-                # nothing changed...
-            }
-            elsif (defined($fi->{$name}) && defined($prev_fi->{$name}) &&
-                    $fi->{$name} eq $prev_fi->{$name}) {
-                # nothing changed...
-            }
-            else {
-                $is_updated =1 ;
-                debug "FILE  $name changed!";
-            }
+    for my $name (@$descriptive_fields) {
+        if (! exists $fi->{$name} && ! exists $prev_fi->{$name}) {
+            # nothing changed...
+        }
+        elsif (defined($fi->{$name}) && defined($prev_fi->{$name}) &&
+                $fi->{$name} eq $prev_fi->{$name}) {
+            # nothing changed...
+        }
+        else {
+            $is_updated =1 ;
         }
     }
-    else {
-        $is_updated = 1;
-    }
 
-    $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
-    $fi->{date_created} = h->now unless $fi->{date_created};
-
-    $fi->{date_updated}   = h->now if $is_updated;
-    $fi->{date_updated} //= h->now;
+    return $is_updated;
 }
 
 # Find deleted files. Filter out the ones where more than one pub->file
