@@ -280,7 +280,6 @@ sub _add {
     my $ret       = 0;
     my $importer  = Catmandu->importer('YAML', file => $file);
     my $helper    = LibreCat::App::Helper::Helpers->new;
-    my $validator = LibreCat::Validator::Department->new;
 
     my $records = $importer->select(
         sub {
@@ -288,19 +287,28 @@ sub _add {
 
             $rec->{_id} //= $helper->new_record('department');
 
-            if ($validator->is_valid($rec)) {
-                $helper->store_record('department', $rec);
-                print "added $rec->{_id}\n";
-                return 1;
-            }
-            else {
-                print STDERR join("\n",
-                    "ERROR: not a valid department",
-                    @{$validator->last_errors}),
-                    "\n";
-                $ret = 2;
-                return 0;
-            }
+            my $is_ok = 1;
+
+            $helper->store_record(
+                        'department',
+                        $rec,
+                        validation_error => sub {
+                            my $validator = shift;
+                            print STDERR join("\n",
+                                $rec->{_id},
+                                "ERROR: not a valid department",
+                                @{$validator->last_errors}),
+                                "\n";
+                            $ret   = 2;
+                            $is_ok = 0;
+                        }
+            );
+
+            return 0 unless $is_ok;
+
+            print "added $rec->{_id}\n";
+
+            return 1;
         }
     );
 

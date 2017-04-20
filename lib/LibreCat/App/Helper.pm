@@ -340,8 +340,8 @@ sub store_record {
         unless ($rec->{user_id}) {
 
             # Edit by a user via the command line?
-            my $super_id = $self->config->{store}->{builtin_users}->{options}
-                ->{init_data}->[0]->{_id};
+            my $super_id =
+                $self->config->{store}->{builtin_users}->{options}->{init_data}->[0]->{_id} // 'undef';
             $rec->{user_id} = $super_id;
         }
     }
@@ -363,7 +363,9 @@ sub store_record {
         'LibreCat::Validator');
 
     if ($validator_pkg) {
-        my @white_list = $validator_pkg->new->white_list;
+        my $validator  = $validator_pkg->new;
+
+        my @white_list = $validator->white_list;
 
         $self->log->fatal("no white_list found for $validator_pkg ??!")
             unless @white_list;
@@ -374,6 +376,11 @@ sub store_record {
                 delete $rec->{
                     $key};
             }
+        }
+
+        unless ($validator->is_valid($rec)) {
+            $opts{validation_error}->($validator,$rec)
+                    if $opts{validation_error} && ref($opts{validation_error}) eq 'CODE';
         }
     }
 
