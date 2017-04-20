@@ -321,7 +321,7 @@ sub update_record {
 }
 
 sub store_record {
-    my ($self, $bag, $rec, $skip_citation) = @_;
+    my ($self, $bag, $rec, %opts) = @_;
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
@@ -352,8 +352,8 @@ sub store_record {
     $fix->fix($rec);
 
     state $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
-    if ($bag eq 'publication' && !$skip_citation) {
-        $cite_fix->fix($rec);
+    if ($bag eq 'publication') {
+        $cite_fix->fix($rec) unless $opts{skip_citation};
     }
 
     # clean all the fields that are not part of the JSON schema
@@ -361,6 +361,7 @@ sub store_record {
     my $validator_pkg = $validators->{$bag}
         //= Catmandu::Util::require_package(ucfirst($bag),
         'LibreCat::Validator');
+
     if ($validator_pkg) {
         my @white_list = $validator_pkg->new->white_list;
 

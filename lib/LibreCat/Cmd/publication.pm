@@ -287,7 +287,7 @@ sub _add {
             $rec->{_id} //= $helper->new_record('publication');
 
             if ($validator->is_valid($rec)) {
-                $helper->store_record('publication', $rec, $skip_citation);
+                $helper->store_record('publication', $rec, skip_citation => $skip_citation);
                 if ($exporter) {
                     $exporter->add($rec);
                 }
