@@ -312,7 +312,14 @@ sub update_record {
         $self->log->debug(Dancer::to_json($rec));
     }
 
-    $rec = $self->store_record($bag, $rec);
+    $rec = $self->store_record($bag, $rec, validation_error => sub {
+        my $validator = shift;
+
+        # At least cry foul when the record doesn't validate
+        $self->log->error($rec->{_id} . " not a valid publication!");
+        $self->log->error(Dancer::to_json($validator->last_errors));
+    });
+
     $self->index_record($bag, $rec);
 
     sleep 1;    # bad hack!
