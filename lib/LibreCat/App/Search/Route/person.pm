@@ -59,6 +59,28 @@ research data and author IDs.
 
 get qr{/person/(.[^/]{2,})/?(\w+)?/?} => sub {
     my ($id, $modus) = splat;
+
+    # Redirect to the alias if the other can't be found
+    h->log->debug("trying to find user $id");
+    unless (my $user = h->researcher->get($id)) {
+        h->log->debug("trying to find user alias $id");
+        
+        my %search_params = (cql => ["alias=$id"]);
+
+        my $hits = LibreCat->searcher->search('researcher', \%search_params);
+
+        if (!$hits->{total}) {
+            status '404';
+            return template 'error', {
+                message => "No researcher found found with ID $id"
+            };
+        }
+        else {
+            my $person = $hits->first;
+            forward "/person/$person->{_id}";
+        }
+    }
+
     my $p = h->extract_params();
     $p->{sort} = $p->{sort} // h->config->{default_sort};
 
@@ -76,23 +98,6 @@ get qr{/person/(.[^/]{2,})/?(\w+)?/?} => sub {
     h->log->debug("executing publication->search: " . to_dumper($p));
     my $hits = LibreCat->searcher->search('publication', $p);
 
-    unless ($hits->total) {
-        my %search_params = (cql => ["alias=$id"]);
-        h->log->debug(
-            "executing researcher->search: " . to_dumper(\%search_params));
-
-        $hits = LibreCat->searcher->search('researcher', \%search_params);
-        if (!$hits->{total}) {
-            status '404';
-
-            #template '404', {path => request->path};
-        }
-        else {
-            my $person = $hits->first;
-            forward "/person/$person->{_id}";
-        }
-    }
-
     # search for research hits (only to see if present and to display tab)
     my $researchhits;
     push @{$p->{cql}}, ("type=research_data", "person=$id", "status=public");
@@ -109,7 +114,6 @@ get qr{/person/(.[^/]{2,})/?(\w+)?/?} => sub {
     $hits->{marked} = @$marked if $marked;
 
     template 'home', $hits;
-
 };
 
 =head2 GET /staffdirectory/:id
