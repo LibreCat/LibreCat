@@ -8,7 +8,7 @@
     <title>
       [%- IF title %][% title | html %][% ELSE %][% h.config.appname %][% END %]
     </title>
-    <link rel="icon" href="/images/icon_uni.png" type="image/png">
+    <link rel="icon" href="/images/brand_logo.png" type="image/png">
     [%- IF title AND !backend %]
       <!-- Google Scholar -->
       [%- IF title %]<meta name="citation_title" content="[% title | html %]">[% END %]
