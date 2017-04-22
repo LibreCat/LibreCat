@@ -1,3 +1,40 @@
+default_lang: en
+
+host: "http://localhost:5001"
+
+## Uncomment when audit messages need to be displayed
+# audit: 1
+
+## Specity the ipranges which can download (local) files
+ip_range:
+    - 157.193.0.0/16
+    - 127.0.0.1
+    - 10.0.0.0/8
+
+authentication:
+  package: LibreCat::Auth::Multi
+  options:
+    methods:
+      # password auth against users in config
+      - package: LibreCat::Auth::Bag
+        options:
+          store: builtin_users
+          username_attr: login
+      # password auth against database users
+      - package: LibreCat::Auth::Bag
+        options:
+          store: search
+          bag: researcher
+          username_attr: login
+
+user:
+  sources:
+    - store: builtin_users
+      username_attr: login
+    - store: search
+      bag: researcher
+      username_attr: login
+
 citation:
   engine: none
 
@@ -20,9 +57,23 @@ store:
         researcher: *backup_settings
         department: *backup_settings
         research_group: *backup_settings
+        session:
+          plugins: ['Datestamps']
   search:
     options:
       index_name: librecat_test
+  builtin_users:
+    package: Hash
+    options:
+      init_data:
+        # stored password authentication
+        - login: einstein
+          # password is same as login
+          # crypt a password with 'bmkpasswd [password]' in the shell
+          password: '$2a$08$p1zhJInkNqy9nvMFsEPde./hU4ERNQuX2UQUjZA/ddrp1uUXikn/6'
+          _id: 1234
+          super_admin: 1
+          account_status: active
 
 hooks:
   eat:
@@ -38,3 +89,19 @@ i18n:
 locale:
   en:
     hello: How are you?
+
+# log4perl: |
+#   log4perl.category.LibreCat::Auth=DEBUG,STDERR
+#   log4perl.category.LibreCat::FileStore=INFO,STDERR
+#   log4perl.category.LibreCat::Worker=DEBUG,STDERR
+#   log4perl.category.LibreCat::App=DEBUG,STDERR
+#   log4perl.category.LibreCat::Search=DEBUG,STDERR
+#   log4perl.category.LibreCat::Hook=DEBUG,STDERR
+#   log4perl.category.LibreCat::FetchRecord=DEBUG,STDERR
+#   log4perl.category.LibreCat::Helper=DEBUG,STDERR
+#   log4perl.category.Catmandu::Exporter=DEBUG,STDERR
+#   log4perl.appender.STDERR=Log::Log4perl::Appender::Screen
+#   log4perl.appender.STDERR.stderr=1
+#   log4perl.appender.STDERR.utf8=1
+#   log4perl.appender.STDERR.layout=PatternLayout
+#   log4perl.appender.STDERR.layout.ConversionPattern=%d [%P] - %c[%L] : %m%n

@@ -82,10 +82,10 @@ sub _login_route {
     my $conf = shift;
     sub {
         if (session $conf->{logged_in_key}) {
-
-            # ok
+            h->log->debug("found a logged_in_key in the session");
         }
         else {
+            h->log->debug("not logged in redirecting to login page");
             my $query_params = params("query");
             my $data
                 = {
