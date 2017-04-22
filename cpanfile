@@ -10,6 +10,7 @@ on 'test' => sub {
     requires 'IO::File';
     requires 'File::Path';
     requires 'Test::Code::TidyAll', '0.20';
+    requires 'Test::WWW::Mechanize::Dancer';
     requires 'App::Cmd::Tester';
     requires 'Devel::Cover';
 };
@@ -22,7 +23,7 @@ requires 'Catmandu', '>=1.04';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Store::ElasticSearch', '>=0.0509';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
-requires 'Catmandu::DBI', '>=0.0510';
+requires 'Catmandu::DBI', '>=0.0511';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::XML';
 requires 'Catmandu::ArXiv', '>=0.100';
@@ -31,7 +32,7 @@ requires 'Catmandu::Importer::getJSON';
 requires 'Catmandu::Identifier', '>=0.05';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::Fix::Date';
-requires 'Catmandu::SRU';
+requires 'Catmandu::SRU','0.039';
 requires 'Catmandu::OAI' , '0.16';
 
 #Dancer
@@ -39,7 +40,7 @@ requires 'Dancer';
 requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
 requires 'Dancer::Plugin::Catmandu::OAI', '>=0.04';
-requires 'Dancer::Plugin::Catmandu::SRU';
+requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
 requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::DirectoryView';
