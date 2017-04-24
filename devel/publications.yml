@@ -758,7 +758,6 @@ department:
   tree:
   - _id: 9997
   - _id: 9996
-doi: 10.5072/test/1
 edit_mode: expert
 publisher: Bielefeld University
 status: public
