@@ -90,6 +90,9 @@ locale:
   en:
     hello: How are you?
 
+worker:
+    logdir: /tmp
+    
 # log4perl: |
 #   log4perl.category.LibreCat::Auth=DEBUG,STDERR
 #   log4perl.category.LibreCat::FileStore=INFO,STDERR
