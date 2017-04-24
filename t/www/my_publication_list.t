@@ -10,7 +10,6 @@ my $app = eval {
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
-
 note("login");
 {
     $mech->get_ok( '/login' );
