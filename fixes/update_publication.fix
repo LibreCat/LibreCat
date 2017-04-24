@@ -96,8 +96,7 @@ else
 end
 
 # Force the year field to be a string (see #267)
-replace_all(year,'\D+','')
-append(year,'')
+string(year)
 
 remove_field('idm')
 remove_field('editor_idm')

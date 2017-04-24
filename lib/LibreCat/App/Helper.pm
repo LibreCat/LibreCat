@@ -417,6 +417,7 @@ sub delete_record {
         && ($del_record->{oai_deleted} || $del_record->{status} eq 'public'))
     {
         $del_record->{oai_deleted} = 1;
+        $del_record->{locked}      = 1;
     }
 
     $del_record->{date_deleted} = $self->now;
