@@ -1,5 +1,6 @@
 !Build/
 !t/tmp/.gitkeep
+*.log
 *.pid
 *.spec
 *.swp
