@@ -51,4 +51,12 @@ note("loading test department");
     ok !$result->error, 'add threw no exception';
 }
 
+note("generate forms");
+{
+    my $result = test_app(qq|LibreCat::CLI| =>
+        ['generate', 'forms']);
+
+    ok !$result->error, 'add threw no exception';
+}
+
 done_testing;

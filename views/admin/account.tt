@@ -19,7 +19,7 @@
       </h1>
     </div>
 
-    <form role="form" action="/librecat/admin/account/search" method="GET">
+    <form id="admin-account-search" role="form" action="/librecat/admin/account/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
 	  <label for="id_q"><span class="glyphicon glyphicon-search"></span> Search by name or PEVZ-ID</label>
