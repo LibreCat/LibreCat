@@ -287,7 +287,7 @@ sub _add {
             $rec->{_id} //= $helper->new_record('publication');
 
             my $is_ok = 1;
-            
+
             $helper->store_record(
                         'publication',
                         $rec,
@@ -433,7 +433,7 @@ sub _fetch {
     my @perl = $pkg->new->fetch($id);
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many(\@perl);
+    $exporter->add_many($perl[0]);
     $exporter->commit;
 
     return 0;
