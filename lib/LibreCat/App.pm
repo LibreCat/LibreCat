@@ -283,7 +283,7 @@ Route to call when changing language in session
 =cut
 
 get '/set_language' => sub {
-    my $referer = request->{referer};
+    my $referer = request->{referer} // '/?';
     session lang => params->{lang};
     $referer =~ s/lang=\w{2}\&*//g;
     redirect $referer;
