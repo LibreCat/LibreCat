@@ -82,7 +82,7 @@ note("search accounts");
     $mech->content_contains("1 Results", "found 1 results");
 }
 
-note("editing count");
+note("editing account");
 {
     $mech->submit_form_ok( {
                 form_id => 'admin-account-search',

@@ -58,7 +58,10 @@ note("search accounts");
     );
 
     $mech->content_contains("1 Results", "found 1 results");
+}
 
+note("edit account");
+{
     $mech->follow_link_ok( { url => '/librecat/admin/project/edit/011D12402'} , "edit project link");
 
     $mech->content_contains("Edit Project \"Identification and characterization of virulence-associated markers of Staphylococcus aureus strains from rabbits\"", 'got the correct page');
