@@ -84,4 +84,12 @@ note("loading test department");
     ok !$result->error, 'add threw no exception';
 }
 
+note("generate departments");
+{
+    my $result = test_app(qq|LibreCat::CLI| =>
+        ['generate', 'departments']);
+
+    ok !$result->error, 'add threw no exception';
+}
+
 done_testing;
