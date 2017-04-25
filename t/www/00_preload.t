@@ -52,7 +52,6 @@ note("generate forms");
     ok !$result->error, 'add threw no exception';
 }
 
-
 note("loading test publications");
 {
     my $result = test_app(qq|LibreCat::CLI| =>

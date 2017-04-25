@@ -47,7 +47,7 @@ note("search accounts");
             }, 'submitting the search form ""'
     );
 
-    $mech->content_contains("1584 Results", "found 1584 Results");
+    $mech->content_contains("Results", "found Results");
 
     $mech->submit_form_ok( {
                 form_id => 'admin-account-search',

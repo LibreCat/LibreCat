@@ -47,7 +47,7 @@ note("search accounts");
             }, 'submitting the search form ""'
     );
 
-    $mech->content_contains("2 Results", "found 2 results");
+    $mech->content_contains("Results", "found results");
 
 
     $mech->submit_form_ok( {
