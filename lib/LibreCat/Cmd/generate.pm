@@ -16,6 +16,7 @@ Usage:
 librecat generate package.json
 librecat generate forms
 librecat generate departments
+librecat generate cleanup
 
 EOF
 }
@@ -28,7 +29,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/^(package\.json|forms|departments)$/;
+    my $commands = qr/^(package\.json|forms|departments|cleanup)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -48,6 +49,52 @@ sub command {
     }
     elsif ($cmd eq 'departments') {
         return $self->_generate_departments;
+    }
+    elsif ($cmd eq 'cleanup') {
+        return $self->_generate_cleanup;
+    }
+}
+
+sub _generate_cleanup {
+    my $layers         = LibreCat->layers;
+
+    print "Cleaning generated forms...\n";
+    {
+        my $template_paths = $layers->template_paths;
+        my $forms_path     = $template_paths->[0] . '/backend/forms';
+
+        print "$forms_path\n";
+
+        unlink glob("$forms_path/*.tt");
+
+        my $expert_path    = $template_paths->[0] . '/backend/forms/expert';
+
+        print "$expert_path\n";
+
+        unlink glob("$expert_path/*.tt");
+
+        my $admin_path     = $template_paths->[0] . '/admin/forms';
+
+        print "$admin_path\n";
+
+        unlink glob("$admin_path/*.tt");
+    }
+
+    print "Cleaning departments...\n";
+    {
+        my $template_paths = $layers->template_paths;
+
+        my $output_path    = $template_paths->[0] . '/department';
+
+        if (-f "$output_path/nodes.tt") {
+            print "$output_path/nodes.tt\n";
+            unlink "$output_path/nodes.tt"
+        }
+
+        if (-f "$output_path/nodes_backend.tt") {
+            print "$output_path/nodes_backend.tt\n";
+            unlink "$output_path/nodes_backend.tt";
+        }
     }
 }
 
@@ -270,4 +317,7 @@ LibreCat::Cmd::generate - generate various files
 
     librecat generate package.json
     librecat generate forms
+    librecat generate departments
+    librecat generate cleanup
+
 =cut
