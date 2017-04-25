@@ -19,6 +19,16 @@ use App::Cmd::Tester;
     $store->commit;
 }
 
+note("cleaning forms");
+{
+    my $result = test_app(qq|LibreCat::CLI| =>
+        ['generate', 'cleanup']);
+
+    print $result->stdout;
+
+    ok !$result->error, 'add threw no exception';
+}
+
 note("loading test publications");
 {
     my $result = test_app(qq|LibreCat::CLI| =>
@@ -55,6 +65,8 @@ note("generate forms");
 {
     my $result = test_app(qq|LibreCat::CLI| =>
         ['generate', 'forms']);
+
+    print $result->stdout;
 
     ok !$result->error, 'add threw no exception';
 }

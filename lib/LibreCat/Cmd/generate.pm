@@ -96,6 +96,8 @@ sub _generate_cleanup {
             unlink "$output_path/nodes_backend.tt";
         }
     }
+
+    return 0;
 }
 
 sub _generate_package_json {
