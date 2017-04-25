@@ -39,6 +39,8 @@ note("cleaning forms");
 
     print $result->stdout;
 
+    warn $result->stderr if $result->stderr;
+
     ok !$result->error, 'generate threw no exception';
 }
 
@@ -48,6 +50,8 @@ note("generate forms");
         ['generate', 'forms']);
 
     print $result->stdout;
+
+    warn $result->stderr if $result->stderr;
 
     ok !$result->error, 'generate threw no exception';
 }
@@ -88,6 +92,10 @@ note("generate departments");
 {
     my $result = test_app(qq|LibreCat::CLI| =>
         ['generate', 'departments']);
+
+    print $result->stdout;
+
+    warn $result->stderr if $result->stderr;
 
     ok !$result->error, 'generate threw no exception';
 }
