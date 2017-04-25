@@ -39,7 +39,7 @@ note("cleaning forms");
 
     print $result->stdout;
 
-    ok !$result->error, 'add threw no exception';
+    ok !$result->error, 'generate threw no exception';
 }
 
 note("generate forms");
@@ -49,7 +49,7 @@ note("generate forms");
 
     print $result->stdout;
 
-    ok !$result->error, 'add threw no exception';
+    ok !$result->error, 'generate threw no exception';
 }
 
 note("loading test publications");
@@ -89,7 +89,7 @@ note("generate departments");
     my $result = test_app(qq|LibreCat::CLI| =>
         ['generate', 'departments']);
 
-    ok !$result->error, 'add threw no exception';
+    ok !$result->error, 'generate threw no exception';
 }
 
 done_testing;
