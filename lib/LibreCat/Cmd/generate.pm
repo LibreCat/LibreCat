@@ -1,8 +1,6 @@
 package LibreCat::Cmd::generate;
 
 use Catmandu::Sane;
-use Catmandu;
-use LibreCat;
 use Path::Tiny;
 use Template;
 use LibreCat::App::Helper;
@@ -56,7 +54,7 @@ sub command {
 }
 
 sub _generate_cleanup {
-    my $layers         = LibreCat->layers;
+    my $layers = LibreCat::App::Helper::Helpers->new->layers;
 
     print "Cleaning generated forms...\n";
     {
@@ -101,7 +99,7 @@ sub _generate_cleanup {
 }
 
 sub _generate_package_json {
-    my $layers         = LibreCat->layers;
+    my $layers         = LibreCat::App::Helper::Helpers->new->layers;
     my $css_path       = $layers->css_paths->[0];
     my $root_css_path  = $layers->css_paths->[-1];
     my $scss_path      = $layers->scss_paths->[0];
@@ -163,8 +161,9 @@ sub _generate_package_json {
 }
 
 sub _generate_forms {
-    my $layers         = LibreCat->layers;
-    my $conf           = Catmandu->config;
+    my $h              = LibreCat::App::Helper::Helpers->new;
+    my $layers         = $h->layers;
+    my $conf           = $h->config;
     my $forms          = $conf->{forms}{publication_types};
     my $other_items    = $conf->{forms}{other_items};
     my $template_paths = $layers->template_paths;
@@ -220,13 +219,14 @@ sub _generate_forms {
 
 sub _generate_departments {
     my ($self, $file) = @_;
+    my $h              = LibreCat::App::Helper::Helpers->new;
 
-    my $layers         = LibreCat->layers;
+    my $layers         = $h->layers;
     my $template_paths = $layers->template_paths;
     my $output_path    = $template_paths->[0] . '/department';
 
-    my $pubs = LibreCat::App::Helper::Helpers->new->publication;
-    my $it   = LibreCat::App::Helper::Helpers->new->department->searcher();
+    my $pubs           = $h->publication;
+    my $it             = $h->department->searcher();
 
     my $HASH = {};
 

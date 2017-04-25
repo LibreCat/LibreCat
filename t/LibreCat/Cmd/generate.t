@@ -18,6 +18,7 @@ require_ok $pkg;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['generate']);
+
     ok $result->error, 'ok threw an exception';
 }
 
