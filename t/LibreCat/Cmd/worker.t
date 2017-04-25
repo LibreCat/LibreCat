@@ -2,7 +2,6 @@ use strict;
 use warnings FATAL => 'all';
 
 use Path::Tiny;
-use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 use Test::More;

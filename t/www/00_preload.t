@@ -1,22 +1,35 @@
 use Catmandu::Sane;
 use Catmandu;
+use Path::Tiny;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
+use Catmandu;
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
 
-
 # empty db
-{
-    my $store = Catmandu->store('backup')->bag('publication');
-    $store->delete_all;
-    $store->commit;
-}
-{
-    my $store = Catmandu->store('search')->bag('publication');
-    $store->drop;
-    $store->commit;
+for my $bag (qw(publication department project research_group user)) {
+    note("deleting backup $bag");
+    {
+        my $store = Catmandu->store('backup')->bag($bag);
+        $store->delete_all;
+        $store->commit;
+    }
+
+    note("deleting version $bag");
+    {
+        my $store = Catmandu->store('backup')->bag("$bag\_version");
+        $store->delete_all;
+        $store->commit;
+    }
+
+    note("deleting search $bag");
+    {
+        my $store = Catmandu->store('search')->bag($bag);
+        $store->drop;
+        $store->commit;
+    }
 }
 
 note("cleaning forms");

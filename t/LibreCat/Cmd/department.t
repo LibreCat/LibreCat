@@ -1,6 +1,5 @@
 use Catmandu::Sane;
 use Path::Tiny;
-use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Catmandu;
 use LibreCat::CLI;
@@ -20,6 +19,7 @@ require_ok $pkg;
 
 # empty db
 Catmandu->store('backup')->bag('department')->delete_all;
+Catmandu->store('backup')->bag('department_version')->delete_all;
 Catmandu->store('search')->bag('department')->drop;
 
 {
