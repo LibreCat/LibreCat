@@ -265,9 +265,7 @@ sub _generate_departments {
 
     path($output_path)->mkpath unless -d $output_path;
 
-    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt");
-
-    croak "error - views/department/nodes.tt not writable!" unless $fh;
+    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt") || die "failed to write nodes.tt: $!";
 
     $self->_template_printer($HASH, "publication", $fh);
 
@@ -275,10 +273,7 @@ sub _generate_departments {
 
     print STDERR "Output written to $output_path/nodes.tt\n";
 
-    open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt");
-
-    croak "error - views/department/nodes_backend.tt not writable!"
-        unless $fh;
+    open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt") || die "failed to write nodes_backend.tt : $!";
 
     $self->_template_printer($HASH, "librecat", $fh);
 
