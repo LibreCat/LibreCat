@@ -249,6 +249,9 @@ sub _generate_departments {
             }
 
             my $id    = $item->{_id};
+
+            return unless defined($id) && $id =~ /\S+/;
+
             my $hits  = $pubs->search(cql_query => "department=$id");
             my $total = $hits->{total};
 
