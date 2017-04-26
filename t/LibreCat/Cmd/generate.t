@@ -47,12 +47,9 @@ require_ok $pkg;
 {
     my $result = test_app(qq|LibreCat::CLI| => ['generate', 'departments']);
 
-use Data::Dumper;
-print Dumper($result);
-
     print $result->stdout;
 
-    print $result->stderr;
+    print $result->stderr if $result->stderr;
 
     ok !$result->error, 'ok threw no exception';
 
