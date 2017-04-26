@@ -93,6 +93,9 @@ note("generate departments");
     my $result = test_app(qq|LibreCat::CLI| =>
         ['generate', 'departments']);
 
+use Data::Dumper;
+print Dumper($result);
+
     print $result->stdout;
 
     warn $result->stderr if $result->stderr;

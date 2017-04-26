@@ -15,7 +15,7 @@ require_ok $pkg;
 
 Catmandu->config->{default_lang} = 'en';
 Catmandu->store('backup')->bag('publication')->delete_all;
-Catmandu->store('search')->bag('publication')->drop;
+Catmandu->store('search')->bag('publication')->delete_all;
 
 foreach my $obj (qw(publication project researcher)) {
     my $result = test_app(
