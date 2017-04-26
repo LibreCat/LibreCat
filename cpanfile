@@ -21,6 +21,7 @@ requires 'Module::Install', '1.16';
 # Catmandu
 requires 'Catmandu', '>=1.0504';
 requires 'Catmandu::Exporter::Table';
+requires 'Search::Elasticsearch', '==5.01';
 requires 'Catmandu::Store::ElasticSearch', '>=0.0509';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::DBI', '>=0.0511';
