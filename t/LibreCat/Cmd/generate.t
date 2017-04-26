@@ -27,7 +27,7 @@ require_ok $pkg;
 
     print $result->stdout;
 
-    warn $result->stderr if $result->stderr;
+    print $result->stderr if $result->stderr;
 
     ok !$result->error, 'ok threw no exception';
 }
@@ -37,7 +37,7 @@ require_ok $pkg;
 
     print $result->stdout;
 
-    warn $result->stderr if $result->stderr;
+    print $result->stderr if $result->stderr;
 
     ok !$result->error, 'ok threw no exception';
 
@@ -49,7 +49,7 @@ require_ok $pkg;
 
     print $result->stdout;
 
-    warn $result->stderr if $result->stderr;
+    print $result->stderr;
 
     ok !$result->error, 'ok threw no exception';
 
