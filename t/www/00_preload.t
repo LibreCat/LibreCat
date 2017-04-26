@@ -27,7 +27,7 @@ for my $bag (qw(publication department project research_group user)) {
     note("deleting search $bag");
     {
         my $store = Catmandu->store('search')->bag($bag);
-        $store->drop;
+        $store->delete_all;
         $store->commit;
     }
 }
@@ -92,9 +92,6 @@ note("generate departments");
 {
     my $result = test_app(qq|LibreCat::CLI| =>
         ['generate', 'departments']);
-
-use Data::Dumper;
-print Dumper($result);
 
     print $result->stdout;
 
