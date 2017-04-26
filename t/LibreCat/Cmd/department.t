@@ -20,7 +20,6 @@ require_ok $pkg;
 # empty db
 Catmandu->store('backup')->bag('department')->delete_all;
 Catmandu->store('backup')->bag('department_version')->delete_all;
-Catmandu->store('search')->bag('department')->drop;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['department']);
