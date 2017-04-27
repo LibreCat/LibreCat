@@ -22,6 +22,16 @@ librecat [--background] queue add_job WORKER FILE
 librecat queue start
 librecat queue stop
 
+Examples:
+
+# Test a indexation worker
+\$ cat /tmp/job.yml
+---
+bag: publication
+id: 1234
+...
+\$ bin/librecat queue add_job indexer /tmp/job.yml
+
 EOF
 }
 
@@ -173,5 +183,15 @@ LibreCat::Cmd::queue - show job queue status
 
     # Stop all configured workers
     librecat queue stop
+
+    Examples:
+
+    # Test a indexation worker
+    $ cat /tmp/job.yml
+    ---
+    bag: publication
+    id: 1234
+    ...
+    $ bin/librecat queue add_job indexer /tmp/job.yml
 
 =cut
