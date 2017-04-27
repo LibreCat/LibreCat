@@ -24,7 +24,7 @@ sub index_record {
     my ($self, $opts, $job) = @_;
 
     my $bag = $opts->{bag};
-    my $id  = $opts->{bag};
+    my $id  = $opts->{id};
 
     my $source = Catmandu->store('backup')->bag($bag);
     my $target = Catmandu->store('search')->bag($bag);
