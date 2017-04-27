@@ -8,7 +8,7 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat [--background] [--id=...] index [bag]
+librecat index [--background] [--id=...] [bag]
 
 EOF
 }
@@ -87,6 +87,6 @@ LibreCat::Cmd::index - manage index jobs
 
 =head1 SYNOPSIS
 
-    librecat [--background] [--id=...] index [bag]
+    librecat index [--background] [--id=...] [bag]
 
 =cut
