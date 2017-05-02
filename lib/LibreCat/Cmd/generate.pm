@@ -1,8 +1,6 @@
 package LibreCat::Cmd::generate;
 
 use Catmandu::Sane;
-use Catmandu;
-use LibreCat;
 use Path::Tiny;
 use Template;
 use LibreCat::App::Helper;
@@ -16,6 +14,7 @@ Usage:
 librecat generate package.json
 librecat generate forms
 librecat generate departments
+librecat generate cleanup
 
 EOF
 }
@@ -28,7 +27,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/^(package\.json|forms|departments)$/;
+    my $commands = qr/^(package\.json|forms|departments|cleanup)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -49,10 +48,58 @@ sub command {
     elsif ($cmd eq 'departments') {
         return $self->_generate_departments;
     }
+    elsif ($cmd eq 'cleanup') {
+        return $self->_generate_cleanup;
+    }
+}
+
+sub _generate_cleanup {
+    my $layers = LibreCat::App::Helper::Helpers->new->layers;
+
+    print "Cleaning generated forms...\n";
+    {
+        my $template_paths = $layers->template_paths;
+        my $forms_path     = $template_paths->[0] . '/backend/forms';
+
+        print "$forms_path\n";
+
+        unlink glob("$forms_path/*.tt");
+
+        my $expert_path    = $template_paths->[0] . '/backend/forms/expert';
+
+        print "$expert_path\n";
+
+        unlink glob("$expert_path/*.tt");
+
+        my $admin_path     = $template_paths->[0] . '/admin/forms';
+
+        print "$admin_path\n";
+
+        unlink glob("$admin_path/*.tt");
+    }
+
+    print "Cleaning departments...\n";
+    {
+        my $template_paths = $layers->template_paths;
+
+        my $output_path    = $template_paths->[0] . '/department';
+
+        if (-f "$output_path/nodes.tt") {
+            print "$output_path/nodes.tt\n";
+            unlink "$output_path/nodes.tt"
+        }
+
+        if (-f "$output_path/nodes_backend.tt") {
+            print "$output_path/nodes_backend.tt\n";
+            unlink "$output_path/nodes_backend.tt";
+        }
+    }
+
+    return 0;
 }
 
 sub _generate_package_json {
-    my $layers         = LibreCat->layers;
+    my $layers         = LibreCat::App::Helper::Helpers->new->layers;
     my $css_path       = $layers->css_paths->[0];
     my $root_css_path  = $layers->css_paths->[-1];
     my $scss_path      = $layers->scss_paths->[0];
@@ -114,8 +161,9 @@ sub _generate_package_json {
 }
 
 sub _generate_forms {
-    my $layers         = LibreCat->layers;
-    my $conf           = Catmandu->config;
+    my $h              = LibreCat::App::Helper::Helpers->new;
+    my $layers         = $h->layers;
+    my $conf           = $h->config;
     my $forms          = $conf->{forms}{publication_types};
     my $other_items    = $conf->{forms}{other_items};
     my $template_paths = $layers->template_paths;
@@ -171,13 +219,14 @@ sub _generate_forms {
 
 sub _generate_departments {
     my ($self, $file) = @_;
+    my $h              = LibreCat::App::Helper::Helpers->new;
 
-    my $layers         = LibreCat->layers;
+    my $layers         = $h->layers;
     my $template_paths = $layers->template_paths;
     my $output_path    = $template_paths->[0] . '/department';
 
-    my $pubs = LibreCat::App::Helper::Helpers->new->publication;
-    my $it   = LibreCat::App::Helper::Helpers->new->department->searcher();
+    my $pubs           = $h->publication;
+    my $it             = $h->department->searcher();
 
     my $HASH = {};
 
@@ -200,6 +249,9 @@ sub _generate_departments {
             }
 
             my $id    = $item->{_id};
+
+            return unless defined($id) && $id =~ /\S+/;
+
             my $hits  = $pubs->search(cql_query => "department=$id");
             my $total = $hits->{total};
 
@@ -213,9 +265,7 @@ sub _generate_departments {
 
     path($output_path)->mkpath unless -d $output_path;
 
-    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt");
-
-    croak "error - views/department/nodes.tt not writable!" unless $fh;
+    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt") || die "failed to write nodes.tt: $!";
 
     $self->_template_printer($HASH, "publication", $fh);
 
@@ -223,10 +273,7 @@ sub _generate_departments {
 
     print STDERR "Output written to $output_path/nodes.tt\n";
 
-    open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt");
-
-    croak "error - views/department/nodes_backend.tt not writable!"
-        unless $fh;
+    open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt") || die "failed to write nodes_backend.tt : $!";
 
     $self->_template_printer($HASH, "librecat", $fh);
 
@@ -270,4 +317,7 @@ LibreCat::Cmd::generate - generate various files
 
     librecat generate package.json
     librecat generate forms
+    librecat generate departments
+    librecat generate cleanup
+
 =cut

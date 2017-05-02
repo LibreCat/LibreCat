@@ -272,8 +272,8 @@ sub _add {
     my $ret       = 0;
     my $importer  = Catmandu->importer('YAML', file => $file);
     my $helper    = LibreCat::App::Helper::Helpers->new;
-    my $validator = LibreCat::Validator::Publication->new;
     my $exporter;
+
     if (defined $out_file) {
         $exporter = Catmandu->exporter('YAML', file => $out_file);
     }
@@ -286,30 +286,38 @@ sub _add {
 
             $rec->{_id} //= $helper->new_record('publication');
 
-            if ($validator->is_valid($rec)) {
-                $helper->store_record('publication', $rec, $skip_citation);
-                if ($exporter) {
-                    $exporter->add($rec);
-                }
-                else {
-                    print "added $rec->{_id}\n";
-                }
+            my $is_ok = 1;
 
-                if (my $msg = $self->opts->{log}) {
-                    audit_message($rec->{_id}, 'add', $msg);
-                }
+            $helper->store_record(
+                        'publication',
+                        $rec,
+                        skip_citation => $skip_citation ,
+                        validation_error => sub {
+                            my $validator = shift;
+                            print STDERR join("\n",
+                                $rec->{_id},
+                                "ERROR: not a valid publication",
+                                @{$validator->last_errors}),
+                                "\n";
+                            $ret   = 2;
+                            $is_ok = 0;
+                        }
+            );
 
-                return 1;
+            return 0 unless $is_ok;
+
+            if ($exporter) {
+                $exporter->add($rec);
             }
             else {
-                print STDERR join("\n",
-                    $rec->{_id},
-                    "ERROR: not a valid publication",
-                    @{$validator->last_errors}),
-                    "\n";
-                $ret = 2;
-                return 0;
+                print "added $rec->{_id}\n";
             }
+
+            if (my $msg = $self->opts->{log}) {
+                audit_message($rec->{_id}, 'add', $msg);
+            }
+
+            return 1;
         }
     );
 
@@ -425,7 +433,7 @@ sub _fetch {
     my @perl = $pkg->new->fetch($id);
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many(\@perl);
+    $exporter->add_many($perl[0]);
     $exporter->commit;
 
     return 0;

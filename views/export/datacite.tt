@@ -1,10 +1,16 @@
 [%- USE XML::Strict -%]
-<resource xmlns="http://datacite.org/schema/kernel-3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-3 http://schema.datacite.org/meta/kernel-3/metadata.xsd">
+<resource xmlns="http://datacite.org/schema/kernel-34 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
 [%- IF doi %]<identifier identifierType="DOI">[% doi | xml_strict %]</identifier>[% END -%]
 <creators>
 [%- FOREACH au IN author -%]
-<creator><creatorName>[% au.full_name | xml_strict %]</creatorName>
-[%- IF au.orcid %]<nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://orcid.org">[% au.orcid %]</nameIdentifier>[% END -%]
+<creator>
+    <creatorName>
+        <familyName>[% au.last_name | xml_strict %]</familyName>
+        <givenName>[% au.first_name | xml_strict %]</givenName>
+        [% au.full_name | xml_strict %]</creatorName>
+        [%- IF au.orcid -%]
+        <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://orcid.org">[% au.orcid | xml_strict %]</nameIdentifier>
+        [%- END -%]
 </creator>
 [%- END -%]
 </creators>
@@ -34,7 +40,7 @@
 [%- IF language %]
 	<language>[% language.0.iso %]</language>
 [%- END %]
-<resourceType resourceTypeGeneral="Dataset">dataset</resourceType>
+<resourceType resourceTypeGeneral="[% IF type == 'reasearch_data' %]Dataset[% ELSE %]Text[% END%]">[% type %]</resourceType>
 <alternateIdentifiers>
 	<alternateIdentifier alternateIdentifierType="URL">[% host %]/data/[% _id %]</alternateIdentifier>
 </alternateIdentifiers>

@@ -24,7 +24,7 @@ sub index_record {
     my ($self, $opts, $job) = @_;
 
     my $bag = $opts->{bag};
-    my $id  = $opts->{bag};
+    my $id  = $opts->{id};
 
     my $source = Catmandu->store('backup')->bag($bag);
     my $target = Catmandu->store('search')->bag($bag);
@@ -33,7 +33,8 @@ sub index_record {
 
     if (my $rec = $source->get($id)) {
         $self->log->info("indexing $bag 1/1");
-        $target->add($rec);
+        $rec = $target->add($rec);
+        $self->log->debug(Catmandu->export_to_string($rec));
         $target->commit;
         $job->send_status(1, 1);
         $self->log->info("indexed 1");

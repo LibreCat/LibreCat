@@ -850,10 +850,12 @@ publication_types:
         year_extern: *year_extern
         language: &language
           label: "Language"
+          hash_array: 1
         original_language: &original_language
           label: "Language (Original)"
           label_short: "Lang. (Orig)"
           multiple: 0
+          hash_array: 1
         locked: *locked
       file_upload: *file_upload
       supplementary_fields:

@@ -5,7 +5,7 @@
 <html>
   <head>
     <title>PUB &ndash; Publications at LibreCat University</title>
-    <link rel="icon" href="/images/icon_uni.png" type="image/png">
+    <link rel="icon" href="/images/brand_logo.png" type="image/png">
     [% INCLUDE head_meta.tt %]
   </head>
 

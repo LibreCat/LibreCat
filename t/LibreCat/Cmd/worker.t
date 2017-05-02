@@ -1,5 +1,9 @@
 use strict;
 use warnings FATAL => 'all';
+
+use Path::Tiny;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
+
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;

@@ -36,12 +36,16 @@ sub queue {
     state $config = LibreCat::JobQueue->new;
 }
 
+sub layers {
+    LibreCat->layers;
+}
+
 sub create_fixer {
     my ($self, $file) = @_;
 
     $self->log->debug("searching for fix `$file'");
 
-    for my $p (@{LibreCat->layers->fixes_paths}) {
+    for my $p (@{$self->layers->fixes_paths}) {
         $self->log->debug("testing `$p/$file'");
         if (-r "$p/$file") {
             $self->log->debug("found `$p/$file'");
@@ -312,7 +316,14 @@ sub update_record {
         $self->log->debug(Dancer::to_json($rec));
     }
 
-    $rec = $self->store_record($bag, $rec);
+    $rec = $self->store_record($bag, $rec, validation_error => sub {
+        my $validator = shift;
+
+        # At least cry foul when the record doesn't validate
+        $self->log->error($rec->{_id} . " not a valid publication!");
+        $self->log->error(Dancer::to_json($validator->last_errors));
+    });
+
     $self->index_record($bag, $rec);
 
     sleep 1;    # bad hack!
@@ -321,7 +332,7 @@ sub update_record {
 }
 
 sub store_record {
-    my ($self, $bag, $rec, $skip_citation) = @_;
+    my ($self, $bag, $rec, %opts) = @_;
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
@@ -340,8 +351,8 @@ sub store_record {
         unless ($rec->{user_id}) {
 
             # Edit by a user via the command line?
-            my $super_id = $self->config->{store}->{builtin_users}->{options}
-                ->{init_data}->[0]->{_id};
+            my $super_id =
+                $self->config->{store}->{builtin_users}->{options}->{init_data}->[0]->{_id} // 'undef';
             $rec->{user_id} = $super_id;
         }
     }
@@ -352,8 +363,8 @@ sub store_record {
     $fix->fix($rec);
 
     state $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
-    if ($bag eq 'publication' && !$skip_citation) {
-        $cite_fix->fix($rec);
+    if ($bag eq 'publication') {
+        $cite_fix->fix($rec) unless $opts{skip_citation};
     }
 
     # clean all the fields that are not part of the JSON schema
@@ -361,8 +372,11 @@ sub store_record {
     my $validator_pkg = $validators->{$bag}
         //= Catmandu::Util::require_package(ucfirst($bag),
         'LibreCat::Validator');
+
     if ($validator_pkg) {
-        my @white_list = $validator_pkg->new->white_list;
+        my $validator  = $validator_pkg->new;
+
+        my @white_list = $validator->white_list;
 
         $self->log->fatal("no white_list found for $validator_pkg ??!")
             unless @white_list;
@@ -373,6 +387,11 @@ sub store_record {
                 delete $rec->{
                     $key};
             }
+        }
+
+        unless ($validator->is_valid($rec)) {
+            $opts{validation_error}->($validator,$rec)
+                    if $opts{validation_error} && ref($opts{validation_error}) eq 'CODE';
         }
     }
 
@@ -402,6 +421,7 @@ sub delete_record {
         && ($del_record->{oai_deleted} || $del_record->{status} eq 'public'))
     {
         $del_record->{oai_deleted} = 1;
+        $del_record->{locked}      = 1;
     }
 
     $del_record->{date_deleted} = $self->now;

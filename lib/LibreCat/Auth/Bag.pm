@@ -64,6 +64,7 @@ sub _authenticate {
 
     if (exists $user->{$password_attr}) {
         if (passwdcmp($password, $user->{$password_attr})) {
+            $self->log->debug("$username password ok :-)");
             return +{
                 uid        => $username,
                 package    => __PACKAGE__,

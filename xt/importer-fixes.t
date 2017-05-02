@@ -1,4 +1,5 @@
 use Catmandu::Sane;
+use File::Slurp 'read_file';
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 use LibreCat::Validator::Publication;
 use Test::More;
@@ -9,24 +10,42 @@ my $yaml = do { local $/; <main::DATA> };
 my $data = Load $yaml;
 
 my $validator = LibreCat::Validator::Publication->new;
-foreach my $source (keys %$data) {
+foreach my $source (sort keys %$data) {
 
-    foreach my $d (@{$data->{$source}}) {
+    if (ref $data->{$source} eq 'HASH' &&  $data->{$source}->{file}) {
         my $pkg = "LibreCat::FetchRecord::$source";
         my $x = $pkg->new();
 
-        my $pub = $x->fetch($d);
+        my $content = read_file($data->{$source}->{file});
+        my $pub = $x->fetch($content);
         ok $pub;
-        ok $pub->[0];
 
         # mock _id
-        $pub->[0]->{_id} = 1;
-        my $errors = $validator->validate_data($pub->[0]);
-        note @$errors if $errors;
+        foreach my $entry (@$pub) {
+            $entry->{_id} = 1;
+            my $errors = $validator->validate_data($entry);
+            note @$errors if $errors;
 
-        ok ! $errors , "got no errors for $source : $d";
+            ok ! $errors , "got no errors for $source, title: ". $entry->{title};
+        }
     }
+    elsif (ref $data->{$source} eq 'ARRAY') {
+        foreach my $d (@{$data->{$source}}) {
+            my $pkg = "LibreCat::FetchRecord::$source";
+            my $x = $pkg->new();
 
+            my $pub = $x->fetch($d);
+            ok $pub;
+            ok $pub->[0];
+
+            # mock _id
+            $pub->[0]->{_id} = 1;
+            my $errors = $validator->validate_data($pub->[0]);
+            note @$errors if $errors;
+
+            ok ! $errors , "got no errors for $source : $d";
+        }
+    }
 }
 
 done_testing;
@@ -43,8 +62,8 @@ arxiv:
   - 1001.1241
   - 1001.1786
   - 1001.2231
-# bibtex:
-#   file: sample.bib
+bibtex:
+  file: xt/sample.bib
 crossref:
   - 10.1017/cbo9780511526169.002
   - 10.1364/ao.53.003758

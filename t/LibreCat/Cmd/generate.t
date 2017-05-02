@@ -1,6 +1,5 @@
 use Catmandu::Sane;
 use Path::Tiny;
-use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 use LibreCat::CLI;
@@ -19,15 +18,44 @@ require_ok $pkg;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['generate']);
+
     ok $result->error, 'ok threw an exception';
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'forms']);
+
+    print $result->stdout;
+
+    print $result->stderr if $result->stderr;
+
+    ok !$result->error, 'ok threw no exception';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['generate', 'package.json']);
 
+    print $result->stdout;
+
+    print $result->stderr if $result->stderr;
+
     ok !$result->error, 'ok threw no exception';
 
     ok -f "package.json", "package.json generated";
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'departments']);
+
+    print $result->stdout;
+
+    print $result->stderr if $result->stderr;
+
+    ok !$result->error, 'ok threw no exception';
+
+    ok -f "t/layer/views/department/nodes.tt", "departments nodes generated";
+
+    ok -f "t/layer/views/department/nodes_backend.tt", "departments backend generated";
 }
 
 done_testing;

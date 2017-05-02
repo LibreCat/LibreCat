@@ -22,7 +22,7 @@
     </div>
 
 
-    <form action="/librecat/admin/project/update" method="POST">
+    <form id="id_project_form" action="/librecat/admin/project/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
 
       {% FOREACH key IN project_field_order %}
