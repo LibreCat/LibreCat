@@ -203,6 +203,8 @@ sub _list {
             }
         }
     }
+
+    return 0;
 }
 
 sub _exists {
@@ -340,6 +342,8 @@ sub _purge {
     croak "delete - failed to find $key" unless $container;
 
     $store->delete($key);
+
+    return 0;
 }
 
 sub _export {
