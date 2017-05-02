@@ -2,6 +2,13 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.6.1 2017-05-02
+    - introduce Test::WWW::Mechanize tests
+    - fix ElasticSearch-related things
+    - lock deleted publications
+    - introduce Datacite XML v.4
+    - fix travis CI
+
 0.6.0 2017-04-12
     - improved data imports
     - type mappings for crossref
@@ -9,7 +16,6 @@ Revision history for LibreCat
     - GH #20: regenarate thumbnails only in case of changes
     - GH #264: improved search
     - GH #269: fix date_updated on files
-
 
 0.5.4 2017-03-28
     - PR #241: fix person routes
