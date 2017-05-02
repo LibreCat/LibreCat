@@ -61,6 +61,7 @@ store:
           plugins: ['Datestamps']
   search:
     options:
+      client: '1_0::Direct'
       index_name: librecat_test
   builtin_users:
     package: Hash
@@ -92,7 +93,7 @@ locale:
 
 worker:
     logdir: /tmp
-    
+
 # log4perl: |
 #   log4perl.category.LibreCat::Auth=DEBUG,STDERR
 #   log4perl.category.LibreCat::FileStore=INFO,STDERR

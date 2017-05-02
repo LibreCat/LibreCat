@@ -63,6 +63,7 @@ metrics:
 search:
   package: ElasticSearch
   options:
+    client: '1_0::Direct'
     bags:
       project:
         cql_mapping:
