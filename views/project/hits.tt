@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <ul class="pagination">
       [%- FOREACH c IN h.alphabet %]
-      <li [% IF request.path.match("/project/$c")%]class="active"[% END %]><a href="/project/[% c %]">[% c %]</a></li>
+      <li [% IF request.path.match("browse=$c")%]class="active"[% END %]><a href="/project?browse=[% c %]">[% c %]</a></li>
       [%- END %]
       </ul>
     </div>
