@@ -19,9 +19,9 @@ subtest '/publication/:id.:fmt' => sub {
 
     $mech->get_ok( '/publication/2737384.rtf' );
 
-    $mech->get_ok( '/publication/2737384.yml' );
+    $mech->get_ok( '/publication/2737384.yaml' );
 
-    $mech->get_ok( '/publication/2737384.bib' );
+    $mech->get_ok( '/publication/2737384.bibtex' );
 
     $mech->get( '/publication/2737384.xyz' );
     is $mech->status, "406", "status not acceptable";
