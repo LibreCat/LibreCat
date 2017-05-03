@@ -15,22 +15,7 @@ use LibreCat::App::Helper;
 Project splash page for :id.
 
 =cut
-
-get qr{/project/([a-zA-Z])} => sub {
-    my ($c) = splat;
-
-    my %search_params
-        = (query => {prefix => {'name.exact' => lc($c)}}, limit => 1000);
-
-    h->log->debug(
-        "executing project->native_search: " . to_dumper(\%search_params));
-
-    my $hits = LibreCat->searcher->native_search('project', \%search_params);
-
-    template 'project/list', $hits;
-};
-
-get qr{/project/([a-zA-Z0-9-]{2,})} => sub {
+get qr{/project/([a-zA-Z0-9].*)} => sub {
     my ($id) = splat;
     my $proj = h->project->get($id);
 
@@ -41,8 +26,22 @@ get qr{/project/([a-zA-Z0-9-]{2,})} => sub {
     template 'project/record', $proj;
 };
 
-get '/project' => sub {
-    forward '/project/A';
+=head2 GET /project
+
+Project page with alphabetical browsing.
+
+=cut
+get qr{/project/*} => sub {
+    my $c = params->{browse} // 'a';
+    my %search_params
+        = (query => {prefix => {'name.exact' => lc($c)}}, limit => 1000);
+
+    h->log->debug(
+        "executing project->native_search: " . to_dumper(\%search_params));
+
+    my $hits = LibreCat->searcher->native_search('project', \%search_params);
+
+    template 'project/list', $hits;
 };
 
 1;
