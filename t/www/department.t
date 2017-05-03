@@ -14,12 +14,11 @@ my $app = eval {
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
-note("departments");
-{
+subtest 'department overview page' => sub {
     $mech->get_ok( '/department' );
-
-    # check if all links work
     $mech->page_links_ok('testing all the links');
-}
+
+    $mech->content_like( qr/(?i)department of mathematics/ );
+};
 
 done_testing;
