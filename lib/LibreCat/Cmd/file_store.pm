@@ -258,6 +258,8 @@ sub _get {
                 strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)), $key;
         }
     }
+
+    return 0;
 }
 
 sub _fetch {
@@ -287,6 +289,8 @@ sub _fetch {
             syswrite(STDOUT, $buffer, $len);
         }
     }
+
+    return 0;
 }
 
 sub _add {
@@ -412,7 +416,7 @@ sub _export {
         croak "Failed to remove $workdir";
     }
 
-    1;
+    0;
 }
 
 sub _import {
@@ -465,7 +469,7 @@ sub _import {
         croak "Failed to remove $workdir";
     }
 
-    1;
+    0;
 }
 
 sub _thumbnail {
