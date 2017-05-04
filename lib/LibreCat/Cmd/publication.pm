@@ -577,10 +577,10 @@ sub _files_load {
             my $file = $_[0];
 
             for my $key (keys %$file) {
-                my $new_key = trim $key;
+                my $new_key = Catmandu::Util::trim $key;
                 croak "file - field '$key' not allowed in file"
                     unless $allowed_fields{$new_key};
-                $file->{$new_key} = trim delete $file->{$key};
+                $file->{$new_key} = Catmandu::Util::trim delete $file->{$key};
             }
 
             my $id = delete $file->{id};
