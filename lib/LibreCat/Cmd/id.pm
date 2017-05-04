@@ -1,7 +1,6 @@
 package LibreCat::Cmd::id;
 
 use Catmandu::Sane;
-use LibreCat::App::Helper;
 use LibreCat::Validator::Researcher;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
