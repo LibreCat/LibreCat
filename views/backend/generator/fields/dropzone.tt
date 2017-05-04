@@ -54,7 +54,7 @@
             [% END %]
           </div>
           <div class="col-xs-3" id="updated_[% fi.file_id %]">
-            [% fi.date_updated %]
+            [% fi.date_created %]
           </div>
           <div class="col-xs-3" id="creator_[% fi.file_id %]">
             [% fi.creator %]
