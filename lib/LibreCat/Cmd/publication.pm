@@ -493,6 +493,9 @@ sub _files {
     elsif ($file && $file =~ /^\d+$/) {
         $self->_files_list($file);
     }
+    elsif ($file && $file eq '-') {
+        $self->_files_load($file);
+    }
     elsif ($file && -r $file) {
         $self->_files_load($file);
     }
