@@ -436,7 +436,7 @@ Changes the layout of the edit form.
                 'split_field(nasc, " ; ")',
                 'split_field(genbank, " ; ")',
                 'split_field(keyword, " ; ")',
-                'delete_empty()',
+                'vacuum()',
             ]
         )->fix($params);
 

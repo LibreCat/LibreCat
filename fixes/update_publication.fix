@@ -2,7 +2,7 @@
 
 compact(department)
 compact(project)
-delete_empty()
+vacuum()
 publication_identifier()
 external_id()
 page_range_number()
@@ -103,4 +103,4 @@ remove_field('editor_idm')
 remove_field('translator_idm')
 remove_field('supervisor_idm')
 
-delete_empty()
+vacuum()
