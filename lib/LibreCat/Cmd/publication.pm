@@ -546,10 +546,21 @@ sub _files_load {
     my $helper = LibreCat::App::Helper::Helpers->new;
     my $importer = Catmandu->importer('TSV', file => $filename);
 
-    my $prev_id = undef;
-    my $files   = [];
+    my $update_file = sub {
+        my ($id, $files) = @_;
+        if (my $data = $helper->get_publication($id)) {
+            $self->_file_process($data, $files)
+                && $helper->update_record('publication', $data);
+        } else {
+            warn "$id - no such publication";
+        }
 
-    my @allowed_fields = qw(
+        if (my $msg = $self->opts->{log}) {
+            audit_message($id, 'files', $msg);
+        }
+    };
+
+    my %allowed_fields = map { ($_ => 1) } qw(
         id
         access_level creator content_type
         date_created date_updated file_id
@@ -558,69 +569,38 @@ sub _files_load {
         relation title description embargo
     );
 
-    my $checked = 0;
+    my $current_id;
+    my $files = [];
 
     $importer->each(
         sub {
-            my $record = $_[0];
+            my $file = $_[0];
 
-            my $file = {};
-
-            for my $key (keys %$record) {
-                my $new_key = $key;
-                $new_key =~ s{^\s*|\s*$}{}g;
-                $file->{$new_key} = $record->{$key};
-                $file->{$new_key} =~ s{^\s*|\s*$}{}g;
-                croak "file - field '$new_key' not allowed in file"
-                    unless $checked || grep {/^$new_key$/} @allowed_fields;
+            for my $key (keys %$file) {
+                my $new_key = trim $key;
+                croak "file - field '$key' not allowed in file"
+                    unless $allowed_fields{$new_key};
+                $file->{$new_key} = trim delete $file->{$key};
             }
 
-            $checked = 1;
+            my $id = delete $file->{id};
+            croak "file - no id column found" unless defined $id;
+            $current_id //= $id;
 
-            my $id = $file->{id};
-
-            croak "file - no id column found?" unless defined($id);
-
-            delete $file->{id};
-
-            if ($prev_id && $prev_id ne $id) {
-                my $data = $helper->get_publication($id);
-
-                if ($data) {
-                    $self->_file_process($data, $files)
-                        && $helper->update_record('publication', $data);
-                }
-                else {
-                    warn "$id - no such publication";
-                }
-
-                if (my $msg = $self->opts->{log}) {
-                    audit_message($id, 'files', $msg);
-                }
-
-                $files = [];
+            if ($id eq $current_id) {
+                push @$files, $file;
+                return;
+            } else {
+                $update_file->($current_id, $files);
             }
 
-            push @$files, $file;
-
-            $prev_id = $id;
+            $current_id = $id;
+            $files = [$file];
         }
     );
 
-    if ($files) {
-        my $data = $helper->get_publication($prev_id);
-
-        if ($data) {
-            $self->_file_process($data, $files)
-                && $helper->update_record('publication', $data);
-        }
-        else {
-            warn "$prev_id - no such publication";
-        }
-
-        if (my $msg = $self->opts->{log}) {
-            audit_message($prev_id, 'files', $msg);
-        }
+    if (defined $current_id) {
+        $update_file->($current_id, $files);
     }
 }
 
