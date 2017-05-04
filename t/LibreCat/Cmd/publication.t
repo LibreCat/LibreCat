@@ -17,7 +17,7 @@ require_ok $pkg;
 
 # empty db
 Catmandu->store('backup')->bag('publication')->delete_all;
-Catmandu->store('search')->bag('publication')->drop;
+Catmandu->store('search')->bag('publication')->delete_all;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['publication']);

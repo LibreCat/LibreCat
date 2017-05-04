@@ -21,7 +21,7 @@ require_ok $pkg;
 
 # empty db
 Catmandu->store('backup')->bag('project')->delete_all;
-Catmandu->store('search')->bag('project')->drop;
+Catmandu->store('search')->bag('project')->delete_all;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['project']);
