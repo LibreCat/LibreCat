@@ -608,6 +608,7 @@ sub _file_process {
     my ($self, $data, $files) = @_;
 
     return undef unless $data;
+    return $data unless $files;
 
     my $id = $data->{_id};
     my %file_map = map {$_->{file_name} => $_} @{$data->{file}};
@@ -643,6 +644,28 @@ sub _file_process {
             $file
                 = LibreCat::App::Catalogue::Controller::File::update_file($id,
                 $file);
+        }
+
+        unless (defined $file) {
+            croak "FATAL - trying to `$name' to $id which doesn't exist?!";
+        }
+    }
+
+    # Check if we are deleting files...
+    if ($data->{file}) {
+        my $lookup = {};
+
+        for my $file (@$files) {
+            my $file_name = $file->{file_name};
+            my $file_id   = $file->{file_id};
+            $lookup->{"$file_id--$file_name"} = 1;
+        }
+
+        for my $file (@{$data->{file}}) {
+            my $file_name = $file->{file_name};
+            my $file_id   = $file->{file_id};
+            croak "FATAL - cowardly refusing to delete `$file_name` from $id"
+                    unless $lookup->{"$file_id--$file_name"};
         }
     }
 
