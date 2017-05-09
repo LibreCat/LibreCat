@@ -524,7 +524,8 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
+        my $bag  = LibreCat::App::Helper::Helpers->new->backup_publication;
+        my $data = $bag->get_($id);
         $printer->($data);
     }
     elsif (defined($id)) {
@@ -548,7 +549,7 @@ sub _files_load {
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = $helper->get_publication($id)) {
+        if (my $data = $helper->backup_publication->get($id)) {
             $self->_file_process($data, $files)
                 && $helper->update_record('publication', $data);
         } else {
@@ -647,7 +648,7 @@ sub _file_process {
         }
 
         unless (defined $file) {
-            croak "FATAL - trying to `$name' to $id which doesn't exist?!";
+            croak "FATAL - failed to update `$name' for $id";
         }
     }
 
@@ -670,6 +671,11 @@ sub _file_process {
     }
 
     $data->{file} = $files;
+
+    for my $file (@$files) {
+        my $file_name = $file->{file_name};
+        print "updated $id `$file_name`\n";
+    }
 
     1;
 }
