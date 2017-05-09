@@ -3,7 +3,6 @@ dist: trusty
 language: perl
 
 perl:
-  - "blead"
   - "5.24"
   - "5.22"
   - "5.20"
@@ -21,7 +20,6 @@ before_install:
   - sudo apt-get install --yes --force-yes gearman-job-server libgearman-dev
   - cpanm local::lib
   - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
-  - eval $(curl https://travis-perl.github.io/init) --auto
 
 before_script:
   - sleep 3
@@ -31,14 +29,20 @@ service:
 
 install:
   - cpanm --quiet --installdeps --notest --force --skip-satisfied .
-  - cpanm --quiet --notest --skip-satisfied Devel::Cover
+
+matrix:
+  include:
+    perl: "5.24"
+    install:
+      - cpanm --quiet --notest --skip-satisfied Devel::Cover
+    script:
+      - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -r t; exit $?'
+    after_success:
+      - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
+      - cover -report coveralls
 
 script:
-  - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -r t; exit $?'
-
-after_success:
-  - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
-  - cover -report coveralls
+  - prove -Ilib -r t/
 
 notifications:
   email: false
