@@ -66,7 +66,8 @@ sub update_related_material {
                     $ref->{status} = $pub->{status};
                 }
             }
-            h->publication->add($opposite);
+            my $saved = h->backup_publication->add($opposite);
+            h->publication->add($saved);
             h->publication->commit;
 
             $rm->{status} = $opposite->{status};
@@ -121,7 +122,8 @@ sub update_related_material {
                                     delete $rec->{related_material};
                                 }
                             }
-                            h->publication->add($rec);
+                            my $saved = h->backup_publication->add($rec);
+                            h->publication->add($saved);
                             h->publication->commit;
                         }
                     }
