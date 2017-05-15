@@ -26,7 +26,7 @@ services:
   - sqlite3
 
 install:
-  - cpanm --quiet --installdeps --notest --force --skip-satisfied .
+  - cpanm --quiet --installdeps --notest --force --skip-satisfied . || cat /home/travis/.cpanm/*/build.log
   - cpanm --quiet --notest --skip-satisfied Devel::Cover
   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
 
