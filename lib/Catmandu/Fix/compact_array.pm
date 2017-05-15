@@ -8,6 +8,8 @@ with 'Catmandu::Fix::Base';
 
 has path => (fix_arg => 1);
 
+# TODO: replace with Catmandu's native "compact" fix when released
+
 sub emit {
     my ($self, $fixer) = @_;
     my $path = $fixer->split_path($self->path);
