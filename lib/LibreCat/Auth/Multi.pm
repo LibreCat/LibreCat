@@ -46,7 +46,7 @@ tries multiple authentication methods.
 
     use LibreCat::Auth::Multi;
 
-    my $auth = Auth::Multi->new(
+    my $auth = LibreCat::Auth::Multi->new(
         methods => [
             {
                 package => 'LibreCat::Auth::Simple',

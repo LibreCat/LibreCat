@@ -17,13 +17,8 @@ Catmandu->config->{store}{users} = {
 
 lives_ok {$pkg->new()} 'lives ok';
 
-my $auth
-    = LibreCat::Auth::Bag->new(store => 'users', username_attr => 'login',);
+my $auth = $pkg->new(store => 'users', username_attr => 'login',);
 
 can_ok $auth, 'authenticate';
-
-#my $check = $auth->authenticate({
-#        username => 'demo',
-#        password => 's3cret',
 
 done_testing;
