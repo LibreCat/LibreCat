@@ -100,7 +100,7 @@ requires 'REST::Client';
 requires 'Data::Uniqid';
 
 requires 'Authen::CAS::Client','0.06';
-requires 'Module::Install';
+requires 'Module::Install', '1.18';
 requires 'Gearman::XS', '0.15';
 requires 'Net::Telnet::Gearman';
 requires 'Proc::Launcher', '0.0.35';
