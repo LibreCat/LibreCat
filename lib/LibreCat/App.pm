@@ -71,6 +71,7 @@ hook before => sub {
         if (my $h = $handlers->{$_role}) {
             h->log->info("excuting hander $_role for $_regex");
             $h->(@_params);
+	    last;
         }
         else {
             h->log->error("no handler found for $_role");
