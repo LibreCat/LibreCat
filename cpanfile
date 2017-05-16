@@ -117,3 +117,5 @@ requires 'Code::TidyAll', 0;
 
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon';
+requires 'AnyEvent','7.13';
+requires 'AnyEvent::HTTP','2.23';
