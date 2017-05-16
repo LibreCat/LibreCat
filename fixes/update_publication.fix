@@ -1,7 +1,7 @@
 # fix publication data at update
 
-compact_array('department')
-compact_array('project')
+compact(department)
+compact(project)
 delete_empty()
 publication_identifier()
 external_id()

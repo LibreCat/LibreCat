@@ -125,7 +125,7 @@ new publication form.
     post '/affiliation' => sub {
 
         my $fix
-            = Catmandu::Fix->new(fixes => ['compact_array("department")']);
+            = Catmandu::Fix->new(fixes => ['compact("department")']);
 
         my $p = params;
         $p = h->nested_params($p);
