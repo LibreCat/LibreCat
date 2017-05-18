@@ -69,7 +69,7 @@ hook before => sub {
         next unless $path_info =~ /^${_regex}/;
 
         if (my $h = $handlers->{$_role}) {
-            h->log->info("excuting hander $_role for $_regex");
+            h->log->info("executing handler $_role for $_regex");
             $h->(@_params);
 	    last;
         }
