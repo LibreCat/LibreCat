@@ -584,10 +584,16 @@ publication:
             - type: integer
           description: "Unknown source identifier"
         isi:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+              oneOf:
+                - type: string
+                - type: integer
           description: "Web of Science identifier"
+          # oneOf:
+          #   - type: string
+          #   - type: integer
+          # description: "Web of Science identifier"
         pmid:
           oneOf:
             - type: string
