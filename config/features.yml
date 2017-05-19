@@ -7,7 +7,15 @@ views:
   frontend:
     publication:
       facets:
-        - - template: facets/popular_science
+        - - template: facets/type
+            facet: type
+          - template: facets/author
+            facet: author
+          - template: facets/editor
+            facet: editor
+          - template: facets/year
+            facet: year
+          - template: facets/popular_science
             facet: popular_science
           - template: facets/extern
             facet: extern
