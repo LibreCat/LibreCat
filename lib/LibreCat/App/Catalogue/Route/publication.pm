@@ -149,7 +149,7 @@ Checks if the user has permission the see/edit this record.
         my $person       = h->get_person(session->{personNumber});
         my $edit_mode    = params->{edit_mode} || $person->{edit_mode};
         my $templatepath = "backend/forms";
-        my $template     = $rec->{type} . ".tt";
+        my $template     = $rec->{meta}->{template} // $rec->{type};
 
         if (   ($edit_mode and $edit_mode eq "expert")
             or (!$edit_mode and session->{role} eq "super_admin"))

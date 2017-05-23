@@ -3,8 +3,7 @@
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 
 <!-- BEGIN filters.tt -->
-
-[%- USE JSON -%]
+[%- USE JSON.Escape %]
 <div id="filters"></div>
 <div id="export"></div>
 

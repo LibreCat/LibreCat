@@ -1,4 +1,4 @@
-[% USE JSON %]
+[%- USE JSON.Escape %]
 <div class="row innerrow">
   <div class="col-xs-10">
     [% h.loc("forms.${type}.field.dropzone.label") %]
