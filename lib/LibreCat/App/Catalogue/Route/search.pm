@@ -107,7 +107,7 @@ Performs search for reviewer.
                 "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
         }
 
-        push @{$p->{q}}, "status<>deleted";
+        push @{$p->{cql}}, "status<>deleted";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $dep_query = "department=" . params->{department_id};
@@ -148,7 +148,7 @@ Performs search for reviewer.
                 "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
         }
 
-        push @{$p->{q}}, "status<>deleted";
+        push @{$p->{cql}}, "status<>deleted";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $dep_query = "project=" . params->{project_id};
