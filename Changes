@@ -2,6 +2,13 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.6.2 2017-05-24
+    - improved test coverage
+    - small bug fixes
+    - GH #281: use Template::Plugin::JSONEscape
+    - GH #275: match project routes
+    - GH #152: new cmd 'url' to check urls
+
 0.6.1 2017-05-02
     - introduce Test::WWW::Mechanize tests
     - fix ElasticSearch-related things
