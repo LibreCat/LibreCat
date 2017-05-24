@@ -203,6 +203,8 @@ sub _list {
             }
         }
     }
+
+    return 0;
 }
 
 sub _exists {
@@ -256,6 +258,8 @@ sub _get {
                 strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)), $key;
         }
     }
+
+    return 0;
 }
 
 sub _fetch {
@@ -285,6 +289,8 @@ sub _fetch {
             syswrite(STDOUT, $buffer, $len);
         }
     }
+
+    return 0;
 }
 
 sub _add {
@@ -340,6 +346,8 @@ sub _purge {
     croak "delete - failed to find $key" unless $container;
 
     $store->delete($key);
+
+    return 0;
 }
 
 sub _export {
@@ -408,7 +416,7 @@ sub _export {
         croak "Failed to remove $workdir";
     }
 
-    1;
+    0;
 }
 
 sub _import {
@@ -461,7 +469,7 @@ sub _import {
         croak "Failed to remove $workdir";
     }
 
-    1;
+    0;
 }
 
 sub _thumbnail {

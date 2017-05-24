@@ -19,9 +19,10 @@ requires 'Business::ISBN', 0;
 requires 'Module::Install', '1.16';
 
 # Catmandu
-requires 'Catmandu', '>=1.0504';
+requires 'Catmandu', '>=1.0506';
 requires 'Catmandu::Exporter::Table';
-requires 'Search::Elasticsearch', '==2.03';
+requires 'Search::Elasticsearch', '>=5.02';
+requires 'Search::Elasticsearch::Client::1_0','>=5.02';
 requires 'Catmandu::Store::ElasticSearch', '>=0.0509';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::DBI', '>=0.0511';
@@ -50,7 +51,7 @@ requires 'Dancer::Logger::Log4perl';
 requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';
-requires 'Template::Plugin::JSON';
+requires 'Template::Plugin::JSON::Escape', '0.02';
 requires 'Template::Plugin::Gravatar';
 requires 'Furl';
 requires 'HTML::Entities';
@@ -116,3 +117,5 @@ requires 'Code::TidyAll', 0;
 
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon';
+requires 'AnyEvent','7.13';
+requires 'AnyEvent::HTTP','2.23';

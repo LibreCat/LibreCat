@@ -493,6 +493,9 @@ sub _files {
     elsif ($file && $file =~ /^\d+$/) {
         $self->_files_list($file);
     }
+    elsif ($file && $file eq '-') {
+        $self->_files_load($file);
+    }
     elsif ($file && -r $file) {
         $self->_files_load($file);
     }
@@ -521,7 +524,8 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = LibreCat::App::Helper::Helpers->new->get_publication($id);
+        my $bag  = LibreCat::App::Helper::Helpers->new->backup_publication;
+        my $data = $bag->get_($id);
         $printer->($data);
     }
     elsif (defined($id)) {
@@ -543,10 +547,21 @@ sub _files_load {
     my $helper = LibreCat::App::Helper::Helpers->new;
     my $importer = Catmandu->importer('TSV', file => $filename);
 
-    my $prev_id = undef;
-    my $files   = [];
+    my $update_file = sub {
+        my ($id, $files) = @_;
+        if (my $data = $helper->backup_publication->get($id)) {
+            $self->_file_process($data, $files)
+                && $helper->update_record('publication', $data);
+        } else {
+            warn "$id - no such publication";
+        }
 
-    my @allowed_fields = qw(
+        if (my $msg = $self->opts->{log}) {
+            audit_message($id, 'files', $msg);
+        }
+    };
+
+    my %allowed_fields = map { ($_ => 1) } qw(
         id
         access_level creator content_type
         date_created date_updated file_id
@@ -555,69 +570,38 @@ sub _files_load {
         relation title description embargo
     );
 
-    my $checked = 0;
+    my $current_id;
+    my $files = [];
 
     $importer->each(
         sub {
-            my $record = $_[0];
+            my $file = $_[0];
 
-            my $file = {};
-
-            for my $key (keys %$record) {
-                my $new_key = $key;
-                $new_key =~ s{^\s*|\s*$}{}g;
-                $file->{$new_key} = $record->{$key};
-                $file->{$new_key} =~ s{^\s*|\s*$}{}g;
-                croak "file - field '$new_key' not allowed in file"
-                    unless $checked || grep {/^$new_key$/} @allowed_fields;
+            for my $key (keys %$file) {
+                my $new_key = Catmandu::Util::trim $key;
+                croak "file - field '$key' not allowed in file"
+                    unless $allowed_fields{$new_key};
+                $file->{$new_key} = Catmandu::Util::trim delete $file->{$key};
             }
 
-            $checked = 1;
+            my $id = delete $file->{id};
+            croak "file - no id column found" unless defined $id;
+            $current_id //= $id;
 
-            my $id = $file->{id};
-
-            croak "file - no id column found?" unless defined($id);
-
-            delete $file->{id};
-
-            if ($prev_id && $prev_id ne $id) {
-                my $data = $helper->get_publication($id);
-
-                if ($data) {
-                    $self->_file_process($data, $files)
-                        && $helper->update_record('publication', $data);
-                }
-                else {
-                    warn "$id - no such publication";
-                }
-
-                if (my $msg = $self->opts->{log}) {
-                    audit_message($id, 'files', $msg);
-                }
-
-                $files = [];
+            if ($id eq $current_id) {
+                push @$files, $file;
+                return;
+            } else {
+                $update_file->($current_id, $files);
             }
 
-            push @$files, $file;
-
-            $prev_id = $id;
+            $current_id = $id;
+            $files = [$file];
         }
     );
 
-    if ($files) {
-        my $data = $helper->get_publication($prev_id);
-
-        if ($data) {
-            $self->_file_process($data, $files)
-                && $helper->update_record('publication', $data);
-        }
-        else {
-            warn "$prev_id - no such publication";
-        }
-
-        if (my $msg = $self->opts->{log}) {
-            audit_message($prev_id, 'files', $msg);
-        }
+    if (defined $current_id) {
+        $update_file->($current_id, $files);
     }
 }
 
@@ -625,6 +609,7 @@ sub _file_process {
     my ($self, $data, $files) = @_;
 
     return undef unless $data;
+    return $data unless $files;
 
     my $id = $data->{_id};
     my %file_map = map {$_->{file_name} => $_} @{$data->{file}};
@@ -661,9 +646,36 @@ sub _file_process {
                 = LibreCat::App::Catalogue::Controller::File::update_file($id,
                 $file);
         }
+
+        unless (defined $file) {
+            croak "FATAL - failed to update `$name' for $id";
+        }
+    }
+
+    # Check if we are deleting files...
+    if ($data->{file}) {
+        my $lookup = {};
+
+        for my $file (@$files) {
+            my $file_name = $file->{file_name};
+            my $file_id   = $file->{file_id};
+            $lookup->{"$file_id--$file_name"} = 1;
+        }
+
+        for my $file (@{$data->{file}}) {
+            my $file_name = $file->{file_name};
+            my $file_id   = $file->{file_id};
+            croak "FATAL - cowardly refusing to delete `$file_name` from $id"
+                    unless $lookup->{"$file_id--$file_name"};
+        }
     }
 
     $data->{file} = $files;
+
+    for my $file (@$files) {
+        my $file_name = $file->{file_name};
+        print "updated $id `$file_name`\n";
+    }
 
     1;
 }

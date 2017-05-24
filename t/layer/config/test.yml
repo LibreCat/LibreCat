@@ -61,6 +61,7 @@ store:
           plugins: ['Datestamps']
   search:
     options:
+      client: '1_0::Direct'
       index_name: librecat_test
   builtin_users:
     package: Hash
@@ -75,6 +76,15 @@ store:
           super_admin: 1
           account_status: active
 
+filestore:
+    default: &filestore_settings
+        package: Simple
+        options:
+            root: t/data
+    uploader:
+        package: 'LibreCat::Worker::FileUploader'
+        options:
+            files: *filestore_settings
 hooks:
   eat:
    before_fixes: [peckish, hungry]
@@ -92,7 +102,7 @@ locale:
 
 worker:
     logdir: /tmp
-    
+
 # log4perl: |
 #   log4perl.category.LibreCat::Auth=DEBUG,STDERR
 #   log4perl.category.LibreCat::FileStore=INFO,STDERR

@@ -12,7 +12,7 @@ sub feed {
     my $q      = shift // [];
     my $period = shift // 'weekly';
 
-    my $fixer = Catmandu::Fix->new(fixes => ['fixes/to_dc.fix']);
+    state $fixer = Catmandu::Fix->new(fixes => ['fixes/to_dc.fix']);
 
     my $now;
 

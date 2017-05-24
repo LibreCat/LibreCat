@@ -1,4 +1,3 @@
-[% USE JSON %]
 <div id="superv">
   <div class="row authorspan innerrow">
     <div class="col-md-2 form-group hidden-xs hidden-sm">

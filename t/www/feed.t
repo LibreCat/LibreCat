@@ -14,11 +14,16 @@ my $app = eval {
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
-subtest 'department overview page' => sub {
-    $mech->get_ok( '/department' );
-    $mech->page_links_ok('testing all the links');
+subtest 'feed' => sub {
+    $mech->get_ok( '/feed' );
+    $mech->content_like( qr/\<syn:updateBase/ );
+    note $mech->content;
+};
 
-    $mech->content_like( qr/(?i)department of mathematics/ );
+subtest 'feed \w period' => sub {
+    $mech->get_ok( '/feed/daily' );
+    $mech->get_ok( '/feed/weekly' );
+    $mech->get_ok( '/feed/monthly' );
 };
 
 done_testing;
