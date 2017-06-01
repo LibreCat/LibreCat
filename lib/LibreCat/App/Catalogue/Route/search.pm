@@ -180,6 +180,7 @@ Performs search for data manager.
         my $account   = h->get_person(session->{user});
         my $dep_query = "department=" . params->{department_id};
 
+        push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "(type=research_data OR type=data)";
         push @{$p->{cql}}, $dep_query;
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
@@ -214,6 +215,7 @@ publications.
     get '/delegate/:delegate_id' => sub {
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
+        push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
@@ -237,6 +239,7 @@ Performs search for user.
 
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "type<>research_data";
+        push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
@@ -261,6 +264,7 @@ Performs search for user.
         my $id     = session 'personNumber';
         my @orig_q = @{$p->{q}};
 
+        push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "(type=research_data OR type=data)";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
