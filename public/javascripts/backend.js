@@ -123,6 +123,10 @@ $(function () {
 /**
  * Link author name to person account
  */
+function trimStr(str) {
+    return str.replace(/^\s+|\s+$/gm,'');
+}
+
 function link_person(element){
     var type = "";
     type = $(element).attr('data-type');
@@ -142,11 +146,11 @@ function link_person(element){
         var narrowurl = "";
         var first_name = $('#' + type + 'first_name_' + lineId).val();
         $('#' + type + 'orig_first_name_' + lineId).val(first_name);
-        var firstname = first_name.toLowerCase();
+        var firstname = trimStr(first_name.toLowerCase());
         firstname = firstname.replace('\.','');
         var last_name = $('#' + type + 'last_name_' + lineId).val();
         $('#' + type + 'orig_last_name_' + lineId).val(last_name);
-        var lastname = last_name.toLowerCase();
+        var lastname = trimStr(last_name.toLowerCase());
         lastname = lastname.replace('\.','');
         if(firstname){
             // if name consists of more than one word, use any and ""
