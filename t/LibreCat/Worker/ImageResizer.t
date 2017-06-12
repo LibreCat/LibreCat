@@ -8,6 +8,7 @@ BEGIN {
     $pkg = 'LibreCat::Worker::ImageResizer';
     use_ok $pkg;
 }
+
 require_ok $pkg;
 
 my $opts = {package => 'Simple', options => {root => './t'}};

@@ -28,4 +28,7 @@ my %map = (
 is($mime->content_type('test.' . $_), $map{$_}, "mime type for $_ ok")
     for keys %map;
 
+is $mime->content_type(''), undef, "mime type undef";
+is $mime->content_type(), undef, "mime type undef";
+
 done_testing;

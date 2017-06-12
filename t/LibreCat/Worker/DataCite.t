@@ -9,6 +9,8 @@ BEGIN {
     use_ok $pkg;
 }
 
+require_ok $pkg;
+
 dies_ok {$pkg->new()};
 dies_ok {$pkg->new(user => 'me')};
 dies_ok {$pkg->new(password => 'secret')};
