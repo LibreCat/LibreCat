@@ -14,4 +14,6 @@ require_ok $pkg;
 
 lives_ok {$pkg->new()} 'lives_ok';
 
+ok $pkg->new->config;
+
 done_testing;

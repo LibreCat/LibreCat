@@ -1,5 +1,6 @@
 use strict;
 use warnings FATAL => 'all';
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
@@ -21,11 +22,11 @@ SKIP: {
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue']);
-        ok !$result->error, 'ok threw no exception';
+        ok $result->error, 'ok threw an exception';
 
-        my $output = $result->stdout;
+        my $output = $result->error;
         ok $output, 'got an output';
-        like $output, qr/functions/, 'got expected output';
+        like $output, qr/Error/, 'got expected output';
     }
 
     {
@@ -35,7 +36,7 @@ SKIP: {
             ]
         );
 
-        my $result = test_app(qq|LibreCat::CLI| => ['queue']);
+        my $result = test_app(qq|LibreCat::CLI| => ['queue','status']);
         ok !$result->error, 'ok threw no exception';
 
         my $output = $result->stdout;
@@ -45,6 +46,24 @@ SKIP: {
         ok test_app(qq|LibreCat::CLI| =>
                 ['worker', 'mailer', 'stop', '--workers', '2', '--supervise']
         ), 'stop workers';
+    }
+
+    {
+        my $result = test_app(qq|LibreCat::CLI| => ['queue', 'start']);
+        ok !$result->error, 'ok threw no exception';
+
+        my $output = $result->stdout;
+        ok $output, 'got an output';
+        like $output, qr/Starting /, 'got expected output';
+    }
+
+    {
+        my $result = test_app(qq|LibreCat::CLI| => ['queue', 'stop']);
+        ok !$result->error, 'ok threw no exception';
+
+        my $output = $result->stdout;
+        ok $output, 'got an output';
+        like $output, qr/Stopping /, 'got expected output';
     }
 
 }

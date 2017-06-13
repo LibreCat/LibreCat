@@ -76,10 +76,10 @@ sub _daemon {
         my $cmd = "$0 worker $worker $startstop --workers $count";
         $cmd .= " --supervise" if $supervise;
 
-        printf STDERR "%s $worker...",
+        printf "%s $worker...",
             $startstop eq 'start' ? 'Starting' : 'Stopping';
         system($cmd);
-        printf STDERR "OK\n";
+        printf "OK\n";
     }
 }
 
