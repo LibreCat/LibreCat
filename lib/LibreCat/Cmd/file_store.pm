@@ -386,6 +386,20 @@ sub _move {
     0;
 }
 
+{
+    my $_mb_sec_stats = { now => time, total => 0 };
+
+    sub _mb_sec {
+        my ($self,$bytes) = @_;
+
+        $_mb_sec_stats->{total} += $bytes // 0;
+
+        my $elapsed = (time - $_mb_sec_stats->{now}) // 1;
+
+        return $_mb_sec_stats->{total}/(1000*1000*$elapsed);
+    }
+}
+
 sub _move_files {
     my ($self,$source_store,$target_store,$key) = @_;
 
@@ -393,7 +407,7 @@ sub _move_files {
         strftime("%Y-%m-%dT%H:%M:%S",localtime(time));
     };
 
-    printf STDERR "%s $key " , $curr_time->();
+    printf STDERR "%s [%-3.3f] $key " , $curr_time->(), _mb_sec();
 
     my $source_container = $source_store->get($key);
 
@@ -419,9 +433,10 @@ sub _move_files {
 
     for my $file (@source_files) {
         my $name = $file->key;
+        my $size = $file->size;
         my $io   = $file->fh;
 
-        printf STDERR "%s $key/$name ", $curr_time->();
+        printf STDERR "%s [%-3.3f] $key/$name ", $curr_time->() , _mb_sec($size);
         my $res = $target_container->add($name, $io);
         $target_container->commit;
         printf STDERR " %s\n", $res ? 'OK' : 'ERROR';
