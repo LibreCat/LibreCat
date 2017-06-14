@@ -81,6 +81,10 @@ filestore:
         package: Simple
         options:
             root: t/data
+    test:
+        package: Simple
+        options:
+            root: t/data2
     uploader:
         package: 'LibreCat::Worker::FileUploader'
         options:

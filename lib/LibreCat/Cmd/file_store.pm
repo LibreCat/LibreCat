@@ -26,6 +26,7 @@ librecat file_store [options] delete <key> <file>
 librecat file_store [options] purge <key>
 librecat file_store [options] export <key> <zip>
 librecat file_store [options] import <key> <zip>
+librecat file_store [options] move <key> <store_name>
 
 librecat file_store [options] thumbnail <key> <file>
 
@@ -80,7 +81,7 @@ sub command {
     my ($self, $opts, $args) = @_;
 
     my $commands
-        = qr/list|exists|get|add|delete|purge|export|import|thumbnail/;
+        = qr/list|exists|get|add|delete|purge|export|import|move|thumbnail/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -154,6 +155,9 @@ sub command {
     }
     elsif ($cmd eq 'import') {
         return $self->_import(@$args);
+    }
+    elsif ($cmd eq 'move') {
+        return $self->_move(@$args);
     }
     elsif ($cmd eq 'thumbnail') {
         return $self->_thumbnail(@$args);
@@ -350,6 +354,81 @@ sub _purge {
     return 0;
 }
 
+sub _move {
+    my ($self, $key, $name) = @_;
+
+    croak "move - need a key and file_store" unless defined($key) && defined($name);
+
+    my $file_store = $self->file_store($name);
+    my $file_opt   = $self->file_opt($name);
+
+    croak "move - no `$name` defined as file_store" unless $file_store;
+
+    my $target_store = $self->load($file_store, $file_opt);
+
+    croak "move - can't create `$name` store" unless $target_store;
+
+    my $source_store     = $self->app->global_options->{store};
+
+    if (-r $key) {
+        local(*F);
+        open(F,$key) || croak "move - failed to open `$key` for reading";
+        while(<F>) {
+            chomp;
+            $self->_move_files($source_store,$target_store,$_);
+        }
+        close(F);
+    }
+    else {
+        $self->_move_files($source_store,$target_store,$key);
+    }
+
+    0;
+}
+
+sub _move_files {
+    my ($self,$source_store,$target_store,$key) = @_;
+
+    my $curr_time = sub {
+        strftime("%Y-%m-%dT%H:%M:%S",localtime(time));
+    };
+
+    printf STDERR "%s $key " , $curr_time->();
+
+    my $source_container = $source_store->get($key);
+
+    if ($source_container) {
+        print STDERR "OK\n";
+    }
+    unless ($source_container) {
+        print STDERR "ERROR\n";
+        return;
+    }
+
+    my $target_container = $target_store->get($key);
+
+    unless ($target_container) {
+        $target_container = $target_store->add($key);
+    }
+
+    unless ($target_container) {
+        warn "add - failed to find or create $key";
+        return;
+    }
+
+    my @source_files = $source_container->list;
+
+    for my $file (@source_files) {
+        my $name = $file->key;
+        my $io   = $file->fh;
+
+        printf STDERR "%s $key/$name ", $curr_time->();
+        my $res = $target_container->add($name, $io);
+        $target_container->commit;
+        printf STDERR " %s\n", $res ? 'OK' : 'ERROR';
+    }
+}
+
 sub _export {
     my ($self, $key, $zip_file) = @_;
 
@@ -526,6 +605,7 @@ LibreCat::Cmd::file_store - manage librecat file stores
     librecat file_store purge <key>
     librecat file_store export <key> <zip>
     librecat file_store import <key> <zip>
+    librecat file_store move <key> <store_name>
 
     librecat store thumbnail <key> <file>
 
