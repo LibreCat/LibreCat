@@ -26,7 +26,7 @@ librecat file_store [options] delete <key> <file>
 librecat file_store [options] purge <key>
 librecat file_store [options] export <key> <zip>
 librecat file_store [options] import <key> <zip>
-librecat file_store [options] move <key> <store_name>
+librecat file_store [options] move <key|store_name> <store_name>
 
 librecat file_store [options] thumbnail <key> <file>
 
@@ -379,6 +379,16 @@ sub _move {
         }
         close(F);
     }
+    elsif (my $key_store = $self->file_store($key)) {
+        my $key_opt   = $self->file_opt($key);
+        my $key_store = $self->load($key_store,$key_opt);
+
+        my $gen = $key_store->list;
+
+        while (my $key = $gen->()) {
+            $self->_move_files($source_store,$target_store,$key);
+        }
+    }
     else {
         $self->_move_files($source_store,$target_store,$key);
     }
@@ -619,7 +629,7 @@ LibreCat::Cmd::file_store - manage librecat file stores
     librecat file_store purge <key>
     librecat file_store export <key> <zip>
     librecat file_store import <key> <zip>
-    librecat file_store move <key> <store_name>
+    librecat file_store move <key|store_name> <store_name>
 
     librecat store thumbnail <key> <file>
 
