@@ -51,7 +51,6 @@ requires 'Dancer::Logger::Log4perl';
 requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';
-requires 'Template::Plugin::JSON';
 requires 'Template::Plugin::JSON::Escape', '0.02';
 requires 'Template::Plugin::Gravatar';
 requires 'Furl';
