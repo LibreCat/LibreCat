@@ -397,9 +397,6 @@ sub _move_files {
 
     my $source_container = $source_store->get($key);
 
-    if ($source_container) {
-        print STDERR "OK\n";
-    }
     unless ($source_container) {
         print STDERR "ERROR\n";
         return;
@@ -412,9 +409,11 @@ sub _move_files {
     }
 
     unless ($target_container) {
-        warn "add - failed to find or create $key";
+        print STDERR "ERROR\n";
         return;
     }
+
+    print "OK\n";
 
     my @source_files = $source_container->list;
 

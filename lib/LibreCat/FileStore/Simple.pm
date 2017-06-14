@@ -4,15 +4,24 @@ use Catmandu::Sane;
 use Moo;
 use Carp;
 use LibreCat::FileStore::Container::Simple;
+use Data::UUID;
+use POSIX qw(ceil);
 use namespace::clean;
 
 with 'LibreCat::FileStore';
 
 has root => (is => 'ro', required => '1');
+has uuid     => (is => 'ro', trigger => 1);
+has keysize  => (is => 'ro', default => 9 , trigger => 1);
 
 sub list {
     my ($self, $callback) = @_;
-    my $root = $self->root;
+
+    my $root     = $self->root;
+    my $keysize  = $self->keysize;
+
+    my $mindepth = ceil($keysize / 3);
+    my $maxdepth = $mindepth + 1;
 
     unless (-d $root) {
         $self->log->error("no root $root found");
@@ -24,7 +33,7 @@ sub list {
         state $io;
 
         unless (defined($io)) {
-            open($io, "find -L $root -mindepth 3 -maxdepth 4 -type d|");
+            open($io, "find -L $root -mindepth $mindepth -maxdepth $maxdepth -type d |");
         }
 
         my $line = <$io>;
@@ -48,7 +57,7 @@ sub exists {
 
     $self->log->debug("Checking exists $key");
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     -d $path;
 }
@@ -58,7 +67,7 @@ sub add {
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -75,7 +84,7 @@ sub get {
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -92,7 +101,7 @@ sub delete {
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -105,14 +114,29 @@ sub delete {
 }
 
 sub path_string {
-    my ($root, $key) = @_;
+    my ($self,$key) = @_;
 
-    unless ($key =~ /^\d{1,9}$/) {
-        return undef;
+    my $keysize = $self->keysize;
+
+    # Allow all hexidecimal numbers
+    $key =~ s{[^A-F0-9-]}{}g;
+
+    # If the key is a UUID then the matches need to be exact
+    if ($self->uuid) {
+        try {
+            Data::UUID->new->from_string($key);
+        }
+        catch {
+            return undef;
+        };
+    }
+    else {
+        return undef unless length($key) && length($key) <= $keysize;
+        $key =~ s/^0+//;
+        $key = sprintf "%-${keysize}.${keysize}d", $key;
     }
 
-    my $long_key = sprintf "%-9.9d", $key;
-    my $path = $root . "/" . join("/", unpack('(A3)*', $long_key));
+    my $path = $self->root . "/" . join("/", unpack('(A3)*', $key));
 
     $path;
 }
@@ -158,6 +182,20 @@ LibreCat::FileStore::Simple - The default implementation of a file storage
     my $container = $filestore->add('1235');
 
     $filestore->delete('1234');
+
+=head1 CONFIGURATION
+
+=head2 root($path)
+
+The path to the root of the Simple file store storage.
+
+=head2 uuid(0|1)
+
+Optional. Support UUID-s as identifiers. Default 0
+
+=head2 keysize($num)
+
+Option. Support a FileStore with larger integer keys. Default 9
 
 =head1 SEE ALSO
 

@@ -4,22 +4,31 @@ use Catmandu::Sane;
 use Moo;
 use Carp;
 use LibreCat::FileStore::Container::BagIt;
+use Data::UUID;
+use POSIX qw(ceil);
 use namespace::clean;
 
 with 'LibreCat::FileStore';
 
-has root => (is => 'ro', required => '1');
+has root     => (is => 'ro', required => '1');
+has uuid     => (is => 'ro', trigger => 1);
+has keysize  => (is => 'ro', default => 9 , trigger => 1);
 
 sub list {
     my ($self, $callback) = @_;
-    my $root = $self->root;
+
+    my $root     = $self->root;
+    my $keysize  = $self->keysize;
+
+    my $mindepth = ceil($keysize / 3);
+    my $maxdepth = $mindepth + 1;
 
     $self->log->debug("creating generator for root: $root");
     return sub {
         state $io;
 
         unless (defined($io)) {
-            open($io, "find $root -maxdepth 5 -name data -type d|");
+            open($io, "find -L $root -mindepth $mindepth -maxdepth $maxdepth -type d |");
         }
 
         my $line = <$io>;
@@ -45,7 +54,7 @@ sub exists {
 
     $self->log->debug("Checking exists $key");
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     -d $path;
 }
@@ -55,7 +64,7 @@ sub add {
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -72,7 +81,7 @@ sub get {
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -89,7 +98,7 @@ sub delete {
 
     croak "Need a key" unless defined $key;
 
-    my $path = path_string($self->root, $key);
+    my $path = $self->path_string($key);
 
     unless ($path) {
         $self->log->error("Failed to create path from $key");
@@ -102,14 +111,29 @@ sub delete {
 }
 
 sub path_string {
-    my ($root, $key) = @_;
+    my ($self,$key) = @_;
 
-    unless ($key =~ /^\d{1,12}$/) {
-        return undef;
+    my $keysize = $self->keysize;
+
+    # Allow all hexidecimal numbers
+    $key =~ s{[^A-F0-9-]}{}g;
+
+    # If the key is a UUID then the matches need to be exact
+    if ($self->uuid) {
+        try {
+            Data::UUID->new->from_string($key);
+        }
+        catch {
+            return undef;
+        };
+    }
+    else {
+        return undef unless length($key) && length($key) <= $keysize;
+        $key =~ s/^0+//;
+        $key = sprintf "%-${keysize}.${keysize}d", $key;
     }
 
-    my $long_key = sprintf "%-9.9d", $key;
-    my $path = $root . "/" . join("/", unpack('(A3)*', $long_key));
+    my $path = $self->root . "/" . join("/", unpack('(A3)*', $key));
 
     $path;
 }

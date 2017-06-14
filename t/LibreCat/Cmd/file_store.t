@@ -23,7 +23,7 @@ require_ok $pkg;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['file_store', 'list']);
-
+    
     ok !$result->error, 'list threw no exception';
 
     my $output = $result->stdout;
@@ -66,8 +66,6 @@ require_ok $pkg;
 
     my $output = $result->stderr;
     ok $output , 'got an output';
-
-    like $output , qr/1234 OK/, 'moved 1234';
 
     ok -r 't/data2/000/001/234/cpanfile' , 'got a file';
 }
