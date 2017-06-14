@@ -14,6 +14,18 @@ has root => (is => 'ro', required => '1');
 has uuid     => (is => 'ro', trigger => 1);
 has keysize  => (is => 'ro', default => 9 , trigger => 1);
 
+sub _trigger_keysize {
+    my $self = shift;
+
+    croak "keysize needs to be a multiple of 3" unless $self->keysize % 3 == 0;
+}
+
+sub _trigger_uuid {
+    my $self = shift;
+
+    $self->{keysize} == 36;
+}
+
 sub list {
     my ($self, $callback) = @_;
 
