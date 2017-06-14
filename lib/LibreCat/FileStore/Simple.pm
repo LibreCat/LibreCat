@@ -105,7 +105,7 @@ sub get {
 
     $self->log->debug("Loading path $path for key $key");
 
-    LibreCat::FileStore::Container::Simple->read_container($path);
+    LibreCat::FileStore::Container::Simple->read_container($path,$key);
 }
 
 sub delete {
