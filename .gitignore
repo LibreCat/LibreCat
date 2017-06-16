@@ -41,6 +41,7 @@ sessions/
 t/tmp/*
 tmp/*
 uploads/
+Vagrantfile
 vendor/
 views/admin/forms/
 views/backend/forms/
