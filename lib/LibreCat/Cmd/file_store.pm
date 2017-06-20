@@ -386,7 +386,7 @@ sub _move {
         my $gen = $key_store->list;
 
         while (my $key = $gen->()) {
-            $self->_move_files($source_store,$target_store,$key);
+            $self->_move_files($key_store,$target_store,$key);
         }
     }
     else {
