@@ -35,17 +35,6 @@ plugins:
     Bcrypt:
       cost: 8
 
-  Email:
-    type: 'html'
-    headers:
-      sender: 'helpdesk@librecat.org'
-      from: 'helpdesk@librecat.org'
-      X-Mailer: 'PUB Dancer Mailer'
-      X-Accept-Language: 'en'
-    transport:
-      Sendmail:
-        sendmail: '/usr/sbin/sendmail'
-
   'Catmandu::SRU':
     store: search
     bag: publication

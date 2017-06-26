@@ -21,7 +21,6 @@ use LibreCat::App::Api;          # the api
 
 use LibreCat::App::Helper;
 use Dancer::Plugin::Auth::Tiny;
-use Dancer::Plugin::DirectoryView;
 
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private
