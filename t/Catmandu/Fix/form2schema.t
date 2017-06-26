@@ -5,7 +5,7 @@ use Data::Dumper;
 my $pkg;
 
 BEGIN {
-    $pkg = 'Catmandu::Fix::publication_identifier';
+    $pkg = 'Catmandu::Fix::form2schema';
     use_ok $pkg;
 }
 require_ok $pkg;

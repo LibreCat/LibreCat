@@ -19,7 +19,7 @@ requires 'Business::ISBN', 0;
 requires 'Module::Install', '1.16';
 
 # Catmandu
-requires 'Catmandu', '>=1.0506';
+requires 'Catmandu', '>=1.06';
 requires 'Catmandu::Exporter::Table';
 requires 'Search::Elasticsearch', '>=5.02';
 requires 'Search::Elasticsearch::Client::1_0','>=5.02';

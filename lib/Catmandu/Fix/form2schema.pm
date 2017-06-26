@@ -9,7 +9,7 @@ has field => (fix_arg => 1);
 sub fix {
     my ($self, $data) = @_;
     my $field = $self->field;
-    if ( my $path = $data->{$field} and @{$data->{$field}} )
+    if ( my $path = $data->{$field} and ref $data->{$field} eq 'ARRAY' )
     {
         my $out;
         foreach my $pid (@$path) {
