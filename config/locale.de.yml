@@ -2,6 +2,7 @@ _prefix:
   locale:
     de:
 
+appname: "LibreCat"
 general:
   plural: "en"
   where: "in"

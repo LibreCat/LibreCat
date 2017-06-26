@@ -6,7 +6,7 @@
 <!-- BEGIN header.tt -->
   <head>
     <title>
-      [%- IF title %][% title | html %][% ELSE %][% h.config.appname %][% END %]
+      [%- IF title %][% title | html %][% ELSE %][% h.loc("appname") %][% END %]
     </title>
     <link rel="icon" href="/images/brand_logo.png" type="image/png">
     [%- IF title AND !backend %]
