@@ -7,20 +7,16 @@ LibreCat::App - a webapp that runs an awesome institutional repository.
 =cut
 
 use Catmandu::Sane;
-
-our $VERSION = '0.01';
-
 use Catmandu::Util;
 use LibreCat;
-
 use Dancer qw(:syntax);
-
 use LibreCat::App::Search;       # the frontend
 use LibreCat::App::Catalogue;    # the backend
 use LibreCat::App::Api;          # the api
-
 use LibreCat::App::Helper;
 use Dancer::Plugin::Auth::Tiny;
+
+our $VERSION = '0.01';
 
 # make variables with leading '_' visible in TT,
 # otherwise they are considered private

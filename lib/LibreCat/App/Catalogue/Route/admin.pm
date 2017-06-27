@@ -11,7 +11,6 @@ use Catmandu::Util qw(trim);
 use App::bmkpasswd qw(mkpasswd);
 use Dancer ':syntax';
 use LibreCat::App::Helper;
-use Syntax::Keyword::Junction 'any' => {-as => 'any_of'};
 
 =head1 PREFIX /librecat/admin
 
