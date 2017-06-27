@@ -41,7 +41,6 @@ Some fields are pre-filled.
     get '/new' => sub {
         my $type      = params->{type};
         my $user      = h->get_person(session->{personNumber});
-        my $edit_mode = params->{edit_mode} || $user->{edit_mode} || "";
 
         return template 'backend/add_new' unless $type;
 
@@ -99,12 +98,6 @@ Some fields are pre-filled.
 
         my $templatepath = "backend/forms";
 
-        if (   ($edit_mode and $edit_mode eq "expert")
-            or ($edit_mode eq "" and session->{role} eq "super_admin"))
-        {
-            $templatepath .= "/expert";
-        }
-
         $data->{new_record} = 1;
 
         # -- end default fields ---
@@ -145,22 +138,10 @@ Checks if the user has permission the see/edit this record.
 
         $hook->fix_before($rec);
 
-        # --- Setting the edit mode ---
-        my $person       = h->get_person(session->{personNumber});
-        my $edit_mode    = params->{edit_mode} || $person->{edit_mode};
         my $templatepath = "backend/forms";
         my $template     = $rec->{meta}->{template} // $rec->{type};
 
-        if (   ($edit_mode and $edit_mode eq "expert")
-            or (!$edit_mode and session->{role} eq "super_admin"))
-        {
-            $templatepath .= "/expert";
-            $edit_mode = "expert";
-        }
-
         $rec->{return_url} = request->{referer} if request->{referer};
-
-        $rec->{edit_mode} = $edit_mode if $edit_mode;
 
         # --- End setting edit mode
 
@@ -345,10 +326,9 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{related_material};
         $rec->{_id} = h->new_record('publication');
 
-        my $templatepath = "backend/forms/expert/";
         my $template     = $rec->{type} . ".tt";
 
-        return template $templatepath . $template, $rec;
+        return template "backend/forms/$template", $rec;
     };
 
 =head2 GET /publish/:id
@@ -400,60 +380,6 @@ Publishes private records, returns to the list.
         redirect '/librecat';
     };
 
-=head2 GET /change_mode
-
-Changes the layout of the edit form.
-
-=cut
-    post '/change_mode' => sub {
-        my $mode   = params->{edit_mode};
-        my $params = params;
-
-        $params->{file} = [$params->{file}]
-            if ($params->{file} and ref $params->{file} ne "ARRAY");
-
-        $params = h->nested_params($params);
-        if ($params->{file}) {
-            foreach my $fi (@{$params->{file}}) {
-                $fi              = encode('UTF-8', $fi);
-                $fi              = from_json($fi);
-                $fi->{file_json} = to_json($fi);
-            }
-        }
-
-        # Use config/hooks.yml to register functions
-        # that should run before/after changing the edit mode
-        state $hook = h->hook('publication-change-mode');
-
-        $hook->fix_before($params);
-
-        Catmandu::Fix->new(
-            fixes => [
-                'publication_identifier()',
-                'external_id()',
-                'page_range_number()',
-                'clean_preselects()',
-                'split_field(nasc, " ; ")',
-                'split_field(genbank, " ; ")',
-                'split_field(keyword, " ; ")',
-                'vacuum()',
-            ]
-        )->fix($params);
-
-        my $person = h->get_person(session('personNumber'));
-        if ($mode eq "normal" or $mode eq "expert") {
-            $person->{edit_mode} = $mode;
-            h->update_record('researcher', $person);
-        }
-
-        my $path = "backend/forms/";
-        $path .= "expert/" if $mode eq "expert";
-        $path .= params->{type} . ".tt";
-
-        $hook->fix_after($params);
-
-        template $path, $params;
-    };
 };
 
 1;

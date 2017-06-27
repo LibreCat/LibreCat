@@ -964,7 +964,6 @@ other_items:
       - data_manager
       - project_reviewer
       - reviewer
-      - edit_mode
       - author_ids
       - photo
       - style
@@ -1021,8 +1020,6 @@ other_items:
       label: "Author IDs"
     photo:
       label: "Photo URL"
-    edit_mode:
-      label: "Edit Mode"
     style:
       label: "Citation-Style"
     sort:

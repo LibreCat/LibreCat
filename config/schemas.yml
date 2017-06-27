@@ -883,9 +883,6 @@ researcher:
                 minimum: 0
             description: "Department identifier"
       description: "Department"
-    edit_mode:
-       enum: ["normal","expert"]
-       description: "Preferred web form edit mode"
     style:
        type: string
        description: "Preferred citation style"
