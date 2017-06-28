@@ -1,25 +1,21 @@
-{% editmode = "expert" %}
 [% path = request.path -%]
 [% backend = path.match('librecat') ? 1 : 0 -%]
 [% thisPerson = h.get_person(session.personNumber) -%]
-[% edit_mode = "expert" -%]
 [% lang = session.lang -%]
 [% lf = h.config.locale.$lang.forms -%]
 
 [% INCLUDE header.tt %]
 
 <!-- BEGIN backend/generator/master_expert.tt -->
-
 <!-- changes here must be generated -->
-
 <div class="col-md-11 col-md-offset-1">
 
   <div class="page-header" id="banner">
     <div class="row">
       <div class="col-sm-8">
-      [% IF title %]
-	<h1>[% title %]</h1>
-      [% ELSE %]
+      [%- IF title %]
+	    <h1>[% title %]</h1>
+      [%- ELSE %]
 	<h1 class="margin-top0">[% h.loc("forms.${type}.label") %]</h1>
       [% END%]
       </div>
@@ -41,9 +37,7 @@
     <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
-
       {% INCLUDE fields/buttonrow_tab.tt %}
-
       <!-- STEP 1 -->
       <div id="basic_fields" class="tab_section">
 
@@ -51,15 +45,15 @@
         <p>[% h.loc("forms.mandatory_error") %]</p>
       </div>
 
-{% IF fields.basic_fields %}
+{%- IF fields.basic_fields %}
   <h3>[% h.loc("forms.${type}.tab.basic_fields") %]</h3>
-  {% FOREACH key IN field_order.basic_fields %}
-    {% IF fields.basic_fields.$key %}
-    {% template = "fields/" _ key _ ".tt" %}
+  {%- FOREACH key IN field_order.basic_fields %}
+    {%- IF fields.basic_fields.$key %}
+    {%- template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
-    {% END %}
-  {% END %}
-{% END %}
+    {%- END %}
+  {%- END %}
+{%- END %}
       </div><!-- tab-pane -->
 
       <!-- STEP 2 -->
@@ -78,42 +72,39 @@
 
       <!-- STEP 3 -->
       <div id="supplementary_fields" class="tab_section">
-
-{% IF fields.supplementary_fields %}
+{%- IF fields.supplementary_fields %}
   <h3>[% h.loc("forms.${type}.tab.supplementary_fields") %]</h3>
-  {% FOREACH key IN field_order.supplementary_fields %}
-    {% IF fields.supplementary_fields.$key %}
-    {% template = "fields/" _ key _ ".tt" %}
+  {%- FOREACH key IN field_order.supplementary_fields %}
+    {%- IF fields.supplementary_fields.$key %}
+    {%- template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
-    {% END %}
-  {% END %}
-{% END %}
+    {%- END %}
+  {%- END %}
+{%- END %}
 
       </div><!-- tab-pane -->
 
       <!-- STEP 4 -->
       <div id="related_material" class="tab_section">
-
-{% IF fields.related_material %}
+{%- IF fields.related_material %}
   <h3>[% h.loc("forms.${type}.tab.related_material") %]</h3>
-  {% FOREACH key IN field_order.related_material %}
-    {% IF fields.related_material.$key %}
-    {% template = "fields/" _ key _ ".tt" %}
+  {%- FOREACH key IN field_order.related_material %}
+    {%- IF fields.related_material.$key %}
+    {%- template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
-    {% END %}
-  {% END %}
-{% END %}
+    {%- END %}
+  {%- END %}
+{%- END %}
 
       </div><!-- tab-pane -->
-
       {% INCLUDE fields/buttonrow_tab.tt %}
 
     </div><!-- tab-content -->
   </form>
 
-{% IF fields.file_upload %}
+{%- IF fields.file_upload %}
 {% INCLUDE fields/modal_fileupload.tt %}
-{% END %}
+{%- END %}
 
 </div><!-- col-md -->
 
@@ -122,6 +113,4 @@
 </script>
 
 <!-- END backend/generator/master_expert.tt -->
-[% lang = session.lang %]
-[% lf = h.config.locale.$lang %]
 [% INCLUDE footer.tt %]
