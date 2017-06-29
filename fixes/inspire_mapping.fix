@@ -3,11 +3,11 @@
 add_field(_r.status,new)
 add_field(_r.type, journal_article)
 move_field(title.title, _r.title)
-move_field(recid, _r.external_id.inspire)
+move_field(recid, _r.external_id.inspire.$append)
 do list(path:primary_report_number, var:c)
   if all_match(c, 'arXiv')
     replace_all(c, 'arXiv:', '')
-    copy_field(c, _r.external_id.arxiv)
+    copy_field(c, _r.external_id.arxiv.$append)
   end
 end
 

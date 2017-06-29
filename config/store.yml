@@ -1019,9 +1019,6 @@ search:
                 properties:
                   _id: {type: string, index: not_analyzed, include_in_all: true}
           proj: {type: byte}
-          metrics:
-            properties:
-              timesCited: {type: integer}
           project:
             properties:
               _id: {type: string, index: not_analyzed, include_in_all: true}

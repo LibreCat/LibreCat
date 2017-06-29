@@ -101,30 +101,14 @@ language:
   - other
 
 external_identifier:
-  isi:
-    name: "Web of Science"
-    prefix: "ISI:"
-  arxiv:
-    name: "ArXiv"
-    prefix: "arXiv:"
-  pmid:
-    name: "PMID"
-    prefix: "MEDLINE:"
-  inspire:
-    name: "Inspire"
-    prefix: "INSPIRE:"
-  ahf:
-    name: "AHF"
-    prefix: "AHF:"
-  scoap3:
-    name: "SCOAP3"
-    prefix: "SCOAP3:"
-  phillister:
-    name: "PhilLister"
-    prefix: "PhilLister:"
-  opac:
-    name: "Katalog.plus!"
-    prefix: "UB-OPAC:"
+  isi: "Web of Science"
+  arxiv: "ArXiv"
+  pmid: "PMID"
+  inspire: "Inspire"
+  ahf: "AHF"
+  scoap3: "SCOAP3"
+  phillister: "PhilLister"
+  opac: "Katalog.plus!"
 
 publication_identifier:
   issn: "ISSN"
@@ -1575,4 +1559,3 @@ import_sources:
   - epmc
   - arxiv
   - inspire
-

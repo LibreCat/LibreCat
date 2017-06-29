@@ -87,6 +87,7 @@ main_page:
     qae: "New"
     private: "Private"
   links:
+    audit: Audit
     clone: "Klonen"
     edit: "Editieren"
     details: "Details"
