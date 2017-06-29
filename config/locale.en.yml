@@ -505,7 +505,7 @@ forms:
           label_short: "Material is"
           label: "External material is"
       locked: &locked
-        label: "Locked for editing (except for admins)"
+        label: "Locked for editing"
         label_short: "Locked"
       link: &link
         label: "URL"
