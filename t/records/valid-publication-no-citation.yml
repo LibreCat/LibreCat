@@ -71,8 +71,10 @@ department:
 - _id: '2685177'
 doi: 10.1093/jxb/erv066
 external_id:
-  isi: '000356223900015'
-  pmid: '25740929'
+  isi:
+    - '000356223900015'
+  pmid:
+    - '25740929'
 intvolume: '        66'
 isi: 1
 issue: '10'
