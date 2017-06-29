@@ -256,8 +256,7 @@ any '/rc/:id/:file_id' => sub {
 
         try {
             h->queue->add_job('mailer', $job);
-            return redirect "/publication/" . params->{id}
-                if $mail_response =~ /success/i;
+            return redirect "/publication/" . params->{id};
         }
         catch {
             h->log->error("Could not send email: $_");
