@@ -94,7 +94,7 @@ note("adding a file to the file store");
 note("testing file metadata updates (adding files)");
 {
     my $result
-        = test_app(qq|LibreCat::CLI| => ['publication', 'files', 't/records/update_file.tsv']);
+        = test_app(qq|LibreCat::CLI| => ['publication', 'files', 't/records/update_file.yml']);
 
     ok !$result->error, 'files threw no exception';
 
@@ -122,7 +122,7 @@ note("testing file metadata updates (updates)");
     add_publication($record);
 
     my $result
-        = test_app(qq|LibreCat::CLI| => ['publication', 'files', 't/records/update_file.tsv']);
+        = test_app(qq|LibreCat::CLI| => ['publication', 'files', 't/records/update_file.yml']);
 
     ok !$result->error, 'files threw no exception';
 
@@ -147,7 +147,7 @@ note("testing file metadata updates (deletes)");
     add_publication($record);
 
     my $result
-        = test_app(qq|LibreCat::CLI| => ['publication', 'files', 't/records/update_file.tsv']);
+        = test_app(qq|LibreCat::CLI| => ['publication', 'files', 't/records/update_file.yml']);
 
     ok $result->error, 'ok we get an exception';
 
