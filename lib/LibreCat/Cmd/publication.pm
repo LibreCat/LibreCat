@@ -473,7 +473,7 @@ sub _embargo {
             # Show __all__ files and indicate which ones should
             # be switched to open_access.
             $exporter->add({
-                _id => $item->{_id},
+                id => $item->{_id},
                 file_id => $file->{file_id},
                 access_level => $process ? $embargo_to : $file->{access_level},
                 request_a_copy => $process ? 0 : $file->{request_a_copy},
@@ -573,7 +573,7 @@ sub _files_load {
     };
 
     my %allowed_fields = map { ($_ => 1) } qw(
-        _id
+        id
         access_level creator content_type
         date_created date_updated file_id
         file_name file_size open_access
@@ -595,7 +595,7 @@ sub _files_load {
                 $file->{$new_key} = Catmandu::Util::trim delete $file->{$key};
             }
 
-            my $id = delete $file->{_id};
+            my $id = delete $file->{id};
             croak "file - no _id column found" unless defined $id;
             $current_id //= $id;
 
