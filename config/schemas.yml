@@ -579,9 +579,11 @@ publication:
       description: "External identifier"
       properties:
         unknown:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "Unknown source identifier"
         isi:
           type: array
