@@ -8,6 +8,10 @@
 [%- IF status != "public" AND _id %]
 <div id="preview">[% h.loc("frontdoor.preview") %]</div>
 [%- END %]
+[% ip = request.address %]
+[% ip_range = h.config.ip_range %]
+[% local_user = h.within_ip_range(ip, ip_range) %]
+
 [%- mainFile = [] %]
 [%- relMat = [] %]
 [%- relPubl = [] %]
@@ -89,7 +93,14 @@
             <div class="row">
               <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
               <div class="col-xs-10">
-                  [% PROCESS publication/oa_lock.tt %] <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
+                  [% PROCESS publication/oa_lock.tt %]
+                  [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]
+                  <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
+                    [% fi.title || fi.file_name | html %]
+                  </a>
+                  [% ELSE %]
+                  <strong>[% fi.title || fi.file_name | html %]</strong>
+                  [% END %]
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
                   [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]

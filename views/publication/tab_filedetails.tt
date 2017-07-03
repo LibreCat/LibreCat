@@ -7,7 +7,7 @@
       <strong>[% h.loc("frontdoor.license_heading") %]</strong><br />
       <div class="alert alert-green">
       [%- IF data_reuse_license %]
-        [% h.loc("forms.${type}.field.license.data_reuse_license.label") %] : 
+        [% h.loc("forms.${type}.field.license.data_reuse_license.label") %] :
         [%- SWITCH data_reuse_license %]
           [%- CASE 'PDDL' %]<a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.pddl.name") %]</a>
 	      [%- CASE 'ODC-By' %]<a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.odcby.name") %]</a>
@@ -39,8 +39,13 @@
   <div class="row[% UNLESS i==0 %] margin-top1[% END %]">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
+      [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]
+      <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]">
         [% fi.file_name | html %]
+      </a>
+      [% ELSE %]
+      <strong>[% fi.file_name | html %]</strong>
+      [% END %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>
   </div>
