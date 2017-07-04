@@ -579,45 +579,61 @@ publication:
       description: "External identifier"
       properties:
         unknown:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "Unknown source identifier"
         isi:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "Web of Science identifier"
         pmid:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "PubMed identifier"
         inspire:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "Inspire identifier"
         arxiv:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "Arxiv identifier"
         ahf:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "???"
         opac:
-          oneOf:
-            - type: string
-            - type: integer
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
           description: "Opac identifier"
         scoap3:
-          oneOf:
-            - type: string
-            - type: integer
           description: "???"
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
     file:
       type: array
       minItems: 0
@@ -883,9 +899,6 @@ researcher:
                 minimum: 0
             description: "Department identifier"
       description: "Department"
-    edit_mode:
-       enum: ["normal","expert"]
-       description: "Preferred web form edit mode"
     style:
        type: string
        description: "Preferred citation style"

@@ -451,8 +451,7 @@ sub _embargo {
     my $query = "embargo < $now";
     my $it = $helper->publication->searcher(cql_query => $query);
 
-    printf "%-9s\t%-9s\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
-        qw(id file_id access_level request_a_copy embargo file_name);
+    my $exporter = Catmandu->exporter('YAML');
 
     my $printer = sub {
         my ($item) = @_;
@@ -471,17 +470,22 @@ sub _embargo {
 
             my $embargo_to = $file->{embargo_to} // 'open_access';
 
-            # Show __all__ file files and indicate which ones should
+            # Show __all__ files and indicate which ones should
             # be switched to open_access.
-            printf "%-9d\t%-9d\t%-12.12s\t%-14.14s\t%-15.15s\t%s\n",
-                $item->{_id}, $file->{file_id},
-                $process ? $embargo_to : $file->{access_level},
-                $process ? 0           : $file->{request_a_copy},
-                $process ? 'NA' : $embargo // 'NA', $file->{file_name};
+            $exporter->add({
+                id => $item->{_id},
+                file_id => $file->{file_id},
+                access_level => $process ? $embargo_to : $file->{access_level},
+                request_a_copy => $process ? 0 : $file->{request_a_copy},
+                embargo => $process ? 'NA' : $embargo // 'NA',
+                embargo_to => $process ? 'NA' : $embargo_to // 'NA',
+                file_name => $file->{file_name},
+            });
         }
     };
 
     $it->each($printer);
+    $exporter->commit;
 }
 
 sub _files {
@@ -508,18 +512,24 @@ sub _files {
 
 sub _files_list {
     my ($self, $id) = @_;
-    printf "%-9s\t%-9s\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n",
-        qw(id file_id access_level relation embargo file_name);
+
+    my $exporter = Catmandu->exporter('YAML');
 
     my $printer = sub {
         my ($item) = @_;
         return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
         for my $file (@{$item->{file}}) {
-            printf "%-9d\t%-9d\t%-20.20s\t%-20.20s\t%-15.15s\t%s\n",
-                $item->{_id}, $file->{file_id}, $file->{access_level},
-                $file->{relation}, $file->{embargo} // 'NA',
-                $file->{file_name};
+            $exporter->add({
+                _id => $item->{_id},
+                file_id => $file->{file_id},
+                access_level => $file->{access_level},
+                request_a_copy => $file->{request_a_copy} // 'NA',
+                relation => $file->{relation},
+                embargo => $file->{embargo} // 'NA',
+                embargo_to => $file->{embargo_to} // 'NA',
+                file_name => $file->{file_name},
+            });
         }
     };
 
@@ -535,6 +545,7 @@ sub _files_list {
     else {
         LibreCat::App::Helper::Helpers->new->publication->each($printer);
     }
+    $exporter->commit;
 }
 
 sub _files_load {
@@ -545,7 +556,7 @@ sub _files_load {
     local (*FH);
 
     my $helper = LibreCat::App::Helper::Helpers->new;
-    my $importer = Catmandu->importer('TSV', file => $filename);
+    my $importer = Catmandu->importer('YAML', file => $filename);
 
     my $update_file = sub {
         my ($id, $files) = @_;
@@ -567,7 +578,7 @@ sub _files_load {
         date_created date_updated file_id
         file_name file_size open_access
         request_a_copy checksum
-        relation title description embargo
+        relation title description embargo embargo_to
     );
 
     my $current_id;
@@ -585,7 +596,7 @@ sub _files_load {
             }
 
             my $id = delete $file->{id};
-            croak "file - no id column found" unless defined $id;
+            croak "file - no _id column found" unless defined $id;
             $current_id //= $id;
 
             if ($id eq $current_id) {
@@ -688,11 +699,7 @@ sub _files_reporter {
         = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
     my $files = $pkg->new(%$file_opt);
 
-    my $exporter = Catmandu->exporter(
-        'TSV',
-        header => 1,
-        fields => [qw(status container filename error)]
-    );
+    my $exporter = Catmandu->exporter('YAML');
 
     LibreCat::App::Helper::Helpers->new->publication->each(
         sub {

@@ -22,7 +22,7 @@ sub work {
 
     try {
         sendmail($mail);
-        $self->log->debug("send mail successfully to $opts->{to}");
+        $self->log->debug("sent mail successfully to $opts->{to}");
     }
     catch {
         $self->log->error("send mail error: $_");

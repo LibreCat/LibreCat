@@ -8,22 +8,22 @@
  * check if alias is already used
  */
 $(function () {
-$('.check_alias').keyup(function() {
+    $('.check_alias').keyup(function() {
         var object = $(this);
         var val = object.val();
         var id = $(object).data('id');
         $.ajax({
-                url: '/get_alias/' + id + '/' + val,
-                dataType: 'json',
-                success: function(data,textStatus){
-                        if (data.ok == 0) {
-                                object.closest('.form-group').addClass('has-error');
-                        } else {
-                                object.closest('.form-group').removeClass('has-error');
-                        }
-                },
+            url: '/get_alias/' + id + '/' + val,
+            dataType: 'json',
+            success: function(data,textStatus){
+                if (data.ok == 0) {
+                    object.closest('.form-group').addClass('has-error');
+                } else {
+                    object.closest('.form-group').removeClass('has-error');
+                }
+            },
         });
-});
+    });
 });
 
 $(function() {
@@ -31,16 +31,16 @@ $(function() {
         html: true,
         trigger: "manual",
     });
-        $('.toggle_help').click(function() {
-            if($(this).hasClass('toggled')){
-                $(this).removeClass('toggled');
-                $('.helpme').tooltip('hide');
-            }
-            else{
-                $(this).addClass('toggled');
-                $('.helpme').tooltip('show');
-            }
-        });
+    $('.toggle_help').click(function() {
+        if($(this).hasClass('toggled')){
+            $(this).removeClass('toggled');
+            $('.helpme').tooltip('hide');
+        }
+        else{
+            $(this).addClass('toggled');
+            $('.helpme').tooltip('show');
+        }
+    });
 });
 
 /**
@@ -49,16 +49,16 @@ $(function() {
  * @param direction = [edit|cancel] display or hide form
  */
 function editAuthorIds(direction){
-        if(direction == "edit"){
-                $('.authorIds').css('display','none');
-                $('.authorIds_input').attr('style','display:display');
-                $('#author_ids_edit').attr('onclick',"editAuthorIds('cancel')");
-        }
-        else if(direction == "cancel"){
-                $('.authorIds').attr('style','display:display');
-                $('.authorIds_input').attr('style','display:none');
-                $('#author_ids_edit').attr('onclick',"editAuthorIds('edit')");
-        }
+    if(direction == "edit"){
+        $('.authorIds').css('display','none');
+        $('.authorIds_input').attr('style','display:display');
+        $('#author_ids_edit').attr('onclick',"editAuthorIds('cancel')");
+    }
+    else if(direction == "cancel"){
+        $('.authorIds').attr('style','display:display');
+        $('.authorIds_input').attr('style','display:none');
+        $('#author_ids_edit').attr('onclick',"editAuthorIds('edit')");
+    }
 }
 
 /**
@@ -67,22 +67,22 @@ function editAuthorIds(direction){
  * @param pub_id
  */
 function generate_link(file_id, pub_id){
-        var url = '/rc/' + pub_id + '/' + file_id;
-        var csrfToken = $("meta[name='csrf_token']").attr("content");
-        $.ajax({
-            type: 'POST',
-            url: url,
-            headers: {
-               "X-CSRF-Token": csrfToken
-            },
-            data: {approved: 1},
-            dataType: 'json',
-            success: function(data) {
-                var request_url = data.url;
-                $("ul[id$='_rac_dd_" + file_id + "'] li input").val(request_url);
-                $('ul[id$="_rac_dd_' + file_id + '"]').dropdown('toggle');
-            }
-        });
+    var url = '/rc/' + pub_id + '/' + file_id;
+    var csrfToken = $("meta[name='csrf_token']").attr("content");
+    $.ajax({
+        type: 'POST',
+        url: url,
+        headers: {
+           "X-CSRF-Token": csrfToken
+        },
+        data: {approved: 1},
+        dataType: 'json',
+        success: function(data) {
+            var request_url = data.url;
+            $("ul[id$='_rac_dd_" + file_id + "'] li input").val(request_url);
+            $('ul[id$="_rac_dd_' + file_id + '"]').dropdown('toggle');
+        }
+    });
 }
 
 /**
@@ -97,26 +97,16 @@ function generate_link(file_id, pub_id){
  */
 
 $(function () {
-        $('.change_mode').click(function(){
-                if($('#edit_mode').val() == "normal"){
-                        $('#edit_mode').val('expert');
-                }
-                else{
-                        $('#edit_mode').val('normal');
-                }
-                $('#edit_form').attr('action','/librecat/record/change_mode');
-                $('#edit_form').submit();
-        });
-        $('.change_type').click(function(){
-                var sure = confirm("Changing the publication type may result in loss of data if the new type uses different fields from the previous one! Proceed with caution.");
-                if(sure){
-                        var newtype = $(this).data('val');
-                        $('#id_type').val(newtype);
-                        $('#id_select_type').remove();
-                        $('#edit_form').attr('action','/librecat/record/change_mode');
-                        $('#edit_form').submit();
-                }
-        });
+    $('.change_type').click(function(){
+        var sure = confirm("Changing the publication type may result in loss of data if the new type uses different fields from the previous one! Proceed with caution.");
+        if(sure){
+            var newtype = $(this).data('val');
+            $('#id_type').val(newtype);
+            $('#id_select_type').remove();
+            $('#edit_form').attr('action','/librecat/record/change_mode');
+            $('#edit_form').submit();
+        }
+    });
 });
 
 

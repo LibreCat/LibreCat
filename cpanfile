@@ -19,7 +19,7 @@ requires 'Business::ISBN', 0;
 requires 'Module::Install', '1.16';
 
 # Catmandu
-requires 'Catmandu', '>=1.0506';
+requires 'Catmandu', '>=1.06';
 requires 'Catmandu::Exporter::Table';
 requires 'Search::Elasticsearch', '>=5.02';
 requires 'Search::Elasticsearch::Client::1_0','>=5.02';
@@ -43,9 +43,7 @@ requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
 requires 'Dancer::Plugin::Catmandu::OAI', '>=0.04';
 requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
-requires 'Dancer::Plugin::Email';
 requires 'Dancer::Plugin::Auth::Tiny';
-requires 'Dancer::Plugin::DirectoryView';
 requires 'Dancer::Plugin::StreamData';
 requires 'Dancer::Logger::Log4perl';
 requires 'Dancer::Session::PSGI';

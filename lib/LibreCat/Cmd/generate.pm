@@ -65,12 +65,6 @@ sub _generate_cleanup {
 
         unlink glob("$forms_path/*.tt");
 
-        my $expert_path    = $template_paths->[0] . '/backend/forms/expert';
-
-        print "$expert_path\n";
-
-        unlink glob("$expert_path/*.tt");
-
         my $admin_path     = $template_paths->[0] . '/admin/forms';
 
         print "$admin_path\n";
@@ -186,9 +180,6 @@ sub _generate_forms {
         if ($type_hash->{fields}) {
             print "Generating $output_path/$type.tt\n";
             $tt->process("master.tt", $type_hash, "$type.tt")
-                || die $tt->error(), "\n";
-            print "Generating $output_path/expert/$type.tt\n";
-            $tt->process("master_expert.tt", $type_hash, "expert/$type.tt")
                 || die $tt->error(), "\n";
         }
     }

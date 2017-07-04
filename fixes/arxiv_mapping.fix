@@ -7,7 +7,7 @@ add_field('type','preprint')
 replace_all('id','http://arxiv.org/abs/(.*)v[0-9]','$1')
 copy_field('id','publication')
 prepend('publication','arXiv:')
-move_field('id','external_id.arxiv')
+move_field(id,external_id.arxiv.$append)
 
 # abstract, keywords
 move_field('summary','abstract.0.text')

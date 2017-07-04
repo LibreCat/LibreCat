@@ -21,10 +21,10 @@
 [%- relLinkRd = [] %]
 [%- relLinkSw = [] %]
 [%- relFile = [] %]
-[%- IF external_id.pmid %]
-  [%- epmc_cit = h.get_metrics('epmc_citations',external_id.pmid) %]
-  [%- epmc_ref = h.get_metrics('epmc_references',external_id.pmid) %]
-  [%- ebi_data = h.get_metrics('epmc_dblinks',external_id.pmid) %]
+[%- IF external_id.pmid.0 %]
+  [%- epmc_cit = h.get_metrics('epmc_citations',external_id.pmid.0) %]
+  [%- epmc_ref = h.get_metrics('epmc_references',external_id.pmid.0) %]
+  [%- ebi_data = h.get_metrics('epmc_dblinks',external_id.pmid.0) %]
 [%- END -%]
 
 [%- FOREACH key IN related_material.keys %]
@@ -316,29 +316,29 @@
     <!-- Sources -->
     [%- IF external_id %]
 
-          [%- IF external_id.isi %]
+          [%- IF external_id.isi.0 %]
           <h3 id="wos">Web of Science</h3>
-          <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi %]">[% h.loc("frontdoor.view_wos") %]&reg;</a>
+          <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% external_id.isi.0 %]">[% h.loc("frontdoor.view_wos") %]&reg;</a>
           [%- END %]
 
 	  [%- IF external_id.pmid OR  external_id.arxiv OR external_id.inspire OR external_id.scoap3 %]
 	    <h3>[% h.loc("frontdoor.sources") %]</h3>
 
-	    [%- IF external_id.pmid %]
-	    <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid %]<br>
-	    <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid %]">Europe PMC</a></p>
+	    [%- IF external_id.pmid.0 %]
+	    <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid.0 %]<br>
+	    <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid.0 %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid.0 %]">Europe PMC</a></p>
 	    [%- END %]
 
-	    [%- IF external_id.arxiv %]
-	    <p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv %]">[% external_id.arxiv %]</a></p>
+	    [%- IF external_id.arxiv.0 %]
+	    <p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv.0 %]">[% external_id.arxiv.0 %]</a></p>
 	    [%- END %]
 
-	    [%- IF external_id.inspire %]
-	    <p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire %]">[% external_id.inspire %]</a></p>
+	    [%- IF external_id.inspire.0 %]
+	    <p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire.0 %]">[% external_id.inspire.0 %]</a></p>
 	    [%- END %]
 
-	    [%- IF external_id.scoap3 %]
-	    <p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3 %]">[% external_id.scoap3 %]</a></p>
+	    [%- IF external_id.scoap3.0 %]
+	    <p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3.0 %]">[% external_id.scoap3.0 %]</a></p>
 	    [%- END %]
 	  [%- END %]
     [%- END %]

@@ -2,6 +2,14 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.7.0 2017-07-03
+    - new command: file_store move
+    - move tasks to job queue
+    - GH #272: remove fix hash_array(), new data structure
+      for field external_id (e.g. external.id.pmid.0 instead of external_id.pmid);
+      apply migrate/migrate_v0.7.0.fix to the publication bag and re-index
+    - GH #276: delete 'embargo_to' when 'embargo' is deleted
+
 0.6.2 2017-05-24
     - improved test coverage
     - small bug fixes

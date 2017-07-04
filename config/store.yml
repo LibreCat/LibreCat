@@ -904,11 +904,11 @@ search:
               funder: {type: string, include_in_all: true}
               exact: {type: string, analyzer: name}
           funded: {type: string, analyzer: tag}
-          sc39: {type: string, anlyzer: tag}
+          sc39: {type: string, analyzer: tag}
           start_date:
             type: multi_field
             fields:
-              start_date: {type: string, anlyzer: datestring}
+              start_date: {type: string, analyzer: datestring}
               exact: {type: string, analyzer: tag}
           end_date:
             type: multi_field
@@ -1019,9 +1019,6 @@ search:
                 properties:
                   _id: {type: string, index: not_analyzed, include_in_all: true}
           proj: {type: byte}
-          metrics:
-            properties:
-              timesCited: {type: integer}
           project:
             properties:
               _id: {type: string, index: not_analyzed, include_in_all: true}
@@ -1163,12 +1160,12 @@ search:
           start_date:
             type: multi_field
             fields:
-              start_date: {type: string, anlyzer: datestring}
+              start_date: {type: string, analyzer: datestring}
               exact: {type: string, analyzer: tag}
           end_date:
             type: multi_field
             fields:
-              start_date: {type: string, anlyzer: datestring}
+              start_date: {type: string, analyzer: datestring}
               exact: {type: string, analyzer: tag}
           department:
             properties:

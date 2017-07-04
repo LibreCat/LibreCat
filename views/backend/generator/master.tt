@@ -1,61 +1,30 @@
-{% editmode = "normal" %}
 [% path = request.path -%]
 [% backend = path.match('librecat') ? 1 : 0 -%]
 [% thisPerson = h.get_person(session.personNumber) -%]
-[% edit_mode = "normal" -%]
 [% lang = session.lang -%]
 [% lf = h.config.locale.$lang.forms -%]
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN backend/generator/master.tt -->
-
+<!-- BEGIN backend/generator/master_expert.tt -->
 <!-- changes here must be generated -->
-
 <div class="col-md-11 col-md-offset-1">
 
   <div class="page-header" id="banner">
     <div class="row">
       <div class="col-sm-8">
-      [% IF title %]
-	<h1>[% title %]</h1>
-      [% ELSE %]
+      [%- IF title %]
+	    <h1>[% title %]</h1>
+      [%- ELSE %]
 	<h1 class="margin-top0">[% h.loc("forms.${type}.label") %]</h1>
       [% END%]
       </div>
       <div class="col-sm-4 text-right">
-	  </div>
+      </div>
     </div>
   </div>
 
   <div class="row"></div>
-
-  <ul class="nav nav-tabs" id="tabs-left">
-    <li id="li_basic_fields" class="active">
-      <a class="change_tab" href="#basic_fields">[% h.loc("forms.${type}.tab.basic_fields") %]</a>
-    </li>
-    {% IF fields.file_upload %}
-    <li id="li_file_upload">
-      <a class="change_tab" href="#file_upload">[% h.loc("forms.${type}.tab.file_upload") %]</a>
-    </li>
-    {% END %}
-    {% IF fields.supplementary_fields %}
-    <li id="li_supplementary_fields">
-      <a class="change_tab" href="#supplementary_fields">[% h.loc("forms.${type}.tab.supplementary_fields") %]</a>
-    </li>
-    {% END %}
-    {% IF fields.related_material %}
-    <li id="li_related_material">
-      <a class="change_tab" href="#related_material">[% h.loc("forms.${type}.tab.related_material") %]</a>
-    </li>
-    {% END %}
-
-    <li class="navbar-right">
-      <a class="btn btn-default change_mode hidden-xs">[% lf.sp_form %]</a>
-    </li>
-  </ul>
-
-  <div class="clearfix"></div>
 
   <form action="/librecat/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="[% type %]" id="id_type"/>
@@ -65,92 +34,83 @@
     <input type="hidden" name="date_created" value="[% date_created %]" />
     <input type="hidden" name="creator.login" value="[% creator ? creator.login : thisPerson.login %]" />
     <input type="hidden" name="creator.id" value="[% creator ? creator.id : thisPerson._id %]" />
-    <input type="hidden" name="edit_mode" id="edit_mode" value="normal" />
+    <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
 
     <div class="tab tab-content edit-form">
-
+      {% INCLUDE fields/buttonrow_tab.tt %}
       <!-- STEP 1 -->
-      <div class="tab-pane active" id="basic_fields">
+      <div id="basic_fields" class="tab_section">
 
       <div class="hidden bg-danger" id="mandatory-field-error">
         <p>[% h.loc("forms.mandatory_error") %]</p>
       </div>
 
-{% IF fields.basic_fields %}
-  {% INCLUDE fields/buttonrow_tab.tt right_href="#file_upload" %}
-  {% FOREACH key IN field_order.basic_fields %}
-    {% IF fields.basic_fields.$key %}
-    {% template = "fields/" _ key _ ".tt" %}
+{%- IF fields.basic_fields %}
+  <h3>[% h.loc("forms.${type}.tab.basic_fields") %]</h3>
+  {%- FOREACH key IN field_order.basic_fields %}
+    {%- IF fields.basic_fields.$key %}
+    {%- template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
-    {% END %}
-  {% END %}
-  {% INCLUDE fields/buttonrow_tab.tt right_href="!!!!file_upload" %}
-{% END %}
-
+    {%- END %}
+  {%- END %}
+{%- END %}
       </div><!-- tab-pane -->
 
       <!-- STEP 2 -->
-      <div class="tab-pane" id="file_upload">
-
+      <div id="file_upload" class="tab_section">
 {% IF fields.file_upload %}
-  {% INCLUDE fields/buttonrow_tab.tt left_href="#basic_fields" right_href="#supplementary_fields" %}
+  <h3>[% h.loc("forms.${type}.tab.file_upload") %]</h3>
   {% FOREACH key IN field_order.file_upload %}
     {% IF fields.file_upload.$key %}
     {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
     {% END %}
   {% END %}
-  {% INCLUDE fields/buttonrow_tab.tt left_href="#basic_fields" right_href="#supplementary_fields" %}
 {% END %}
 
       </div><!-- tab-pane -->
 
       <!-- STEP 3 -->
-      <div class="tab-pane" id="supplementary_fields">
-
-{% IF fields.supplementary_fields %}
-  {% INCLUDE fields/buttonrow_tab.tt left_href="#file_upload" right_href="#related_material" %}
-  {% FOREACH key IN field_order.supplementary_fields %}
-    {% IF fields.supplementary_fields.$key %}
-    {% template = "fields/" _ key _ ".tt" %}
+      <div id="supplementary_fields" class="tab_section">
+{%- IF fields.supplementary_fields %}
+  <h3>[% h.loc("forms.${type}.tab.supplementary_fields") %]</h3>
+  {%- FOREACH key IN field_order.supplementary_fields %}
+    {%- IF fields.supplementary_fields.$key %}
+    {%- template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
-    {% END %}
-  {% END %}
-  {% INCLUDE fields/buttonrow_tab.tt left_href="#file_upload" right_href="#related_material" %}
-{% END %}
+    {%- END %}
+  {%- END %}
+{%- END %}
 
       </div><!-- tab-pane -->
 
       <!-- STEP 4 -->
-      <div class="tab-pane" id="related_material">
-
-{% IF fields.related_material %}
-  {% INCLUDE fields/buttonrow_tab.tt left_href="#supplementary_fields" %}
-  {% FOREACH key IN field_order.related_material %}
-    {% IF fields.related_material.$key %}
-    {% template = "fields/" _ key _ ".tt" %}
+      <div id="related_material" class="tab_section">
+{%- IF fields.related_material %}
+  <h3>[% h.loc("forms.${type}.tab.related_material") %]</h3>
+  {%- FOREACH key IN field_order.related_material %}
+    {%- IF fields.related_material.$key %}
+    {%- template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
-    {% END %}
-  {% END %}
-  {% INCLUDE fields/buttonrow_tab.tt left_href="#supplementary_fields" %}
-{% END %}
+    {%- END %}
+  {%- END %}
+{%- END %}
 
       </div><!-- tab-pane -->
+      {% INCLUDE fields/buttonrow_tab.tt %}
 
     </div><!-- tab-content -->
   </form>
 
-{% IF fields.file_upload %}
+{%- IF fields.file_upload %}
 {% INCLUDE fields/modal_fileupload.tt %}
-{% END %}
+{%- END %}
 
-</div><!-- col-md-11 -->
+</div><!-- col-md -->
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
 </script>
 
-<!-- END backend/generator/master.tt -->
-[% lang = session.lang %]
-[% lf = h.config.locale.$lang %]
+<!-- END backend/generator/master_expert.tt -->
 [% INCLUDE footer.tt %]

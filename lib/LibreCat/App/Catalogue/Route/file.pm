@@ -11,7 +11,6 @@ All these must be public.
 use Catmandu::Sane;
 use Catmandu qw(export_to_string);
 use Dancer ':syntax';
-use Dancer::Plugin::Email;
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
 use LibreCat::App::Helper;
@@ -115,8 +114,6 @@ Author approves the request. Email will be sent to user.
 =cut
 
 get '/rc/approve/:key' => sub {
-    require Dancer::Plugin::Email;
-
     my $bag  = Catmandu->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to approve." unless $data;
@@ -127,18 +124,19 @@ get '/rc/approve/:key' => sub {
     my $body = export_to_string({key => params->{key}, host => h->host},
         'Template', template => 'views/email/req_copy_approve.tt');
 
+    my $job = {
+        to      => $data->{user_email},
+        subject => h->config->{request_copy}->{subject},
+        body    => $body,
+    };
+
     try {
-        email {
-            to      => $data->{user_email},
-            subject => h->config->{request_copy}->{subject},
-            body    => $body,
-        };
+        h->queue->add_job('mailer', $job);
         return
             "Thank you for your approval. The user will be notified to download the file.";
-
     }
     catch {
-        return "Could not send email: $_";
+        h->log->error("Could not send email: $_");
     }
 };
 
@@ -150,25 +148,25 @@ to user. Delete request key from database.
 =cut
 
 get '/rc/deny/:key' => sub {
-    require Dancer::Plugin::Email;
-
     my $bag  = Catmandu->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to deny." unless $data;
 
+    my $job = {
+        to      => $data->{user_email},
+        subject => h->config->{request_copy}->{subject},
+        body    => export_to_string(
+            {}, 'Template', template => 'views/email/req_copy_deny.tt'
+        ),
+    };
+
     try {
-        email {
-            to      => $data->{user_email},
-            subject => h->config->{request_copy}->{subject},
-            body    => export_to_string(
-                {}, 'Template', template => 'views/email/req_copy_deny.tt'
-            ),
-        };
+        h->queue->add_job('mailer', $job);
         $bag->delete(params->{key});
         return "The user will be notified that the request has been denied.";
     }
     catch {
-        error "Could not send email: $_";
+        h->log->error("Could not send email: $_");
     }
 };
 
@@ -207,8 +205,6 @@ Request a copy of the publication. Email will be sent to the author.
 =cut
 
 any '/rc/:id/:file_id' => sub {
-    require Dancer::Plugin::Email;
-
     my $bag = Catmandu->store->bag('reqcopy');
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
@@ -252,17 +248,18 @@ any '/rc/:id/:file_id' => sub {
             'Template',
             template => 'views/email/req_copy.tt',
         );
+        my $job = {
+            to      => $file_creator_email,
+            subject => h->config->{request_copy}->{subject},
+            body    => $mail_body,
+        };
+
         try {
-            my $mail_response = email {
-                to      => $file_creator_email,
-                subject => h->config->{request_copy}->{subject},
-                body    => $mail_body,
-            };
-            return redirect "/publication/" . params->{id}
-                if $mail_response =~ /success/i;
+            h->queue->add_job('mailer', $job);
+            return redirect "/publication/" . params->{id};
         }
         catch {
-            error "Could not send email: $_";
+            h->log->error("Could not send email: $_");
         }
     }
     else {
