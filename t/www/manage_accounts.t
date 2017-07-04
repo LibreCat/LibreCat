@@ -94,7 +94,7 @@ note("editing account");
 
     $mech->content_contains("1 Results", "found 1 results");
 
-    $mech->follow_link_ok( { url => '/librecat/admin/account/edit/4321'}  , 'follow edit link');
+    $mech->follow_link_ok( { url => '/librecat/admin/account/edit/1'}  , 'follow edit link');
 
     $mech->content_contains("Edit Account for User, Test", "found the correct user");
 

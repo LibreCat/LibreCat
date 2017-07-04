@@ -20,11 +20,8 @@ List persons alphabetically
 get qr{/person} => sub {
     my $c = params->{browse} // 'a';
 
-    # $c = 'A' unless defined($c) && length($c);
-
-    my $cql = $c ? ["lastname=" . lc $c . "*"] : '';
     my %search_params = (
-        cql   => $cql,
+        cql   => ["lastname=" . lc $c . "*"],
         sort  => h->config->{default_person_sort},
         start => 0,
         limit => 1000
@@ -50,7 +47,7 @@ get qr{/person} => sub {
     template 'person/list', $hits;
 };
 
-=head2 GET /person/:id
+=head2 GET /person/:id_or_alias{/data}
 
 Returns a person's profile page, including publications,
 research data and author IDs.
