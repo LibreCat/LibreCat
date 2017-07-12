@@ -196,7 +196,12 @@ sub _list {
         else {
             if ($args[0] && $args[0] eq 'recursive') {
                 for (@files) {
-                    printf "%s %s\n", $key, $_->key;
+                    printf "%s %s %s %s %s\n"
+                            , $key
+                            , $_->key
+                            , strftime("%Y-%m-%dT%H:%M:%S", localtime($_->modified))
+                            , $_->size
+                            , $_->md5;
                 }
             }
             else {
