@@ -219,17 +219,24 @@ sub get_count {
 }
 
 # main: call the test routines
-our $driver = Selenium::Remote::Driver->new(browser_name => 'chrome');
+SKIP: {
 
-test_home();
-test_search('einstein', '2 Publications');
-test_search('', '17 Publications');
-test_publication();
-test_data_publication();
-test_author();
-test_project();
-test_department();
+    unless ($ENV{SELENIUM_TEST}) {
+        skip("No Selenium instance. You may want to run docker run -d -p 4444:4444 selenium/standalone-chrome' and set SELENIUM_TEST to run these tests.", 5);
+    }
 
-$driver->quit;
+    our $driver = Selenium::Remote::Driver->new(browser_name => 'chrome');
+
+    test_home();
+    test_search('einstein', 'Publications');
+    test_search('', 'Publications');
+    test_publication();
+    test_data_publication();
+    test_author();
+    test_project();
+    test_department();
+
+    $driver->quit;
+}
 
 done_testing();
