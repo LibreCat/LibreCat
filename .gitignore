@@ -38,6 +38,7 @@ public/images/dummy.jpg
 public/javascripts/MathJax/*
 public/javascripts/commonmarkjs/*
 sessions/
+t/Selenium/run-selenium.sh
 t/tmp/*
 tmp/*
 uploads/
