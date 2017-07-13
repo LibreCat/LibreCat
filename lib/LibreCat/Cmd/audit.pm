@@ -61,8 +61,7 @@ sub _list {
     if ($pid) {
         $it = $it->select(id => $pid)->sorted(
             sub {
-                $_[0]->{time}
-                    cmp $_[1]->{time};
+                $_[0]->{time} cmp $_[1]->{time};
             }
         );
     }

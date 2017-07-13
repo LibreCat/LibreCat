@@ -48,7 +48,7 @@ sub _check {
 
     croak "usage: $0 check <FILE>" unless defined($file) && -r $file;
 
-    my $importer  = Catmandu->importer('YAML', file => $file);
+    my $importer = Catmandu->importer('YAML', file => $file);
     my $exporter;
 
     if (defined $out_file) {
@@ -64,16 +64,22 @@ sub _check {
             $cv->begin;
             if (defined $rec->{url}) {
                 http_head $rec->{url}, sub {
-                    my ( $body, $hdr ) = @_;
+                    my ($body, $hdr) = @_;
                     if ($exporter) {
-                        $exporter->add({_id => $rec->{_id}, url => $rec->{url}, http_status => $hdr->{Status}});
+                        $exporter->add(
+                            {
+                                _id         => $rec->{_id},
+                                url         => $rec->{url},
+                                http_status => $hdr->{Status}
+                            }
+                        );
                     }
                     else {
                         print "$rec->{_id} | $hdr->{Status} | $rec->{url}\n";
                     }
-		            $cv->end;
-                }
-            };
+                    $cv->end;
+                    }
+            }
         }
     );
 

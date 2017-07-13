@@ -18,6 +18,7 @@ Build*
 MANIFEST.bak
 META*
 MYMETA.*
+Vagrantfile
 blib/
 catmandu.local.yml
 cover_db/
@@ -42,7 +43,6 @@ t/Selenium/run-selenium.sh
 t/tmp/*
 tmp/*
 uploads/
-Vagrantfile
 vendor/
 views/admin/forms/
 views/backend/forms/

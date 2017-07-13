@@ -196,12 +196,9 @@ sub _list {
         else {
             if ($args[0] && $args[0] eq 'recursive') {
                 for (@files) {
-                    printf "%s %s %s %s %s\n"
-                            , $key
-                            , $_->key
-                            , strftime("%Y-%m-%dT%H:%M:%S", localtime($_->modified))
-                            , $_->size
-                            , $_->md5;
+                    printf "%s %s %s %s %s\n", $key, $_->key,
+                        strftime("%Y-%m-%dT%H:%M:%S",
+                        localtime($_->modified)), $_->size, $_->md5;
                 }
             }
             else {
@@ -362,7 +359,8 @@ sub _purge {
 sub _move {
     my ($self, $key, $name) = @_;
 
-    croak "move - need a key and file_store" unless defined($key) && defined($name);
+    croak "move - need a key and file_store"
+        unless defined($key) && defined($name);
 
     my $file_store = $self->file_store($name);
     my $file_opt   = $self->file_opt($name);
@@ -373,56 +371,56 @@ sub _move {
 
     croak "move - can't create `$name` store" unless $target_store;
 
-    my $source_store     = $self->app->global_options->{store};
+    my $source_store = $self->app->global_options->{store};
 
     if (-r $key) {
-        local(*F);
-        open(F,$key) || croak "move - failed to open `$key` for reading";
-        while(<F>) {
+        local (*F);
+        open(F, $key) || croak "move - failed to open `$key` for reading";
+        while (<F>) {
             chomp;
-            $self->_move_files($source_store,$target_store,$_);
+            $self->_move_files($source_store, $target_store, $_);
         }
         close(F);
     }
     elsif (my $key_store = $self->file_store($key)) {
-        my $key_opt   = $self->file_opt($key);
-        my $key_store = $self->load($key_store,$key_opt);
+        my $key_opt = $self->file_opt($key);
+        my $key_store = $self->load($key_store, $key_opt);
 
         my $gen = $key_store->list;
 
         while (my $key = $gen->()) {
-            $self->_move_files($key_store,$target_store,$key);
+            $self->_move_files($key_store, $target_store, $key);
         }
     }
     else {
-        $self->_move_files($source_store,$target_store,$key);
+        $self->_move_files($source_store, $target_store, $key);
     }
 
     0;
 }
 
 {
-    my $_mb_sec_stats = { now => time, total => 0 };
+    my $_mb_sec_stats = {now => time, total => 0};
 
     sub _mb_sec {
-        my ($self,$bytes) = @_;
+        my ($self, $bytes) = @_;
 
         $_mb_sec_stats->{total} += $bytes // 0;
 
         my $elapsed = (time - $_mb_sec_stats->{now}) || 1;
 
-        return $_mb_sec_stats->{total}/(1000*1000*$elapsed);
+        return $_mb_sec_stats->{total} / (1000 * 1000 * $elapsed);
     }
 }
 
 sub _move_files {
-    my ($self,$source_store,$target_store,$key) = @_;
+    my ($self, $source_store, $target_store, $key) = @_;
 
     my $curr_time = sub {
-        strftime("%Y-%m-%dT%H:%M:%S",localtime(time));
+        strftime("%Y-%m-%dT%H:%M:%S", localtime(time));
     };
 
-    printf STDERR "%s [%-3.3f] $key " , $curr_time->(), $self->_mb_sec();
+    printf STDERR "%s [%-3.3f] $key ", $curr_time->(), $self->_mb_sec();
 
     my $source_container = $source_store->get($key);
 
@@ -451,7 +449,8 @@ sub _move_files {
         my $size = $file->size;
         my $io   = $file->fh;
 
-        printf STDERR "%s [%-3.3f] $key/$name ", $curr_time->() , $self->_mb_sec($size);
+        printf STDERR "%s [%-3.3f] $key/$name ", $curr_time->(),
+            $self->_mb_sec($size);
         my $res = $target_container->add($name, $io);
         $target_container->commit;
         printf STDERR " %s\n", $res ? 'OK' : 'ERROR';

@@ -28,7 +28,7 @@ subtest 'id without cmd' => sub {
     ok $result->error, 'ok threw an exception';
     like $result->error, qr/should be one of/, 'error message';
 
-    $result = test_app(qq|LibreCat::CLI| => ['id','boom']);
+    $result = test_app(qq|LibreCat::CLI| => ['id', 'boom']);
     ok $result->error, 'ok threw an exception';
     like $result->error, qr/should be one of/, 'error message';
 };
@@ -36,14 +36,14 @@ subtest 'id without cmd' => sub {
 subtest 'id get' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['id', 'get']);
     ok !$result->error, 'ok threw no exception';
-    ok $result->output , 'got an output';
+    ok $result->output, 'got an output';
     like $result->output, qr/\d+/, 'output looks good';
 };
 
 subtest 'id set' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['id', 'set', '100']);
     ok !$result->error, 'ok threw no exception';
-    ok $result->output , 'got an output';
+    ok $result->output, 'got an output';
     like $result->output, qr/\d+/, 'output looks good';
 
     $result = test_app(qq|LibreCat::CLI| => ['id', 'get']);

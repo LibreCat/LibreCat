@@ -36,7 +36,7 @@ SKIP: {
             ]
         );
 
-        my $result = test_app(qq|LibreCat::CLI| => ['queue','status']);
+        my $result = test_app(qq|LibreCat::CLI| => ['queue', 'status']);
         ok !$result->error, 'ok threw no exception';
 
         my $output = $result->stdout;

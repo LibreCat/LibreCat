@@ -11,10 +11,13 @@ BEGIN {
 }
 require_ok $pkg;
 
-dies_ok { $pkg->new() } 'client_id and client_secret required';
-dies_ok { $pkg->new(client_id => 'freaky_app_123') } 'client_secret required';
-dies_ok { $pkg->new(client_secret => 'secr3t') } 'client_id required';
+dies_ok {$pkg->new()} 'client_id and client_secret required';
+dies_ok {$pkg->new(client_id => 'freaky_app_123')} 'client_secret required';
+dies_ok {$pkg->new(client_secret => 'secr3t')} 'client_id required';
 
-lives_ok { $pkg->new(client_id => 'freaky_app_123', client_secret => 'secr3t') } 'lives ok';
+lives_ok {
+    $pkg->new(client_id => 'freaky_app_123', client_secret => 'secr3t')
+}
+'lives ok';
 
 done_testing;

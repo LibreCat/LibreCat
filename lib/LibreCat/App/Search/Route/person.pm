@@ -68,9 +68,8 @@ get qr{/person/(.*?)/?(data)*} => sub {
 
         if (!$hits->{total}) {
             status '404';
-            return template 'error', {
-                message => "No researcher found found with ID $id"
-            };
+            return template 'error',
+                {message => "No researcher found found with ID $id"};
         }
         else {
             my $person = $hits->first;

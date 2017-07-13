@@ -106,7 +106,7 @@ sub commit {
 }
 
 sub read_container {
-    my ($class, $path,$key) = @_;
+    my ($class, $path, $key) = @_;
     croak "Need a path and a key" unless $path && $key;
 
     return undef unless -d $path;
@@ -127,7 +127,7 @@ sub create_container {
 
     File::Path::make_path($path);
 
-    $class->read_container($path,$key);
+    $class->read_container($path, $key);
 }
 
 sub delete_container {

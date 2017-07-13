@@ -10,14 +10,15 @@ use namespace::clean;
 
 with 'LibreCat::FileStore';
 
-has root     => (is => 'ro', required => '1');
-has uuid     => (is => 'ro', trigger => 1);
-has keysize  => (is => 'ro', default => 9 , trigger => 1);
+has root    => (is => 'ro', required => '1');
+has uuid    => (is => 'ro', trigger  => 1);
+has keysize => (is => 'ro', default  => 9, trigger => 1);
 
 sub _trigger_keysize {
     my $self = shift;
 
-    croak "keysize needs to be a multiple of 3" unless $self->keysize % 3 == 0;
+    croak "keysize needs to be a multiple of 3"
+        unless $self->keysize % 3 == 0;
 }
 
 sub _trigger_uuid {
@@ -29,8 +30,8 @@ sub _trigger_uuid {
 sub list {
     my ($self, $callback) = @_;
 
-    my $root     = $self->root;
-    my $keysize  = $self->keysize;
+    my $root    = $self->root;
+    my $keysize = $self->keysize;
 
     my $mindepth = ceil($keysize / 3);
     my $maxdepth = $mindepth + 1;
@@ -40,7 +41,9 @@ sub list {
         state $io;
 
         unless (defined($io)) {
-            open($io, "find -L $root -mindepth $mindepth -maxdepth $maxdepth -type d |");
+            open($io,
+                "find -L $root -mindepth $mindepth -maxdepth $maxdepth -type d |"
+            );
         }
 
         my $line = <$io>;
@@ -123,7 +126,7 @@ sub delete {
 }
 
 sub path_string {
-    my ($self,$key) = @_;
+    my ($self, $key) = @_;
 
     my $keysize = $self->keysize;
 

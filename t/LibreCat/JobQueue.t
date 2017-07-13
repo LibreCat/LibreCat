@@ -17,6 +17,7 @@ lives_ok {$pkg->new()} 'lives_ok';
 can_ok $pkg, $_ for qw(add_job job_status);
 
 {
+
     package T::Worker::Mock;
 
     sub do_work {

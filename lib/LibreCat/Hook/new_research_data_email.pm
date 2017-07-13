@@ -20,10 +20,10 @@ sub fix {
     h->log->info("Sending research_data submitted email.");
 
     my $job = {
-        from     => h->config->{research_data}->{from},
-        to       => h->config->{research_data}->{to},
-        subject  => h->config->{research_data}->{subject},
-        body     => $mail_body,
+        from    => h->config->{research_data}->{from},
+        to      => h->config->{research_data}->{to},
+        subject => h->config->{research_data}->{subject},
+        body    => $mail_body,
     };
 
     try {

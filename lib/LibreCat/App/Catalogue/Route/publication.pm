@@ -15,12 +15,9 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 
 sub access_denied_hook {
-    h->hook('publication-access-denied')->fix_around(
-        {
-            _id     => params->{id} ,
-            user_id => session->{personNumber} ,
-        }
-    );
+    h->hook('publication-access-denied')
+        ->fix_around(
+        {_id => params->{id}, user_id => session->{personNumber},});
 }
 
 =head1 PREFIX /record
@@ -38,9 +35,10 @@ Prints a list of available publication types + import form.
 Some fields are pre-filled.
 
 =cut
+
     get '/new' => sub {
-        my $type      = params->{type};
-        my $user      = h->get_person(session->{personNumber});
+        my $type = params->{type};
+        my $user = h->get_person(session->{personNumber});
 
         return template 'backend/add_new' unless $type;
 
@@ -52,7 +50,7 @@ Some fields are pre-filled.
             type       => $type,
             department => $user->{department},
             creator =>
-                {id => session->{personNumber}, login => session->{user},} ,
+                {id => session->{personNumber}, login => session->{user},},
             user_id => session->{personNumber},
         };
 
@@ -114,6 +112,7 @@ Displays record for id.
 Checks if the user has permission the see/edit this record.
 
 =cut
+
     get '/edit/:id' => sub {
         my $id = params->{id};
 
@@ -139,7 +138,7 @@ Checks if the user has permission the see/edit this record.
         $hook->fix_before($rec);
 
         my $templatepath = "backend/forms";
-        my $template     = $rec->{meta}->{template} // $rec->{type};
+        my $template = $rec->{meta}->{template} // $rec->{type};
 
         $rec->{return_url} = request->{referer} if request->{referer};
 
@@ -157,6 +156,7 @@ Saves the record in the database.
 Checks if the user has the rights to update this record.
 
 =cut
+
     post '/update' => sub {
         my $p = params;
 
@@ -205,6 +205,7 @@ Set status to 'returned'.
 Checks if the user has the rights to edit this record.
 
 =cut
+
     get '/return/:id' => sub {
         my $id = params->{id};
 
@@ -241,10 +242,11 @@ Checks if the user has the rights to edit this record.
 Deletes record with id. For admins only.
 
 =cut
-    get '/delete/:id' => sub {
-        my $id     = params->{id};
 
-        my $rec    = h->publication->get($id);
+    get '/delete/:id' => sub {
+        my $id = params->{id};
+
+        my $rec = h->publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -270,6 +272,7 @@ Deletes record with id. For admins only.
 Prints the frontdoor for every record.
 
 =cut
+
     get '/preview/:id' => sub {
         my $id = params->{id};
 
@@ -277,7 +280,7 @@ Prints the frontdoor for every record.
 
         $hits->{bag}
             = $hits->{type} eq "research_data" ? "data" : "publication";
-        $hits->{style} = h->config->{citation}->{csl}->{default_style};
+        $hits->{style}  = h->config->{citation}->{csl}->{default_style};
         $hits->{marked} = 0;
 
         template 'publication/record.tt', $hits;
@@ -290,10 +293,11 @@ Prints internal view, optionally as data dumper.
 For admins only!
 
 =cut
+
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec    = h->publication->get($id);
+        my $rec = h->publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -304,8 +308,7 @@ For admins only!
         my $exporter = Catmandu->exporter('YAML', file => \$export_string);
         $exporter->add($rec);
 
-        return template 'backend/internal_view',
-            {data => $export_string};
+        return template 'backend/internal_view', {data => $export_string};
     };
 
 =head2 GET /clone/:id
@@ -313,6 +316,7 @@ For admins only!
 Clones the record with ID :id and returns a form with a different ID.
 
 =cut
+
     get '/clone/:id' => sub {
         my $id  = params->{id};
         my $rec = h->publication->get($id);
@@ -326,7 +330,7 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{related_material};
         $rec->{_id} = h->new_record('publication');
 
-        my $template     = $rec->{type} . ".tt";
+        my $template = $rec->{type} . ".tt";
 
         return template "backend/forms/$template", $rec;
     };
@@ -336,6 +340,7 @@ Clones the record with ID :id and returns a form with a different ID.
 Publishes private records, returns to the list.
 
 =cut
+
     get '/publish/:id' => sub {
         my $id = params->{id};
 

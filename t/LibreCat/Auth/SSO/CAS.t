@@ -11,7 +11,7 @@ BEGIN {
 }
 require_ok $pkg;
 
-dies_ok { $pkg->new() } "cas_url required";
-lives_ok { $pkg->new(cas_url => 'sso.service.com') } 'lives ok';
+dies_ok {$pkg->new()} "cas_url required";
+lives_ok {$pkg->new(cas_url => 'sso.service.com')} 'lives ok';
 
 done_testing;

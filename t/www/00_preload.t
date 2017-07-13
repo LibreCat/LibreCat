@@ -34,8 +34,7 @@ for my $bag (qw(publication department project research_group user)) {
 
 note("cleaning forms");
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['generate', 'cleanup']);
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'cleanup']);
 
     print $result->stdout;
 
@@ -46,8 +45,7 @@ note("cleaning forms");
 
 note("generate forms");
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['generate', 'forms']);
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'forms']);
 
     print $result->stdout;
 
@@ -58,40 +56,41 @@ note("generate forms");
 
 note("loading test publications");
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['publication', 'add', 'devel/publications.yml']);
+    my $result
+        = test_app(
+        qq|LibreCat::CLI| => ['publication', 'add', 'devel/publications.yml']
+        );
 
     ok !$result->error, 'add threw no exception';
 }
 
 note("loading test project");
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['project', 'add', 'devel/project.yml']);
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['project', 'add', 'devel/project.yml']);
 
     ok !$result->error, 'add threw no exception';
 }
 
 note("loading test researcher");
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['user', 'add', 'devel/researcher.yml']);
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['user', 'add', 'devel/researcher.yml']);
 
     ok !$result->error, 'add threw no exception';
 }
 
 note("loading test department");
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['department', 'add', 'devel/department.yml']);
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['department', 'add', 'devel/department.yml']);
 
     ok !$result->error, 'add threw no exception';
 }
 
 note("generate departments");
 {
-    my $result = test_app(qq|LibreCat::CLI| =>
-        ['generate', 'departments']);
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'departments']);
 
     print $result->stdout;
 
