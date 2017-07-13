@@ -1,5 +1,18 @@
 # Selenium Tests
 
+## Run Selenium tests with docker
+
+```
+$ docker run -d -p 4444:4444 selenium/standalone-chrome
+```
+
+Then run the test with
+```
+$ prove -lv t/Selenium/librecat.t
+```
+
+## Alternatively install manually
+
 In order to run selenium you have to
 
 1. download [selenium-server-standalone-3.2.0.jar](http://www.seleniumhq.org/download/), and put a place which is accessible from your `$PATH`
