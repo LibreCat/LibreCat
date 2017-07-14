@@ -65,7 +65,7 @@ sub _generate_cleanup {
 
         unlink glob("$forms_path/*.tt");
 
-        my $admin_path     = $template_paths->[0] . '/admin/forms';
+        my $admin_path = $template_paths->[0] . '/admin/forms';
 
         print "$admin_path\n";
 
@@ -76,11 +76,11 @@ sub _generate_cleanup {
     {
         my $template_paths = $layers->template_paths;
 
-        my $output_path    = $template_paths->[0] . '/department';
+        my $output_path = $template_paths->[0] . '/department';
 
         if (-f "$output_path/nodes.tt") {
             print "$output_path/nodes.tt\n";
-            unlink "$output_path/nodes.tt"
+            unlink "$output_path/nodes.tt";
         }
 
         if (-f "$output_path/nodes_backend.tt") {
@@ -210,14 +210,14 @@ sub _generate_forms {
 
 sub _generate_departments {
     my ($self, $file) = @_;
-    my $h              = LibreCat::App::Helper::Helpers->new;
+    my $h = LibreCat::App::Helper::Helpers->new;
 
     my $layers         = $h->layers;
     my $template_paths = $layers->template_paths;
     my $output_path    = $template_paths->[0] . '/department';
 
-    my $pubs           = $h->publication;
-    my $it             = $h->department->searcher();
+    my $pubs = $h->publication;
+    my $it   = $h->department->searcher();
 
     my $HASH = {};
 
@@ -239,11 +239,14 @@ sub _generate_departments {
                 $root = $root->{tree}->{$id};
             }
 
-            my $id    = $item->{_id};
+            my $id = $item->{_id};
 
             return unless defined($id) && $id =~ /\S+/;
 
-            my $hits  = $pubs->search(cql_query => "department=$id AND status=public AND type<>research_data");
+            my $hits
+                = $pubs->search(cql_query =>
+                    "department=$id AND status=public AND type<>research_data"
+                );
             my $total = $hits->{total};
 
             $root->{tree}->{$id}->{name}    = $item->{name};
@@ -256,7 +259,8 @@ sub _generate_departments {
 
     path($output_path)->mkpath unless -d $output_path;
 
-    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt") || die "failed to write nodes.tt: $!";
+    open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt")
+        || die "failed to write nodes.tt: $!";
 
     $self->_template_printer($HASH, "publication", $fh);
 
@@ -264,7 +268,8 @@ sub _generate_departments {
 
     print STDERR "Output written to $output_path/nodes.tt\n";
 
-    open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt") || die "failed to write nodes_backend.tt : $!";
+    open($fh, '>:encoding(UTF-8)', "$output_path/nodes_backend.tt")
+        || die "failed to write nodes_backend.tt : $!";
 
     $self->_template_printer($HASH, "librecat", $fh);
 

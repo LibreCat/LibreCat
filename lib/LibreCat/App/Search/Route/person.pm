@@ -17,14 +17,11 @@ List persons alphabetically
 
 =cut
 
-get qr{/person/?([a-zA-Z]?)$} => sub {
-    my ($c) = splat;
+get qr{/person} => sub {
+    my $c = params->{browse} // 'a';
 
-    $c = 'A' unless defined($c) && length($c);
-
-    my $cql = $c ? ["lastname=" . lc $c . "*"] : '';
     my %search_params = (
-        cql   => $cql,
+        cql   => ["lastname=" . lc $c . "*"],
         sort  => h->config->{default_person_sort},
         start => 0,
         limit => 1000
@@ -50,30 +47,29 @@ get qr{/person/?([a-zA-Z]?)$} => sub {
     template 'person/list', $hits;
 };
 
-=head2 GET /person/:id
+=head2 GET /person/:id_or_alias{/data}
 
 Returns a person's profile page, including publications,
 research data and author IDs.
 
 =cut
 
-get qr{/person/(.[^/]{2,})/?(\w+)?/?} => sub {
+get qr{/person/(.*?)/?(data)*} => sub {
     my ($id, $modus) = splat;
 
     # Redirect to the alias if the other can't be found
     h->log->debug("trying to find user $id");
     unless (my $user = h->researcher->get($id)) {
         h->log->debug("trying to find user alias $id");
-        
+
         my %search_params = (cql => ["alias=$id"]);
 
         my $hits = LibreCat->searcher->search('researcher', \%search_params);
 
         if (!$hits->{total}) {
             status '404';
-            return template 'error', {
-                message => "No researcher found found with ID $id"
-            };
+            return template 'error',
+                {message => "No researcher found found with ID $id"};
         }
         else {
             my $person = $hits->first;
@@ -99,12 +95,12 @@ get qr{/person/(.[^/]{2,})/?(\w+)?/?} => sub {
     my $hits = LibreCat->searcher->search('publication', $p);
 
     # search for research hits (only to see if present and to display tab)
-    my $researchhits;
-    push @{$p->{cql}}, ("type=research_data", "person=$id", "status=public");
-    $p->{limit} = 1;
+    my $r;
+    push @{$r->{cql}}, ("type=research_data", "person=$id", "status=public");
+    $r->{limit} = 1;
 
-    h->log->debug("executing publication->search: " . to_dumper($p));
-    $hits->{researchhits} = LibreCat->searcher->search('publication', $p);
+    h->log->debug("executing publication->search: " . to_dumper($r));
+    $hits->{researchhits} = LibreCat->searcher->search('publication', $r);
 
     $p->{limit}    = h->config->{maximum_page_size};
     $hits->{id}    = $id;

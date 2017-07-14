@@ -168,7 +168,7 @@ sub handle_file {
 
         # Generate a new file_id if not one existed
         $fi->{file_id} = h->new_record('publication')
-                unless defined($fi->{file_id}) && length($fi->{file_id});
+            unless defined($fi->{file_id}) && length($fi->{file_id});
 
         h->log->debug("processing file-id: " . $fi->{file_id});
 
@@ -190,15 +190,20 @@ sub handle_file {
         # And, check if the first file changed...
         my $has_first_changed = 0;
         if ($prev_pub) {
-            my ($prev_fi) = grep {$_->{file_id} eq $fi->{file_id}} @{$prev_pub->{file}};
+            my ($prev_fi)
+                = grep {$_->{file_id} eq $fi->{file_id}} @{$prev_pub->{file}};
 
-            if (_is_file_metadata_changed($fi,$prev_fi)) {
-                _update_file_metadata($fi,$prev_fi);
+            if (_is_file_metadata_changed($fi, $prev_fi)) {
+                _update_file_metadata($fi, $prev_fi);
             }
 
             # Check if a new file has been reordered to the first one
-            if ($count == 0 && $pub->{file}->[0] && $prev_pub->{file}->[0] &&
-                $pub->{file}->[0]->{file_id} ne $prev_pub->{file}->[0]->{file_id}) {
+            if (   $count == 0
+                && $pub->{file}->[0]
+                && $prev_pub->{file}->[0]
+                && $pub->{file}->[0]->{file_id} ne
+                $prev_pub->{file}->[0]->{file_id})
+            {
                 $has_first_changed = 1;
             }
         }
@@ -403,6 +408,7 @@ sub _update_file_metadata {
     # Throw away the unimportant stuff
     for my $name (keys %$fi) {
         if (grep(/^$name$/, @$administrative_fields)) {
+
             # do nothing
         }
         elsif (!grep(/^$name$/, @$descriptive_fields)) {
@@ -420,10 +426,10 @@ sub _update_file_metadata {
         $fi->{$name} = $prev_fi->{$name};
     }
 
-    $fi->{open_access}    = $fi->{access_level} eq 'open_access' ? 1 : 0;
-    $fi->{date_created}   = h->now unless $fi->{date_created};
+    $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
+    $fi->{date_created} = h->now unless $fi->{date_created};
 
-    $fi->{date_updated}   = h->now;
+    $fi->{date_updated} = h->now;
 }
 
 sub _is_file_metadata_changed {
@@ -434,15 +440,18 @@ sub _is_file_metadata_changed {
         = h->config->{forms}->{dropzone_fields}->{descriptive} // [];
 
     for my $name (@$descriptive_fields) {
-        if (! exists $fi->{$name} && ! exists $prev_fi->{$name}) {
+        if (!exists $fi->{$name} && !exists $prev_fi->{$name}) {
+
             # nothing changed...
         }
-        elsif (defined($fi->{$name}) && defined($prev_fi->{$name}) &&
-                $fi->{$name} eq $prev_fi->{$name}) {
+        elsif (defined($fi->{$name})
+            && defined($prev_fi->{$name})
+            && $fi->{$name} eq $prev_fi->{$name})
+        {
             # nothing changed...
         }
         else {
-            $is_updated =1 ;
+            $is_updated = 1;
         }
     }
 

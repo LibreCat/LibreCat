@@ -6,7 +6,7 @@ use Test::Exception;
 my $pkg;
 
 BEGIN {
-    $pkg = 'LibreCat::Auth::SSO';
+    $pkg = 'LibreCat::Auth::SSO::Util';
     use_ok $pkg;
 }
 require_ok $pkg;

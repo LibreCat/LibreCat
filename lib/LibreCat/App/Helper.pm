@@ -316,13 +316,16 @@ sub update_record {
         $self->log->debug(Dancer::to_json($rec));
     }
 
-    $rec = $self->store_record($bag, $rec, validation_error => sub {
-        my $validator = shift;
+    $rec = $self->store_record(
+        $bag, $rec,
+        validation_error => sub {
+            my $validator = shift;
 
-        # At least cry foul when the record doesn't validate
-        $self->log->error($rec->{_id} . " not a valid publication!");
-        $self->log->error(Dancer::to_json($validator->last_errors));
-    });
+            # At least cry foul when the record doesn't validate
+            $self->log->error($rec->{_id} . " not a valid publication!");
+            $self->log->error(Dancer::to_json($validator->last_errors));
+        }
+    );
 
     $self->index_record($bag, $rec);
 
@@ -351,8 +354,8 @@ sub store_record {
         unless ($rec->{user_id}) {
 
             # Edit by a user via the command line?
-            my $super_id =
-                $self->config->{store}->{builtin_users}->{options}->{init_data}->[0]->{_id} // 'undef';
+            my $super_id = $self->config->{store}->{builtin_users}->{options}
+                ->{init_data}->[0]->{_id} // 'undef';
             $rec->{user_id} = $super_id;
         }
     }
@@ -374,7 +377,7 @@ sub store_record {
         'LibreCat::Validator');
 
     if ($validator_pkg) {
-        my $validator  = $validator_pkg->new;
+        my $validator = $validator_pkg->new;
 
         my @white_list = $validator->white_list;
 
@@ -384,14 +387,14 @@ sub store_record {
         for my $key (keys %$rec) {
             unless (grep(/^$key$/, @white_list)) {
                 $self->log->debug("deleting invalid key: $key");
-                delete $rec->{
-                    $key};
+                delete $rec->{$key};
             }
         }
 
         unless ($validator->is_valid($rec)) {
-            $opts{validation_error}->($validator,$rec)
-                    if $opts{validation_error} && ref($opts{validation_error}) eq 'CODE';
+            $opts{validation_error}->($validator, $rec)
+                if $opts{validation_error}
+                && ref($opts{validation_error}) eq 'CODE';
         }
     }
 

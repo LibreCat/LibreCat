@@ -6,6 +6,7 @@ use Test::More;
 use Test::Exception;
 
 my $pkg;
+
 BEGIN {
     $pkg = "Catmandu::Exporter::Cite";
     use_ok $pkg;

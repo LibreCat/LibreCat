@@ -15,6 +15,7 @@ use LibreCat::App::Helper;
 Project splash page for :id.
 
 =cut
+
 get qr{/project/([a-zA-Z0-9].*)} => sub {
     my ($id) = splat;
     my $proj = h->project->get($id);
@@ -31,6 +32,7 @@ get qr{/project/([a-zA-Z0-9].*)} => sub {
 Project page with alphabetical browsing.
 
 =cut
+
 get qr{/project/*} => sub {
     my $c = params->{browse} // 'a';
     my %search_params

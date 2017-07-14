@@ -21,17 +21,17 @@ require_ok $pkg;
     ok $result->error, 'threw an exception, file missing';
 }
 
-
 {
     my $result = test_app(qq|LibreCat::CLI| => ['url', 'check']);
 
     ok $result->error, 'threw an exception';
 
-    $result = test_app(qq|LibreCat::CLI| => ['url', 'check', 't/records/urls.yml']);
+    $result = test_app(
+        qq|LibreCat::CLI| => ['url', 'check', 't/records/urls.yml']);
     ok !$result->error, 'threw no exception';
 
     like $result->stdout, qr/200.*pub\.uni-bielefeld/, 'result looks good';
-    like $result->stdout, qr/200.*biblio\.ugent/, 'result looks good';
+    like $result->stdout, qr/200.*biblio\.ugent/,      'result looks good';
 }
 
 done_testing;

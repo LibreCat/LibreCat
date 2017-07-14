@@ -13,6 +13,7 @@ BEGIN {
 require_ok $pkg;
 
 {
+
     package T::Worker;
     use Moo;
     with $pkg;

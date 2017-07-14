@@ -55,7 +55,8 @@ require_ok $pkg;
 
     ok -f "t/layer/views/department/nodes.tt", "departments nodes generated";
 
-    ok -f "t/layer/views/department/nodes_backend.tt", "departments backend generated";
+    ok -f "t/layer/views/department/nodes_backend.tt",
+        "departments backend generated";
 }
 
 done_testing;

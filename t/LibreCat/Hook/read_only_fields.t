@@ -5,6 +5,7 @@ use Test::Exception;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
+
 BEGIN {
     $pkg = 'LibreCat::Hook::read_only_fields';
     use_ok $pkg;

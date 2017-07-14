@@ -5,6 +5,7 @@ use Test::Exception;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
+
 BEGIN {
     $pkg = 'LibreCat::Hook::new_research_data_datacite';
     use_ok $pkg;

@@ -8,27 +8,25 @@ use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Test::More;
 use Test::WWW::Mechanize::PSGI;
 
-my $app = eval {
-    require 'bin/app.pl';
-};
+my $app = eval {require 'bin/app.pl';};
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
 subtest 'sru' => sub {
-    $mech->get_ok( '/sru' );
-    $mech->content_like( qr/explainResponse/ );
+    $mech->get_ok('/sru');
+    $mech->content_like(qr/explainResponse/);
 
-    $mech->get_ok( 'sru?version=1.1&operation=searchRetrieve&query=einstein' );
-    $mech->content_like( qr/\<numberOfRecords\>/ );
+    $mech->get_ok('sru?version=1.1&operation=searchRetrieve&query=einstein');
+    $mech->content_like(qr/\<numberOfRecords\>/);
 };
 
 subtest '/oai' => sub {
-    $mech->get_ok( '/oai' );
-    $mech->content_like( qr/OAI-PMH/ );
+    $mech->get_ok('/oai');
+    $mech->content_like(qr/OAI-PMH/);
 
-    $mech->content_like( qr/illegal OAI verb/ );
-    $mech->get_ok( '/oai?verb=Identify' );
-    $mech->content_like( qr/\<repositoryName\>/ );
+    $mech->content_like(qr/illegal OAI verb/);
+    $mech->get_ok('/oai?verb=Identify');
+    $mech->content_like(qr/\<repositoryName\>/);
 };
 
 done_testing;

@@ -5,6 +5,7 @@ use Test::Exception;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
+
 BEGIN {
     $pkg = 'LibreCat::Hook::audit_message';
     use_ok $pkg;

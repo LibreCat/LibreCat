@@ -18,6 +18,7 @@ Build*
 MANIFEST.bak
 META*
 MYMETA.*
+Vagrantfile
 blib/
 catmandu.local.yml
 cover_db/
@@ -38,10 +39,10 @@ public/images/dummy.jpg
 public/javascripts/MathJax/*
 public/javascripts/commonmarkjs/*
 sessions/
+t/Selenium/run-selenium.sh
 t/tmp/*
 tmp/*
 uploads/
-Vagrantfile
 vendor/
 views/admin/forms/
 views/backend/forms/

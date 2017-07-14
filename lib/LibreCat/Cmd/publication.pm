@@ -269,9 +269,9 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret       = 0;
-    my $importer  = Catmandu->importer('YAML', file => $file);
-    my $helper    = LibreCat::App::Helper::Helpers->new;
+    my $ret      = 0;
+    my $importer = Catmandu->importer('YAML', file => $file);
+    my $helper   = LibreCat::App::Helper::Helpers->new;
     my $exporter;
 
     if (defined $out_file) {
@@ -289,19 +289,19 @@ sub _add {
             my $is_ok = 1;
 
             $helper->store_record(
-                        'publication',
-                        $rec,
-                        skip_citation => $skip_citation ,
-                        validation_error => sub {
-                            my $validator = shift;
-                            print STDERR join("\n",
-                                $rec->{_id},
-                                "ERROR: not a valid publication",
-                                @{$validator->last_errors}),
-                                "\n";
-                            $ret   = 2;
-                            $is_ok = 0;
-                        }
+                'publication',
+                $rec,
+                skip_citation    => $skip_citation,
+                validation_error => sub {
+                    my $validator = shift;
+                    print STDERR join("\n",
+                        $rec->{_id},
+                        "ERROR: not a valid publication",
+                        @{$validator->last_errors}),
+                        "\n";
+                    $ret   = 2;
+                    $is_ok = 0;
+                }
             );
 
             return 0 unless $is_ok;
@@ -472,15 +472,19 @@ sub _embargo {
 
             # Show __all__ files and indicate which ones should
             # be switched to open_access.
-            $exporter->add({
-                id => $item->{_id},
-                file_id => $file->{file_id},
-                access_level => $process ? $embargo_to : $file->{access_level},
-                request_a_copy => $process ? 0 : $file->{request_a_copy},
-                embargo => $process ? 'NA' : $embargo // 'NA',
-                embargo_to => $process ? 'NA' : $embargo_to // 'NA',
-                file_name => $file->{file_name},
-            });
+            $exporter->add(
+                {
+                    id           => $item->{_id},
+                    file_id      => $file->{file_id},
+                    access_level => $process
+                    ? $embargo_to
+                    : $file->{access_level},
+                    request_a_copy => $process ? 0 : $file->{request_a_copy},
+                    embargo => $process ? 'NA' : $embargo // 'NA',
+                    embargo_to => $process ? 'NA' : $embargo_to // 'NA',
+                    file_name => $file->{file_name},
+                }
+            );
         }
     };
 
@@ -520,16 +524,18 @@ sub _files_list {
         return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
 
         for my $file (@{$item->{file}}) {
-            $exporter->add({
-                _id => $item->{_id},
-                file_id => $file->{file_id},
-                access_level => $file->{access_level},
-                request_a_copy => $file->{request_a_copy} // 'NA',
-                relation => $file->{relation},
-                embargo => $file->{embargo} // 'NA',
-                embargo_to => $file->{embargo_to} // 'NA',
-                file_name => $file->{file_name},
-            });
+            $exporter->add(
+                {
+                    _id            => $item->{_id},
+                    file_id        => $file->{file_id},
+                    access_level   => $file->{access_level},
+                    request_a_copy => $file->{request_a_copy} // 'NA',
+                    relation       => $file->{relation},
+                    embargo        => $file->{embargo} // 'NA',
+                    embargo_to     => $file->{embargo_to} // 'NA',
+                    file_name      => $file->{file_name},
+                }
+            );
         }
     };
 
@@ -563,7 +569,8 @@ sub _files_load {
         if (my $data = $helper->backup_publication->get($id)) {
             $self->_file_process($data, $files)
                 && $helper->update_record('publication', $data);
-        } else {
+        }
+        else {
             warn "$id - no such publication";
         }
 
@@ -572,7 +579,7 @@ sub _files_load {
         }
     };
 
-    my %allowed_fields = map { ($_ => 1) } qw(
+    my %allowed_fields = map {($_ => 1)} qw(
         id
         access_level creator content_type
         date_created date_updated file_id
@@ -602,12 +609,13 @@ sub _files_load {
             if ($id eq $current_id) {
                 push @$files, $file;
                 return;
-            } else {
+            }
+            else {
                 $update_file->($current_id, $files);
             }
 
             $current_id = $id;
-            $files = [$file];
+            $files      = [$file];
         }
     );
 
@@ -677,7 +685,7 @@ sub _file_process {
             my $file_name = $file->{file_name};
             my $file_id   = $file->{file_id};
             croak "FATAL - cowardly refusing to delete `$file_name` from $id"
-                    unless $lookup->{"$file_id--$file_name"};
+                unless $lookup->{"$file_id--$file_name"};
         }
     }
 

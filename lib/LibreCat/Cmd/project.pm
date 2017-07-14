@@ -174,9 +174,9 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret       = 0;
-    my $importer  = Catmandu->importer('YAML', file => $file);
-    my $helper    = LibreCat::App::Helper::Helpers->new;
+    my $ret      = 0;
+    my $importer = Catmandu->importer('YAML', file => $file);
+    my $helper   = LibreCat::App::Helper::Helpers->new;
 
     my $records = $importer->select(
         sub {
@@ -187,18 +187,18 @@ sub _add {
             my $is_ok = 1;
 
             $helper->store_record(
-                        'project',
-                        $rec,
-                        validation_error => sub {
-                            my $validator = shift;
-                            print STDERR join("\n",
-                                $rec->{_id},
-                                "ERROR: not a valid project",
-                                @{$validator->last_errors}),
-                                "\n";
-                            $ret   = 2;
-                            $is_ok = 0;
-                        }
+                'project',
+                $rec,
+                validation_error => sub {
+                    my $validator = shift;
+                    print STDERR join("\n",
+                        $rec->{_id},
+                        "ERROR: not a valid project",
+                        @{$validator->last_errors}),
+                        "\n";
+                    $ret   = 2;
+                    $is_ok = 0;
+                }
             );
 
             return 0 unless $is_ok;

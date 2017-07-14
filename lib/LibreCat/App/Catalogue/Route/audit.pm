@@ -35,8 +35,7 @@ List all audit messages for an :id in the store :bag
             = h->backup_audit()->select(id => $id)->select(bag => $bag)
             ->sorted(
             sub {
-                $_[0]->{time}
-                    cmp $_[1]->{time};
+                $_[0]->{time} cmp $_[1]->{time};
             }
             )->map(
             sub {

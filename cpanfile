@@ -13,6 +13,7 @@ on 'test' => sub {
     requires 'Test::WWW::Mechanize::Dancer';
     requires 'App::Cmd::Tester';
     requires 'Devel::Cover';
+    requires 'Selenium::Remote::Driver', '1.12';
 };
 
 requires 'Business::ISBN', 0;

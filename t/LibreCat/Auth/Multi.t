@@ -10,22 +10,20 @@ BEGIN {
 }
 require_ok $pkg;
 
-dies_ok { $pkg->new() } 'methods required';
+dies_ok {$pkg->new()} 'methods required';
 
 my @methods = [
     {
         'package' => 'LibreCat::Auth::Simple',
-        options => {
-            users => { demo => {password => 'demo'} },
-        },
+        options   => {users => {demo => {password => 'demo'}},},
     },
     {
         'package' => 'LibreCat::Auth::LDAP',
-        options => { host => "ldap.example.com" },
+        options   => {host => "ldap.example.com"},
     },
 ];
 
-lives_ok { $pkg->new(methods => @methods) } 'lives ok';
+lives_ok {$pkg->new(methods => @methods)} 'lives ok';
 
 my $auth = $pkg->new(methods => @methods);
 
