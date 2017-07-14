@@ -591,6 +591,11 @@ search:
                 'exact': true
                 '<>': true
               field: 'file.open_access'
+            linkoa:
+              op:
+                '=': true
+                '<>': true
+              field: 'main_file_link.open_access'
             embargo:
               op:
                 '=': true
@@ -1058,6 +1063,10 @@ search:
               access_level: {type: string, analyzer: tag}
               year_last_uploaded: {type: date, format: "yyyy"}
               date_updated: {type: string}
+          main_file_link:
+            properties:
+              url: {type: string, analyzer: tag}
+              open_access: {type: byte}
           alternative_id: {type: string, analyzer: tag, include_in_all: true}
           defense_date: {type: date, index: no}
           locked: {type: byte}

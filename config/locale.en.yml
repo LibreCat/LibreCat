@@ -507,9 +507,10 @@ forms:
       locked: &locked
         label: "Locked for editing"
         label_short: "Locked"
-      link: &link
-        label: "URL"
-        placeholder: ""
+      main_file_link: &main_file_link
+        label: "Fulltext URL"
+        placeholder: "Ext. location of your main file"
+        open_access: "<img src='/images/access_open.png' /> Open Access"
   book_editor:
     label: "Book (Editor)"
     tab: *tab
@@ -580,7 +581,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   book_chapter:
     label: "Book Chapter"
     tab: *tab
@@ -645,7 +646,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   conference_abstract:
     label: "Conference Abstract"
     tab: *tab
@@ -719,7 +720,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   conference_editor:
     label: "Conference (Editor)"
     tab: *tab
@@ -760,7 +761,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   conference:
     label: "Conference Paper"
     tab: *tab
@@ -807,7 +808,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   dissertation:
     label: "Dissertation"
     tab: *tab
@@ -852,7 +853,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   encyclopedia_article:
     label: "Encyclopedia Article"
     tab: *tab
@@ -895,7 +896,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   journal_article:
     label: "Journal Article"
     tab: *tab
@@ -952,7 +953,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   journal_editor:
     label: "Special Issue"
     tab: *tab
@@ -1008,7 +1009,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   newspaper_article:
     label: "Newspaper Article"
     tab: *tab
@@ -1051,7 +1052,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   patent:
     label: "Patent"
     tab: *tab
@@ -1113,7 +1114,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   preprint:
     label: "Preprint"
     tab: *tab
@@ -1147,7 +1148,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   report:
     label: "Report"
     tab: *tab
@@ -1187,7 +1188,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   review:
     label: "Book Review"
     tab: *tab
@@ -1226,7 +1227,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
       editor.label: "Editor"
   research_data:
     label: "Research Data"
@@ -1335,6 +1336,7 @@ forms:
         placeholder: "Start typing to search your publications."
       related_material.link: *related_material_link
       locked: *locked
+      main_file_link: *main_file_link
   translation:
     label: "Translation"
     tab: *tab
@@ -1407,7 +1409,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   translation_chapter:
     label: "Translation (Section)"
     tab: *tab
@@ -1482,7 +1484,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   working_paper:
     label: "Working Paper"
     tab: *tab
@@ -1519,7 +1521,7 @@ forms:
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
-      link: *link
+      main_file_link: *main_file_link
   to_sp_form: "Single Page Form"
   sp_form: "Single Page Form"
   to_tab_form: "Tabbed Form"

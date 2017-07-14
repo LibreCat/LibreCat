@@ -1,0 +1,65 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_main_file_link_0">
+      [% h.loc("forms.${type}.field.main_file_link.label") %]
+    </label>
+    {% IF fields.basic_fields.main_file_link.mandatory OR fields.supplementary_fields.main_file_link.mandatory OR fields.related_material.main_file_link.mandatory %}<span class="starMandatory"></span>{% END %}
+  </div>
+  <div class="col-md-10" id="main_file_link">
+    {% IF fields.basic_fields.main_file_link.multiple OR fields.supplementary_fields.main_file_link.multiple OR fields.related_material.main_file_link.multiple %}
+    [% IF !main_file_link %]
+    <div class="row innerrow multirow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.main_file_link.mandatory OR fields.supplementary_fields.main_file_link.mandatory OR fields.related_material.main_file_link.mandatory %} mandatory{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.main_file_link.label_short") || h.loc("forms.${type}.field.main_file_link.label") %]</div>
+          <input type="text" name="main_file_link.0.url" id="id_main_file_link_0" value="" placeholder="[% h.loc("forms.${type}.field.main_file_link.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.main_file_link.mandatory OR fields.supplementary_fields.main_file_link.mandatory OR fields.related_material.main_file_link.mandatory %} required{% END %}"{% IF fields.basic_fields.main_file_link.readonly OR fields.supplementary_fields.main_file_link.readonly OR fields.related_material.main_file_link.readonly %} readonly="readonly"{% END %} />
+          <div class="input-group-addon">
+            <label class="checkbox-inline">
+              <input type="checkbox" name="main_file_link.0.open_access" id="main_file_link_oa_0" value="1">
+              [% h.loc("forms.${type}.field.main_file_link.open_access") %]
+            </label>
+          </div>
+          <div class="input-group-addon" onclick="add_field('main_file_link');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+        </div>
+      </div>
+    </div>
+    [% ELSE %]
+    [% FOREACH alttitle IN main_file_link %]
+    <div class="row innerrow multirow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.main_file_link.mandatory OR fields.supplementary_fields.main_file_link.mandatory OR fields.related_material.main_file_link.mandatory %}[% IF loop.first %] mandatory[% END %]{% END %}">
+          <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.main_file_link.label_short") || h.loc("forms.${type}.field.main_file_link.label") %]</div>
+          <input type="text" name="main_file_link.[% loop.index %].url" id="id_main_file_link_[% loop.index %]" value="[% alttitle.url | html %]" placeholder="[% h.loc("forms.${type}.field.main_file_link.placeholder") %]" class="form-control{% IF fields.basic_fields.main_file_link.mandatory OR fields.supplementary_fields.main_file_link.mandatory OR fields.related_material.main_file_link.mandatory %} required{% END %}"{% IF fields.basic_fields.main_file_link.readonly OR fields.supplementary_fields.main_file_link.readonly OR fields.related_material.main_file_link.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon">
+            <label class="checkbox-inline">
+              <input type="checkbox" name="main_file_link.[% loop.index %].open_access" id="main_file_link_oa_[% loop.index %]" value="1"[% IF alttitle.open_access %] checked="checked"[% END %]>
+              [% h.loc("forms.${type}.field.main_file_link.open_access") %]
+            </label>
+          </div>
+          <div class="input-group-addon" onclick="add_field('main_file_link');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+        </div>
+      </div>
+    </div>
+    [% END %]
+    [% END %]
+    {% ELSE %}
+    <div class="row innerrow">
+      <div class="form-group col-md-10 col-xs-11">
+        <div class="input-group sticky{% IF fields.basic_fields.main_file_link.mandatory OR fields.supplementary_fields.main_file_link.mandatory OR fields.related_material.main_file_link.mandatory %} mandatory{% END %}">
+          <div class="hidden-lg hidden-md input-group-addon">[% h.loc("forms.${type}.field.main_file_link.label_short") || h.loc("foms.${type}.field.main_file_link.label") %]</div>
+          <input type="text" name="main_file_link.0.url" id="id_main_file_link_0" value="[% main_file_link.0.url | html %]" placeholder="[% h.loc("forms.${type}.field.main_file_link.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.main_file_link.mandatory OR fields.supplementary_fields.main_file_link.mandatory OR fields.related_material.main_file_link.mandatory %} required{% END %}"{% IF fields.basic_fields.main_file_link.readonly OR fields.supplementary_fields.main_file_link.readonly OR fields.related_material.main_file_link.readonly %} readonly="readonly"{% END %}>
+          <div class="input-group-addon">
+            <label class="checkbox-inline">
+              <input type="checkbox" name="main_file_link.0.open_access" id="main_file_link_oa_0" value="1"[% IF main_file_link.0.open_access %] checked="checked"[% END %]>
+              [% h.loc("forms.${type}.field.main_file_link.open_access") %]
+            </label>
+          </div>
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+    {% END %}
+  </div>
+</div>

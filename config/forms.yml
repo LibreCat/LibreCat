@@ -81,7 +81,6 @@ field_order:
     - conference.date
     - ipc
     - external_id
-    - link
     - nasc
     - genbank
     - popular_science
@@ -107,13 +106,13 @@ field_order:
     - quality_controlled
     - popular_science_quality_controlled
     - external_id
-    - link
     - message
     - ubi_funded
     - alternative_id
   related_material:
     - related_material.record
     - related_material.rd
+    - main_file_link
     - related_material.link
 
 # file dropzone fields that may be changed/edited
@@ -232,11 +231,11 @@ publication_types:
           multiple: 0
         alternative_id: &alternative_id
           multiple: 1
-        link: &link
-          multiple: 0
       related_material: &related_material
         related_material.record:
           mandatory: 0
+        main_file_link: &main_file_link
+          multiple: 0
         related_material.link:
           multiple: 1
           mandatory: 0
@@ -287,7 +286,6 @@ publication_types:
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   book_chapter:
     fields:
@@ -334,7 +332,6 @@ publication_types:
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   conference_abstract:
     fields:
@@ -383,7 +380,6 @@ publication_types:
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   conference_editor:
     fields:
@@ -422,7 +418,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   conference:
     fields:
@@ -464,7 +459,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   dissertation:
     fields:
@@ -501,7 +495,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   encyclopedia_article:
     fields:
@@ -536,7 +529,6 @@ publication_types:
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   journal_article:
     fields:
@@ -579,7 +571,6 @@ publication_types:
           multiple: 0
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   journal_editor:
     fields:
@@ -616,7 +607,6 @@ publication_types:
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   newspaper_article:
     fields:
@@ -647,7 +637,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   patent:
     fields:
@@ -681,7 +670,6 @@ publication_types:
         message: *message
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   preprint:
     fields:
@@ -709,7 +697,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   report:
     fields:
@@ -741,7 +728,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   review:
     fields:
@@ -774,7 +760,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   research_data:
     fields:
@@ -863,7 +848,6 @@ publication_types:
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   translation_chapter:
     fields:
@@ -910,7 +894,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
   working_paper:
     fields:
@@ -941,7 +924,6 @@ publication_types:
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
-        link: *link
       related_material: *related_material
 
 other_items:
