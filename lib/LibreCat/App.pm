@@ -161,7 +161,7 @@ sub _authenticate {
     my ($username, $password) = @_;
 
     # Clean dirties .. in loginname
-    $username =~ s{[^a-zA-Z0-9_]*}{}mg;
+    $username =~ s{[^a-zA-Z0-9_-]*}{}mg;
 
     my $auth = do {
         my $package_name = Catmandu->config->{authentication}->{package};
