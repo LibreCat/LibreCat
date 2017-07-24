@@ -64,6 +64,7 @@ search:
   package: ElasticSearch
   options:
     client: '1_0::Direct'
+    seamless: 0
     bags:
       project:
         cql_mapping:

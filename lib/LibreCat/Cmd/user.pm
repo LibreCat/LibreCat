@@ -3,6 +3,7 @@ package LibreCat::Cmd::user;
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Researcher;
+use Search::Elasticsearch;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -20,6 +21,7 @@ librecat user [options] valid <FILE>
 librecat user [options] passwd <id>
 
 options:
+    --initial=1   (indicates initial index build)
     --sort=STR    (sorting results [only in combination with cql-query])
     --total=NUM   (total number of items to list/export)
     --start=NUM   (start list/export at this item)
@@ -34,7 +36,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['total=i', ""], ['start=i', ""], ['sort=s', ""]);
+    (['total=i', ""], ['start=i', ""], ['sort=s', ""], ['initial=i', ""]);
 }
 
 sub opts {
@@ -184,6 +186,12 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $i_name   = $helper->config->{store}->{search}->{options}->{index_name};
+    if($helper->config->{store}->{search}->{seamless} and $self->opts->{initial}){
+        # only if it's the initial index build AND if you have chosen the seamless index switch
+        # use [index_name]1 instead of [index_name]
+        $i_name = $i_name . "1";
+    }
 
     my $records = $importer->select(
         sub {
@@ -218,9 +226,20 @@ sub _add {
         }
     );
 
-    my $index = $helper->researcher;
+    my $index = Catmandu->store('search', index_name => $i_name)->bag('researcher');#$helper->researcher;
     $index->add_many($records);
     $index->commit;
+
+    if($helper->config->{store}->{search}->{seamless} and $self->opts->{initial}){
+        my $e = Search::Elasticsearch->new();
+        $e->indices->update_aliases(
+            body => {
+                actions => [
+                    { add => { alias => $helper->config->{store}->{search}->{options}->{index_name}, index => $i_name }},
+                ]
+            }
+        );
+    }
 
     $ret;
 }

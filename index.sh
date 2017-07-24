@@ -78,6 +78,10 @@ case "${CMD}" in
         carton exec "bin/librecat copy -v backup --bag research_group. to search --bag research_group"
         echo "Done"
         ;;
+    switch)
+            echo "Reindex without interruption:"
+            carton exec "bin/librecat switch -v index"
+        ;;
     export)
         echo "Exporting index..."
 
