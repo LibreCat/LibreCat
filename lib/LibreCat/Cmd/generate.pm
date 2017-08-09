@@ -53,8 +53,12 @@ sub command {
     }
 }
 
+sub _helper {
+    $_[0]->{helper} ||= LibreCat::App::Helper::Helpers->new();
+}
+
 sub _generate_cleanup {
-    my $layers = LibreCat::App::Helper::Helpers->new->layers;
+    my $layers = $_[0]->_helper->layers;
 
     print "Cleaning generated forms...\n";
     {
@@ -93,7 +97,7 @@ sub _generate_cleanup {
 }
 
 sub _generate_package_json {
-    my $layers         = LibreCat::App::Helper::Helpers->new->layers;
+    my $layers         = $_[0]->_helper->layers;
     my $css_path       = $layers->css_paths->[0];
     my $root_css_path  = $layers->css_paths->[-1];
     my $scss_path      = $layers->scss_paths->[0];
@@ -155,7 +159,7 @@ sub _generate_package_json {
 }
 
 sub _generate_forms {
-    my $h              = LibreCat::App::Helper::Helpers->new;
+    my $h              = $_[0]->_helper;
     my $layers         = $h->layers;
     my $conf           = $h->config;
     my $forms          = $conf->{forms}{publication_types};
@@ -210,7 +214,7 @@ sub _generate_forms {
 
 sub _generate_departments {
     my ($self, $file) = @_;
-    my $h = LibreCat::App::Helper::Helpers->new;
+    my $h = $self->_helper;
 
     my $layers         = $h->layers;
     my $template_paths = $layers->template_paths;
@@ -286,12 +290,14 @@ sub _template_printer {
     my $nodes = $tree->{tree};
     return unless $nodes;
 
+    my $uri_base = $self->_helper->uri_base;
+
     print $io "<ul>\n";
     for my $node (sort {$nodes->{$a}->{name} cmp $nodes->{$b}->{name}}
         keys %$nodes)
     {
         print $io "<li>\n";
-        printf $io "<a href=\"/%s?cql=department=%s\">%s</a> %d\n", $path,
+        printf $io "<a href=\"${uri_base}/%s?cql=department=%s\">%s</a> %d\n", $path,
             $node, $nodes->{$node}->{display}, $nodes->{$node}->{total};
         $self->_template_printer($nodes->{$node}, $path, $io);
         print $io "</li>\n";

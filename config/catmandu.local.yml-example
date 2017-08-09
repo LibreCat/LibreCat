@@ -1,6 +1,8 @@
 default_lang: en
 
-host: "http://localhost:5001"
+#deprecated: use uri_base
+#host: "http://localhost:5001"
+uri_base: "http://localhost:5001"
 
 ## Uncomment when audit messages need to be displayed
 # audit: 1

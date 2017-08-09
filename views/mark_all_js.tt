@@ -31,7 +31,7 @@ $(function () {
             // TODO post requests shouldn't contain url params
             $.ajax({
                 type: 'POST',
-                url: "/marked?x-tunneled-method=DELETE",
+                url: librecat.uri_base + "/marked?x-tunneled-method=DELETE",
                 dataType: 'json',
                 success: function(res) {
                     if(prev){

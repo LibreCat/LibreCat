@@ -16,7 +16,7 @@
       [%- END %]
       [%- IF cc_license %]
         <strong>[% h.loc("forms.${type}.field.license.cc_license.label") %]:</strong><br />
-	    <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="/images/cc_by.png" alt="CC-BY"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="/images/cc_by_sa.png" alt="CC-BY-SA"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="/images/cc0.png" alt="CC0"[% END %] class="img-thumbnail pull-left" /></a>[% h.loc("forms.${type}.field.license.cc_license.${cc_license}.name") %]
+	    <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="[% uri_base %]/images/cc_by.png" alt="CC-BY"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="[% uri_base %]/images/cc_by_sa.png" alt="CC-BY-SA"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="[% uri_base %]/images/cc0.png" alt="CC0"[% END %] class="img-thumbnail pull-left" /></a>[% h.loc("forms.${type}.field.license.cc_license.${cc_license}.name") %]
       [%- END %]
       [%- IF other_data_license %]
         [%- other_data_license %]
@@ -40,7 +40,7 @@
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
       [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]
-      <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]">
+      <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]">
         [% fi.file_name | html %]
       </a>
       [% ELSE %]
@@ -115,7 +115,7 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
+      <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
         [% fi.file_name | html %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>

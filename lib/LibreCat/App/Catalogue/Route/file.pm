@@ -284,7 +284,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
 
     unless ($ok) {
         status 403;
-        return template '403', {path => request->path};
+        return template '403';
     }
 
     if (my $file = _file_exists($id, $file_name)) {
