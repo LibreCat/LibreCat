@@ -92,7 +92,7 @@ Deletes the account with ID :id.
 
     get '/account/delete/:id' => sub {
         h->delete_record('researcher', params->{id});
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     };
 
 =head2 GET /account/import
@@ -134,7 +134,7 @@ Input is person id. Returns warning if person is already in the database.
     post '/project/update' => sub {
         my $p = h->nested_params();
         my $return = h->update_record('project', $p);
-        redirect '/librecat/admin/project';
+        redirect uri_for('/librecat/admin/project');
     };
 
     get '/research_group' => sub {
@@ -164,7 +164,7 @@ Input is person id. Returns warning if person is already in the database.
     post '/research_group/update' => sub {
         my $p = h->nested_params();
         my $return = h->update_record('research_group', $p);
-        redirect '/librecat/admin/research_group';
+        redirect uri_for('/librecat/admin/research_group');
     };
 
     get '/department' => sub {
@@ -194,7 +194,7 @@ Input is person id. Returns warning if person is already in the database.
     post '/department/update' => sub {
         my $p = h->nested_params();
         my $return = h->update_record('department', $p);
-        redirect '/librecat/admin/department';
+        redirect uri_for('/librecat/admin/department');
     };
 };
 

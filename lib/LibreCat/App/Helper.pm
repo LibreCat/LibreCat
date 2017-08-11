@@ -475,7 +475,8 @@ sub display_name_from_value {
 }
 
 sub uri_base {
-    state $h = $_[0]->config->{uri_base} // "http://localhost:5001";
+    #config option 'host' is deprecated
+    state $h = $_[0]->config->{uri_base} // $_[0]->config->{host} // "http://localhost:5001";
 }
 sub uri_for {
     my ( $self, $path, $params ) = @_;

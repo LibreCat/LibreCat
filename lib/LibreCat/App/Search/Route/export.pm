@@ -70,7 +70,7 @@ get '/export' => sub {
     h->log->debug("searching for publications:" . Dancer::to_json($p));
     my $hits = LibreCat->searcher->search('publication', $p);
 
-    my $uri_base = request->uri_base()->as_string();
+    my $uri_base = h->uri_base();
     for my $hit ( @{ $hits->hits() } ) {
         $hit->{uri_base} = $uri_base;
     }

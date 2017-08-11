@@ -89,7 +89,7 @@ Performs search for reviewer.
 
     get '/reviewer' => sub {
         my $account = h->get_person(session->{user});
-        redirect "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
+        redirect uri_for("/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
     };
 
     get '/reviewer/:department_id' => sub {
@@ -104,7 +104,7 @@ Performs search for reviewer.
             @{$account->{reviewer}})
         {
             return redirect
-                "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}";
+                uri_for("/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
         }
 
         push @{$p->{cql}}, "status<>deleted";
@@ -130,7 +130,7 @@ Performs search for reviewer.
     get '/project_reviewer' => sub {
         my $account = h->get_person(session->{user});
         redirect
-            "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
+            uri_for("/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}");
     };
 
     get '/project_reviewer/:project_id' => sub {
@@ -145,7 +145,7 @@ Performs search for reviewer.
             @{$account->{project_reviewer}})
         {
             return redirect
-                "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}";
+                uri_for("/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}");
         }
 
         push @{$p->{cql}}, "status<>deleted";
@@ -171,7 +171,7 @@ Performs search for data manager.
     get '/data_manager' => sub {
         my $account = h->get_person(session->{user});
         redirect
-            "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}";
+            uri_for("/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}");
     };
 
     get '/data_manager/:department_id' => sub {
@@ -202,7 +202,7 @@ according to first delegate ID.
 
     get '/delegate' => sub {
         my $account = h->get_person(session->{user});
-        redirect "/librecat/search/delegate/$account->{delegate}->[0]";
+        redirect uri_for("/librecat/search/delegate/$account->{delegate}->[0]");
     };
 
 =head2 GET '/delegate/:delegate_id'

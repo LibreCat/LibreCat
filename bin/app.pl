@@ -75,7 +75,7 @@ my $session_state_package = is_string($config->{session_state}->{package}) ?
 my $session_state_options = is_hash_ref($config->{session_state}->{options}) ?
     $config->{session_state}->{options} : {};
 
-my $uri_base = Catmandu->config->{uri_base} // "http://localhost:5001";
+my $uri_base = Catmandu->config->{uri_base} // Catmandu->config->{host} // "http://localhost:5001";
 
 builder {
     enable '+Dancer::Middleware::Rebase', base => $uri_base, strip => 0 if is_string( $uri_base );

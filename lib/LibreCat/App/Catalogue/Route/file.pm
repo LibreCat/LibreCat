@@ -256,7 +256,7 @@ any '/rc/:id/:file_id' => sub {
 
         try {
             h->queue->add_job('mailer', $job);
-            return redirect "/publication/" . params->{id};
+            return redirect uri_for("/publication/" . params->{id});
         }
         catch {
             h->log->error("Could not send email: $_");
@@ -311,7 +311,7 @@ get '/thumbnail/:id' => sub {
         _send_it($key, $file->key, access => 1);
     }
     else {
-        redirect '/images/thumbnail_dummy.png';
+        redirect uri_for('/images/thumbnail_dummy.png');
     }
 };
 
