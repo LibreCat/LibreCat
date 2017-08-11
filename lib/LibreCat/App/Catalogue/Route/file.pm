@@ -121,7 +121,7 @@ get '/rc/approve/:key' => sub {
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body = export_to_string({key => params->{key}, host => h->host},
+    my $body = export_to_string({key => params->{key}, uri_base => h->uri_base()},
         'Template', template => 'views/email/req_copy_approve.tt');
 
     my $job = {
@@ -243,7 +243,7 @@ any '/rc/:id/:file_id' => sub {
                 user_email => params->{user_email},
                 mesg       => params->{mesg} || '',
                 key        => $stored->{_id},
-                host       => h->host,
+                uri_base   => h->uri_base(),
             },
             'Template',
             template => 'views/email/req_copy.tt',
@@ -263,7 +263,9 @@ any '/rc/:id/:file_id' => sub {
         }
     }
     else {
-        return to_json {ok => true, url => h->host . "/rc/" . $stored->{_id},
+        return to_json {
+            ok => true,
+            url => uri_for("/rc/" . $stored->{_id})
         };
     }
 };
