@@ -2,6 +2,11 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.7.2 2017-08-14
+    - fix bug: allow '-' in username
+    - update to recent Catmandu::BagIt (modified method call)
+    - add Makefile to repository
+
 0.7.1 2017-07-14
     - GH #196: introduce selenium tests
     - add OA flag to fulltext link
