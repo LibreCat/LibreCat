@@ -52,9 +52,9 @@ sub get {
 
     return undef unless $file;
 
-    my $data = $file->fh;
+    my $data = $file->open();
     my $md5  = $bagit->get_checksum($key);
-    my $stat = [$file->fh->stat];
+    my $stat = [$data->stat()];
 
     my $size     = $stat->[7];
     my $modified = $stat->[9];
