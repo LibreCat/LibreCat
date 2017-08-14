@@ -15,12 +15,12 @@
     <div class="col-md-12 row">
       <div class="row">
 	<div class="col-md-1">[% h.loc("person_profile.local_id") %]</div>
-	<div class="col-md-8"><a href="/person/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
+	<div class="col-md-8"><a href="[% uri_base %]/person/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
       </div>
     </div>
 
     <div class="col-md-12 row hidden-xs">
-    <form action="/librecat/person/author_id" id="author_id_form" method="POST">
+    <form action="[% uri_base %]/librecat/person/author_id" id="author_id_form" method="POST">
     <input type="hidden" name="_id" value="[% session.personNumber %]" />
     [%- IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">

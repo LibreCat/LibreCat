@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <ul class="pagination">
     [%- FOREACH c IN h.alphabet %]
-      <li [% IF request.path.match("/person?browse=$c")%]class="active"[% END %]><a href="/person?browse=[% c %]">[% c %]</a></li>
+      <li [% IF request.path_info.match("/person?browse=$c")%]class="active"[% END %]><a href="[% uri_base %]/person?browse=[% c %]">[% c %]</a></li>
     [%- END %]
     </ul>
   </div>
@@ -22,7 +22,7 @@
   <div class="col-md-12">
     <dl class="hitlist">
     [%- FOREACH person IN hits %]
-      <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a></dt>
+      <dt><a href="[% uri_base %]/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a></dt>
         <dd>
         [%- FOREACH affil IN person.department %]
           <span class="text-muted">[% h.get_department(affil._id).display %]</span>[% IF !loop.last %], [% END %]

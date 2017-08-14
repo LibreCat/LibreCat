@@ -70,7 +70,7 @@ for his own publication list.
 
         h->update_record('researcher', $person);
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     };
 
 =head2 POST /author_id
@@ -87,7 +87,7 @@ be displayed on author's profile page.
         my @identifier = keys %{h->config->{lists}->{author_id}};
 
         map {$person->{$_} = params->{$_} ? params->{$_} : ""} @identifier;
-        redirect '/librecat' if keys %{$person} > 1;
+        redirect uri_for('/librecat') if scalar(keys %{$person}) > 1;
 
         h->update_record('researcher', $person);
 
@@ -111,7 +111,7 @@ User can choose default language for the librecat backend
             session lang => $lang;
         }
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
 
     };
 
@@ -133,7 +133,7 @@ new publication form.
         $person->{department} = $p->{department};
         h->update_record('researcher', $person);
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
 
     };
 

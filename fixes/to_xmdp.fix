@@ -7,8 +7,6 @@ prepend(dini_type,'doc-type:')
 move_field(keyword, subject)
 move_field(year, date)
 
-add_field(host,'http://www.librecat.org/');
-
 add_field(institution.name_eng, 'Librecat University')
 add_field(institution.name, 'Universität Librecat')
 add_field(institution.nameLib, 'Universitätsbibliothek Librecat')

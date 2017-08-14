@@ -75,8 +75,10 @@ my $session_state_package = is_string($config->{session_state}->{package}) ?
 my $session_state_options = is_hash_ref($config->{session_state}->{options}) ?
     $config->{session_state}->{options} : {};
 
+my $uri_base = Catmandu->config->{uri_base} // Catmandu->config->{host} // "http://localhost:5001";
+
 builder {
-    enable 'ReverseProxy';
+    enable '+Dancer::Middleware::Rebase', base => $uri_base, strip => 0 if is_string( $uri_base );
     enable 'Deflater';
     enable 'Session',
         store => require_package( $session_store_package )->new( %$session_store_options ),

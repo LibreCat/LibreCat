@@ -14,7 +14,7 @@
     <h2>[% IF ok %]<p class="text-success">[% ok %]</p>[% END %]</h2>
     <ul>
     [% FOREACH rec IN imported %]
-       <li>[% rec.title | html %]<br><a href="/librecat/record/edit/[% rec._id %]">Edit</a></li>
+       <li>[% rec.title | html %]<br><a href="[% uri_base %]/librecat/record/edit/[% rec._id %]">Edit</a></li>
     [% END %]
     </ul>
   </div>
@@ -24,7 +24,7 @@
     <div class="row">
       <h3>[% h.loc("add_new.import") %]</h3>
       <div class="row">
-        <form role="form" action="/librecat/record/import" method="POST">
+        <form role="form" action="[% uri_base %]/librecat/record/import" method="POST">
           <div class="col-xs-3 col-md-2">
             <select class="selectpicker form-control" id="select_source">
               [% FOR source IN h.config.lists.import_sources %]
@@ -56,25 +56,25 @@
 
       <div class="col-sm-4">
         [%- FOREACH type IN h.config.forms.publication_type_order.column_left -%]
-          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
       </div>
       <div class="col-sm-4">
         [%- FOREACH type IN h.config.forms.publication_type_order.column_middle -%]
-          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
       </div>
       <div class="col-sm-4">
         [%- FOREACH type IN h.config.forms.publication_type_order.column_right -%]
-          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
         [%- IF session.role == "super_admin" -%]
           [%- FOREACH type IN h.config.forms.publication_type_order.column_admin -%]
-          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
           [%- END -%]
         [%- END -%]
         [%- FOREACH type IN h.config.forms.publication_type_order.column_rd -%]
-          <a href="/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/new?type=[% type %]">[% h.loc("forms.${type}.label") %]</a><br />
         [%- END -%]
       </div>
     </div>
@@ -97,7 +97,7 @@
       </div>
       <div class="col-md-5">
         <h3 class="margin-top0">[% h.loc("add_new.paste_bibtex") %]</h3>
-        <form role="form" action="/librecat/record/import" method="POST">
+        <form role="form" action="[% uri_base %]/librecat/record/import" method="POST">
       <div class="well col-xs-11 col-md-12">
             <textarea class="form-control" rows="3" name="data" placeholder="[% h.loc("add_new.paste_bibtex_placeholder") %]"></textarea>
             <input type="hidden" id="bibtex_source" name="source" value="bibtex">
@@ -110,7 +110,7 @@
     <div class="row">
      <h3>[% h.loc("add_new.wos_import") %]</h3>
      <div class="row">
-       <form role="form" action="/librecat/record/import" enctype="multipart/form-data" method="POST">
+       <form role="form" action="[% uri_base %]/librecat/record/import" enctype="multipart/form-data" method="POST">
          <input type="hidden" id="wos_source" name="source" value="wos">
          <div class="input-group col-md-5 col-xs-8">
            <input type="file" class="form-control" id="input_id" name="data" required/>
@@ -121,7 +121,7 @@
        </form>
      </div>
    </div>
-    
+
   </div>
 </div>
 

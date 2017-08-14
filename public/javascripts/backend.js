@@ -13,7 +13,7 @@ $(function () {
         var val = object.val();
         var id = $(object).data('id');
         $.ajax({
-            url: '/get_alias/' + id + '/' + val,
+            url: librecat.uri_base + '/get_alias/' + id + '/' + val,
             dataType: 'json',
             success: function(data,textStatus){
                 if (data.ok == 0) {
@@ -67,7 +67,7 @@ function editAuthorIds(direction){
  * @param pub_id
  */
 function generate_link(file_id, pub_id){
-    var url = '/rc/' + pub_id + '/' + file_id;
+    var url = librecat.uri_base + '/rc/' + pub_id + '/' + file_id;
     var csrfToken = $("meta[name='csrf_token']").attr("content");
     $.ajax({
         type: 'POST',
@@ -103,7 +103,7 @@ $(function () {
             var newtype = $(this).data('val');
             $('#id_type').val(newtype);
             $('#id_select_type').remove();
-            $('#edit_form').attr('action','/librecat/record/change_mode');
+            $('#edit_form').attr('action',librecat.uri_base + '/librecat/record/change_mode');
             $('#edit_form').submit();
         }
     });
@@ -132,7 +132,7 @@ function link_person(element){
     }
 
     if($('#' + type + 'idm_intern_' + lineId).is(':checked')){
-        var baseURL = '/search_researcher?term=';
+        var baseURL = librecat.uri_base + '/search_researcher?term=';
         var narrowurl = "";
         var first_name = $('#' + type + 'first_name_' + lineId).val();
         $('#' + type + 'orig_first_name_' + lineId).val(first_name);
@@ -193,7 +193,7 @@ function link_person(element){
                 $('#' + type + 'first_name_' + lineId).val(first_name);
                 $('#' + type + 'last_name_' + lineId).val(last_name);
                 $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly", "readonly");
-                $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_yes.png');
+                $('#' + type + 'Authorized' + lineId).attr('src',librecat.uri_base + '/images/authorized_yes.png');
                 $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
                 $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
@@ -251,15 +251,15 @@ function link_person(element){
                     });
 
                     if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
-                        rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                        rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                         if(old_first_name || old_last_name){
-                            rows += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                            rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                         }
                     }
                     else {
-                        rows2 += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                        rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                         if(old_first_name || old_last_name){
-                            rows2 += '<tr data-id="' + personId + '"><td><a href="/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                            rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                         }
                     }
 
@@ -294,7 +294,7 @@ function link_person(element){
                     $('#' + type + 'last_name_' + lineId).val("");
                     $('#' + type + 'last_name_' + lineId).val(last_name);
                     $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).attr("readonly","readonly");
-                    $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_yes.png');
+                    $('#' + type + 'Authorized' + lineId).attr('src',librecat.uri_base + '/images/authorized_yes.png');
                     $('#' + type + 'Authorized' + lineId).attr('alt','Authorized');
                     $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).parent().removeClass("has-error");
 
@@ -335,7 +335,7 @@ function link_person(element){
 
         if($('#' + type + 'idm_extern_' + lineId).is(':checked') && $('#' + type + 'Authorized' + lineId).attr('alt') == "Authorized"){
             // Uncheck, release input fields and change img back to gray
-            $('#' + type + 'Authorized' + lineId).attr('src','/images/authorized_no.png');
+            $('#' + type + 'Authorized' + lineId).attr('src',librecat.uri_base + '/images/authorized_no.png');
             $('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
             $('#' + type + 'id_' + lineId).val("");
             $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
@@ -521,7 +521,7 @@ function add_field(name, placeholder){
                         $(this).val('');
                 }
                 if($(this).prop('tagName') == "IMG"){
-                        $(this).attr('src','/images/authorized_no.png');
+                        $(this).attr('src',librecat.uri_base + '/images/authorized_no.png');
                         $(this).attr('alt', 'Not Authorized');
                         $(this).tooltip();
                 }
@@ -604,7 +604,7 @@ function remove_field(object){
                                 $(this).prop('checked', true);
                         }
                         if($(this).prop('tagName') == "IMG"){
-                                $(this).attr('src','/images/authorized_no.png');
+                                $(this).attr('src',librecat.uri_base + '/images/authorized_no.png');
                                 $(this).attr('alt', 'Not Authorized');
                         }
                 });
@@ -659,7 +659,7 @@ function enable_autocomplete(field, index){
                 type = "department"
         }
         $( "#" + field + "_autocomplete_" + index ).autocomplete({
-                source: "/get_" + type,
+                source: librecat.uri_base + "/get_" + type,
                 minLength: 0,
             response: function( event, ui ) {
             if (ui.content.length === 0) {

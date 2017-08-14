@@ -16,6 +16,7 @@ use LibreCat::I18N;
 use LibreCat::JobQueue;
 use Log::Log4perl ();
 use NetAddr::IP::Lite;
+use URI::Escape qw(uri_escape_utf8);
 use Moo;
 
 sub log {
@@ -473,8 +474,39 @@ sub display_name_from_value {
     $name;
 }
 
-sub host {
-    $_[0]->config->{host};
+sub uri_base {
+    #config option 'host' is deprecated
+    state $h = $_[0]->config->{uri_base} // $_[0]->config->{host} // "http://localhost:5001";
+}
+sub uri_for {
+    my ( $self, $path, $params ) = @_;
+
+    my @uri;
+
+    push @uri, $self->uri_base(), $path;
+
+    if ( is_hash_ref( $params ) ) {
+
+        my @keys = keys %$params;
+
+        push @uri,"?" if scalar(@keys);
+
+        for my $key ( @keys ) {
+
+            my $value = $params->{$key};
+            $value    = is_array_ref( $value ) ? $value : is_string( $value ) ? [ $value ] : [];
+
+            push @uri, join( "&", map {
+
+                uri_escape_utf8($key)."=".uri_escape_utf8($_);
+
+            } @$value );
+
+        }
+
+    }
+
+    join('',@uri);
 }
 
 sub export_publication {
@@ -549,7 +581,7 @@ sub file_extension {
 sub uri_for_file {
     my ($self, $pub_id, $file_id, $file_name) = @_;
     my $ext = $self->file_extension($file_name);
-    request->uri_base . "/download/$pub_id/$file_id$ext";
+    $self->uri_base() . "/download/$pub_id/$file_id$ext";
 }
 
 package LibreCat::App::Helper;
@@ -565,6 +597,7 @@ register h => sub {$h};
 hook before_template => sub {
 
     $_[0]->{h} = $h;
+    $_[0]->{uri_base} = $h->uri_base();
 
 };
 

@@ -75,7 +75,7 @@ get '/librecat/change_role/:role' => sub {
         session role => "user";
     }
 
-    redirect '/librecat';
+    redirect uri_for('/librecat');
 };
 
 1;

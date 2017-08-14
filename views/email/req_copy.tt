@@ -3,9 +3,9 @@ The publication <<[% title %]>> has been requested by [% user_email %].
 Message: [% mesg %]
 [% END %]
 To approve this request click on the link below:
-[% host %]/rc/approve/[% key %]
+[% uri_base %]/rc/approve/[% key %]
 
 If you want to deny this request click on the following link:
-[% host %]/rc/deny/[% key %]
+[% uri_base %]/rc/deny/[% key %]
 
 Your PUB system

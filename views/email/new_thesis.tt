@@ -3,4 +3,4 @@ A new thesis has been submitted.
 Title: [% title %]
 Author: [% author %]
 
-[% host %]/librecat/search/admin?q=id=[% _id %]
+[% uri_base %]/librecat/search/admin?q=id=[% _id %]

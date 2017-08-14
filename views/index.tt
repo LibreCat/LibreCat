@@ -16,12 +16,12 @@
     <div class="row margin-top1">
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
-          <li class="active"><a href="/">[% h.loc("tabs.home") %]</a></li>
-          <li><a href="/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
-          <li><a href="/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
-          <li><a href="/person">[% h.loc("tabs.authors") %]</a></li>
-          <li><a href="/project">[% h.loc("tabs.projects") %]</a></li>
-          <li><a href="/department">[% h.loc("tabs.departments") %]</a></li>
+          <li class="active"><a href="[% uri_base %]/">[% h.loc("tabs.home") %]</a></li>
+          <li><a href="[% uri_base %]/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
+          <li><a href="[% uri_base %]/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+          <li><a href="[% uri_base %]/person">[% h.loc("tabs.authors") %]</a></li>
+          <li><a href="[% uri_base %]/project">[% h.loc("tabs.projects") %]</a></li>
+          <li><a href="[% uri_base %]/department">[% h.loc("tabs.departments") %]</a></li>
         </ul>
       </div>
     </div>
@@ -33,7 +33,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="row">
-                    <form action="/publication" method="get">
+                    <form action="[% uri_base %]/publication" method="get">
                       <div class="col-lg-8 col-md-7 col-sm-6">
                         <div class="input-group">
                           <input type="text" name="q" class="form-control" placeholder="[% h.loc("home.search_placeholder") %]">
@@ -48,10 +48,10 @@
               </div>
               <div class="row margin-top2">
                 <div class="col-md-12">
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="/publication">[% h.loc("home.stats.publications") %]</a></p>
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="/data">[% h.loc("home.stats.data_publications") %]</a></p>
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="/publication?q=fulltext=1">[% h.loc("home.stats.oa_publications") %]</a></p>
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.projects %]</span> <a href="/project">[% h.loc("home.stats.projects") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="[% uri_base %]/publication">[% h.loc("home.stats.publications") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="[% uri_base %]/data">[% h.loc("home.stats.data_publications") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="[% uri_base %]/publication?q=fulltext=1">[% h.loc("home.stats.oa_publications") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.projects %]</span> <a href="[% uri_base %]/project">[% h.loc("home.stats.projects") %]</a></p>
                 </div>
               </div>
             </div><!-- end left col -->

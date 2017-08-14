@@ -37,9 +37,9 @@ sub feed {
     ];
 
     my $rss = XML::RSS->new;
-
+    my $uri_base = h->uri_base();
     $rss->channel(
-        link  => h->host,
+        link  => $uri_base,
         title => h->config->{app},
         syn   => {
             updatePeriod    => $period,
@@ -56,7 +56,7 @@ sub feed {
             my $title = $hit->{title} // 'no title';
 
             $rss->add_item(
-                link  => h->host . "/publication/$hit->{_id}",
+                link  => $uri_base."/publication/$hit->{_id}",
                 title => $title,
                 dc    => $fixer->fix($hit)->{dc},
             );
