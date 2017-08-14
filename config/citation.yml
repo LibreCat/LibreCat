@@ -3,7 +3,7 @@ _prefix:
 
 # engine for citation generation
 # possible values are 'csl' or 'none'
-engine: no
+engine: none
 
 # example 'csl' style citation generation
 # see: https://github.com/LibreCat/LibreCat/wiki/Citation-Style-Language
