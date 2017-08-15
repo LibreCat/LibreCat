@@ -15,7 +15,7 @@
       <h1>[% IF full_name %]Edit Account for [% full_name %][% ELSE %]Add new account[% END %]</h1>
     </div>
 
-    <form id="id_account_form" action="/librecat/admin/account/update" method="POST">
+    <form id="id_account_form" action="[% uri_base %]/librecat/admin/account/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
       <input type="hidden" name="email_encoded" value="[% email_encoded %]" />
       <input type="hidden" name="title" value="[% title %]" />
@@ -33,7 +33,7 @@
           <span class="form-group col-md-10 col-md-offset-2">
             <button type="button" id="id_check_submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
             <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
-            <a class="btn btn-danger" href="/librecat/admin/account/delete/[% _id %]" onclick="return confirm('Caution! You are deleting an account.');" name="delete"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+            <a class="btn btn-danger" href="[% uri_base %]/librecat/admin/account/delete/[% _id %]" onclick="return confirm('Caution! You are deleting an account.');" name="delete"><span class="glyphicon glyphicon-trash"></span> Delete</a>
           </span>
         </div>
       </div>
@@ -141,7 +141,7 @@ function addDelegate(element){
   var index = $('#delegate').find('input').length;
   var id = $('#id_delegate').val();
   var person = "";
-  $.getJSON("/authority_user/" + id, function(data,status){
+  $.getJSON( librecat.uri_base + "/authority_user/" + id, function(data,status){
     if(data.error){
       alert(data.error);
     }

@@ -126,7 +126,7 @@ get '/staffdirectory/:id' => sub {
             uri_escape($id);
     }
     else {
-        redirect sprintf "/person/%s", uri_escape($id);
+        redirect uri_for( sprintf "/person/%s", uri_escape($id) );
     }
 };
 

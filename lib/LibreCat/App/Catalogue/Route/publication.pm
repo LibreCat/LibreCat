@@ -195,7 +195,7 @@ Checks if the user has the rights to update this record.
             }
         );
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     };
 
 =head2 GET /return/:id
@@ -234,7 +234,7 @@ Checks if the user has the rights to edit this record.
             }
         );
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     };
 
 =head2 GET /delete/:id
@@ -264,7 +264,7 @@ Deletes record with id. For admins only.
             }
         );
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     };
 
 =head2 GET /preview/id
@@ -382,7 +382,7 @@ Publishes private records, returns to the list.
             $hook->fix_after($res);
         }
 
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     };
 
 };

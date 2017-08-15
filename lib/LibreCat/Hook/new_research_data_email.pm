@@ -14,7 +14,7 @@ sub fix {
         && $data->{type} eq "research_data"
         && $data->{status} eq "submitted";
 
-    my $mail_body = Catmandu->export_to_string({%$data, host => h->host},
+    my $mail_body = Catmandu->export_to_string({%$data, uri_base => h->uri_base()},
         'Template', template => 'views/email/rd_submitted.tt');
 
     h->log->info("Sending research_data submitted email.");

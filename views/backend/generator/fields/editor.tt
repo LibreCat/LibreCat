@@ -37,7 +37,7 @@
                 <input type="radio" name="editor_idm.0" id="editor_idm_extern_0" checked="checked"> [% lf.$type.field.editor.idm_extern || lf.$type.field.editor_solo.idm_extern %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
+                <input type="radio" style="margin-top:5px;" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="[% uri_base %]/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
               </label>
               </span>
             </div>
@@ -86,7 +86,7 @@
                 <input type="radio" name="editor_idm.[% loop.index %]" id="editor_idm_extern_[% loop.index %]"[% IF !name.id %] checked="checked"[% END %]> [% lf.$type.field.editor.idm_extern || lf.$type.field.editor_solo.idm_extern %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="editor_idm.[% loop.index %]" id="editor_idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="/images/authorized_yes.png"[% ELSE %]src="/images/authorized_no.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
+                <input type="radio" style="margin-top:5px;" name="editor_idm.[% loop.index %]" id="editor_idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="[% uri_base %]/images/authorized_yes.png"[% ELSE %]src="[% uri_base %]/images/authorized_no.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
               </label>
               </span>
             </div>
@@ -134,7 +134,7 @@
               <input type="radio" name="editor_idm.0" id="editor_idm_extern_0" checked="checked"> [% lf.$type.field.editor.idm_extern || lf.$type.field.editor_solo.idm_extern %]
             </label>
             <label class="radio-inline">
-              <input type="radio" style="margin-top:5px;" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
+              <input type="radio" style="margin-top:5px;" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="[% uri_base %]/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
             </label>
             </span>
           </div>

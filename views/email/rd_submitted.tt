@@ -6,6 +6,6 @@ ID: [% _id %]
 "[% title %]"
 ([% author.0.full_name %])
 
-[% host %]/librecat/search/admin?q=id=[% _id %]
+[% uri_base %]/librecat/search/admin?q=id=[% _id %]
 
 Viel Spass!

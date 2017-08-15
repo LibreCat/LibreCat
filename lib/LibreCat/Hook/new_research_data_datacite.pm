@@ -16,7 +16,7 @@ sub fix {
 
     h->log->info("Register the publication at DataCite");
 
-    my $datacite_xml = Catmandu->export_to_string({%$data, host => h->host},
+    my $datacite_xml = Catmandu->export_to_string({%$data, uri_base => h->uri_base()},
         'Template', template => 'views/export/datacite.tt');
 
     h->log->debug("datacite_xml: $datacite_xml");
@@ -25,7 +25,7 @@ sub fix {
         user         => h->config->{doi}->{user},
         password     => h->config->{doi}->{passwd},
         doi          => $data->{doi},
-        landing_url  => h->host . "/data/$data->{_id}",
+        landing_url  => h->uri_base() . "/data/$data->{_id}",
         datacite_xml => $datacite_xml
     };
 

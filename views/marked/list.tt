@@ -6,14 +6,14 @@
 
 <!-- BEGIN marked/marked.tt -->
 
-<script src="/javascripts/jquery-sortable-min.js"></script>
+<script src="[% uri_base %]/javascripts/jquery-sortable-min.js"></script>
 <script>
   $(function() {
     $( "#sortable" ).sortable({
       onDrop: function($item) {
         $.ajax({
             type: 'POST',
-            url: '[% h.host %]/reorder/' + $item.find('span.pubid').text() + '/' + $item.index(),
+            url: librecat.uri_base + '/reorder/' + $item.find('span.pubid').text() + '/' + $item.index(),
             dataType: 'json',
             success: function(res) {}
         });

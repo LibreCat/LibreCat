@@ -1,7 +1,7 @@
 [%- INCLUDE header.tt %]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 <!-- BEGIN project/record.tt -->
-<div class="row" itemscope itemtype="http://schema.org/webpage" itemid="/project/[% _id %]"><!-- outer border -->
+<div class="row" itemscope itemtype="http://schema.org/webpage" itemid="[% uri_base %]/project/[% _id %]"><!-- outer border -->
   <div class="col-md-11 col-sm-12">
     <div class="page-header" id="banner">
       [%- UNLESS name %]

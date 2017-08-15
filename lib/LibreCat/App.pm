@@ -85,7 +85,7 @@ sub _login_route {
             my $query_params = params("query");
             my $data
                 = {
-                $conf->{callback_key} => uri_for(request->path, $query_params)
+                $conf->{callback_key} => uri_for(request->path_info, $query_params)
                 };
             for my $k (@{$conf->{passthrough}}) {
                 $data->{$k} = params->{$k} if params->{$k};
@@ -120,7 +120,7 @@ sub _role_route {
             my $query_params = params("query");
             my $data
                 = {
-                $conf->{callback_key} => uri_for(request->path, $query_params)
+                $conf->{callback_key} => uri_for(request->path_info, $query_params)
                 };
             for my $k (@{$conf->{passthrough}}) {
                 $data->{$k} = params->{$k} if params->{$k};

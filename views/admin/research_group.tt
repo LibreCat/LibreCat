@@ -19,7 +19,7 @@
       </h1>
     </div>
 
-    <form id="admin-research-group-search" role="form" action="/librecat/admin/research_group/search" method="GET">
+    <form id="admin-research-group-search" role="form" action="[% uri_base %]/librecat/admin/research_group/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
 	  <label for="id_q">Search Research Groups</label>
@@ -34,7 +34,7 @@
     </form>
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
-      <a href="/librecat/admin/research_group/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new research group</a>
+      <a href="[% uri_base %]/librecat/admin/research_group/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new research group</a>
     </div>
 
     [% IF hits %]
@@ -51,10 +51,10 @@
     [% FOREACH p IN hits %]
     <div class="row innerrow">
       <div class="col-md-1">
-	<a href="/research_group/[% p._id %]"><span class="label label-success"><strong>[% p._id %]</strong></span></a>
+	<a href="[% uri_base %]/research_group/[% p._id %]"><span class="label label-success"><strong>[% p._id %]</strong></span></a>
       </div>
       <div class="col-md-9">
-	<a href="/librecat/admin/research_group/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% IF p.acronym %][% p.acronym %] | [% END %][% p.name %]</a>
+	<a href="[% uri_base %]/librecat/admin/research_group/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% IF p.acronym %][% p.acronym %] | [% END %][% p.name %]</a>
 	<br />
 	<span class="text-muted">[% FOREACH dep IN p.department %][% dep.name %][% UNLESS loop.last %] | [% END %][% END %]</span>
       </div>

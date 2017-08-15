@@ -1,7 +1,7 @@
 [%- PROCESS header.tt %]
 <!-- BEGIN publication/record.tt -->
 
-<script src="/javascripts/frontend.js"></script>
+<script src="[% uri_base %]/javascripts/frontend.js"></script>
 <script type="text/javascript">
 [%- PROCESS publication/javascriptShowHide.tt %]
 </script>
@@ -67,7 +67,7 @@
 [%- style = h.config.citation.csl.default_style %]
 
 [% mypath = request.path.match('/publication') ? 'publication' : 'data' %]
-<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% h.host %]/[% mypath %]/[% _id %]"><!-- outer row-->
+<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% uri_base %]/[% mypath %]/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
       [%- UNLESS _id %]
@@ -95,7 +95,7 @@
               <div class="col-xs-10">
                   [% PROCESS publication/oa_lock.tt %]
                   [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]
-                  <a itemprop="url" href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
+                  <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
                     [% fi.title || fi.file_name | html %]
                   </a>
                   [% ELSE %]
@@ -105,7 +105,7 @@
                   [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
             [% IF loop.count > 1 %]
-                  <br>[% PROCESS publication/oa_lock.tt %] <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
+                  <br>[% PROCESS publication/oa_lock.tt %] <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
                   [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
@@ -167,8 +167,8 @@
       [%- IF fi %]
       <div class="col-xs-2 col-sm-3 col-sm-offset-1 text-sm-right">
 	     <div class="img-thumbnail img-thumbnail-fh">
-	        <a href="/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
-	           <img src="/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
+	        <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
+	           <img src="[% uri_base %]/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
 	        </a>
 	     </div>
       </div>
@@ -272,18 +272,18 @@
         <!-- Edit -->
         [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
         <h3 id="edit">[% h.loc("frontdoor.editing_options") %]</h3>
-        <a href="/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
+        <a href="[% uri_base %]/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]
-          <a href="/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
         [% END %]
         [% IF type == "research_data" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
-          <a href="/librecat/record/publish/[% _id %]">[% h.loc("frontdoor.submit") %]</a>
+          <a href="[% uri_base %]/librecat/record/publish/[% _id %]">[% h.loc("frontdoor.submit") %]</a>
         [% END %]
         [% END %]
 
         <!-- Export -->
         <h3 id="export">[% h.loc("frontdoor.export") %]</h3>
-        <a class="label label-default total-marked" href="/marked">[% marked %]</a> <a href="/marked" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
+        <a class="label label-default total-marked" href="[% uri_base %]/marked">[% marked %]</a> <a href="[% uri_base %]/marked" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
 
         <!-- trigger modal -->
         <p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>[% h.loc("frontdoor.open_data_pub") %]</a></p>
@@ -325,20 +325,20 @@
 	    <h3>[% h.loc("frontdoor.sources") %]</h3>
 
 	    [%- IF external_id.pmid.0 %]
-	    <p><img src="/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid.0 %]<br>
+	    <p><img src="[% uri_base %]/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid.0 %]<br>
 	    <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid.0 %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid.0 %]">Europe PMC</a></p>
 	    [%- END %]
 
 	    [%- IF external_id.arxiv.0 %]
-	    <p><img src="/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv.0 %]">[% external_id.arxiv.0 %]</a></p>
+	    <p><img src="[% uri_base %]/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv.0 %]">[% external_id.arxiv.0 %]</a></p>
 	    [%- END %]
 
 	    [%- IF external_id.inspire.0 %]
-	    <p><img src="/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire.0 %]">[% external_id.inspire.0 %]</a></p>
+	    <p><img src="[% uri_base %]/images/icon_inspire.png" class="img-thumbnail" alt="">Inspire <a href="https://inspirehep.net/record/[% external_id.inspire.0 %]">[% external_id.inspire.0 %]</a></p>
 	    [%- END %]
 
 	    [%- IF external_id.scoap3.0 %]
-	    <p><img src="/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3.0 %]">[% external_id.scoap3.0 %]</a></p>
+	    <p><img src="[% uri_base %]/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3.0 %]">[% external_id.scoap3.0 %]</a></p>
 	    [%- END %]
 	  [%- END %]
     [%- END %]
@@ -351,7 +351,7 @@
           <p>
           [% FOREACH id_entry IN genbank %]
             [% IF loop.first %]
-            <img src="/images/icon_genbank.gif" class="img-thumbnail" alt=""><strong>GenBank</strong><br>
+            <img src="[% uri_base %]/images/icon_genbank.gif" class="img-thumbnail" alt=""><strong>GenBank</strong><br>
             [% END %]
             <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
             [% IF loop.count > 14 %]
@@ -367,7 +367,7 @@
           <p>
           [% FOREACH id_entry IN nasc %]
             [% IF loop.first %]
-            <img src="/images/icon_nasc.png" alt="" class="img-thumbnail"><strong>NASC</strong><br>
+            <img src="[% uri_base %]/images/icon_nasc.png" alt="" class="img-thumbnail"><strong>NASC</strong><br>
             [% END %]
             <a href="http://arabidopsis.info/StockInfo?NASC_id=[% id_entry %]">[% id_entry %]</a>
             [% END %]
@@ -379,9 +379,9 @@
         <!-- Search title in -->
         <h3>[% h.loc("frontdoor.search_this") %]</h3>
         <p>
-          <a href="http://scholar.google.com/scholar?q=allintitle%3A[% title | uri %]"><img src="/images/icon_gs.png" alt="" class="img-thumbnail">Google Scholar</a><br>
+          <a href="http://scholar.google.com/scholar?q=allintitle%3A[% title | uri %]"><img src="[% uri_base %]/images/icon_gs.png" alt="" class="img-thumbnail">Google Scholar</a><br>
           [%- IF publication_identifier.isbn %]
-          <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% publication_identifier.isbn.0 %]"><img src="/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.isbn_search") %]</a><br>
+          <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% publication_identifier.isbn.0 %]"><img src="[% uri_base %]/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.isbn_search") %]</a><br>
           [%- END %]
         </p>
       </div>
@@ -395,15 +395,15 @@
 
 [% IF _id %]
 <script>
-$.getJSON("/metrics/[% _id %]").done(function( data ) {
+$.getJSON( librecat.uri_base + "/metrics/[% _id %]").done(function( data ) {
   if (data.times_cited > 0) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
   }
 });
-$.getJSON("/bibtex/[% _id %]").done(function(data) {
+$.getJSON( librecat.uri_base +  "/bibtex/[% _id %]").done(function(data) {
     $('#bibtex').prepend('<pre>'+ data.bibtex + '</pre>');
 });
-$.getJSON("/ris/[% _id %]").done(function(data) {
+$.getJSON( librecat.uri_base + "/ris/[% _id %]").done(function(data) {
     $('#ris').prepend('<pre>'+ data.ris +'</pre>');
 });
 </script>
