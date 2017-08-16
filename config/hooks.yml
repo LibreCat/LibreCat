@@ -8,92 +8,92 @@
 hooks:
   # Code that runs when creating a new publication
   publication-new:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when editing a new publication
   publication-edit:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when changing the edit mode of a publication
   publication-change-type:
-   before_fixes:
-     - form2schema(publication_identifier)
-     - form2schema(external_id)
-     - page_range_number()
-     - clean_preselects()
-     - split_field(nasc, " ; ")
-     - split_field(genbank, " ; ")
-     - split_field(keyword, " ; ")
-     - vacuum()
-   after_fixes: []
+    before_fixes:
+      - form2schema(publication_identifier)
+      - form2schema(external_id)
+      - page_range_number()
+      - clean_preselects()
+      - split_field(nasc, " ; ")
+      - split_field(genbank, " ; ")
+      - split_field(keyword, " ; ")
+      - vacuum()
+    after_fixes: []
 
   # Code that runs when updating a publication
   publication-update:
-   before_fixes: []
-   after_fixes:
-       - new_research_data_email
-       - new_research_data_datacite
+    before_fixes: []
+    after_fixes:
+      - new_research_data_email
+      - new_research_data_datacite
 
   # Code that runs at a 'Make public' action
   publication-publish:
-   before_fixes: []
-   after_fixes:
-       - new_research_data_email
-       - new_research_data_datacite
+    before_fixes: []
+    after_fixes:
+      - new_research_data_email
+      - new_research_data_datacite
 
   # Code that runs when deleting a publication
   publication-delete:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs at a 'Return' action
   publication-return:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when a publication access is tried without credentials
   publication-access-denied:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a Quick and Easy publication
   qae-new:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a new aXiv record
   import-new-arxiv:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a new BibTex record
   import-new-bibtex:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a new DOI record
   import-new-crossref:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a new datacite record
   import-new-datacite:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a new PubMed record
   import-new-epmc:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a new Inspire record
   import-new-inspire:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
 
   # Code that runs when importing a new WOS record
   import-new-wos:
-   before_fixes: []
-   after_fixes: []
+    before_fixes: []
+    after_fixes: []
