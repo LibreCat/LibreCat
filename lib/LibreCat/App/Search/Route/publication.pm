@@ -10,6 +10,32 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 
+=head2 GET /publication/:id.:fmt
+
+Export normal publication in format :fmt
+
+=cut
+
+get '/publication/:id.:fmt' => sub {
+    my $id = params->{id};
+    my $fmt = params->{fmt} // 'yaml';
+
+    forward "/export", {cql => "(id=$id AND type<>research_data)", bag => 'publication', fmt => $fmt};
+};
+
+=head2 GET /data/:id.:fmt
+
+Export data publication in format :fmt
+
+=cut
+
+get '/data/:id.:fmt' => sub {
+    my $id = params->{id};
+    my $fmt = params->{fmt} // 'yaml';
+
+    forward "/export", {cql => "(id=$id AND type=research_data)", bag => 'publication', fmt => $fmt};
+};
+
 =head2 GET /{data|publication}/:id
 
 Splash page for :id.
