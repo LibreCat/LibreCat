@@ -1,8 +1,8 @@
 <button data-toggle="collapse" data-target="#type_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.publication_type") %]</button>
 <div class="facettecollapse">
   <ul id="type_[% tabmodus %][% menu %]" class="collapse">
-[% FOREACH type IN facets.type.terms %]
-[% typeName = lf.forms.item(type.term).label %]
+[%- FOREACH type IN facets.type.terms %]
+[%- typeName = lf.forms.item(type.term).label %]
 <li><a class="facet_[%tabmodus %][% menu %]" data-key="cql" data-param="type" data-value="[% type.term %]" href="#" rel="nofollow">[% typeName %] ([% type.count %])</a></li>
 [% END %]
   </ul>
