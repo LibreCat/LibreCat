@@ -16,7 +16,7 @@ use Encode qw(encode);
 
 sub access_denied_hook {
     h->hook('publication-access-denied')
-        ->fix_around(
+>fix_around(
         {_id => params->{id}, user_id => session->{personNumber},});
 }
 
@@ -383,6 +383,35 @@ Publishes private records, returns to the list.
         }
 
         redirect uri_for('/librecat');
+    };
+
+=head2 POST /change_mode
+
+Changes the type of the publication.
+
+=cut
+    post '/change_type' => sub {
+        my $params = params;
+
+        $params->{file} = [$params->{file}]
+            if ($params->{file} and ref $params->{file} ne "ARRAY");
+
+        $params = h->nested_params($params);
+        if ($params->{file}) {
+            foreach my $fi (@{$params->{file}}) {
+                $fi              = encode('UTF-8', $fi);
+                $fi              = from_json($fi);
+                $fi->{file_json} = to_json($fi);
+            }
+        }
+
+        # Use config/hooks.yml to register functions
+        # that should run before/after changing the edit mode
+        state $hook = h->hook('publication-change-type');
+        $hook->fix_before($params);
+        $hook->fix_after($params);
+
+        template "backend/forms/$params->{type}", $params;
     };
 
 };
