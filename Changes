@@ -2,6 +2,12 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.7.1 2017-07-14
+    - GH #196: introduce selenium tests
+    - add OA flag to fulltext link
+    - GH #80: show download link on frontdoor only if accessible
+    - GH #238: refactord person routes
+
 0.7.0 2017-07-03
     - new command: file_store move
     - move tasks to job queue

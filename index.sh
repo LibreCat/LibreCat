@@ -75,7 +75,7 @@ case "${CMD}" in
         echo "project"
         carton exec "bin/librecat copy -v backup --bag project to search --bag project"
         echo "research_group."
-        carton exec "bin/librecat copy -v backup --bag research_group. to search --bag research_group"
+        carton exec "bin/librecat copy -v backup --bag research_group to search --bag research_group"
         echo "Done"
         ;;
     export)

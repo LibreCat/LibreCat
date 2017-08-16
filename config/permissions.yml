@@ -39,7 +39,7 @@ routes:
     - [ 'GET'  , '/librecat/record/internal_view' , 'role' , 'super_admin' ]
     - [ 'GET'  , '/librecat/record/clone'         , 'login' ]
     - [ 'GET'  , '/librecat/record/publish'       , 'login' ]
-    - [ 'POST' , '/librecat/record/change_mode'   , 'login' ]
+    - [ 'POST' , '/librecat/record/change_type'   , 'login' ]
     - [ 'POST' , '/librecat/record/import'        , 'login' ]
 
     - [ 'GET'  , '/librecat/search/admin'         , 'role' , 'super_admin' ]
