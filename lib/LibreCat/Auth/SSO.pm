@@ -15,7 +15,7 @@ has session_key => (
     default  => sub {'auth_sso'},
     required => 1
 );
-has authorization_url => (
+has authorization_path => (
     is       => 'ro',
     isa      => sub {check_string($_[0]);},
     lazy     => 1,
@@ -23,7 +23,19 @@ has authorization_url => (
     required => 1
 );
 has id => (is => 'ro', lazy => 1);
+has uri_base => (
+    is => 'ro',
+    isa => sub {check_string($_[0]);},
+    required => 1,
+    default => sub { "http://localhost:5000"; }
+);
+
 requires 'to_app';
+
+sub uri_for {
+    my ( $self, $path ) = @_;
+    $self->uri_base().$path;
+}
 
 sub _build_id {
     ref($_[0]);
@@ -78,7 +90,7 @@ LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication
             #already authenticated: what are you doing here?
             if( is_hash_ref($auth_sso)){
 
-                return [302,[Location => $self->authorization_url],[]];
+                return [302,[Location => $self->uri_for($self->authorization_path)],[]];
 
             }
 
@@ -89,7 +101,7 @@ LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication
             $self->set_auth_sso( $session, { package => __PACKAGE__, package_id => $self->id, response => "Long response from external SSO application" } );
 
             #redirect to other application for authorization:
-            return [302,[Location => $self->authorization_url],[]];
+            return [302,[Location => $self->uri_for($self->authorization_path)],[]];
 
         };
     }
@@ -104,7 +116,8 @@ LibreCat::Auth::SSO - LibreCat role for Single Sign On (SSO) authentication
         mount '/auth/myssoauth' => MySSOAuth->new(
 
             session_key => "auth_sso",
-            authorization_url => "/auth/myssoauth/callback"
+            authorization_path => "/auth/myssoauth/callback",
+            uri_base => "http://localhost:5001"
 
         )->to_app;
 
@@ -165,17 +178,26 @@ This is usefull for two reasons:
 
     * the authorization application can pick up the saved response from the session
 
-=item authorization_url
+=item authorization_path
 
-URL of the authorization route.
+(internal) path of the authorization route. This path will be prepended by "uri_base" to
+create the full url.
 
 When authentication succeeds, this application should redirect you here
+
+=item uri_for( path )
+
+method that prepends your path with "uri_base".
 
 =item id
 
 identifier of the authentication module. Defaults to the package name.
 This is handy when using multiple SSO instances, and you need to known
 exactly which package authenticated the user.
+
+=item uri_base
+
+base url of the Plack application
 
 =back
 
