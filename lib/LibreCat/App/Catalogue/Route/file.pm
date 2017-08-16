@@ -213,16 +213,6 @@ any '/rc/:id/:file_id' => sub {
 
     my $date_expires = _calc_date();
 
-    my $query = {
-        approved     => 1,
-        file_id      => params->{file_id},
-        file_name    => $file->{file_name},
-        date_expires => $date_expires,
-        record_id    => params->{id},
-    };
-
-    my $hits = $bag->search(query => $query, limit => 1);
-
     my $stored = $bag->add(
         {
             record_id    => params->{id},
@@ -263,9 +253,11 @@ any '/rc/:id/:file_id' => sub {
         }
     }
     else {
-        return to_json {
-            ok => true,
-            url => uri_for("/rc/" . $stored->{_id})
+        my $url = uri_for("/rc/". $stored->{_id});
+        content_type "application/json";
+        return Dancer::to_json {
+            ok => 1,
+            url => "$url", # need to quotes here!
         };
     }
 };
