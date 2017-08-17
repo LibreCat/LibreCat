@@ -50,7 +50,7 @@
           [% INCLUDE hits.tt %]
           </div>
           <div class="col-md-3 col-md-offset-1 col-sm-4">
-          [% PROCESS filters.tt %]
+          [% PROCESS marked/filters.tt %]
           </div>
         </div>
       </div>

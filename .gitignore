@@ -49,3 +49,4 @@ views/backend/forms/
 views/department/nodes*
 wiki/
 ~$
+environments/*.yml
