@@ -2,7 +2,7 @@
 [% qp = h.extract_params -%]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 
-<!-- BEGIN filters.tt -->
+<!-- BEGIN marked/filters.tt -->
 [%- USE JSON.Escape %]
 <div id="filters"></div>
 <div id="export"></div>
@@ -35,7 +35,7 @@
     [%- END %]
   </div>
 [%- END %]
-BOOOOOOOM!
+
 [%- IF qp.style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
     [%- tmp = {}; tmp.import(qp); tmp.delete('style') %]
@@ -133,4 +133,4 @@ $('button.collapse').click(function(e){
 });
 </script>
 
-<!-- END filters.tt -->
+<!-- END marked/filters.tt -->
