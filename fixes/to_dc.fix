@@ -1,5 +1,5 @@
 # mapping pub data to dublic core (dc)
-
+librecat_uri_base('uri_base')
 copy_field('uri_base','tmp_id.$append')
 if any_match(type, research_data)
   add_field(tmp_id.$append, data)
