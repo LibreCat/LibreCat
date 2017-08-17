@@ -65,6 +65,7 @@ exporter:
       package: 'Template'
       content_type: 'application/x-datacite+xml'
       options:
+        fix: ["fixes/to_datacite.fix"]
         template: views/export/datacite.tt
         xml: true
       extension: xml
