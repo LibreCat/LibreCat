@@ -1,0 +1,95 @@
+_prefix:
+  route:
+
+exporter:
+  publication:
+    json:
+      package: 'JSON'
+      content_type: 'application/json'
+      options:
+        fix: ["fixes/to_public.fix"]
+        array: 1
+      label: JSON
+    jsonl:
+      package: 'JSON'
+      content_type: 'application/json'
+      options:
+        fix: ["fixes/to_public.fix"]
+      label: JSONLines
+      extension: jsonl
+    yaml:
+      package: 'YAML'
+      content_type: 'text/x-yaml'
+      options:
+        fix: ["fixes/to_public.fix"]
+      extension: yml
+      label: YAML
+    bibtex:
+      package: 'BibTeX'
+      content_type: 'text/x-bibtex'
+      options:
+        fix: ["fixes/to_bibtex.fix"]
+      extension: bib
+      label: BibTeX
+    ris:
+      package: 'RIS'
+      content_type: 'application/x-research-info-systems'
+      options:
+        fix: ["fixes/to_ris.fix"]
+      label: 'RIS (reference software)'
+      extension: ris
+    rtf:
+      package: RTF
+      content_type: 'application/rtf'
+      options:
+        fix: ["nothing()"]
+      extension: rtf
+      label: RTF
+    aref:
+      package: YAML
+      content_type: 'text/x-yaml'
+      options:
+        fix: ["fixes/to_aref.fix"]
+      label: 'aREF (another RDF Encoding Form)'
+      extension: yml
+    mods:
+      package: 'Template'
+      content_type: application/xml
+      options:
+        fix: ["fixes/to_mods.fix"]
+        template: views/export/mods.tt
+        xml: true
+      extension: xml
+      label: MODS
+    datacite:
+      package: 'Template'
+      content_type: 'application/x-datacite+xml'
+      options:
+        template: views/export/datacite.tt
+        xml: true
+      extension: xml
+      label: 'Datacite XML'
+    dc:
+      package: 'Template'
+      content_type: application/xml
+      options:
+        template: views/export/oai_dc.tt
+        xml: true
+        fix: ["fixes/to_dc.fix"]
+      extension: xml
+      label: Dublin Core
+    dc_json:
+      package: 'JSON'
+      content_type: 'application/oaidc+json'
+      options:
+        fix: ["fixes/to_dc.fix"]
+      extension: json
+      label: 'DC JSON'
+    csl_json:
+      package: 'JSON'
+      options:
+        fix: ["fixes/to_csl.fix"]
+        pretty: 1
+      content_type: 'application/vnd.citationstyles.csl+json'
+      extension: json
+      label: 'CSL JSON'
