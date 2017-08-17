@@ -926,6 +926,11 @@ researcher:
        - type: string
        - type: integer
       description: "Researcher authorClaim identifier"
+    github:
+      oneOf:
+       - type: string
+       - type: integer
+      description: "Researcher github ID"
     googleScholar:
       oneOf:
        - type: string
