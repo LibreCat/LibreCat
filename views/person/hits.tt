@@ -2,8 +2,9 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="pagination">
+    [% browse = params.browse == "" ? h.alphabet.0 : params.browse %]
     [%- FOREACH c IN h.alphabet %]
-      <li [% IF request.path_info.match("/person?browse=$c")%]class="active"[% END %]><a href="[% uri_base %]/person?browse=[% c %]">[% c %]</a></li>
+      <li [% IF browse == c %]class="active"[% END %]><a href="[% uri_base %]/person?browse=[% c %]">[% c %]</a></li>
     [%- END %]
     </ul>
   </div>

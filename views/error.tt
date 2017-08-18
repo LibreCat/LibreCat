@@ -1,7 +1,4 @@
 [% PROCESS header.tt %]
-[% path = request.path %]
-[% qp = request.params.hash %]
-[% qp.delete('splat') %]
 
 <!-- BEGIN websites/error.tt -->
 

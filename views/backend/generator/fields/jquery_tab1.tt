@@ -287,7 +287,7 @@ $(function() {
   [% END %]
 
   $( "#connect_autocomplete" ).autocomplete({
-    source: puburl,
+    source: librecat.uri_base + puburl,
     minLength: 0,
     messages: {
 	    noResults: '',

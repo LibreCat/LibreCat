@@ -66,7 +66,7 @@
 [%- IF h.config.citation.engine == 'csl' AND citation %][% display_citation = 1 %][% END %]
 [%- style = h.config.citation.csl.default_style %]
 
-[% mypath = request.path.match('/publication') ? 'publication' : 'data' %]
+[% mypath = request.path_info.match('/publication') ? 'publication' : 'data' %]
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% uri_base %]/[% mypath %]/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
@@ -303,7 +303,7 @@
                     [% h.config.route.exporter.publication.$f.label %]:
                     </div>
                     <div class="col-xs-8">
-                      <a href="[% request.path %].[% f %]"> [% h.config.route.exporter.publication.$f.content_type %]</a>
+                      <a href="[% request.uri_for(request.path_info) %].[% f %]"> [% h.config.route.exporter.publication.$f.content_type %]</a>
                     </div>
                   </div>
                   <div class="row"><div class="col-xs-12">&nbsp;</div></div>

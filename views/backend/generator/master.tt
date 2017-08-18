@@ -1,5 +1,4 @@
-[% path = request.path -%]
-[% backend = path.match('librecat') ? 1 : 0 -%]
+[% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = h.get_person(session.personNumber) -%]
 [% lang = session.lang -%]
 [% lf = h.config.locale.$lang.forms -%]
