@@ -19,14 +19,7 @@ hooks:
   # Code that runs when changing the edit mode of a publication
   publication-change-type:
     before_fixes:
-      - form2schema(publication_identifier)
-      - form2schema(external_id)
-      - page_range_number()
-      - clean_preselects()
-      - split_field(nasc, " ; ")
-      - split_field(genbank, " ; ")
-      - split_field(keyword, " ; ")
-      - vacuum()
+      - publication_change_type
     after_fixes: []
 
   # Code that runs when updating a publication
