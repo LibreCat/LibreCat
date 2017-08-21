@@ -46,7 +46,7 @@ $(document).ready(function() {
 <h2>FileStore</h2>
 
 <h3>List</h3>
-<form id="dolist" method="post" enctype="multipart/form-data" onSubmit="do_list();">
+<form id="dolist" method="post" enctype="multipart/form-data">
  	<input type="hidden" name="action" value="list">
     Select container key:
     <input type="text" name="key" size="10" value="000000008"><br>

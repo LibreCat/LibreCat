@@ -13,7 +13,7 @@
   [%- END %]
 [%- END -%]
 
-[%- UNLESS request.path.match('marked') %]
+[%- UNLESS request.path_info.match('marked') %]
 <h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% h.loc("facets.search") %]</h3>
 <form action="#" method="get" role="form" class="helpme helpme-md" data-placement="left" title="[% h.loc("help.search") | html %]">
   <span class="input-group">

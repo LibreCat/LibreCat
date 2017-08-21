@@ -8,7 +8,7 @@
     [% IF previous_page %]
     [% s = start-limit < 0 ? 0 : start-limit; qp.start = s %]
     <li>
-      <a href="[% request.uri_for(path, qp) %]" aria-label="Previous">
+      <a href="[% request.uri_for(request.path_info, qp) %]" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -20,7 +20,7 @@
     <li class="active"><a href="#">[% p %] <span class="sr-only">(current)</span></a></li>
     [% ELSIF p.defined %]
     [% s = limit * (p - 1); qp.start = s %]
-    <li><a href='[% request.uri_for(path, qp) %]'>[% p %]</a></li>
+    <li><a href='[% request.uri_for(request.path_info, qp) %]'>[% p %]</a></li>
     [% ELSE %]
     <li class="disabled"><a href="">&hellip;</a></li>
     [% END %]
@@ -29,7 +29,7 @@
     [% IF next_page %]
     [% s = start+limit; qp.start = s %]
     <li>
-      <a href="[% request.uri_for(path, qp) %]" aria-label="Next">
+      <a href="[% request.uri_for(request.path_info, qp) %]" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

@@ -1,4 +1,4 @@
-[%- path = request.path %]
+[%- path_info = request.path_info %]
 [%- qp = request.params.hash %]
 [%- qp.delete('splat') %]
 [%- PROCESS header.tt %]
@@ -18,8 +18,8 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs" id="indexTab">
           <li><a href="[% uri_base %]/">[% h.loc("tabs.home") %]</a></li>
-          <li [% IF path.match('publication')%]class="active"[% END %]><a href="[% uri_base %]/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
-          <li [% IF path.match('data')%]class="active"[% END %]><a href="[% uri_base %]/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+          <li [% IF path_info.match('publication')%]class="active"[% END %]><a href="[% uri_base %]/publication[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.publications") %]</a></li>
+          <li [% IF path_info.match('data')%]class="active"[% END %]><a href="[% uri_base %]/data[% IF qp.style OR qp.limit %]?[% END %][% IF qp.style %]style=[% qp.style %][% IF qp.limit %]&[% END %][% END %][% IF qp.limit %]limit=[% qp.limit %][% END %]">[% h.loc("tabs.data_publications") %]</a></li>
           <li><a href="[% uri_base %]/person">[% h.loc("tabs.authors") %]</a></li>
           <li><a href="[% uri_base %]/project">[% h.loc("tabs.projects") %]</a></li>
           <li><a href="[% uri_base %]/department">[% h.loc("tabs.departments") %]</a></li>
