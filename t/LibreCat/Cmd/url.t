@@ -18,12 +18,14 @@ require_ok $pkg;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['url']);
-    ok $result->error, 'threw an exception, file missing';
+    ok $result->error, 'threw an exception: cmd missing';
+
+    $result = test_app(qq|LibreCat::CLI| => ['url', 'do_nonsense']);
+    ok $result->error, 'threw an exception: cmd unknown';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['url', 'check']);
-
     ok $result->error, 'threw an exception';
 
     $result = test_app(
@@ -32,6 +34,12 @@ require_ok $pkg;
 
     like $result->stdout, qr/200.*pub\.uni-bielefeld/, 'result looks good';
     like $result->stdout, qr/200.*biblio\.ugent/,      'result looks good';
+
+    $result = test_app(
+        qq|LibreCat::CLI| => ['url', 'check', 't/records/urls.yml', 't/tmp/urls.out']);
+    ok !$result->error, 'threw no exception with outfile';
+
+    unlink('t/tmp/urls.out');
 }
 
 done_testing;
