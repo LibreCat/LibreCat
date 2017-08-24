@@ -81,7 +81,7 @@ sub upload_temp_file {
         file_size    => $file_size,
         tempid       => $tempid,
         content_type => $content_type,
-        access_level => "open_access",
+        access_level => h->config->{default_access_level} // "open_access",
         open_access  => 1,
         relation     => "main_file",
         creator      => $creator,
