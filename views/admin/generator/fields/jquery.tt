@@ -61,5 +61,5 @@ function selectButton(element){
 }
 
 $('button.cancel-button').click(function() {
-  window.location.href = '/librecat';
+  window.location.href = librecat.uri_base + '/librecat';
 });

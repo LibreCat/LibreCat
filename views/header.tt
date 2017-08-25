@@ -2,13 +2,14 @@
 <html>
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
+[% path_info = request.path_info -%]
 
 <!-- BEGIN header.tt -->
   <head>
     <title>
       [%- IF title %][% title | html %][% ELSE %][% h.loc("appname") %][% END %]
     </title>
-    <link rel="icon" href="/images/brand_logo.png" type="image/png">
+    <link rel="icon" href="[% uri_base %]/images/brand_logo.png" type="image/png">
     [%- IF title AND !backend %]
       <!-- Google Scholar -->
       [%- IF title %]<meta name="citation_title" content="[% title | html %]">[% END %]
@@ -16,7 +17,7 @@
       [% END -%]
       [%- IF year %]<meta name="citation_date" content="[% year | html %]">[% END %]
       [%- IF file %][% FOREACH fi IN file %][% IF fi.file_name %]
-      <meta name="citation_pdf_url" content="[% h.host %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">[% END %][% END %][% END %]
+      <meta name="citation_pdf_url" content="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">[% END %][% END %][% END %]
       [%- IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi | html %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url | html %]">[% END %]
       [%- IF publication %]<meta name="citation_journal_title" content="[% publication | html %]" />[% END %]
       [%- IF volume %]<meta name="citation_volume" content="[% volume | html %]" />[% END %]
@@ -30,7 +31,7 @@
       [% END -%]
       [%- IF year %]<meta name="DC.date" content="[% year | html %]">[% END %]
       [%- IF language %]<meta name="DC.language" content="[% language.0.iso | html %]">[% END %]
-      <meta name="DC.identifier" content="[% h.host %][% request.path %]/[% _id %]">
+      <meta name="DC.identifier" content="[% uri_base %][% path_info %]/[% _id %]">
       [%- IF abstract %][% FOREACH abstract_entry IN abstract %][% UNLESS loop.first %][% END %]<meta name="DC.description" content="[% abstract_entry.text | html %]">[% END %][% END %]
       [%- IF cc_license %]<meta name="DC.rights" scheme="DCTERMS.URI" content="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/[% CASE 'cc_0' %]publicdomain/zero/1.0/[% END %]">[% END %]
       [%- FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 | html %]">[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 | html %]">[% END %][% END %]
@@ -41,17 +42,16 @@
       [%- IF publication_identifier.issn.0 %]<link rel="DC.relation" href="urn:ISSN:[% publication_identifier.issn.0 | html %]">[% END %]
       [%- IF publication_identifier.isbn.0 %]<link rel="DC.relation" href="urn:ISBN:[% publication_identifier.isbn.0 | html %]">[% END %]
     [%- END %]
-    [% reqpath = request.path -%]
-    [% personid = reqpath.search('person/(\d{1,})') -%]
+    [% personid = path_info.search('person/(\d{1,})') -%]
     [% query = qp.q | replace('"', '&quot;') -%]
-    [%- IF request.path.match("person/") %]
+    [%- IF path_info.match("person/") %]
       [%- qp.q = "person%2D$personid"%]
-      <link rel="alternate" type="application/rss+xml" href="[% request.uri_for('/feed/daily', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (today)">
-      <link rel="alternate" type="application/rss+xml" href="[% request.uri_for('/feed/weekly', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last week)">
-      <link rel="alternate" type="application/rss+xml" href="[% request.uri_for('/feed/monthly', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last month)">
-    [%- ELSIF request.path.match("text") %]
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/daily', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (today)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/weekly', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last week)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/monthly', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last month)">
+    [%- ELSIF path_info.match("text") %]
       [%- qp.q = query %]
-      <link rel="alternate" type="application/rss+xml" href="[% request.uri_for('/feed/monthly', qp) %]" title="Publications last month">
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/monthly', qp) %]" title="Publications last month">
     [%- END %]
     [% UNLESS backend %]
     <meta name="robots" content="index,follow,noimageindex" />

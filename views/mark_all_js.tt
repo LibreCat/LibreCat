@@ -1,5 +1,5 @@
 <script>
-var path = '[% request.path %]',
+var path = '[% request.uri_for(request.path_info) %]',
 searchParams = [% h.extract_params.json %];
 [%- IF !backend %]
 searchParams.cql.push('person=[% id %]');
@@ -31,7 +31,7 @@ $(function () {
             // TODO post requests shouldn't contain url params
             $.ajax({
                 type: 'POST',
-                url: "/marked?x-tunneled-method=DELETE",
+                url: librecat.uri_base + "/marked?x-tunneled-method=DELETE",
                 dataType: 'json',
                 success: function(res) {
                     if(prev){

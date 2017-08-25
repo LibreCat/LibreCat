@@ -59,7 +59,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
 
     # Redirect to the alias if the other can't be found
     h->log->debug("trying to find user $id");
-    unless (my $user = h->researcher->get($id)) {
+    unless (my $user = LibreCat->store->bag('researcher')->get($id)) {
         h->log->debug("trying to find user alias $id");
 
         my %search_params = (cql => ["alias=$id"]);
@@ -126,7 +126,7 @@ get '/staffdirectory/:id' => sub {
             uri_escape($id);
     }
     else {
-        redirect sprintf "/person/%s", uri_escape($id);
+        redirect uri_for( sprintf "/person/%s", uri_escape($id) );
     }
 };
 

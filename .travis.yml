@@ -12,7 +12,7 @@ cache:
     - perl_modules
 
 env:
-  - AUTOMATED_TESTING=1 GEARMAN_NETWORK_TEST=1
+  - AUTOMATED_TESTING=1 GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
 
 addons:
   sauce_connect:

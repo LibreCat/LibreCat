@@ -42,7 +42,7 @@ sub command {
 sub _get {
     my ($self) = @_;
 
-    my $bag  = Catmandu->store('backup')->bag('info');
+    my $bag  = LibreCat->store->bag('info');
     my $data = $bag->get('publication_id');
 
     printf "%s\n", $data->{latest};
@@ -57,7 +57,7 @@ sub _set {
 
     croak "id `$id` is not numeric" unless $id =~ /^\d+$/;
 
-    my $bag = Catmandu->store('backup')->bag('info');
+    my $bag = LibreCat->store->bag('info');
     my $data = $bag->add({_id => 'publication_id', latest => $id});
 
     printf "%s\n", $data->{latest};

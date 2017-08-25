@@ -1,7 +1,6 @@
-[% path = request.path %]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
-[% backend = path.match('librecat') ? 1 : 0 %]
+[% backend = request.path_info.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
@@ -22,7 +21,7 @@
     </div>
 
 
-    <form id="id_research_group_form" action="/librecat/admin/research_group/update" method="POST">
+    <form id="id_research_group_form" action="[% uri_base %]/librecat/admin/research_group/update" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
 
       {% FOREACH key IN research_group_field_order %}
@@ -60,7 +59,7 @@
 
 <script>
 $('button.cancel-button').click(function() {
-  window.location.href = '/librecat/admin/research_group';
+  window.location.href = librecat.uri_base + '/librecat/admin/research_group';
 });
 </script>
 

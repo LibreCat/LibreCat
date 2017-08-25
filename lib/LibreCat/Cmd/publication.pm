@@ -166,7 +166,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_publication;
+        $it = LibreCat->store->bag('publication');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -214,7 +214,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_publication;
+        $it = LibreCat->store->bag('publication');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -236,7 +236,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag = LibreCat::App::Helper::Helpers->new->backup_publication;
+    my $bag = LibreCat->store->bag('publication');
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {
@@ -540,8 +540,7 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $bag  = LibreCat::App::Helper::Helpers->new->backup_publication;
-        my $data = $bag->get_($id);
+        my $data = LibreCat->store->bag('publication')->get_($id);
         $printer->($data);
     }
     elsif (defined($id)) {
@@ -566,7 +565,7 @@ sub _files_load {
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = $helper->backup_publication->get($id)) {
+        if (my $data = LibreCat->store->bag('publication')->get($id)) {
             $self->_file_process($data, $files)
                 && $helper->update_record('publication', $data);
         }

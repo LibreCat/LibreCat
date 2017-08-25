@@ -35,8 +35,8 @@ sub fix {
 
     my $action;
 
-    if (request && request->{path}) {
-        $action = request->{path};
+    if (request && request->path_info()) {
+        $action = request->path_info();
     }
     else {
         $action = 'batch';

@@ -1,7 +1,7 @@
 # mapping to BibTeX format
 
-#_citekey PUB_ID
-# url host/ID
+#_citekey
+copy_field(_id, r._citekey)
 
 if any_match(type, '^bi')
   set_field(r.school, 'Bielefeld University')

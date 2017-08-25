@@ -1,5 +1,4 @@
-[% path = request.path -%]
-[% backend = path.match('librecat') ? 1 : 0 -%]
+[% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = h.get_person(session.personNumber) -%]
 [% lang = session.lang -%]
 [% lf = h.config.locale.$lang.forms -%]
@@ -26,7 +25,7 @@
 
   <div class="row"></div>
 
-  <form action="/librecat/record/update" method="POST" id="edit_form">
+  <form action="[% uri_base %]/librecat/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="[% type %]" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>

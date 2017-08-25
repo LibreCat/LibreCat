@@ -10,7 +10,7 @@
   </div>
 [%- END %]
 
-[%- IF request.path != "/marked" -%]
+[%- IF request.path_info != "/marked" -%]
 
   <h3>[% IF bag == "data" %][% h.loc("facets.filter_data_publications") %]
       [% ELSIF bag == "person" %][% h.loc("facets.filter_authorlist") %]

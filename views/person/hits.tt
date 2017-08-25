@@ -2,8 +2,9 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="pagination">
+    [% browse = params.browse == "" ? h.alphabet.0 : params.browse %]
     [%- FOREACH c IN h.alphabet %]
-      <li [% IF request.path.match("/person?browse=$c")%]class="active"[% END %]><a href="/person?browse=[% c %]">[% c %]</a></li>
+      <li [% IF browse == c %]class="active"[% END %]><a href="[% uri_base %]/person?browse=[% c %]">[% c %]</a></li>
     [%- END %]
     </ul>
   </div>
@@ -22,7 +23,7 @@
   <div class="col-md-12">
     <dl class="hitlist">
     [%- FOREACH person IN hits %]
-      <dt><a href="/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a></dt>
+      <dt><a href="[% uri_base %]/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a></dt>
         <dd>
         [%- FOREACH affil IN person.department %]
           <span class="text-muted">[% h.get_department(affil._id).display %]</span>[% IF !loop.last %], [% END %]

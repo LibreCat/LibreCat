@@ -39,7 +39,7 @@
                 <input type="radio" name="supervisor_idm.0" id="supervisor_idm_extern_0" checked="checked"> [% h.loc("forms.${type}.field.supervisor.idm_extern") %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="supervisor_idm.0" id="supervisor_idm_intern_0"> <img id="supervisor_Authorized0" src="/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
+                <input type="radio" style="margin-top:5px;" name="supervisor_idm.0" id="supervisor_idm_intern_0"> <img id="supervisor_Authorized0" src="[% uri_base %]/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
               </label>
               </span>
             </div>
@@ -88,7 +88,7 @@
                 <input type="radio" name="supversior_idm.[% loop.index %]" id="supervisor_idm_extern_[% loop.index %]"[% IF !name.id %] checked="checked"[% END %]> [% h.loc("forms.${type}.field.supervisor.idm_extern") %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="supervisor_idm.[% loop.index %]" id="supervisor_idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="supervisor_Authorized[% loop.index %]" [% IF name.id %]src="/images/authorized_yes.png"[% ELSE %]src="/images/authorized_no.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
+                <input type="radio" style="margin-top:5px;" name="supervisor_idm.[% loop.index %]" id="supervisor_idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="supervisor_Authorized[% loop.index %]" [% IF name.id %]src="[% uri_base %]/images/authorized_yes.png"[% ELSE %]src="[% uri_base %]/images/authorized_no.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
               </label>
               </span>
             </div>
@@ -136,7 +136,7 @@
                 <input type="radio" name="supervisor_idm.0" id="supervisor_idm_extern_0"[% IF !supervisor.0.id %] checked="checked"[% END %]> [% h.loc("forms.${type}.field.supervisor.idm_extern") %]
               </label>
               <label class="radio-inline">
-                <input type="radio" style="margin-top:5px;" name="supversior_idm.0" id="supervisor_idm_intern_0"[% IF supervisor.0.id %] checked="checked"[% END %]> <img id="supervisor_Authorized0" [% IF supervisor.0.id %]src="/images/authorized_yes.png"[% ELSE %]src="/images/authorized_no.png"[% END %] [% IF supervisor.0.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
+                <input type="radio" style="margin-top:5px;" name="supversior_idm.0" id="supervisor_idm_intern_0"[% IF supervisor.0.id %] checked="checked"[% END %]> <img id="supervisor_Authorized0" [% IF supervisor.0.id %]src="[% uri_base %]/images/authorized_yes.png"[% ELSE %]src="[% uri_base %]/images/authorized_no.png"[% END %] [% IF supervisor.0.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% h.loc("forms.${type}.field.supervisor.tooltip") %]" />
               </label>
               </span>
             </div>

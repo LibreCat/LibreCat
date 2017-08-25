@@ -107,7 +107,7 @@ requires 'Path::Tiny', '0.052';
 requires 'String::CamelCase';
 
 requires 'MIME::Types','==1.38';
-requires 'Catmandu::BagIt' , '>=0.12';
+requires 'Catmandu::BagIt' , '>=0.13';
 
 requires 'Catmandu::Store::FedoraCommons';
 requires 'IO::All';

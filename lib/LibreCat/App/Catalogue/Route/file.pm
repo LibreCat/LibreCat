@@ -99,7 +99,7 @@ sub _calc_date {
 
 sub _get_file_info {
     my ($pub_id, $file_id) = @_;
-    my $rec = h->publication->get($pub_id);
+    my $rec = LibreCat->store-bag('publication')->get($pub_id);
     if ($rec->{file} and ref $rec->{file} eq "ARRAY") {
         my $matching_items
             = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
@@ -121,7 +121,7 @@ get '/rc/approve/:key' => sub {
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body = export_to_string({key => params->{key}, host => h->host},
+    my $body = export_to_string({key => params->{key}, uri_base => h->uri_base()},
         'Template', template => 'views/email/req_copy_approve.tt');
 
     my $job = {
@@ -213,16 +213,6 @@ any '/rc/:id/:file_id' => sub {
 
     my $date_expires = _calc_date();
 
-    my $query = {
-        approved     => 1,
-        file_id      => params->{file_id},
-        file_name    => $file->{file_name},
-        date_expires => $date_expires,
-        record_id    => params->{id},
-    };
-
-    my $hits = $bag->search(query => $query, limit => 1);
-
     my $stored = $bag->add(
         {
             record_id    => params->{id},
@@ -236,14 +226,14 @@ any '/rc/:id/:file_id' => sub {
 
     my $file_creator_email = h->get_person($file->{creator})->{email};
     if (params->{user_email}) {
-        my $pub       = h->publication->get(params->{id});
+        my $pub       = LibreCat->store->bag('publication')->get(params->{id});
         my $mail_body = export_to_string(
             {
                 title      => $pub->{title},
                 user_email => params->{user_email},
                 mesg       => params->{mesg} || '',
                 key        => $stored->{_id},
-                host       => h->host,
+                uri_base   => h->uri_base(),
             },
             'Template',
             template => 'views/email/req_copy.tt',
@@ -256,14 +246,18 @@ any '/rc/:id/:file_id' => sub {
 
         try {
             h->queue->add_job('mailer', $job);
-            return redirect "/publication/" . params->{id};
+            return redirect uri_for("/publication/" . params->{id});
         }
         catch {
             h->log->error("Could not send email: $_");
         }
     }
     else {
-        return to_json {ok => true, url => h->host . "/rc/" . $stored->{_id},
+        my $url = uri_for("/rc/". $stored->{_id});
+        content_type "application/json";
+        return Dancer::to_json {
+            ok => 1,
+            url => "$url", # need to quotes here!
         };
     }
 };
@@ -284,7 +278,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
 
     unless ($ok) {
         status 403;
-        return template '403', {path => request->path};
+        return template '403';
     }
 
     if (my $file = _file_exists($id, $file_name)) {
@@ -311,7 +305,7 @@ get '/thumbnail/:id' => sub {
         _send_it($key, $file->key, access => 1);
     }
     else {
-        redirect '/images/thumbnail_dummy.png';
+        redirect uri_for('/images/thumbnail_dummy.png');
     }
 };
 

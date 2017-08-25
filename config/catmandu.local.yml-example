@@ -1,15 +1,20 @@
 default_lang: en
 
-host: "http://localhost:5001"
+#deprecated: use uri_base
+#host: "http://localhost:5001"
+uri_base: "http://localhost:5001"
 
 ## Uncomment when audit messages need to be displayed
 # audit: 1
- 
+
 ## Specity the ipranges which can download (local) files
 ip_range:
     - 157.193.0.0/16
     - 127.0.0.1
     - 10.0.0.0/8
+
+# Default access level for uploaded files
+default_access_level: open_access
 
 store:
   builtin_users:
