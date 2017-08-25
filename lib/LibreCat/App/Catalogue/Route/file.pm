@@ -99,7 +99,7 @@ sub _calc_date {
 
 sub _get_file_info {
     my ($pub_id, $file_id) = @_;
-    my $rec = LibreCat->store-bag('publication')->get($pub_id);
+    my $rec = LibreCat->store->bag('publication')->get($pub_id);
     if ($rec->{file} and ref $rec->{file} eq "ARRAY") {
         my $matching_items
             = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
