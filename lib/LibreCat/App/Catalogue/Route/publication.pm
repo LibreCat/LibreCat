@@ -297,7 +297,7 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = LibreCat->store-bag('publication')->get($id);
+        my $rec = LibreCat->store->bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',
