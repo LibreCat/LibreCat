@@ -123,6 +123,29 @@
             [% END %]
           [% END %]
         [% END %]
+
+        [% IF !mainFile.0 AND (!main_file_link.0 OR !main_file_link.0.open_access) %]
+        <!-- no fulltext -->
+        <div class="row">
+          <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
+          <div class="col-xs-10">[% h.loc("frontdoor.no_download") %]</div>
+        </div>
+        [% END %]
+
+        [% IF main_file_link.0 %]
+        <div class="row">
+          <div class="col-xs-2 text-muted">[% IF main_file_link.0.open_access %][% lf.frontdoor.download_extern %][% ELSE %]URL[% END %]</div>
+          <div class="col-xs-10">
+            [% IF main_file_link.0.open_access %]
+              <img src="/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA" />
+            [% ELSE %]
+              <img src="/images/access_restricted.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access." alt="Restricted" />
+            [% END %]
+            <a itemprop="url" href="[% main_file_link.0.url %]">[% main_file_link.0.url.substr(0,80) %][% IF main_file_link.0.url.length > 80%][...][% END %]</a>
+          </div>
+        </div>
+        [% END %]
+
         [%- IF doi %]
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.doi.label") %]</div>
