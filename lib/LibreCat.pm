@@ -77,6 +77,10 @@ sub searcher {
         ->new(store => Catmandu->store('search'));
 }
 
+sub store {
+    state $store = Catmandu->store('backup');
+}
+
 1;
 
 __END__

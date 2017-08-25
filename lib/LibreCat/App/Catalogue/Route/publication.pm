@@ -124,7 +124,7 @@ Checks if the user has permission the see/edit this record.
 
         forward '/' unless $id;
 
-        my $rec = h->publication->get($id);
+        my $rec = LibreCat->store->bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -215,7 +215,7 @@ Checks if the user has the rights to edit this record.
             forward '/access_denied';
         }
 
-        my $rec = h->publication->get($id);
+        my $rec = LibreCat->store-bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -246,7 +246,7 @@ Deletes record with id. For admins only.
     get '/delete/:id' => sub {
         my $id = params->{id};
 
-        my $rec = h->publication->get($id);
+        my $rec = LibreCat->store-bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -276,7 +276,7 @@ Prints the frontdoor for every record.
     get '/preview/:id' => sub {
         my $id = params->{id};
 
-        my $hits = h->publication->get($id);
+        my $hits = LibreCat->store-bag('publication')->get($id);
 
         $hits->{bag}
             = $hits->{type} eq "research_data" ? "data" : "publication";
@@ -297,7 +297,7 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = h->publication->get($id);
+        my $rec = LibreCat->store-bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -319,7 +319,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
     get '/clone/:id' => sub {
         my $id  = params->{id};
-        my $rec = h->publication->get($id);
+        my $rec = LibreCat->store-bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -350,7 +350,7 @@ Publishes private records, returns to the list.
             forward '/access_denied';
         }
 
-        my $rec = h->publication->get($id);
+        my $rec = LibreCat->store-bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',

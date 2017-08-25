@@ -28,14 +28,14 @@ ajax '/metrics/:id' => sub {
 };
 
 ajax '/bibtex/:id' => sub {
-    my $pub = h->publication->get(params->{id});
+    my $pub = LibreCat->store->bag('publication')->get(params->{id});
     return to_json {
         bibtex => encode_entities(h->export_publication($pub, 'bibtex', 1)),
     };
 };
 
 ajax '/ris/:id' => sub {
-    my $pub = h->publication->get(params->{id});
+    my $pub = LibreCat->store->bag('publication')->get(params->{id});
     my $ris = h->export_publication($pub, 'ris', 1);
     utf8::decode($ris);
     return to_json {ris => encode_entities($ris),};

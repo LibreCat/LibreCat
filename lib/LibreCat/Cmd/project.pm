@@ -96,7 +96,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_project;
+        $it = LibreCat->store->bag('project');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -139,7 +139,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_project;
+        $it = LibreCat->store->bag('project');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -161,8 +161,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag  = LibreCat::App::Helper::Helpers->new->backup_project;
-    my $data = $bag->get($id);
+    my $data = LibreCat->store->bag('project')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -223,7 +222,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->backup_project;
+        my $bag = LibreCat->store->bag('project');
         $bag->delete($id);
         $bag->commit;
     }
