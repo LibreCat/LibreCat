@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Researcher;
 use Search::Elasticsearch;
+use LibreCat::Index;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -21,7 +22,6 @@ librecat user [options] valid <FILE>
 librecat user [options] passwd <id>
 
 options:
-    --initial=1   (indicates initial index build)
     --sort=STR    (sorting results [only in combination with cql-query])
     --total=NUM   (total number of items to list/export)
     --start=NUM   (start list/export at this item)
@@ -36,7 +36,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['total=i', ""], ['start=i', ""], ['sort=s', ""], ['initial=i', ""]);
+    (['total=i', ""], ['start=i', ""], ['sort=s', ""],);
 }
 
 sub opts {
@@ -187,11 +187,7 @@ sub _add {
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
     my $i_name   = $helper->config->{store}->{search}->{options}->{index_name};
-    if($helper->config->{store}->{search}->{seamless} and $self->opts->{initial}){
-        # only if it's the initial index build AND if you have chosen the seamless index switch
-        # use [index_name]1 instead of [index_name]
-        $i_name = $i_name . "1";
-    }
+    my $i_status = LibreCat::Index->get_status;
 
     my $records = $importer->select(
         sub {
@@ -226,11 +222,22 @@ sub _add {
         }
     );
 
+    if(!$i_status->{index_name}){
+        # only if it's the initial index build
+        # use [index_name]1 instead of [index_name]
+        $i_name = $i_name . "1";
+    }
+    elsif(!$i_status->{alias} and $i_status->{index_name} and $i_status->{index_name} ne $i_name."1" and $i_status->{index_name} ne $i_name."2"){
+        # an index with (any) name exists but no alias is set
+        # use existing index and set alias later
+        $i_name = $i_status->{index_name};
+    }
+
     my $index = Catmandu->store('search', index_name => $i_name)->bag('researcher');#$helper->researcher;
     $index->add_many($records);
     $index->commit;
 
-    if($helper->config->{store}->{search}->{seamless} and $self->opts->{initial}){
+    if(!$i_status->{alias}){
         my $e = Search::Elasticsearch->new();
         $e->indices->update_aliases(
             body => {

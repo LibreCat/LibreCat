@@ -77,7 +77,7 @@ sub _switch {
 }
 
 sub _do_switch {
-	my ($old, $new, $e) = @_;
+	my ($self, $old, $new, $e) = @_;
 
     my $backup_store = Catmandu->store('backup');
     my $ind_name = Catmandu->config->{store}->{search}->{options}->{'index_name'};
