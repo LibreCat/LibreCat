@@ -509,29 +509,6 @@ sub uri_for {
     join('',@uri);
 }
 
-sub export_publication {
-    my ($self, $hits, $fmt, $to_string) = @_;
-
-    if (my $spec = config->{exporter}->{publication}->{$fmt}) {
-        my $package = $spec->{package};
-        my $options = $spec->{options} || {};
-
-        $options->{style} = $hits->{style} || 'default';
-        $options->{explinks} = params->{explinks};
-        my $content_type = $spec->{content_type} || mime->for_name($fmt);
-        my $extension    = $spec->{extension}    || $fmt;
-
-        my $f = export_to_string($hits, $package, $options);
-        return $f if $to_string;
-
-        return Dancer::send_file(
-            \$f,
-            content_type => $content_type,
-            filename     => "publications.$extension"
-        );
-    }
-}
-
 sub get_file_store {
     my ($self) = @_;
 
