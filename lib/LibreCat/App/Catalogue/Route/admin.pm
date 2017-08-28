@@ -61,7 +61,7 @@ Opens the record with ID id.
 =cut
 
     get '/account/edit/:id' => sub {
-        my $person = h->researcher->get(params->{id});
+        my $person = LibreCat->store->bag('researcher')->get(params->{id});
         template 'admin/forms/edit_account', $person;
     };
 
@@ -127,7 +127,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project/edit/:id' => sub {
-        my $project = h->project->get(params->{id});
+        my $project = LibreCat->store->bag('project')->get(params->{id});
         template 'admin/forms/edit_project', $project;
     };
 
@@ -157,7 +157,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group/edit/:id' => sub {
-        my $research_group = h->research_group->get(params->{id});
+        my $research_group = LibreCat->store->bag('research_group')->get(params->{id});
         template 'admin/forms/edit_research_group', $research_group;
     };
 
@@ -167,35 +167,6 @@ Input is person id. Returns warning if person is already in the database.
         redirect uri_for('/librecat/admin/research_group');
     };
 
-    get '/department' => sub {
-        my $hits = LibreCat->searcher->search('department',
-            {q => "", limit => 100, start => params->{start} || 0});
-        template 'admin/department', $hits;
-    };
-
-    get '/department/new' => sub {
-        template 'admin/forms/edit_department',
-            {_id => h->new_record('department')};
-    };
-
-    get '/department/search' => sub {
-        my $p = h->extract_params();
-
-        my $hits = LibreCat->searcher->search('department', $p);
-
-        template 'admin/department', $hits;
-    };
-
-    get '/department/edit/:id' => sub {
-        my $department = h->department->get(params->{id});
-        template 'admin/forms/edit_department', $department;
-    };
-
-    post '/department/update' => sub {
-        my $p = h->nested_params();
-        my $return = h->update_record('department', $p);
-        redirect uri_for('/librecat/admin/department');
-    };
 };
 
 1;

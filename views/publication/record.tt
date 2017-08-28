@@ -66,7 +66,7 @@
 [%- IF h.config.citation.engine == 'csl' AND citation %][% display_citation = 1 %][% END %]
 [%- style = h.config.citation.csl.default_style %]
 
-[% mypath = request.path.match('/publication') ? 'publication' : 'data' %]
+[% mypath = request.path_info.match('/publication') ? 'publication' : 'data' %]
 <div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% uri_base %]/[% mypath %]/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
@@ -123,6 +123,29 @@
             [% END %]
           [% END %]
         [% END %]
+
+        [% IF !mainFile.0 AND (!main_file_link.0 OR !main_file_link.0.open_access) %]
+        <!-- no fulltext -->
+        <div class="row">
+          <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
+          <div class="col-xs-10">[% h.loc("frontdoor.no_download") %]</div>
+        </div>
+        [% END %]
+
+        [% IF main_file_link.0 %]
+        <div class="row">
+          <div class="col-xs-2 text-muted">[% IF main_file_link.0.open_access %][% lf.frontdoor.download_extern %][% ELSE %]URL[% END %]</div>
+          <div class="col-xs-10">
+            [% IF main_file_link.0.open_access %]
+              <img src="/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA" />
+            [% ELSE %]
+              <img src="/images/access_restricted.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access." alt="Restricted" />
+            [% END %]
+            <a itemprop="url" href="[% main_file_link.0.url %]">[% main_file_link.0.url.substr(0,80) %][% IF main_file_link.0.url.length > 80%][...][% END %]</a>
+          </div>
+        </div>
+        [% END %]
+
         [%- IF doi %]
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.doi.label") %]</div>
@@ -133,12 +156,6 @@
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.urn.label") %]</div>
           <div class="col-xs-10"><a href="http://nbn-resolving.de/[% urn %]">[% urn | html %]</a></div>
-        </div>
-        [%- END %]
-        [%- IF link.0 %]
-        <div class="row">
-          <div class="col-xs-2 text-muted">URL</div>
-          <div class="col-xs-10"><a itemprop="url" href="[% link.0 %]">[% link.0.substr(0,80) %][% IF link.0.length > 80%][...][% END %]</a></div>
         </div>
         [%- END %]
 
@@ -297,13 +314,13 @@
               <h3 id="myModalLabel">[% h.loc("frontdoor.open_data_pub") %]</h3>
             </div>
             <div class="modal-body">
-              [%- FOREACH f IN h.config.exporter.publication.keys %]
+              [%- FOREACH f IN h.config.route.exporter.publication.keys %]
                   <div class="row">
                     <div class="col-xs-4">
-                    [% h.config.exporter.publication.$f.label %]:
+                    [% h.config.route.exporter.publication.$f.label %]:
                     </div>
                     <div class="col-xs-8">
-                      <a href="[% request.path %].[% f %]"> [% h.config.exporter.publication.$f.content_type %]</a>
+                      <a href="[% request.uri_for(request.path_info) %].[% f %]"> [% h.config.route.exporter.publication.$f.content_type %]</a>
                     </div>
                   </div>
                   <div class="row"><div class="col-xs-12">&nbsp;</div></div>
@@ -393,21 +410,15 @@
 
 </div><!-- outer row-->
 
-[% IF _id %]
+[%- IF _id %]
 <script>
 $.getJSON( librecat.uri_base + "/metrics/[% _id %]").done(function( data ) {
   if (data.times_cited > 0) {
     $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
   }
 });
-$.getJSON( librecat.uri_base +  "/bibtex/[% _id %]").done(function(data) {
-    $('#bibtex').prepend('<pre>'+ data.bibtex + '</pre>');
-});
-$.getJSON( librecat.uri_base + "/ris/[% _id %]").done(function(data) {
-    $('#ris').prepend('<pre>'+ data.ris +'</pre>');
-});
 </script>
-[% END %]
+[%- END %]
 
 <!-- END publication/record.tt -->
 

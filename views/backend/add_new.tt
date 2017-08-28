@@ -1,5 +1,4 @@
-[% path = request.path %]
-[% backend = path.match('librecat') ? 1 : 0 %]
+[% backend = request.path_info.match('librecat') ? 1 : 0 %]
 [% lang = session.lang %]
 
 [% INCLUDE header.tt %]

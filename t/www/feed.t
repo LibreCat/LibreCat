@@ -15,7 +15,8 @@ my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 subtest 'feed' => sub {
     $mech->get_ok('/feed');
     $mech->content_like(qr/\<syn:updateBase/);
-    note $mech->content;
+
+    $mech->get_ok('/feed/whatever');
 };
 
 subtest 'feed \w period' => sub {

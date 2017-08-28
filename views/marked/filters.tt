@@ -2,7 +2,7 @@
 [% qp = h.extract_params -%]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 
-<!-- BEGIN filters.tt -->
+<!-- BEGIN marked/filters.tt -->
 [%- USE JSON.Escape %]
 <div id="filters"></div>
 <div id="export"></div>
@@ -15,10 +15,6 @@
   <a href="[% request.uri_for("/marked", qp) %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
 </div>
 [%- END -%]
-
-[% INCLUDE search_box.tt %]
-
-[% INCLUDE facets.tt %]
 
 [%- IF hits.0.citation OR (total AND total > 1) %]
 <h3[% IF request.path_info.match('marked') %] class="margin-top0"[% END %]>[% h.loc("facets.display") %][% UNLESS request.path_info.match('marked') %] / [% h.loc("facets.sort") %][% END %]</h3>
@@ -50,7 +46,7 @@
 [%- END %]
 
 <ul class="nav nav-tabs nav-stacked ul3[% IF backend %] helpme" data-placement="left" title="[% h.loc("help.display_block") %][% END %]">
-  [% IF (!request.path_info.match('person') OR bag == "person") AND total > 9 %]
+  [% IF (!request.path_info.match('person') OR bag == "person") AND !request.path_info.match('marked') AND total > 9 %]
   <li>
     <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.hits_per_page") %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
     <div class="facettecollapse">
@@ -67,31 +63,6 @@
     </div>
   </li>
   [% END %]
-  [%- IF total > 1 %]
-  <li>
-    <button data-toggle="collapse" data-target="#sort_facet" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.sort") %]</button>
-    <div class="facettecollapse">
-    <ul id="sort_facet" class="collapse">
-      [%- IF bag == "person" %]
-        [% sort_options = h.config.sort_options_person %]
-      [%- ELSE %]
-        [% sort_options = h.config.sort_options %]
-      [%- END %]
-      [%- FOREACH s IN sort_options %]
-        [%- gray = "" %]
-        [%- FOREACH qs IN qp.item('sort') %][% IF qs == s _ ".asc" OR qs == s _ ".desc" %][% gray = "yes" %][% END %][% END %]
-        [%- IF gray %]
-          <span class="text-muted">[% h.loc("facets.sort_options.${s}") %]</span><br />
-        [%- ELSE %]
-          <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% h.loc("facets.sort_options.${s}") %] <span class="glyphicon glyphicon-arrow-up"></span></a>
-          <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].desc" rel="nofollow">
-          <span class="glyphicon glyphicon-arrow-down"></span></a></li>
-        [%- END %]
-      [%- END %]
-    </ul>
-    </div>
-  </li>
-  [%- END %]
 
   <li>
     <button data-toggle="collapse" data-target="#style" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.citation_style") %]</button>
@@ -111,7 +82,7 @@
 </ul>
 [%- END -%]
 
-<h3>[% h.loc("facets.export") %][% UNLESS backend OR request.path_info.match('embed') %] / [% h.loc("facets.embed") %][% END %]</h3>
+<h3>[% h.loc("facets.export") %][% UNLESS backend OR request.path_info.match('marked') OR request.path_info.match('embed') %] / [% h.loc("facets.embed") %][% END %]</h3>
 
 <ul class="nav nav-tabs nav-stacked ul4">
   <li>
@@ -120,38 +91,14 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_facet" class="collapse">
-      [%- tmp = {}; tmp.import(qp) %]
       <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
-      <li><a href="[% tmp.fmt='bibtex'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
-      <li><a href="[% tmp.fmt='ris'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
-      <li><a href="[% tmp.fmt='json'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
-      <li><a href="[% tmp.fmt='yaml'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
+      <li><a href="[% request.uri_for('marked.bibtex') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
+      <li><a href="[% request.uri_for('marked.ris') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
+      <li><a href="[% request.uri_for('marked.json') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
+      <li><a href="[% request.uri_for('marked.yaml') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
     </ul>
     </div>
   </li>
-  [%- UNLESS backend OR request.path_info.match('embed') %]
-  <li>
-    <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
-      <span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.embed") %]
-    </button>
-    <div class="facettecollapse">
-    <ul id="embed_[% tabmodus %][% menu %]" class="collapse">
-    [%- FOREACH emb IN ['js', 'iframe', 'link'] %]
-        <li><span class="fa fa-fw fa-arrow-circle-o-down"></span><strong>[% emb %]</strong>
-        <span class="input-group">
-          <input id="id_[% emb %]text" class="form-control" readonly="1">
-          <span class="input-group-btn">
-            <button class="btn btn-default" data-clipboard-target="#id_[% emb %]text">
-              <span class="fa fa-clipboard"></span>
-            </button>
-          </span>
-        </span>
-        </li>
-    [%- END %]
-    </ul>
-    </div>
-  </li>
-  [%- END %]
 </ul>
 
 <!-- Modal -->
@@ -180,62 +127,10 @@ var clipboard = new Clipboard('.btn');
 $('.rtfmodal').click(function(){
   $('myModal').modal('hide');
 });
-var path = '[% request.path %]',
-searchParams = [% qp.json %];
-
-$('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
-    var embed_link = window.location.href;
-    var person_id  = embed_link.match(/\/person\/(.[^\/]{2,})/);
-
-    if (embed_link.match(/\/publication/)) {
-      searchParams.cql.push("type<>research_data");
-      embed_link = embed_link.replace(/\/publication.*/,"/embed?");
-    }
-
-    if (person_id) {
-      searchParams.cql.push("person=" + person_id[1]);
-      embed_link = embed_link.replace(/\/person\/.*/,"/embed?");
-    }
-
-    if (embed_link.match(/\/data/)) {
-      searchParams.cql.push("type=research_data");
-      embed_link = embed_link.replace(/\/data.*/,"/embed?");
-    }
-
-    embed_link = embed_link + $.param($.extend({}, searchParams), true);
-
-    var emb_js     = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&fmt=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% h.loc("facets.embed_linktext") %]</a></noscript></div>';
-    var emb_iframe = '<iframe id="pubIFrame" name="pubIFrame" frameborder="0" width="726" height="300" src="' + embed_link + '&fmt=iframe"></iframe>';
-    var emb_link   = '<a href="'+ window.location.href +'">[% h.loc("facets.embed_linktext") %]</a>';
-
-    $('#id_jstext').val(emb_js);
-    $('#id_iframetext').val(emb_iframe);
-    $('#id_linktext').val(emb_link);
-});
-
-$('a.facet_[% tabmodus %]').click(function() {
-  var par_key = $(this).data('key');
-  if(!searchParams[par_key]){
-    searchParams[par_key] = [];
-  }
-  if(par_key == "sort"){
-    searchParams[par_key].push($(this).data('value'));
-  }
-  else if(par_key == "cql"){
-    searchParams[par_key].push($(this).data('param') + "=" + $(this).data('value'));
-    delete searchParams.start;
-    delete searchParams.fmt;
-  }
-  else {
-    searchParams[par_key] = $(this).data('value');
-  }
-  var url = path+'?'+ $.param($.extend({}, searchParams), true);
-  window.location.replace(url);
-});
 
 $('button.collapse').click(function(e){
   e.preventDefault();
 });
 </script>
 
-<!-- END filters.tt -->
+<!-- END marked/filters.tt -->

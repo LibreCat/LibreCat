@@ -100,7 +100,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_department;
+        $it = LibreCat->store->bag('department');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -190,7 +190,7 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $it = LibreCat::App::Helper::Helpers->new->backup_department;
+    my $it = LibreCat->store->bag('department');
 
     my $HASH = {};
 
@@ -242,7 +242,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_department;
+        $it = LibreCat->store->bag('department');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -264,8 +264,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag  = LibreCat::App::Helper::Helpers->new->backup_department;
-    my $data = $bag->get($id);
+    my $data = LibreCat->store->bag('department')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -326,7 +325,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->backup_department;
+        my $bag = LibreCat->store->bag('department');
         $bag->delete($id);
         $bag->commit;
     }

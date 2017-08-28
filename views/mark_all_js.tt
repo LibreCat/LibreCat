@@ -1,5 +1,5 @@
 <script>
-var path = '[% request.path %]',
+var path = '[% request.uri_for(request.path_info) %]',
 searchParams = [% h.extract_params.json %];
 [%- IF !backend %]
 searchParams.cql.push('person=[% id %]');

@@ -1,5 +1,6 @@
 # mapping to xMetaDissPlus
 
+librecat_uri_base('uri_base')
 copy_field(type, dini_type)
 lookup(dini_type, fixes/lookup/dini_types.csv, default: other)
 prepend(dini_type,'doc-type:')

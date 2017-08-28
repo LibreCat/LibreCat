@@ -99,7 +99,7 @@ sub _calc_date {
 
 sub _get_file_info {
     my ($pub_id, $file_id) = @_;
-    my $rec = h->publication->get($pub_id);
+    my $rec = LibreCat->store->bag('publication')->get($pub_id);
     if ($rec->{file} and ref $rec->{file} eq "ARRAY") {
         my $matching_items
             = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
@@ -226,7 +226,7 @@ any '/rc/:id/:file_id' => sub {
 
     my $file_creator_email = h->get_person($file->{creator})->{email};
     if (params->{user_email}) {
-        my $pub       = h->publication->get(params->{id});
+        my $pub       = LibreCat->store->bag('publication')->get(params->{id});
         my $mail_body = export_to_string(
             {
                 title      => $pub->{title},
