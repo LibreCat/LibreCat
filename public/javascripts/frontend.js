@@ -7,7 +7,7 @@ $(function () {
         if (marked === 0) {
             $.ajax({
                 type: 'POST',
-                url: '/mark/' + a.data('id'),
+                url: librecat.uri_base + '/mark/' + a.data('id'),
                 dataType: 'json',
                 success: function(res) {
                     $('.total-marked').text(res.total);
@@ -20,7 +20,7 @@ $(function () {
         else {
             $.ajax({
                 type: 'POST',
-                url: '/mark/' + a.data('id')+'?x-tunneled-method=DELETE',
+                url: librecat.uri_base + '/mark/' + a.data('id')+'?x-tunneled-method=DELETE',
                 dataType: 'json',
                 success: function(res) {
                     $('.total-marked').text(res.total);
@@ -44,7 +44,7 @@ $(document).ready(function() {
     if (totalMarked.length) {
         $.ajax({
             type: 'GET',
-            url: '/marked_total',
+            url: librecat.uri_base + '/marked_total',
             dataType: 'json',
             success: function(res) {
                totalMarked.text(res.total);

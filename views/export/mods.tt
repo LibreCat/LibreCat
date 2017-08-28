@@ -149,7 +149,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 [%- IF fi.relation != 'hidden' %]
 <relatedItem type="constituent">
   <location>
-    <url displayLabel="[% fi.file_name | xml_strict %]">[% host %]/download/[% _id %]/[% fi.file_id | xml_strict %]/[% fi.file_name | xml_strict %]</url>
+    <url displayLabel="[% fi.file_name | xml_strict %]">[% uri_base %]/download/[% _id %]/[% fi.file_id | xml_strict %]/[% fi.file_name | xml_strict %]</url>
   </location>
   [%- IF fi.content_type %]
   <physicalDescription><internetMediaType>[% fi.content_type | xml_strict %]</internetMediaType></physicalDescription>
@@ -220,7 +220,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 <relatedItem type="Supplementary material">
   <location>
   [%- FOREACH rm IN related_material.record -%]
-     <url>[% host %]/publication/[% rm.id %]</url>
+     <url>[% uri_base %]/publication/[% rm.id %]</url>
   [%- END -%]
   </location>
 </relatedItem>

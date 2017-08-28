@@ -48,7 +48,7 @@ sub command {
     return if $warns;
 
     # migrate latest publication id from system store to backup store
-    my $info_bag = Catmandu->store('backup')->bag('info');
+    my $info_bag = LibreCat->store->bag('info');
     if (!$info_bag->get('publication_id')
         && exists Catmandu->config->{store}{default})
     {
@@ -65,7 +65,7 @@ sub command {
     }
 
     # migrate sessions from system store to backup store
-    my $session_bag = Catmandu->store('backup')->bag('session');
+    my $session_bag = LibreCat->store->bag('session');
     if (   !$session_bag->count
         && Catmandu->config->{store}{default}
         && Catmandu->store->bag('session')->count)
@@ -91,4 +91,3 @@ __END__
 LibreCat::Cmd::migrate - config checking and database migrations
 
 =cut
-

@@ -42,12 +42,12 @@
 [%- END %]
 <resourceType resourceTypeGeneral="[% IF type == 'reasearch_data' %]Dataset[% ELSE %]Text[% END%]">[% type %]</resourceType>
 <alternateIdentifiers>
-	<alternateIdentifier alternateIdentifierType="URL">[% host %]/data/[% _id %]</alternateIdentifier>
+	<alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/data/[% _id %]</alternateIdentifier>
 </alternateIdentifiers>
 [%- IF related_material %]
 <relatedIdentifiers>
 [% FOREACH rm IN related_material.record %]
-<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% host %]/publication/[% rm.id %]</relatedIdentifier>
+<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% uri_base %]/publication/[% rm.id %]</relatedIdentifier>
 [%- END %]
 </relatedIdentifiers>
 [%- END %]

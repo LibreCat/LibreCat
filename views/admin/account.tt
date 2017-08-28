@@ -1,9 +1,8 @@
-[% path = request.path %]
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
-[% backend = path.match('librecat') ? 1 : 0 %]
+[% backend = request.path_info.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
 
@@ -19,7 +18,7 @@
       </h1>
     </div>
 
-    <form id="admin-account-search" role="form" action="/librecat/admin/account/search" method="GET">
+    <form id="admin-account-search" role="form" action="[% uri_base %]/librecat/admin/account/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
 	  <label for="id_q"><span class="glyphicon glyphicon-search"></span> Search by name or PEVZ-ID</label>
@@ -34,11 +33,11 @@
     </form>
 
     [%- IF error %]
-    <p class="text-danger">[% error %] <a href="/librecat/admin/account/edit/[% qp.id %]"><span class="glyphicon glyphicon-pencil fw"></span>Edit</a></p>
+    <p class="text-danger">[% error %] <a href="[% uri_base %]/librecat/admin/account/edit/[% qp.id %]"><span class="glyphicon glyphicon-pencil fw"></span>Edit</a></p>
     [%- END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
-      <a href="/librecat/admin/account/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
+      <a href="[% uri_base %]/librecat/admin/account/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
     </div>
 
     [%- IF hits %]
@@ -55,9 +54,9 @@
     <dl class="hitlist">
     [%- FOREACH p IN hits %]
 	<dt>
-	<a href="/librecat/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
+	<a href="[% uri_base %]/librecat/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
 	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
-	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
+	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
 	</dt>
 	<dd>
 	<span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>
@@ -79,7 +78,7 @@ $(document).ready(function(){
   $('.num_publ').each(function(){
     var element = this;
     var id = $(this).data('id');
-    $.getJSON("/num_of_publ/" + id).done(function( res ) {
+    $.getJSON( librecat.uri_base + "/num_of_publ/" + id ).done(function( res ) {
       $(element).html(res.total);
     });
   });

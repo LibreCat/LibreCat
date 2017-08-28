@@ -1,0 +1,136 @@
+[% qp = {} -%]
+[% qp = h.extract_params -%]
+[% lang = session.lang ? session.lang : h.config.default_lang -%]
+
+<!-- BEGIN marked/filters.tt -->
+[%- USE JSON.Escape %]
+<div id="filters"></div>
+<div id="export"></div>
+
+<div class="hidden-sm hidden-md hidden-lg"><hr></div>
+
+[%- IF request.path_info.match("person") AND bag != 'person' %]
+<div class="margin-bottom1">
+  [%- qp.person = id %]
+  <a href="[% request.uri_for("/marked", qp) %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
+</div>
+[%- END -%]
+
+[%- IF hits.0.citation OR (total AND total > 1) %]
+<h3[% IF request.path_info.match('marked') %] class="margin-top0"[% END %]>[% h.loc("facets.display") %][% UNLESS request.path_info.match('marked') %] / [% h.loc("facets.sort") %][% END %]</h3>
+
+[%- IF qp.item('sort') %]
+  <div class="text-muted">
+    [%- tmp = {}; tmp.import(qp); tmp.delete('sort') %]
+    <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <strong>[% h.loc("facets.sorted_by") %]:</strong>
+    [% IF bag == "person" %]
+      [% sort_options = h.config.sort_options_person %]
+    [% ELSE %]
+      [% sort_options = h.config.sort_options %]
+    [% END %]
+    [%- FOREACH setting IN qp.item('sort') %]
+      [%- tmp = setting.split('\.') %]
+      [% h.loc("facets.sort_options.${tmp.0}") %] <span class="glyphicon glyphicon-arrow-[% IF tmp.1 == 'asc' %]up[% ELSE %]down[% END %]"></span>[% UNLESS loop.last %], [% END %]
+    [%- END %]
+  </div>
+[%- END %]
+
+[%- IF qp.style AND !user_settings.style_eq_userstyle %]
+  <div class="text-muted">
+    [%- tmp = {}; tmp.import(qp); tmp.delete('style') %]
+    <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a>
+    <strong>[% h.loc("facets.citation_style") %]:</strong>
+    [% h.loc("styles.${qp.style}") %]
+  </div>
+[%- END %]
+
+<ul class="nav nav-tabs nav-stacked ul3[% IF backend %] helpme" data-placement="left" title="[% h.loc("help.display_block") %][% END %]">
+  [% IF (!request.path_info.match('person') OR bag == "person") AND !request.path_info.match('marked') AND total > 9 %]
+  <li>
+    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.hits_per_page") %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
+    <div class="facettecollapse">
+    <ul id="hitsperpage_[% tabmodus %][% menu %]" class="collapse">
+      [%- FOREACH lim IN h.config.pagination_options %]
+        [%- IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
+        <li>[% lim %]</li>
+        [%- ELSE %]
+          [%- tmp = {}; tmp.import(qp); tmp.limit = lim %]
+          <li><a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow">[% lim %]</a></li>
+        [%- END %]
+      [%- END %]
+    </ul>
+    </div>
+  </li>
+  [% END %]
+
+  <li>
+    <button data-toggle="collapse" data-target="#style" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.citation_style") %]</button>
+    <div class="facettecollapse">
+    <ul id="style" class="collapse">
+      [%- FOREACH dstyle IN h.config.citation.csl.styles.keys %]
+        [%- IF dstyle == style %]
+          <li><span class="text-muted">[% h.loc("styles.${dstyle}") %]</span></li>
+        [%- ELSE %]
+          [%- tmp = {}; tmp.import(qp); tmp.style = dstyle %]
+          <li><a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow">[% h.loc("styles.${dstyle}") %]</a></li>
+        [%- END %]
+      [%- END %]
+    </ul>
+    </div>
+  </li>
+</ul>
+[%- END -%]
+
+<h3>[% h.loc("facets.export") %][% UNLESS backend OR request.path_info.match('marked') OR request.path_info.match('embed') %] / [% h.loc("facets.embed") %][% END %]</h3>
+
+<ul class="nav nav-tabs nav-stacked ul4">
+  <li>
+    <button data-toggle="collapse" data-target="#export_facet" class="btn-link">
+      <span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.export_as") %]
+    </button>
+    <div class="facettecollapse">
+    <ul id="export_facet" class="collapse">
+      <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
+      <li><a href="[% request.uri_for('marked.bibtex') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
+      <li><a href="[% request.uri_for('marked.ris') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
+      <li><a href="[% request.uri_for('marked.json') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
+      <li><a href="[% request.uri_for('marked.yaml') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
+    </ul>
+    </div>
+  </li>
+</ul>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
+	     <h3 id="ModalExport">[% h.loc("facets.export_options") %]</h3>
+      </div>
+      <div class="modal-body">
+        [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.explinks = 'yes' %]
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
+         [%-  tmp.delete('explinks') %]
+	     <p><span class="glyphicon glyphicon-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="[% uri_base %]/javascripts/clipboard.min.js">
+</script>
+<script>
+var clipboard = new Clipboard('.btn');
+
+$('.rtfmodal').click(function(){
+  $('myModal').modal('hide');
+});
+
+$('button.collapse').click(function(e){
+  e.preventDefault();
+});
+</script>
+
+<!-- END marked/filters.tt -->

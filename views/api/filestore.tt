@@ -1,18 +1,18 @@
 <html>
 <head>
-	 <script src="/javascripts/jquery.min.js"></script>
+	 <script src="[% uri_base %]/javascripts/jquery.min.js"></script>
 	 <script>
 $(document).ready(function() {
 
 	$('#dolist').submit('click', function () {
 		var key = $('#dolist input[name=key]').val();
-		var url = "/librecat/api/filestore/" + key;
-		
+		var url = librecat.uri_base + "/librecat/api/filestore/" + key;
+
 		$('#dolist_result').empty();
 		$('#dolist_result').append("<pre>GET " + url + "</pre>");
 
-		var imgurl    = "/librecat/api/access/" + key + "/x/thumbnail";
-	
+		var imgurl    = librecat.uri_base + "/librecat/api/access/" + key + "/x/thumbnail";
+
 		$('#dolist_result').append("<img src=\"" + imgurl + "\">");
 
 		$.getJSON(url, function(data) {
@@ -21,10 +21,10 @@ $(document).ready(function() {
 			for (var i in data.files) {
 				var filename  = data.files[i].key;
 				var filesize  = data.files[i]['size'];
-				var geturl    = "/librecat/api/filestore/" + key + "/" + filename;
-				
+				var geturl    = librecat.uri_base + "/librecat/api/filestore/" + key + "/" + filename;
+
 				$('#dolist_result').append(
-					"<div>" + 
+					"<div>" +
 					"<a target=new href=\"" +  geturl + "\">" +
 					filename +
 					"</a>" +
@@ -46,7 +46,7 @@ $(document).ready(function() {
 <h2>FileStore</h2>
 
 <h3>List</h3>
-<form id="dolist" method="post" enctype="multipart/form-data" onSubmit="do_list();">
+<form id="dolist" method="post" enctype="multipart/form-data">
  	<input type="hidden" name="action" value="list">
     Select container key:
     <input type="text" name="key" size="10" value="000000008"><br>

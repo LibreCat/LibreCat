@@ -96,7 +96,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        $it = LibreCat->store->bag('research_group');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -140,7 +140,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        $it = LibreCat->store->bag('research_group');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -162,8 +162,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag  = LibreCat::App::Helper::Helpers->new->backup_research_group;
-    my $data = $bag->get($id);
+    my $data = LibreCat->store->bag('research_group')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -224,7 +223,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        my $bag = LibreCat->store->bag('research_group');
         $bag->delete($id);
         $bag->commit;
     }

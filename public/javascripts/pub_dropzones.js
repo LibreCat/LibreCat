@@ -12,7 +12,7 @@ $(document).ready(function(){
     };
 
     Dropzone.options.qaeUpload = {
-        url: '/librecat/upload',
+        url: librecat.uri_base + '/librecat/upload',
         maxFilesize: 500,
         maxFiles: 1,
         previewTemplate: "<span></span>",
@@ -37,7 +37,7 @@ $(document).ready(function(){
                 var resp = response;//JSON.parse(response);
                 var modal = Dropzone.createElement(
 "<div class='well' id='" + resp.tempname + "'>" +
-"<form id='form_" + resp.tempname + "' action='/librecat/upload/qae/submit' method='post'>" +
+"<form id='form_" + resp.tempname + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
 "<strong>" + file.name + "</strong>" +
 "<textarea class='form-control' placeholder='Type details about your publication here' name='description'>" +
 "</textarea>" +
@@ -47,7 +47,7 @@ $(document).ready(function(){
 "<input type='hidden' name='file_name' value='" + resp.file_name + "' />" +
 "<div class='checkbox'>" +
 "<label>" +
-"<input type='checkbox' required> I have read and accept the <a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
+"<input type='checkbox' required> I have read and accept the <a href='" + librecat.uri_base + "/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
 "</label>" +
 "</div>" +
 "<input type='hidden' name='tempid' value='" + resp.tempid + "' />" +
@@ -69,7 +69,7 @@ $(document).ready(function(){
     };
 
     Dropzone.options.uploadFiles = {
-        url: '/librecat/upload',
+        url: librecat.uri_base + '/librecat/upload',
         maxFilesize: 500,
         previewTemplate: '<div class=\"col-md-11 dz-preview dz-file-preview\"></div>',
         createImageThumbnails: false,
@@ -162,7 +162,7 @@ $(document).ready(function(){
     };
 
     Dropzone.options.thesesUpload = {
-        url: '/librecat/thesesupload',
+        url: librecat.uri_base + '/librecat/thesesupload',
         maxFilesize: 500,
         maxFiles: 1,
         previewTemplate: "<span></span>",
@@ -188,7 +188,7 @@ $(document).ready(function(){
                 var resp = response;
                 var well = Dropzone.createElement("<div class='well' id='" + resp.tempid + "'></div>");
 
-                var form = Dropzone.createElement("<form class='form-horizontal' id='form_" + resp.tempid + "' action='/librecat/thesesupload/submit' method='post'></form>");
+                var form = Dropzone.createElement("<form class='form-horizontal' id='form_" + resp.tempid + "' action='" + librecat.uri_base + "/librecat/thesesupload/submit' method='post'></form>");
 
                 var file_name = Dropzone.createElement("<h4 class='expert'><span class='fa fa-file-pdf-o'></span> " + file.name + "</h4>");
                 form.appendChild(file_name);
@@ -208,7 +208,7 @@ $(document).ready(function(){
                 var ddc_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>DDC<span class='starMandatory'></span></label><div class='col-sm-10'><input type='text' name='ddc' class='form-control' placeholder='e.g. 006 (please check the DDC list above for the correct number)' required /></div></div>");
                 form.appendChild(ddc_field);
 
-                var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea><span class='text-muted'>You can use <a href='/docs/howto/markdown' target='_blank'>Markdown</a> in the abstract field for text styling.</span></div></div>");
+                var abstract_field = Dropzone.createElement("<div class='form-group'><label class='col-sm-2 control-label'>Abstract</label><div class='col-sm-10'><textarea class='form-control' name='abstract'></textarea><span class='text-muted'>You can use <a href='" + librecat.uri_base + "/docs/howto/markdown' target='_blank'>Markdown</a> in the abstract field for text styling.</span></div></div>");
                 form.appendChild(abstract_field);
 
                 var hidden = Dropzone.createElement(

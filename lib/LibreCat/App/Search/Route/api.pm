@@ -11,9 +11,6 @@ use Dancer qw/:syntax/;
 use Dancer::Plugin::Catmandu::OAI;
 use Dancer::Plugin::Catmandu::SRU;
 use Catmandu::Util qw(:is);
-use Catmandu::Fix;
-use LibreCat::App::Helper;
-use LibreCat::Citation;
 
 =head2 GET /sru
 

@@ -31,10 +31,10 @@ Catmandu->store('search')->bag('project')->delete_all;
 {
     my $result = test_app(qq|LibreCat::CLI| => ['project', 'list']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'ok list: threw no exception';
 
     my $output = $result->stdout;
-    ok $output , 'got an output';
+    ok $output , 'got an output for list';
 
     my $count = count_project($output);
 
@@ -44,14 +44,14 @@ Catmandu->store('search')->bag('project')->delete_all;
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['project', 'add', 't/records/invalid-project.yml']);
-    ok $result->error, 'ok threw an exception';
+    ok $result->error, 'invalid project: threw an exception';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['project', 'add', 't/records/valid-project.yml']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'valid project: threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';

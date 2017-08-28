@@ -5,7 +5,7 @@
 <div class="row margin-top2">
   <div class="col-md-6 col-md-offset-2 well loginframe">
 
-    <form action="/login" method="post" class="form-horizontal">
+    <form action="[% uri_base %]/login" method="post" class="form-horizontal">
       <h2 class="margin-top0">[% h.loc('login.login_heading') %] </h2>
       <input type="hidden" name="return_url" value="[% return_url %]">
 

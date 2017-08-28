@@ -5,7 +5,6 @@ use Catmandu::Util qw(:check :is);
 use Moo;
 use Plack::Request;
 use Plack::Session;
-use LibreCat::Auth::SSO::Util qw(uri_for);
 use URI;
 use namespace::clean;
 use LWP::UserAgent;
@@ -42,7 +41,7 @@ sub to_app {
         #already got here before
         if (is_hash_ref($auth_sso)) {
 
-            return [302, [Location => $self->authorization_url], []];
+            return [302, [Location => $self->uri_for($self->authorization_path)], []];
 
         }
 
@@ -93,13 +92,13 @@ sub to_app {
                 }
             );
 
-            return [302, [Location => $self->authorization_url], []];
+            return [302, [Location => $self->uri_for($self->authorization_path)], []];
         }
 
         #request phase
         else {
 
-            my $redirect_uri = URI->new(uri_for($env, $request->script_name));
+            my $redirect_uri = URI->new($self->uri_for($request->script_name));
             $redirect_uri->query_form({_callback => "true"});
 
             my $auth_url
@@ -142,7 +141,8 @@ LibreCat::Auth::SSO::ORCID - implementation of LibreCat::Auth::SSO for ORCID
             client_id => "APP-1",
             client_secret => "mypassword",
             sandbox => 1,
-            authorization_url => "${base_url}/auth/orcid/callback"
+            uri_base => "http://localhost:5000",
+            authorization_path => "/auth/orcid/callback"
         )->to_app;
 
         #DO NOT register this uri as new redirect_uri in ORCID
@@ -195,7 +195,7 @@ It inherits all configuration options from its parent.
 
 Register the uri of this application in ORCID as a new redirect_uri.
 
-DO NOT register the authorization_url in ORCID as the redirect_uri!
+DO NOT register the authorization_path in ORCID as the redirect_uri!
 
 =over 4
 

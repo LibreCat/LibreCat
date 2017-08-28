@@ -61,7 +61,7 @@ Opens the record with ID id.
 =cut
 
     get '/account/edit/:id' => sub {
-        my $person = h->researcher->get(params->{id});
+        my $person = LibreCat->store->bag('researcher')->get(params->{id});
         template 'admin/forms/edit_account', $person;
     };
 
@@ -92,7 +92,7 @@ Deletes the account with ID :id.
 
     get '/account/delete/:id' => sub {
         h->delete_record('researcher', params->{id});
-        redirect '/librecat';
+        redirect uri_for('/librecat');
     };
 
 =head2 GET /account/import
@@ -127,14 +127,14 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project/edit/:id' => sub {
-        my $project = h->project->get(params->{id});
+        my $project = LibreCat->store->bag('project')->get(params->{id});
         template 'admin/forms/edit_project', $project;
     };
 
     post '/project/update' => sub {
         my $p = h->nested_params();
         my $return = h->update_record('project', $p);
-        redirect '/librecat/admin/project';
+        redirect uri_for('/librecat/admin/project');
     };
 
     get '/research_group' => sub {
@@ -157,45 +157,16 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group/edit/:id' => sub {
-        my $research_group = h->research_group->get(params->{id});
+        my $research_group = LibreCat->store->bag('research_group')->get(params->{id});
         template 'admin/forms/edit_research_group', $research_group;
     };
 
     post '/research_group/update' => sub {
         my $p = h->nested_params();
         my $return = h->update_record('research_group', $p);
-        redirect '/librecat/admin/research_group';
+        redirect uri_for('/librecat/admin/research_group');
     };
 
-    get '/department' => sub {
-        my $hits = LibreCat->searcher->search('department',
-            {q => "", limit => 100, start => params->{start} || 0});
-        template 'admin/department', $hits;
-    };
-
-    get '/department/new' => sub {
-        template 'admin/forms/edit_department',
-            {_id => h->new_record('department')};
-    };
-
-    get '/department/search' => sub {
-        my $p = h->extract_params();
-
-        my $hits = LibreCat->searcher->search('department', $p);
-
-        template 'admin/department', $hits;
-    };
-
-    get '/department/edit/:id' => sub {
-        my $department = h->department->get(params->{id});
-        template 'admin/forms/edit_department', $department;
-    };
-
-    post '/department/update' => sub {
-        my $p = h->nested_params();
-        my $return = h->update_record('department', $p);
-        redirect '/librecat/admin/department';
-    };
 };
 
 1;

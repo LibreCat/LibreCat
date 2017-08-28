@@ -81,7 +81,7 @@ sub upload_temp_file {
         file_size    => $file_size,
         tempid       => $tempid,
         content_type => $content_type,
-        access_level => "open_access",
+        access_level => h->config->{default_access_level} // "open_access",
         open_access  => 1,
         relation     => "main_file",
         creator      => $creator,
@@ -153,7 +153,7 @@ sub handle_file {
 
     $pub->{file} = _decode_file($pub->{file});
 
-    my $prev_pub = h->publication->get($key);
+    my $prev_pub = LibreCat->store->bag('publication')->get($key);
 
     # Delete files that are not needed
     for my $fi (_find_deleted_files($prev_pub, $pub)) {

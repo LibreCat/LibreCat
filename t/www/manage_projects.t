@@ -55,7 +55,7 @@ note("search accounts");
 
 note("edit account");
 {
-    $mech->follow_link_ok({url => '/librecat/admin/project/edit/011D12402'},
+    $mech->follow_link_ok({ url_regex => qr(/librecat/admin/project/edit/011D12402$), n => 1 },
         "edit project link");
 
     $mech->content_contains(
