@@ -11,16 +11,10 @@ BEGIN {
 require_ok $pkg;
 
 is_deeply $pkg->new('uri_base')->fix({}),
-    {
-        uri_base => 'http://localhost:5001',
-    },
-    "add uri_base to empty hash";
+    {uri_base => 'http://localhost:5001',}, "add uri_base to empty hash";
 
 is_deeply $pkg->new('uri_base')->fix({data => 1}),
-    {
-        data => 1,
-        uri_base => 'http://localhost:5001',
-    },
+    {data => 1, uri_base => 'http://localhost:5001',},
     "add uri_base to non-empty hash";
 
 done_testing;

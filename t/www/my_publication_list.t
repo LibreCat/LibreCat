@@ -29,7 +29,8 @@ note("login");
 
 note("my publication list");
 {
-    $mech->follow_link_ok({url_regex => qr(/person/1234$), n => 1}, 'my publication list');
+    $mech->follow_link_ok({url_regex => qr(/person/1234$), n => 1},
+        'my publication list');
 
     $mech->content_contains("/marked?person=1234", "found right page");
 }

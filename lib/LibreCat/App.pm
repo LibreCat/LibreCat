@@ -84,8 +84,8 @@ sub _login_route {
             h->log->debug("not logged in redirecting to login page");
             my $query_params = params("query");
             my $data
-                = {
-                $conf->{callback_key} => uri_for(request->path_info, $query_params)
+                = {$conf->{callback_key} =>
+                    uri_for(request->path_info, $query_params)
                 };
             for my $k (@{$conf->{passthrough}}) {
                 $data->{$k} = params->{$k} if params->{$k};
@@ -119,8 +119,8 @@ sub _role_route {
         else {
             my $query_params = params("query");
             my $data
-                = {
-                $conf->{callback_key} => uri_for(request->path_info, $query_params)
+                = {$conf->{callback_key} =>
+                    uri_for(request->path_info, $query_params)
                 };
             for my $k (@{$conf->{passthrough}}) {
                 $data->{$k} = params->{$k} if params->{$k};

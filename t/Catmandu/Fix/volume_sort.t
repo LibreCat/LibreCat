@@ -9,25 +9,10 @@ BEGIN {
 }
 require_ok $pkg;
 
-is_deeply $pkg->new()->fix(
-    {
-        volume => '2342A',
-    }
-    ),
-    {
-        volume => '2342A',
-    },
+is_deeply $pkg->new()->fix({volume => '2342A',}), {volume => '2342A',},
     "no intvolume";
 
-is_deeply $pkg->new()->fix(
-    {
-        volume => 2342,
-    }
-    ),
-    {
-        volume => 2342,
-        intvolume => '      2342',
-    },
-    "prepend whitespaces";
+is_deeply $pkg->new()->fix({volume => 2342,}),
+    {volume => 2342, intvolume => '      2342',}, "prepend whitespaces";
 
 done_testing;

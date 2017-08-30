@@ -121,7 +121,8 @@ get '/rc/approve/:key' => sub {
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body = export_to_string({key => params->{key}, uri_base => h->uri_base()},
+    my $body
+        = export_to_string({key => params->{key}, uri_base => h->uri_base()},
         'Template', template => 'views/email/req_copy_approve.tt');
 
     my $job = {
@@ -226,7 +227,7 @@ any '/rc/:id/:file_id' => sub {
 
     my $file_creator_email = h->get_person($file->{creator})->{email};
     if (params->{user_email}) {
-        my $pub       = LibreCat->store->bag('publication')->get(params->{id});
+        my $pub = LibreCat->store->bag('publication')->get(params->{id});
         my $mail_body = export_to_string(
             {
                 title      => $pub->{title},
@@ -253,11 +254,11 @@ any '/rc/:id/:file_id' => sub {
         }
     }
     else {
-        my $url = uri_for("/rc/". $stored->{_id});
+        my $url = uri_for("/rc/" . $stored->{_id});
         content_type "application/json";
         return Dancer::to_json {
-            ok => 1,
-            url => "$url", # need to quotes here!
+            ok  => 1,
+            url => "$url",    # need to quotes here!
         };
     }
 };

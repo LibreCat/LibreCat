@@ -77,7 +77,8 @@ note("editing account");
 
     $mech->content_contains("1 Results", "found 1 results");
 
-    $mech->follow_link_ok({ url_regex => qr(/librecat/admin/account/edit/1$), n => 1 },
+    $mech->follow_link_ok(
+        {url_regex => qr(/librecat/admin/account/edit/1$), n => 1},
         'follow edit link');
 
     $mech->content_contains("Edit Account for User, Test",

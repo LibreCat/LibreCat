@@ -13,16 +13,19 @@ is_deeply $pkg->new()->fix(
     {
         author => [
             {first_name => 'DeleteMe'},
-            {last_name => 'DeleteMeEither'},
-            {first_name => 'A.', last_name => 'Einstein'},
-            {},
+            {last_name  => 'DeleteMeEither'},
+            {first_name => 'A.', last_name => 'Einstein'}, {},
         ]
     }
     ),
     {
-        author => [
-            {first_name => 'A.', last_name => 'Einstein', full_name => 'Einstein, A.'}
-        ]
+    author => [
+        {
+            first_name => 'A.',
+            last_name  => 'Einstein',
+            full_name  => 'Einstein, A.'
+        }
+    ]
     },
     "person name handling";
 

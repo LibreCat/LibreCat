@@ -36,7 +36,7 @@ sub feed {
         "date_updated>" . $now->strftime('"%FT%H:%M:00Z"')
     ];
 
-    my $rss = XML::RSS->new;
+    my $rss      = XML::RSS->new;
     my $uri_base = h->uri_base();
     $rss->channel(
         link  => $uri_base,
@@ -56,7 +56,7 @@ sub feed {
             my $title = $hit->{title} // 'no title';
 
             $rss->add_item(
-                link  => $uri_base."/publication/$hit->{_id}",
+                link  => $uri_base . "/publication/$hit->{_id}",
                 title => $title,
                 dc    => $fixer->fix($hit)->{dc},
             );

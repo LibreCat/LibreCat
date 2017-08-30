@@ -157,7 +157,8 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group/edit/:id' => sub {
-        my $research_group = LibreCat->store->bag('research_group')->get(params->{id});
+        my $research_group
+            = LibreCat->store->bag('research_group')->get(params->{id});
         template 'admin/forms/edit_research_group', $research_group;
     };
 

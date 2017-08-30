@@ -177,10 +177,11 @@ sub _list {
     while (my $key = $gen->()) {
         my $container = $store->get($key);
 
-        croak "failed to create a container for key `$key`" unless defined($container);
-        
-        my $created   = $container->created;
-        my $modified  = $container->modified;
+        croak "failed to create a container for key `$key`"
+            unless defined($container);
+
+        my $created  = $container->created;
+        my $modified = $container->modified;
 
         my @files = $container->list;
 

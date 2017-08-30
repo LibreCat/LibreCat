@@ -35,8 +35,8 @@ require_ok $pkg;
     like $result->stdout, qr/200.*pub\.uni-bielefeld/, 'result looks good';
     like $result->stdout, qr/200.*biblio\.ugent/,      'result looks good';
 
-    $result = test_app(
-        qq|LibreCat::CLI| => ['url', 'check', 't/records/urls.yml', 't/tmp/urls.out']);
+    $result = test_app(qq|LibreCat::CLI| =>
+            ['url', 'check', 't/records/urls.yml', 't/tmp/urls.out']);
     ok !$result->error, 'threw no exception with outfile';
 
     unlink('t/tmp/urls.out');

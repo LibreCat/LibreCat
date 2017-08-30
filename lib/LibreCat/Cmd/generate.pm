@@ -297,8 +297,9 @@ sub _template_printer {
         keys %$nodes)
     {
         print $io "<li>\n";
-        printf $io "<a href=\"${uri_base}/%s?cql=department=%s\">%s</a> %d\n", $path,
-            $node, $nodes->{$node}->{display}, $nodes->{$node}->{total};
+        printf $io "<a href=\"${uri_base}/%s?cql=department=%s\">%s</a> %d\n",
+            $path, $node, $nodes->{$node}->{display},
+            $nodes->{$node}->{total};
         $self->_template_printer($nodes->{$node}, $path, $io);
         print $io "</li>\n";
     }

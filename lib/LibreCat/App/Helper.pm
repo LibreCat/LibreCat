@@ -475,38 +475,47 @@ sub display_name_from_value {
 }
 
 sub uri_base {
+
     #config option 'host' is deprecated
-    state $h = $_[0]->config->{uri_base} // $_[0]->config->{host} // "http://localhost:5001";
+    state $h = $_[0]->config->{uri_base} // $_[0]->config->{host}
+        // "http://localhost:5001";
 }
+
 sub uri_for {
-    my ( $self, $path, $params ) = @_;
+    my ($self, $path, $params) = @_;
 
     my @uri;
 
     push @uri, $self->uri_base(), $path;
 
-    if ( is_hash_ref( $params ) ) {
+    if (is_hash_ref($params)) {
 
         my @keys = keys %$params;
 
-        push @uri,"?" if scalar(@keys);
+        push @uri, "?" if scalar(@keys);
 
-        for my $key ( @keys ) {
+        for my $key (@keys) {
 
             my $value = $params->{$key};
-            $value    = is_array_ref( $value ) ? $value : is_string( $value ) ? [ $value ] : [];
+            $value
+                = is_array_ref($value) ? $value
+                : is_string($value)    ? [$value]
+                :                        [];
 
-            push @uri, join( "&", map {
+            push @uri, join(
+                "&",
+                map {
 
-                uri_escape_utf8($key)."=".uri_escape_utf8($_);
+                    uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
 
-            } @$value );
+                } @$value
+            );
 
         }
 
     }
 
-    join('',@uri);
+    join('', @uri);
 }
 
 sub get_file_store {
@@ -573,7 +582,7 @@ register h => sub {$h};
 
 hook before_template => sub {
 
-    $_[0]->{h} = $h;
+    $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
 
 };

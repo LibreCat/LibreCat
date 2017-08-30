@@ -24,17 +24,17 @@ has authorization_path => (
 );
 has id => (is => 'ro', lazy => 1);
 has uri_base => (
-    is => 'ro',
-    isa => sub {check_string($_[0]);},
+    is       => 'ro',
+    isa      => sub {check_string($_[0]);},
     required => 1,
-    default => sub { "http://localhost:5000"; }
+    default  => sub {"http://localhost:5000";}
 );
 
 requires 'to_app';
 
 sub uri_for {
-    my ( $self, $path ) = @_;
-    $self->uri_base().$path;
+    my ($self, $path) = @_;
+    $self->uri_base() . $path;
 }
 
 sub _build_id {

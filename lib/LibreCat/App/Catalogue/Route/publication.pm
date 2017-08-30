@@ -16,7 +16,7 @@ use Encode qw(encode);
 
 sub access_denied_hook {
     h->hook('publication-access-denied')
->fix_around(
+        > fix_around(
         {_id => params->{id}, user_id => session->{personNumber},});
 }
 
@@ -390,6 +390,7 @@ Publishes private records, returns to the list.
 Changes the type of the publication.
 
 =cut
+
     post '/change_type' => sub {
         my $params = params;
 
