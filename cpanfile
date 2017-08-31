@@ -42,7 +42,7 @@ requires 'Catmandu::OAI' , '0.16';
 requires 'Dancer';
 requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
-requires 'Dancer::Plugin::Catmandu::OAI', '>=0.04';
+requires 'Dancer::Plugin::Catmandu::OAI', '>=0.05';
 requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::StreamData';
