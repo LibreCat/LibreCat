@@ -177,27 +177,30 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag = LibreCat->store->bag('research_group');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('research_group');
+            $rec->{_id} //= $bag->generate_id;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'research_group',
+            h->hook('research_group-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid research_group",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{validation_error}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid research_group",
+                            @{$rec->{validation_error}}),
+                            "\n";
+                            $ret   = 2;
+                            $is_ok = 0;
+                    } else {
+                        $bag->add($rec);
+                    }
                 }
             );
 

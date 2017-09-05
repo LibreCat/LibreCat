@@ -20,9 +20,13 @@ Permission: for admins only. Every other user will get a 403.
 
 prefix '/librecat/admin' => sub {
 
+my $user_bag = LibreCat->store->bag('researcher');
+my $project_bag = LibreCat->store->bag('project');
+my $rg_bag = LibreCat->store->bag('research_group');
+
 =head2 GET /account
 
-Prints a search form for the authority database.
+Prints a search form for the user database.
 
 =cut
 
@@ -38,7 +42,7 @@ Opens an empty form. The ID is automatically generated.
 
     get '/account/new' => sub {
         template 'admin/forms/edit_account',
-            {_id => h->new_record('researcher')};
+            { _id => $user_bag->generate_id };
     };
 
 =head2 GET /account/search
@@ -61,7 +65,7 @@ Opens the record with ID id.
 =cut
 
     get '/account/edit/:id' => sub {
-        my $person = LibreCat->store->bag('researcher')->get(params->{id});
+        my $person = $user_bag->get(params->{id});
         template 'admin/forms/edit_account', $person;
     };
 
@@ -72,15 +76,15 @@ Saves the data in the authority database.
 =cut
 
     post '/account/update' => sub {
-        my $p = params;
+        my $data = params;
 
-        $p = h->nested_params($p);
+        $data = h->nested_params($data);
 
         # if password and not yet encrypted
-        $p->{password} = mkpasswd($p->{password})
-            if ($p->{password} and $p->{password} !~ /\$.{15,}/);
+        $data->{password} = mkpasswd($data->{password})
+            if ($data->{password} and $data->{password} !~ /\$.{15,}/);
 
-        h->update_record('researcher', $p);
+        $user_bag->add($data);
         template 'admin/account';
     };
 
@@ -91,20 +95,8 @@ Deletes the account with ID :id.
 =cut
 
     get '/account/delete/:id' => sub {
-        h->delete_record('researcher', params->{id});
+        $user_bag->delete(params->{id}) if params->{id};
         redirect uri_for('/librecat');
-    };
-
-=head2 GET /account/import
-
-Input is person id. Returns warning if person is already in the database.
-
-=cut
-
-    get '/account/import' => sub {
-
-        # todo: was Bielefeld specific....
-        template 'admin/account';
     };
 
     get '/project' => sub {
@@ -113,9 +105,12 @@ Input is person id. Returns warning if person is already in the database.
         template 'admin/project', $hits;
     };
 
+=head1 PROJECT
+
+=cut
     get '/project/new' => sub {
         template 'admin/forms/edit_project',
-            {_id => h->new_record('project')};
+            { _id => $project_bag->generate_id };
     };
 
     get '/project/search' => sub {
@@ -127,16 +122,20 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project/edit/:id' => sub {
-        my $project = LibreCat->store->bag('project')->get(params->{id});
+        my $project = $project_bag->get(params->{id});
         template 'admin/forms/edit_project', $project;
     };
 
     post '/project/update' => sub {
         my $p = h->nested_params();
-        my $return = h->update_record('project', $p);
+        my $return = $project_bag->add($p);
+
         redirect uri_for('/librecat/admin/project');
     };
 
+=head1 REASEARCH GROUP
+
+=cut
     get '/research_group' => sub {
         my $hits = LibreCat->searcher->search('research_group',
             {q => "", limit => 100, start => params->{start} || 0});
@@ -145,7 +144,7 @@ Input is person id. Returns warning if person is already in the database.
 
     get '/research_group/new' => sub {
         template 'admin/forms/edit_research_group',
-            {_id => h->new_record('research_group')};
+            { _id => $rg_bag->generate_id };
     };
 
     get '/research_group/search' => sub {
@@ -157,14 +156,15 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group/edit/:id' => sub {
-        my $research_group
-            = LibreCat->store->bag('research_group')->get(params->{id});
+        my $research_group = $rg_bag->get(params->{id});
+
         template 'admin/forms/edit_research_group', $research_group;
     };
 
     post '/research_group/update' => sub {
         my $p = h->nested_params();
-        my $return = h->update_record('research_group', $p);
+        my $return = $rg_bag->add($p);
+
         redirect uri_for('/librecat/admin/research_group');
     };
 

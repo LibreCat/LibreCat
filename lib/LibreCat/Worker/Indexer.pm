@@ -26,7 +26,7 @@ sub index_record {
     my $bag = $opts->{bag};
     my $id  = $opts->{id};
 
-    my $source = Catmandu->store('backup')->bag($bag);
+    my $source = Catmandu->store->bag($bag);
     my $target = Catmandu->store('search')->bag($bag);
 
     $self->log->debug("index one $bag : $id");
@@ -50,7 +50,7 @@ sub index_all {
     my $bag = $opts->{bag};
     my $id  = $opts->{bag};
 
-    my $source = Catmandu->store('backup')->bag($bag);
+    my $source = Catmandu->store->bag($bag);
     my $target = Catmandu->store('search')->bag($bag);
     my $total  = $source->count;
     my $n      = 0;

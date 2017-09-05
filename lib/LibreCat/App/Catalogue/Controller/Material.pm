@@ -67,7 +67,7 @@ sub update_related_material {
                     $ref->{status} = $pub->{status};
                 }
             }
-            my $saved = h->backup_publication->add($opposite);
+            my $saved = LibreCat->store->bag('publication')->add($opposite);
             h->publication->add($saved);
             h->publication->commit;
 
@@ -123,7 +123,7 @@ sub update_related_material {
                                     delete $rec->{related_material};
                                 }
                             }
-                            my $saved = h->backup_publication->add($rec);
+                            my $saved = LibreCat->store->bag('publication')->add($rec);
                             h->publication->add($saved);
                             h->publication->commit;
                         }

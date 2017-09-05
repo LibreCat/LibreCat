@@ -24,27 +24,34 @@ hooks:
 
   # Code that runs when updating a publication
   publication-update:
-    before_fixes: []
+    before_fixes: ['validate']
     after_fixes:
+      - index_record
       - new_research_data_email
       - new_research_data_datacite
+
+  # Code that runs when updating a publication via cli
+  publication-update-cmd:
+    before_fixes: ['validate']
+    after_fixes: []
 
   # Code that runs at a 'Make public' action
   publication-publish:
     before_fixes: []
     after_fixes:
+      - index_record
       - new_research_data_email
       - new_research_data_datacite
 
   # Code that runs when deleting a publication
   publication-delete:
     before_fixes: []
-    after_fixes: []
+    after_fixes: ['index_record']
 
   # Code that runs at a 'Return' action
   publication-return:
     before_fixes: []
-    after_fixes: []
+    after_fixes: ['index_record']
 
   # Code that runs when a publication access is tried without credentials
   publication-access-denied:
@@ -89,4 +96,24 @@ hooks:
   # Code that runs when importing a new WOS record
   import-new-wos:
     before_fixes: []
+    after_fixes: []
+
+  # Code that runs when updating a project via cli
+  project-update-cmd:
+    before_fixes: ['validate']
+    after_fixes: []
+
+  # Code that runs when updating a department via cli
+  department-update-cmd:
+    before_fixes: ['validate']
+    after_fixes: []
+
+  # Code that runs when updating a research_group via cli
+  research_group-update-cmd:
+    before_fixes: ['validate']
+    after_fixes: []
+
+  # Code that runs when updating an user via cli
+  user-update-cmd:
+    before_fixes: ['validate']
     after_fixes: []

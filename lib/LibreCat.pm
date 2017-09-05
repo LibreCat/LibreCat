@@ -78,7 +78,7 @@ sub searcher {
 }
 
 sub store {
-    state $store = Catmandu->store('backup');
+    state $store = Catmandu->store;
 }
 
 1;

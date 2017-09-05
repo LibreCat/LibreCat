@@ -1,4 +1,4 @@
-package LibreCat::Validator::Researcher;
+package LibreCat::Validator::User;
 
 use Catmandu::Sane;
 use Moo;

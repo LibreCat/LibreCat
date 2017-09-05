@@ -4,16 +4,6 @@ _prefix:
 default:
   package: DBI
   options:
-    data_source: "DBI:mysql:database=librecat_system"
-    username: librecat
-    password: librecat
-    bags:
-      session:
-        plugins: ['Datestamps']
-
-backup:
-  package: DBI
-  options:
     data_source: "DBI:mysql:database=librecat_backup"
     username: librecat
     password: librecat
@@ -35,16 +25,16 @@ backup:
                 type: integer
       session:
         plugins: ['Datestamps']
-      publication: &backup_settings
-        plugins: ['Datestamps', 'Versioning']
+      publication:
+        plugins: ['Datestamps', 'Versioning', 'PublicationStore']
         id_generator: Incremental
       project:
-        plugins: ['Datestamps', 'Versioning']
+        plugins: ['Datestamps']
         id_generator: Incremental
-      researcher: *backup_settings
-      department: *backup_settings
+      researcher: ['Datestamps']
+      department: ['Datestamps']
       research_group:
-        plugins: ['Datestamps', 'Versioning']
+        plugins: ['Datestamps']
         id_generator: Incremental
 
 metrics:
@@ -53,12 +43,6 @@ metrics:
     data_source: "DBI:mysql:database=librecat_metrics"
     username: librecat
     password: librecat
-    bags:
-      wos: &metrics_settings
-        plugins: ['Datestamps']
-      epmc_citations: *metrics_settings
-      epmc_references: *metrics_settings
-      epmc_dblinks: *metrics_settings
 
 search:
   package: ElasticSearch

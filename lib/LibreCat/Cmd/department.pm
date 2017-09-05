@@ -279,27 +279,30 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag = LibreCat->store->bag('department');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('department');
+            $rec->{_id} //= $bag->generate_id;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'department',
+            h->hook('department-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid department",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{validation_error}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid department",
+                            @{$rec->{validation_error}}),
+                            "\n";
+                            $ret   = 2;
+                            $is_ok = 0;
+                    } else {
+                        $bag->add($rec);
+                    }
                 }
             );
 

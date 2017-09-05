@@ -10,7 +10,7 @@ with 'LibreCat::Worker';
 sub work {
     my ($self, $opts) = @_;
 
-    my $store = Catmandu->store('backup')->bag('audit');
+    my $store = Catmandu->store->bag('audit');
 
     unless ($store) {
         $self->log->error("failed to find 'backup.audit' store");

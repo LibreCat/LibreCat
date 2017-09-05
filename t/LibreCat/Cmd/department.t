@@ -18,8 +18,8 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store('backup')->bag('department')->delete_all;
-Catmandu->store('backup')->bag('department_version')->delete_all;
+Catmandu->store->bag('department')->delete_all;
+Catmandu->store->bag('department_version')->delete_all;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['department']);
@@ -32,24 +32,24 @@ Catmandu->store('backup')->bag('department_version')->delete_all;
     ok !$result->error, 'ok threw no exception';
 
     my $output = $result->stdout;
-    ok $output , 'got an output';
+    ok $output , 'list departments: got an output';
 
     my $count = count_department($output);
 
-    ok $count == 0, 'got no departments';
+    ok $count == 0, 'list departments: empty';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['department', 'add', 't/records/invalid-department.yml']);
-    ok $result->error, 'ok threw an exception';
+    ok $result->error, 'add invalid department: threw an exception';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['department', 'add', 't/records/valid-department.yml']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'add valid department: threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';

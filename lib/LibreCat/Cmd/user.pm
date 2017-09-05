@@ -2,7 +2,7 @@ package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
-use LibreCat::Validator::Researcher;
+use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -183,29 +183,32 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag = LibreCat->store->bag('researcher');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('researcher');
+            $rec->{_id} //= $bag->generate_id;
             $rec->{password} = mkpasswd($rec->{password})
                 if exists $rec->{password};
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'researcher',
+            h->hook('user-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid researcher",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{validation_error}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid user",
+                            @{$rec->{validation_error}}),
+                            "\n";
+                            $ret   = 2;
+                            $is_ok = 0;
+                    } else {
+                        $bag->add($rec);
+                    }
                 }
             );
 
@@ -252,7 +255,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Researcher->new;
+    my $validator = LibreCat::Validator::User->new;
 
     my $ret = 0;
 
@@ -309,7 +312,7 @@ sub _passwd {
     $data->{password} = mkpasswd($password2);
 
     my $helper = LibreCat::App::Helper::Helpers->new;
-    $data = $helper->store_record('researcher', $data);
+    $data = LibreCat->store->bag('researcher')->add($data);
 
     my $index = $helper->researcher;
     $index->add($data);
