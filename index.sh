@@ -33,33 +33,33 @@ case "${CMD}" in
         echo "Done"
         ;;
     drop_backup)
-        echo "Dropping backup.."
+        echo "Dropping backup..."
         echo "ids..."
-        carton exec "bin/librecat delete default --bag data"
+        carton exec "bin/librecat delete --bag data"
         echo "researcher..."
-        carton exec "bin/librecat delete backup  --bag researcher"
+        carton exec "bin/librecat delete --bag researcher"
         echo "publication..."
-        carton exec "bin/librecat delete backup  --bag publication"
+        carton exec "bin/librecat delete --bag publication"
         echo "department..."
-        carton exec "bin/librecat delete backup  --bag department"
+        carton exec "bin/librecat delete --bag department"
         echo "project..."
-        carton exec "bin/librecat delete backup  --bag project"
+        carton exec "bin/librecat delete --bag project"
         echo "research_group..."
-        carton exec "bin/librecat delete backup  --bag research_group"
+        carton exec "bin/librecat delete --bag research_group"
         echo "Done"
         ;;
     drop_version)
-        echo "Dropping backup.."
+        echo "Dropping versions..."
         echo "researcher..."
-        carton exec "bin/librecat delete backup  --bag researcher_version"
+        carton exec "bin/librecat delete --bag researcher_version"
         echo "publication..."
-        carton exec "bin/librecat delete backup  --bag publication_version"
+        carton exec "bin/librecat delete --bag publication_version"
         echo "department..."
-        carton exec "bin/librecat delete backup  --bag department_version"
+        carton exec "bin/librecat delete --bag department_version"
         echo "project..."
-        carton exec "bin/librecat delete backup  --bag project_version"
+        carton exec "bin/librecat delete --bag project_version"
         echo "research_group..."
-        carton exec "bin/librecat delete backup  --bag research_group_version"
+        carton exec "bin/librecat delete --bag research_group_version"
         echo "Done"
         ;;
     reindex)
@@ -67,15 +67,15 @@ case "${CMD}" in
         carton exec bin/librecat drop search
         echo "Reindex:"
         echo "researcher"
-        carton exec "bin/librecat copy -v backup --bag researcher to search --bag researcher"
+        carton exec "bin/librecat copy -v --bag researcher to search --bag researcher"
         echo "publication"
-        carton exec "bin/librecat copy -v backup --bag publication to search --bag publication"
+        carton exec "bin/librecat copy -v --bag publication to search --bag publication"
         echo "department"
-        carton exec "bin/librecat copy -v backup --bag department to search --bag department"
+        carton exec "bin/librecat copy -v --bag department to search --bag department"
         echo "project"
-        carton exec "bin/librecat copy -v backup --bag project to search --bag project"
+        carton exec "bin/librecat copy -v --bag project to search --bag project"
         echo "research_group."
-        carton exec "bin/librecat copy -v backup --bag research_group to search --bag research_group"
+        carton exec "bin/librecat copy -v --bag research_group to search --bag research_group"
         echo "Done"
         ;;
     export)
@@ -140,6 +140,6 @@ case "${CMD}" in
         echo "Done"
         ;;
     *)
-        echo "usage: $0 {create|drop|drop_backup|drop_version|export|import}"
+        echo "usage: $0 {create|drop|drop_|drop_version|export|import}"
         exit 1
 esac
