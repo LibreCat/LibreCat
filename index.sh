@@ -62,22 +62,22 @@ case "${CMD}" in
         carton exec "bin/librecat delete backup  --bag research_group_version"
         echo "Done"
         ;;
-    reindex)
-        echo "Dropping the search"
-        carton exec bin/librecat drop search
-        echo "Reindex:"
-        echo "researcher"
-        carton exec "bin/librecat copy -v backup --bag researcher to search --bag researcher"
-        echo "publication"
-        carton exec "bin/librecat copy -v backup --bag publication to search --bag publication"
-        echo "department"
-        carton exec "bin/librecat copy -v backup --bag department to search --bag department"
-        echo "project"
-        carton exec "bin/librecat copy -v backup --bag project to search --bag project"
-        echo "research_group."
-        carton exec "bin/librecat copy -v backup --bag research_group. to search --bag research_group"
-        echo "Done"
-        ;;
+    # reindex)
+    #     echo "Dropping the search"
+    #     carton exec bin/librecat drop search
+    #     echo "Reindex:"
+    #     echo "researcher"
+    #     carton exec "bin/librecat copy -v backup --bag researcher to search --bag researcher"
+    #     echo "publication"
+    #     carton exec "bin/librecat copy -v backup --bag publication to search --bag publication"
+    #     echo "department"
+    #     carton exec "bin/librecat copy -v backup --bag department to search --bag department"
+    #     echo "project"
+    #     carton exec "bin/librecat copy -v backup --bag project to search --bag project"
+    #     echo "research_group."
+    #     carton exec "bin/librecat copy -v backup --bag research_group. to search --bag research_group"
+    #     echo "Done"
+    #     ;;
     switch)
             echo "Reindex without interruption:"
             carton exec "bin/librecat switch -v index"
