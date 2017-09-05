@@ -50,7 +50,7 @@ store:
           plugins: ['Datestamps', 'Versioning']
           id_generator: Incremental
         project: *backup_settings
-        researcher: *backup_settings
+        user: *backup_settings
         department: *backup_settings
         research_group: *backup_settings
         session:

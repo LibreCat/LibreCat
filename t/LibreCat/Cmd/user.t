@@ -1,4 +1,5 @@
-use Catmandu::Sane;
+use strict;
+use warnings FATAL => 'all';
 use Path::Tiny;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
@@ -21,8 +22,8 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store->bag('researcher')->delete_all;
-Catmandu->store('search')->bag('researcher')->delete_all;
+Catmandu->store->bag('user')->delete_all;
+Catmandu->store('search')->bag('user')->delete_all;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['user']);
@@ -53,7 +54,7 @@ Catmandu->store('search')->bag('researcher')->delete_all;
         qq|LibreCat::CLI| => ['user', 'add', 't/records/valid-user.yml']);
 
     ok !$result->error, 'add valid user: threw no exception';
-note $result->error;
+
     my $output = $result->stdout;
     ok $output , 'add valid user: got an output';
 
