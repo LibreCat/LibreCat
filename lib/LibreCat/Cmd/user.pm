@@ -92,15 +92,15 @@ sub _list {
 
     my $it;
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
+        $it = LibreCat::App::Helper::Helpers->new->user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
-            sru_sortkeys => $sort
+            sru_sortkeys => $sort,
         );
     }
     else {
-        $it = LibreCat->store->bag('researcher');
+        $it = LibreCat->store->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -138,7 +138,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
+        $it = LibreCat::App::Helper::Helpers->new->user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -146,7 +146,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('researcher');
+        $it = LibreCat->store->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -168,7 +168,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('researcher')->get($id);
+    my $data = LibreCat->store->bag('user')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -183,7 +183,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = LibreCat->store->bag('researcher');
+    my $bag = LibreCat->store->bag('user');
 
     my $records = $importer->select(
         sub {
@@ -220,7 +220,7 @@ sub _add {
         }
     );
 
-    my $index = $helper->researcher;
+    my $index = $helper->user;
     $index->add_many($records);
     $index->commit;
 
@@ -234,14 +234,14 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat->store->bag('researcher');
+        my $bag = LibreCat->store->bag('user');
         $bag->delete($id);
         $bag->commit;
     }
 
     # Deleting search
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->researcher;
+        my $bag = LibreCat::App::Helper::Helpers->new->user;
         $bag->delete($id);
         $bag->commit;
     }
@@ -312,9 +312,9 @@ sub _passwd {
     $data->{password} = mkpasswd($password2);
 
     my $helper = LibreCat::App::Helper::Helpers->new;
-    $data = LibreCat->store->bag('researcher')->add($data);
+    $data = LibreCat->store->bag('user')->add($data);
 
-    my $index = $helper->researcher;
+    my $index = $helper->user;
     $index->add($data);
     $index->commit;
 

@@ -20,7 +20,7 @@ Permission: for admins only. Every other user will get a 403.
 
 prefix '/librecat/admin' => sub {
 
-my $user_bag = LibreCat->store->bag('researcher');
+my $user_bag = LibreCat->store->bag('user');
 my $project_bag = LibreCat->store->bag('project');
 my $rg_bag = LibreCat->store->bag('research_group');
 
@@ -53,8 +53,8 @@ Searches the authority database. Prints the search form + result list.
 
     get '/account/search' => sub {
         my $p = params;
-        h->log->debug("query for researcher: " . to_dumper($p));
-        my $hits = LibreCat->searcher->search('researcher', $p);
+        h->log->debug("query for user: " . to_dumper($p));
+        my $hits = LibreCat->searcher->search('user', $p);
         template 'admin/account', $hits;
     };
 

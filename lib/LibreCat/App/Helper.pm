@@ -65,8 +65,8 @@ sub project {
     state $bag = Catmandu->store('search')->bag('project');
 }
 
-sub researcher {
-    state $bag = Catmandu->store('search')->bag('researcher');
+sub user {
+    state $bag = Catmandu->store('search')->bag('user');
 }
 
 sub department {
@@ -186,9 +186,9 @@ sub get_person {
     my ($self, $id) = @_;
     if ($id) {
         my $hits
-            = LibreCat->searcher->search('researcher', {cql => ["id=$id"]});
+            = LibreCat->searcher->search('user', {cql => ["id=$id"]});
         $hits
-            = LibreCat->searcher->search('researcher', {cql => ["login=$id"]})
+            = LibreCat->searcher->search('user', {cql => ["login=$id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
         if (my $user
