@@ -63,9 +63,9 @@ sub _switch {
     my $ind2_exists = $e->indices->exists(index => $ind2);
 
     if (($ind1_exists and !$ind2_exists) or (!$ind1_exists and !$ind2_exists)) {
-        _do_switch($ind1, $ind2, $e);
+        $self->_do_switch($ind1, $ind2, $e);
     } elsif ($ind2_exists and !$ind1_exists) {
-        _do_switch($ind2, $ind1, $e);
+        $self->_do_switch($ind2, $ind1, $e);
     } else { # $pub1_exists and $pub2_exists
         print "Both indexes exist. Find out which one is running \n
         (curl -s -XGET 'http://localhost:9200/[alias]/_status') and delete \n
