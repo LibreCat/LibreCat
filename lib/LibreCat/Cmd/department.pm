@@ -135,7 +135,6 @@ sub _tree {
         $self->_tree_parse($file);
     }
     else {
-        print STDERR "tree display\n";
         $self->_tree_display;
     }
 }
@@ -152,6 +151,8 @@ sub _tree_parse {
     print "deleting previous departments...\n";
     $helper->department->delete_all;
 
+    my $index = $helper->department;
+
     _tree_parse_parser(
         $HASH->{tree},
         sub {
@@ -163,11 +164,14 @@ sub _tree_parse {
                         # ...
                     } else {
                         LibreCat->store->bag('department')->add($rec);
+                        $index->add($rec);
                     }
                 });
             print "added $rec->{_id}\n";
         }
     );
+
+    $index->commit;
 }
 
 sub _tree_parse_parser {
@@ -198,9 +202,7 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    print STDERR "sub tree display\n";
     my $it = LibreCat->store->bag('department');
-    print STDERR "after store call\n";
     my $HASH = {};
 
     $it->each(
