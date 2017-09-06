@@ -140,6 +140,6 @@ case "${CMD}" in
         echo "Done"
         ;;
     *)
-        echo "usage: $0 {create|drop|drop_|drop_version|export|import}"
+        echo "usage: $0 {create|drop|drop_backup|drop_version|export|import}"
         exit 1
 esac

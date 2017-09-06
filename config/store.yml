@@ -31,8 +31,10 @@ default:
       project:
         plugins: ['Datestamps']
         id_generator: Incremental
-      user: ['Datestamps']
-      department: ['Datestamps']
+      user:
+        plugins: ['Datestamps']
+      department:
+        plugins: ['Datestamps']
       research_group:
         plugins: ['Datestamps']
         id_generator: Incremental
