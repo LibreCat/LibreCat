@@ -18,8 +18,7 @@ hooks:
 
   # Code that runs when changing the edit mode of a publication
   publication-change-type:
-    before_fixes:
-      - publication_change_type
+    before_fixes: ['publication_change_type']
     after_fixes: []
 
   # Code that runs when updating a publication
@@ -117,3 +116,23 @@ hooks:
   user-update-cmd:
     before_fixes: ['validate']
     after_fixes: []
+
+  # Code that runs when updating an user
+  user-update:
+    before_fixes: ['validate']
+    after_fixes: ['index_record']
+
+  # Code that runs when updating a project
+  project-update:
+    before_fixes: ['validate']
+    after_fixes: ['index_record']
+
+  # Code that runs when updating a department
+  department-update:
+    before_fixes: ['validate']
+    after_fixes: ['index_record']
+
+  # Code that runs when updating a research_group
+  research_group-update:
+    before_fixes: ['validate']
+    after_fixes: ['index_record']

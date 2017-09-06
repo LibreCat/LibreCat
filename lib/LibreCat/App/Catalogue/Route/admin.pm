@@ -29,7 +29,6 @@ my $rg_bag = LibreCat->store->bag('research_group');
 Prints a search form for the user database.
 
 =cut
-
     get '/account' => sub {
         template 'admin/account';
     };
@@ -39,7 +38,6 @@ Prints a search form for the user database.
 Opens an empty form. The ID is automatically generated.
 
 =cut
-
     get '/account/new' => sub {
         template 'admin/forms/edit_account',
             { _id => $user_bag->generate_id };
@@ -50,11 +48,11 @@ Opens an empty form. The ID is automatically generated.
 Searches the authority database. Prints the search form + result list.
 
 =cut
-
     get '/account/search' => sub {
         my $p = params;
         h->log->debug("query for user: " . to_dumper($p));
         my $hits = LibreCat->searcher->search('user', $p);
+
         template 'admin/account', $hits;
     };
 
@@ -63,9 +61,9 @@ Searches the authority database. Prints the search form + result list.
 Opens the record with ID id.
 
 =cut
-
     get '/account/edit/:id' => sub {
         my $person = $user_bag->get(params->{id});
+
         template 'admin/forms/edit_account', $person;
     };
 
@@ -74,7 +72,6 @@ Opens the record with ID id.
 Saves the data in the authority database.
 
 =cut
-
     post '/account/update' => sub {
         my $data = params;
 
@@ -84,7 +81,17 @@ Saves the data in the authority database.
         $data->{password} = mkpasswd($data->{password})
             if ($data->{password} and $data->{password} !~ /\$.{15,}/);
 
-        $user_bag->add($data);
+        h->hook('user-update')->fix_around(
+            $data,
+            sub {
+                if ($data->{validation_error}) {
+                    return "Error: Need nice template, though!";
+                } else {
+                    $user_bag->add($data);
+                }
+            }
+        );
+
         template 'admin/account';
     };
 
@@ -93,9 +100,9 @@ Saves the data in the authority database.
 Deletes the account with ID :id.
 
 =cut
-
     get '/account/delete/:id' => sub {
         $user_bag->delete(params->{id}) if params->{id};
+
         redirect uri_for('/librecat');
     };
 
@@ -123,12 +130,23 @@ Deletes the account with ID :id.
 
     get '/project/edit/:id' => sub {
         my $project = $project_bag->get(params->{id});
+
         template 'admin/forms/edit_project', $project;
     };
 
     post '/project/update' => sub {
-        my $p = h->nested_params();
-        my $return = $project_bag->add($p);
+        my $data = h->nested_params();
+
+        h->hook('project-update')->fix_around(
+            $data,
+            sub {
+                if ($data->{validation_error}) {
+                    return "Error: Need nice template, though!";
+                } else {
+                    $project_bag->add($data);
+                }
+            }
+        );
 
         redirect uri_for('/librecat/admin/project');
     };
@@ -139,6 +157,7 @@ Deletes the account with ID :id.
     get '/research_group' => sub {
         my $hits = LibreCat->searcher->search('research_group',
             {q => "", limit => 100, start => params->{start} || 0});
+
         template 'admin/research_group', $hits;
     };
 
@@ -162,8 +181,18 @@ Deletes the account with ID :id.
     };
 
     post '/research_group/update' => sub {
-        my $p = h->nested_params();
-        my $return = $rg_bag->add($p);
+        my $data = h->nested_params();
+
+        h->hook('research_group-update')->fix_around(
+            $data,
+            sub {
+                if ($data->{validation_error}) {
+                    return "Error: Need nice template, though!";
+                } else {
+                    $rg_bag->add($data);
+                }
+            }
+        );
 
         redirect uri_for('/librecat/admin/research_group');
     };
