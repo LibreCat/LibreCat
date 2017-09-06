@@ -135,6 +135,7 @@ sub _tree {
         $self->_tree_parse($file);
     }
     else {
+        print STDERR "tree display\n";
         $self->_tree_display;
     }
 }
@@ -155,8 +156,14 @@ sub _tree_parse {
         $HASH->{tree},
         sub {
             my $rec = shift;
-            $helper->store_record('department', $rec);
-            $helper->index_record('department', $rec);
+            LibreCat->hook->fix_around('department-update-cmd',
+                sub {
+                    if ($rec->{validation_error}) {
+                        LibreCat->store->bag('department')->add($rec);
+                    } else {
+                        # ...
+                    }
+                });
             print "added $rec->{_id}\n";
         }
     );
@@ -190,8 +197,9 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
+    print STDERR "sub tree display\n";
     my $it = LibreCat->store->bag('department');
-
+    print STDERR "after store call\n";
     my $HASH = {};
 
     $it->each(
@@ -368,13 +376,12 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+                $ret = 2;
             }
-
-            $ret = -1;
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 1;
