@@ -43,18 +43,7 @@ store:
     package: DBI
     options:
       data_source: "dbi:SQLite:dbname=t/tmp/librecat_test.sqlite3"
-      bags:
-        project:
-          plugins: ['Datestamps']
-        publication: &backup_settings
-          plugins: ['Datestamps', 'Versioning']
-          id_generator: Incremental
-        project: *backup_settings
-        user: *backup_settings
-        department: *backup_settings
-        research_group: *backup_settings
-        session:
-          plugins: ['Datestamps']
+
   search:
     options:
       client: '1_0::Direct'
