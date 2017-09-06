@@ -151,6 +151,8 @@ sub _tree_parse {
     print "deleting previous departments...\n";
     $helper->department->delete_all;
 
+    my $index = $helper->department;
+
     _tree_parse_parser(
         $HASH->{tree},
         sub {
@@ -162,11 +164,14 @@ sub _tree_parse {
                         # ...
                     } else {
                         LibreCat->store->bag('department')->add($rec);
+                        $index->add($rec);
                     }
                 });
             print "added $rec->{_id}\n";
         }
     );
+
+    $index->commit;
 }
 
 sub _tree_parse_parser {
