@@ -12,7 +12,9 @@ has _fixer => (is => 'lazy');
 sub _build_fixer {
     my $self = shift;
 
-    my $file = "update_publication.fix";
+    my $bag = $self->name;
+    $bag =~ s/(^[a-z_]+)\-.*/$1/;
+    my $file = "update_$bag.fix";
     h->log->debug("searching for fix `$file'");
 
     for my $p (@{LibreCat->layers->fixes_paths}) {

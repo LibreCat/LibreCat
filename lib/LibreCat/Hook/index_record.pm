@@ -10,7 +10,8 @@ has name => (is => 'ro', default => sub {''});
 sub fix {
     my ($self, $data) = @_;
 
-    my $bag = $self->name =~ /(^.*?)-/;
+    my $bag = $self->name;
+    $bag =~ s/(^[a-z_]+)\-.*/$1/;
     my $id = $data->{_id};
 
     my $job = {
