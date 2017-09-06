@@ -156,7 +156,8 @@ sub _tree_parse {
         $HASH->{tree},
         sub {
             my $rec = shift;
-            LibreCat->hook->fix_around('department-update-cmd',
+            LibreCat->hook('department-update-cmd')->fix_around(
+                $rec,
                 sub {
                     if ($rec->{validation_error}) {
                         LibreCat->store->bag('department')->add($rec);

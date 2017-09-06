@@ -5,6 +5,7 @@ use Catmandu::Util qw(require_package);
 use LibreCat::Layers;
 use LibreCat::Hook;
 use Catmandu;
+use Carp;
 use namespace::clean;
 
 our $VERSION = '0.3.2';
@@ -51,6 +52,8 @@ sub user {
 
 sub hook {
     my ($self, $name) = @_;
+
+    croak "need a name" unless $name;
 
     state $hooks = {};
 
