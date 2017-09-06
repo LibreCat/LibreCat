@@ -160,9 +160,9 @@ sub _tree_parse {
                 $rec,
                 sub {
                     if ($rec->{validation_error}) {
-                        LibreCat->store->bag('department')->add($rec);
-                    } else {
                         # ...
+                    } else {
+                        LibreCat->store->bag('department')->add($rec);
                     }
                 });
             print "added $rec->{_id}\n";
