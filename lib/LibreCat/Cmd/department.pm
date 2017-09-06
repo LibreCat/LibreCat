@@ -135,7 +135,6 @@ sub _tree {
         $self->_tree_parse($file);
     }
     else {
-        print STDERR "tree display\n";
         $self->_tree_display;
     }
 }
@@ -198,9 +197,7 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    print STDERR "sub tree display\n";
     my $it = LibreCat->store->bag('department');
-    print STDERR "after store call\n";
     my $HASH = {};
 
     $it->each(
