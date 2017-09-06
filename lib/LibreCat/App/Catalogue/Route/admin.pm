@@ -85,7 +85,7 @@ Saves the data in the authority database.
             $data,
             sub {
                 if ($data->{validation_error}) {
-                    return "Error: Need nice template, though!";
+                    # error handling
                 } else {
                     $user_bag->add($data);
                 }
@@ -141,7 +141,7 @@ Deletes the account with ID :id.
             $data,
             sub {
                 if ($data->{validation_error}) {
-                    return "Error: Need nice template, though!";
+                    # error handling
                 } else {
                     $project_bag->add($data);
                 }
@@ -187,7 +187,7 @@ Deletes the account with ID :id.
             $data,
             sub {
                 if ($data->{validation_error}) {
-                    return "Error: Need nice template, though!";
+                    # error handling
                 } else {
                     $rg_bag->add($data);
                 }
