@@ -82,8 +82,7 @@ post '/librecat/record/import' => sub {
             $pub->{department} = $user->{department};
 
             # Use config/hooks.yml to register functions
-            # that should run before/after uploading QAE publications
-
+            # that should run before/after importing publications
             h->hook('import-new-' . $source)->fix_around(
                 $pub,
                 sub {

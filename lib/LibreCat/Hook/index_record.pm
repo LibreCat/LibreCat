@@ -1,6 +1,7 @@
 package LibreCat::Hook::index_record;
 
 use Catmandu::Sane;
+use LibreCat;
 use LibreCat::App::Helper;
 use Dancer qw(:syntax);
 use Moo;
@@ -21,7 +22,7 @@ sub fix {
 
     h->log->error("adding job indexer: " . to_yaml($job));
     try {
-        h->queue->add_job('indexer', $job);
+        LibreCat->queue->add_job('indexer', $job);
     }
     catch {
         h->log->trace("caught a : $_");

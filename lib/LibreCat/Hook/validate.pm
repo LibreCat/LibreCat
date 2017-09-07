@@ -15,17 +15,17 @@ sub _build_fixer {
     my $bag = $self->name;
     $bag =~ s/(^[a-z_]+)\-.*/$1/;
     my $file = "update_$bag.fix";
-    h->log->debug("searching for fix `$file'");
+    h->log->debug("searching for fix '$file'");
 
     for my $p (@{LibreCat->layers->fixes_paths}) {
         h->log->debug("testing `$p/$file'");
-        if (-r "$file") {
-            h->log->debug("found `$p/$file'");
-            return Catmandu::Fix->new(fixes => ["$file"]);
+        if (-r "$p/$file") {
+            h->log->debug("found '$p/$file'");
+            return Catmandu::Fix->new(fixes => ["$p/$file"]);
         }
     }
 
-    h->log->error("can't find a fixer for: `$file'");
+    h->log->error("can't find a fixer for: '$file'");
 
     return Catmandu::Fix->new();
 }

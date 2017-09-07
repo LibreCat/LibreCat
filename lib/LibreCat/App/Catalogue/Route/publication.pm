@@ -195,7 +195,7 @@ Checks if the user has the rights to update this record.
             $p,
             sub {
                 if ($p->{validation_error}) {
-                    # return to user
+                    # error handling
                 } else {
                     $pub_bag->add($p);
                 }
@@ -230,13 +230,12 @@ Checks if the user has the rights to edit this record.
         }
 
         $rec->{user_id} = session->{personNumber};
-
+        $rec->{status} = "returned";
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
         h->hook('publication-return')->fix_around(
             $rec,
             sub {
-                $rec->{status} = "returned";
                 $pub_bag->add($rec);
             }
         );
@@ -380,13 +379,12 @@ Publishes private records, returns to the list.
 
             # Use config/hooks.yml to register functions
             # that should run before/after publishing publications
-            state $hook = h->hook('publication-publish');
-
-            $hook->fix_before($rec);
-
-            my $res = $pub_bag->add($rec);
-
-            $hook->fix_after($res);
+            h->hook('publication-publish')->fix_around(
+                $rec,
+                sub {
+                    $pub_bag->add($rec);
+                }
+            );
         }
 
         redirect uri_for('/librecat');
