@@ -42,13 +42,13 @@
       </div>
     </div>
     [%- END %]<!-- end if -->
-    <div class="row authorIds_input form-group" style="display:none;">
+    <div class="row authorIds_input form-group hidden">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
       <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% thisPerson._id %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
     </div>
     [%- END %]<!-- END foreach -->
 
-    <div class="row authorIds_input" style="display:none;">
+    <div class="row authorIds_input hidden">
       <div class="col-md-4">
 	<span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="[% h.loc("person_profile.person_id_title") %]"></span>
 	<script>

@@ -50,13 +50,13 @@ $(function() {
  */
 function editAuthorIds(direction){
     if(direction == "edit"){
-        $('.authorIds').css('display','none');
-        $('.authorIds_input').attr('style','display:display');
+        $('.authorIds').addClass('hidden');
+        $('.authorIds_input').removeClass('hidden');
         $('#author_ids_edit').attr('onclick',"editAuthorIds('cancel')");
     }
     else if(direction == "cancel"){
-        $('.authorIds').attr('style','display:display');
-        $('.authorIds_input').attr('style','display:none');
+        $('.authorIds').removeClass('hidden');
+        $('.authorIds_input').addClass('hidden');
         $('#author_ids_edit').attr('onclick',"editAuthorIds('edit')");
     }
 }
