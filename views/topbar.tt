@@ -41,7 +41,7 @@
                 </li>
                 [%- IF session.user %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% h.loc("header.settings") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
-                    <div class="dropdown-menu" style="width:550px">
+                    <div id="settings" class="dropdown-menu">
                         [% INCLUDE backend/user_settings.tt %]
                     </div>
                 </li>
