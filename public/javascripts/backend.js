@@ -417,8 +417,6 @@ function edit_file(fileId, id){
             $('#id_embargo_to option[value="open_access"]').prop('selected', true);
         }
 
-        var fileNameTag = self.document.getElementById('fileNameTag');
-        fileNameTag.style.display = "block";
         $('#upload_file').modal('show');
 }
 
