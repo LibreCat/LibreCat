@@ -5,8 +5,8 @@ CMD=$1
 
 function f_create {
     echo "Creating index..."
-    echo "researcher..."
-    carton exec "bin/librecat user add devel/researcher.yml"
+    echo "user..."
+    carton exec "bin/librecat user add devel/user.yml"
     echo "publication..."
     carton exec "bin/librecat publication add devel/publications.yml"
     echo "department..."
@@ -20,8 +20,8 @@ function f_create {
 
 function f_drop {
     echo "Dropping index.."
-    echo "researcher..."
-    carton exec "bin/librecat delete search --bag researcher"
+    echo "user..."
+    carton exec "bin/librecat delete search --bag user"
     echo "publication..."
     carton exec "bin/librecat delete search --bag publication"
     echo "department..."
@@ -37,8 +37,8 @@ function f_drop_backup {
     echo "Dropping backup..."
     echo "ids..."
     carton exec "bin/librecat delete --bag data"
-    echo "researcher..."
-    carton exec "bin/librecat delete --bag researcher"
+    echo "user..."
+    carton exec "bin/librecat delete --bag user"
     echo "publication..."
     carton exec "bin/librecat delete --bag publication"
     echo "department..."
@@ -52,8 +52,8 @@ function f_drop_backup {
 
 function f_drop_version {
     echo "Dropping versions..."
-    echo "researcher..."
-    carton exec "bin/librecat delete --bag researcher_version"
+    echo "user..."
+    carton exec "bin/librecat delete --bag user_version"
     echo "publication..."
     carton exec "bin/librecat delete --bag publication_version"
     echo "department..."
@@ -69,8 +69,8 @@ function f_reindex {
     echo "Dropping the search"
     carton exec bin/librecat drop search
     echo "Reindex:"
-    echo "researcher"
-    carton exec "bin/librecat copy -v --bag researcher to search --bag researcher"
+    echo "user"
+    carton exec "bin/librecat copy -v --bag user to search --bag user"
     echo "publication"
     carton exec "bin/librecat copy -v --bag publication to search --bag publication"
     echo "department"
@@ -87,8 +87,8 @@ function f_export {
 
     mkdir -p ${TMPDIR}
 
-    echo "researcher..."
-    carton exec "bin/librecat user list" > ${TMPDIR}/researcher.yml
+    echo "user..."
+    carton exec "bin/librecat user list" > ${TMPDIR}/user.yml
     echo "publication..."
     carton exec "bin/librecat publication list" > ${TMPDIR}/publications.yml
     echo "department..."
@@ -129,8 +129,8 @@ function f_import {
 
     cd -
 
-    echo "researcher..."
-    carton exec "bin/librecat user add" ${TMPDIR}/researcher.yml
+    echo "user..."
+    carton exec "bin/librecat user add" ${TMPDIR}/user.yml
     echo "publications..."
     carton exec "bin/librecat publication add" ${TMPDIR}/publications.yml
     echo "department..."

@@ -1,4 +1,4 @@
-# fix researcher data at update
+# fix user data at update
 
 unless exists(account_status)
     add_field(account_status,inactive)

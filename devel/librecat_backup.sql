@@ -33,8 +33,8 @@ CREATE TABLE `project` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `researcher`;
-CREATE TABLE `researcher` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `data` longblob NOT NULL,
   PRIMARY KEY (`id`)

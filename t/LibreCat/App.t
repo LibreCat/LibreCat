@@ -17,7 +17,7 @@ Catmandu->config->{default_lang} = 'en';
 Catmandu->store->bag('publication')->delete_all;
 Catmandu->store('search')->bag('publication')->delete_all;
 
-foreach my $obj (qw(publication project researcher)) {
+foreach my $obj (qw(publication project user)) {
     my $result = test_app(
         qq|LibreCat::CLI| => [$obj, "add", "t/records/valid-$obj.yml"]);
 }

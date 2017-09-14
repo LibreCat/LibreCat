@@ -72,10 +72,10 @@ note("loading test project");
     ok !$result->error, 'add threw no exception';
 }
 
-note("loading test researcher");
+note("loading test user");
 {
     my $result = test_app(
-        qq|LibreCat::CLI| => ['user', 'add', 'devel/researcher.yml']);
+        qq|LibreCat::CLI| => ['user', 'add', 'devel/user.yml']);
 note $result->error;
     ok !$result->error, 'add threw no exception';
 }

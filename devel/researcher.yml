@@ -3,7 +3,7 @@ _id: '1234'
 alias: genius
 account_status: active
 account_type: external
-password: secret
+password: einstein
 login: einstein
 super_admin: 1
 department:
