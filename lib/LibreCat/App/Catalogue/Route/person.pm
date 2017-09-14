@@ -68,7 +68,17 @@ for his own publication list.
             $person->{style} = undef;
         }
 
-        h->update_record('user', $person);
+        LibreCat->hook('user-update')->fix_around(
+            $person,
+            sub {
+                if ($person->{_validation_errors}) {
+                    # TODO: error handling
+                } else {
+                    h->log->debug("fix around user hook");
+                    LibreCat->store->bag('user')->add($person);
+                }
+            }
+        );
 
         redirect uri_for('/librecat');
     };
@@ -89,7 +99,17 @@ be displayed on author's profile page.
         map {$person->{$_} = params->{$_} ? params->{$_} : ""} @identifier;
         redirect uri_for('/librecat') if scalar(keys %{$person}) > 1;
 
-        h->update_record('user', $person);
+        LibreCat->hook('user-update')->fix_around(
+            $person,
+            sub {
+                if ($person->{_validation_errors}) {
+                    # TODO: error handling
+                } else {
+                    h->log->debug("fix around user hook");
+                    LibreCat->store->bag('user')->add($person);
+                }
+            }
+        );
 
     };
 
@@ -107,7 +127,18 @@ User can choose default language for the librecat backend
         my $lang   = params->{lang};
         if ($lang eq "en" or $lang eq "de") {
             $person->{lang} = $lang;
-            h->update_record('user', $person);
+
+            LibreCat->hook('user-update')->fix_around(
+                $person,
+                sub {
+                    if ($person->{_validation_errors}) {
+                        # TODO: error handling
+                    } else {
+                        h->log->debug("fix around user hook");
+                        LibreCat->store->bag('user')->add($person);
+                    }
+                }
+            );
             session lang => $lang;
         }
 
@@ -131,7 +162,18 @@ new publication form.
         $fix->fix($p);
         my $person = h->get_person(session('personNumber'));
         $person->{department} = $p->{department};
-        h->update_record('user', $person);
+
+        LibreCat->hook('user-update')->fix_around(
+            $person,
+            sub {
+                if ($person->{_validation_errors}) {
+                    # TODO: error handling
+                } else {
+                    h->log->debug("fix around user hook");
+                    LibreCat->store->bag('user')->add($person);
+                }
+            }
+        );
 
         redirect uri_for('/librecat');
 
