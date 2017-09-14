@@ -69,6 +69,8 @@ hooks:
 
   # Code that runs when importing a publication
   publication-import:
+    options:
+      bag: publication
     before_fixes: ['validate']
     after_fixes: ['index_record']
 

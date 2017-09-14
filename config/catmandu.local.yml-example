@@ -61,5 +61,5 @@ user:
     - store: builtin_users
       username_attr: login
     - store: search
-      bag: researcher
+      bag: user
       username_attr: login

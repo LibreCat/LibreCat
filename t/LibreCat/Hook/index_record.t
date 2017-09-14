@@ -13,7 +13,7 @@ BEGIN {
 require_ok $pkg;
 
 my $x;
-lives_ok {$x = $pkg->new()} 'lives_ok';
+lives_ok {$x = $pkg->new(bag => 'foo')} 'lives_ok';
 
 can_ok $x, 'fix';
 
