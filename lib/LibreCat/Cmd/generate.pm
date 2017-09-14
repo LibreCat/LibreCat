@@ -221,7 +221,7 @@ sub _generate_departments {
     my $output_path    = $template_paths->[0] . '/department';
 
     my $pubs = $h->publication;
-    my $it   = Catmandu->store->bag('department');
+    my $it   = LibreCat->store->bag('department');
 
     my $HASH = {};
 

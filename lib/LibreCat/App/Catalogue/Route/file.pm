@@ -114,7 +114,7 @@ Author approves the request. Email will be sent to user.
 =cut
 
 get '/rc/approve/:key' => sub {
-    my $bag  = Catmandu->store->bag('reqcopy');
+    my $bag  = LibreCat->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to approve." unless $data;
 
@@ -149,7 +149,7 @@ to user. Delete request key from database.
 =cut
 
 get '/rc/deny/:key' => sub {
-    my $bag  = Catmandu->store->bag('reqcopy');
+    my $bag  = LibreCat->store->bag('reqcopy');
     my $data = $bag->get(params->{key});
     return "Nothing to deny." unless $data;
 
@@ -179,7 +179,7 @@ Now get the document if time has not expired yet.
 =cut
 
 get '/rc/:key' => sub {
-    my $check = Catmandu->store->bag('reqcopy')->get(params->{key});
+    my $check = LibreCat->store->bag('reqcopy')->get(params->{key});
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
@@ -206,7 +206,7 @@ Request a copy of the publication. Email will be sent to the author.
 =cut
 
 any '/rc/:id/:file_id' => sub {
-    my $bag = Catmandu->store->bag('reqcopy');
+    my $bag = LibreCat->store->bag('reqcopy');
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
         forward '/publication/' . params->{id}, {method => 'GET'};
