@@ -15,7 +15,7 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 
 sub access_denied_hook {
-    h->hook('publication-access-denied')->fix_around(
+    LibreCat->hook('publication-access-denied')->fix_around(
         {_id => params->{id},
         user_id => session->{personNumber},
     });
@@ -60,7 +60,7 @@ Some fields are pre-filled.
         # Use config/hooks.yml to register functions
         # that should run before/after adding new publications
         # E.g. create a hooks to change the default fields
-        state $hook = h->hook('publication-new');
+        state $hook = LibreCat->hook('publication-new');
 
         $hook->fix_before($data);
 
@@ -136,7 +136,7 @@ Checks if the user has permission the see/edit this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after edit publications
-        state $hook = h->hook('publication-edit');
+        state $hook = LibreCat->hook('publication-edit');
 
         $hook->fix_before($rec);
 
@@ -191,12 +191,13 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-        h->hook('publication-update')->fix_around(
+        LibreCat->hook('publication-update')->fix_around(
             $p,
             sub {
                 if ($p->{validation_error}) {
                     # error handling
                 } else {
+                    h->log->debug("fix around publication hook");
                     $pub_bag->add($p);
                 }
             }
@@ -233,7 +234,7 @@ Checks if the user has the rights to edit this record.
         $rec->{status} = "returned";
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
-        h->hook('publication-return')->fix_around(
+        LibreCat->hook('publication-return')->fix_around(
             $rec,
             sub {
                 $pub_bag->add($rec);
@@ -263,7 +264,7 @@ Deletes record with id. For admins only.
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications
-        h->hook('publication-delete')->fix_around(
+        LibreCat->hook('publication-delete')->fix_around(
             $rec,
             sub {
                 $pub_bag->set_delete_status($id);
@@ -379,7 +380,7 @@ Publishes private records, returns to the list.
 
             # Use config/hooks.yml to register functions
             # that should run before/after publishing publications
-            h->hook('publication-publish')->fix_around(
+            LibreCat->hook('publication-publish')->fix_around(
                 $rec,
                 sub {
                     $pub_bag->add($rec);
@@ -413,7 +414,7 @@ Changes the type of the publication.
 
         # Use config/hooks.yml to register functions
         # that should run before/after changing the edit mode
-        state $hook = h->hook('publication-change-type');
+        state $hook = LibreCat->hook('publication-change-type');
         $hook->fix_before($params);
         $hook->fix_after($params);
 

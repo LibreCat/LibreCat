@@ -187,7 +187,7 @@ sub _add {
 
             my $is_ok = 1;
 
-            h->hook('research_group-update-cmd')->fix_around(
+            LibreCat->hook('research_group-update-cmd')->fix_around(
                 $rec,
                 sub {
                     if ($rec->{validation_error}) {

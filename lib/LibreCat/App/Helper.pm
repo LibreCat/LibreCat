@@ -29,10 +29,6 @@ sub config {
     state $config = hash_merge(Catmandu->config, Dancer::config);
 }
 
-sub hook {
-    LibreCat->hook($_[1]);
-}
-
 sub queue {
     state $config = LibreCat::JobQueue->new;
 }
@@ -43,18 +39,6 @@ sub layers {
 
 sub alphabet {
     return ['A' .. 'Z'];
-}
-
-sub backup_publication_static {
-    my ($self) = @_;
-    my $backup = Catmandu::Store::DBI->new(
-        'data_source' =>
-            $self->config->{store}->{default}->{options}->{data_source},
-        username => $self->config->{store}->{default}->{options}->{username},
-        password => $self->config->{store}->{default}->{options}->{password},
-    #    bags     => {publication => {plugins => ['Versioning']}},
-    );
-    state $bag = $backup->bag('publication');
 }
 
 sub publication {
