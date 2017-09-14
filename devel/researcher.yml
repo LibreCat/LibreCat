@@ -1,29 +1,82 @@
 ---
-_id: '1234'
-alias: genius
+_id: '1'
+_version: 2
 account_status: active
-account_type: external
-password: secret
-login: einstein
-super_admin: 1
+date_created: 2017-09-14T07:38:52Z
+date_updated: 2017-09-14T07:38:52Z
+first_name: Elvis
+full_name: Presley, Elvis
+last_name: Presley
+login: elvis
+password: $2a$08$DVI4GDbknih/JMt61b0PVuSbj.ll9yB.C2MITHqkSsz0NMnI0XiWW
+style: apa
+...
+---
+_id: '1234'
+_version: 1
+account_status: active
+alias: genius
+date_created: 2017-09-14T07:38:07Z
+date_updated: 2017-09-14T07:38:07Z
 department:
 - _id: 9996
 email: einstein@physics.com
 first_name: Albert
 full_name: Einstein, Albert
 last_name: Einstein
+login: einstein
+password: $2a$08$UYr512xTCV9.FktQld.tBe84ptqqONtP3Wuo6deY//wblH1hXlZhm
+super_admin: 1
 ...
 ---
-_id: '1'
+_id: '2'
+_version: 1
 account_status: active
-account_type: external
-password: secret
-login: test
-super_admin: 0
-department:
-- _id: 9996
-email: test.user@physics.com
+date_created: 2017-09-14T07:39:22Z
+date_updated: 2017-09-14T07:39:22Z
 first_name: Test
-full_name: User, Test
-last_name: User
+full_name: Test, Test
+last_name: Test
+login: test
+password: $2a$08$x067F8z.WNYiLtJ4Mk0/wOliS5fnke7HK0LRpeYEo5bIAzSfobYHS
+style: apa
+...
+---
+_id: '3'
+_version: 1
+account_status: active
+date_created: 2017-09-14T07:39:48Z
+date_updated: 2017-09-14T07:39:48Z
+first_name: James
+full_name: Dean, James
+last_name: Dean
+login: james
+password: $2a$08$aLKiJuc1SbLHL7J3wA47u.iZ2Zry1OB3Pz/RdhB6pKgCI2ue2SsZ6
+style: apa
+...
+---
+_id: '4'
+_version: 1
+account_status: active
+date_created: 2017-09-14T07:40:42Z
+date_updated: 2017-09-14T07:40:42Z
+first_name: Marilyn
+full_name: Monroe, Marilyn
+last_name: Monroe
+login: marilyn
+password: $2a$08$TXyinAi6a8rrV7pmCytoH.DxizD5yMMH7cBiAHvbc8DsZ.6yP2rQq
+style: apa
+...
+---
+_id: '5'
+_version: 1
+account_status: active
+date_created: 2017-09-14T07:41:27Z
+date_updated: 2017-09-14T07:41:27Z
+first_name: Natalie
+full_name: Portman, Natalie
+last_name: Portman
+login: natalie
+password: $2a$08$XivJnCdT66INAtvFXqZ2UOpu38Qmrl7M.dYg6jXtyHiywFovcXiCq
+style: apa
 ...
