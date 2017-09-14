@@ -27,8 +27,8 @@ service:
   - sqlite3
 
 install:
-  - cpanm --quiet --installdeps --notest --force --skip-satisfied .
-  - cpanm --quiet --notest --skip-satisfied Devel::Cover
+  - cpanm --quiet --installdeps --notest --force .
+  - cpanm --quiet --notest Devel::Cover
 
 script:
   - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 2 -r t; exit $?'
