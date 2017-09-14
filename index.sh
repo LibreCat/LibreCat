@@ -16,6 +16,8 @@ case "${CMD}" in
         carton exec "bin/librecat project add devel/project.yml"
         echo "Generating tree"
         carton exec "bin/librecat generate departments"
+        echo "award dummy DB..."
+        carton exec "bin/librecat award add devel/award.yml"
         echo "Done"
         ;;
     drop)
@@ -30,6 +32,8 @@ case "${CMD}" in
         carton exec "bin/librecat delete search --bag research_group"
         echo "project..."
         carton exec "bin/librecat delete search --bag project"
+        echo "award..."
+        carton exec "bin/librecat delete search --bag award"
         echo "Done"
         ;;
     drop_backup)
@@ -46,6 +50,8 @@ case "${CMD}" in
         carton exec "bin/librecat delete backup  --bag project"
         echo "research_group..."
         carton exec "bin/librecat delete backup  --bag research_group"
+        echo "award..."
+        carton exec "bin/librecat delete backup  --bag award"
         echo "Done"
         ;;
     drop_version)
@@ -60,6 +66,8 @@ case "${CMD}" in
         carton exec "bin/librecat delete backup  --bag project_version"
         echo "research_group..."
         carton exec "bin/librecat delete backup  --bag research_group_version"
+        echo "award..."
+        carton exec "bin/librecat delete backup  --bag award_version"
         echo "Done"
         ;;
     # reindex)
@@ -97,6 +105,8 @@ case "${CMD}" in
         carton exec "bin/librecat project list" > ${TMPDIR}/project.yml
         echo "research_group..."
         carton exec "bin/librecat research_group list" > ${TMPDIR}/research_group.yml
+        echo "award..."
+        carton exec "bin/librecat award list" > ${TMPDIR}/award.yml
 
         cd ${TMPDIR}
 
