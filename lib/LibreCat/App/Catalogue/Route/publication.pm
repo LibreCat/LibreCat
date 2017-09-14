@@ -194,7 +194,7 @@ Checks if the user has the rights to update this record.
         h->hook('publication-update')->fix_around(
             $p,
             sub {
-                if ($p->{validation_error}) {
+                if ($p->{_validation_errors}) {
                     # error handling
                 } else {
                     $pub_bag->add($p);

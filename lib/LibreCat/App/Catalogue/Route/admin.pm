@@ -84,7 +84,7 @@ Saves the data in the authority database.
         h->hook('user-update')->fix_around(
             $data,
             sub {
-                if ($data->{validation_error}) {
+                if ($data->{_validation_errors}) {
                     # error handling
                 } else {
                     $user_bag->add($data);
@@ -140,7 +140,7 @@ Deletes the account with ID :id.
         h->hook('project-update')->fix_around(
             $data,
             sub {
-                if ($data->{validation_error}) {
+                if ($data->{_validation_errors}) {
                     # error handling
                 } else {
                     $project_bag->add($data);
@@ -186,7 +186,7 @@ Deletes the account with ID :id.
         h->hook('research_group-update')->fix_around(
             $data,
             sub {
-                if ($data->{validation_error}) {
+                if ($data->{_validation_errors}) {
                     # error handling
                 } else {
                     $rg_bag->add($data);

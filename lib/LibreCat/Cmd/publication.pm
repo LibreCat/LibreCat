@@ -293,11 +293,11 @@ sub _add {
             h->hook('publication-update-cmd')->fix_around(
                 $rec,
                 sub {
-                    if ($rec->{validation_error}) {
+                    if ($rec->{_validation_errors}) {
                         print STDERR join("\n",
                             $rec->{_id},
                             "ERROR: not a valid publication",
-                            @{$rec->{validation_error}}),
+                            @{$rec->{_validation_errors}}),
                             "\n";
                             $ret   = 2;
                             $is_ok = 0;
