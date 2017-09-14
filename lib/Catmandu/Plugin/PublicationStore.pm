@@ -37,7 +37,7 @@ around add => sub {
         $data->{user_id} = $super_id;
     }
 
-    (!defined $data->{validation_error})
+    (!defined $data->{_validation_errors})
         ? $orig->($self, $data)
         : return $data;
 };

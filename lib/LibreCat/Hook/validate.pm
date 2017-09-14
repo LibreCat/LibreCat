@@ -45,33 +45,23 @@ sub fix {
     # $cite_fix->fix($data) unless $opts{skip_citation};
 
     state $validators = {};
-    my $validator_pkg = $validators->{$bag}
-        // Catmandu::Util::require_package(ucfirst($bag),
-        'LibreCat::Validator');
 
-    if ($validator_pkg) {
-        my $validator = $validator_pkg->new;
+    my $validator = $validators->{$bag} //= Catmandu::Util::require_package(ucfirst($bag),
+            'LibreCat::Validator')->new;
 
-        my @white_list = $validator->white_list;
+    my @white_list = $validator->white_list;
 
-        h->log->fatal("no white_list found for $validator_pkg ??!")
-            unless @white_list;
-
-        for my $key (keys %$data) {
-            unless (grep(/^$key$/, @white_list)) {
-                h->log->debug("deleting invalid key: $key");
-                delete $data->{$key};
-            }
-        }
-
-        unless ($validator->is_valid($data)) {
-            h->log->error($data->{_id} . " not a valid publication!");
-            h->log->error($validator->last_errors);
-            $data->{validation_error} = $validator->last_errors;
+    for my $key (keys %$data) {
+        unless (grep(/^$key$/, @white_list)) {
+            h->log->debug("deleting invalid key: $key");
+            delete $data->{$key};
         }
     }
-    else {
-        h->log->fatal("no validator package $validator_pkg found!");
+
+    unless ($validator->is_valid($data)) {
+        h->log->error($data->{_id} . " not a valid publication!");
+        h->log->error($validator->last_errors);
+        $data->{_validation_errors} = $validator->last_errors;
     }
 
 };
