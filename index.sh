@@ -150,7 +150,9 @@ case "${CMD}" in
         f_create
         ;;
     drop)
-        f_drop
+        echo "Dropping index.."
+        carton exec "bin/librecat drop search"
+        echo "Done"
         ;;
     drop_backup)
         f_drop_backup

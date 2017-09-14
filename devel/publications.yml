@@ -1,5 +1,6 @@
 ---
 _id: '2737383'
+_version: 1
 abstract:
 - lang: eng
   text: Glutathione peroxidases (Gpxs) are antioxidant enzymes not studied so far
@@ -125,23 +126,22 @@ citation:
 creator:
   login: einstein
 date_created: 2015-05-22T08:35:10Z
-date_updated: 2015-09-10T13:35:40Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '2685177'
 doi: 10.1093/jxb/erv066
 external_id:
   isi:
-    - '000356223900015'
+  - '000356223900015'
   pmid:
-    - '25740929'
+  - '25740929'
+file: []
 intvolume: '        66'
-isi: 1
 issue: '10'
 language:
 - iso: eng
   name: English
 page: 2979-2990
-pmid: 1
 publication: Journal of Experimental Botany
 publication_identifier:
   issn:
@@ -151,10 +151,13 @@ quality_controlled: '1'
 status: public
 title: Function of glutathione peroxidases in legume root nodules
 type: journal_article
+user_id: 1234
 volume: 66
 year: '2015'
+...
 ---
 _id: '2737384'
+_version: 1
 abstract:
 - lang: eng
   text: In 1716, as a result of the War of the Spanish Succession, Emperor Charles
@@ -181,14 +184,14 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T07:40:34Z
-date_updated: 2016-06-24T07:40:34Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '10085'
   tree:
   - _id: 10085
 doi: 1854/LU-5964365
-edit_mode: expert
 extern: '1'
+file: []
 intvolume: '        29'
 jel:
 - B19
@@ -215,10 +218,13 @@ status: public
 title: 'Regime change at a distance: Austria and the Southern Netherlands following
   the war of the Spanish succession, 1716-1725'
 type: book
+user_id: 1234
 volume: 29
 year: '2016'
+...
 ---
 _id: '2737385'
+_version: 1
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -227,14 +233,13 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T07:48:53Z
-date_updated: 2016-06-24T07:48:53Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
 doi: 1854/LU-7221224
-edit_mode: expert
 editor:
 - first_name: Frank
   full_name: Brisard, Frank
@@ -242,6 +247,7 @@ editor:
 - first_name: Michael
   full_name: Meeuwis, Michael
   last_name: Meeuwis
+file: []
 jel:
 - D2
 keyword:
@@ -255,9 +261,12 @@ publisher: ' John Benjamins'
 status: public
 title: 'Bibliography of pragmatics online: 13th release, updated and expanded'
 type: book_editor
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737386'
+_version: 1
 abstract:
 - lang: eng
   text: In order to protect minors from the risks associated with exposure to content
@@ -287,13 +296,12 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T07:59:19Z
-date_updated: 2016-06-24T07:59:56Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
 editor:
 - first_name: Michel
   full_name: Walrave, Michel
@@ -307,6 +315,7 @@ editor:
 - first_name: Jacques
   full_name: Haers, Jacques
   last_name: Haers
+file: []
 language:
 - iso: eng
 link: https://biblio.ugent.be/publication/7215119
@@ -317,32 +326,29 @@ publisher: Springer
 status: public
 title: 'Empowering children through labelling in social networks: illusion or solution?'
 type: book_chapter
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737387'
+_version: 2
 author:
+- first_name: Natalie
+  full_name: Portman, Natalie
+  id: '5'
+  last_name: Portman
 - first_name: Michael
   full_name: Schaub, Michael
   last_name: Schaub
-citation:
-  default: |
-    <!-- simple example for a citation template -->
-    Schaub, Michael, <em>'Good As Gone' Doesn't Quite Get To Greatness</em>. As Good As Gone <strong></strong> ().
-    , 2016
 creator:
   login: einstein
 date_created: 2016-06-24T08:07:32Z
-date_updated: 2016-06-24T08:08:16Z
+date_updated: 2017-09-14T07:43:32Z
 department:
 - _id: '9996'
   tree:
-  - _id: 9997
-  - _id: 9996
-edit_mode: expert
-editor:
-- first_name: Larry
-  full_name: Watson, Larry
-  last_name: Watson
+  - _id: '9997'
+  - _id: '1'
 language:
 - iso: eng
 publication: As Good As Gone
@@ -350,21 +356,23 @@ publisher: ' Algonquin Books'
 status: public
 title: '''Good As Gone'' Doesn''t Quite Get To Greatness'
 type: review
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737388'
+_version: 2
 author:
+- first_name: Marilyn
+  full_name: Monroe, Marilyn
+  id: '4'
+  last_name: Monroe
 - first_name: Jonas
   full_name: Billet, Jonas
   last_name: Billet
 - first_name: Filip
   full_name: Du Prez, Filip
   last_name: Du Prez
-citation:
-  default: |
-    <!-- simple example for a citation template -->
-    Billet, Jonas, <em>Ordering of TiO2 (nanoparticles) to mesoporous structures</em>. ChemCYS book of abstracts <strong></strong> ().
-    , 2016
 conference:
   end_date: ' 2016-03-18'
   location: ' Blankenberge, Belgium'
@@ -373,13 +381,12 @@ conference:
 creator:
   login: einstein
 date_created: 2016-06-24T08:15:11Z
-date_updated: 2016-06-24T08:15:22Z
+date_updated: 2017-09-14T07:41:58Z
 department:
 - _id: '9996'
   tree:
-  - _id: 9997
-  - _id: 9996
-edit_mode: expert
+  - _id: '9997'
+  - _id: '1'
 language:
 - iso: eng
 publication: ChemCYS book of abstracts
@@ -387,9 +394,12 @@ publication_status: published
 status: public
 title: Ordering of TiO2 (nanoparticles) to mesoporous structures
 type: conference_abstract
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737389'
+_version: 1
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -403,35 +413,37 @@ conference:
 creator:
   login: einstein
 date_created: 2016-06-24T08:19:16Z
-date_updated: 2016-06-24T08:19:27Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
 editor:
 - first_name: Dirk
   full_name: Poelman, Dirk
   last_name: Poelman
+file: []
 language:
 - iso: eng
 series_title: Rare Earths 2016, Abstracts
 status: public
 title: 'Rare earths for phosphor development: the final frontier?'
 type: conference_editor
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737390'
+_version: 2
 author:
 - first_name: Stefanie
   full_name: Krijger, Stefanie
   last_name: Krijger
-citation:
-  default: |
-    <!-- simple example for a citation template -->
-    Krijger, Stefanie, <em>Listening challenges for children with cochlear implants in mainstream education</em>. Royal Belgian Society for Ear, Nose, Throat, Head and Neck Surgery, Spring meeting, Abstracts <strong></strong> ().
-    , 2016
+- first_name: Marilyn
+  full_name: Monroe, Marilyn
+  id: '4'
+  last_name: Monroe
 conference:
   end_date: 2016-03-05
   location: ' Leuven, Belgium'
@@ -441,13 +453,12 @@ conference:
 creator:
   login: einstein
 date_created: 2016-06-24T08:22:52Z
-date_updated: 2016-06-24T08:22:57Z
+date_updated: 2017-09-14T07:42:33Z
 department:
 - _id: '9996'
   tree:
-  - _id: 9997
-  - _id: 9996
-edit_mode: expert
+  - _id: '9997'
+  - _id: '1'
 language:
 - iso: eng
 publication: Royal Belgian Society for Ear, Nose, Throat, Head and Neck Surgery, Spring
@@ -456,9 +467,12 @@ publication_status: published
 status: public
 title: Listening challenges for children with cochlear implants in mainstream education
 type: conference
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737391'
+_version: 1
 author:
 - first_name: Milad
   full_name: El Haddad, Milad
@@ -471,22 +485,25 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T08:26:46Z
-date_updated: 2016-06-24T08:26:59Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
+file: []
 language:
 - iso: eng
 status: public
 title: 'Signal processing of intracardiac electrograms : optimization of mapping and
   ablation in tachyarrhythmias'
 type: dissertation
+user_id: 1234
 year: '2014'
+...
 ---
 _id: '2737392'
+_version: 1
 author:
 - first_name: Eva
   full_name: Lievens, Eva
@@ -499,13 +516,13 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T08:30:38Z
-date_updated: 2016-06-24T08:31:43Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
+file: []
 language:
 - iso: eng
 publication: ' Law and Political Science'
@@ -513,9 +530,12 @@ publication_status: published
 status: public
 title: 'Young users, social media and the legal framework: match or mismatch?'
 type: encyclopedia_article
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737393'
+_version: 1
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -524,17 +544,17 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T08:37:29Z
-date_updated: 2016-06-24T08:37:50Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
 editor:
 - first_name: Filip
   full_name: Van Hauwermeiren, Filip
   last_name: Van Hauwermeiren
+file: []
 language:
 - iso: eng
 publication: NATURE IMMUNOLOGY
@@ -542,28 +562,29 @@ publication_status: published
 status: public
 title: The NEK-sus of the NLRP3 inflammasome
 type: journal_editor
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737394'
+_version: 2
 author:
+- first_name: Elvis
+  full_name: Presley, Elvis
+  id: '1'
+  last_name: Presley
 - first_name: Alan
   full_name: Smith, Alan
   last_name: Smith
-citation:
-  default: |
-    <!-- simple example for a citation template -->
-    Smith, Alan, <em>Euro 2016 power rankings: Croatia go top but problems for France</em>. The Guardian <strong></strong> ().
-    , 2016
 creator:
   login: einstein
 date_created: 2016-06-24T08:45:19Z
-date_updated: 2016-06-24T08:45:22Z
+date_updated: 2017-09-14T07:43:49Z
 department:
 - _id: '9996'
   tree:
-  - _id: 9997
-  - _id: 9996
-edit_mode: expert
+  - _id: '9997'
+  - _id: '1'
 language:
 - iso: eng
 publication: The Guardian
@@ -571,64 +592,45 @@ publication_date: 2916-09-23
 status: public
 title: 'Euro 2016 power rankings: Croatia go top but problems for France'
 type: newspaper_article
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737395'
+_version: 3
 author:
-- first_name: Y
-  full_name: Donderlinger, Y
-  last_name: Donderlinger
-citation:
-  default: |
-    <!-- simple example for a citation template -->
-    Donderlinger, Y, <em>Necroptosis inducing MLKL fragment and inhibitors thereof.</em>.  <strong></strong> ().
-    , 2014
-creator:
-  login: einstein
-date_created: 2016-06-24T08:51:04Z
-date_updated: 2016-06-24T08:51:04Z
-department:
-- _id: '9996'
-  tree:
-  - _id: 9997
-  - _id: 9996
-edit_mode: expert
-ipc: B25TEST
-ipn: WO2015/140313 (24.09.2015)
-page: '1'
-publication_date: 2014-03-20
-status: private
-title: Necroptosis inducing MLKL fragment and inhibitors thereof.
-type: patent
-year: '2014'
----
-_id: '2737395'
-author:
+- first_name: James
+  full_name: Dean, James
+  id: '3'
+  last_name: Dean
+- first_name: Marilyn
+  full_name: Monroe, Marilyn
+  id: '4'
+  last_name: Monroe
 - first_name: Dida
   full_name: Markovic, Dida
   last_name: Markovic
-citation:
-  default: |
-    <!-- simple example for a citation template -->
-    Markovic, Dida, <em>Large-scale retrospective relative spectro-photometric self-calibration in space</em>.  <strong></strong> (). , 2016
 creator:
   login: einstein
 date_created: 2016-06-24T09:00:01Z
-date_updated: 2016-06-24T09:00:05Z
+date_updated: 2017-09-14T07:43:02Z
 department:
 - _id: '9996'
   tree:
-  - _id: 9997
-  - _id: 9996
-edit_mode: expert
+  - _id: '9997'
+  - _id: '1'
 language:
 - iso: eng
 status: public
-title: Large-scale retrospective relative spectro-photometric self-calibration in space
+title: Large-scale retrospective relative spectro-photometric self-calibration in
+  space
 type: preprint
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737396'
+_version: 1
 author:
 - first_name: Hense
   full_name: Gebel, Hense
@@ -641,22 +643,25 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T09:05:37Z
-date_updated: 2016-06-24T09:05:40Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
+file: []
 language:
 - iso: eng
 status: public
 title: Personaleinsatz aktiv gestalten. Methodendokumentation der deutschlandweiten
   Betriebsbefragung
 type: report
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737397'
+_version: 1
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -665,13 +670,13 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T09:07:59Z
-date_updated: 2016-06-24T09:08:18Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
+file: []
 language:
 - iso: eng
 original_language:
@@ -683,9 +688,12 @@ translator:
   full_name: Peräkylä, A
   last_name: Peräkylä
 type: translation
+user_id: 1234
 year: '2012'
+...
 ---
 _id: '2737398'
+_version: 1
 citation:
   default: |
     <!-- simple example for a citation template -->
@@ -694,13 +702,13 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T09:10:25Z
-date_updated: 2016-06-24T09:10:25Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
+file: []
 language:
 - iso: eng
 original_language:
@@ -712,9 +720,12 @@ translator:
   full_name: McNeill, D
   last_name: McNeill
 type: translation_chapter
+user_id: 1234
 year: '2010'
+...
 ---
 _id: '2737399'
+_version: 1
 author:
 - first_name: Keller W
   full_name: Utar H, Keller W
@@ -727,21 +738,24 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T09:13:11Z
-date_updated: 2016-06-24T09:13:11Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
+file: []
 language:
 - iso: eng
 status: public
 title: 'INTERNATIONAL TRADE AND JOB POLARIZATION: EVIDENCE AT THE WORKER-LEVEL'
 type: working_paper
+user_id: 1234
 year: '2016'
+...
 ---
 _id: '2737400'
+_version: 1
 author:
 - first_name: T
   full_name: Kluth, T
@@ -754,16 +768,17 @@ citation:
 creator:
   login: einstein
 date_created: 2016-06-24T09:16:02Z
-date_updated: 2016-06-24T09:16:02Z
+date_updated: 2017-09-06T09:15:25Z
 department:
 - _id: '9996'
   tree:
   - _id: 9997
   - _id: 9996
-edit_mode: expert
+file: []
 publisher: Bielefeld University
 status: public
 title: A C++ Implementation of the reversed Attentional Vector Sum (rAVS) model
 type: research_data
+user_id: 1234
 year: '2016'
 ...
