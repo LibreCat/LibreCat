@@ -5,13 +5,12 @@ use LibreCat::App::Helper;
 use Dancer qw(:syntax);
 use Moo;
 
-has name => (is => 'ro', default => sub {''});
+has bag => (is => 'ro', required => 1);
 
 sub fix {
     my ($self, $data) = @_;
 
-    my $bag = $self->name;
-    $bag =~ s/(^[a-z_]+)\-.*/$1/;
+    my $bag = $self->bag;
     h->log->debug("entering index_record hook with bag $bag");
     my $id = $data->{_id};
 

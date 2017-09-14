@@ -5,15 +5,16 @@ use Catmandu::Fix;
 use Catmandu::Util qw(require_package);
 use LibreCat::App::Helper;
 use Moo;
+use namespace::clean;
 
-has name => (is => 'ro', default => sub {''});
+has bag => (is => 'ro', required => 1);
 has _fixer => (is => 'lazy');
+has _validator => (is => 'lazy');
 
-sub _build_fixer {
+sub _build__fixer {
     my $self = shift;
 
-    my $bag = $self->name;
-    $bag =~ s/(^[a-z_]+)\-.*/$1/;
+    my $bag = $self->bag;
     my $file = "update_$bag.fix";
     h->log->debug("searching for fix '$file'");
 
@@ -27,7 +28,13 @@ sub _build_fixer {
 
     h->log->error("can't find a fixer for: '$file'");
 
-    return Catmandu::Fix->new();
+    return;
+}
+
+sub _build__validator {
+    my $self = shift;
+    my $bag = $self->bag;
+    require_package(ucfirst($bag), 'LibreCat::Validator')->new;
 }
 
 sub fix {
@@ -35,19 +42,14 @@ sub fix {
 
     my %opts;
 
-    my $bag = $self->name;
-    $bag =~ s/(^\w+)\-.*/$1/; # TODO: check the regex carfully
-    state $fixes = {};
-    my $fix = $fixes->{$bag} //= $self->_build_fixer();
-    $fix->fix($data);
+    my $bag = $self->bag;
+    my $fix = $self->_fixer;
+    my $validator = $self->_validator;
 
+    $data = $fix->fix($data) if $fix;
+
+    # TODO
     # state $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
-    # $cite_fix->fix($data) unless $opts{skip_citation};
-
-    state $validators = {};
-
-    my $validator = $validators->{$bag} //= Catmandu::Util::require_package(ucfirst($bag),
-            'LibreCat::Validator')->new;
 
     my @white_list = $validator->white_list;
 
