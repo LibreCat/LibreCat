@@ -195,7 +195,7 @@ sub _add {
 
             my $is_ok = 1;
 
-            h->hook('user-update-cmd')->fix_around(
+            LibreCat->hook('user-update-cmd')->fix_around(
                 $rec,
                 sub {
                     if ($rec->{_validation_errors}) {

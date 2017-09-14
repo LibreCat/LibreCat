@@ -290,7 +290,7 @@ sub _add {
 
             my $is_ok = 1;
 
-            h->hook('publication-update-cmd')->fix_around(
+            LibreCat->hook('publication-update-cmd')->fix_around(
                 $rec,
                 sub {
                     if ($rec->{_validation_errors}) {

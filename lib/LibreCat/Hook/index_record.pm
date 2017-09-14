@@ -1,7 +1,6 @@
 package LibreCat::Hook::index_record;
 
 use Catmandu::Sane;
-use LibreCat;
 use LibreCat::App::Helper;
 use Dancer qw(:syntax);
 use Moo;
@@ -13,6 +12,7 @@ sub fix {
 
     my $bag = $self->name;
     $bag =~ s/(^[a-z_]+)\-.*/$1/;
+    h->log->debug("entering index_record hook with bag $bag");
     my $id = $data->{_id};
 
     my $job = {
@@ -22,7 +22,7 @@ sub fix {
 
     h->log->error("adding job indexer: " . to_yaml($job));
     try {
-        LibreCat->queue->add_job('indexer', $job);
+        h->queue->add_job('indexer', $job);
     }
     catch {
         h->log->trace("caught a : $_");

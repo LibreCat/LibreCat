@@ -81,7 +81,7 @@ Saves the data in the authority database.
         $data->{password} = mkpasswd($data->{password})
             if ($data->{password} and $data->{password} !~ /\$.{15,}/);
 
-        h->hook('user-update')->fix_around(
+        LibreCat->hook('user-update')->fix_around(
             $data,
             sub {
                 if ($data->{_validation_errors}) {
@@ -137,7 +137,7 @@ Deletes the account with ID :id.
     post '/project/update' => sub {
         my $data = h->nested_params();
 
-        h->hook('project-update')->fix_around(
+        LibreCat->hook('project-update')->fix_around(
             $data,
             sub {
                 if ($data->{_validation_errors}) {
@@ -183,7 +183,7 @@ Deletes the account with ID :id.
     post '/research_group/update' => sub {
         my $data = h->nested_params();
 
-        h->hook('research_group-update')->fix_around(
+        LibreCat->hook('research_group-update')->fix_around(
             $data,
             sub {
                 if ($data->{_validation_errors}) {

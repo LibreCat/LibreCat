@@ -2,9 +2,10 @@ use strict;
 use warnings FATAL => 'all';
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 use LibreCat::JobQueue;
+use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
-use Data::Dumper;
+use App::Cmd::Tester;
 
 my $pkg;
 
@@ -20,6 +21,18 @@ lives_ok { $pkg->new() } "object creation";
 my $worker = $pkg->new();
 
 can_ok $worker, "work";
+
+done_testing;
+
+__END__
+Catmandu->config->{queue} = {workers => {indexer => {count => 1}}};
+# {
+#     my $result = test_app(qq|LibreCat::CLI| => ['queue', 'start']);
+#     ok ! $result->error, 'start worker via queue cmd';
+#
+#     $result = test_app(qq|LibreCat::CLI| => ['queue', 'status']);
+#     like $result->output, qr/indexer/, "indexer worker running";
+# }
 
 # empty db
 for my $bag (qw(publication department project research_group user)) {
@@ -62,5 +75,7 @@ TODO: {
     my $indexed_rg = Catmandu->store('search')->bag('research_group')->get('1');
     is $indexed_rg, "Indexing RG Test", "indexed named";
 };
+
+#test_app(qq|LibreCat::CLI| => ['queue', 'stop']);
 
 done_testing;

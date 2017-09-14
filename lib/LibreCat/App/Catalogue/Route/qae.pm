@@ -59,7 +59,7 @@ post '/librecat/upload/qae/submit' => sub {
 
         # Use config/hooks.yml to register functions
         # that should run before/after uploading QAE publications
-        h->hook('qae-new')->fix_around(
+        LibreCat->hook('qae-new')->fix_around(
             $record,
             sub {
                 my $response = h->update_record('publication', $record);

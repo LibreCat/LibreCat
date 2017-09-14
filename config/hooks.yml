@@ -67,43 +67,13 @@ hooks:
     before_fixes: []
     after_fixes: []
 
+  # Code that runs when importing a publication
+  publication-import:
+    before_fixes: ['validate']
+    after_fixes: ['index_record']
+
   # Code that runs when importing a Quick and Easy publication
   qae-new:
-    before_fixes: []
-    after_fixes: []
-
-  # Code that runs when importing a new aXiv record
-  import-new-arxiv:
-    before_fixes: []
-    after_fixes: []
-
-  # Code that runs when importing a new BibTex record
-  import-new-bibtex:
-    before_fixes: []
-    after_fixes: []
-
-  # Code that runs when importing a new DOI record
-  import-new-crossref:
-    before_fixes: []
-    after_fixes: []
-
-  # Code that runs when importing a new datacite record
-  import-new-datacite:
-    before_fixes: []
-    after_fixes: []
-
-  # Code that runs when importing a new PubMed record
-  import-new-epmc:
-    before_fixes: []
-    after_fixes: []
-
-  # Code that runs when importing a new Inspire record
-  import-new-inspire:
-    before_fixes: []
-    after_fixes: []
-
-  # Code that runs when importing a new WOS record
-  import-new-wos:
     before_fixes: []
     after_fixes: []
 
