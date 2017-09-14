@@ -20,16 +20,7 @@ case "${CMD}" in
         ;;
     drop)
         echo "Dropping index.."
-        echo "researcher..."
-        carton exec "bin/librecat delete search --bag researcher"
-        echo "publication..."
-        carton exec "bin/librecat delete search --bag publication"
-        echo "department..."
-        carton exec "bin/librecat delete search --bag department"
-        echo "research_group..."
-        carton exec "bin/librecat delete search --bag research_group"
-        echo "project..."
-        carton exec "bin/librecat delete search --bag project"
+        carton exec "bin/librecat drop search"
         echo "Done"
         ;;
     drop_backup)
