@@ -23,6 +23,8 @@ hooks:
 
   # Code that runs when updating a publication
   publication-update:
+    options:
+      bag: publication
     before_fixes: ['validate']
     after_fixes:
       - index_record
@@ -31,11 +33,15 @@ hooks:
 
   # Code that runs when updating a publication via cli
   publication-update-cmd:
+    options:
+      bag: publication
     before_fixes: ['validate']
     after_fixes: []
 
   # Code that runs at a 'Make public' action
   publication-publish:
+    options:
+      bag: publication
     before_fixes: []
     after_fixes:
       - index_record
@@ -44,11 +50,15 @@ hooks:
 
   # Code that runs when deleting a publication
   publication-delete:
+    options:
+      bag: publication
     before_fixes: []
     after_fixes: ['index_record']
 
   # Code that runs at a 'Return' action
   publication-return:
+    options:
+      bag: publication
     before_fixes: []
     after_fixes: ['index_record']
 
@@ -99,40 +109,56 @@ hooks:
 
   # Code that runs when updating a project via cli
   project-update-cmd:
+    options:
+      bag: project
     before_fixes: ['validate']
     after_fixes: []
 
   # Code that runs when updating a department via cli
   department-update-cmd:
+    options:
+      bag: department
     before_fixes: ['validate']
     after_fixes: []
 
   # Code that runs when updating a research_group via cli
   research_group-update-cmd:
+    options:
+      bag: research_group
     before_fixes: ['validate']
     after_fixes: []
 
   # Code that runs when updating an user via cli
   user-update-cmd:
+    options:
+      bag: user
     before_fixes: ['validate']
     after_fixes: []
 
   # Code that runs when updating an user
   user-update:
+    options:
+      bag: user
     before_fixes: ['validate']
     after_fixes: ['index_record']
 
   # Code that runs when updating a project
   project-update:
+    options:
+      bag: project
     before_fixes: ['validate']
     after_fixes: ['index_record']
 
   # Code that runs when updating a department
   department-update:
+    options:
+      bag: department
     before_fixes: ['validate']
     after_fixes: ['index_record']
 
   # Code that runs when updating a research_group
   research_group-update:
+    options:
+      bag: research_group
     before_fixes: ['validate']
     after_fixes: ['index_record']
