@@ -26,7 +26,7 @@ default:
       session:
         plugins: ['Datestamps']
       publication:
-        plugins: ['Datestamps', 'Versioning', 'PublicationStore']
+        plugins: ['Datestamps', 'Versioning', 'LibreCat::PublicationStore']
         id_generator: Incremental
       project:
         plugins: ['Datestamps']
