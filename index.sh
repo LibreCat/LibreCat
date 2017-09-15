@@ -16,24 +16,11 @@ case "${CMD}" in
         carton exec "bin/librecat project add devel/project.yml"
         echo "Generating tree"
         carton exec "bin/librecat generate departments"
-        echo "award dummy DB..."
-        carton exec "bin/librecat award add devel/award.yml"
         echo "Done"
         ;;
     drop)
         echo "Dropping index.."
-        echo "researcher..."
-        carton exec "bin/librecat delete search --bag researcher"
-        echo "publication..."
-        carton exec "bin/librecat delete search --bag publication"
-        echo "department..."
-        carton exec "bin/librecat delete search --bag department"
-        echo "research_group..."
-        carton exec "bin/librecat delete search --bag research_group"
-        echo "project..."
-        carton exec "bin/librecat delete search --bag project"
-        echo "award..."
-        carton exec "bin/librecat delete search --bag award"
+        carton exec "bin/librecat drop search"
         echo "Done"
         ;;
     drop_backup)
@@ -70,25 +57,17 @@ case "${CMD}" in
         carton exec "bin/librecat delete backup  --bag award_version"
         echo "Done"
         ;;
-    # reindex)
-    #     echo "Dropping the search"
-    #     carton exec bin/librecat drop search
-    #     echo "Reindex:"
-    #     echo "researcher"
-    #     carton exec "bin/librecat copy -v backup --bag researcher to search --bag researcher"
-    #     echo "publication"
-    #     carton exec "bin/librecat copy -v backup --bag publication to search --bag publication"
-    #     echo "department"
-    #     carton exec "bin/librecat copy -v backup --bag department to search --bag department"
-    #     echo "project"
-    #     carton exec "bin/librecat copy -v backup --bag project to search --bag project"
-    #     echo "research_group."
-    #     carton exec "bin/librecat copy -v backup --bag research_group. to search --bag research_group"
-    #     echo "Done"
-    #     ;;
     switch)
-            echo "Reindex without interruption:"
-            carton exec "bin/librecat switch -v index"
+        echo "Switch index (reindex) without interruption:"
+        carton exec "bin/librecat switch -v index"
+        ;;
+    reindex)
+        echo "Reindex (switch index) without interruption:"
+        carton exec "bin/librecat switch -v index"
+        ;;
+    info)
+        echo "Info on current indexes:"
+        carton exec "bin/librecat index --status"
         ;;
     export)
         echo "Exporting index..."
@@ -154,6 +133,6 @@ case "${CMD}" in
         echo "Done"
         ;;
     *)
-        echo "usage: $0 {create|drop|drop_backup|drop_version|export|import}"
+        echo "usage: $0 {create|drop|drop_backup|drop_version|switch|reindex|info|export|import}"
         exit 1
 esac

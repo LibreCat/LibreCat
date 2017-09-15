@@ -24,10 +24,17 @@ sub get_status {
     my $ind1_exists = $e->indices->exists(index => $ind1);
     my $ind2_exists = $e->indices->exists(index => $ind2);
 
+    my $alias_exists_for_1 = $e->indices->exists_alias(index => $ind1, name => $ind_name);
+    my $alias_exists_for_2 = $e->indices->exists_alias(index => $ind2, name => $ind_name);
+
     my $result;
-    $result->{index_name} = $ind1 if $ind1_exists;
-    $result->{index_name} = $ind2 if $ind2_exists;
-    $result->{index_name} = $ind_name if (!$ind1_exists and !$ind2_exists and $alias_exists);
+    $result->{all_indexes} = [];
+    push @{$result->{all_indexes}}, $ind1 if $ind1_exists;
+    push @{$result->{all_indexes}}, $ind2 if $ind2_exists;
+    $result->{number_of_indexes} = @{$result->{all_indexes}};
+    $result->{active_index} = $ind1 if ($ind1_exists and $alias_exists_for_1);
+    $result->{active_index} = $ind2 if ($ind2_exists and $alias_exists_for_2);
+    $result->{active_index} = $ind_name if (!$ind1_exists and !$ind2_exists and $alias_exists);
     $result->{alias} = $ind_name if $alias_exists;
     return $result;
 }

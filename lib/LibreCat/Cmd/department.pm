@@ -316,15 +316,15 @@ sub _add {
         }
     );
 
-    if(!$i_status->{index_name}){
+    if(!$i_status->{active_index}){
         # only if it's the initial index build
         # use [index_name]1 instead of [index_name]
         $i_name = $i_name . "1";
     }
-    elsif(!$i_status->{alias} and $i_status->{index_name} and $i_status->{index_name} ne $i_name."1" and $i_status->{index_name} ne $i_name."2"){
+    elsif(!$i_status->{alias} and $i_status->{active_index} and $i_status->{active_index} ne $i_name."1" and $i_status->{active_index} ne $i_name."2"){
         # an index with (any) name exists but no alias is set
         # use existing index and set alias later
-        $i_name = $i_status->{index_name};
+        $i_name = $i_status->{active_index};
     }
 
     my $index = Catmandu->store('search', index_name => $i_name)->bag('department');#$helper->department;

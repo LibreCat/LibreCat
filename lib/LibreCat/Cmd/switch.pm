@@ -7,6 +7,7 @@ use AnyEvent::HTTP;
 use Carp;
 use parent qw(LibreCat::Cmd);
 use Search::Elasticsearch;
+use LibreCat::Index;
 
 sub description {
     return <<EOF;
@@ -59,58 +60,81 @@ sub _switch {
 
     my $e = Search::Elasticsearch->new();
 
-    my $ind1_exists = $e->indices->exists(index => $ind1);
-    my $ind2_exists = $e->indices->exists(index => $ind2);
+    my $i_status = LibreCat::Index->get_status;
 
-    if (($ind1_exists and !$ind2_exists) or (!$ind1_exists and !$ind2_exists)) {
-        $self->_do_switch($ind1, $ind2, $e);
-    } elsif ($ind2_exists and !$ind1_exists) {
-        $self->_do_switch($ind2, $ind1, $e);
-    } else { # $pub1_exists and $pub2_exists
-        print "Both indexes exist. Find out which one is running \n
-        (curl -s -XGET 'http://localhost:9200/[alias]/_status') and delete \n
-        the other (curl -s -XDELETE 'http://localhost:9200/[unused_index]').\n Then restart!\n";
-        exit;
+    if (!$i_status->{active_index}){
+        # There is no alias
+        if($i_status->{all_indexes} and $i_status->{number_of_indexes}){
+            # but there are one or more indexes
+            foreach my $ind (@{$i_status->{all_indexes}}){
+                $self->_do_delete($ind, $e, $opts);
+            }
+        }
+        $self->_do_switch("No index", $ind1, $e, $opts);
+    }
+    elsif ($i_status->{active_index}) {
+        if($i_status->{active_index} eq $ind1){
+            foreach my $ind (@{$i_status->{all_indexes}}){
+                next if $ind eq $ind1;
+                $self->_do_delete($ind, $e, $opts);
+            }
+            $self->_do_switch($ind1, $ind2, $e, $opts);
+        }
+        elsif ($i_status->{active_index} eq $ind2){
+            foreach my $ind (@{$i_status->{all_indexes}}){
+                next if $ind eq $ind2;
+                $self->_do_delete($ind, $e, $opts);
+            }
+            $self->_do_switch($ind2, $ind1, $e, $opts);
+        }
     }
 
     return 0;
 }
 
+sub _do_delete {
+    my ($self, $old, $e, $opts) = @_;
+
+    $e->indices->delete(index => $old);
+    print "Deleted index $old\n" if $opts->{verbose};
+}
+
 sub _do_switch {
-	my ($self, $old, $new, $e) = @_;
+    my ($self, $old, $new, $e, $opts) = @_;
 
     my $backup_store = Catmandu->store('backup');
     my $ind_name = Catmandu->config->{store}->{search}->{options}->{'index_name'};
 
-	print "Index $new does not exist yet, new index will be $new.\n" if ($self->opts->{v} or $self->opts->{verbose});
+    print "$old is active, new index will be $new.\n" if $opts->{verbose};
 
-	my $store = Catmandu->store('search', index_name => $new);
-	my @bags = qw(publication project award researcher department research_group);
-	foreach my $b (@bags) {
-		my $bag = $store->bag($b);
-		$bag->add_many($backup_store->bag($b));
-		$bag->commit;
-	}
+    my $store = Catmandu->store('search', index_name => $new);
+    my @bags = qw(publication project award researcher department research_group);
 
-	print "New index is $new. Testing...\n";
-	my $checkForIndex = $e->indices->exists(index => $new);
-	my $checkForAlias = $e->indices->exists(index => $ind_name);
+    foreach my $b (@bags) {
+        my $bag = $store->bag($b);
+        $bag->add_many($backup_store->bag($b));
+        $bag->commit;
+    }
 
-	if($checkForIndex){
-		print "Index $new exists. Setting index alias $ind_name to $new and testing again.\n";
+    print "New index is $new. Testing...\n" if $opts->{verbose};
+    my $checkForIndex = $e->indices->exists(index => $new);
+    my $checkForAlias = $e->indices->exists(index => $ind_name);
 
-		if(!$checkForAlias){
-			# First run, no alias present
-			$e->indices->update_aliases(
-			    body => {
-			    	actions => [
-			    	    { add => { alias => $ind_name, index => $new }},
-			    	]
-			    }
-			);
-		}
-		else {
-			$e->indices->update_aliases(
+    if($checkForIndex){
+        print "Index $new exists. Setting index alias $ind_name to $new and testing again.\n" if $opts->{verbose};
+
+        if(!$checkForAlias){
+            # First run, no alias present
+            $e->indices->update_aliases(
+                body => {
+                    actions => [
+                        { add => { alias => $ind_name, index => $new }},
+                    ]
+                }
+            );
+        }
+        else {
+            $e->indices->update_aliases(
                 body => {
                     actions => [
                         { add    => { alias => $ind_name, index => $new }},
@@ -118,27 +142,23 @@ sub _do_switch {
                     ]
                 }
             );
-		}
+        }
 
-		$checkForIndex = $e->indices->exists(index => $ind_name);
+        $checkForIndex = $e->indices->exists(index => $ind_name);
 
-		if($checkForIndex and !$checkForAlias){
-			# First run, no old index to be deleted
-			print "Alias $ind_name is ok and points to index $new.\n Done!\n";
-		}
-		elsif($checkForIndex and $checkForAlias) {
-			print "Alias $ind_name is ok and points to index $new. Deleting $old.\n";
-			$e->indices->delete(index => $old);
-		}
-		else {
-			print "Error: Could not create alias $ind_name.\n";
-			exit;
-		}
-	}
-	else {
-		print "Error: Could not create index $new.\n";
-		exit;
-	}
+        if($checkForIndex){
+            # First run, no old index to be deleted
+            print "Alias $ind_name is ok and points to index $new.\nDone!\n" if $opts->{verbose};
+        }
+        else {
+            print "Error: Could not create alias $ind_name.\n" if $opts->{verbose};
+            exit;
+        }
+    }
+    else {
+        print "Error: Could not create index $new.\n" if $opts->{verbose};
+        exit;
+    }
 }
 
 1;
