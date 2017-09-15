@@ -9,13 +9,13 @@ use Data::Dumper;
 my $pkg;
 
 BEGIN {
-    $pkg = "Catmandu::Plugin::PublicationStore";
+    $pkg = "Catmandu::Plugin::LibreCat::PublicationStore";
     use_ok $pkg;
 }
 require_ok $pkg;
 
 my $store = Catmandu::Store::Hash->new(
-    bags => {publication => {plugins => [qw(PublicationStore)]}});
+    bags => {publication => {plugins => [qw(LibreCat::PublicationStore)]}});
 my $bag = $store->bag('publication');
 
 ok $store->does('Catmandu::Store'), 'create Catmandu-Store with plugin';

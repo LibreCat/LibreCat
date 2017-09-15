@@ -1,4 +1,4 @@
-package Catmandu::Plugin::PublicationStore;
+package Catmandu::Plugin::LibreCat::PublicationStore;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(check_string);
