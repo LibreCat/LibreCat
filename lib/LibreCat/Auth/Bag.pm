@@ -19,7 +19,9 @@ sub _authenticate {
     my $password = $params->{password} // return 0;
 
     my $store_name    = $self->store;
-    my $bag_name      = $self->bag;
+    my $store         = Catmandu->store($store_name);
+    my $bag_name      = $self->bag // $store->default_bag;
+    my $bag           = $store->bag($bag_name);
     my $username_attr = $self->username_attr;
     my $password_attr = $self->password_attr;
 
@@ -28,7 +30,6 @@ sub _authenticate {
     $self->log->debugf("store: %s bag: %s $username_attr = $username",
         $store_name, $bag_name);
 
-    my $bag = LibreCat->store($store_name)->bag($bag_name);
 
     my $user;
 
