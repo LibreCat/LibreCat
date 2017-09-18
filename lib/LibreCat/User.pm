@@ -22,7 +22,10 @@ sub _build_username_attrs {
 
 sub _build_bags {
     my ($self) = @_;
-    [map {Catmandu->store($_->{store})->bag($_->{bag});} @{$self->sources}];
+    [map {
+        my $store = Catmandu->store($_->{store});
+        $store->bag($_->{bag} // $store->default_bag);
+    } @{$self->sources}];
 }
 
 sub get {

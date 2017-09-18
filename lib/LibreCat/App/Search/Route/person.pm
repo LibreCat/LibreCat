@@ -28,9 +28,9 @@ get qr{/person} => sub {
     );
 
     h->log->debug(
-        "executing researcher->search: " . to_dumper(\%search_params));
+        "executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('researcher', \%search_params);
+    my $hits = LibreCat->searcher->search('user', \%search_params);
 
     @{$hits->{hits}} = map {
         my $rec = $_;
@@ -59,17 +59,17 @@ get qr{/person/(.*?)/?(data)*} => sub {
 
     # Redirect to the alias if the other can't be found
     h->log->debug("trying to find user $id");
-    unless (my $user = LibreCat->store->bag('researcher')->get($id)) {
+    unless (my $user = LibreCat->store->bag('user')->get($id)) {
         h->log->debug("trying to find user alias $id");
 
         my %search_params = (cql => ["alias=$id"]);
 
-        my $hits = LibreCat->searcher->search('researcher', \%search_params);
+        my $hits = LibreCat->searcher->search('user', \%search_params);
 
         if (!$hits->{total}) {
             status '404';
             return template 'error',
-                {message => "No researcher found found with ID $id"};
+                {message => "No user found found with ID $id"};
         }
         else {
             my $person = $hits->first;

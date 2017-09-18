@@ -16,7 +16,7 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store('backup')->bag('publication')->delete_all;
+Catmandu->store->bag('publication')->delete_all;
 Catmandu->store('search')->bag('publication')->delete_all;
 
 {
@@ -42,7 +42,7 @@ note("testing adding invalid publications");
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['publication', 'add', 't/records/invalid-publication.yml']);
-    ok $result->error, 'add threw an exception';
+    ok $result->error, 'add invalid publication: threw an exception';
 }
 
 note("testing adding valid publications");
@@ -50,7 +50,7 @@ note("testing adding valid publications");
     my $result = test_app(qq|LibreCat::CLI| =>
             ['publication', 'add', 't/records/valid-publication.yml']);
 
-    ok !$result->error, 'add threw no exception';
+    ok !$result->error, 'add valid publication: threw no exception';
 
     my $output = $result->stdout;
     ok $output , 'got an output';
@@ -221,10 +221,10 @@ sub count_publication {
 
 sub get_publication {
     my $id = shift;
-    Catmandu->store('backup')->bag('publication')->get($id);
+    Catmandu->store->bag('publication')->get($id);
 }
 
 sub add_publication {
     my $record = shift;
-    Catmandu->store('backup')->bag('publication')->add($record);
+    Catmandu->store->bag('publication')->add($record);
 }

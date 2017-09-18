@@ -176,27 +176,30 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag = LibreCat->store->bag('project');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('project');
+            $rec->{_id} //= $bag->generate_id;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'project',
+            LibreCat->hook('project-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid project",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{_validation_errors}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid project",
+                            @{$rec->{_validation_errors}}),
+                            "\n";
+                            $ret   = 2;
+                            $is_ok = 0;
+                    } else {
+                        $bag->add($rec);
+                    }
                 }
             );
 
@@ -262,13 +265,12 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+                $ret = 2;
             }
-
-            $ret = -1;
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 1;
