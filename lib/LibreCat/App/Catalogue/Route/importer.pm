@@ -60,7 +60,7 @@ post '/librecat/record/import' => sub {
     trim($p, 'source', 'whitespace');
 
     state $bag = LibreCat->store->bag('publication');
-    my $user = h->get_person(session->{personNumber});
+    my $user = h->get_person(session->{user_id});
     my $id   = $p->{id};
     my $data
         = request->upload('data')
@@ -78,8 +78,8 @@ post '/librecat/record/import' => sub {
             $pub->{status} = 'new'
                 ; # new is the status of records not checked by users/reviewers
             $pub->{creator}
-                = {id => session->{personNumber}, login => session->{user}};
-            $pub->{user_id}    = session->{personNumber};
+                = {id => session->{user_id}, login => session->{user}};
+            $pub->{user_id}    = session->{user_id};
             $pub->{department} = $user->{department};
 
             # Use config/hooks.yml to register functions

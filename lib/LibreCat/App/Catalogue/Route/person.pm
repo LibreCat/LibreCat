@@ -36,7 +36,7 @@ for his own publication list.
 
     get '/preference' => sub {
         my $person
-            = h->get_person(params->{delegate_id} || session('personNumber'));
+            = h->get_person(params->{delegate_id} || session('user_id'));
         my $sort;
         my $tmp;
         if (params->{'sort'}) {
@@ -123,7 +123,7 @@ User can choose default language for the librecat backend
 
     get '/set_language' => sub {
 
-        my $person = h->get_person(session('personNumber'));
+        my $person = h->get_person(session('user_id'));
         my $lang   = params->{lang};
         if ($lang eq "en" or $lang eq "de") {
             $person->{lang} = $lang;
@@ -160,7 +160,7 @@ new publication form.
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
-        my $person = h->get_person(session('personNumber'));
+        my $person = h->get_person(session('user_id'));
         $person->{department} = $p->{department};
 
         LibreCat->hook('user-update')->fix_around(

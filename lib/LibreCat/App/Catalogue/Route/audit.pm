@@ -53,7 +53,7 @@ List all audit messages for an :id in the store :bag
     post '/audit/*/*' => sub {
         my ($bag, $id) = splat;
 
-        my $user_id = session->{personNumber};
+        my $user_id = session->{user_id};
         my $message = params->{message};
 
         unless ($message) {

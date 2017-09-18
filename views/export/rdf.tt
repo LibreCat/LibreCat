@@ -13,12 +13,12 @@
         [%- IF author %]
         <bibo:authorList rdf:parseType="Collection">
             [%- FOREACH person IN author %]
-            <foaf:Person[% IF person.personNumber %] rdf:about="[% uri_base %]/person/[% person.personNumber %]"[% END %]>
+            <foaf:Person[% IF person.user_id %] rdf:about="[% uri_base %]/person/[% person.user_id %]"[% END %]>
                 <foaf:name>[% person.fullName | xml_strict %]</foaf:name>
                 <foaf:surname>[% person.surname | xml_strict %]</foaf:surname>
                 <foaf:givenname>[% person.givenName | xml_strict %]</foaf:givenname>
-                [% IF person.personNumber %]
-                <foaf:workInfoHomepage rdf:resource="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% person.personNumber | xml_strict %]"/>
+                [% IF person.user_id %]
+                <foaf:workInfoHomepage rdf:resource="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% person.user_id | xml_strict %]"/>
                 [% END %]
             </foaf:Person>
             [%- END %]

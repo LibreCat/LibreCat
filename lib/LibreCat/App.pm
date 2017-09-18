@@ -246,7 +246,7 @@ post '/login' => sub {
             || $delegate
             || "user";
         session user         => $user->{login};
-        session personNumber => $user->{_id};
+        session user_id => $user->{_id};
         session lang         => $user->{lang} || h->config->{default_lang};
 
         redirect uri_for($return_url);
@@ -267,7 +267,7 @@ any '/logout' => sub {
 
     session role         => undef;
     session user         => undef;
-    session personNumber => undef;
+    session user_id => undef;
 
     redirect '/';
 };

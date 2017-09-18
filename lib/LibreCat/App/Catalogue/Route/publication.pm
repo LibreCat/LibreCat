@@ -17,7 +17,7 @@ use Encode qw(encode);
 sub access_denied_hook {
     LibreCat->hook('publication-access-denied')->fix_around(
         {_id => params->{id},
-        user_id => session->{personNumber},
+        user_id => session->{user_id},
     });
 }
 
@@ -41,7 +41,7 @@ Some fields are pre-filled.
 
     get '/new' => sub {
         my $type = params->{type};
-        my $user = h->get_person(session->{personNumber});
+        my $user = h->get_person(session->{user_id});
 
         return template 'backend/add_new' unless $type;
 
@@ -53,8 +53,8 @@ Some fields are pre-filled.
             type       => $type,
             department => $user->{department},
             creator =>
-                {id => session->{personNumber}, login => session->{user},},
-            user_id => session->{personNumber},
+                {id => session->{user_id}, login => session->{user},},
+            user_id => session->{user_id},
         };
 
         # Use config/hooks.yml to register functions
@@ -71,7 +71,7 @@ Some fields are pre-filled.
                 first_name => $user->{first_name},
                 last_name  => $user->{last_name},
                 full_name  => $user->{full_name},
-                id         => session->{personNumber},
+                id         => session->{user_id},
             };
             $person->{orcid} = $user->{orcid} if $user->{orcid};
 
@@ -187,7 +187,7 @@ Checks if the user has the rights to update this record.
             $p->{status} = 'returned';
         }
 
-        $p->{user_id} = session->{personNumber};
+        $p->{user_id} = session->{user_id};
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
@@ -230,7 +230,7 @@ Checks if the user has the rights to edit this record.
                 {message => "No publication found with ID $id."};
         }
 
-        $rec->{user_id} = session->{personNumber};
+        $rec->{user_id} = session->{user_id};
         $rec->{status} = "returned";
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
@@ -260,7 +260,7 @@ Deletes record with id. For admins only.
                 {message => "No publication found with ID $id."};
         }
 
-        $rec->{user_id} = session->{personNumber};
+        $rec->{user_id} = session->{user_id};
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications
