@@ -153,7 +153,7 @@ sub handle_file {
 
     $pub->{file} = _decode_file($pub->{file});
 
-    my $prev_pub = LibreCat->store->bag('publication')->get($key);
+    my $prev_pub = Catmandu->store('main')->bag('publication')->get($key);
 
     # Delete files that are not needed
     for my $fi (_find_deleted_files($prev_pub, $pub)) {

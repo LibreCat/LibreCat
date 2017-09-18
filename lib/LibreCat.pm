@@ -82,10 +82,6 @@ sub searcher {
         ->new(store => Catmandu->store('search'));
 }
 
-sub store {
-    state $store = Catmandu->store;
-}
-
 1;
 
 __END__

@@ -29,7 +29,7 @@ All actions related to a publication record are handled under this prefix.
 
 prefix '/librecat/record' => sub {
 
-    state $pub_bag = LibreCat->store->bag('publication');
+    state $pub_bag = Catmandu->store('main')->bag('publication');
 
 =head2 GET /new
 
@@ -253,7 +253,7 @@ Deletes record with id. For admins only.
     get '/delete/:id' => sub {
         my $id = params->{id};
 
-        my $rec = LibreCat->store->bag('publication')->get($id);
+        my $rec = Catmandu->store('main')->bag('publication')->get($id);
 
         unless ($rec) {
             return template 'error',

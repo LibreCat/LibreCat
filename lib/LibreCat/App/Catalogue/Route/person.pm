@@ -75,7 +75,7 @@ for his own publication list.
                     # TODO: error handling
                 } else {
                     h->log->debug("fix around user hook");
-                    LibreCat->store->bag('user')->add($person);
+                    Catmandu->store('main')->bag('user')->add($person);
                 }
             }
         );
@@ -106,7 +106,7 @@ be displayed on author's profile page.
                     # TODO: error handling
                 } else {
                     h->log->debug("fix around user hook");
-                    LibreCat->store->bag('user')->add($person);
+                    Catmandu->store('main')->bag('user')->add($person);
                 }
             }
         );
@@ -135,7 +135,7 @@ User can choose default language for the librecat backend
                         # TODO: error handling
                     } else {
                         h->log->debug("fix around user hook");
-                        LibreCat->store->bag('user')->add($person);
+                        Catmandu->store('main')->bag('user')->add($person);
                     }
                 }
             );
@@ -170,7 +170,7 @@ new publication form.
                     # TODO: error handling
                 } else {
                     h->log->debug("fix around user hook");
-                    LibreCat->store->bag('user')->add($person);
+                    Catmandu->store('main')->bag('user')->add($person);
                 }
             }
         );

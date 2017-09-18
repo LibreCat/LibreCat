@@ -20,9 +20,9 @@ Permission: for admins only. Every other user will get a 403.
 
 prefix '/librecat/admin' => sub {
 
-my $user_bag = LibreCat->store->bag('user');
-my $project_bag = LibreCat->store->bag('project');
-my $rg_bag = LibreCat->store->bag('research_group');
+my $user_bag = Catmandu->store('main')->bag('user');
+my $project_bag = Catmandu->store('main')->bag('project');
+my $rg_bag = Catmandu->store('main')->bag('research_group');
 
 =head2 GET /account
 

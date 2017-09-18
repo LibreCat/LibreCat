@@ -26,7 +26,7 @@ require_ok $pkg;
 
 # add some data
 {
-    Catmandu->store->bag('publication')->delete_all;
+    Catmandu->store('main')->bag('publication')->delete_all;
     Catmandu->store('search')->bag('publication')->delete_all;
     my $result = test_app(qq|LibreCat::CLI| =>
             ['publication', 'add', 't/records/valid-publication.yml']);

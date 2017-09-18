@@ -100,7 +100,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('department');
+        $it = Catmandu->store('main')->bag('department');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -163,7 +163,7 @@ sub _tree_parse {
                     if ($rec->{_validation_errors}) {
                         # ...
                     } else {
-                        LibreCat->store->bag('department')->add($rec);
+                        Catmandu->store('main')->bag('department')->add($rec);
                         $index->add($rec);
                     }
                 });
@@ -202,7 +202,7 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $it = LibreCat->store->bag('department');
+    my $it = Catmandu->store('main')->bag('department');
     my $HASH = {};
 
     $it->each(
@@ -253,7 +253,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('department');
+        $it = Catmandu->store('main')->bag('department');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -275,7 +275,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('department')->get($id);
+    my $data = Catmandu->store('main')->bag('department')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -290,7 +290,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = LibreCat->store->bag('department');
+    my $bag = Catmandu->store('main')->bag('department');
 
     my $records = $importer->select(
         sub {
@@ -339,7 +339,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat->store->bag('department');
+        my $bag = Catmandu->store('main')->bag('department');
         $bag->delete($id);
         $bag->commit;
     }

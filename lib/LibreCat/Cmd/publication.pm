@@ -166,7 +166,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('publication');
+        $it = Catmandu->store('main')->bag('publication');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -214,7 +214,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('publication');
+        $it = Catmandu->store('main')->bag('publication');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -236,7 +236,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag = LibreCat->store->bag('publication');
+    my $bag = Catmandu->store('main')->bag('publication');
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {
@@ -272,7 +272,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = LibreCat->store->bag('publication');
+    my $bag = Catmandu->store('main')->bag('publication');
 
     my $exporter;
 
@@ -340,7 +340,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = LibreCat->store->bag('publication')->set_delete_status($id);
+    my $result = Catmandu->store('main')->bag('publication')->set_delete_status($id);
 
     if (my $msg = $self->opts->{log}) {
         audit_message($id, 'delete', $msg);
@@ -361,7 +361,7 @@ sub _purge {
 
     croak "usage: $0 purge <id>" unless defined($id);
 
-    my $result = LibreCat->store->bag('publication')->delete($id);
+    my $result = Catmandu->store('main')->bag('publication')->delete($id);
 
     if (my $msg = $self->opts->{log}) {
         audit_message($id, 'purge', $msg);
@@ -539,7 +539,7 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = LibreCat->store->bag('publication')->get_($id);
+        my $data = Catmandu->store('main')->bag('publication')->get_($id);
         $printer->($data);
     }
     elsif (defined($id)) {
@@ -559,12 +559,12 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
-    my $bag = LibreCat->store->bag('publication');
+    my $bag = Catmandu->store('main')->bag('publication');
     my $importer = Catmandu->importer('YAML', file => $filename);
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = LibreCat->store->bag('publication')->get($id)) {
+        if (my $data = Catmandu->store('main')->bag('publication')->get($id)) {
             $self->_file_process($data, $files)
                 && $bag->add($data); # + indexing required
         }

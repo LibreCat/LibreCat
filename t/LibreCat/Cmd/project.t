@@ -20,7 +20,7 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store->bag('project')->delete_all;
+Catmandu->store('main')->bag('project')->delete_all;
 Catmandu->store('search')->bag('project')->delete_all;
 
 subtest 'missing cmd' => sub {

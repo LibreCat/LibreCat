@@ -38,14 +38,14 @@ Catmandu->config->{queue} = {workers => {indexer => {count => 1}}};
 for my $bag (qw(publication department project research_group user)) {
     note("deleting backup $bag");
     {
-        my $store = Catmandu->store->bag($bag);
+        my $store = Catmandu->store('main')->bag($bag);
         $store->delete_all;
         $store->commit;
     }
 
     note("deleting version $bag");
     {
-        my $store = Catmandu->store->bag("$bag\_version");
+        my $store = Catmandu->store('main')->bag("$bag\_version");
         $store->delete_all;
         $store->commit;
     }
@@ -61,7 +61,7 @@ for my $bag (qw(publication department project research_group user)) {
 my $q = LibreCat::JobQueue->new;
 
 my $rg = {_id => 1, name => "Indexing RG Test"};
-my $stored_rg = Catmandu->store->bag('research_group')->add($rg);
+my $stored_rg = Catmandu->store('main')->bag('research_group')->add($rg);
 is $stored_rg->{name}, "Indexing RG Test", "stored name";
 
 my $job_id = $q->add_job("indexer", {_id => 1, bag => 'research_group'});

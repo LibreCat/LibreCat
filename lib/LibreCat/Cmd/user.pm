@@ -100,7 +100,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('user');
+        $it = Catmandu->store('main')->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -146,7 +146,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('user');
+        $it = Catmandu->store('main')->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -168,7 +168,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('user')->get($id);
+    my $data = Catmandu->store('main')->bag('user')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -183,7 +183,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = LibreCat->store->bag('user');
+    my $bag = Catmandu->store('main')->bag('user');
 
     my $records = $importer->select(
         sub {
@@ -234,7 +234,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat->store->bag('user');
+        my $bag = Catmandu->store('main')->bag('user');
         $bag->delete($id);
         $bag->commit;
     }
@@ -312,7 +312,7 @@ sub _passwd {
     $data->{password} = mkpasswd($password2);
 
     my $helper = LibreCat::App::Helper::Helpers->new;
-    $data = LibreCat->store->bag('user')->add($data);
+    $data = Catmandu->store('main')->bag('user')->add($data);
 
     my $index = $helper->user;
     $index->add($data);

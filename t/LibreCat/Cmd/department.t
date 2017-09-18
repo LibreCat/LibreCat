@@ -19,9 +19,9 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store->bag('department')->delete_all;
+Catmandu->store('main')->bag('department')->delete_all;
 Catmandu->store('search')->bag('department')->delete_all;
-Catmandu->store->bag('department_version')->delete_all;
+Catmandu->store('main')->bag('department_version')->delete_all;
 
 subtest 'initial cmd' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department']);
@@ -70,7 +70,7 @@ subtest 'add valid' => sub {
 
     like $output , qr/^added 999000999/, 'added 999000999';
 
-    my $stored_record = Catmandu->store->bag('department')->get('999000999');
+    my $stored_record = Catmandu->store('main')->bag('department')->get('999000999');
     is $stored_record->{_id}, '999000999', 'stored record id';
 
     my $indexed_record = Catmandu->store('search')->bag('department')->get('999000999');

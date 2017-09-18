@@ -16,7 +16,7 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store->bag('publication')->delete_all;
+Catmandu->store('main')->bag('publication')->delete_all;
 Catmandu->store('search')->bag('publication')->delete_all;
 
 {
@@ -221,10 +221,10 @@ sub count_publication {
 
 sub get_publication {
     my $id = shift;
-    Catmandu->store->bag('publication')->get($id);
+    Catmandu->store('main')->bag('publication')->get($id);
 }
 
 sub add_publication {
     my $record = shift;
-    Catmandu->store->bag('publication')->add($record);
+    Catmandu->store('main')->bag('publication')->add($record);
 }

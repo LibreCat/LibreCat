@@ -96,7 +96,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('research_group');
+        $it = Catmandu->store('main')->bag('research_group');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -140,7 +140,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('research_group');
+        $it = Catmandu->store('main')->bag('research_group');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -162,7 +162,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('research_group')->get($id);
+    my $data = Catmandu->store('main')->bag('research_group')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -177,7 +177,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = LibreCat->store->bag('research_group');
+    my $bag = Catmandu->store('main')->bag('research_group');
 
     my $records = $importer->select(
         sub {
@@ -226,7 +226,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat->store->bag('research_group');
+        my $bag = Catmandu->store('main')->bag('research_group');
         $bag->delete($id);
         $bag->commit;
     }

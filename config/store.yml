@@ -1,10 +1,10 @@
 _prefix:
   store:
 
-default:
+main:
   package: DBI
   options:
-    data_source: "DBI:mysql:database=librecat_backup"
+    data_source: "DBI:mysql:database=librecat_main"
     username: librecat
     password: librecat
     bags:
@@ -30,14 +30,14 @@ default:
         id_generator: Incremental
       project:
         plugins: ['Datestamps']
-        id_generator: Incremental
+        # id_generator: Incremental
       user:
         plugins: ['Datestamps']
       department:
         plugins: ['Datestamps']
       research_group:
         plugins: ['Datestamps']
-        id_generator: Incremental
+        # id_generator: Incremental
 
 metrics:
   package: DBI
