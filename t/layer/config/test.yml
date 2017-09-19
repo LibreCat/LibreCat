@@ -115,7 +115,6 @@ worker:
 
 # log4perl: |
 #   log4perl.category.LibreCat::Auth=DEBUG,STDERR
-#   log4perl.category.LibreCat::FileStore=INFO,STDERR
 #   log4perl.category.LibreCat::Worker=DEBUG,STDERR
 #   log4perl.category.LibreCat::App=DEBUG,STDERR
 #   log4perl.category.LibreCat::Search=DEBUG,STDERR
