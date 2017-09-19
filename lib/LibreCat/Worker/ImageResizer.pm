@@ -138,6 +138,8 @@ sub do_upload {
     $self->log->info("storing $tmpdir/thumb.png in access container $key");
     my $bytes =  $thumbs->upload(IO::File->new("$tmpdir/thumb.png"),$thumbnail_name);
 
+    $self->log->info("uploaded $bytes bytes");
+    
     unless ($bytes) {
         $self->log->error(
             "failed to create a thumbail for $filename in container $key");
@@ -208,13 +210,13 @@ LibreCat::Worker::ImageResizer - a worker for creating thumbnails
 
 =item files
 
-Required. The LibreCat::FileStore implementation to use for files
+Required. The Catmandu::Store::File implementation to use for files
 
 =item access
 
 =item files
 
-Required. The LibreCat::FileStore implementation to use for access files.
+Required. The Catmandu::Store::File  implementation to use for access files.
 
 =item tmpdir
 

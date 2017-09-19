@@ -18,7 +18,7 @@ sub _build_file_store {
     my $file_opts = $self->files->{options} // {};
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -50,20 +50,21 @@ sub do_delete {
     return -1 unless length $key && $key =~ /^\d+$/;
 
     $self->log->info("loading container $key");
-    my $container = $self->file_store->get($key);
 
-    unless ($container) {
+    unless ($self->file_store->index->exists($key)) {
         $self->log->error("$key not found");
         return -1;
     }
 
+    my $files = $self->file_store->index->files($key);
+
     if (defined $filename) {
         $self->log->info("deleting $filename from container $key");
-        return $container->delete($filename);
+        return $files->delete($filename);
     }
     else {
         $self->log->info("deleting container $key");
-        return $self->file_store->delete($key);
+        return $self->file_store->index->delete($key);
     }
 }
 
@@ -75,30 +76,26 @@ sub do_upload {
     return -1 unless length $path && -f $path && -r $path;
 
     $self->log->info("loading container $key");
-    my $container = $self->file_store->get($key);
 
-    unless ($container) {
+    unless ($self->file_store->index->exists($key)) {
         $self->log->info("$key not found");
         $self->log->info("creating a new container $key");
-        $container = $self->file_store->add($key);
+        $self->file_store->index->add($key);
     }
 
-    if ($container) {
-        $self->log->info("storing $filename in container $key");
+    my $files = $self->file_store->index->files($key);
 
-        my $ret = $container->add($filename, IO::File->new($path));
+    $self->log->info("storing $filename in container $key");
 
-        if ($ret) {
-            $container->commit;
-            return 1;
-        }
-        else {
-            $self->log->error("failed to store $filename in container $key");
-            return -1;
-        }
+    my $bytes = $files->upload(IO::File->new($path), $filename);
+
+    $self->log->info("uploaded $bytes bytes");
+
+    if ($bytes) {
+        return 1;
     }
     else {
-        $self->log->error("failed to create container $key");
+        $self->log->error("failed to store $filename in container $key");
         return -1;
     }
 }
@@ -128,7 +125,7 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
     $uploader->work({
         key      => $key,
         filename => $filename,
-        filepath => $filepath,
+        path     => $filepath,
         [ delete => 1]
     });
 
@@ -138,7 +135,7 @@ LibreCat::Worker::FileUploader - a worker for uploading files into the repostito
 
 =item files
 
-Required. The LibreCat::FileStore implementation to use.
+Required. The Catmandu::Store::File implementation to use.
 
 =back
 

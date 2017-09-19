@@ -24,18 +24,24 @@ lives_ok {$pkg->new(files => $opts, access => $opts)}
 my $resizer = $pkg->new(files => $opts, access => $opts);
 can_ok $resizer, 'work';
 
+my $ret;
+
 lives_ok {
-    $resizer->work({key => 1, filename => 'publication.pdf'})
+    $ret = $resizer->work({key => 1, filename => 'publication.pdf'})
 }
 "Calling work is safe.";
+
+is_deeply $ret , {ok => 1} , 'work returned the correct response code';
 
 ok -r $thumbnail_path , "found a thumbnail";
 ok -s $thumbnail_path , "thumbnail is not empty";
 
 lives_ok {
-    $resizer->work({key => 1, delete => 1})
+    $ret = $resizer->work({key => 1, delete => 1})
 }
 "Calling work is safe.";
+
+is $ret , 1 , 'work returned the correct response code';
 
 ok ! -r $thumbnail_path , "thumbnail is deleted";
 
