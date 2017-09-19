@@ -8,7 +8,7 @@ default: &filestore_settings
     package: Simple
     options:
         root: data/file_uploads
-
+        
 api:
     buffer_size: 8192
     access:
@@ -34,21 +34,19 @@ access_thumbnailer:
         files: *filestore_settings
         access: *accessstore_settings
 
-# Demo
-fedora:
-    package: FedoraCommons
-    options:
-        url: http://localhost:8080/fedora
-        user: fedoraAdmin
-        password: fedoraAdmin
-        namespace: demo
-        dsnamespace: DS
-        md5enabled: 1
-        versionable: 0
-        purge: 1
-
-# Demo
-bagit:
+# Install Catmandu::BagIt for this demo
+bagit_demo:
     package: BagIt
     options:
         root: data/bag_uploads
+
+# Install Catmandu::FedoraCommons for this demo
+fedora_demo:
+    package: FedoraCommons
+    options:
+        baseurl: http://localhost:8080/fedora
+        username: fedoraAdmin
+        password: fedoraAdmin
+        namespace: demo
+        model: DC
+        purge: 1

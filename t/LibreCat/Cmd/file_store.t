@@ -53,7 +53,7 @@ require_ok $pkg;
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output , qr/^000001234/, 'listing of 1234';
+    like $output , qr/^1234/, 'listing of 1234';
 }
 
 {
@@ -65,18 +65,6 @@ require_ok $pkg;
     ok $output , 'got an output';
 
     like $output , qr/^key: 1234/, 'added 1234';
-}
-
-{
-    my $result = test_app(
-        qq|LibreCat::CLI| => ['file_store', 'move', '1234', 'test']);
-
-    ok !$result->error, 'get threw no exception';
-
-    my $output = $result->stderr;
-    ok $output , 'got an output';
-
-    ok -r 't/data2/000/001/234/cpanfile', 'got a file';
 }
 
 {
@@ -96,19 +84,6 @@ require_ok $pkg;
 {
     my $result
         = test_app(qq|LibreCat::CLI| => ['file_store', 'purge', '1234']);
-
-    ok !$result->error, 'purge threw no exception';
-
-    my $output = $result->stdout;
-
-    is $output , "", 'got no output';
-
-    ok !-d 't/data/000/001/234', 'container is gone';
-}
-
-{
-    my $result = test_app(
-        qq|LibreCat::CLI| => ['file_store', '--store=test', 'purge', '1234']);
 
     ok !$result->error, 'purge threw no exception';
 
