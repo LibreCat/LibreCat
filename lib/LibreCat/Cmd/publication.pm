@@ -540,7 +540,7 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = LibreCat->store->bag('publication')->get_($id);
+        my $data = LibreCat->store->bag('publication')->get($id);
         $printer->($data);
     }
     elsif (defined($id)) {
@@ -703,7 +703,7 @@ sub _files_reporter {
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
     my $files = $pkg->new(%$file_opt);
 
     my $exporter = Catmandu->exporter('YAML');
@@ -720,8 +720,8 @@ sub _files_reporter {
                 my $status = 'OK';
                 my $error  = '';
 
-                if (my $container = $files->get($pub_id)) {
-                    if ($container->exists($file_name)) {
+                if ($files->index->exists($pub_id)) {
+                    if ($files->index->files($pub_id)->exists($file_name)) {
                         $status = 'OK';
                     }
                     else {
