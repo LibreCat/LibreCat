@@ -130,7 +130,7 @@ sub do_upload {
     unless ($self->access_store->index->exists($key)) {
         $self->log->info("$key not found");
         $self->log->info("creating a new access container $key");
-        $self->access_store->index->add($key);
+        $self->access_store->index->add({ _id => $key });
     }
 
     $thumbs = $self->access_store->index->files($key);
@@ -139,7 +139,7 @@ sub do_upload {
     my $bytes =  $thumbs->upload(IO::File->new("$tmpdir/thumb.png"),$thumbnail_name);
 
     $self->log->info("uploaded $bytes bytes");
-    
+
     unless ($bytes) {
         $self->log->error(
             "failed to create a thumbail for $filename in container $key");

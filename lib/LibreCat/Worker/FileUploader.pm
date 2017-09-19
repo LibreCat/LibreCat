@@ -80,7 +80,7 @@ sub do_upload {
     unless ($self->file_store->index->exists($key)) {
         $self->log->info("$key not found");
         $self->log->info("creating a new container $key");
-        $self->file_store->index->add($key);
+        $self->file_store->index->add({ _id => $key });
     }
 
     my $files = $self->file_store->index->files($key);
