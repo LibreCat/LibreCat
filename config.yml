@@ -21,7 +21,7 @@ session_state:
 session_store:
   package: "Plack::Session::Store::Catmandu"
   options:
-    store: default
+    store: main
     bag: session
 
 plugins:
