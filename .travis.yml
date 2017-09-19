@@ -3,7 +3,6 @@ dist: trusty
 language: perl
 
 perl:
-#  - "5.26"
   - "5.24"
   - "5.22"
 
@@ -12,7 +11,13 @@ cache:
     - perl_modules
 
 env:
-  - AUTOMATED_TESTING=1 GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
+matrix:
+  include:
+    - perl: "5.26"
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
+  allow_failures:
+    - perl: "5.26"
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
 
 before_install:
   - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.5.deb && sudo dpkg -i --force-confnew elasticsearch-1.7.5.deb && sudo service elasticsearch restart
