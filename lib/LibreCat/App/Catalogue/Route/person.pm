@@ -72,8 +72,10 @@ for his own publication list.
             $person,
             sub {
                 if ($person->{_validation_errors}) {
+
                     # TODO: error handling
-                } else {
+                }
+                else {
                     h->log->debug("fix around user hook");
                     Catmandu->store('main')->bag('user')->add($person);
                 }
@@ -103,8 +105,10 @@ be displayed on author's profile page.
             $person,
             sub {
                 if ($person->{_validation_errors}) {
+
                     # TODO: error handling
-                } else {
+                }
+                else {
                     h->log->debug("fix around user hook");
                     Catmandu->store('main')->bag('user')->add($person);
                 }
@@ -132,8 +136,10 @@ User can choose default language for the librecat backend
                 $person,
                 sub {
                     if ($person->{_validation_errors}) {
+
                         # TODO: error handling
-                    } else {
+                    }
+                    else {
                         h->log->debug("fix around user hook");
                         Catmandu->store('main')->bag('user')->add($person);
                     }
@@ -167,8 +173,10 @@ new publication form.
             $person,
             sub {
                 if ($person->{_validation_errors}) {
+
                     # TODO: error handling
-                } else {
+                }
+                else {
                     h->log->debug("fix around user hook");
                     Catmandu->store('main')->bag('user')->add($person);
                 }

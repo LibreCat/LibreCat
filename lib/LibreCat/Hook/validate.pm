@@ -8,13 +8,13 @@ use Moo;
 use namespace::clean;
 
 has bag => (is => 'ro', required => 1);
-has _fixer => (is => 'lazy');
+has _fixer     => (is => 'lazy');
 has _validator => (is => 'lazy');
 
 sub _build__fixer {
     my $self = shift;
 
-    my $bag = $self->bag;
+    my $bag  = $self->bag;
     my $file = "update_$bag.fix";
     h->log->debug("searching for fix '$file'");
 
@@ -33,7 +33,7 @@ sub _build__fixer {
 
 sub _build__validator {
     my $self = shift;
-    my $bag = $self->bag;
+    my $bag  = $self->bag;
     require_package(ucfirst($bag), 'LibreCat::Validator')->new;
 }
 
@@ -42,8 +42,8 @@ sub fix {
 
     my %opts;
 
-    my $bag = $self->bag;
-    my $fix = $self->_fixer;
+    my $bag       = $self->bag;
+    my $fix       = $self->_fixer;
     my $validator = $self->_validator;
 
     $data = $fix->fix($data) if $fix;
@@ -66,6 +66,6 @@ sub fix {
         $data->{_validation_errors} = $validator->last_errors;
     }
 
-};
+}
 
 1;

@@ -15,10 +15,8 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 
 sub access_denied_hook {
-    LibreCat->hook('publication-access-denied')->fix_around(
-        {_id => params->{id},
-        user_id => session->{user_id},
-    });
+    LibreCat->hook('publication-access-denied')
+        ->fix_around({_id => params->{id}, user_id => session->{user_id},});
 }
 
 =head1 PREFIX /record
@@ -52,8 +50,7 @@ Some fields are pre-filled.
             _id        => $id,
             type       => $type,
             department => $user->{department},
-            creator =>
-                {id => session->{user_id}, login => session->{user},},
+            creator => {id => session->{user_id}, login => session->{user},},
             user_id => session->{user_id},
         };
 
@@ -195,8 +192,10 @@ Checks if the user has the rights to update this record.
             $p,
             sub {
                 if ($p->{_validation_errors}) {
+
                     # error handling
-                } else {
+                }
+                else {
                     h->log->debug("fix around publication hook");
                     $pub_bag->add($p);
                 }
@@ -231,7 +230,8 @@ Checks if the user has the rights to edit this record.
         }
 
         $rec->{user_id} = session->{user_id};
-        $rec->{status} = "returned";
+        $rec->{status}  = "returned";
+
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
         LibreCat->hook('publication-return')->fix_around(

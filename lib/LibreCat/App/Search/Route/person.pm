@@ -27,8 +27,7 @@ get qr{/person} => sub {
         limit => 1000
     );
 
-    h->log->debug(
-        "executing user->search: " . to_dumper(\%search_params));
+    h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
     my $hits = LibreCat->searcher->search('user', \%search_params);
 

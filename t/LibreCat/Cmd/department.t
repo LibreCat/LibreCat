@@ -49,7 +49,7 @@ subtest 'validate' => sub {
 
     $result = test_app(qq|LibreCat::CLI| =>
             ['department', 'valid', 't/records/valid-department.yml']);
-    ok ! $result->error, "file valid";
+    ok !$result->error, "file valid";
     unlike $result->output, qr/^ERROR/, "output for valid file";
 };
 
@@ -70,10 +70,12 @@ subtest 'add valid' => sub {
 
     like $output , qr/^added 999000999/, 'added 999000999';
 
-    my $stored_record = Catmandu->store('main')->bag('department')->get('999000999');
+    my $stored_record
+        = Catmandu->store('main')->bag('department')->get('999000999');
     is $stored_record->{_id}, '999000999', 'stored record id';
 
-    my $indexed_record = Catmandu->store('search')->bag('department')->get('999000999');
+    my $indexed_record
+        = Catmandu->store('search')->bag('department')->get('999000999');
     is $indexed_record->{_id}, '999000999', 'indexed record id';
 };
 
@@ -98,14 +100,14 @@ subtest 'get' => sub {
 subtest 'tree' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department', 'tree']);
 
-    ok ! $result->error, "threw no exception";
+    ok !$result->error, "threw no exception";
     like $result->output, qr/tree:/, "tree ouput";
 };
 
 subtest 'export' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department', 'export']);
 
-    ok ! $result->error, "threw no exception";
+    ok !$result->error, "threw no exception";
     like $result->output, qr/_id:/, "export output";
 };
 

@@ -272,7 +272,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = Catmandu->store('main')->bag('publication');
+    my $bag      = Catmandu->store('main')->bag('publication');
 
     my $exporter;
 
@@ -299,9 +299,10 @@ sub _add {
                             "ERROR: not a valid publication",
                             @{$rec->{_validation_errors}}),
                             "\n";
-                            $ret   = 2;
-                            $is_ok = 0;
-                    } else {
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
                         $bag->add($rec);
                     }
                 }
@@ -340,7 +341,8 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = Catmandu->store('main')->bag('publication')->set_delete_status($id);
+    my $result
+        = Catmandu->store('main')->bag('publication')->set_delete_status($id);
 
     if (my $msg = $self->opts->{log}) {
         audit_message($id, 'delete', $msg);
@@ -564,9 +566,10 @@ sub _files_load {
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = Catmandu->store('main')->bag('publication')->get($id)) {
+        if (my $data = Catmandu->store('main')->bag('publication')->get($id))
+        {
             $self->_file_process($data, $files)
-                && $bag->add($data); # + indexing required
+                && $bag->add($data);    # + indexing required
         }
         else {
             warn "$id - no such publication";

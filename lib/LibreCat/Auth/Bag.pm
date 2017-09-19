@@ -30,7 +30,6 @@ sub _authenticate {
     $self->log->debugf("store: %s bag: %s $username_attr = $username",
         $store_name, $bag_name);
 
-
     my $user;
 
     if ($bag->does('Catmandu::Searchable')) {

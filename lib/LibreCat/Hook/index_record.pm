@@ -14,10 +14,7 @@ sub fix {
     h->log->debug("entering index_record hook with bag $bag");
     my $id = $data->{_id};
 
-    my $job = {
-        id      => $data->{_id},
-        bag     => $bag,
-    };
+    my $job = {id => $data->{_id}, bag => $bag,};
 
     h->log->error("adding job indexer: " . to_yaml($job));
     try {

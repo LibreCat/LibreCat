@@ -54,7 +54,7 @@ sub set_delete_status {
 
     $del->{status} = 'deleted';
     $self->add($del);
-};
+}
 
 sub purge {
     my ($self, $id) = @_;

@@ -16,7 +16,7 @@ BEGIN {
 
 require_ok $pkg;
 
-lives_ok { $pkg->new() } "object creation";
+lives_ok {$pkg->new()} "object creation";
 
 my $worker = $pkg->new();
 

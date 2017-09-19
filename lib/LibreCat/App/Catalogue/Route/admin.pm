@@ -20,15 +20,16 @@ Permission: for admins only. Every other user will get a 403.
 
 prefix '/librecat/admin' => sub {
 
-my $user_bag = Catmandu->store('main')->bag('user');
-my $project_bag = Catmandu->store('main')->bag('project');
-my $rg_bag = Catmandu->store('main')->bag('research_group');
+    my $user_bag    = Catmandu->store('main')->bag('user');
+    my $project_bag = Catmandu->store('main')->bag('project');
+    my $rg_bag      = Catmandu->store('main')->bag('research_group');
 
 =head2 GET /account
 
 Prints a search form for the user database.
 
 =cut
+
     get '/account' => sub {
         template 'admin/account';
     };
@@ -38,9 +39,9 @@ Prints a search form for the user database.
 Opens an empty form. The ID is automatically generated.
 
 =cut
+
     get '/account/new' => sub {
-        template 'admin/forms/edit_account',
-            { _id => $user_bag->generate_id };
+        template 'admin/forms/edit_account', {_id => $user_bag->generate_id};
     };
 
 =head2 GET /account/search
@@ -48,6 +49,7 @@ Opens an empty form. The ID is automatically generated.
 Searches the authority database. Prints the search form + result list.
 
 =cut
+
     get '/account/search' => sub {
         my $p = params;
         h->log->debug("query for user: " . to_dumper($p));
@@ -61,6 +63,7 @@ Searches the authority database. Prints the search form + result list.
 Opens the record with ID id.
 
 =cut
+
     get '/account/edit/:id' => sub {
         my $person = $user_bag->get(params->{id});
 
@@ -72,6 +75,7 @@ Opens the record with ID id.
 Saves the data in the authority database.
 
 =cut
+
     post '/account/update' => sub {
         my $data = params;
 
@@ -85,8 +89,10 @@ Saves the data in the authority database.
             $data,
             sub {
                 if ($data->{_validation_errors}) {
+
                     # error handling
-                } else {
+                }
+                else {
                     $user_bag->add($data);
                 }
             }
@@ -100,6 +106,7 @@ Saves the data in the authority database.
 Deletes the account with ID :id.
 
 =cut
+
     get '/account/delete/:id' => sub {
         $user_bag->delete(params->{id}) if params->{id};
 
@@ -115,9 +122,10 @@ Deletes the account with ID :id.
 =head1 PROJECT
 
 =cut
+
     get '/project/new' => sub {
         template 'admin/forms/edit_project',
-            { _id => $project_bag->generate_id };
+            {_id => $project_bag->generate_id};
     };
 
     get '/project/search' => sub {
@@ -141,8 +149,10 @@ Deletes the account with ID :id.
             $data,
             sub {
                 if ($data->{_validation_errors}) {
+
                     # error handling
-                } else {
+                }
+                else {
                     $project_bag->add($data);
                 }
             }
@@ -154,6 +164,7 @@ Deletes the account with ID :id.
 =head1 REASEARCH GROUP
 
 =cut
+
     get '/research_group' => sub {
         my $hits = LibreCat->searcher->search('research_group',
             {q => "", limit => 100, start => params->{start} || 0});
@@ -163,7 +174,7 @@ Deletes the account with ID :id.
 
     get '/research_group/new' => sub {
         template 'admin/forms/edit_research_group',
-            { _id => $rg_bag->generate_id };
+            {_id => $rg_bag->generate_id};
     };
 
     get '/research_group/search' => sub {
@@ -187,8 +198,10 @@ Deletes the account with ID :id.
             $data,
             sub {
                 if ($data->{_validation_errors}) {
+
                     # error handling
-                } else {
+                }
+                else {
                     $rg_bag->add($data);
                 }
             }

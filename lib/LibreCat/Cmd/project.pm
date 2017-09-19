@@ -176,7 +176,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = Catmandu->store('main')->bag('project');
+    my $bag      = Catmandu->store('main')->bag('project');
 
     my $records = $importer->select(
         sub {
@@ -195,9 +195,10 @@ sub _add {
                             "ERROR: not a valid project",
                             @{$rec->{_validation_errors}}),
                             "\n";
-                            $ret   = 2;
-                            $is_ok = 0;
-                    } else {
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
                         $bag->add($rec);
                     }
                 }

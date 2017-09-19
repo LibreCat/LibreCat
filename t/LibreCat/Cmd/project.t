@@ -49,10 +49,9 @@ subtest 'validate' => sub {
 
     $result = test_app(qq|LibreCat::CLI| =>
             ['project', 'valid', 't/records/valid-project.yml']);
-    ok ! $result->error, "file valid";
+    ok !$result->error, "file valid";
     unlike $result->output, qr/^ERROR/, "output for valid file";
 };
-
 
 subtest 'add invalid project' => sub {
     my $result = test_app(qq|LibreCat::CLI| =>
@@ -94,7 +93,7 @@ subtest 'get project' => sub {
 subtest 'export project' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['project', 'export']);
 
-    ok ! $result->error, "threw no exception";
+    ok !$result->error, "threw no exception";
     like $result->output, qr/_id:/, "export output";
 };
 
@@ -109,8 +108,7 @@ subtest 'delete project' => sub {
 
     like $output , qr/^deleted P9999999/, 'deleted P9999999';
 
-    $result
-        = test_app(qq|LibreCat::CLI| => ['project', 'get', 'P9999999']);
+    $result = test_app(qq|LibreCat::CLI| => ['project', 'get', 'P9999999']);
 
     ok $result->error, 'ok no exception';
 

@@ -38,7 +38,8 @@ subtest 'add_many' => sub {
 };
 
 subtest 'delete' => sub {
-    ok my $deleted = $bag->set_delete_status($rec->{_id}), 'can set status to delete';
+    ok my $deleted = $bag->set_delete_status($rec->{_id}),
+        'can set status to delete';
     is $deleted->{status}, 'deleted', 'status deleted';
     ok $deleted->{title}, 'title';
     ok $bag->get($rec->{_id}), 'can get record';

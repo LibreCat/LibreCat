@@ -32,8 +32,8 @@ List all audit messages for an :id in the store :bag
         my ($bag, $id) = splat;
 
         my $it
-            = Catmandu->store('main')->bag('audit')->select(id => $id)->select(bag => $bag)
-            ->sorted(
+            = Catmandu->store('main')->bag('audit')->select(id => $id)
+            ->select(bag => $bag)->sorted(
             sub {
                 $_[0]->{time} cmp $_[1]->{time};
             }

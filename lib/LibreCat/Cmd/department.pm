@@ -161,12 +161,15 @@ sub _tree_parse {
                 $rec,
                 sub {
                     if ($rec->{_validation_errors}) {
+
                         # ...
-                    } else {
+                    }
+                    else {
                         Catmandu->store('main')->bag('department')->add($rec);
                         $index->add($rec);
                     }
-                });
+                }
+            );
             print "added $rec->{_id}\n";
         }
     );
@@ -202,7 +205,7 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $it = Catmandu->store('main')->bag('department');
+    my $it   = Catmandu->store('main')->bag('department');
     my $HASH = {};
 
     $it->each(
@@ -290,7 +293,7 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag = Catmandu->store('main')->bag('department');
+    my $bag      = Catmandu->store('main')->bag('department');
 
     my $records = $importer->select(
         sub {
@@ -309,9 +312,10 @@ sub _add {
                             "ERROR: not a valid department",
                             @{$rec->{_validation_errors}}),
                             "\n";
-                            $ret   = 2;
-                            $is_ok = 0;
-                    } else {
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
                         $bag->add($rec);
                     }
                 }
