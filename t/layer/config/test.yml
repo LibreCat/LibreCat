@@ -39,7 +39,7 @@ citation:
   engine: none
 
 store:
-  default:
+  main:
     package: DBI
     options:
       data_source: "dbi:SQLite:dbname=t/tmp/librecat_test.sqlite3"
