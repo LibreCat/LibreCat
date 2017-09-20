@@ -302,7 +302,7 @@ sub get_file_store {
     return undef unless $file_store;
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -315,7 +315,7 @@ sub get_access_store {
     return undef unless $access_store;
 
     my $pkg = Catmandu::Util::require_package($access_store,
-        'LibreCat::FileStore');
+        'Catmandu::Store::File');
     $pkg->new(%$access_opts);
 }
 

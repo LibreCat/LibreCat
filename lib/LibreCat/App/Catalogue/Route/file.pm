@@ -24,11 +24,8 @@ sub _file_exists {
 
     return undef unless $store;
 
-    my $container = $store->get($key);
-
-    if (defined $container) {
-        my $file = $container->get($filename);
-        return $file;
+    if ($store->index->exists($key)) {
+        return $store->index->files($key)->get($filename);
     }
     else {
         return undef;
@@ -39,7 +36,13 @@ sub _send_it {
     my ($key, $filename, %opts) = @_;
 
     my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
-    my $container = $store->get($key);
+
+    return undef unless $store->index->exists($key);
+
+    my $files = $store->index->files($key);
+    my $file  = $files->get($filename);
+
+    return undef unless $file;
 
     send_file(
         \"dummy",    # anything, as long as it's a scalar-ref
@@ -47,13 +50,11 @@ sub _send_it {
         callbacks => {
             override => sub {
                 my ($respond, $response) = @_;
-                my $file         = $container->get($filename);
-                my $content_type = $file->content_type;
-
+                my $content_type = $file->{content_type};
                 my $http_status_code = 200;
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
+                # Tech.note: This is a hash of HTTP header/values, but the
+                #            function below requires an even-numbered array-ref.
                 my @http_headers = (
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
@@ -61,30 +62,11 @@ sub _send_it {
                     'Pragma' => 'no-cache'
                 );
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
+                # Send the HTTP headers
+                # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
-                # Avoid creating forks whenever possible...
-                if ($file->is_callback) {
-                    $file->data->($writer);
-                    $writer->close();
-                }
-                else {
-                    my $io = $file->fh;
-                    my $buffer_size
-                        = h->config->{filestore}->{api}->{buffer_size}
-                        // 1024;
-
-                    while (!$io->eof) {
-                        my $buffer;
-                        $io->read($buffer, $buffer_size);
-                        $writer->write($buffer);
-                    }
-
-                    $writer->close();
-                    $io->close();
-                }
+                $files->stream($writer,$file);
             },
         },
     );
@@ -274,6 +256,7 @@ and user rights will be checked before.
 get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     my ($id, $file_id) = splat;
 
+
     my ($ok, $file_name)
         = p->can_download($id, $file_id, session->{user}, session->{role},
         request->address);
@@ -284,7 +267,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     }
 
     if (my $file = _file_exists($id, $file_name)) {
-        _send_it($id, $file->key);
+        _send_it($id, $file->{_id});
     }
     else {
         status 404;

@@ -1,5 +1,16 @@
-.PHONY: cover test update
+usage:
+	@echo "usage: make TARGET"
+	@echo
+	@echo "targets:"
+	@echo "  generate"
+	@echo "  update"
+	@echo "  test"
+	@echo "  cover"
 
+generate:
+	carton exec bin/librecat generate forms
+	carton exec bin/librecat generate departments
+	
 update:
 	git pull --tags origin master
 	carton install

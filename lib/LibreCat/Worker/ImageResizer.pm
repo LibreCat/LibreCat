@@ -24,7 +24,7 @@ sub _build_file_store {
     my $file_opts = $self->files->{options} // {};
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -35,7 +35,7 @@ sub _build_access_store {
     my $file_opts = $self->access->{options} // {};
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -62,20 +62,21 @@ sub do_delete {
     return -1 unless length $key && $key =~ /^\d+$/;
 
     $self->log->info("loading container $key");
-    my $container = $self->file_store->get($key);
 
-    unless ($container) {
+    unless ($self->file_store->index->exists($key)) {
         $self->log->error("$key not found");
         return -1;
     }
 
+    my $files = $self->file_store->index->files($key);
+
     if (defined $thumbnail_name) {
         $self->log->info("deleting $thumbnail_name from container $key");
-        return $container->delete($thumbnail_name);
+        return $files->delete($thumbnail_name);
     }
     else {
         $self->log->info("deleting container $key");
-        return $self->file_store->delete($key);
+        return $self->file_store->index->delete($key);
     }
 }
 
@@ -84,14 +85,15 @@ sub do_upload {
 
     # Retrieve the file
     $self->log->info("loading container $key");
-    my $container = $self->file_store->get($key);
 
-    unless (defined $container) {
+    unless ($self->file_store->index->exists($key)) {
         $self->log->error("no container $key found");
         return {error => 'no such container'};
     }
 
-    my $file = $container->get($filename);
+    my $files = $self->file_store->index->files($key);
+
+    my $file  = $files->get($filename);
 
     unless (defined $file) {
         $self->log->error("no file $filename in container $key found");
@@ -122,24 +124,23 @@ sub do_upload {
 
     # store the results
     $self->log->info("loading access container $key");
-    $container = $self->access_store->get($key);
 
-    unless (defined $container) {
+    my $thumbs;
+
+    unless ($self->access_store->index->exists($key)) {
         $self->log->info("$key not found");
         $self->log->info("creating a new access container $key");
-        $container = $self->access_store->add($key);
+        $self->access_store->index->add({ _id => $key });
     }
 
-    unless (defined $container) {
-        $self->log->error("failed to create access container for $key");
-        return {error => 'failed to create thumbnail'};
-    }
+    $thumbs = $self->access_store->index->files($key);
 
     $self->log->info("storing $tmpdir/thumb.png in access container $key");
-    my $ret = $container->add($thumbnail_name,
-        IO::File->new("$tmpdir/thumb.png"));
+    my $bytes =  $thumbs->upload(IO::File->new("$tmpdir/thumb.png"),$thumbnail_name);
 
-    unless ($ret) {
+    $self->log->info("uploaded $bytes bytes");
+
+    unless ($bytes) {
         $self->log->error(
             "failed to create a thumbail for $filename in container $key");
         return {error => 'failed to create thumbnail'};
@@ -149,7 +150,7 @@ sub do_upload {
     system("rm $tmpdir/*");
     system("rmdir $tmpdir");
 
-    return $ret ? {ok => 1} : {error => 'failed to create thumbnail'};
+    return $bytes ? {ok => 1} : {error => 'failed to create thumbnail'};
 }
 
 sub extract_to_tmpdir {
@@ -165,20 +166,11 @@ sub extract_to_tmpdir {
 
     my $tmpfile = "$tmpdir/" . Data::Uniqid::suniqid;
 
-    open(my $out, '>', $tmpfile);
+    $self->log->debug("streaming to $tmpfile");
 
-    my $io = $file->fh;
+    my $bytes = $file->{_stream}->(IO::File->new(">$tmpfile"));
 
-    binmode($out, ':raw');
-
-    while (defined($io) && !$io->eof) {
-        my $buffer;
-        my $len = $io->read($buffer, $self->buffer_size);
-        syswrite($out, $buffer, $len);
-    }
-
-    $io->flush();
-    $io->close();
+    $self->log->debug("wrote $bytes bytes");
 
     return ($tmpdir, $tmpfile);
 }
@@ -218,13 +210,13 @@ LibreCat::Worker::ImageResizer - a worker for creating thumbnails
 
 =item files
 
-Required. The LibreCat::FileStore implementation to use for files
+Required. The Catmandu::Store::File implementation to use for files
 
 =item access
 
 =item files
 
-Required. The LibreCat::FileStore implementation to use for access files.
+Required. The Catmandu::Store::File  implementation to use for access files.
 
 =item tmpdir
 

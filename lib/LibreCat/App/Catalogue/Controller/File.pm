@@ -247,18 +247,20 @@ sub update_file {
     my $file_opt   = h->config->{filestore}->{default}->{options};
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+
     my $store = $pkg->new(%$file_opt);
 
     h->log->info("loading container $key");
-    my $container = $store->get($key);
 
-    unless ($container) {
+    unless ($store->index->exists($key)) {
         h->log->error("container $key not found");
         return undef;
     }
 
-    my $res = $container->get($filename);
+    my $files = $store->index->files($key);
+
+    my $res   = $files->get($filename);
 
     unless ($res) {
         h->log->error("file $filename not found in container $key");
