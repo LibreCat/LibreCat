@@ -59,7 +59,8 @@ post '/librecat/record/import' => sub {
     trim($p, 'id',     'whitespace');
     trim($p, 'source', 'whitespace');
 
-    my $user = h->get_person(session->{personNumber});
+    state $bag = Catmandu->store('main')->bag('publication');
+    my $user = h->get_person(session->{user_id});
     my $id   = $p->{id};
     my $data
         = request->upload('data')
@@ -73,21 +74,20 @@ post '/librecat/record/import' => sub {
         die "no records imported" unless $imported_records;
 
         for my $pub (@$imported_records) {
-            $pub->{_id}    = h->new_record('publication');
+            $pub->{_id}    = $bag->generate_id;
             $pub->{status} = 'new'
                 ; # new is the status of records not checked by users/reviewers
             $pub->{creator}
-                = {id => session->{personNumber}, login => session->{user}};
-            $pub->{user_id}    = session->{personNumber};
+                = {id => session->{user_id}, login => session->{user}};
+            $pub->{user_id}    = session->{user_id};
             $pub->{department} = $user->{department};
 
             # Use config/hooks.yml to register functions
-            # that should run before/after uploading QAE publications
-
-            h->hook('import-new-' . $source)->fix_around(
+            # that should run before/after importing publications
+            LibreCat->hook('publication-import')->fix_around(
                 $pub,
                 sub {
-                    h->update_record('publication', $pub);
+                    $bag->add($pub);
                 }
             );
         }

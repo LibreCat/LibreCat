@@ -60,7 +60,7 @@ $('#searchPubl').click(function() {
       puburl += searchphrase;
     }
   [% ELSE %]
-    puburl += 'person=[% session.personNumber %]';
+    puburl += 'person=[% session.user_id %]';
     var searchphrase = $('#searchPublInput').val();
     if(searchphrase != ""){
       searchphrase = searchphrase.replace(/\s+/g, ' AND ');

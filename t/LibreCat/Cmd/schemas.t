@@ -35,7 +35,7 @@ require_ok $pkg;
     ok $output , 'got an output';
 
     like $output, qr/$_/, "$_ is listed"
-        for qw(publication research_group project researcher department)
+        for qw(publication research_group project user department)
 }
 
 {

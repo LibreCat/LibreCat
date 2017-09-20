@@ -56,7 +56,7 @@ sub command {
 sub _list {
     my ($self, $pid) = @_;
 
-    my $it = LibreCat->store->bag('audit');
+    my $it = Catmandu->store('main')->bag('audit');
 
     if ($pid) {
         $it = $it->select(id => $pid)->sorted(
@@ -90,7 +90,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('audit')->get($id);
+    my $data = Catmandu->store('main')->bag('audit')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 

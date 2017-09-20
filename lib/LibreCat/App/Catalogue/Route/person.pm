@@ -36,7 +36,7 @@ for his own publication list.
 
     get '/preference' => sub {
         my $person
-            = h->get_person(params->{delegate_id} || session('personNumber'));
+            = h->get_person(params->{delegate_id} || session('user_id'));
         my $sort;
         my $tmp;
         if (params->{'sort'}) {
@@ -68,7 +68,19 @@ for his own publication list.
             $person->{style} = undef;
         }
 
-        h->update_record('researcher', $person);
+        LibreCat->hook('user-update')->fix_around(
+            $person,
+            sub {
+                if ($person->{_validation_errors}) {
+
+                    # TODO: error handling
+                }
+                else {
+                    h->log->debug("fix around user hook");
+                    Catmandu->store('main')->bag('user')->add($person);
+                }
+            }
+        );
 
         redirect uri_for('/librecat');
     };
@@ -89,7 +101,19 @@ be displayed on author's profile page.
         map {$person->{$_} = params->{$_} ? params->{$_} : ""} @identifier;
         redirect uri_for('/librecat') if scalar(keys %{$person}) > 1;
 
-        h->update_record('researcher', $person);
+        LibreCat->hook('user-update')->fix_around(
+            $person,
+            sub {
+                if ($person->{_validation_errors}) {
+
+                    # TODO: error handling
+                }
+                else {
+                    h->log->debug("fix around user hook");
+                    Catmandu->store('main')->bag('user')->add($person);
+                }
+            }
+        );
 
     };
 
@@ -103,11 +127,24 @@ User can choose default language for the librecat backend
 
     get '/set_language' => sub {
 
-        my $person = h->get_person(session('personNumber'));
+        my $person = h->get_person(session('user_id'));
         my $lang   = params->{lang};
         if ($lang eq "en" or $lang eq "de") {
             $person->{lang} = $lang;
-            h->update_record('researcher', $person);
+
+            LibreCat->hook('user-update')->fix_around(
+                $person,
+                sub {
+                    if ($person->{_validation_errors}) {
+
+                        # TODO: error handling
+                    }
+                    else {
+                        h->log->debug("fix around user hook");
+                        Catmandu->store('main')->bag('user')->add($person);
+                    }
+                }
+            );
             session lang => $lang;
         }
 
@@ -129,9 +166,22 @@ new publication form.
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
-        my $person = h->get_person(session('personNumber'));
+        my $person = h->get_person(session('user_id'));
         $person->{department} = $p->{department};
-        h->update_record('researcher', $person);
+
+        LibreCat->hook('user-update')->fix_around(
+            $person,
+            sub {
+                if ($person->{_validation_errors}) {
+
+                    # TODO: error handling
+                }
+                else {
+                    h->log->debug("fix around user hook");
+                    Catmandu->store('main')->bag('user')->add($person);
+                }
+            }
+        );
 
         redirect uri_for('/librecat');
 

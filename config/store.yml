@@ -1,20 +1,10 @@
 _prefix:
   store:
 
-default:
+main:
   package: DBI
   options:
-    data_source: "DBI:mysql:database=librecat_system"
-    username: librecat
-    password: librecat
-    bags:
-      session:
-        plugins: ['Datestamps']
-
-backup:
-  package: DBI
-  options:
-    data_source: "DBI:mysql:database=librecat_backup"
+    data_source: "DBI:mysql:database=librecat_main"
     username: librecat
     password: librecat
     bags:
@@ -35,17 +25,19 @@ backup:
                 type: integer
       session:
         plugins: ['Datestamps']
-      publication: &backup_settings
-        plugins: ['Datestamps', 'Versioning']
+      publication:
+        plugins: ['Datestamps', 'Versioning', 'LibreCat::PublicationStore']
         id_generator: Incremental
       project:
-        plugins: ['Datestamps', 'Versioning']
-        id_generator: Incremental
-      researcher: *backup_settings
-      department: *backup_settings
+        plugins: ['Datestamps']
+        # id_generator: Incremental
+      user:
+        plugins: ['Datestamps']
+      department:
+        plugins: ['Datestamps']
       research_group:
-        plugins: ['Datestamps', 'Versioning']
-        id_generator: Incremental
+        plugins: ['Datestamps']
+        # id_generator: Incremental
 
 metrics:
   package: DBI
@@ -53,12 +45,6 @@ metrics:
     data_source: "DBI:mysql:database=librecat_metrics"
     username: librecat
     password: librecat
-    bags:
-      wos: &metrics_settings
-        plugins: ['Datestamps']
-      epmc_citations: *metrics_settings
-      epmc_references: *metrics_settings
-      epmc_dblinks: *metrics_settings
 
 search:
   package: ElasticSearch
@@ -690,7 +676,7 @@ search:
                 'exact': true
               field: thematic_area
 
-      researcher:
+      user:
         cql_mapping:
           default_index: basic
           indexes:
@@ -1086,7 +1072,7 @@ search:
           user_id: {type: string, index: no}
           citation: {index: not_analyzed, type: object}
 
-      researcher:
+      user:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}

@@ -27,7 +27,7 @@ sub fix {
         $read_only_fields = [];
     }
 
-    if (my $rec = LibreCat->store->bag('publication')->get($id)) {
+    if (my $rec = Catmandu->store('main')->bag('publication')->get($id)) {
         for my $field (@$read_only_fields) {
             h->log->debug("updating field $field...");
             $data->{$field} = $rec->{$field} if $rec->{$field};

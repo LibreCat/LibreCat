@@ -1,4 +1,4 @@
-[%- thisPerson = h.get_person(session.personNumber) -%]
+[%- thisPerson = h.get_person(session.user_id) -%]
 [% qp = request.params.hash %]
 [%- qp.delete('splat') %]
 [%- lang = session.lang ? session.lang : h.config.default_lang %]
@@ -23,7 +23,7 @@
                 [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
                 <li class="helpme" data-placement="bottom" title="[% h.loc("help.brand") %]"><a href="[% uri_base %]/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="glyphicon glyphicon-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
                 [%- IF session.user %]
-                <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="[% uri_base %]/person/[% session.personNumber %]"><span class="glyphicon glyphicon-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
+                <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="[% uri_base %]/person/[% session.user_id %]"><span class="glyphicon glyphicon-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
                 [%- END %]
                 [%- IF session.role && session.role == 'super_admin' %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>[% h.loc("header.admin_menu.admin") %] <span class="glyphicon glyphicon-chevron-down"></span></a>

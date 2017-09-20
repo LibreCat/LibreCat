@@ -21,7 +21,7 @@
 
     <div class="col-md-12 row hidden-xs">
     <form action="[% uri_base %]/librecat/person/author_id" id="author_id_form" method="POST">
-    <input type="hidden" name="_id" value="[% session.personNumber %]" />
+    <input type="hidden" name="_id" value="[% session.user_id %]" />
     [%- IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
       <span class="text-muted">[% h.loc("person_profile.no_author_ids") %]</span>

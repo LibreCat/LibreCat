@@ -166,7 +166,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('publication');
+        $it = Catmandu->store('main')->bag('publication');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -214,7 +214,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('publication');
+        $it = Catmandu->store('main')->bag('publication');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -236,7 +236,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag = LibreCat->store->bag('publication');
+    my $bag = Catmandu->store('main')->bag('publication');
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {
@@ -272,6 +272,8 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag      = Catmandu->store('main')->bag('publication');
+
     my $exporter;
 
     if (defined $out_file) {
@@ -284,23 +286,25 @@ sub _add {
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('publication');
+            $rec->{_id} //= $bag->generate_id;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'publication',
+            LibreCat->hook('publication-update-cmd')->fix_around(
                 $rec,
-                skip_citation    => $skip_citation,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid publication",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{_validation_errors}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid publication",
+                            @{$rec->{_validation_errors}}),
+                            "\n";
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
+                        $bag->add($rec);
+                    }
                 }
             );
 
@@ -338,8 +342,7 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $result
-        = LibreCat::App::Helper::Helpers->new->delete_record('publication',
-        $id);
+        = Catmandu->store('main')->bag('publication')->set_delete_status($id);
 
     if (my $msg = $self->opts->{log}) {
         audit_message($id, 'delete', $msg);
@@ -360,9 +363,7 @@ sub _purge {
 
     croak "usage: $0 purge <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('publication',
-        $id);
+    my $result = Catmandu->store('main')->bag('publication')->delete($id);
 
     if (my $msg = $self->opts->{log}) {
         audit_message($id, 'purge', $msg);
@@ -540,7 +541,7 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = LibreCat->store->bag('publication')->get($id);
+        my $data = Catmandu->store('main')->bag('publication')->get_($id);
         $printer->($data);
     }
     elsif (defined($id)) {
@@ -560,14 +561,15 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $bag = Catmandu->store('main')->bag('publication');
     my $importer = Catmandu->importer('YAML', file => $filename);
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = LibreCat->store->bag('publication')->get($id)) {
+        if (my $data = Catmandu->store('main')->bag('publication')->get($id))
+        {
             $self->_file_process($data, $files)
-                && $helper->update_record('publication', $data);
+                && $bag->add($data);    # + indexing required
         }
         else {
             warn "$id - no such publication";

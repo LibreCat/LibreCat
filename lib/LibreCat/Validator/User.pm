@@ -1,4 +1,4 @@
-package LibreCat::Validator::Researcher;
+package LibreCat::Validator::User;
 
 use Catmandu::Sane;
 use Moo;
@@ -12,15 +12,15 @@ sub schema_validator {
 
     state $s = Catmandu::Validator::JSONSchema->new(
 
-        schema => Catmandu->config->{schemas}->{researcher}
+        schema => Catmandu->config->{schemas}->{user}
 
     );
 
 }
 
 sub white_list {
-    state $properties
-        = Catmandu->config->{schemas}->{researcher}->{properties} // {};
+    state $properties = Catmandu->config->{schemas}->{user}->{properties}
+        // {};
     return sort keys %$properties;
 }
 

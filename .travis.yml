@@ -3,7 +3,6 @@ dist: trusty
 language: perl
 
 perl:
-#  - "5.26"
   - "5.24"
   - "5.22"
 
@@ -12,12 +11,13 @@ cache:
     - perl_modules
 
 env:
-  - AUTOMATED_TESTING=1 GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
-
-addons:
-  sauce_connect:
-    username: vpeil
-    access_key: 652994d3-4190-4b73-ae82-c5429e707dfa
+matrix:
+  include:
+    - perl: "5.26"
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
+  allow_failures:
+    - perl: "5.26"
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
 
 before_install:
   - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.5.deb && sudo dpkg -i --force-confnew elasticsearch-1.7.5.deb && sudo service elasticsearch restart
@@ -32,8 +32,8 @@ service:
   - sqlite3
 
 install:
-  - cpanm --quiet --installdeps --notest --force --skip-satisfied .
-  - cpanm --quiet --notest --skip-satisfied Devel::Cover
+  - cpanm --quiet --installdeps --notest --force .
+  - cpanm --quiet --notest Devel::Cover
 
 script:
   - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 2 -r t; exit $?'
