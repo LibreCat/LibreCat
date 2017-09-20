@@ -20,16 +20,7 @@ function f_create {
 
 function f_drop {
     echo "Dropping index.."
-    echo "user..."
-    carton exec "bin/librecat delete search --bag user"
-    echo "publication..."
-    carton exec "bin/librecat delete search --bag publication"
-    echo "department..."
-    carton exec "bin/librecat delete search --bag department"
-    echo "research_group..."
-    carton exec "bin/librecat delete search --bag research_group"
-    echo "project..."
-    carton exec "bin/librecat delete search --bag project"
+    carton exec "bin/librecat drop search"
     echo "Done"
 }
 
@@ -145,25 +136,37 @@ function f_import {
     echo "Done"
 }
 
+confirm() {
+    # call with a prompt string or use a default
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
 case "${CMD}" in
     create)
         f_create
         ;;
     drop)
-        echo "Dropping index.."
-        carton exec "bin/librecat drop search"
-        echo "Done"
+        confirm "Are you sure you want to drop the search index? [y/N]" && f_drop
         ;;
     drop_backup)
-        f_drop_backup
+        confirm "Are you sure you want to drop the main data? [y/N]" && f_drop_backup
         ;;
     drop_version)
-        f_drop_version
+        confirm "Are you sure you want to drop the version data? [y/N]" && f_drop_version
         ;;
     drop_all)
-        f_drop
-        f_drop_backup
-        f_drop_version
+        confirm "Are you sure you want to drop all data? [y/N]" && \
+            f_drop && \
+            f_drop_backup && \
+            f_drop_version
         ;;
     reindex)
         f_reindex
