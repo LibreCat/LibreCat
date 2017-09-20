@@ -185,7 +185,7 @@ searchParams = [% qp.json %];
 
 $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
-    var person_id  = embed_link.match(/\/person\/(.[^\/]{2,})/);
+    var person_id  = embed_link.match(/\/person\/([^\?]+)/);
 
     if (embed_link.match(/\/publication/)) {
       searchParams.cql.push("type<>research_data");
@@ -193,7 +193,6 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     }
 
     if (person_id) {
-      searchParams.cql.push("person=" + person_id[1]);
       embed_link = embed_link.replace(/\/person\/.*/,"/embed?");
     }
 
