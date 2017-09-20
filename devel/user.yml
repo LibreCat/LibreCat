@@ -8,7 +8,7 @@ first_name: Test
 full_name: User, Test
 last_name: User
 login: test
-password: $2a$08$Li8NSoaLndvIc3eqO5Y07.eqeXwqYWvem/ekfZeL4vK5V7MqX/Z.u
+password: secret
 style: apa
 ...
 ---
@@ -25,7 +25,7 @@ first_name: Albert
 full_name: Einstein, Albert
 last_name: Einstein
 login: einstein
-password: $2a$08$YZGgVi6uHpdXuK0QaXxgX.qmt2abPMoNyDEjUlzDw12lc6jX0PtXC
+password: einstein
 super_admin: 1
 ...
 ---
@@ -38,7 +38,7 @@ first_name: Elvis
 full_name: Presley, Elvis
 last_name: Presley
 login: elvis
-password: $2a$08$xq/ss3QCezgrsjS3/KGiWeJpB8161TpYlqZUVi1r2mCPX9jDSj.92
+password: secret
 style: apa
 ...
 ---
@@ -51,7 +51,7 @@ first_name: James
 full_name: Dean, James
 last_name: Dean
 login: james
-password: $2a$08$C5t6tOGcCpEKVldRN3HstuV9t6fO8Um0onKj3qhxJWzTucTM1tRam
+password: secret
 style: apa
 ...
 ---
@@ -64,7 +64,7 @@ first_name: Marilyn
 full_name: Monroe, Marilyn
 last_name: Monroe
 login: marilyn
-password: $2a$08$mj7A1hBihzXlCivTGB12NuUxJhtV5/4hUKaWYQrRxAtn/cZHEz4q.
+password: secret
 style: apa
 ...
 ---
@@ -77,6 +77,6 @@ first_name: Natalie
 full_name: Portman, Natalie
 last_name: Portman
 login: natalie
-password: $2a$08$mUIBTKL0cU3cNEgozGLryuDhNdm5SdwqE6/HtTrT3VV/whWoD9wBi
+password: secret
 style: apa
 ...
