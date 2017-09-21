@@ -20,7 +20,7 @@ META*
 MYMETA.*
 Vagrantfile
 blib/
-catmandu.local.yml
+config/catmandu.local.yml
 cover_db/
 cpanfile.snapshot
 data/file_uploads/**

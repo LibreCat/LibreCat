@@ -25,7 +25,7 @@ sub _authenticate {
     my $username_attr = $self->username_attr;
     my $password_attr = $self->password_attr;
 
-    $self->log->debugf("authenticating: %s", $username);
+    $self->log->debugf("authenticating: %s in %s", $username, $store_name);
 
     $self->log->debugf("store: %s bag: %s $username_attr = $username",
         $store_name, $bag_name);
@@ -63,7 +63,7 @@ sub _authenticate {
     $self->log->debug("checking $password_attr for $username");
 
     if (exists $user->{$password_attr}) {
-        if (passwdcmp($password, $user->{$password_attr})) {
+        if (passwdcmp($password => $user->{$password_attr})) {
             $self->log->debug("$username password ok :-)");
             return +{
                 uid        => $username,

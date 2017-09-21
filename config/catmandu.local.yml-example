@@ -1,11 +1,91 @@
-default_lang: en
-
-#deprecated: use uri_base
-#host: "http://localhost:5001"
+# Public location of the application
 uri_base: "http://localhost:5001"
 
-## Uncomment when audit messages need to be displayed
-# audit: 1
+# Default interface options
+default_lang: en
+default_page_size: 20
+default_searchpage_size: 10
+maximum_page_size: 1000
+pagination_options:
+  - 10
+  - 20
+  - 50
+  - 100
+sort_options:
+  - year
+  - date_updated
+  - title
+  - author
+  - type
+  - publication
+sort_options_person:
+  - fullname
+  - publcount
+project_sort_options:
+  - name
+  - acronym
+  - startyear
+default_sort:
+  - year.desc
+default_sort_backend:
+  - date_updated.desc
+  - year.desc
+default_person_sort:
+  - lastname.asc
+default_facets:
+    open_access:
+      terms:
+        field: 'file.open_access'
+        size: 1
+    popular_science:
+      terms:
+        field: 'popular_science'
+        size: 1
+    extern:
+      terms:
+        field: 'extern'
+        size: 2
+    status:
+      terms:
+        field: 'status'
+        size: 8
+    year:
+      terms:
+        field: 'year'
+        size: 100
+        order: 'reverse_term'
+    type:
+      terms:
+        field: 'type'
+        size: 25
+    isi:
+      terms:
+        field: 'isi'
+        size: 1
+    pmid:
+      terms:
+        field: 'pmid'
+        size: 1
+
+request_copy:
+  # period in days
+  period: 7
+  subject: 'Request for a copy of your publication'
+
+# Default format to display dates
+time_format: "%Y-%m-%dT%H:%M:%SZ"
+
+# Prefix used for local generated URNs
+urn_prefix: 'urn:whatever-'
+
+# Use this link to lookup a personId in a staff directory. Required
+# to differentiate between different users with the same name (homonym,namesake)
+person:
+  staffdirectory: "http://www.librecat.org/?personId="
+
+
+# Default access level for uploaded files
+default_access_level: open_access
 
 ## Specity the ipranges which can download (local) files
 ip_range:
@@ -13,8 +93,16 @@ ip_range:
     - 127.0.0.1
     - 10.0.0.0/8
 
-# Default access level for uploaded files
-default_access_level: open_access
+## Uncomment when you want to send emails when new research data becomes available
+#research_data:
+#  to: 'send@me.org'
+#  subject: '[PUB] New research data submitted'
+
+## Uncomment when you want to register your research_data DOI at DataCite
+#doi:
+#  prefix: "10.5072/test"
+#  user: user
+#  passwd: secret
 
 store:
   builtin_users:
