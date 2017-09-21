@@ -83,7 +83,6 @@ urn_prefix: 'urn:whatever-'
 person:
   staffdirectory: "http://www.librecat.org/?personId="
 
-
 # Default access level for uploaded files
 default_access_level: open_access
 
