@@ -190,8 +190,9 @@ sub _add {
             my $rec = $_[0];
 
             $rec->{_id} //= $bag->generate_id;
+            # Guess if we need to encrypt the password
             $rec->{password} = mkpasswd($rec->{password})
-                if exists $rec->{password};
+                if exists $rec->{password} && length($rec->{password}) < 60;
 
             my $is_ok = 1;
 
