@@ -84,6 +84,8 @@ person:
 # Default access level for uploaded files
 default_access_level: open_access
 
+urn_prefix: 'urn:test-'
+
 ## Specity the ipranges which can download (local) files
 ip_range:
     - 157.193.0.0/16

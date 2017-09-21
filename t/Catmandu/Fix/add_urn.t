@@ -43,7 +43,7 @@ is_deeply $pkg->new()->fix(
     _id  => 1,
     type => 'journal_article',
     file => [{access_level => 'open_access', relation => 'main_file'}],
-    urn  => 'urn:whatever-11',
+    urn  => 'urn:test-15',
     },
     "add urn";
 
