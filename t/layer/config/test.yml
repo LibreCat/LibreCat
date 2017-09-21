@@ -5,6 +5,8 @@ host: "http://localhost:5001"
 ## Uncomment when audit messages need to be displayed
 # audit: 1
 
+urn_prefix: 'urn:test-'
+
 ## Specity the ipranges which can download (local) files
 ip_range:
     - 157.193.0.0/16
