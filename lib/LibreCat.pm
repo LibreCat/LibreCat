@@ -65,8 +65,9 @@ sub hook {
         my $hook_options = $hook->{options} || {};
 
         for my $key (qw(before_fixes after_fixes)) {
+            my $default_fixes = $hook->{"default_$key"} || [];
             my $fixes = $hook->{$key} || [];
-            for my $fix (@$fixes) {
+            for my $fix (@$default_fixes, @$fixes) {
                 push @{$args->{$key}},
                     require_package($fix, 'LibreCat::Hook')
                     ->new(%$hook_options, name => $name, type => $key);
