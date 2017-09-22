@@ -1286,6 +1286,12 @@ ul.dropdown-menu[id^="admin_rac_"] {
     border-radius: 0;
     box-shadow: none;
     position: relative;
+
+    li {
+        input {
+            width: 100%;
+        }
+    }
 }
 
 /* print */
