@@ -192,8 +192,10 @@ Checks if the user has the rights to update this record.
             $p,
             sub {
                 if ($p->{_validation_errors}) {
-                    h->log->debug("got validation errors");
-                    # error handling
+                    h->log->debug("got validation errors for publication $p->{_id}");
+                    my $templatepath = "backend/forms";
+                    my $template = $p->{meta}->{template} // $p->{type};
+                    return template "$templatepath/$template", $p;
                 }
                 else {
                     h->log->debug("fix around publication hook");
