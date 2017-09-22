@@ -1280,6 +1280,14 @@ body.embed {
   }
 }
 
+// Request a copy
+ul.dropdown-menu[id^="admin_rac_"] {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+}
+
 /* print */
 @media print {
   .breadcrumb,
