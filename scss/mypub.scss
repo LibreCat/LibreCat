@@ -127,6 +127,16 @@ h3 {
   border-bottom: 1px solid #eee;
 }
 
+.publication {
+    #basic_fields {
+        .creator {
+            input[type="radio"][id^="idm_intern_"] {
+                margin-top: 5px;
+            }
+        }
+    }
+}
+
 h3 a {
   font-size: inherit;
 }
