@@ -1,7 +1,6 @@
 package LibreCat::Cmd::id;
 
 use Catmandu::Sane;
-use LibreCat::Validator::Researcher;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -42,7 +41,7 @@ sub command {
 sub _get {
     my ($self) = @_;
 
-    my $bag  = LibreCat->store->bag('info');
+    my $bag  = Catmandu->store('main')->bag('info');
     my $data = $bag->get('publication_id');
 
     printf "%s\n", $data->{latest};
@@ -57,7 +56,7 @@ sub _set {
 
     croak "id `$id` is not numeric" unless $id =~ /^\d+$/;
 
-    my $bag = LibreCat->store->bag('info');
+    my $bag = Catmandu->store('main')->bag('info');
     my $data = $bag->add({_id => 'publication_id', latest => $id});
 
     printf "%s\n", $data->{latest};

@@ -4,7 +4,7 @@ use warnings;
 use Path::Tiny;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
-use Test::More;
+use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
 
 my $app = eval {require 'bin/app.pl';};

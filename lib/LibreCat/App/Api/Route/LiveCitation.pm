@@ -25,7 +25,7 @@ get '/livecitation' => sub {
         return to_json h->config->{citation}->{csl}->{styles};
     }
 
-    my $pub = LibreCat->store->bag('publication')->get($params->{id});
+    my $pub = Catmandu->store('main')->bag('publication')->get($params->{id});
 
     my $response = LibreCat::Citation->new(styles => [$params->{style}],)
         ->create($pub);

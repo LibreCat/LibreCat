@@ -96,7 +96,7 @@ Performs search for reviewer.
     get '/reviewer/:department_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'personNumber';
+        my $id      = session 'user_id';
         my $account = h->get_person(session->{user});
 
         # if user not reviewer or not allowed to access chosen department
@@ -138,7 +138,7 @@ Performs search for reviewer.
     get '/project_reviewer/:project_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'personNumber';
+        my $id      = session 'user_id';
         my $account = h->get_person(session->{user});
 
         # if user not project_reviewer or not allowed to access chosen project
@@ -180,7 +180,7 @@ Performs search for data manager.
 
     get '/data_manager/:department_id' => sub {
         my $p         = h->extract_params();
-        my $id        = session 'personNumber';
+        my $id        = session 'user_id';
         my $account   = h->get_person(session->{user});
         my $dep_query = "department=" . params->{department_id};
 
@@ -240,7 +240,7 @@ Performs search for user.
 
     get '/' => sub {
         my $p  = h->extract_params();
-        my $id = session 'personNumber';
+        my $id = session 'user_id';
 
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "type<>research_data";
@@ -266,7 +266,7 @@ Performs search for user.
 
     get '/data' => sub {
         my $p      = h->extract_params();
-        my $id     = session 'personNumber';
+        my $id     = session 'user_id';
         my @orig_q = @{$p->{q}};
 
         push @{$p->{cql}}, "status<>deleted";

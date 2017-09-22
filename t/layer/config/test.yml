@@ -24,7 +24,7 @@ authentication:
       - package: LibreCat::Auth::Bag
         options:
           store: search
-          bag: researcher
+          bag: user
           username_attr: login
 
 user:
@@ -32,33 +32,18 @@ user:
     - store: builtin_users
       username_attr: login
     - store: search
-      bag: researcher
+      bag: user
       username_attr: login
 
 citation:
   engine: none
 
 store:
-  default:
-    package: DBI
-    options:
-      data_source: "dbi:SQLite:dbname=t/tmp/librecatsystem_test.sqlite3"
-  backup:
+  main:
     package: DBI
     options:
       data_source: "dbi:SQLite:dbname=t/tmp/librecat_test.sqlite3"
-      bags:
-        project:
-          plugins: ['Datestamps']
-        publication: &backup_settings
-          plugins: ['Datestamps', 'Versioning']
-          id_generator: Incremental
-        project: *backup_settings
-        researcher: *backup_settings
-        department: *backup_settings
-        research_group: *backup_settings
-        session:
-          plugins: ['Datestamps']
+
   search:
     options:
       client: '1_0::Direct'
@@ -112,19 +97,3 @@ queue:
 
 worker:
     logdir: /tmp
-
-# log4perl: |
-#   log4perl.category.LibreCat::Auth=DEBUG,STDERR
-#   log4perl.category.LibreCat::FileStore=INFO,STDERR
-#   log4perl.category.LibreCat::Worker=DEBUG,STDERR
-#   log4perl.category.LibreCat::App=DEBUG,STDERR
-#   log4perl.category.LibreCat::Search=DEBUG,STDERR
-#   log4perl.category.LibreCat::Hook=DEBUG,STDERR
-#   log4perl.category.LibreCat::FetchRecord=DEBUG,STDERR
-#   log4perl.category.LibreCat::Helper=DEBUG,STDERR
-#   log4perl.category.Catmandu::Exporter=DEBUG,STDERR
-#   log4perl.appender.STDERR=Log::Log4perl::Appender::Screen
-#   log4perl.appender.STDERR.stderr=1
-#   log4perl.appender.STDERR.utf8=1
-#   log4perl.appender.STDERR.layout=PatternLayout
-#   log4perl.appender.STDERR.layout.ConversionPattern=%d [%P] - %c[%L] : %m%n

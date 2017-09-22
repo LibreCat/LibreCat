@@ -1,6 +1,6 @@
 use Catmandu::Sane;
-use Test::More;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
+use Test::More;
 
 my $pkg;
 

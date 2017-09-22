@@ -245,9 +245,9 @@ post '/login' => sub {
             || $data_manager
             || $delegate
             || "user";
-        session user         => $user->{login};
-        session personNumber => $user->{_id};
-        session lang         => $user->{lang} || h->config->{default_lang};
+        session user    => $user->{login};
+        session user_id => $user->{_id};
+        session lang    => $user->{lang} || h->config->{default_lang};
 
         redirect uri_for($return_url);
     }
@@ -265,9 +265,9 @@ The logout route. Destroys session.
 
 any '/logout' => sub {
 
-    session role         => undef;
-    session user         => undef;
-    session personNumber => undef;
+    session role    => undef;
+    session user    => undef;
+    session user_id => undef;
 
     redirect '/';
 };
