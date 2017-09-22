@@ -130,7 +130,7 @@ h3 {
 .publication {
     #basic_fields {
         .creator {
-            input[type="radio"][id^="idm_intern_"] {
+            input[type="radio"][id*="idm_intern_"] {
                 margin-top: 5px;
             }
         }
