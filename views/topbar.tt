@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="[% uri_base %]/"><img src="[% uri_base %]/images/brand_logo.png" style="height:30px" alt="" /></a>
+            <a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="[% uri_base %]/"><img src="[% uri_base %]/images/brand_logo.png" alt="" /></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -41,7 +41,7 @@
                 </li>
                 [%- IF session.user %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> [% h.loc("header.settings") %] <span class="glyphicon glyphicon-chevron-down"></span></a>
-                    <div class="dropdown-menu" style="width:550px">
+                    <div id="settings" class="dropdown-menu">
                         [% INCLUDE backend/user_settings.tt %]
                     </div>
                 </li>

@@ -4,7 +4,6 @@
     </div>
     <div class="form-group col-md-8">
       <div class="btn-group">
-        <button style="display:none;" disabled="disabled"></button>
         <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
 	    [%- IF title %]
             <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</span></button>
