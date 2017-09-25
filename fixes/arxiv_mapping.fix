@@ -1,53 +1,50 @@
-# mapping data from ArXiv to the local repository
+# mapping data from arxiv.org to the local repository
 
-add_field('status','new')
+add_field(r.status, new)
+
+move_field(title, r.title)
+trim(r.title)
 
 # default type
-add_field('type','preprint')
-replace_all('id','http://arxiv.org/abs/(.*)v[0-9]','$1')
-copy_field('id','publication')
-prepend('publication','arXiv:')
-move_field(id,external_id.arxiv.$append)
+add_field(r.type, preprint)
+replace_all(id, 'http://arxiv.org/abs/(.*)v[0-9]', '$1')
+copy_field(id, r.publication)
+prepend(r.publication, 'arXiv:')
+move_field(id, external_id.arxiv.$append)
 
 # abstract, keywords
-move_field('summary','abstract.0.text')
-add_field('abstract.0.lang','eng')
-#move_field('category.*.term','keyword.$append')
-trim('abstract.0.text')
-trim('title')
+move_field(summary, r.abstract.0.text)
+add_field(r.abstract.0.lang, eng)
+trim(r.abstract.0.text)
 
 # year
 substring(published,0,4)
-move_field('published','year')
+move_field(published, r.year)
 
 # authors
 unless is_array(author)
   move_field(author, author.0)
 end
-
-do list (path => author)
+move_field(author, r.author)
+do list (path => r.author)
   do identity ()
 	remove_field('arxiv:affiliation')
-	copy_field('name','last_name')
-	replace_all('last_name','.*\s(\w+)$','$1')
-	copy_field('name', 'first_name')
-	replace_all('first_name', '(.*)\s(\w+)$','$1')
-	remove_field('name');
+	copy_field(name,last_name)
+	replace_all(last_name, '.*\s(\w+)$', '$1')
+	copy_field(name, first_name)
+	replace_all(first_name, '(.*)\s(\w+)$', '$1')
+	remove_field(name);
   end
 end
 
 # maybe journal article with doi
 if exists ('arxiv:journal_ref')
-	set_field('type','journal_article')
-	move_field('arxiv:journal_ref.content', 'publication')
+	set_field(r.type, journal_article)
+	move_field('arxiv:journal_ref.content', r.publication)
 end
-remove_field('arxiv:journal_ref')
-move_field('arxiv:doi.content','doi')
-remove_field('arxiv:doi')
 
-# cleaning record
-remove_field('arxiv:comment')
-remove_field('arxiv:primary_category')
-remove_field('category')
-remove_field('link')
-remove_field('updated')
+move_field('arxiv:doi.content', r.doi)
+
+retain(r)
+move_field(r, .)
+vacuum()

@@ -27,20 +27,6 @@ ajax '/metrics/:id' => sub {
     };
 };
 
-ajax '/bibtex/:id' => sub {
-    my $pub = h->publication->get(params->{id});
-    return to_json {
-        bibtex => encode_entities(h->export_publication($pub, 'bibtex', 1)),
-    };
-};
-
-ajax '/ris/:id' => sub {
-    my $pub = h->publication->get(params->{id});
-    my $ris = h->export_publication($pub, 'ris', 1);
-    utf8::decode($ris);
-    return to_json {ris => encode_entities($ris),};
-};
-
 =head2 AJAX /search_researcher
 
 =cut
@@ -51,11 +37,9 @@ ajax '/search_researcher' => sub {
 
     my %search_params = (cql => $cql, limit => 100,
         sort => h->config->{default_person_sort});
-    h->log->debug(
-        "executing researcher->search: " . to_dumper(\%search_params));
+    h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits
-        = LibreCat->searcher->search('researcher', \%search_params)->{hits};
+    my $hits = LibreCat->searcher->search('user', \%search_params)->{hits};
 
     return to_json $hits;
 };
@@ -90,10 +74,9 @@ ajax '/get_alias/:id/:alias' => sub {
     my $id = params->{'id'};
 
     my %search_params = (cql => ["alias=$term", "id<>$id"]);
-    h->log->debug(
-        "executing researcher->search: " . to_dumper(\%search_params));
+    h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('researcher', \%search_params);
+    my $hits = LibreCat->searcher->search('user', \%search_params);
 
     return to_json {ok => $hits->{total} ? 0 : 1};
 };

@@ -5,7 +5,7 @@
 <div class="row margin-top2">
   <div class="col-md-6 col-md-offset-2 well loginframe">
 
-    <form action="/login" method="post" class="form-horizontal">
+    <form action="[% uri_base %]/login" method="post" class="form-horizontal">
       <h2 class="margin-top0">[% h.loc('login.login_heading') %] </h2>
       <input type="hidden" name="return_url" value="[% return_url %]">
 
@@ -23,7 +23,7 @@
         <label class="col-md-3 control-label" for="id_password">[% h.loc("login.password") %]</label>
         <div class="col-md-8">
           <input type="password" class="form-control" name="pass" id="id_password" value="" required onkeypress="caps_lock(event)">
-          <div class="text-danger" id="caps_alert" style="visibility:hidden">[% h.loc("login.caps_lock_warning") %]</div>
+          <div id="caps_alert" class="text-danger invisible">[% h.loc("login.caps_lock_warning") %]</div>
         </div>
       </div>
       <div class="form-group">
@@ -43,10 +43,11 @@ $(document).ready(function(){
 function caps_lock(e){
   kc = e.keyCode?e.keyCode:e.which;
   sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
-  if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
-    document.getElementById('caps_alert').style.visibility = 'visible';
-  else
-    document.getElementById('caps_alert').style.visibility = 'hidden';
+  if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk)) {
+    $('#caps_alert').removeClass('invisible');
+  } else {
+    $('#caps_alert').addClass('invisible');
+  }
 }
 </script>
 

@@ -21,7 +21,7 @@ sub update_related_material {
         if $pub->{related_material}->{record};
 
     # get old related material (to be able to remove deleted relations)
-    my $hit                         = h->publication->get($pub->{_id});
+    my $hit = Catmandu->store('main')->bag('publication')->get($pub->{_id});
     my $old_related_material_record = $hit->{related_material}->{record}
         if $hit->{related_material} and $hit->{related_material}->{record};
 
@@ -29,7 +29,8 @@ sub update_related_material {
 
         # set relation in other record
         if ($rm->{id}) {
-            my $opposite = h->publication->get($rm->{id});
+            my $opposite
+                = Catmandu->store('main')->bag('publication')->get($rm->{id});
 
             push(@$relations_record, @$rd_relation);
 
@@ -66,7 +67,8 @@ sub update_related_material {
                     $ref->{status} = $pub->{status};
                 }
             }
-            my $saved = h->backup_publication->add($opposite);
+            my $saved
+                = Catmandu->store('main')->bag('publication')->add($opposite);
             h->publication->add($saved);
             h->publication->commit;
 
@@ -122,7 +124,9 @@ sub update_related_material {
                                     delete $rec->{related_material};
                                 }
                             }
-                            my $saved = h->backup_publication->add($rec);
+                            my $saved
+                                = Catmandu->store('main')->bag('publication')
+                                ->add($rec);
                             h->publication->add($saved);
                             h->publication->commit;
                         }

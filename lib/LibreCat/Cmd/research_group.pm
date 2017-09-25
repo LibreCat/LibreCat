@@ -96,7 +96,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        $it = Catmandu->store('main')->bag('research_group');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -140,7 +140,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        $it = Catmandu->store('main')->bag('research_group');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -162,8 +162,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag  = LibreCat::App::Helper::Helpers->new->backup_research_group;
-    my $data = $bag->get($id);
+    my $data = Catmandu->store('main')->bag('research_group')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -178,27 +177,31 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag      = Catmandu->store('main')->bag('research_group');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('research_group');
+            $rec->{_id} //= $bag->generate_id;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'research_group',
+            LibreCat->hook('research_group-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid research_group",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{_validation_errors}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid research_group",
+                            @{$rec->{_validation_errors}}),
+                            "\n";
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
+                        $bag->add($rec);
+                    }
                 }
             );
 
@@ -224,7 +227,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->backup_research_group;
+        my $bag = Catmandu->store('main')->bag('research_group');
         $bag->delete($id);
         $bag->commit;
     }

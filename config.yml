@@ -21,7 +21,7 @@ session_state:
 session_store:
   package: "Plack::Session::Store::Catmandu"
   options:
-    store: backup
+    store: main
     bag: session
 
 plugins:
@@ -84,7 +84,7 @@ plugins:
         metadataNamespace: urn:nbn:de:1111-2004033116
         template: views/export/oai_epicur.tt
         cql: 'status exact public AND fulltext exact 1'
-        fix: ["add_field('host','http://localhost:5001')"]
+        fix: ["fixes/to_epicur.fix"]
       -
         metadataPrefix: xMetaDissPlus
         schema: http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd
@@ -98,11 +98,11 @@ plugins:
         metadataNamespace: http://www.datacite.org/schema/namespace
         template: views/export/datacite.tt
         cql: 'status exact public AND type=researchData'
-        fix: ["add_field('host','http://localhost:5001')"]
+        fix: ["fixes/to_datacite.fix"]
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt
-        fix: ["nothing()"]
+        fix: ["fixes/to_rdf.fix"]
         cql: 'status exact public'
         schema: http://www.openarchives.org/OAI/2.0/rdf.xsd
         metadataNamespace: http://www.openarchives.org/OAI/2.0/rdf/

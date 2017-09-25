@@ -7,18 +7,18 @@
          xmlns:owl="http://www.w3.org/2002/07/owl#"
          xmlns:event="http://purl.org/NET/c4dm/event.owl#"
          xmlns:ore="http://www.openarchives.org/ore/terms/">
-    <rdf:Description rdf:about="[% h.host %]/publication/[% _id %]">
-        <ore:isDescribedBy rdf:resource="[% h.host %]/publication/[% _id %]"/>
+    <rdf:Description rdf:about="[% uri_base %]/publication/[% _id %]">
+        <ore:isDescribedBy rdf:resource="[% uri_base %]/publication/[% _id %]"/>
         <dc:title>[% title | xml_strict %]</dc:title>
         [%- IF author %]
         <bibo:authorList rdf:parseType="Collection">
             [%- FOREACH person IN author %]
-            <foaf:Person[% IF person.personNumber %] rdf:about="[% h.host %]/person/[% person.personNumber %]"[% END %]>
+            <foaf:Person[% IF person.user_id %] rdf:about="[% uri_base %]/person/[% person.user_id %]"[% END %]>
                 <foaf:name>[% person.fullName | xml_strict %]</foaf:name>
                 <foaf:surname>[% person.surname | xml_strict %]</foaf:surname>
                 <foaf:givenname>[% person.givenName | xml_strict %]</foaf:givenname>
-                [% IF person.personNumber %]
-                <foaf:workInfoHomepage rdf:resource="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% person.personNumber | xml_strict %]"/>
+                [% IF person.user_id %]
+                <foaf:workInfoHomepage rdf:resource="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% person.user_id | xml_strict %]"/>
                 [% END %]
             </foaf:Person>
             [%- END %]
@@ -57,7 +57,7 @@
         [%- IF file.size %]
         <dc:format>[% file.0.content_type %]</dc:format>
         [%- FOREACH f IN file %]
-        <ore:aggregates rdf:resource="[% h.host %]/download/[% _id | xml_strict %]/[% f.file_id | xml_strict %]/[% f.file_name | uri %]"/>
+        <ore:aggregates rdf:resource="[% uri_base %]/download/[% _id | xml_strict %]/[% f.file_id | xml_strict %]/[% f.file_name | uri %]"/>
         [%- END %]
         [%- END %]
         [%- FOREACH val IN issn %]

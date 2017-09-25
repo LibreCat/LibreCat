@@ -41,7 +41,7 @@ $('#id_select_document_type').on('change', function() {
   if(sure){
     var newtype = $(this).val();
     $('#id_type').val(newtype);
-    $('#edit_form').attr('action','/librecat/record/change_mode');
+    $('#edit_form').attr('action',librecat.uri_base+'/librecat/record/change_type');
     $('#edit_form').submit();
   }
   else {

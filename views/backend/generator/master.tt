@@ -1,6 +1,5 @@
-[% path = request.path -%]
-[% backend = path.match('librecat') ? 1 : 0 -%]
-[% thisPerson = h.get_person(session.personNumber) -%]
+[% backend = request.path_info.match('librecat') ? 1 : 0 -%]
+[% thisPerson = h.get_person(session.user_id) -%]
 [% lang = session.lang -%]
 [% lf = h.config.locale.$lang.forms -%]
 
@@ -16,8 +15,11 @@
       [%- IF title %]
 	    <h1>[% title %]</h1>
       [%- ELSE %]
-	<h1 class="margin-top0">[% h.loc("forms.${type}.label") %]</h1>
-      [% END%]
+	    <h1 class="margin-top0">[% h.loc("forms.${type}.label") %]</h1>
+      [%- END%]
+      [%- IF _validation_errors %]
+        <h3 class="alert-danger">[% _validation_errors.join(' | ')%]</h3>
+      [%- END %]
       </div>
       <div class="col-sm-4 text-right">
       </div>
@@ -26,7 +28,7 @@
 
   <div class="row"></div>
 
-  <form action="/librecat/record/update" method="POST" id="edit_form">
+  <form action="[% uri_base %]/librecat/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="[% type %]" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>

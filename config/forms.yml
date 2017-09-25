@@ -933,6 +933,7 @@ other_items:
       - login
       - password
       - names
+      - old_name
       - account_status
       - email
       - ext_institution

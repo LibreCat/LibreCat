@@ -6,13 +6,13 @@ use Authen::CAS::Client;
 use Moo;
 use Plack::Request;
 use Plack::Session;
-use LibreCat::Auth::SSO::Util qw(uri_for);
 use namespace::clean;
 
 with 'LibreCat::Auth::SSO';
 
 has cas_url => (is => 'ro', isa => sub {check_string($_[0]);}, required => 1);
-has _cas => (is => 'ro', lazy => 1, builder => '_build_cas');
+has cas =>
+    (is => 'ro', lazy => 1, builder => '_build_cas', init_arg => undef);
 
 sub _build_cas {
     my $self = $_[0];
@@ -38,18 +38,21 @@ sub to_app {
         #already got here before
         if (is_hash_ref($auth_sso)) {
 
-            return [302, [Location => $self->authorization_url], []];
+            return [
+                302, [Location => $self->uri_for($self->authorization_path)],
+                []
+            ];
 
         }
 
         #ticket?
         my $ticket = $params->get('ticket');
 
-        my $service = uri_for($env, $request->script_name);
+        my $service = $self->uri_for($request->script_name());
 
         if (is_string($ticket)) {
 
-            my $cas = $self->_cas();
+            my $cas = $self->cas();
 
             my $r = $cas->service_validate($service, $ticket);
 
@@ -67,14 +70,18 @@ sub to_app {
                     }
                 );
 
-                return [302, [Location => $self->authorization_url], []];
+                return [
+                    302,
+                    [Location => $self->uri_for($self->authorization_path)],
+                    []
+                ];
 
             }
 
         }
 
         #no ticket or ticket validation failed
-        my $login_url = $self->_cas()->login_url($service)->as_string;
+        my $login_url = $self->cas()->login_url($service)->as_string;
 
         [302, [Location => $login_url], []];
 
@@ -98,7 +105,8 @@ LibreCat::Auth::SSO::CAS - implementation of LibreCat::Auth::SSO for CAS
         mount '/auth/cas' => LibreCat::Auth::SSO::CAS->new(
 
             session_key => "auth_sso",
-            authorization_url => "/auth/cas/callback"
+            uri_base => "http://localhost:5000",
+            authorization_path => "/auth/cas/callback"
 
         )->to_app;
 

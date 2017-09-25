@@ -2,7 +2,7 @@ package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
-use LibreCat::Validator::Researcher;
+use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -92,15 +92,15 @@ sub _list {
 
     my $it;
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
+        $it = LibreCat::App::Helper::Helpers->new->user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
-            sru_sortkeys => $sort
+            sru_sortkeys => $sort,
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_researcher;
+        $it = Catmandu->store('main')->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -138,7 +138,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
+        $it = LibreCat::App::Helper::Helpers->new->user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -146,7 +146,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_researcher;
+        $it = Catmandu->store('main')->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -168,8 +168,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag  = LibreCat::App::Helper::Helpers->new->backup_researcher;
-    my $data = $bag->get($id);
+    my $data = Catmandu->store('main')->bag('user')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -184,29 +183,34 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag      = Catmandu->store('main')->bag('user');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('researcher');
+            $rec->{_id} //= $bag->generate_id;
+            # Guess if we need to encrypt the password
             $rec->{password} = mkpasswd($rec->{password})
-                if exists $rec->{password};
+                if exists $rec->{password} && length($rec->{password}) < 60;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'researcher',
+            LibreCat->hook('user-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid researcher",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{_validation_errors}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid user",
+                            @{$rec->{_validation_errors}}),
+                            "\n";
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
+                        $bag->add($rec);
+                    }
                 }
             );
 
@@ -230,16 +234,16 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
+    # Deleting main store
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->backup_researcher;
+        my $bag = Catmandu->store('main')->bag('user');
         $bag->delete($id);
         $bag->commit;
     }
 
     # Deleting search
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->researcher;
+        my $bag = LibreCat::App::Helper::Helpers->new->user;
         $bag->delete($id);
         $bag->commit;
     }
@@ -253,7 +257,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Researcher->new;
+    my $validator = LibreCat::Validator::User->new;
 
     my $ret = 0;
 
@@ -310,9 +314,9 @@ sub _passwd {
     $data->{password} = mkpasswd($password2);
 
     my $helper = LibreCat::App::Helper::Helpers->new;
-    $data = $helper->store_record('researcher', $data);
+    $data = Catmandu->store('main')->bag('user')->add($data);
 
-    my $index = $helper->researcher;
+    my $index = $helper->user;
     $index->add($data);
     $index->commit;
 

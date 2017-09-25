@@ -81,7 +81,7 @@ sub upload_temp_file {
         file_size    => $file_size,
         tempid       => $tempid,
         content_type => $content_type,
-        access_level => "open_access",
+        access_level => h->config->{default_access_level} // "open_access",
         open_access  => 1,
         relation     => "main_file",
         creator      => $creator,
@@ -153,7 +153,7 @@ sub handle_file {
 
     $pub->{file} = _decode_file($pub->{file});
 
-    my $prev_pub = h->publication->get($key);
+    my $prev_pub = Catmandu->store('main')->bag('publication')->get($key);
 
     # Delete files that are not needed
     for my $fi (_find_deleted_files($prev_pub, $pub)) {
@@ -247,18 +247,20 @@ sub update_file {
     my $file_opt   = h->config->{filestore}->{default}->{options};
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+
     my $store = $pkg->new(%$file_opt);
 
     h->log->info("loading container $key");
-    my $container = $store->get($key);
 
-    unless ($container) {
+    unless ($store->index->exists($key)) {
         h->log->error("container $key not found");
         return undef;
     }
 
-    my $res = $container->get($filename);
+    my $files = $store->index->files($key);
+
+    my $res   = $files->get($filename);
 
     unless ($res) {
         h->log->error("file $filename not found in container $key");

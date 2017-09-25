@@ -4,16 +4,15 @@
 [%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
 [% INCLUDE header.tt %]
 
-<!-- BEGIN marked/marked.tt -->
-
-<script src="/javascripts/jquery-sortable-min.js"></script>
+<!-- BEGIN marked/list.tt -->
+<script src="[% uri_base %]/javascripts/jquery-sortable-min.js"></script>
 <script>
   $(function() {
     $( "#sortable" ).sortable({
       onDrop: function($item) {
         $.ajax({
             type: 'POST',
-            url: '[% h.host %]/reorder/' + $item.find('span.pubid').text() + '/' + $item.index(),
+            url: librecat.uri_base + '/reorder/' + $item.find('span.pubid').text() + '/' + $item.index(),
             dataType: 'json',
             success: function(res) {}
         });
@@ -24,16 +23,13 @@
   });
 </script>
 
-
 <div class="row"><!-- outer border -->
-
   <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
-
     <div class="page-header" id="banner">
         <h1>[% h.loc("mark.marked_publication") %]</h1>
     </div>
 
-    [% IF total %]
+    [%- IF total %]
     <div class="row">
       <div class="col-md-12">
         <ul class="nav nav-tabs">
@@ -50,24 +46,21 @@
           [% INCLUDE hits.tt %]
           </div>
           <div class="col-md-3 col-md-offset-1 col-sm-4">
-          [% PROCESS filters.tt %]
+          [% PROCESS marked/filters.tt %]
           </div>
         </div>
       </div>
     </div>
-    [% ELSE %]
+    [%- ELSE %]
     <div class="row">
       <div class="col-md-12">
         <p>[% h.loc("mark.no_marked_publication") %]</p>
       </div>
     </div>
-    [% END %]
-
+    [%- END %]
   </div>
-
 </div>
-
-<!-- END marked/marked.tt -->
+<!-- END marked/list.tt -->
 
 [% INCLUDE mark_all_js.tt %]
 

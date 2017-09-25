@@ -5,7 +5,7 @@ use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
-use Test::More;
+use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
 
 my $app = eval {require 'bin/app.pl';};
@@ -55,7 +55,8 @@ note("search accounts");
 
 note("edit account");
 {
-    $mech->follow_link_ok({url => '/librecat/admin/project/edit/011D12402'},
+    $mech->follow_link_ok(
+        {url_regex => qr(/librecat/admin/project/edit/011D12402$), n => 1},
         "edit project link");
 
     $mech->content_contains(

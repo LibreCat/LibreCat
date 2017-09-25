@@ -96,7 +96,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_project;
+        $it = Catmandu->store('main')->bag('project');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -139,7 +139,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_project;
+        $it = Catmandu->store('main')->bag('project');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -161,8 +161,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag  = LibreCat::App::Helper::Helpers->new->backup_project;
-    my $data = $bag->get($id);
+    my $data = Catmandu->store('main')->bag('project')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -177,27 +176,31 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag      = Catmandu->store('main')->bag('project');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('project');
+            $rec->{_id} //= $bag->generate_id;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'project',
+            LibreCat->hook('project-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid project",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{_validation_errors}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid project",
+                            @{$rec->{_validation_errors}}),
+                            "\n";
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
+                        $bag->add($rec);
+                    }
                 }
             );
 
@@ -223,7 +226,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->backup_project;
+        my $bag = Catmandu->store('main')->bag('project');
         $bag->delete($id);
         $bag->commit;
     }
@@ -263,13 +266,12 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+                $ret = 2;
             }
-
-            $ret = -1;
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 1;

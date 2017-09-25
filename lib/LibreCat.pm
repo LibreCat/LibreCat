@@ -5,6 +5,7 @@ use Catmandu::Util qw(require_package);
 use LibreCat::Layers;
 use LibreCat::Hook;
 use Catmandu;
+use Carp;
 use namespace::clean;
 
 our $VERSION = '0.3.2';
@@ -52,6 +53,8 @@ sub user {
 sub hook {
     my ($self, $name) = @_;
 
+    croak "need a name" unless $name;
+
     state $hooks = {};
 
     $hooks->{$name} ||= do {
@@ -59,12 +62,14 @@ sub hook {
 
         my $hook = ($self->config->{hooks} || {})->{$name} || {};
 
+        my $hook_options = $hook->{options} || {};
+
         for my $key (qw(before_fixes after_fixes)) {
             my $fixes = $hook->{$key} || [];
             for my $fix (@$fixes) {
                 push @{$args->{$key}},
                     require_package($fix, 'LibreCat::Hook')
-                    ->new(name => $name, type => $key);
+                    ->new(%$hook_options, name => $name, type => $key);
             }
         }
 
@@ -95,6 +100,8 @@ LibreCat - Librecat helper functions
    # --
    # hooks:
    #   myhook:
+   #      options:
+   #        foo: bar
    #      before_fixes: [BeforeFix1,BeforeFix2]
    #      after_fixes:  [AfterFix]
 

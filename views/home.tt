@@ -1,9 +1,8 @@
-[% path = request.path -%]
 [% qp = request.params.hash -%]
 [% qp.delete('splat') -%]
 [%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
-[% backend = path.match('librecat') ? 1 : 0 -%]
-[% thisPerson = backend ? h.get_person(session.personNumber) : h.get_person(id) -%]
+[% backend = request.path_info.match('librecat') ? 1 : 0 -%]
+[% thisPerson = backend ? h.get_person(session.user_id) : h.get_person(id) -%]
 [% menu = "" -%]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
@@ -18,10 +17,10 @@
                 <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_photo") %]">
                     [%- IF thisPerson.photo %]
                     [%- photo_url=thisPerson.photo.replace('http:','') -%]
-                    <img src="[% photo_url %]" style="max-width:140px;" class="img-thumbnail" >
+                    <img id="user_photo" src="[% photo_url %]" class="img-thumbnail" />
                     [%- ELSE %]
                     [%- USE Gravatar %]
-                    <img src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
+                    <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
                     [%- END %]
                 </div>
                 <div class="col-md-6 col-sm-5 col-xs-12">
@@ -43,39 +42,39 @@
             <div class="col-md-12">
                 <ul class="nav nav-tabs">
                     [% IF backend AND session.role == 'super_admin' %]
-                    <li class="helpme[% IF backend AND modus == "admin" %] active[% END %]" title="[% h.loc("help.publication_admin") %]"><a href="/librecat/search/admin">[% h.loc("tabs.all_publications") %]</a></li>
+                    <li class="helpme[% IF backend AND modus == "admin" %] active[% END %]" title="[% h.loc("help.publication_admin") %]"><a href="[% uri_base %]/librecat/search/admin">[% h.loc("tabs.all_publications") %]</a></li>
                     [% END %]
                     [% IF session.role == 'user' OR !backend %]
-                    <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% h.loc("help.publication_user") %]"><a href="[% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% h.loc("tabs.publications") %]</a></li>
+                    <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% h.loc("help.publication_user") %]"><a href="[% uri_base %][% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% h.loc("tabs.publications") %]</a></li>
                     [% IF researchhits AND researchhits.total != 0 %]
-                    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+                    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% uri_base %][% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data_publications") %]</a></li>
                     [% END %]
                     [% END %]
                     [% IF backend AND session.role == 'reviewer' %]
                     [% FOREACH department IN thisPerson.reviewer %]
-                    <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_reviewer") %]"><a href="/librecat/search/reviewer/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
+                    <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_reviewer") %]"><a href="[% uri_base %]/librecat/search/reviewer/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
                     [% END %]
                     [% END %]
                     [% IF backend AND session.role == "project_reviewer" %]
                     [% FOREACH project IN thisPerson.project_reviewer %]
-                    <li class="helpme[% IF modus.match(project._id) %] active[% END %]" title="[% lf.help.publication_project_reviewer %]"><a href="/librecat/search/project_reviewer/[% project._id %]">[% h.get_project(project._id).name %]</a></li>
+                    <li class="helpme[% IF modus.match(project._id) %] active[% END %]" title="[% lf.help.publication_project_reviewer %]"><a href="[% uri_base %]/librecat/search/project_reviewer/[% project._id %]">[% h.get_project(project._id).name %]</a></li>
                     [% END %]
                     [% END %]
                     [% IF backend AND session.role == "data_manager" %]
                     [% FOREACH department IN thisPerson.data_manager %]
-                    <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_data_manager") %]"><a href="/librecat/search/data_manager/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
+                    <li class="helpme[% IF modus.match(department._id) %] active[% END %]" title="[% h.loc("help.publication_data_manager") %]"><a href="[% uri_base %]/librecat/search/data_manager/[% department._id %]">[% h.get_department(department._id).display %]</a></li>
                     [% END %]
                     [% END %]
                     [% IF backend AND session.role == "delegate" %]
                     [% FOREACH delegate_id IN thisPerson.delegate %]
-                    <li class="[% IF loop.first %]helpme[% END %][% IF modus.match(delegate_id) %] active[% END %]"[% IF loop.first %] title="[% h.loc("help.publication_delegate") %]"[% END %]><a href="/librecat/search/delegate/[% delegate_id %]">[% h.get_person(delegate_id).full_name %]</a></li>
+                    <li class="[% IF loop.first %]helpme[% END %][% IF modus.match(delegate_id) %] active[% END %]"[% IF loop.first %] title="[% h.loc("help.publication_delegate") %]"[% END %]><a href="[% uri_base %]/librecat/search/delegate/[% delegate_id %]">[% h.get_person(delegate_id).full_name %]</a></li>
                     [% END %]
                     [% END %]
                     [% UNLESS backend %]
                     <li class="hidden-md hidden-lg hidden-sm"><a href="#facets">[% h.loc("facets.search_filter") %]</a></li>
                     <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% h.loc("facets.export_marked") %]</a></li>
-                    <li class="navbar-right">[% IF session AND session.user %]<a href="/logout" title="[% h.loc("main_page.logout") %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
-                    [% IF session AND session.user %]<li class="navbar-right"><a href="/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
+                    <li class="navbar-right">[% IF session AND session.user %]<a href="[% uri_base %]/logout" title="[% h.loc("main_page.logout") %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="[% uri_base %]/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
+                    [% IF session AND session.user %]<li class="navbar-right"><a href="[% uri_base %]/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
                 </ul>
                 [% END %]
             </ul>

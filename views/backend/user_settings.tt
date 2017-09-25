@@ -14,22 +14,22 @@
       <h5>[% h.loc("header.role_label") %]: <em><strong>[% lf.header.role.item(session.role) %]</strong></em></h5>
       ([% h.loc("header.role_change") %]
       [% IF session.role != "user" %]
-      <a href="[% IF session.role != "user" %]/librecat/change_role/user[% END %]">[% h.loc("header.role.user") %]</a>
+      <a href="[% uri_base %]/librecat/change_role/user">[% h.loc("header.role.user") %]</a>
       [% END %]
       [% IF thisPerson.delegate AND session.role != "delegate" %]
-      | <a href="/librecat/change_role/delegate">[% h.loc("header.role.delegate") %]</a>
+      | <a href="[% uri_base %]/librecat/change_role/delegate">[% h.loc("header.role.delegate") %]</a>
 	  [% END %]
 	  [% IF thisPerson.reviewer AND session.role != "reviewer" %]
-	  | <a href="/librecat/change_role/reviewer">[% h.loc("header.role.reviewer") %]</a>
+	  | <a href="[% uri_base %]/librecat/change_role/reviewer">[% h.loc("header.role.reviewer") %]</a>
 	  [% END %]
       [% IF thisPerson.project_reviewer AND session.role != "project_reviewer" %]
-      | <a href="/librecat/change_role/project_reviewer">[% lf.header.role.project_reviewer %]</a>
+      | <a href="[% uri_base %]/librecat/change_role/project_reviewer">[% lf.header.role.project_reviewer %]</a>
       [% END %]
       [% IF thisPerson.data_manager AND session.role != "data_manager" %]
-	  | <a href="/librecat/change_role/data_manager">[% h.loc("header.role.data_manager") %]</a>
+	  | <a href="[% uri_base %]/librecat/change_role/data_manager">[% h.loc("header.role.data_manager") %]</a>
 	  [% END %]
 	  [% IF thisPerson.super_admin AND session.role != "super_admin" %]
-	  | <a href="/librecat/change_role/admin">[% h.loc("header.role.super_admin") %]</a>
+	  | <a href="[% uri_base %]/librecat/change_role/admin">[% h.loc("header.role.super_admin") %]</a>
 	  [% END %]
 	  )
     </div>
@@ -38,7 +38,7 @@
 
   <hr />
 
-<form id="id_save_aff" action="/librecat/person/affiliation" method="POST">
+<form id="id_save_aff" action="[% uri_base %]/librecat/person/affiliation" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
       <h4>[% h.loc("header.department_affiliation") %]</h4>

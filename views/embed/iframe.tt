@@ -5,13 +5,13 @@
 <html>
   <head>
     <title>PUB &ndash; Publications at LibreCat University</title>
-    <link rel="icon" href="/images/brand_logo.png" type="image/png">
+    <link rel="icon" href="[% uri_base %]/images/brand_logo.png" type="image/png">
     [% INCLUDE head_meta.tt %]
   </head>
 
   <body class="embed">
 
-  <div class="row" style="margin-right:0;">
+  <div class="row mr-0">
     <div class="col-sm-11">
       <div class="row">
 	<div class="col-xs-8">

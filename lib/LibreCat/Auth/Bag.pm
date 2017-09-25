@@ -19,16 +19,16 @@ sub _authenticate {
     my $password = $params->{password} // return 0;
 
     my $store_name    = $self->store;
-    my $bag_name      = $self->bag;
+    my $store         = Catmandu->store($store_name);
+    my $bag_name      = $self->bag // $store->default_bag;
+    my $bag           = $store->bag($bag_name);
     my $username_attr = $self->username_attr;
     my $password_attr = $self->password_attr;
 
-    $self->log->debugf("authenticating: %s", $username);
+    $self->log->debugf("authenticating: %s in %s", $username, $store_name);
 
     $self->log->debugf("store: %s bag: %s $username_attr = $username",
         $store_name, $bag_name);
-
-    my $bag = Catmandu->store($store_name)->bag($bag_name);
 
     my $user;
 
@@ -63,7 +63,7 @@ sub _authenticate {
     $self->log->debug("checking $password_attr for $username");
 
     if (exists $user->{$password_attr}) {
-        if (passwdcmp($password, $user->{$password_attr})) {
+        if (passwdcmp($password => $user->{$password_attr})) {
             $self->log->debug("$username password ok :-)");
             return +{
                 uid        => $username,

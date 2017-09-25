@@ -1,6 +1,5 @@
 use Catmandu::Sane;
 use Test::More;
-use Data::Dumper;
 
 my $pkg;
 

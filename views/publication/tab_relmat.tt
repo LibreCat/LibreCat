@@ -16,7 +16,7 @@
   <div class="row">
     <div class="col-md-12">
       [% rec = h.get_publication(rm.id) %]
-      <a href="/publication/[% rm.id %]">[% rec.title %]</a><br />
+      <a href="[% uri_base %]/publication/[% rm.id %]">[% rec.title %]</a><br />
       [% rec.citation.default %]<br />
     </div>
   </div>

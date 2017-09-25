@@ -100,7 +100,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_department;
+        $it = Catmandu->store('main')->bag('department');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -151,15 +151,30 @@ sub _tree_parse {
     print "deleting previous departments...\n";
     $helper->department->delete_all;
 
+    my $index = $helper->department;
+
     _tree_parse_parser(
         $HASH->{tree},
         sub {
             my $rec = shift;
-            $helper->store_record('department', $rec);
-            $helper->index_record('department', $rec);
+            LibreCat->hook('department-update-cmd')->fix_around(
+                $rec,
+                sub {
+                    if ($rec->{_validation_errors}) {
+
+                        # ...
+                    }
+                    else {
+                        Catmandu->store('main')->bag('department')->add($rec);
+                        $index->add($rec);
+                    }
+                }
+            );
             print "added $rec->{_id}\n";
         }
     );
+
+    $index->commit;
 }
 
 sub _tree_parse_parser {
@@ -190,8 +205,7 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $it = LibreCat::App::Helper::Helpers->new->backup_department;
-
+    my $it   = Catmandu->store('main')->bag('department');
     my $HASH = {};
 
     $it->each(
@@ -242,7 +256,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat::App::Helper::Helpers->new->backup_department;
+        $it = Catmandu->store('main')->bag('department');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -264,8 +278,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag  = LibreCat::App::Helper::Helpers->new->backup_department;
-    my $data = $bag->get($id);
+    my $data = Catmandu->store('main')->bag('department')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -280,27 +293,31 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $bag      = Catmandu->store('main')->bag('department');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('department');
+            $rec->{_id} //= $bag->generate_id;
 
             my $is_ok = 1;
 
-            $helper->store_record(
-                'department',
+            LibreCat->hook('department-update-cmd')->fix_around(
                 $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid department",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
+                sub {
+                    if ($rec->{_validation_errors}) {
+                        print STDERR join("\n",
+                            $rec->{_id},
+                            "ERROR: not a valid department",
+                            @{$rec->{_validation_errors}}),
+                            "\n";
+                        $ret   = 2;
+                        $is_ok = 0;
+                    }
+                    else {
+                        $bag->add($rec);
+                    }
                 }
             );
 
@@ -326,7 +343,7 @@ sub _delete {
 
     # Deleting backup
     {
-        my $bag = LibreCat::App::Helper::Helpers->new->backup_department;
+        my $bag = Catmandu->store('main')->bag('department');
         $bag->delete($id);
         $bag->commit;
     }
@@ -366,13 +383,12 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+                $ret = 2;
             }
-
-            $ret = -1;
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 1;

@@ -16,6 +16,24 @@ use List::Util;
 use DateTime;
 use LibreCat::App::Helper;
 
+=head2 GET /marked.:fmt
+
+Return list of marked records in format :fmt
+
+=cut
+
+get '/marked.:fmt' => sub {
+    my $marked = session 'marked';
+    $marked = is_array_ref($marked) ? $marked : [];
+    my $params = params;
+    $params->{fmt} = "yaml" unless is_string($params->{fmt});
+    $params->{cql}  = ["(id=" . join(' OR id=', @$marked) . ")"];
+    $params->{sort} = "false";
+    $params->{bag}  = "publication";
+
+    forward "/export", $params;
+};
+
 =head2 GET /marked
 
 Returns list of marked records.

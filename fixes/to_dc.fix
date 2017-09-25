@@ -1,6 +1,6 @@
 # mapping pub data to dublic core (dc)
-
-add_field(tmp_id.$append, 'http://www.librecat.org/')
+librecat_uri_base('uri_base')
+copy_field('uri_base','tmp_id.$append')
 if any_match(type, research_data)
   add_field(tmp_id.$append, data)
 else
@@ -83,7 +83,7 @@ end
 do list(path: file,var:loop)
   do identity()
     if all_match(loop.access_level, open_access)
-      add_field(tmpfile.$append, 'http://www.librecat.org')
+      copy_field('uri_base','tmpfile.$append')
       add_field(tmpfile.$append, download)
       copy_field(_id, tmpfile.$append)
       copy_field(loop.file_id, tmpfile.$append)

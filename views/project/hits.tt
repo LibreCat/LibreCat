@@ -2,8 +2,9 @@
 <div class="row">
     <div class="col-md-12">
       <ul class="pagination">
+      [% browse = params.browse == "" ? h.alphabet.0 : params.browse %]
       [%- FOREACH c IN h.alphabet %]
-      <li [% IF request.path.match("browse=$c")%]class="active"[% END %]><a href="/project?browse=[% c %]">[% c %]</a></li>
+      <li [% IF browse == c %]class="active"[% END %]><a href="[% uri_base %]/project?browse=[% c %]">[% c %]</a></li>
       [%- END %]
       </ul>
     </div>
@@ -24,7 +25,7 @@
       <div class="row">
         <div class="col-sm-8 col-md-8">
           [%- FOREACH project IN hits %]
-          <a href="/project/[% project._id %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
+          <a href="[% uri_base %]/project/[% project._id %]">[% project.name %][% IF project.acronym %] ([% project.acronym %])[% END %]</a><br />
             <p class="text-muted">
               [%- IF project.start_date AND project.end_date %]
                 [% project.start_date %] &ndash; [% project.end_date %]<br />

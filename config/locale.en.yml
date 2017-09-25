@@ -186,6 +186,8 @@ frontdoor:
   preview: "Preview"
   no_record: "This record does not exist or was deleted"
   download: "Download"
+  download_extern: "Download (ext.)"
+  no_download: "<span class='text-danger'><strong>No fulltext has been uploaded. References only!</strong></span>"
   show_all: "All"
   local_brand: "LibreCat"
   export: "Export"

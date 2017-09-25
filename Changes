@@ -2,6 +2,26 @@ Revision history for LibreCat
 
 {{$NEXT}}
 
+0.7.3 2017-08-28
+    - refactor host calling: use uri_base and middlewares
+    - GH #288: change type broken
+    - GH #287: share button does nothing
+    - refactor export functions
+    - make default access level configurable
+    - GH #277: don't user helper bag functions
+    - make oa link visible on frontdoor
+
+0.7.2 2017-08-14
+    - fix bug: allow '-' in username
+    - update to recent Catmandu::BagIt (modified method call)
+    - add Makefile to repository
+
+0.7.1 2017-07-14
+    - GH #196: introduce selenium tests
+    - add OA flag to fulltext link
+    - GH #80: show download link on frontdoor only if accessible
+    - GH #238: refactord person routes
+
 0.7.0 2017-07-03
     - new command: file_store move
     - move tasks to job queue
