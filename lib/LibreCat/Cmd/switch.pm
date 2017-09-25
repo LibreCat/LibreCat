@@ -2,8 +2,6 @@ package LibreCat::Cmd::switch;
 
 use Catmandu::Sane;
 use Catmandu;
-use AnyEvent;
-use AnyEvent::HTTP;
 use Carp;
 use parent qw(LibreCat::Cmd);
 use Search::Elasticsearch;
@@ -102,7 +100,7 @@ sub _do_delete {
 sub _do_switch {
     my ($self, $old, $new, $e, $opts) = @_;
 
-    my $backup_store = Catmandu->store('backup');
+    my $main_store = Catmandu->store('main');
     my $ind_name = Catmandu->config->{store}->{search}->{options}->{'index_name'};
 
     print "$old is active, new index will be $new.\n" if $opts->{verbose};
@@ -112,7 +110,7 @@ sub _do_switch {
 
     foreach my $b (@bags) {
         my $bag = $store->bag($b);
-        $bag->add_many($backup_store->bag($b));
+        $bag->add_many($main_store->bag($b));
         $bag->commit;
     }
 
@@ -169,16 +167,10 @@ __END__
 
 =head1 NAME
 
-LibreCat::Cmd::url - check urls
+LibreCat::Cmd::switch - reindex data from database
 
 =head1 SYNOPSIS
 
-    librecat schemas url check <FILE> <OUTFILE>
-
-=head1 commands
-
-=head2 check
-
-check all provided URLs
+    librecat switch
 
 =cut
