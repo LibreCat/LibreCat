@@ -64,9 +64,9 @@ sub _switch {
 
     if (!$i_status->{active_index}){
         # There is no alias
-        if($i_status->{all_indexes} and $i_status->{number_of_indexes}){
-            # but there are one or more indexes
-            foreach my $ind (@{$i_status->{all_indexes}}){
+        if($i_status->{all_indices} and $i_status->{number_of_indices}){
+            # but there are one or more indices
+            foreach my $ind (@{$i_status->{all_indices}}){
                 $self->_do_delete($ind, $e, $opts);
             }
         }
@@ -74,14 +74,14 @@ sub _switch {
     }
     elsif ($i_status->{active_index}) {
         if($i_status->{active_index} eq $ind1){
-            foreach my $ind (@{$i_status->{all_indexes}}){
+            foreach my $ind (@{$i_status->{all_indices}}){
                 next if $ind eq $ind1;
                 $self->_do_delete($ind, $e, $opts);
             }
             $self->_do_switch($ind1, $ind2, $e, $opts);
         }
         elsif ($i_status->{active_index} eq $ind2){
-            foreach my $ind (@{$i_status->{all_indexes}}){
+            foreach my $ind (@{$i_status->{all_indices}}){
                 next if $ind eq $ind2;
                 $self->_do_delete($ind, $e, $opts);
             }

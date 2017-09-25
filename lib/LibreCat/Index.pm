@@ -20,7 +20,7 @@ sub get_status {
 
     my $e = Search::Elasticsearch->new();
 
-    my $alias_exists = $e->indices->exists(index => $ind_name);
+    my $ind_exists = $e->indices->exists(index => $ind_name);
     my $ind1_exists = $e->indices->exists(index => $ind1);
     my $ind2_exists = $e->indices->exists(index => $ind2);
 
@@ -28,14 +28,15 @@ sub get_status {
     my $alias_exists_for_2 = $e->indices->exists_alias(index => $ind2, name => $ind_name);
 
     my $result;
-    $result->{all_indexes} = [];
-    push @{$result->{all_indexes}}, $ind1 if $ind1_exists;
-    push @{$result->{all_indexes}}, $ind2 if $ind2_exists;
-    $result->{number_of_indexes} = @{$result->{all_indexes}};
+    $result->{all_indices} = [];
+    push @{$result->{all_indices}}, $ind_name if ($ind_exists and !$alias_exists_for_1 and !$alias_exists_for_2);
+    push @{$result->{all_indices}}, $ind1 if $ind1_exists;
+    push @{$result->{all_indices}}, $ind2 if $ind2_exists;
+    $result->{number_of_indices} = @{$result->{all_indices}};
     $result->{active_index} = $ind1 if ($ind1_exists and $alias_exists_for_1);
     $result->{active_index} = $ind2 if ($ind2_exists and $alias_exists_for_2);
-    $result->{active_index} = $ind_name if (!$ind1_exists and !$ind2_exists and $alias_exists);
-    $result->{alias} = $ind_name if $alias_exists;
+    $result->{active_index} = $ind_name if (!$ind1_exists and !$ind2_exists and $ind_exists);
+    $result->{alias} = $ind_name if ($alias_exists_for_1 or $alias_exists_for_2);
     return $result;
 }
 
