@@ -5,6 +5,8 @@ CMD=$1
 
 case "${CMD}" in
     create)
+        echo "Initializing index..."
+        carton exec "bin/librecat index initialize"
         echo "Creating index..."
         echo "researcher..."
         carton exec "bin/librecat user add devel/researcher.yml"

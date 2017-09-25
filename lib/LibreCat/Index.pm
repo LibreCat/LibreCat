@@ -40,4 +40,38 @@ sub get_status {
     return $result;
 }
 
+sub initialize {
+    my ($self) = @_;
+
+    my $i_status = $self->get_status;
+
+    my $e = Search::Elasticsearch->new();
+
+    foreach my $index (@{$i_status->{all_indices}}){
+        $e->indices->delete(index => $index);
+    }
+
+    $e->indices->update_aliases(
+        body => {
+            actions => [
+                { remove => { alias => $i_status->{alias} }}
+            ]
+        }
+    ) if $i_status->{alias};
+
+    my $ind_name = Catmandu->config->{store}->{search}->{options}->{index_name};
+    my $ind1 = $ind_name ."1";
+    my $index = Catmandu->store('search', index_name => $ind1)->bag('x');
+    $index->add({x => 1});
+    $index->commit;
+
+    $e->indices->update_aliases(
+        body => {
+            actions => [
+                { add => { alias => $ind_name, index => $ind1 }},
+            ]
+        }
+    );
+}
+
 1;

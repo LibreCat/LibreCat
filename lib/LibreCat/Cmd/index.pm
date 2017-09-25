@@ -12,13 +12,14 @@ Usage:
 
 librecat index [--background] [--id=...] [bag]
 librecat index [--status] [--croak]
+librecat index [--initialize]
 
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['background|bg', ""], ['id=s', ""], ['status', ""], );
+    (['background|bg', ""], ['id=s', ""], ['status', ""], ['initialize', ""], );
 }
 
 sub command {
@@ -26,13 +27,16 @@ sub command {
 
     my $bag = shift @$args;
 
-    unless ($bag or $opts->status) {
+    unless ($bag or $opts->status or $opts->initialize) {
         $self->usage_error("need a bag as argument");
     }
 
     if($opts->status){
         my $status = LibreCat::Index->get_status;
         Catmandu->exporter('YAML')->add($status);
+    }
+    elsif($opts->initialize){
+        my $initial = LibreCat::Index->initialize;
     }
     else {
         my $queue = LibreCat::JobQueue->new;
