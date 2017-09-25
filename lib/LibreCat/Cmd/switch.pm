@@ -87,6 +87,16 @@ sub _switch {
             }
             $self->_do_switch($ind2, $ind1, $e, $opts);
         }
+        elsif ($i_status->{active_index} eq $ind_name){
+            if($i_status->{all_indices} and $i_status->{number_of_indices}){
+                # but there are one or more indices
+                foreach my $ind (@{$i_status->{all_indices}}){
+                    next if $ind eq $ind_name;
+                    $self->_do_delete($ind, $e, $opts);
+                }
+            }
+            $self->_do_switch("No index", $ind1, $e, $opts);
+        }
     }
 
     return 0;
