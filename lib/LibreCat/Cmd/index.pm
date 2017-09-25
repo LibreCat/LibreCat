@@ -32,8 +32,7 @@ sub command {
 
     if($opts->status){
         my $status = LibreCat::Index->get_status;
-        print Dumper $status;
-
+        Catmandu->exporter('YAML')->add($status);
     }
     else {
         my $queue = LibreCat::JobQueue->new;
