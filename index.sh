@@ -5,7 +5,7 @@ CMD=$1
 
 function f_create {
     echo "Initializing index..."
-    carton exec "bin/librecat index initialize"
+    carton exec "bin/librecat index --initialize"
     echo "Creating index..."
     echo "user..."
     carton exec "bin/librecat user add devel/user.yml"
@@ -55,23 +55,6 @@ function f_drop_version {
     carton exec "bin/librecat delete main --bag project_version"
     echo "research_group..."
     carton exec "bin/librecat delete main --bag research_group_version"
-    echo "Done"
-}
-
-function f_reindex {
-    echo "Dropping the search"
-    carton exec bin/librecat drop search
-    echo "Reindex:"
-    echo "user"
-    carton exec "bin/librecat copy -v main --bag user to search --bag user"
-    echo "publication"
-    carton exec "bin/librecat copy -v main --bag publication to search --bag publication"
-    echo "department"
-    carton exec "bin/librecat copy -v main --bag department to search --bag department"
-    echo "project"
-    carton exec "bin/librecat copy -v main --bag project to search --bag project"
-    echo "research_group."
-    carton exec "bin/librecat copy -v main --bag research_group to search --bag research_group"
     echo "Done"
 }
 
@@ -181,7 +164,6 @@ case "${CMD}" in
     info)
         echo "Info on current indexes:"
         carton exec "bin/librecat index --status"
-        f_reindex
         ;;
     export)
         f_export
