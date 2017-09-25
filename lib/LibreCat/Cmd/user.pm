@@ -3,8 +3,6 @@ package LibreCat::Cmd::user;
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Researcher;
-use Search::Elasticsearch;
-use LibreCat::Index;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -186,8 +184,6 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $i_name   = $helper->config->{store}->{search}->{options}->{index_name};
-    my $i_status = LibreCat::Index->get_status;
 
     my $records = $importer->select(
         sub {
@@ -222,31 +218,9 @@ sub _add {
         }
     );
 
-    if(!$i_status->{active_index}){
-        # only if it's the initial index build
-        # use [index_name]1 instead of [index_name]
-        $i_name = $i_name . "1";
-    }
-    elsif(!$i_status->{alias} and $i_status->{active_index} and $i_status->{active_index} ne $i_name."1" and $i_status->{active_index} ne $i_name."2"){
-        # an index with (any) name exists but no alias is set
-        # use existing index and set alias later
-        $i_name = $i_status->{active_index};
-    }
-
-    my $index = Catmandu->store('search', index_name => $i_name)->bag('researcher');#$helper->researcher;
+    my $index = Catmandu->store('search')->bag('researcher');
     $index->add_many($records);
     $index->commit;
-
-    if(!$i_status->{alias}){
-        my $e = Search::Elasticsearch->new();
-        $e->indices->update_aliases(
-            body => {
-                actions => [
-                    { add => { alias => $helper->config->{store}->{search}->{options}->{index_name}, index => $i_name }},
-                ]
-            }
-        );
-    }
 
     $ret;
 }
