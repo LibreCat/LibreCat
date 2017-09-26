@@ -20,7 +20,7 @@ requires 'Business::ISBN', 0;
 requires 'Module::Install', '1.16';
 
 # Catmandu
-requires 'Catmandu', '>=1.0603';
+requires 'Catmandu', '>=1.0606';
 requires 'Catmandu::ArXiv', '>=0.100';
 requires 'Catmandu::BagIt' , '>=0.13';
 requires 'Catmandu::BibTeX';
