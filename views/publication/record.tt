@@ -111,7 +111,7 @@
             [% END %]
             [% IF loop.count > 2 && loop.size > 3 %]
                   <span id="showFiles">
-                    <br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
+                    <br><a href="#" onclick="ShowFiles();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
                   </span>
                   </div>
             </div>
@@ -291,7 +291,7 @@
         <h3 id="edit">[% h.loc("frontdoor.editing_options") %]</h3>
         <a href="[% uri_base %]/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]
-          <a href="[% uri_base %]/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/publish/[% _id %]"><span class="fa fa-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
         [% END %]
         [% IF type == "research_data" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
           <a href="[% uri_base %]/librecat/record/publish/[% _id %]">[% h.loc("frontdoor.submit") %]</a>
@@ -373,7 +373,7 @@
             <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
             [% IF loop.count > 14 %]
             <span id="showGen">
-              <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
+              <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
             </span>
             [% LAST %]
             [% END %]

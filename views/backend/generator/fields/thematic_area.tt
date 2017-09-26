@@ -19,8 +19,8 @@
               <option value="[% ta %]">[% ta %]</option>
             [% END %]
           </select>
-          <div class="input-group-addon" onclick="add_field('thematic_area'[% IF lf.$type.field.thematic_area.placeholder %],'[% h.loc("forms.${type}.field.thematic_area.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('thematic_area'[% IF lf.$type.field.thematic_area.placeholder %],'[% h.loc("forms.${type}.field.thematic_area.placeholder") %]'[% END %]);"><span class="fa fa-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
     </div>
@@ -36,8 +36,8 @@
               <option value="[% ta %]"[% IF th_ar == ta %] selected="selected"[% END %]>[% ta %]</option>
             [% END %]
           </select>
-          <div class="input-group-addon" onclick="add_field('thematic_area'[% IF lf.$type.field.thematic_area.placeholder %],'[% h.loc("forms.${type}.field.thematic_area.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('thematic_area'[% IF lf.$type.field.thematic_area.placeholder %],'[% h.loc("forms.${type}.field.thematic_area.placeholder") %]'[% END %]);"><span class="fa fa-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
     </div>

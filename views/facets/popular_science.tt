@@ -1,8 +1,8 @@
 [%- FOREACH t IN facets.popular_science.terms %]
   [%- IF t.count < total %]
   [%- NEXT UNLESS t.term %]
-  <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.popular_science") %]</a>
+  <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="popularscience" data-value="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>[% t.count %] [% h.loc("facets.popular_science") %]</a>
   [%- ELSE %]
-  <div class="text-success"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_popular_science") %]</strong></div>
+  <div class="text-success"><span class="fa fa-check"></span> <strong>[% h.loc("facets.all_popular_science") %]</strong></div>
   [%- END %]
 [%- END %]

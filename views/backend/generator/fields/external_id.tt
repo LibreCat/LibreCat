@@ -22,8 +22,8 @@
             </select>
           </span>
           <input type="text" value="" placeholder="[% h.loc("forms.${type}.field.external_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} required{% END %}" name="external_id.0.value" id="external_id_0"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %} />
-          <div class="input-group-addon" onclick="add_field('extId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('extId');"><span class="fa fa-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
     </div>
@@ -46,8 +46,8 @@
                 </select>
               </span>
               <input type="text" value="[% identifier %]" placeholder="[% h.loc("forms.${type}.field.external_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF localindex == 0 %] required[% END %]{% END %}" name="external_id.[% index %].value" id="external_id_[% index %]"{% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonyl="readonly"{% END %} />
-              <div class="input-group-addon" onclick="add_field('extId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
-              <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+              <div class="input-group-addon" onclick="add_field('extId');"><span class="fa fa-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
+              <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             </div>
           </div>
         </div>
@@ -67,8 +67,8 @@
                 </select>
               </span>
               <input type="text" value="[% external_id.$ext_id %]" placeholder="[% h.loc("forms.${type}.field.external_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %}[% IF localindex == "0" %] required[% END %]{% END %}" name="external_id.[% localindex %].value" id="external_id_[% localindex %]" {% IF fields.basic_fields.external_id.readonly OR fields.supplementary_fields.external_id.readonly %} readonly="readonly"{% END %}/>
-              <div class="input-group-addon" onclick="add_field('extId');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
-              <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+              <div class="input-group-addon" onclick="add_field('extId');"><span class="fa fa-plus"{% IF fields.basic_fields.external_id.mandatory OR fields.supplementary_fields.external_id.mandatory %} data-mandatory="yes"{% END %}></span></div>
+              <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             </div>
           </div>
         </div>

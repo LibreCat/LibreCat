@@ -1,4 +1,4 @@
-<button href="#modal_department" data-toggle="modal" class="btn-link"><span class="glyphicon glyphicon-chevron-left fw"></span>[% h.loc("facets.department") %]</button>
+<button href="#modal_department" data-toggle="modal" class="btn-link"><span class="fa fa-chevron-left fw"></span>[% h.loc("facets.department") %]</button>
 <!-- Modal -->
 <div id="modal_department" class="modal">
   <div class="modal-dialog">

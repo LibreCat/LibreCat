@@ -20,8 +20,8 @@
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.supervisor.first_name.label_short") %]</span>
             </div>
             <input type="text" id="supervisor_first_name_0" name="supervisor.0.first_name" placeholder="[% h.loc("forms.${type}.field.supervisor.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('supervisor');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hiddn-xs hidden-sm"></div>
           </div>
         </span>
@@ -44,8 +44,8 @@
               </span>
             </div>
             {% END %}
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="fa fa-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
@@ -69,8 +69,8 @@
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.supervisor.first_name.label_short") %]</span>
             </div>
             <input type="text" id="supervisor_first_name_[% loop.index %]" name="supervisor.[% loop.index %].first_name" placeholder="[% h.loc("forms.${type}.field.supervisor.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} required{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %]/>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="add_field('supervisor');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </span>
@@ -93,8 +93,8 @@
               </span>
             </div>
             {% END %}
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="glyphicon glyphicon-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="add_field('supervisor');"><span class="fa fa-plus"{% IF fields.basic_fields.supervisor.mandatory || fields.supplementary_fields.supervisor.mandatory %} data-mandatory="yes"{% END %} id="plusSupervisor"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </span>
         {% IF fields.basic_fields.supervisor.idm OR fields.supplementary_fields.supervisor.idm %}
