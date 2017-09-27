@@ -80,6 +80,14 @@ if exists(project)
   end
 end
 
+if all_match(external_id.isi.0, '^\w+$')
+  add_field(isi, 1)
+end
+if all_match(external_id.pmid.0, '^.+$')
+  add_field(pmid, 1)
+end
+
+
 split_field(nasc, ';|,')
 trim(nasc.*)
 split_field(genbank, ';|,')
