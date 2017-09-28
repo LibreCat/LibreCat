@@ -6,7 +6,7 @@ use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
-
+use Data::Dumper;
 my $pkg;
 
 BEGIN {
@@ -57,6 +57,16 @@ require_ok $pkg;
 
     ok -f "t/layer/views/department/nodes_backend.tt",
         "departments backend generated";
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'authors']);
+
+    print $result->stdout;
+
+    print $result->stderr if $result->stderr;
+
+    ok !$result->error, 'ok generate authors';
 }
 
 done_testing;

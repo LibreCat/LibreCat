@@ -20,29 +20,6 @@ List persons alphabetically
 get qr{/person} => sub {
     my $c = params->{browse} // 'a';
 
-    my %search_params = (
-        cql   => ["lastname=" . lc $c . "*"],
-        sort  => h->config->{default_person_sort},
-        start => 0,
-        limit => 1000
-    );
-
-    h->log->debug("executing user->search: " . to_dumper(\%search_params));
-
-    my $hits = LibreCat->searcher->search('user', \%search_params);
-
-    @{$hits->{hits}} = map {
-        my $rec = $_;
-        my $pub = LibreCat->searcher->search('publication',
-            {cql => ["person=$rec->{_id}"], start => 0, limit => 1,});
-        ($pub->{total} > 0) ? $rec : undef;
-    } @{$hits->{hits}};
-
-    @{$hits->{hits}} = grep defined, @{$hits->{hits}};
-
-    # override the total number since we deleted some entries
-    $hits->{total} = scalar @{$hits->{hits}};
-
     template 'person/list', $hits;
 };
 
