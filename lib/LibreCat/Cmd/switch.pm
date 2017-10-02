@@ -106,7 +106,7 @@ sub _do_switch {
     print "$old is active, new index will be $new.\n" if $opts->{verbose};
 
     my $store = Catmandu->store('search', index_name => $new);
-    my @bags = qw(publication project award researcher department research_group);
+    my @bags = qw(publication project award user department research_group);
 
     foreach my $b (@bags) {
         my $bag = $store->bag($b);

@@ -222,7 +222,7 @@ sub _add {
         }
     );
 
-    my $index = Catmandu->store('search')->bag('researcher');
+    my $index = Catmandu->store('search')->bag('user');
     $index->add_many($records);
     $index->commit;
 
