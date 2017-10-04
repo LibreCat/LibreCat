@@ -1,0 +1,75 @@
+@media print {
+    .breadcrumb,
+    .caret,
+    .col-md-3.col-md-offset-1,
+    .col-sm-2.col-sm-offset-1,
+    .col-xs-2.col-sm-3.col-sm-offset-1.text-sm-right,
+    .list-inline,
+    .mark,
+    .mark_all,
+    a.fulltext[href^="/"]::after,
+    footer,
+    ul.nav-tabs li {
+        display: none;
+    }
+
+    main {
+        padding: 0 !important;
+    }
+
+    a {
+        color: #000;
+        font-weight: normal;
+    }
+
+    a[href^="/"]::after {
+        content: " (https://pub.uni-bielefeld.de" attr(href) ") ";
+    }
+
+    #details a[href]::after,
+    .citation-block-div a[href]::after,
+    .nav-tabs a[href]::after,
+    .pagination a[href]::after,
+    a[href].label.label-primary::after {
+        content: "";
+    }
+
+    .nav-tabs,
+    .nav-tabs li.active,
+    .nav-tabs li.active a {
+        border: 0;
+        padding: 0;
+    }
+
+    .nav-tabs li.active {
+        display: inline;
+    }
+
+    .nav-tabs li.active a {
+        font-size: 18px;
+        font-weight: 100;
+    }
+
+    #citethis .nav-tabs li.active a,
+    #details .text-muted {
+        font-weight: bold;
+    }
+
+    #citethis .nav-tabs li.active a {
+        font-size: 12px;
+    }
+
+    div.cmark p:last-child {
+        margin-bottom: 0;
+    }
+
+    .col-xs-10.col-sm-8,
+    .tab-howto .col-sm-9,
+    .tab-pane .col-sm-8 {
+        width: 100%;
+    }
+
+    .img-thumbnail-fh {
+        height: 200px;
+    }
+}
