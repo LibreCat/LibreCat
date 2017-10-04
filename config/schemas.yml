@@ -634,6 +634,18 @@ publication:
             oneOf:
               - type: string
               - type: integer
+    pmid:
+      oneOf:
+        - type: string
+          pattern: "^[01]$"
+        - type: integer
+      description: "Flag of PubMed"
+    isi:
+      oneOf:
+        - type: string
+          pattern: "^[01]$"
+        - type: integer
+      description: "Flag of ISI/WoS"
     file:
       type: array
       minItems: 0
