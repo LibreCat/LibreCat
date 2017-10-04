@@ -5,7 +5,7 @@ CMD=$1
 
 function f_create {
     echo "Initializing index..."
-    carton exec "bin/librecat index --initialize"
+    carton exec "bin/librecat index initialize"
     echo "Creating index..."
     echo "user..."
     carton exec "bin/librecat user add devel/user.yml"
@@ -155,15 +155,15 @@ case "${CMD}" in
         ;;
     switch)
         echo "Switch index (reindex) without interruption:"
-        carton exec "bin/librecat switch -v index"
+        carton exec "bin/librecat index switch"
         ;;
     reindex)
         echo "Reindex (switch index) without interruption:"
-        carton exec "bin/librecat switch -v index"
+        carton exec "bin/librecat index Switch"
         ;;
     info)
         echo "Info on current indexes:"
-        carton exec "bin/librecat index --status"
+        carton exec "bin/librecat index status"
         ;;
     export)
         f_export
