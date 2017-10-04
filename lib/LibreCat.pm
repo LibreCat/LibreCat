@@ -67,7 +67,7 @@ sub hook {
         for my $key (qw(before_fixes after_fixes)) {
             my $default_fixes = $hook->{"default_$key"} || [];
             my $fixes = $hook->{$key} || [];
-            for my $fix (@$default_fixes, @$fixes) {
+            for my $fix (@$fixes, @$default_fixes) {
                 my $hook;
                 if ($self->looks_like_fix($fix)) {
                     $hook = $self->load_fix($fix);
@@ -100,17 +100,17 @@ sub load_fix {
         return Catmandu->fixer([$fix]);
     }
 
-    h->log->debug("searching for fix '$fix'");
+    # h->log->debug("searching for fix '$fix'");
     for my $path (@{$self->layers->fixes_paths}) {
         my $file = "$path/$fix";
         if (-r $file) {
-            h->log->debug("found '$file'");
+            # h->log->debug("found '$file'");
             return Catmandu->fixer([$file]);
         }
     }
 
     my $err = "can't find fix '$fix'";
-    h->log->error($err);
+    # h->log->error($err);
     croak $err;
 }
 
