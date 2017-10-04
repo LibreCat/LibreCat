@@ -21,7 +21,7 @@
       <div class="col-md-11 alert alert-success dz-preview dz-file-preview" id="[% fi.file_id %]">
         <div class="row">
           <div class="col-md-12 col-xs-10 padded">
-            <span class="glyphicon glyphicon-file text-muted"></span> <a href="[% h.uri_for_file(_id, fi.file_id, fi.file_name) %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a> ([% h.loc("forms.${type}.field.dropzone.copy_link") %] <a href="#" onclick="copyToClipboard('[% h.uri_for_file(_id, fi.file_id, fi.file_name) %]');"><span class="glyphicon glyphicon-copy"></span></a>)
+            <span class="fa fa-file text-muted"></span> <a href="[% h.uri_for_file(_id, fi.file_id, fi.file_name) %]" target="_blank" title="[% fi.file_name %]">[% fi.file_name %]</a> ([% h.loc("forms.${type}.field.dropzone.copy_link") %] <a href="#" onclick="copyToClipboard('[% h.uri_for_file(_id, fi.file_id, fi.file_name) %]');"><span class="fa fa-clipboard"></span></a>)
           </div>
         </div>
         <div class="row">
@@ -64,8 +64,8 @@
           </div>
         </div>
         [% IF session.role == "super_admin" OR type != "research_data" OR (type == "research_data" AND status != "public" AND status != "submitted") %]
-        <div class="corner_up" id="corup_[% fi.file_id %]" onclick="delete_file('[% fi.file_id %]');return false;"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></div>
-        <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]', '[% _id %]');"><a href="#" onclick="return false;"><span class="glyphicon glyphicon-pencil"></span></a></div>
+        <div class="corner_up" id="corup_[% fi.file_id %]" onclick="delete_file('[% fi.file_id %]');return false;"><a href="#"><span class="fa fa-times"></span></a></div>
+        <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]', '[% _id %]');"><a href="#" onclick="return false;"><span class="fa fa-pencil"></span></a></div>
         [% END %]
 
         <input type="hidden" id="file_[% fi.file_id %]" name="file" value="[% fi.json | html %]" />

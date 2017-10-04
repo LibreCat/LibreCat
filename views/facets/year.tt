@@ -1,5 +1,5 @@
 [% USE date %]
-<button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.publishing_year") %]</button>
+<button data-target="#year_[% tabmodus %][% menu %]" data-toggle="collapse" class="btn-link"><span class="fa fa-chevron-down fw"></span>[% h.loc("facets.publishing_year") %]</button>
 <div class="facettecollapse">
 <ul id="year_[% tabmodus %][% menu %]" class="collapse">
   [%- FOREACH y IN facets.year.terms %]

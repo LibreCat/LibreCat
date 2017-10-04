@@ -82,8 +82,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" name="finalSubmit" id="fileSubmit"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
+        <button type="button" class="btn btn-success" name="finalSubmit" id="fileSubmit"><span class="fa fa-check"></span> [% h.loc("forms.button.save") %]</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" aria-hidden="true"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</button>
       </div>
       </form>
     </div>
@@ -137,7 +137,7 @@ $('#fileSubmit').click( function() {
   var namediv     = $('#' + use_file_id + ' div.padded');
 
   namediv.html('');
-  namediv.html('<span class="glyphicon glyphicon-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
+  namediv.html('<span class="fa fa-file text-muted"></span> <span class="text-muted"><strong>' + data.file_name + '</strong></span>');
 
   var accessLevel;
 

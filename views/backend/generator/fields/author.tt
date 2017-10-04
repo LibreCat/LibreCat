@@ -21,8 +21,8 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.first_name.label_short || lf.$type.field.author_secondary.first_name.label_short %]</span>
             </div>
             <input type="text" id="first_name_0" name="author.0.first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %]  helpme" data-placement="top" title="[% h.loc("forms.forms.form_add_field") %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %]  helpme" data-placement="top" title="[% h.loc("forms.forms.form_add_field") %][% END %]" onclick="add_field('creator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
@@ -46,8 +46,8 @@
               </span>
             </div>
             {% END %}
-            <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% h.loc("forms.form_add_field") %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% h.loc("forms.form_add_field") %]" onclick="add_field('creator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
@@ -71,8 +71,8 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.first_name.label_short || lf.$type.field.author_secondary.first_name.label_short %]</span>
             </div>
             <input type="text" id="first_name_[% loop.index %]" name="author.[% loop.index %].first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("forms.forms.form_add_field") %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("forms.forms.form_add_field") %][% END %]" onclick="add_field('creator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
@@ -96,8 +96,8 @@
               </span>
             </div>
             {% END %}
-            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("forms.form_add_field") %][% END %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("forms.form_add_field") %][% END %]" onclick="add_field('creator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.author.idm OR fields.basic_fields.author_secondary.idm OR fields.supplementary_fields.author.idm OR fields.supplementary_fields.author_secondary.idm %}
@@ -122,8 +122,8 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.author.first_name.label_short || lf.$type.field.author_secondary.first_name.label_short %]</span>
             </div>
             <input type="text" id="first_name_0" name="author.0.first_name" placeholder="[% lf.$type.field.author.first_name.placeholder || lf.$type.field.author_secondary.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.author.mandatory OR fields.basic_fields.author_secondary.mandatory %} required{% END %}" value="[% author.0.first_name %]" />
-            <div class="input-group-addon hidden-lg hidden-md helpme" data-placement="top" title="[% h.loc("forms.forms.form_add_field") %]" onclick="add_field('creator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md helpme" data-placement="top" title="[% h.loc("forms.forms.form_add_field") %]" onclick="add_field('creator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>

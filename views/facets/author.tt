@@ -8,7 +8,7 @@
 [%- query = query _ ")" %]
 [%- p.q = []; p.q.push(query); p.get_person = 1 %]
 [%- authors = h.search_researcher(p) %]
-<button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="glyphicon glyphicon-chevron-down fw"></span>[% h.loc("facets.current_authors") %]</button>
+<button data-toggle="collapse" data-target="#authors_[% tabmodus %][% menu %]" class="btn-link"><span class="fa fa-chevron-down fw"></span>[% h.loc("facets.current_authors") %]</button>
 <div class="facettecollapse">
   <ul id="authors_[% tabmodus %][% menu %]" class="collapse">
   [%- FOREACH au IN facets.author.terms %]
