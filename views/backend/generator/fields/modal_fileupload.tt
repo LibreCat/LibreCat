@@ -16,7 +16,7 @@
 
         <h4>[% h.loc("forms.${type}.field.dropzone.edit_modal.heading_file") %]</h4>
         <div class="form-group">
-          <label class="text" id="fileNameTag" style="display:none">
+          <label class="text" id="fileNameTag">
             [% h.loc("forms.${type}.field.dropzone.edit_modal.current_file") %]
             <input type="text" name="fileName" id="id_fileName" value="" readonly="readonly" class="form-control"/>
           </label>

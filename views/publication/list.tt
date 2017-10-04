@@ -4,7 +4,7 @@
 [%- PROCESS header.tt %]
 [%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
 <!-- BEGIN publication/list.tt -->
-<span id="language_id" style="display:none;">[% lang %]</span>
+<span id="language_id" class="hidden">[% lang %]</span>
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->
     <div id="banner">
