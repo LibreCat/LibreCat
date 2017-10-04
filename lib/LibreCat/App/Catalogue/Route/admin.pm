@@ -89,8 +89,8 @@ Saves the data in the authority database.
             $data,
             sub {
                 if ($data->{_validation_errors}) {
-
-                    # error handling
+                    h->log->debug("got validation errors: $data->{_id}, bag: user");
+                    return template "admin/edit_account", $data;
                 }
                 else {
                     $user_bag->add($data);
@@ -149,8 +149,8 @@ Deletes the account with ID :id.
             $data,
             sub {
                 if ($data->{_validation_errors}) {
-
-                    # error handling
+                    h->log->debug("got validation errors: $data->{_id}, bag: project");
+                    return template "admin/edit_project", $data;
                 }
                 else {
                     $project_bag->add($data);
@@ -198,8 +198,8 @@ Deletes the account with ID :id.
             $data,
             sub {
                 if ($data->{_validation_errors}) {
-
-                    # error handling
+                    h->log->debug("got validation errors: $data->{_id}, bag: research_group");
+                    return template "admin/edit_research_group", $data;
                 }
                 else {
                     $rg_bag->add($data);

@@ -45,6 +45,10 @@
 .navbar-default .navbar-brand {
   padding: 7px 0 7px 7px;
   margin-left: 0 !important;
+
+  img {
+      height: 30px;
+  }
 }
 
 .navbar-fixed-top .navbar-right {
@@ -60,6 +64,12 @@
 span.select-language {
   padding-top: 32px;
   display: inline-block;
+}
+
+.navbar {
+    #settings {
+        width: 550px;
+    }
 }
 
 /* breadcrumb */
@@ -81,6 +91,10 @@ main {
   margin: 20px 0 0;
   border-bottom: 0;
   padding-bottom: 0;
+
+  img#user_photo {
+      width: 140px;
+  }
 }
 
 /* headlines */
@@ -111,6 +125,16 @@ h3 {
 .pubtheses {
   padding-bottom: 8px;
   border-bottom: 1px solid #eee;
+}
+
+.publication {
+    #basic_fields {
+        .creator {
+            input[type="radio"][id*="idm_intern_"] {
+                margin-top: 5px;
+            }
+        }
+    }
 }
 
 h3 a {
@@ -421,7 +445,7 @@ a.anchor {
 
 /* width */
 .fw,
-a span[class^='glyphicon'] {
+a span[class^='fa'] {
   width: 1.4em;
 }
 
@@ -628,6 +652,11 @@ a span[class^='fa fa-arrow'] {
   border: 1px solid #ddd;
   color: #9da0a4;
   border-radius: 0 4px;
+}
+
+/* file upload modal dialog */
+#fileNameTag {
+    display: block;
 }
 
 /* login page */
@@ -1249,6 +1278,20 @@ body.embed {
   main.front div#home {
     background: url("/images/pub_425px.jpg") 400px 100px no-repeat;
   }
+}
+
+// Request a copy
+ul.dropdown-menu[id^="admin_rac_"] {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+
+    li {
+        input {
+            width: 100%;
+        }
+    }
 }
 
 /* print */

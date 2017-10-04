@@ -9,7 +9,7 @@
     [%- CALL removed.import(qp.cql) -%]
     [%- CALL removed.splice(loop.index, 1) -%]
     [%- my_del_link.cql = removed -%]
-    <p class="text-muted"><a href="[% h.uri_for(request.path_info, other) %]" rel="nofollow"><span class="glyphicon glyphicon-remove"></span></a> [% val |html %]</p>
+    <p class="text-muted"><a href="[% h.uri_for(request.path_info, other) %]" rel="nofollow"><span class="fa fa-times"></span></a> [% val |html %]</p>
   [%- END %]
 [%- END -%]
 

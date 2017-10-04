@@ -35,7 +35,7 @@
           [% NEXT IF skip %]
         <div class="row innerrow">
         <div class="col-md-12">
-          <a href="#" onclick="javascript:connect([% pub.id %],"[% pub.title | replace('"', '\"') %]",[% id %])"><span class="glyphicon glyphicon-plus"></span>
+          <a href="#" onclick="javascript:connect([% pub.id %],"[% pub.title | replace('"', '\"') %]",[% id %])"><span class="fa fa-plus"></span>
           <strong>[% pub.title %]</strong></a><br />
           [% pub.citation.default %]
         </div>
@@ -97,7 +97,7 @@ $('#searchPubl').click(function() {
         }
       });
       if(control == "use"){
-        $('#results').append("<div class=\"row innerrow\"><div class=\"col-md-12\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% id %])\"><span class=\"glyphicon glyphicon-plus\"></span> <strong>" + title + "</strong></a><br />" + citation + "</div></div><div class=\"row\"><div class=\"col-md-12\">&nbsp;</div></div>");
+        $('#results').append("<div class=\"row innerrow\"><div class=\"col-md-12\"><a href=\"#\" onclick=\"javascript:connect(" + oId + ",[% id %])\"><span class=\"fa fa-plus\"></span> <strong>" + title + "</strong></a><br />" + citation + "</div></div><div class=\"row\"><div class=\"col-md-12\">&nbsp;</div></div>");
       }
       oId = "";
       title = "";

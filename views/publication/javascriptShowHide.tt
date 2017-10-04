@@ -1,5 +1,5 @@
 function ReduceAuthors (){
-  document.getElementById('showAut').innerHTML= '<br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
+  document.getElementById('showAut').innerHTML= '<br><a href="#details" onclick="ShowAuthors();"><span class="fa fa-plus fw"></span>All</a>' ;
 }
 
 function ShowAuthors (){
@@ -9,12 +9,12 @@ function ShowAuthors (){
     str +=  " ; [% IF au.id %]<a itemprop='author' href='[% uri_base %]/person/[% au.id %]'>[% au.full_name %]</a><sup class='muted'>Local</sup>[% ELSE %]<span itemprop='author'>[% au.full_name %]</span>[% END %]" ;
     [% END %]
   [% END %]
-  str += "<br><a href='#details' onclick='ReduceAuthors();'><span class='glyphicon glyphicon-minus fw'></span>Less</a>" ;
+  str += "<br><a href='#details' onclick='ReduceAuthors();'><span class='fa fa-minus fw'></span>Less</a>" ;
   document.getElementById('showAut').innerHTML= str ;
 }
 
 function ReduceGenBankIDs (){
-  document.getElementById('showGen').innerHTML= '<br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
+  document.getElementById('showGen').innerHTML= '<br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="fa fa-plus fw"></span>All</a>' ;
 }
 
 function ShowGenBankIDs (){
@@ -24,12 +24,12 @@ function ShowGenBankIDs (){
     str +=  '<a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a> ' ;
     [% END -%]
   [% END %]
-  str += '<br><a href="#" onclick="ReduceGenBankIDs();"><span class="glyphicon glyphicon-minus fw"></span>Less</a>' ;
+  str += '<br><a href="#" onclick="ReduceGenBankIDs();"><span class="fa fa-minus fw"></span>Less</a>' ;
   document.getElementById('showGen').innerHTML= str ;
 }
 
 function ReduceFiles (){
-  document.getElementById('showFiles').innerHTML= '<br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>All</a>' ;
+  document.getElementById('showFiles').innerHTML= '<br><a href="#" onclick="ShowFiles();"><span class="fa fa-plus fw"></span>All</a>' ;
 }
 
 function ShowFiles (){
@@ -42,7 +42,7 @@ function ShowFiles (){
     str +=  '<br>[%- INCLUDE publication/oa_lock_js.tt | trim %] <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name %]</a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>[% INCLUDE publication/modal_requestcopy.tt | trim %]' ;
     [% END -%]
   [% END %]
-  str += '<br><a href="#" onclick="ReduceFiles();"><span class="glyphicon glyphicon-minus fw"></span>Less</a>' ;
+  str += '<br><a href="#" onclick="ReduceFiles();"><span class="fa fa-minus fw"></span>Less</a>' ;
   document.getElementById('showFiles').innerHTML= str ;
 }
 

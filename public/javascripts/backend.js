@@ -50,13 +50,13 @@ $(function() {
  */
 function editAuthorIds(direction){
     if(direction == "edit"){
-        $('.authorIds').css('display','none');
-        $('.authorIds_input').attr('style','display:display');
+        $('.authorIds').addClass('hidden');
+        $('.authorIds_input').removeClass('hidden');
         $('#author_ids_edit').attr('onclick',"editAuthorIds('cancel')");
     }
     else if(direction == "cancel"){
-        $('.authorIds').attr('style','display:display');
-        $('.authorIds_input').attr('style','display:none');
+        $('.authorIds').removeClass('hidden');
+        $('.authorIds_input').addClass('hidden');
         $('#author_ids_edit').attr('onclick',"editAuthorIds('edit')");
     }
 }
@@ -209,7 +209,7 @@ function link_person(element){
             else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)) {
                 var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
                 container_title.html('');
-                var title = '<span class="glyphicon glyphicon-indent-left text-default"></span>Author: Choose name';
+                var title = '<span class="fa fa-indent text-default"></span>Author: Choose name';
                 var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
                 container.html('');
                 var table = '<p>Several exact matches for <em>' + firstname + ' ' + lastname + '</em> were found in the staff directory. Click on the number (Person ID) to view the person\'s profile in the directory. Click on the name to link the publication to the publication list of this person and make it visible on his/her personal publication page.</p><table class="table table-striped" id="lineId' + lineId + '"><tr><th>Person ID</th><th>Name</th></tr>';
@@ -315,7 +315,7 @@ function link_person(element){
             // No results found
             else {
                 var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
-                var title = '<span class="glyphicon glyphicon-remove-circle text-danger"></span> No author found';
+                var title = '<span class="fa fa-times text-danger"></span> No author found';
                 var container = $('#' + type + 'link_person_modal').find('.modal-body').first();
                 container.html('');
                 container_title.html('');
@@ -417,8 +417,6 @@ function edit_file(fileId, id){
             $('#id_embargo_to option[value="open_access"]').prop('selected', true);
         }
 
-        var fileNameTag = self.document.getElementById('fileNameTag');
-        fileNameTag.style.display = "block";
         $('#upload_file').modal('show');
 }
 

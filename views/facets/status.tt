@@ -1,4 +1,4 @@
-<button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="glyphicon glyphicon-chevron-down"></span> [% h.loc("facets.visibility_status") %]</button>
+<button data-toggle="collapse" data-target="#status_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="fa fa-chevron-down"></span> [% h.loc("facets.visibility_status") %]</button>
 <div class="facettecollapse">
   <ul id="status_[% tabmodus %][% menu %]" class="collapse">
   [%- FOREACH stat IN facets.status.terms %]

@@ -12,8 +12,8 @@
           <div class="input-group-addon hidden-lg hidden-md">{% project_reviewer.label %}</div>
           <input type="text" class="sticky form-control" onfocus="enable_autocomplete('pm',0);" id="pm_autocomplete_0" value="" />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="project_reviewer" id="project_reviewer_select_0">Select</span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('project_reviewer');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon"><span class="fa fa-plus" onclick="add_field('project_reviewer');"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
@@ -27,8 +27,8 @@
           <div class="input-group-addon hidden-lg hidden-md">{% project_reviewer.label %}</div>
           <input type="text" class="sticky form-control" onfocus="enable_autocomplete('pm',[% loop.index %]);" name="project_reviewer.[% loop.index %].name" id="pm_autocomplete_[% loop.index %]" value="[% h.get_project(dept._id).name %]" disabled="disabled" />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="project_reviewer" id="project_reviewer_select_[% loop.index %]">Select</span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('project_reviewer');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon"><span class="fa fa-plus" onclick="add_field('project_reviewer');"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>

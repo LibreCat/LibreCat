@@ -11,8 +11,8 @@
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% einrichtung.label %}</div>
           <input type="text" onfocus="enable_autocomplete('ein',0);" class="sticky form-control" id="ein_autocomplete_0" value="" />
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('einrichtung');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon"><span class="fa fa-plus" onclick="add_field('einrichtung');"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
@@ -25,8 +25,8 @@
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% einrichtung.label %}</div>
           <input type="text" onfocus="enable_autocomplete('ein',[% loop.index %]);" class="sticky form-control" id="ein_autocomplete_[% loop.index %]" value="[% h.get_department(dept._id).display %]" disabled="disabled" />
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('einrichtung');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon"><span class="fa fa-plus" onclick="add_field('einrichtung');"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
