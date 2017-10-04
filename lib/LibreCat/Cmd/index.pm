@@ -3,7 +3,6 @@ package LibreCat::Cmd::index;
 use Catmandu::Sane;
 use LibreCat::JobQueue;
 use parent qw(LibreCat::Cmd);
-use Data::Dumper;
 use LibreCat::Index;
 
 sub description {
