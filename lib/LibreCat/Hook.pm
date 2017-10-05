@@ -41,22 +41,20 @@ LibreCat::Hook - create call back functions to be executed at important LibreCat
 =head1 SYNOPSIS
 
     ## In your configuration files
-    # catmandu.hooks.yml
+    # config/hooks.yml
 
     hooks:
-       my-event:
-         before_fixes:
-            - foo
-            - bar
-         after_fixes:
-            - acme
+      my-event:
+        before_fixes:
+          - foo
+          - bar
+        after_fixes:
+          - acme
 
     ## In your perl code;
 
     # test.pl:
-    use Path::Tiny;
-    use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-    use LibreCat qw(:load);
+    use LibreCat load => (layer_paths => [qw(/opt/my-layer)]);
 
     my $hook = LibreCat->hook('my-event');
 
@@ -67,6 +65,18 @@ LibreCat::Hook - create call back functions to be executed at important LibreCat
 
     # This will execute: LibreCat::Hook::acme
     $hook->fix_after({ param1 => ... , param2 => ... });
+
+    ## A more elegant way to do the above is to use a fix_around method
+    # test.pl:
+    use LibreCat load => (layer_paths => [qw(/opt/my-layer)]);
+
+    my $hook = LibreCat->hook('my-event');
+    my $data = {test => 'me'};
+
+    $hook->fix_around($data, sub {
+        # do some stuff here with $data,
+        # e.g. add $data to a store
+    });
 
 =head1 DESCRIPTION
 
@@ -102,5 +112,9 @@ The fix gets as input all the parameters specified in the main LibreCat applicat
 
 Look at the C<config/hooks.yml> file for example hooks that are defined for the
 LibreCat web application.
+
+=head1 WARNING
+
+DO NOT USE the keys B<default_before_fixes> and B<default_after_fixes> in your local layers file.
 
 =cut

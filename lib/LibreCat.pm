@@ -132,7 +132,7 @@ LibreCat - Librecat helper functions
 
    use LibreCat;
 
-   # Given a 'catmandu' configuration file, like: catmandu.hooks.yml
+   # Given a 'catmandu' configuration file, like: config/hooks.yml
    # --
    # hooks:
    #   myhook:
