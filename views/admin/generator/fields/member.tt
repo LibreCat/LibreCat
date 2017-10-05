@@ -14,16 +14,16 @@
         <div class="input-group sticky{% IF member.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">{% member.first_name.label %}</div>
           <input type="text" name="member.0.first_name" id="member_first_name_0" value="[% member.0.first_name %]" class="form-control sticky"{% IF member.mandatory %} required{% END %}>
-	      <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('member');"></span></div>
-          <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon"><span class="fa fa-plus hidden-lg hidden-md" onclick="add_field('member');"></span></div>
+          <div class="input-group-addon hidden-lg hidden-md"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	  <div class="form-group col-md-6 col-xs-11">
 	    <div class="input-group sticky{% IF member.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon">{% member.last_name.label %}</div>
 	      <input type="text" name="member.0.last_name" id="member_last_name_0" value="[% member.0.last_name %]" class="form-control sticky"{% IF member.mandatory %} required{% END %}>
-	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('member');" class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('member');" class="fa fa-plus"></span></div>
+          <div class="input-group-addon hidden-xs hidden-sm"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	</div>
@@ -36,16 +36,16 @@
         <div class="input-group sticky{% IF member.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">{% member.first_name.label %}</div>
           <input type="text" name="member.[% loop.index %].first_name" id="member_first_name_[% loop.index %]" value="[% pi.first_name %]" class="form-control sticky"{% IF member.mandatory %} required{% END %}>
-	      <div class="input-group-addon"><span class="glyphicon glyphicon-plus hidden-lg hidden-md" onclick="add_field('member');"></span></div>
-          <div class="input-group-addon hidden-lg hidden-md"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon"><span class="fa fa-plus hidden-lg hidden-md" onclick="add_field('member');"></span></div>
+          <div class="input-group-addon hidden-lg hidden-md"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	  <div class="form-group col-md-6 col-xs-11">
 	    <div class="input-group sticky{% IF member.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon">{% member.last_name.label %}</div>
 	      <input type="text" name="member.[% loop.index %].last_name" id="member_last_name_[% loop.index %]" value="[% pi.last_name %]" class="form-control sticky"{% IF member.mandatory %} required{% END %}>
-	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('member');" class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('member');" class="fa fa-plus"></span></div>
+          <div class="input-group-addon hidden-xs hidden-sm"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	</div>

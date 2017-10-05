@@ -25,7 +25,7 @@
       [%- IF person.orcid %]<a href="http://orcid.org/[% person.orcid %]"><sup><img src="[% uri_base %]/images/icon_orcid.png" /></sup></a>[% END %]
       [%- IF loop.count > 11 %]
         <span id="showAut">
-          <br><a href="#details" onclick="ShowAuthors();"><span class="glyphicon glyphicon-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
+          <br><a href="#details" onclick="ShowAuthors();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
         </span>
         </div>
       </div>

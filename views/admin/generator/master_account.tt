@@ -30,9 +30,9 @@
       <div class="row innerrow"><!-- button -->
         <div class="col-md-12 buttonrow">
           <span class="form-group col-md-10 col-md-offset-2">
-            <button type="button" id="id_check_submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
-            <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
-            <a class="btn btn-danger" href="[% uri_base %]/librecat/admin/account/delete/[% _id %]" onclick="return confirm('Caution! You are deleting an account.');" name="delete"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+            <button type="button" id="id_check_submit" class="btn btn-success"><span class="fa fa-check"></span> [% h.loc("forms.button.save") %]</button>
+            <button type="button" class="btn btn-warning cancel-button"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</button>
+            <a class="btn btn-danger" href="[% uri_base %]/librecat/admin/account/delete/[% _id %]" onclick="return confirm('Caution! You are deleting an account.');" name="delete"><span class="fa fa-trash"></span> Delete</a>
           </span>
         </div>
       </div>
@@ -48,7 +48,7 @@
       <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	<h4 class="modal-title"></h4>
-	<div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+	<div><small>Click a name to choose. Click <span class="fa fa-chevron-down"></span> to show more.</small></div>
       </div>
       <div class="modal-body">
       </div>
@@ -145,7 +145,7 @@ function addDelegate(element){
       alert(data.error);
     }
     else {
-      $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="glyphicon glyphicon-remove del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
+      $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="fa fa-times del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
       $('#delegate_' + id).find('span.del_del').bind("click", function(){
         $('#delegate_' + id).remove();
       });

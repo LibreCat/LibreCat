@@ -13,8 +13,8 @@
 	    <div class="input-group sticky{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.corporate_editor.label_short || lf.$type.field.corporate_editor.label || lf.$type.field.corporate_editor_solo.label_short || lf.$type.field.corporate_editor_solo.label %]</div>
 	      <input type="text" name="corporate_editor.0" id="id_corporate_editor_0" value="" class="sticky form-control{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %} required{% END %}" placeholder="[% lf.$type.field.corporate_editor.placeholder || lf.$type.field.corporate_editor_solo.placeholder %]"{% IF fields.basic_fields.corporate_editor.readonly OR fields.basic_fields.corporate_editor_solo.readonly OR fields.supplementary_fields.corporate_editor.readonly OR fields.supplementary_fields.corporate_editor_solo.readonly %} readonly="readonly"{% END %} />
-	      <div class="input-group-addon" onclick="add_field('corporate_editor');"><span class="glyphicon glyphicon-plus"></span></div>
-	      <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+	      <div class="input-group-addon" onclick="add_field('corporate_editor');"><span class="fa fa-plus"></span></div>
+	      <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
 	    </div>
       </div>
     </div>
@@ -25,8 +25,8 @@
 	    <div class="input-group sticky{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.corporate_editor.label || lf.$type.field.corporate_editor_solo.label %]</div>
 	      <input type="text" name="corporate_editor.[% loop.index %]" id="corporate_editor_[% loop.index %]" value="[% cored | html %]" class="sticky form-control{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %}[% IF loop.first %] required[% END %]{% END %}"{% IF fields.basic_fields.corporate_editor.readonly OR fields.basic_fields.corporate_editor_solo.readonly OR fields.supplementary_fields.corporate_editor.readonly OR fields.supplementary_fields.corporate_editor_solo.readonly %} readonly="readonly"{% END %} />
-	      <div class="input-group-addon" onclick="add_field('corporate_editor');"><span class="glyphicon glyphicon-plus"></span></div>
-	      <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+	      <div class="input-group-addon" onclick="add_field('corporate_editor');"><span class="fa fa-plus"></span></div>
+	      <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
 	    </div>
       </div>
     </div>
@@ -38,8 +38,8 @@
 	    <div class="input-group sticky{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.corporate_editor.label || lf.$type.field.corporate_editor_solo.label %]</div>
 	      <input type="text" name="corporate_editor.0" id="id_corporate_editor_0" value="" class="sticky form-control{% IF fields.basic_fields.corporate_editor.mandatory OR fields.basic_fields.corporate_editor_solo.mandatory OR fields.supplementary_fields.corporate_editor.mandatory OR fields.supplementary_fields.corporate_editor_solo.mandatory %} required{% END %}" placeholder="[% lf.$type.field.corporate_editor.placeholder || lf.$type.field.corporate_editor_solo.placeholder %]"{% IF fields.basic_fields.corporate_editor.readonly OR fields.basic_fields.corporate_editor_solo.readonly OR fields.supplementary_fields.corporate_editor.readonly OR fields.supplementary_fields.corporate_editor_solo.readonly %} readonly="readonly"{% END %} />
-	      <div class="input-group-addon" onclick="add_field('corporate_editor');"><span class="glyphicon glyphicon-plus"></span></div>
-	      <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+	      <div class="input-group-addon" onclick="add_field('corporate_editor');"><span class="fa fa-plus"></span></div>
+	      <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
 	    </div>
       </div>
     </div>

@@ -20,8 +20,8 @@
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.translator.first_name.label_short") %]</span>
             </div>
             <input type="text" id="translator_first_name_0" name="translator.0.first_name" placeholder="[% h.loc("forms.${type}.field.translator.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("form_add_field") %][% END %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("form_add_field") %][% END %]" onclick="add_field('translator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
@@ -44,8 +44,8 @@
               </span>
             </div>
             {% END %}
-            <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('translator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}
@@ -69,8 +69,8 @@
               <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.translator.first_name.label_short") %]</span>
             </div>
             <input type="text" id="translator_first_name_[% loop.index %]" name="translator.[% loop.index %].first_name" placeholder="[% h.loc("forms.${type}.field.translator.first_name.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.translator.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("form_add_field") %][% END %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md[% IF loop.first %] helpme" data-placement="top" title="[% h.loc("form_add_field") %][% END %]" onclick="add_field('translator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
         </div>
@@ -93,8 +93,8 @@
               </span>
             </div>
             {% END %}
-            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('translator');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('translator');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </div>
         {% IF fields.basic_fields.translator.idm OR fields.supplementary_fields.translator.idm %}

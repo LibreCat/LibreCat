@@ -1,6 +1,6 @@
 <div class="row innerrow">
   <div class="col-md-10">
-    <a href="#file_upload" data-target="#licenses" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span><strong>[% h.loc("forms.${type}.field.license.heading") %]</strong></a><br />
+    <a href="#file_upload" data-target="#licenses" data-toggle="collapse"><span class="fa fa-chevron-down"></span><strong>[% h.loc("forms.${type}.field.license.heading") %]</strong></a><br />
 
     <div id="licenses" class="collapse[% IF file %] in[% END %]">
 
@@ -25,17 +25,17 @@
           <option value="ODbL"[% IF data_reuse_license == "ODbL" %] selected="selected"[% END %]>[% h.loc("forms.${type}.field.license.data_reuse_license.odbl.select_text") %]</option>
         </select><br />
 
-        <a href="#licenses" data-target="#PDDL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.data_reuse_license.pddl.name") %]</a><br />
+        <a href="#licenses" data-target="#PDDL" data-toggle="collapse"><span class="fa fa-chevron-down"></span>[% h.loc("forms.${type}.field.license.data_reuse_license.pddl.name") %]</a><br />
         <div id="PDDL" class="collapse reuse-license">
           [% h.loc("forms.${type}.field.license.data_reuse_license.pddl.license_text") %]
         </div>
 
-        <a href="#licenses" data-target="#ODCBy" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.data_reuse_license.odcby.name") %]</a><br />
+        <a href="#licenses" data-target="#ODCBy" data-toggle="collapse"><span class="fa fa-chevron-down"></span>[% h.loc("forms.${type}.field.license.data_reuse_license.odcby.name") %]</a><br />
         <div id="ODCBy" class="collapse reuse-license">
           [% h.loc("forms.${type}.field.license.data_reuse_license.odcby.license_text") %]
         </div>
 
-        <a href="#licenses" data-target="#ODbL" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.data_reuse_license.odbl.name") %]</a>
+        <a href="#licenses" data-target="#ODbL" data-toggle="collapse"><span class="fa fa-chevron-down"></span>[% h.loc("forms.${type}.field.license.data_reuse_license.odbl.name") %]</a>
         <div id="ODbL" class="collapse reuse-license">
           [% h.loc("forms.${type}.field.license.data_reuse_license.odbl.license_text") %]
         </div>
@@ -81,21 +81,21 @@
           [% END %]
         </select><br />
 
-        <a href="#licenses" data-target="#cc_0" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_0.name") %]</a><br />
+        <a href="#licenses" data-target="#cc_0" data-toggle="collapse"><span class="fa fa-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_0.name") %]</a><br />
         <div id="cc_0" class="collapse reuse-license">
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_0.legal_code_url") %]" target="_blank"><img src="[% uri_base %]/images/cc0.png" alt="CC-0" /></a><br />
           [% h.loc("forms.${type}.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_0.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_0.deed_url") %]</a><br />
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_0.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_0.legal_code_url") %]</a>
         </div>
 
-        <a href="#licenses" data-target="#cc_by" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_by.name") %]</a><br />
+        <a href="#licenses" data-target="#cc_by" data-toggle="collapse"><span class="fa fa-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_by.name") %]</a><br />
         <div id="cc_by" class="collapse reuse-license">
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by.legal_code_url") %]" target="_blank"><img src="[% uri_base %]/images/cc_by.png" alt="CC-BY" /></a><br />
           [% h.loc("forms.${type}.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by.deed_url") %]</a><br />
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by.legal_code_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by.legal_code_url") %]</a>
         </div>
 
-        <a href="#licenses" data-target="#cc_by_sa" data-toggle="collapse"><span class="glyphicon glyphicon-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.name") %]</a><br />
+        <a href="#licenses" data-target="#cc_by_sa" data-toggle="collapse"><span class="fa fa-chevron-down"></span>[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.name") %]</a><br />
         <div id="cc_by_sa" class="collapse reuse-license">
           <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.legal_code_url") %]" target="_blank"><img src="[% uri_base %]/images/cc_by_sa.png" alt="CC-BY-SA" /></a><br />
           [% h.loc("forms.${type}.field.license.cc_license.license_deed") %] <a href="[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.deed_url") %]" target="_blank">[% h.loc("forms.${type}.field.license.cc_license.cc_by_sa.deed_url") %]</a><br />
@@ -110,10 +110,10 @@
       [% IF session.role == "super_admin" %]
       <div class="row">
         <div class="col-md-12">
-        <span class="starMandatory">[% h.loc("forms.${type}.field.license.other_data_license.warning") %] <span class="glyphicon glyphicon-chevron-down"></span></span><br />
+        <span class="starMandatory">[% h.loc("forms.${type}.field.license.other_data_license.warning") %] <span class="fa fa-chevron-down"></span></span><br />
         <strong>[% h.loc("forms.${type}.field.license.other_data_license.label") %]</strong><br />
         <textarea rows="3" class="form-control" id="id_other_data_license" name="other_data_license">[% other_data_license %]</textarea>
-        <span class="starMandatory">[% h.loc("forms.${type}.field.license.other_data_license.warning") %] <span class="glyphicon glyphicon-chevron-up"></span></span><br /><br />
+        <span class="starMandatory">[% h.loc("forms.${type}.field.license.other_data_license.warning") %] <span class="fa fa-chevron-up"></span></span><br /><br />
         </div>
       </div>
       [% ELSIF session.role != "super_admin" && other_data_license %]

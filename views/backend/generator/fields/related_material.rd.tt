@@ -40,12 +40,12 @@
       </div>
       <div class="col-md-7 col-xs-9">
         <span class="form-group col-xs-9">
-          <span class="glyphicon glyphicon-file"></span> <a href="[% uri_base %]/publication/[% rel.id %]" target="_blank">[% record.title %]</a>
+          <span class="fa fa-file"></span> <a href="[% uri_base %]/publication/[% rel.id %]" target="_blank">[% record.title %]</a>
           <input type="hidden" id="related_material_id_[% index %]" name="related_material.record.[% index %].id" value="[% rel.id %]" />
         </span>
         <span class="col-xs-1">
           <button class="btn btn-default connect">
-            <span class="glyphicon glyphicon-minus"></span>
+            <span class="fa fa-minus"></span>
           </button>
         </span>
       </div>
