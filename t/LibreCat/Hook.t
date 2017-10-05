@@ -55,25 +55,22 @@ subtest 'basic' => sub {
     };
 
     my $hook = LibreCat->hook('test-123');
-
     ok $hook , 'got a hook';
 
     my $data = {};
-
     ok $hook->fix_before($data), 'fix_before';
-
     is $data->{test}, 'before', 'executed LibreCat::Fix::foo';
 
     ok $hook->fix_after($data), 'fix_after';
-
     is $data->{test}, 'after', 'executed LibreCat::Fix::foo';
 
     $data = {};
-
     ok $hook->fix_around($data, sub {$_[0]->{bla} = 'ok'; $_[0]}), 'fix_around';
-
     is $data->{bla},  'ok',    'executed the around';
     is $data->{test}, 'after', 'executed LibreCat::Fix::foo';
+
+    $data = {};
+    ok $hook->fix_around($data), 'fix around for empty sub';
 };
 
 subtest "hooks can be fix files" => sub {
@@ -85,23 +82,17 @@ subtest "hooks can be fix files" => sub {
     };
 
     my $hook = LibreCat->hook('test-fix-files');
-
     ok $hook , 'got a hook';
 
     my $data = {};
-
     ok $hook->fix_before($data), 'fix_before';
-
     is $data->{fixfile}, 'before', 'executed test_before.fix';
 
     ok $hook->fix_after($data), 'fix_after';
-
     is $data->{fixfile}, 'after', 'executed test_after.fix';
 
     $data = {};
-
     ok $hook->fix_around($data, sub {$_[0]->{bla} = 'ok'; $_[0]}), 'fix_around';
-
     is $data->{bla},  'ok',    'executed the around';
     is $data->{fixfile}, 'after', 'executed correctly';
 };
@@ -109,34 +100,26 @@ subtest "hooks can be fix files" => sub {
 subtest "default hooks" => sub {
     Catmandu->config->{hooks} = {
         'test-default_hooks' => {
-            'default_before_fixes' => [qw(remove_field(before))],
-            'default_after_fixes' => [qw(remove_field(after))],
-            'before_fixes' => ["add_field(before, 'here')"],
-            'after_fixes' => ["add_field(after, 'here')"],
+            'default_before_fixes' => ["remove_field(before)"],
+            'default_after_fixes' => ["remove_field(after)"],
+            'before_fixes' => ["add_field(before, here)", "add_field(stay, here)"],
+            'after_fixes' => ["add_field(after, here)"],
         }
     };
 
     my $hook = LibreCat->hook('test-default_hooks');
-
     ok $hook , 'got a hook';
 
     my $data = {};
-
     ok $hook->fix_before($data), 'fix_before';
-
-    is $data->{before}, 'here', 'executed test_before.fix';
+    is_deeply $data, {stay => 'here'}, 'executed fix_before method';
 
     ok $hook->fix_after($data), 'fix_after';
-
-    is $data->{after}, 'here', 'executed test_after.fix';
+    is_deeply $data, {stay => 'here', after => 'here'}, 'executed fix_after method';
 
     $data = {};
-
     ok $hook->fix_around($data, sub {$_[0]->{bla} = 'ok'; $_[0]}), 'fix_around';
-note Dumper $data;
-    is $data->{bla},  'ok',    'executed the around';
-    is_deeply $data, {bla => 'ok', after => 'here'};
-    # is $data->{only}, 'me left', 'executed correctly';
+    is_deeply $data, {bla => 'ok', stay => 'here', after => 'here'};
 };
 
 done_testing;

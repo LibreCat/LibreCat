@@ -157,6 +157,8 @@ hooks:
   eat:
    before_fixes: [peckish, hungry]
    after_fixes: [satisfied]
+  iexist:
+    before_fixes: ['butnotme.fix']
 
 i18n:
   lexicon:

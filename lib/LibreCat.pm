@@ -64,10 +64,9 @@ sub hook {
 
         my $hook_options = $hook->{options} || {};
 
-        for my $key (qw(before_fixes after_fixes)) {
-            my $default_fixes = $hook->{"default_$key"} || [];
+        for my $key (qw(before_fixes default_before_fixes default_after_fixes after_fixes)) {
             my $fixes = $hook->{$key} || [];
-            for my $fix (@$fixes, @$default_fixes) {
+            for my $fix (@$fixes) {
                 my $hook;
                 if ($self->looks_like_fix($fix)) {
                     $hook = $self->load_fix($fix);

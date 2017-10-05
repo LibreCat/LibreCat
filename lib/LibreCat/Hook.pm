@@ -5,16 +5,20 @@ use Moo;
 
 has name         => (is => 'ro');
 has before_fixes => (is => 'ro', default => sub {[]});
+has default_before_fixes => (is => 'ro', default => sub {[]});
+has default_after_fixes  => (is => 'ro', default => sub {[]});
 has after_fixes  => (is => 'ro', default => sub {[]});
 
 sub fix_before {
     my ($self, $data) = @_;
     $_->fix($data) for @{$self->before_fixes};
+    $_->fix($data) for @{$self->default_before_fixes};
     $data;
 }
 
 sub fix_after {
     my ($self, $data) = @_;
+    $_->fix($data) for @{$self->default_after_fixes};
     $_->fix($data) for @{$self->after_fixes};
     $data;
 }
