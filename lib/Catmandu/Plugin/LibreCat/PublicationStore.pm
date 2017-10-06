@@ -1,11 +1,9 @@
 package Catmandu::Plugin::LibreCat::PublicationStore;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(check_string);
 use Carp;
 use LibreCat;
 use LibreCat::App::Helper;
-use LibreCat::App::Catalogue::Controller::File;
 use LibreCat::App::Catalogue::Controller::Material;
 use Moo::Role;
 use MooX::Aliases;
@@ -19,8 +17,6 @@ around add => sub {
     if ($self->log->is_debug) {
         $self->log->debug("add " . $data->{_id});
     }
-
-    LibreCat::App::Catalogue::Controller::File::handle_file($data);
 
     if ($data->{related_material}) {
         LibreCat::App::Catalogue::Controller::Material::update_related_material(

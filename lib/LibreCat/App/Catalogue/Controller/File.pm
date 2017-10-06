@@ -164,10 +164,12 @@ sub handle_file {
 
     my $count = 0;
 
+    state $bag = Catmandu->store('main')->bag('publication');
+
     for my $fi (@{$pub->{file}}) {
 
         # Generate a new file_id if not one existed
-        $fi->{file_id} = h->new_record('publication')
+        $fi->{file_id} = $bag->generate_id
             unless defined($fi->{file_id}) && length($fi->{file_id});
 
         h->log->debug("processing file-id: " . $fi->{file_id});

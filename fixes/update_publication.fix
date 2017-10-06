@@ -7,7 +7,12 @@ form2schema(publication_identifier)
 form2schema(external_id)
 page_range_number()
 clean_preselects()
+
+if exists(file)
+  file_upload()
+end
 add_urn()
+
 person()
 volume_sort()
 research_data_doi()
