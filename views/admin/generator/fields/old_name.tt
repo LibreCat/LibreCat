@@ -4,20 +4,63 @@
       {% old_name.label %}
     </label>
   </div>
-  <div class="col-md-10">
-    <div class="form-group col-md-4 col-xs-11">
-      <div class="input-group sticky">
-        <div class="input-group-addon">{% old_name.old_first_name.label %}</div>
-        <input type="text" name="old_first_name" id="id_old_first_name" value="[% old_first_name %]" class="form-control sticky">
-        <div class="input-group-addon"></div>
+  <div class="col-md-10" id="old_name">
+    {% IF old_name.multiple %}
+    [% IF !old_name.0 %]
+    <div class="row innerrow multirow">
+      <div class="form-group col-md-4 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon">{% old_name.old_first_name.label %}</div>
+          <input type="text" name="old_name.0.first_name" id="id_old_first_name" value="[% old_name.0.first_name %]" class="form-control sticky">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon">{% old_name.old_last_name.label %}</div>
+          <input type="text" name="old_name.0.last_name" id="id_old_last_name" value="[% old_name.0.last_name %]" class="form-control sticky">
+          <div class="input-group-addon" onclick="add_field('old_name');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+        </div>
       </div>
     </div>
-    <div class="form-group col-md-6 col-xs-11">
-      <div class="input-group sticky">
-        <div class="input-group-addon">{% old_name.old_last_name.label %}</div>
-        <input type="text" name="old_last_name" id="id_old_last_name" value="[% old_last_name %]" class="form-control sticky">
-        <div class="input-group-addon"></div>
+    [% ELSE %]
+    [% FOREACH name IN old_name %]
+    <div class="row innerrow multirow">
+      <div class="form-group col-md-4 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon">{% old_name.old_first_name.label %}</div>
+          <input type="text" name="old_name.[% loop.index %].first_name" id="id_old_first_name" value="[% name.first_name %]" class="form-control sticky">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon">{% old_name.old_last_name.label %}</div>
+          <input type="text" name="old_name.[% loop.index %].last_name" id="id_old_last_name" value="[% name.last_name %]" class="form-control sticky">
+          <div class="input-group-addon"></div>
+        </div>
       </div>
     </div>
+    [% END %]
+    [% END %]
+    {% ELSE %}
+    <div class="row innerrow">
+      <div class="form-group col-md-4 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon">{% old_name.old_first_name.label %}</div>
+          <input type="text" name="old_name.0.first_name" id="id_old_first_name" value="[% old_name.0.first_name %]" class="form-control sticky">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-11">
+        <div class="input-group sticky">
+          <div class="input-group-addon">{% old_name.old_last_name.label %}</div>
+          <input type="text" name="old_name.0.last_name" id="id_old_last_name" value="[% old_name.0.last_name %]" class="form-control sticky">
+          <div class="input-group-addon"></div>
+        </div>
+      </div>
+    </div>
+    {% END %}
   </div>
 </div>

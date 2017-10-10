@@ -852,7 +852,7 @@ search:
               field: start_date
             end_date: *start_date
 
-    index_name: librecat
+    index_name: librecat1
     index_settings:
       analysis:
         analyzer:
@@ -1084,15 +1084,16 @@ search:
             fields:
               full_name: {type: string, include_in_all: true, analyzer: name}
               exact: {type: string, analyzer: tag}
-          old_full_name:
-            type: multi_field
-            fields:
-              old_full_name: {type: string, include_in_all: true, analyzer: name}
-              exact: {type: string, analyzer: tag}
           last_name: {type: string, analyzer: name}
-          old_last_name: {type: string, analyzer: name}
           first_name: {type: string, analyzer: name}
-          old_first_name: {type: string, analyzer: name}
+          old_name:
+            full_name:
+              type: multi_field
+              fields:
+                full_name: {type: string, include_in_all: true, analyzer: name}
+                exact: {type: string, analyzer: tag}
+            first_name: {type: string, analyzer: name}
+            last_name: {type: string, analyzer: name}
           idm_title: {type: string}
           former: {type: byte}
           nonexist: {type: byte}
