@@ -66,7 +66,7 @@ sub can_download {
     my ($self, $id, $file_id, $login, $role, $ip) = @_;
 
     my $ip_range = h->config->{ip_range};
-    my $pub      = Catmandu->store('main')->bag('publication')->get($id);
+    my $pub      = h->main_publication->get($id);
     my $access   = "";
     my $file_name;
     map {

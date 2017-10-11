@@ -15,8 +15,9 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 
 sub access_denied_hook {
-    LibreCat->hook('publication-access-denied')
-        ->fix_around({_id => params->{id}, user_id => session->{user_id},});
+    h->hook('publication-access-denied')
+        > fix_around(
+        {_id => params->{id}, user_id => session->{user_id},});
 }
 
 =head1 PREFIX /record
@@ -26,8 +27,6 @@ All actions related to a publication record are handled under this prefix.
 =cut
 
 prefix '/librecat/record' => sub {
-
-    state $pub_bag = Catmandu->store('main')->bag('publication');
 
 =head2 GET /new
 
@@ -43,21 +42,22 @@ Some fields are pre-filled.
 
         return template 'backend/add_new' unless $type;
 
-        my $id = $pub_bag->generate_id;
+        my $id = h->new_record('publication');
 
         # set some basic values
         my $data = {
             _id        => $id,
             type       => $type,
             department => $user->{department},
-            creator => {id => session->{user_id}, login => session->{user},},
+            creator =>
+                {id => session->{user_id}, login => session->{user},},
             user_id => session->{user_id},
         };
 
         # Use config/hooks.yml to register functions
         # that should run before/after adding new publications
         # E.g. create a hooks to change the default fields
-        state $hook = LibreCat->hook('publication-new');
+        state $hook = h->hook('publication-new');
 
         $hook->fix_before($data);
 
@@ -124,7 +124,7 @@ Checks if the user has permission the see/edit this record.
 
         forward '/' unless $id;
 
-        my $rec = $pub_bag->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -133,7 +133,7 @@ Checks if the user has permission the see/edit this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after edit publications
-        state $hook = LibreCat->hook('publication-edit');
+        state $hook = h->hook('publication-edit');
 
         $hook->fix_before($rec);
 
@@ -188,19 +188,10 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-        LibreCat->hook('publication-update')->fix_around(
+        h->hook('publication-update')->fix_around(
             $p,
             sub {
-                if ($p->{_validation_errors}) {
-                    h->log->debug("got validation errors for publication $p->{_id}");
-                    my $templatepath = "backend/forms";
-                    my $template = $p->{meta}->{template} // $p->{type};
-                    return template "$templatepath/$template", $p;
-                }
-                else {
-                    h->log->debug("fix around publication hook");
-                    $pub_bag->add($p);
-                }
+                h->update_record('publication', $p);
             }
         );
 
@@ -224,7 +215,7 @@ Checks if the user has the rights to edit this record.
             forward '/access_denied';
         }
 
-        my $rec = $pub_bag->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -232,14 +223,14 @@ Checks if the user has the rights to edit this record.
         }
 
         $rec->{user_id} = session->{user_id};
-        $rec->{status}  = "returned";
 
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
-        LibreCat->hook('publication-return')->fix_around(
+        h->hook('publication-return')->fix_around(
             $rec,
             sub {
-                $pub_bag->add($rec);
+                $rec->{status} = "returned";
+                h->update_record('publication', $rec);
             }
         );
 
@@ -255,7 +246,7 @@ Deletes record with id. For admins only.
     get '/delete/:id' => sub {
         my $id = params->{id};
 
-        my $rec = Catmandu->store('main')->bag('publication')->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -266,10 +257,10 @@ Deletes record with id. For admins only.
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications
-        LibreCat->hook('publication-delete')->fix_around(
+        h->hook('publication-delete')->fix_around(
             $rec,
             sub {
-                $pub_bag->set_delete_status($id);
+                h->delete_record('publication', $id);
             }
         );
 
@@ -285,14 +276,14 @@ Prints the frontdoor for every record.
     get '/preview/:id' => sub {
         my $id = params->{id};
 
-        my $hits = $pub_bag->get($id);
+        my $hits = h->main_publication->get($id);
 
         $hits->{bag}
             = $hits->{type} eq "research_data" ? "data" : "publication";
         $hits->{style}  = h->config->{citation}->{csl}->{default_style};
         $hits->{marked} = 0;
 
-        template "publication/record", $hits;
+        template 'publication/record.tt', $hits;
     };
 
 =head2 GET /internal_view/:id
@@ -306,7 +297,7 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = $pub_bag->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -328,7 +319,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
     get '/clone/:id' => sub {
         my $id  = params->{id};
-        my $rec = $pub_bag->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -337,7 +328,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
         delete $rec->{file};
         delete $rec->{related_material};
-        $rec->{_id} = $pub_bag->generate_id;
+        $rec->{_id} = h->new_record('publication');
 
         my $template = $rec->{type} . ".tt";
 
@@ -359,7 +350,7 @@ Publishes private records, returns to the list.
             forward '/access_denied';
         }
 
-        my $rec = $pub_bag->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -382,12 +373,13 @@ Publishes private records, returns to the list.
 
             # Use config/hooks.yml to register functions
             # that should run before/after publishing publications
-            LibreCat->hook('publication-publish')->fix_around(
-                $rec,
-                sub {
-                    $pub_bag->add($rec);
-                }
-            );
+            state $hook = h->hook('publication-publish');
+
+            $hook->fix_before($rec);
+
+            my $res = h->update_record('publication', $rec);
+
+            $hook->fix_after($res);
         }
 
         redirect uri_for('/librecat');
@@ -416,7 +408,7 @@ Changes the type of the publication.
 
         # Use config/hooks.yml to register functions
         # that should run before/after changing the edit mode
-        state $hook = LibreCat->hook('publication-change-type');
+        state $hook = h->hook('publication-change-type');
         $hook->fix_before($params);
         $hook->fix_after($params);
 

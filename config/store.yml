@@ -26,7 +26,7 @@ main:
       session:
         plugins: ['Datestamps']
       publication:
-        plugins: ['Datestamps', 'Versioning', 'LibreCat::PublicationStore']
+        plugins: ['Datestamps', 'Versioning']
         id_generator: Incremental
       project:
         plugins: ['Datestamps']
@@ -38,6 +38,8 @@ main:
       research_group:
         plugins: ['Datestamps']
         # id_generator: Incremental
+      reqcopy:
+        plugins: []
 
 metrics:
   package: DBI

@@ -81,7 +81,7 @@ sub _calc_date {
 
 sub _get_file_info {
     my ($pub_id, $file_id) = @_;
-    my $rec = Catmandu->store('main')->bag('publication')->get($pub_id);
+    my $rec = h->main_publication->get($pub_id);
     if ($rec->{file} and ref $rec->{file} eq "ARRAY") {
         my $matching_items
             = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
@@ -96,7 +96,7 @@ Author approves the request. Email will be sent to user.
 =cut
 
 get '/rc/approve/:key' => sub {
-    my $bag  = Catmandu->store('main')->bag('reqcopy');
+    my $bag  = h->main_reqcopy;
     my $data = $bag->get(params->{key});
     return "Nothing to approve." unless $data;
 
@@ -131,7 +131,7 @@ to user. Delete request key from database.
 =cut
 
 get '/rc/deny/:key' => sub {
-    my $bag  = Catmandu->store('main')->bag('reqcopy');
+    my $bag  = h->main_reqcopy;
     my $data = $bag->get(params->{key});
     return "Nothing to deny." unless $data;
 
@@ -161,7 +161,7 @@ Now get the document if time has not expired yet.
 =cut
 
 get '/rc/:key' => sub {
-    my $check = Catmandu->store('main')->bag('reqcopy')->get(params->{key});
+    my $check = h->main_reqcopy->get(params->{key});
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
@@ -188,7 +188,7 @@ Request a copy of the publication. Email will be sent to the author.
 =cut
 
 any '/rc/:id/:file_id' => sub {
-    my $bag = Catmandu->store('main')->bag('reqcopy');
+    my $bag  = h->main_reqcopy;
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
         forward '/publication/' . params->{id}, {method => 'GET'};

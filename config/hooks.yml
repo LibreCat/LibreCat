@@ -18,119 +18,75 @@ hooks:
 
   # Code that runs when changing the edit mode of a publication
   publication-change-type:
-    before_fixes: ['publication_change_type']
+    before_fixes:
+      - publication_change_type
     after_fixes: []
 
   # Code that runs when updating a publication
   publication-update:
-    options:
-      bag: publication
-    before_fixes: ['validate']
+    before_fixes: []
     after_fixes:
-      - index_record
       - new_research_data_email
       - new_research_data_datacite
 
-  # Code that runs when updating a publication via cli
-  publication-update-cmd:
-    options:
-      bag: publication
-    before_fixes: ['validate']
-    after_fixes: []
-
   # Code that runs at a 'Make public' action
   publication-publish:
-    options:
-      bag: publication
     before_fixes: []
     after_fixes:
-      - index_record
       - new_research_data_email
       - new_research_data_datacite
 
   # Code that runs when deleting a publication
   publication-delete:
-    options:
-      bag: publication
-    before_fixes: []
-    after_fixes: ['index_record']
+   before_fixes: []
+   after_fixes: []
 
   # Code that runs at a 'Return' action
   publication-return:
-    options:
-      bag: publication
     before_fixes: []
-    after_fixes: ['index_record']
+    after_fixes: []
 
   # Code that runs when a publication access is tried without credentials
   publication-access-denied:
     before_fixes: []
     after_fixes: []
 
-  # Code that runs when importing a publication
-  publication-import:
-    options:
-      bag: publication
-    before_fixes: ['validate']
-    after_fixes: ['index_record']
-
   # Code that runs when importing a Quick and Easy publication
   qae-new:
     before_fixes: []
     after_fixes: []
 
-  # Code that runs when updating a project via cli
-  project-update-cmd:
-    options:
-      bag: project
-    before_fixes: ['validate']
+  # Code that runs when importing a new aXiv record
+  import-new-arxiv:
+    before_fixes: []
     after_fixes: []
 
-  # Code that runs when updating a department via cli
-  department-update-cmd:
-    options:
-      bag: department
-    before_fixes: ['validate']
+  # Code that runs when importing a new BibTex record
+  import-new-bibtex:
+    before_fixes: []
     after_fixes: []
 
-  # Code that runs when updating a research_group via cli
-  research_group-update-cmd:
-    options:
-      bag: research_group
-    before_fixes: ['validate']
+  # Code that runs when importing a new DOI record
+  import-new-crossref:
+    before_fixes: []
     after_fixes: []
 
-  # Code that runs when updating an user via cli
-  user-update-cmd:
-    options:
-      bag: user
-    before_fixes: ['validate']
+  # Code that runs when importing a new datacite record
+  import-new-datacite:
+    before_fixes: []
     after_fixes: []
 
-  # Code that runs when updating an user
-  user-update:
-    options:
-      bag: user
-    before_fixes: ['validate']
-    after_fixes: ['index_record']
+  # Code that runs when importing a new PubMed record
+  import-new-epmc:
+    before_fixes: []
+    after_fixes: []
 
-  # Code that runs when updating a project
-  project-update:
-    options:
-      bag: project
-    before_fixes: ['validate']
-    after_fixes: ['index_record']
+  # Code that runs when importing a new Inspire record
+  import-new-inspire:
+    before_fixes: []
+    after_fixes: []
 
-  # Code that runs when updating a department
-  department-update:
-    options:
-      bag: department
-    before_fixes: ['validate']
-    after_fixes: ['index_record']
-
-  # Code that runs when updating a research_group
-  research_group-update:
-    options:
-      bag: research_group
-    before_fixes: ['validate']
-    after_fixes: ['index_record']
+  # Code that runs when importing a new WOS record
+  import-new-wos:
+    before_fixes: []
+    after_fixes: []
