@@ -71,7 +71,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             name:
               op:
@@ -688,7 +688,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             fullname:
               op:
@@ -772,7 +772,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             id:
               op:
@@ -815,7 +815,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
             id:
               op:
                 '=': true
