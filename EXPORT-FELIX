@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# Execute this script in the Felix installation directory to export all the
+# data from the databases
+#
+# E.g.
+#     $ cd /opt/librecat-felix
+#     $ bash EXPORT-FELIX
+#
+#
+TMPDIR=/tmp/librecat-upgrade-felix
+
+echo "Upgrading from previous installation"
+echo -n "Please provide an export directory [${TMPDIR}] "
+read answer
+
+if [ "${answer}" != "" ]; then
+   TMPDIR=${answer}
+fi
+
+if [ -d ${TMPDIR} ]; then
+   echo "error: ${TMPDIR} already exists!"
+   exit 2
+fi
+
+mkdir -p ${TMPDIR}
+
+if [ $? -eq 0 ]; then
+   echo "created ${TMPDIR}"
+else
+   echo "error: failed to create ${TMPDIR}"
+   exit 3
+fi
+
+echo "Exporting lastest identifiers..."
+carton exec "bin/librecat export backup --bag info to JSON" > ${TMPDIR}/info.json
+
+echo "Exporting audit..."
+carton exec "bin/librecat export backup --bag audit to JSON" > ${TMPDIR}/audit.json
+
+echo "Exporting publication..."
+carton exec "bin/librecat export backup --bag publication to JSON" > ${TMPDIR}/publication.json
+
+echo "Exporting publication_version..."
+carton exec "bin/librecat export backup --bag publication_version to JSON" > ${TMPDIR}/publication_version.json
+
+echo "Exporting project..."
+carton exec "bin/librecat export backup --bag project to JSON" > ${TMPDIR}/project.json
+
+echo "Exporting project_version..."
+carton exec "bin/librecat export backup --bag project_version to JSON" > ${TMPDIR}/project_version.json
+
+echo "Exporting researcher..."
+carton exec "bin/librecat export backup --bag researcher to JSON" > ${TMPDIR}/user.json
+
+echo "Exporting researcher_version..."
+carton exec "bin/librecat export backup --bag researcher_version to JSON" > ${TMPDIR}/user_version.json
+
+echo "Exporting department..."
+carton exec "bin/librecat export backup --bag department to JSON" > ${TMPDIR}/department.json
+
+echo "Exporting department_version..."
+carton exec "bin/librecat export backup --bag department_version to JSON" > ${TMPDIR}/department_version.json
+
+echo "Exporting research_group..."
+carton exec "bin/librecat export backup --bag research_group to JSON" > ${TMPDIR}/research_group.json
+
+echo "Exporting research_group_version..."
+carton exec "bin/librecat export backup --bag research_group_version to JSON" > ${TMPDIR}/research_group_version.json
+
+echo "Exporting reqcopy..."
+carton exec "bin/librecat export default --bag reqcopy to JSON" > ${TMPDIR}/reqcopy.json
+
+echo "Done"

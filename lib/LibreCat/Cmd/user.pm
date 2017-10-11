@@ -96,7 +96,7 @@ sub _list {
             cql_query    => $query,
             total        => $total,
             start        => $start,
-            sru_sortkeys => $sort,
+            sru_sortkeys => $sort
         );
     }
     else {
@@ -183,34 +183,29 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag      = Catmandu->store('main')->bag('user');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $bag->generate_id;
-            # Guess if we need to encrypt the password
+            $rec->{_id} //= $helper->new_record('user');
             $rec->{password} = mkpasswd($rec->{password})
-                if exists $rec->{password} && length($rec->{password}) < 60;
+                if exists $rec->{password};
 
             my $is_ok = 1;
 
-            LibreCat->hook('user-update-cmd')->fix_around(
+            $helper->store_record(
+                'user',
                 $rec,
-                sub {
-                    if ($rec->{_validation_errors}) {
-                        print STDERR join("\n",
-                            $rec->{_id},
-                            "ERROR: not a valid user",
-                            @{$rec->{_validation_errors}}),
-                            "\n";
-                        $ret   = 2;
-                        $is_ok = 0;
-                    }
-                    else {
-                        $bag->add($rec);
-                    }
+                validation_error => sub {
+                    my $validator = shift;
+                    print STDERR join("\n",
+                        $rec->{_id},
+                        "ERROR: not a valid user",
+                        @{$validator->last_errors}),
+                        "\n";
+                    $ret   = 2;
+                    $is_ok = 0;
                 }
             );
 
@@ -234,22 +229,18 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
-    {
-        my $bag = Catmandu->store('main')->bag('user');
-        $bag->delete($id);
-        $bag->commit;
-    }
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('user',
+        $id);
 
-    # Deleting search
-    {
-        my $bag = LibreCat::App::Helper::Helpers->new->user;
-        $bag->delete($id);
-        $bag->commit;
+    if ($result) {
+        print "deleted $id\n";
+        return 0;
     }
-
-    print "deleted $id\n";
-    return 0;
+    else {
+        print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
 }
 
 sub _valid {
@@ -276,13 +267,12 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+                $ret = 2;
             }
-
-            $ret = -1;
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 sub _passwd {
@@ -305,6 +295,7 @@ sub _passwd {
     my $password2 = <STDIN>;
     chop($password2);
     system('/bin/stty', 'echo');
+    print "\n";
 
     unless ($password1 eq $password2) {
         print STDERR "Passwords don't match\n";
@@ -314,7 +305,7 @@ sub _passwd {
     $data->{password} = mkpasswd($password2);
 
     my $helper = LibreCat::App::Helper::Helpers->new;
-    $data = Catmandu->store('main')->bag('user')->add($data);
+    $helper->store_record('user', $data);
 
     my $index = $helper->user;
     $index->add($data);
@@ -341,7 +332,7 @@ LibreCat::Cmd::user - manage librecat users
     librecat user get <id>
     librecat user delete <id>
     librecat user valid <FILE>
-    librecat user [options] passwd <id>
+    librecat user passwd <id>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

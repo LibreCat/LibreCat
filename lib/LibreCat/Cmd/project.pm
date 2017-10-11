@@ -87,8 +87,10 @@ sub _list {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->project->searcher(
+        $it = $helper->project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -96,7 +98,7 @@ sub _list {
         );
     }
     else {
-        $it = Catmandu->store('main')->bag('project');
+        $it = $helper->main_project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -130,8 +132,10 @@ sub _export {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->project->searcher(
+        $it = $helper->project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -139,7 +143,7 @@ sub _export {
         );
     }
     else {
-        $it = Catmandu->store('main')->bag('project');
+        $it = $helper->main_project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -161,7 +165,9 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = Catmandu->store('main')->bag('project')->get($id);
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
+    my $data = $helper->main_project->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -176,31 +182,27 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag      = Catmandu->store('main')->bag('project');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $bag->generate_id;
+            $rec->{_id} //= $helper->new_record('project');
 
             my $is_ok = 1;
 
-            LibreCat->hook('project-update-cmd')->fix_around(
+            $helper->store_record(
+                'project',
                 $rec,
-                sub {
-                    if ($rec->{_validation_errors}) {
-                        print STDERR join("\n",
-                            $rec->{_id},
-                            "ERROR: not a valid project",
-                            @{$rec->{_validation_errors}}),
-                            "\n";
-                        $ret   = 2;
-                        $is_ok = 0;
-                    }
-                    else {
-                        $bag->add($rec);
-                    }
+                validation_error => sub {
+                    my $validator = shift;
+                    print STDERR join("\n",
+                        $rec->{_id},
+                        "ERROR: not a valid project",
+                        @{$validator->last_errors}),
+                        "\n";
+                    $ret   = 2;
+                    $is_ok = 0;
                 }
             );
 
@@ -224,22 +226,18 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
-    {
-        my $bag = Catmandu->store('main')->bag('project');
-        $bag->delete($id);
-        $bag->commit;
-    }
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('project',
+        $id);
 
-    # Deleting search
-    {
-        my $bag = LibreCat::App::Helper::Helpers->new->project;
-        $bag->delete($id);
-        $bag->commit;
+    if ($result) {
+        print "deleted $id\n";
+        return 0;
     }
-
-    print "deleted $id\n";
-    return 0;
+    else {
+        print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
 }
 
 sub _valid {
@@ -266,6 +264,7 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+                
                 $ret = 2;
             }
         }

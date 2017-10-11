@@ -59,7 +59,7 @@ post '/librecat/record/import' => sub {
     trim($p, 'id',     'whitespace');
     trim($p, 'source', 'whitespace');
 
-    state $bag = Catmandu->store('main')->bag('publication');
+    state $bag = h->main_publication;
     my $user = h->get_person(session->{user_id});
     my $id   = $p->{id};
     my $data

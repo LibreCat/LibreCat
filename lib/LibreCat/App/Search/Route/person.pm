@@ -58,7 +58,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
 
     # Redirect to the alias if the other can't be found
     h->log->debug("trying to find user $id");
-    unless (my $user = Catmandu->store('main')->bag('user')->get($id)) {
+    unless (my $user = h->main_user->get($id)) {
         h->log->debug("trying to find user alias $id");
 
         my %search_params = (cql => ["alias=$id"]);

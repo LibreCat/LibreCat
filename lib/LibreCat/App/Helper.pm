@@ -29,6 +29,10 @@ sub config {
     state $config = hash_merge(Catmandu->config, Dancer::config);
 }
 
+sub hook {
+    LibreCat->hook($_[1]);
+}
+
 sub queue {
     state $config = LibreCat::JobQueue->new;
 }
@@ -37,8 +41,54 @@ sub layers {
     LibreCat->layers;
 }
 
+sub create_fixer {
+    my ($self, $file) = @_;
+
+    $self->log->debug("searching for fix `$file'");
+
+    for my $p (@{$self->layers->fixes_paths}) {
+        $self->log->debug("testing `$p/$file'");
+        if (-r "$p/$file") {
+            $self->log->debug("found `$p/$file'");
+            return Catmandu::Fix->new(fixes => ["$p/$file"]);
+        }
+    }
+
+    $self->log->error("can't find a fixer for: `$file'");
+
+    return Catmandu::Fix->new();
+}
+
 sub alphabet {
     return ['A' .. 'Z'];
+}
+
+sub main_audit {
+    state $bag = Catmandu->store('main')->bag('audit');
+}
+
+sub main_publication {
+    state $bag = Catmandu->store('main')->bag('publication');
+}
+
+sub main_project {
+    state $bag = Catmandu->store('main')->bag('project');
+}
+
+sub main_user {
+    state $bag = Catmandu->store('main')->bag('user');
+}
+
+sub main_department {
+    state $bag = Catmandu->store('main')->bag('department');
+}
+
+sub main_research_group {
+    state $bag = Catmandu->store('main')->bag('research_group');
+}
+
+sub main_reqcopy {
+    state $bag = Catmandu->store('main')->bag('reqcopy');
 }
 
 sub publication {
@@ -228,6 +278,172 @@ sub get_metrics {
     return {} unless $bag and $id;
 
     return Catmandu->store('metrics')->bag($bag)->get($id);
+}
+
+sub new_record {
+    my ($self, $bag) = @_;
+    Catmandu->store('main')->bag($bag)->generate_id;
+}
+
+sub update_record {
+    my ($self, $bag, $rec) = @_;
+
+    $self->log->info("updating $bag");
+
+    if ($self->log->is_debug) {
+        $self->log->debug(Dancer::to_json($rec));
+    }
+
+    $rec = $self->store_record(
+        $bag, $rec,
+        validation_error => sub {
+            my $validator = shift;
+
+            # At least cry foul when the record doesn't validate
+            $self->log->error($rec->{_id} . " not a valid publication!");
+            $self->log->error(Dancer::to_json($validator->last_errors));
+        }
+    );
+
+    $self->index_record($bag, $rec);
+
+    sleep 1;    # bad hack!
+
+    $rec;
+}
+
+sub store_record {
+    my ($self, $bag, $rec, %opts) = @_;
+
+    # don't know where to put it, should find better place to handle this
+    # especially the async stuff
+    if ($bag eq 'publication') {
+        require LibreCat::App::Catalogue::Controller::File;
+        require LibreCat::App::Catalogue::Controller::Material;
+
+        LibreCat::App::Catalogue::Controller::File::handle_file($rec);
+
+        if ($rec->{related_material}) {
+            LibreCat::App::Catalogue::Controller::Material::update_related_material(
+                $rec);
+        }
+
+        # Set for every update the user-id of the last editor
+        unless ($rec->{user_id}) {
+
+            # Edit by a user via the command line?
+            my $super_id = $self->config->{store}->{builtin_users}->{options}
+                ->{init_data}->[0]->{_id} // 'undef';
+            $rec->{user_id} = $super_id;
+        }
+    }
+
+    # memoize fixes
+    state $fixes = {};
+    my $fix = $fixes->{$bag} //= $self->create_fixer("update_$bag.fix");
+    $fix->fix($rec);
+
+    state $cite_fix = Catmandu::Fix->new(fixes => ["add_citation()"]);
+    if ($bag eq 'publication') {
+        $cite_fix->fix($rec) unless $opts{skip_citation};
+    }
+
+    # clean all the fields that are not part of the JSON schema
+    state $validators = {};
+    my $validator_pkg = $validators->{$bag};
+    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),'LibreCat::Validator');
+
+    my $can_store = 1;
+
+    if ($validator_pkg) {
+        my $validator = $validator_pkg->new;
+
+        my @white_list = $validator->white_list;
+
+        $self->log->fatal("no white_list found for $validator_pkg ??!")
+            unless @white_list;
+
+        for my $key (keys %$rec) {
+            unless (grep(/^$key$/, @white_list)) {
+                $self->log->debug("deleting invalid key: $key");
+                delete $rec->{$key};
+            }
+        }
+
+        unless ($validator->is_valid($rec)) {
+            $can_store = 0;
+            $opts{validation_error}->($validator, $rec)
+                if $opts{validation_error}
+                && ref($opts{validation_error}) eq 'CODE';
+        }
+    }
+
+    if ($can_store) {
+        my $bagname = "main_$bag";
+        $self->log->debug("storing record in $bagname...");
+        $self->log->debug(Dancer::to_json($rec));
+        my $saved_record = $self->$bagname->add($rec);
+        $self->$bagname->commit;
+        return $saved_record;
+    }
+    else {
+        return undef;
+    }
+}
+
+sub index_record {
+    my ($self, $bag, $rec) = @_;
+    #compare version! through _version or through date_updated
+    $self->log->debug("indexing record in $bag...");
+    $self->log->debug(Dancer::to_json($rec));
+    $self->$bag->add($rec);
+    $self->$bag->commit;
+    $rec;
+}
+
+sub delete_record {
+    my ($self, $bag, $id) = @_;
+
+    if ($bag eq 'publication') {
+        my $del_record = $self->publication->get($id);
+
+        if ($del_record->{oai_deleted} || $del_record->{status} eq 'public') {
+            $del_record->{oai_deleted} = 1;
+            $del_record->{locked}      = 1;
+        }
+
+        $del_record->{date_deleted} = $self->now;
+        $del_record->{status}       = 'deleted';
+
+
+        my $saved   = $self->main_publication->add($del_record);
+        $self->main_publication->commit;
+        $self->publication->add($saved);
+        $self->publication->commit;
+
+        sleep 1;
+
+        return $saved;
+    }
+    else {
+        $self->purge_record($bag,$id);
+        return +{};
+    }
+}
+
+sub purge_record {
+    my ($self, $bag, $id) = @_;
+
+    # Delete from the index store
+    $self->$bag->delete($id);
+    $self->$bag->commit;
+
+    # Delete from the main store
+    my $bagname = "main_$bag";
+    $self->$bagname->delete($id);
+    $self->$bagname->commit;
+
+    return 1;
 }
 
 sub display_doctypes {
