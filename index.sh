@@ -56,6 +56,27 @@ function f_drop_version {
     echo "Done"
 }
 
+function f_drop_audit {
+    echo "Dropping audit..."
+    echo "audit..."
+    carton exec "bin/librecat delete main --bag audit"
+    echo "Done"
+}
+
+function f_drop_reqcopy {
+    echo "Dropping reqcopy..."
+    echo "reqcopy..."
+    carton exec "bin/librecat delete main --bag reqcopy"
+    echo "Done"
+}
+
+function f_drop_metrics {
+    echo "Dropping metrics..."
+    echo "metrics..."
+    carton exec "bin/librecat delete metrics"
+    echo "Done"
+}
+
 function f_reindex {
     echo "Dropping the search"
     carton exec bin/librecat drop search
@@ -167,6 +188,9 @@ case "${CMD}" in
             f_drop && \
             f_drop_backup && \
             f_drop_version
+        confirm "Drop audit data? [y/N]" && f_drop_audit
+        confirm "Drop reqcopy data? [y/N]" && f_drop_reqcopy
+        confirm "Drop metrics data? [y/N]" && f_drop_metrics
         ;;
     reindex)
         f_reindex
