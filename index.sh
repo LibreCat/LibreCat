@@ -200,6 +200,6 @@ case "${CMD}" in
         f_import
         ;;
     *)
-        echo "usage: $0 {create|drop|drop_backup|drop_version|drop_all|export|import}"
+        echo "usage: $0 {create|reindex|drop|drop_backup|drop_version|drop_all|export|import}"
         exit 1
 esac

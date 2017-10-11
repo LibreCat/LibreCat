@@ -42,9 +42,7 @@ for t in info audit publication publication_version project \
     carton exec "bin/librecat import -v JSON to main --bag ${t}" < ${TMPDIR}/${t}.json
 done
 
-for t in publication project user department research_group; do
-    echo "Indexing ${t}..."
-    carton exec "bin/librecat copy -v main --bag ${t} to search --bag ${t}"
-done
+echo "Indexing everything"
+./index.sh reindex
 
 echo "Done"
