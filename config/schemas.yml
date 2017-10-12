@@ -842,20 +842,22 @@ user:
       minLength: 0
       description: "Full name"
     old_name:
-      type: object
-      properties:
-        first_name:
-          type: string
-          minLength: 0
-          description: "Older first name"
-        last_name:
-          type: string
-          minLength: 0
-          description: "Older last name"
-        full_name:
-          type: string
-          minLength: 0
-          description: "Older full name"
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 0
+            description: "Older first name"
+          last_name:
+            type: string
+            minLength: 0
+            description: "Older last name"
+          full_name:
+            type: string
+            minLength: 0
+            description: "Older full name"
     super_admin:
       oneOf:
         - type: string
@@ -925,6 +927,9 @@ user:
                 minimum: 0
             description: "Department identifier"
       description: "Department"
+    ext_institution:
+      type: string
+      description: "External Institution"
     style:
        type: string
        description: "Preferred citation style"

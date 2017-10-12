@@ -38,7 +38,8 @@
         <div class="input-group sticky">
           <div class="input-group-addon">{% old_name.old_last_name.label %}</div>
           <input type="text" name="old_name.[% loop.index %].last_name" id="id_old_last_name" value="[% name.last_name %]" class="form-control sticky">
-          <div class="input-group-addon"></div>
+          <div class="input-group-addon" onclick="add_field('old_name');"><span class="glyphicon glyphicon-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
         </div>
       </div>
     </div>
