@@ -62,7 +62,11 @@ sub fix {
 
     unless ($validator->is_valid($data)) {
         h->log->error($data->{_id} . " not a valid publication!");
-        h->log->error($validator->last_errors);
+        foreach my $err (@{$validator->last_errors}){
+          # is this always an array?
+          h->log->error($err);
+        }
+
         $data->{_validation_errors} = $validator->last_errors;
     }
 
