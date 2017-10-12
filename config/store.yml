@@ -41,13 +41,6 @@ main:
       reqcopy:
         plugins: []
 
-metrics:
-  package: DBI
-  options:
-    data_source: "DBI:mysql:database=librecat_metrics"
-    username: librecat
-    password: librecat
-
 search:
   package: ElasticSearch
   options:
