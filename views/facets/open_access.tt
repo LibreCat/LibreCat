@@ -1,8 +1,8 @@
 [%- FOREACH t IN facets.open_access.terms %]
   [%- IF t.count < total %]
   [%- NEXT UNLESS t.term %]
-  <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="glyphicon glyphicon-chevron-right"></span>[% t.count %] [% h.loc("facets.fulltext") %]</a>
+  <a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="fulltext" data-value="1" href="#" rel="nofollow"><span class="fa fa-chevron-right"></span>[% t.count %] [% h.loc("facets.fulltext") %]</a>
   [%- ELSE %]
-  <div class="text-success margin-top1-2 margin-bottom1-2"><span class="glyphicon glyphicon-ok"></span> <strong>[% h.loc("facets.all_fulltext") %]</strong></div>
+  <div class="text-success margin-top1-2 margin-bottom1-2"><span class="fa fa-check"></span> <strong>[% h.loc("facets.all_fulltext") %]</strong></div>
   [%- END %]
 [%- END %]

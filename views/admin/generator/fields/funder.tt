@@ -12,8 +12,8 @@
         <div class="input-group sticky{% IF funder.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% funder.label %}</div>
           <input type="text" name="funder.0" id="id_funder_0" value="[% funder.0 %]" class="form-control sticky"{% IF funder.mandatory %} required{% END %}>
-	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('funder');" class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('funder');" class="fa fa-plus"></span></div>
+          <div class="input-group-addon hidden-xs hidden-sm"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	</div>
@@ -24,8 +24,8 @@
 	    <div class="input-group sticky{% IF funder.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">{% funder.label %}</div>
 	      <input type="text" name="funder.[% loop.index %]" id="id_funder_[% loop.index %]" value="[% pi %]" class="form-control sticky"{% IF funder.mandatory %} required{% END %}>
-	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('funder');" class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon hidden-xs hidden-sm"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon hidden-xs hidden-sm"><span onclick="add_field('funder');" class="fa fa-plus"></span></div>
+          <div class="input-group-addon hidden-xs hidden-sm"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	</div>

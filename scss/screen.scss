@@ -1,0 +1,59 @@
+@media screen {
+    body,
+    html,
+    main {
+        height: 100%;
+    }
+
+    main {
+        min-height: 100%;
+        height: auto !important;
+        margin: 0 auto -140px;
+    }
+
+    #push {
+        height: 180px;
+    }
+
+    footer {
+        height: 140px;
+    }
+
+    div.cmark {
+        border: 1px solid #ccc;
+        padding: 5px !important;
+    }
+
+    div.cmark p:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    #citethis .tab-content {
+        border: 1px solid #ddd;
+        border-top: 0;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    #citethis .tab-pane.active {
+        padding: 8px;
+    }
+
+    #confletter,
+    #details,
+    #ebi_citations,
+    #ebi_dblinks,
+    #ebi_references,
+    #fileDetails,
+    #relMat,
+    #relPubl,
+    #relResData,
+    #toolkit {
+        padding-left: 10px;
+    }
+
+    .tab-pane.active {
+        padding-top: 20px;
+    }
+}

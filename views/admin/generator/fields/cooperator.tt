@@ -12,8 +12,8 @@
         <div class="input-group sticky{% IF cooperator.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">{% cooperator.label %}</div>
           <input type="text" name="cooperator.0" id="cooperator_0" value="[% cooperator.0 %]" class="form-control sticky"{% IF cooperator.mandatory %} required{% END %}>
-	      <div class="input-group-addon"><span onclick="add_field('cooperator');" class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon"><span onclick="add_field('cooperator');" class="fa fa-plus"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	</div>
@@ -24,8 +24,8 @@
 	    <div class="input-group sticky{% IF cooperator.mandatory %} mandatory{% END %}">
 	      <div class="input-group-addon hidden-lg hidden-md">{% cooperator.label %}</div>
 	      <input type="text" name="cooperator.[% loop.index %]" id="cooperator_[% loop.index %]" value="[% pi %]" class="form-control sticky"{% IF cooperator.mandatory %} required{% END %}>
-	      <div class="input-group-addon"><span onclick="add_field('cooperator');" class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+	      <div class="input-group-addon"><span onclick="add_field('cooperator');" class="fa fa-plus"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
 	    </div>
 	  </div>
 	</div>

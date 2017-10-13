@@ -16,8 +16,8 @@
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
           <input type="text" onfocus="enable_autocomplete('rg',0);" class="sticky form-control{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} required{% END %}" placeholder="[% h.loc("forms.${type}.field.research_group.placeholder") %]" id="rg_autocomplete_0" value=""{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} readonly="readonly" {% END %}/>
-          <div class="input-group-addon" onclick="add_field('research_group'[% IF lf.$type.field.research_group.placeholder %],'[% h.loc("forms.${type}.field.research_group.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('research_group'[% IF lf.$type.field.research_group.placeholder %],'[% h.loc("forms.${type}.field.research_group.placeholder") %]'[% END %]);"><span class="fa fa-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
     </div>
@@ -31,8 +31,8 @@
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
           <input type="text" onfocus="enable_autocomplete('rg',[% loop.index %]);" class="sticky form-control{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %}[% IF loop.first %] required[% END %]{% END %}" placeholder="[% h.loc("forms.${type}.field.research_group.placeholder") %]" id="rg_autocomplete_[% loop.index %]" value="[% proj.name %]"{% IF fields.basic_fields.research_group.readonly OR fields.supplementary_fields.research_group.readonly %} readonly="readonly" {% END %} disabled="disabled"/>
-          <div class="input-group-addon" onclick="add_field('research_group'[% IF lf.$type.field.research_group.placeholder %],'[% h.loc("forms.${type}.field.research_group.placeholder") %]'[% END %]);"><span class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('research_group'[% IF lf.$type.field.research_group.placeholder %],'[% h.loc("forms.${type}.field.research_group.placeholder") %]'[% END %]);"><span class="fa fa-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
     </div>

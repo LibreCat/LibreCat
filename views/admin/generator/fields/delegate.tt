@@ -8,7 +8,7 @@
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% delegate.label %}</div>
           <input type="text" id="id_delegate" value="" class="sticky form-control" placeholder="12345 (PEVZ-ID)"/>
-          <div class="input-group-addon"><span onclick="addDelegate(this);" class="select_button" id="delegate_select"><span class="glyphicon glyphicon-plus"></span> Add</span></div>
+          <div class="input-group-addon"><span onclick="addDelegate(this);" class="select_button" id="delegate_select"><span class="fa fa-plus"></span> Add</span></div>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
   <div class="col-md-10 col-md-offset-2" id="delegate_[% thisPerson._id %]">
     <div class="row innerrow">
       <div class="col-md-7 form-group">
-        <span class="glyphicon glyphicon-remove del_del" id="delegate_span_[% thisPerson._id %]"></span> [% thisPerson.full_name %] <span class="text-muted">[% thisPerson._id %]</span>
+        <span class="fa fa-times del_del" id="delegate_span_[% thisPerson._id %]"></span> [% thisPerson.full_name %] <span class="text-muted">[% thisPerson._id %]</span>
         <input type="hidden" name="delegate.[% loop.index %]" value="[% thisPerson._id %]" />
       </div>
     </div>

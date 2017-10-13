@@ -26,7 +26,7 @@ main:
       session:
         plugins: ['Datestamps']
       publication:
-        plugins: ['Datestamps', 'Versioning', 'LibreCat::PublicationStore']
+        plugins: ['Datestamps', 'Versioning']
         id_generator: Incremental
       project:
         plugins: ['Datestamps']
@@ -38,6 +38,8 @@ main:
       research_group:
         plugins: ['Datestamps']
         # id_generator: Incremental
+      reqcopy:
+        plugins: []
 
 metrics:
   package: DBI
@@ -69,7 +71,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             name:
               op:
@@ -686,7 +688,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             fullname:
               op:
@@ -770,7 +772,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             id:
               op:
@@ -813,7 +815,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
             id:
               op:
                 '=': true

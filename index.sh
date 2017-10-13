@@ -15,8 +15,6 @@ function f_create {
     carton exec "bin/librecat department tree devel/department-tree.yml"
     echo "project..."
     carton exec "bin/librecat project add devel/project.yml"
-    echo "Generating tree"
-    carton exec "bin/librecat generate departments"
     echo "Done"
 }
 
@@ -55,6 +53,37 @@ function f_drop_version {
     carton exec "bin/librecat delete main --bag project_version"
     echo "research_group..."
     carton exec "bin/librecat delete main --bag research_group_version"
+    echo "Done"
+}
+
+function f_drop_audit {
+    echo "Dropping audit..."
+    echo "audit..."
+    carton exec "bin/librecat delete main --bag audit"
+    echo "Done"
+}
+
+function f_drop_reqcopy {
+    echo "Dropping reqcopy..."
+    echo "reqcopy..."
+    carton exec "bin/librecat delete main --bag reqcopy"
+    echo "Done"
+}
+
+function f_reindex {
+    echo "Dropping the search"
+    carton exec bin/librecat drop search
+    echo "Reindex:"
+    echo "user"
+    carton exec "bin/librecat copy -v main --bag user to search --bag user"
+    echo "publication"
+    carton exec "bin/librecat copy -v main --bag publication to search --bag publication"
+    echo "department"
+    carton exec "bin/librecat copy -v main --bag department to search --bag department"
+    echo "project"
+    carton exec "bin/librecat copy -v main --bag project to search --bag project"
+    echo "research_group."
+    carton exec "bin/librecat copy -v main --bag research_group to search --bag research_group"
     echo "Done"
 }
 
@@ -152,6 +181,8 @@ case "${CMD}" in
             f_drop && \
             f_drop_backup && \
             f_drop_version
+        confirm "Drop audit data? [y/N]" && f_drop_audit
+        confirm "Drop reqcopy data? [y/N]" && f_drop_reqcopy
         ;;
     switch)
         echo "Switch index (reindex) without interruption:"

@@ -91,8 +91,10 @@ sub _list {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+        $it = $helper->new->department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -100,7 +102,7 @@ sub _list {
         );
     }
     else {
-        $it = Catmandu->store('main')->bag('department');
+        $it = $helper->main_department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -150,31 +152,17 @@ sub _tree_parse {
 
     print "deleting previous departments...\n";
     $helper->department->delete_all;
-
-    my $index = $helper->department;
+    $helper->main_department->delete_all;
 
     _tree_parse_parser(
         $HASH->{tree},
         sub {
             my $rec = shift;
-            LibreCat->hook('department-update-cmd')->fix_around(
-                $rec,
-                sub {
-                    if ($rec->{_validation_errors}) {
-
-                        # ...
-                    }
-                    else {
-                        Catmandu->store('main')->bag('department')->add($rec);
-                        $index->add($rec);
-                    }
-                }
-            );
+            $helper->store_record('department', $rec);
+            $helper->index_record('department', $rec);
             print "added $rec->{_id}\n";
         }
     );
-
-    $index->commit;
 }
 
 sub _tree_parse_parser {
@@ -205,7 +193,9 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $it   = Catmandu->store('main')->bag('department');
+    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $it = $helper->main_department;
+
     my $HASH = {};
 
     $it->each(
@@ -247,8 +237,10 @@ sub _export {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+        $it = $helper->department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -256,7 +248,7 @@ sub _export {
         );
     }
     else {
-        $it = Catmandu->store('main')->bag('department');
+        $it = $helper->main_department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -278,7 +270,9 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = Catmandu->store('main')->bag('department')->get($id);
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
+    my $data = $helper->main_department->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -293,31 +287,27 @@ sub _add {
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $helper   = LibreCat::App::Helper::Helpers->new;
-    my $bag      = Catmandu->store('main')->bag('department');
 
     my $records = $importer->select(
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $bag->generate_id;
+            $rec->{_id} //= $helper->new_record('department');
 
             my $is_ok = 1;
 
-            LibreCat->hook('department-update-cmd')->fix_around(
+            $helper->store_record(
+                'department',
                 $rec,
-                sub {
-                    if ($rec->{_validation_errors}) {
-                        print STDERR join("\n",
-                            $rec->{_id},
-                            "ERROR: not a valid department",
-                            @{$rec->{_validation_errors}}),
-                            "\n";
-                        $ret   = 2;
-                        $is_ok = 0;
-                    }
-                    else {
-                        $bag->add($rec);
-                    }
+                validation_error => sub {
+                    my $validator = shift;
+                    print STDERR join("\n",
+                        $rec->{_id},
+                        "ERROR: not a valid department",
+                        @{$validator->last_errors}),
+                        "\n";
+                    $ret   = 2;
+                    $is_ok = 0;
                 }
             );
 
@@ -341,22 +331,18 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
-    {
-        my $bag = Catmandu->store('main')->bag('department');
-        $bag->delete($id);
-        $bag->commit;
-    }
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('department',
+        $id);
 
-    # Deleting search
-    {
-        my $bag = LibreCat::App::Helper::Helpers->new->department;
-        $bag->delete($id);
-        $bag->commit;
+    if ($result) {
+        print "deleted $id\n";
+        return 0;
     }
-
-    print "deleted $id\n";
-    return 0;
+    else {
+        print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
 }
 
 sub _valid {
@@ -383,6 +369,7 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+
                 $ret = 2;
             }
         }

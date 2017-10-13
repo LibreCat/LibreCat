@@ -15,8 +15,8 @@
         <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
           <input type="text" name="related_material.link.0.url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder %]" id="relurl_url" class="form-control sticky" value="" />
-          <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="glyphicon glyphicon-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="fa fa-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
       <div class="form-group col-md-10 col-xs-11">
@@ -49,8 +49,8 @@
           <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
             <input type="text" name="related_material.link.[% loop.index %].url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder %]" id="relurl_url" class="form-control sticky" value="[% rel_link.url %]" />
-            <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="glyphicon glyphicon-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
-            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="fa fa-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </div>
         <div class="form-group col-md-10 col-xs-11">
@@ -84,8 +84,8 @@
         <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
           <input type="text" name="related_material.link.0.url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder %]" id="relurl_url" class="form-control sticky" value="[% related_material.link.0.url %]" />
-          <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="glyphicon glyphicon-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="fa fa-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
       <div class="form-group col-md-10 col-xs-11">
