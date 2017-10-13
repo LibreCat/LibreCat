@@ -9,7 +9,7 @@ LibreCat::Index - checks status of current index and of index names
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Search::Elasticsearch;
-
+use Try::Tiny;
 
 sub get_status {
     my ($self) = @_;
@@ -47,17 +47,23 @@ sub initialize {
 
     my $e = Search::Elasticsearch->new();
 
+    try {
+        $e->indices->update_aliases(
+            body => {
+                actions => [
+                    { remove => { alias => $i_status->{alias}, index => $i_status->{active_index} }}
+                ]
+            }
+        );
+    }
+    catch {
+        print STDERR "Catched error while deleting alias: $_\n";
+    };
+
     foreach my $index (@{$i_status->{all_indices}}){
         $e->indices->delete(index => $index);
+        print STDERR "Removing index $index\n";
     }
-
-    $e->indices->update_aliases(
-        body => {
-            actions => [
-                { remove => { alias => $i_status->{alias} }}
-            ]
-        }
-    ) if $i_status->{alias};
 
     my $ind_name = Catmandu->config->{store}->{search}->{options}->{index_name};
     my $ind1 = $ind_name ."1";
