@@ -17,9 +17,10 @@
                 <foaf:name>[% person.fullName | xml_strict %]</foaf:name>
                 <foaf:surname>[% person.surname | xml_strict %]</foaf:surname>
                 <foaf:givenname>[% person.givenName | xml_strict %]</foaf:givenname>
-                [% IF person.user_id %]
-                <foaf:workInfoHomepage rdf:resource="http://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% person.user_id | xml_strict %]"/>
-                [% END %]
+                [%- IF person.work_info_homepage %]
+                <foaf:workInfoHomepage rdf:resource="[% person.work_info_homepage | xml_strict %]"/>
+                [%- END %]
+                [%- END %]
             </foaf:Person>
             [%- END %]
         </bibo:authorList>
@@ -69,7 +70,7 @@
         [%- IF urn %]
         <dc:identifier rdf:resource="[% urn | xml_strict %]"/>
         [%- END %]
-        [%- IF doi || doiInfo.doi %]
+        [%- IF doi %]
         <bibo:doi rdf:resource="[% doi || doiInfo.doi | xml_strict %]" />
         <ore:similarTo rdf:resource="info:doi/[% doi || doiInfo.doi | xml_strict %]"/>
         [%- END %]

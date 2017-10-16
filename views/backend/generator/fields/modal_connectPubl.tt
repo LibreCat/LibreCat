@@ -52,7 +52,7 @@
 
 <script>
 $('#searchPubl').click(function() {
-  var puburl = 'http://pub-dev.ub.uni-bielefeld.de/publication?fmt=jsonintern&q=';
+  var puburl = '/publication?fmt=jsonintern&q=';
   [% IF session.role == 'super_admin' %]
     var searchphrase = $('#searchPublInput').val();
     if(searchphrase != ""){

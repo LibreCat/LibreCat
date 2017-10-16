@@ -22,10 +22,6 @@
         font-weight: normal;
     }
 
-    a[href^="/"]::after {
-        content: " (https://pub.uni-bielefeld.de" attr(href) ") ";
-    }
-
     #details a[href]::after,
     .citation-block-div a[href]::after,
     .nav-tabs a[href]::after,

@@ -2,4 +2,4 @@ Your publication [% title %] has been published.
 
 You can find your publication at [% uri_base %]/publication/[% _id %].
 If you wish to link to your publication, please use the URN: http://nbn-resolving.de/[% urn %]
-Your PUB Team
+Your [% h.config.appname_short %] Team
