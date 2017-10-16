@@ -222,3 +222,68 @@ sub _add_links {
 }
 
 1;
+
+=pod
+
+=head1 NAME
+
+Catmandu::Exporter::RTF - a RTF exporter
+
+=head1 SYNOPSIS
+
+    use Catmandu::Exporter::RTF;
+
+    my $rtf = Catmandu::Exporter::RTF->new(
+        file => "publications.rtf",
+        style => "ama",
+        name => "MyRepo",
+    );
+    my $data = {...};
+
+    $rtf->add($data);
+    $rtf->commit;
+
+
+=head1 DESCRIPTION
+
+This L<Catmandu::Exporter> exports items in RTF by using citation styles.
+
+=head1 CONFIGURATION
+
+=over
+
+=item file
+
+Write output to a local file given by its path or file handle.  Alternatively a
+scalar reference can be passed to write to a string and a code reference can be
+used to write to a callback function.
+
+=item fh
+
+Write the output to an L<IO::Handle>. If not specified,
+L<Catmandu::Util::io|Catmandu::Util/IO-functions> is used to create the output
+handle from the C<file> argument or by using STDOUT.
+
+=item fix
+
+An ARRAY of one or more fixes or file scripts to be applied to exported items.
+
+=item style
+
+The citation style to use. In this case the data should have a key B<citation.$style>.
+
+=item links
+
+0|1. Display external links (e.g. DOI, WoS, PMID, etc)
+
+=item name
+
+Name of the repository to display in case you have set the option B<links to 1>.
+
+=back
+
+=head1 SEE ALSO
+
+L<Catmandu::Exporter>
+
+=cut
