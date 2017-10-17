@@ -88,7 +88,6 @@ default_access_level: open_access
 
 ## Specity the ipranges which can download (local) files
 ip_range:
-    - 157.193.0.0/16
     - 127.0.0.1
     - 10.0.0.0/8
 

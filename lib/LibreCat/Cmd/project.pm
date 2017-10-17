@@ -24,7 +24,7 @@ options:
 
 E.g.
 
-librecat project export 'id = P1'
+librecat project list 'id = P1'
 librecat user --sort "name,,1" list ""  # force to use an empty query
 
 EOF
@@ -264,7 +264,7 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
-                
+
                 $ret = 2;
             }
         }

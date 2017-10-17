@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# Execute this script in the Nora installation directory to import all the
+# data from the previous Felix version. The EXPORT-FELIX command should have
+# been executed in the Felix installation directory
+#
+# E.g.
+#     $ cd /opt/librecat-nora
+#     $ bash IMPORT-FELIX
+#
+TMPDIR=/tmp/librecat-upgrade-felix
+
+echo "Upgrading from previous installation"
+echo -n "Please provide the export directory [${TMPDIR}] "
+read answer
+
+if [ "${answer}" != "" ]; then
+   TMPDIR=${answer}
+fi
+
+if [ ! -d ${TMPDIR} ]; then
+   echo "error: ${TMPDIR} doesn't exists!"
+   exit 2
+fi
+
+for t in info audit publication publication_version project \
+         project_version user user_version department \
+         department_version research_group research_group_version \
+         reqcopy ; do
+    if [ ! -f ${TMPDIR}/${t}.json ]; then
+        echo "error: ${TMPDIR}/${t}.json doesn't exist!"
+        exit 3
+    fi
+done
+
+for t in info audit publication publication_version project \
+         project_version user user_version department \
+         department_version research_group research_group_version \
+         reqcopy ; do
+
+    echo "Importing ${t}..."
+    carton exec "bin/librecat import -v JSON to main --bag ${t}" < ${TMPDIR}/${t}.json
+done
+
+echo "Indexing everything"
+./index.sh reindex
+
+echo "Done"
