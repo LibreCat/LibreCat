@@ -163,9 +163,9 @@
 	     <h3 id="ModalExport">[% h.loc("facets.export_options") %]</h3>
       </div>
       <div class="modal-body">
-        [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.explinks = 'yes' %]
+        [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.links = '1' %]
 	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
-         [%-  tmp.delete('explinks') %]
+         [%-  tmp.delete('links') %]
 	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
       </div>
     </div>
