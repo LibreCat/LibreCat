@@ -273,13 +273,6 @@ sub get_statistics {
 
 }
 
-sub get_metrics {
-    my ($self, $bag, $id) = @_;
-    return {} unless $bag and $id;
-
-    return Catmandu->store('metrics')->bag($bag)->get($id);
-}
-
 sub new_record {
     my ($self, $bag) = @_;
     Catmandu->store('main')->bag($bag)->generate_id;

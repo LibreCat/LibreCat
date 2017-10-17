@@ -41,13 +41,6 @@ main:
       reqcopy:
         plugins: []
 
-metrics:
-  package: DBI
-  options:
-    data_source: "DBI:mysql:database=librecat_metrics"
-    username: librecat
-    password: librecat
-
 search:
   package: ElasticSearch
   options:
@@ -71,7 +64,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             name:
               op:
@@ -688,7 +681,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             fullname:
               op:
@@ -772,7 +765,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             id:
               op:
@@ -815,7 +808,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
             id:
               op:
                 '=': true

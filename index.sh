@@ -13,8 +13,6 @@ function f_create {
     carton exec "bin/librecat department tree devel/department-tree.yml"
     echo "project..."
     carton exec "bin/librecat project add devel/project.yml"
-    echo "Generating tree"
-    carton exec "bin/librecat generate departments"
     echo "Done"
 }
 
@@ -202,6 +200,6 @@ case "${CMD}" in
         f_import
         ;;
     *)
-        echo "usage: $0 {create|drop|drop_backup|drop_version|drop_all|export|import}"
+        echo "usage: $0 {create|reindex|drop|drop_backup|drop_version|drop_all|export|import}"
         exit 1
 esac
