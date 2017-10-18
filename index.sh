@@ -190,7 +190,7 @@ case "${CMD}" in
         ;;
     reindex)
         echo "Reindex (switch index) without interruption:"
-        carton exec "bin/librecat index Switch"
+        carton exec "bin/librecat index switch"
         ;;
     info)
         echo "Info on current indexes:"

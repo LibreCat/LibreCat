@@ -47,15 +47,14 @@ sub command {
         return $self->_status(@$args);
     }
     elsif ($cmd eq 'initialize') {
-        print "Use this command during installation only.\nMake sure you have a fresh elasticsearch install (or run 'curl -XDELETE localhost:9200/*').\nAre you sure you want to run this initialize command [y/N]:";
+        print "Use this command during installation only.\nThis command will delete existing indices!\nAre you sure you want to run it [y/N]:";
         my $start = <STDIN>;
         chomp($start);
         if (lc $start eq 'y') {
-            print "WE ARE RUNNING!\n";
             return $self->_initialize(@$args);
         }
         else {
-            print "You have cancelled the initialize command.\n";
+            print STDERR "Command initialize has been cancelled\n";
         }
     }
     elsif ($cmd eq 'switch') {

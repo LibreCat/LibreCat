@@ -57,7 +57,7 @@ sub initialize {
         );
     }
     catch {
-        print STDERR "Catched error while deleting alias: $_\n";
+        print STDERR "Alias not present, but everything is still ok\n";
     };
 
     foreach my $index (@{$i_status->{all_indices}}){
