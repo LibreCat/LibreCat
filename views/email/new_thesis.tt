@@ -1,6 +1,0 @@
-A new thesis has been submitted.
-
-Title: [% title %]
-Author: [% author %]
-
-[% uri_base %]/librecat/search/admin?q=id=[% _id %]
