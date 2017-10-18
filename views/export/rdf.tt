@@ -20,7 +20,6 @@
                 [%- IF person.work_info_homepage %]
                 <foaf:workInfoHomepage rdf:resource="[% person.work_info_homepage | xml_strict %]"/>
                 [%- END %]
-                [%- END %]
             </foaf:Person>
             [%- END %]
         </bibo:authorList>
