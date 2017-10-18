@@ -8,4 +8,4 @@ To approve this request click on the link below:
 If you want to deny this request click on the following link:
 [% uri_base %]/rc/deny/[% key %]
 
-Your [% h.config.appname_short %] system
+Your [% appname_short %] Team
