@@ -22,6 +22,10 @@
         font-weight: normal;
     }
 
+    a[href^="/"]::after {
+        content: " (" attr(href) ") ";
+    }
+
     #details a[href]::after,
     .citation-block-div a[href]::after,
     .nav-tabs a[href]::after,
