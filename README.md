@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/LibreCat/LibreCat.svg)](https://travis-ci.org/LibreCat/LibreCat)
 [![Coverage Status](https://coveralls.io/repos/github/LibreCat/LibreCat/badge.svg)](https://coveralls.io/github/LibreCat/LibreCat)
+[![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
 
 # LibreCat - an institutional repository
 
