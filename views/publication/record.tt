@@ -1,7 +1,6 @@
 [%- PROCESS header.tt %]
 <!-- BEGIN publication/record.tt -->
 
-<script src="[% uri_base %]/javascripts/frontend.js"></script>
 <script type="text/javascript">
 [%- PROCESS publication/javascriptShowHide.tt %]
 </script>
