@@ -23,7 +23,7 @@
     }
 
     a[href^="/"]::after {
-        content: " (https://pub.uni-bielefeld.de" attr(href) ") ";
+        content: " (" attr(href) ") ";
     }
 
     #details a[href]::after,
