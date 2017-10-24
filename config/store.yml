@@ -353,7 +353,7 @@ search:
                 'any': true
               field: '_id'
               sort: true
-              description: "the unique PUB ID"
+              description: "the unique LibreCat ID"
             orcid:
               op:
                 '=': true
