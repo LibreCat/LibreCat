@@ -34,7 +34,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['total=i', ""], ['start=i', ""], ['sort=s', ""]);
+    (['total=i', ""], ['start=i', ""], ['sort=s', ""],);
 }
 
 sub opts {
@@ -217,7 +217,7 @@ sub _add {
         }
     );
 
-    my $index = $helper->user;
+    my $index = Catmandu->store('search')->bag('user');
     $index->add_many($records);
     $index->commit;
 

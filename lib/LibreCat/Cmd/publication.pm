@@ -328,7 +328,7 @@ sub _add {
         }
     );
 
-    my $index = $helper->publication;
+    my $index = Catmandu->store('search')->bag('publication');
     $index->add_many($records);
     $index->commit;
 

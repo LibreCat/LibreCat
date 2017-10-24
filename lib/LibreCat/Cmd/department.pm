@@ -319,7 +319,7 @@ sub _add {
         }
     );
 
-    my $index = $helper->department;
+    my $index = Catmandu->store('search')->bag('department');
     $index->add_many($records);
     $index->commit;
 

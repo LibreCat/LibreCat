@@ -214,7 +214,7 @@ sub _add {
         }
     );
 
-    my $index = $helper->project;
+    my $index = Catmandu->store('search')->bag('project');
     $index->add_many($records);
     $index->commit;
 

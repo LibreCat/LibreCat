@@ -4,6 +4,8 @@ TMPDIR=/tmp/librecat-$$
 CMD=$1
 
 function f_create {
+    echo "Initializing index..."
+    carton exec "bin/librecat index initialize"
     echo "Creating index..."
     echo "user..."
     carton exec "bin/librecat user add devel/user.yml"
@@ -65,13 +67,6 @@ function f_drop_reqcopy {
     echo "Dropping reqcopy..."
     echo "reqcopy..."
     carton exec "bin/librecat delete main --bag reqcopy"
-    echo "Done"
-}
-
-function f_drop_metrics {
-    echo "Dropping metrics..."
-    echo "metrics..."
-    carton exec "bin/librecat delete metrics"
     echo "Done"
 }
 
@@ -188,10 +183,18 @@ case "${CMD}" in
             f_drop_version
         confirm "Drop audit data? [y/N]" && f_drop_audit
         confirm "Drop reqcopy data? [y/N]" && f_drop_reqcopy
-        confirm "Drop metrics data? [y/N]" && f_drop_metrics
+        ;;
+    switch)
+        echo "Switch index (reindex) without interruption:"
+        carton exec "bin/librecat index switch"
         ;;
     reindex)
-        f_reindex
+        echo "Reindex (switch index) without interruption:"
+        carton exec "bin/librecat index switch"
+        ;;
+    info)
+        echo "Info on current indexes:"
+        carton exec "bin/librecat index status"
         ;;
     export)
         f_export
@@ -200,6 +203,6 @@ case "${CMD}" in
         f_import
         ;;
     *)
-        echo "usage: $0 {create|reindex|drop|drop_backup|drop_version|drop_all|export|import}"
+        echo "usage: $0 {create|drop|drop_backup|drop_version|drop_all|switch|reindex|info|export|import}"
         exit 1
 esac
