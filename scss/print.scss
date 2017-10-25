@@ -23,7 +23,7 @@
     }
 
     a[href^="/"]::after {
-        content: " (" attr(href) ") ";
+        content: "";
     }
 
     #details a[href]::after,
