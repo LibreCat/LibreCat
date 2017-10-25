@@ -12,6 +12,7 @@ Usage:
 librecat index initialize
 librecat index create BAG
 librecat index drop BAG
+librecat index purge
 librecat index status
 librecat index switch
 EOF
@@ -19,7 +20,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['background|bg', ""], ['id=s', ""], );
+    (['yes!', ""] );
 }
 
 sub opts {
@@ -31,7 +32,7 @@ sub command {
 
     $self->opts($opts);
 
-    my $commands = qr/initialize|status|create|drop|switch/;
+    my $commands = qr/initialize|status|create|drop|purge|switch/;
 
     my $cmd = shift @$args;
 
@@ -45,13 +46,23 @@ sub command {
     elsif ($cmd eq 'drop') {
         return $self->_drop(@$args);
     }
+    elsif ($cmd eq 'purge') {
+        return $self->_purge(@$args);
+    }
     elsif ($cmd eq 'status') {
         return $self->_status(@$args);
     }
     elsif ($cmd eq 'initialize') {
+        my $start;
         print "Use this command during installation only.\nThis command will delete existing indices!\nAre you sure you want to run it [y/N]:";
-        my $start = <STDIN>;
-        chomp($start);
+
+        if ($opts->{yes}) {
+            $start = 'y';
+        }
+        else {
+            my $start = <STDIN>;
+            chomp($start);
+        }
         if (lc $start eq 'y') {
             return $self->_initialize(@$args);
         }
@@ -75,6 +86,8 @@ sub _create {
     my $bag = $store->bag($name);
     $bag->add_many($main_store->bag($name)->benchmark);
     $bag->commit;
+
+    return 0;
 }
 
 sub _drop {
@@ -86,25 +99,31 @@ sub _drop {
     my $bag   = $store->bag($name);
     $bag->delete_all;
     $bag->commit;
+
+    return 0;
 }
 
 sub _status {
     my ($self) = @_;
-    my $status = LibreCat::Index->get_status;
+    my $status = LibreCat::Index->new->get_status;
     Catmandu->exporter('YAML')->add($status);
+    return 0;
 }
 
 sub _initialize {
     my ($self) = @_;
-    LibreCat::Index->initialize;
+    defined(LibreCat::Index->new->initialize) ? 0 : 1;
 }
 
 sub _switch {
     my ($self) = @_;
-    LibreCat::Index->switch;
+    defined(LibreCat::Index->new->switch) ? 0 : 1;
 }
 
-
+sub _purge {
+    my ($self) = @_;
+    defined(LibreCat::Index->new->remove_all) ? 0 : 1;
+}
 
 1;
 
@@ -121,6 +140,7 @@ LibreCat::Cmd::index - manage index jobs
     librecat index initialize
     librecat index create BAG
     librecat index drop BAG
+    librecat index purge
     librecat index status
     librecat index switch
 
