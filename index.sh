@@ -18,9 +18,9 @@ function f_create {
 }
 
 function f_drop {
-    echo "Dropping index.."
-    carton exec "bin/librecat drop search --index_name librecat1"
-    carton exec "bin/librecat drop search --index_name librecat2"
+    carton exec "bin/librecat index status"
+    confirm "Drop librecat1? [y/N]" && carton exec "bin/librecat drop search --index_name librecat1"
+    confirm "Drop librecat2? [y/N]" carton exec "bin/librecat drop search --index_name librecat2"
     echo "Done"
 }
 
@@ -157,7 +157,7 @@ case "${CMD}" in
         f_create
         ;;
     drop)
-        confirm "Are you sure you want to drop the search index? [y/N]" && f_drop
+        f_drop
         ;;
     drop_backup)
         confirm "Are you sure you want to drop the main data? [y/N]" && f_drop_backup
