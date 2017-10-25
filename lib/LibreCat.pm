@@ -64,12 +64,16 @@ sub hook {
 
         my $hook_options = $hook->{options} || {};
 
-        for my $key (qw(before_fixes after_fixes)) {
+        for my $key (qw(before_fixes default_before_fixes default_after_fixes after_fixes)) {
             my $fixes = $hook->{$key} || [];
             for my $fix (@$fixes) {
-                push @{$args->{$key}},
-                    require_package($fix, 'LibreCat::Hook')
-                    ->new(%$hook_options, name => $name, type => $key);
+                my $hook;
+                if ($self->looks_like_fix($fix)) {
+                    $hook = $self->load_fix($fix);
+                } else {
+                    $hook = $self->load_hook($fix, %$hook_options, name => $name, type => $key);
+                }
+                push @{$args->{$key}}, $hook;
             }
         }
 
@@ -80,6 +84,38 @@ sub hook {
 sub searcher {
     state $searcher = require_package('LibreCat::Search')
         ->new(store => Catmandu->store('search'));
+}
+
+sub load_hook {
+    my $self = shift;
+    my $hook = shift;
+    require_package($hook, 'LibreCat::Hook')->new(@_);
+}
+
+sub load_fix {
+    my ($self, $fix) = @_;
+
+    if ($fix =~ /\(/) {
+        return Catmandu->fixer([$fix]);
+    }
+
+    # h->log->debug("searching for fix '$fix'");
+    for my $path (@{$self->layers->fixes_paths}) {
+        my $file = "$path/$fix";
+        if (-r $file) {
+            # h->log->debug("found '$file'");
+            return Catmandu->fixer([$file]);
+        }
+    }
+
+    my $err = "can't find fix '$fix'";
+    # h->log->error($err);
+    croak $err;
+}
+
+sub looks_like_fix {
+    my ($self, $fix) = @_;
+    $fix =~ /\(/ || $fix =~ /\.fix$/;
 }
 
 1;
@@ -96,7 +132,7 @@ LibreCat - Librecat helper functions
 
    use LibreCat;
 
-   # Given a 'catmandu' configuration file, like: catmandu.hooks.yml
+   # Given a 'catmandu' configuration file, like: config/hooks.yml
    # --
    # hooks:
    #   myhook:
