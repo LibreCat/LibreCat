@@ -12,7 +12,7 @@
       <h1>[% h.loc("header.title") %]</h1>
     </div>
     <div class="ltIEten">
-      <h3>Please note that PUB no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
+      <h3>Please note that [% h.config.appname_short %] no longer supports Internet Explorer versions 8 or 9 (or earlier).</h3>
       <p>We recommend upgrading to the latest Internet Explorer, Google Chrome, or Firefox.</p>
     </div>
     <div class="row margin-top1">

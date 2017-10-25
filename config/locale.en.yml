@@ -57,14 +57,14 @@ tabs:
   departments: "Departments"
   authors: "Authors"
 hits:
-  id: "PUB-ID"
+  id: "LibreCat-ID"
   author: "Author"
   authors: "Authors"
   publication: "Publication"
   publications: "Publications"
   data_publication: "Data Publication"
 home:
-  search_placeholder: "Search Publications in PUB"
+  search_placeholder: "Search Publications in LibreCat"
   fields: "Fields"
   operators: "Operators"
   stats:
@@ -159,7 +159,7 @@ facets:
   export_as: "Export as"
   export_marked: "Export Marked"
   export_options: "Export Options"
-  export_withlinks: "Export list with links (PUB | DOI | WoS etc.)"
+  export_withlinks: "Export list with links (LibreCat | DOI | WoS etc.)"
   export_withoutlinks: "Export list without links"
   exports:
     rtf: "RTF (e.g. Word, Office)"
@@ -193,7 +193,7 @@ frontdoor:
   export: "Export"
   editing_options: "Editing Options"
   make_public: "Make this record public"
-  open_data_pub: "Open Data PUB"
+  open_data_pub: "Open Data LibreCat"
   submit: "Submit this record"
   marked: "Marked Publications"
   cite_this: "Cite this"
@@ -232,7 +232,7 @@ frontdoor:
     file_details:
       label: "Files"
       external_material: "External material:"
-      internal_material: "Material in PUB:"
+      internal_material: "Material in LibreCat:"
       name: "File Name"
       title: "File Title"
       description: "Description"
@@ -418,7 +418,7 @@ forms:
         heading: "Copyright and Licenses"
         pub_license:
           label: "Copyright Disclaimer"
-          disclaimer_text: "I herewith place this document at LibreCat University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
+          disclaimer_text: "I herewith place this document at LibreCat University's disposal for the purpose of storing in electronic form and making it available to the public according to the LibreCat Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>LibreCat Deposit Policy</a>"
           accept_text: "I accept"
           alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
         info:
@@ -458,7 +458,7 @@ forms:
         label: "Abstract"
         label2: "Language"
         placeholder: "Abstract Text (you can use Markdown for styling)"
-        explain: "Use <a href='/docs/howto/markdown' target='_blank'>Markdown</a> for text styling. After saving click on the link 'PUB' to get a preview and check text styling."
+        explain: "Use <a href='/docs/howto/markdown' target='_blank'>Markdown</a> for text styling. After saving click on the link 'LibreCat' to get a preview and check text styling."
       keyword: &keyword
         label: "Keywords"
         placeholder: "Keywords (multiple entries separated by semicolon, e.g. Keyword1 ; Keyword2 ; Keyword3)"
@@ -490,8 +490,8 @@ forms:
         label_short: "Ret. Rec. Ids"
         placeholder: ""
       related_material.record: &related_material_record
-        label: "Link to PUB record"
-        label_short: "PUB-Rec."
+        label: "Link to LibreCat record"
+        label_short: "LibreCat-Rec."
         placeholder: "Start typing to search your publications."
       related_material.select: "Select type of related material"
       related_material.link: &related_material_link
@@ -1333,8 +1333,8 @@ forms:
       alternative_id: *alternative_id
       ddc: *ddc
       related_material.rd:
-        label: "Link to PUB record"
-        label_short: "PUB-Rec."
+        label: "Link to LibreCat record"
+        label_short: "LibreCat-Rec."
         placeholder: "Start typing to search your publications."
       related_material.link: *related_material_link
       locked: *locked
@@ -1535,7 +1535,7 @@ forms:
   form_change_type: "Change publication type"
   form_sort_item: "Drag & drop to change position of author in author list"
   form_add_field: "Add a field (+) or Remove this field (-)"
-  form_relmat_record: "Link one of your own publication from PUB to this record."
+  form_relmat_record: "Link one of your own publication from LibreCat to this record."
   form_relmat_link: "Link a publication from an external website to this record."
   confirm_return: "Are you sure you want to return this record from public view?"
   confirm_delete: "Are you sure you want to delete this record?"
@@ -1639,14 +1639,14 @@ forms:
       display: "Later Version"
       select: "Later Version"
     contains:
-      display: "Publication containing PUB record"
-      select: "Publication containing PUB record"
+      display: "Publication containing LibreCat record"
+      select: "Publication containing LibreCat record"
     published_in:
-      display: "Part of PUB record"
-      select: "Part of PUB record"
+      display: "Part of LibreCat record"
+      select: "Part of LibreCat record"
     dissertation_contains:
-      display: "Dissertation containing PUB record"
-      select: "Dissertation containing PUB record"
+      display: "Dissertation containing LibreCat record"
+      select: "Dissertation containing LibreCat record"
     part_of_dissertation:
       display: "Part of this Dissertation"
       select: "Part of this Dissertation"
@@ -1696,14 +1696,14 @@ forms:
 418:
   heading: "I'm a teapot (418)"
 help:
-  home: "PUB home"
+  home: "LibreCat home"
   brand: "Backend<br>start page"
   my_author_page: "Your publication list<br>(public records only)"
   change_language: "Change language"
   user_settings: "Change role,<br>department,<br>edit mode<br>default language."
   author_id: "Enter alias (for your public author page), or author IDs (e.g. ORCID)."
   author_id_edit: "Edit ID, add more IDs."
-  add_new_button: "Create a new record in PUB: Import existing data e.g. via DOI or enter data via a form."
+  add_new_button: "Create a new record in LibreCat: Import existing data e.g. via DOI or enter data via a form."
   quick_and_easy: "Got an Open Access fulltext (PDF)? Drop it here and submit the form. A new, non-pubic record will be created. We will complete it for you and make it publicly visible."
   publication_user: "Your personal publication list. If all of your publications have been made public, this list will look exactly like the list on your public author's page."
   publication_user_rd: "Your personal publication list - research data."
@@ -1711,7 +1711,7 @@ help:
   publication_reviewer: "All publications of the department you have been granted access to."
   publication_project_reviewer: "All publications of the project you have been granted access to."
   publication_data_manager: "All data publications of the department you have been granted access to."
-  publication_admin: "All publications in PUB."
+  publication_admin: "All publications in LibreCat."
   statuses: "Visibility  status<br>of publication.<br>To change it, click on 'Edit'."
   citation: "Data of publication in selected citation style."
   search: "Search this publication list."
