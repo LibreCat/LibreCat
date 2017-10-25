@@ -5,6 +5,7 @@ CMD=$1
 
 function f_create {
     echo "Creating index..."
+    carton exec "bin/librecat index initialize"
     echo "user..."
     carton exec "bin/librecat user add devel/user.yml"
     echo "publication..."
@@ -18,7 +19,8 @@ function f_create {
 
 function f_drop {
     echo "Dropping index.."
-    carton exec "bin/librecat drop search"
+    carton exec "bin/librecat drop search --index_name librecat1"
+    carton exec "bin/librecat drop search --index_name librecat2"
     echo "Done"
 }
 
@@ -69,19 +71,8 @@ function f_drop_reqcopy {
 }
 
 function f_reindex {
-    echo "Dropping the search"
-    carton exec bin/librecat drop search
     echo "Reindex:"
-    echo "user"
-    carton exec "bin/librecat copy -v main --bag user to search --bag user"
-    echo "publication"
-    carton exec "bin/librecat copy -v main --bag publication to search --bag publication"
-    echo "department"
-    carton exec "bin/librecat copy -v main --bag department to search --bag department"
-    echo "project"
-    carton exec "bin/librecat copy -v main --bag project to search --bag project"
-    echo "research_group."
-    carton exec "bin/librecat copy -v main --bag research_group to search --bag research_group"
+    carton exec "bin/librecat index switch"
     echo "Done"
 }
 
