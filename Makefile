@@ -19,6 +19,8 @@ update:
 	./index.sh reindex
 	echo "Update complete!"
 
+# Explicit need -j 1 parallel tests will put databases in an
+# inconsistent state
 cover:
 	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit \$?'
 

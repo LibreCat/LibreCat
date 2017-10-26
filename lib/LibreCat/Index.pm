@@ -35,6 +35,10 @@ sub _build_alias {
     Catmandu->config->{store}->{search}->{options}->{index_name};
 }
 
+# Use an explicit require_package->new to create instances of index1
+# and index2. The standard Catmandu->store('search',%opts) will cache
+# connections to the EL store, which can't be overwritten by a second
+# call to Catmandu->store('search',%opts) with other options.
 sub _build_index1 {
     my $conf    = Catmandu->config->{store}->{search};
     my $package = $conf->{package};
@@ -324,7 +328,8 @@ sub switch {
 
         $self->touch_index;
 
-        $ret = $self->_do_switch($active->{active},$active->{inactive});
+        $ret =  $self->_do_index($active->{inactive}) &&
+                $self->_do_switch($active->{active},$active->{inactive});
     }
     else {
         print "No active index found...\n";
@@ -336,7 +341,8 @@ sub switch {
 
         print "Switching: No index -> " . $self->index1->{index_name} . "..\n";
 
-        $ret = $self->_do_switch(undef, $self->index1);
+        $ret =  $self->_do_index($self->index1) &&
+                $self->_do_switch(undef, $self->index1);
     }
 
     if ($ret) {
@@ -349,21 +355,35 @@ sub switch {
     }
 }
 
+sub _do_index {
+    my ($self,$new) = @_;
+
+    my $new_name = $new->{index_name};
+    my @bags = keys %{Catmandu->config->{store}->{search}->{options}->{bags}};
+
+    try {
+        for my $b (@bags) {
+            print "Indexing $b into $new_name...\n";
+            my $bag = $new->bag($b);
+            $bag->add_many($self->main->bag($b)->benchmark);
+            $bag->commit;
+        }
+    }
+    catch {
+        print STDERR "Failed to create the index $new_name";
+        warn $_;
+        return 0;
+    };
+
+    1;
+}
+
 sub _do_switch {
     my ($self, $old, $new) = @_;
 
     my $alias_name = $self->alias;
     my $old_name   = $old->{index_name};
     my $new_name   = $new->{index_name};
-
-    my @bags = keys %{Catmandu->config->{store}->{search}->{options}->{bags}};
-
-    for my $b (@bags) {
-        print "Indexing $b into $new_name...\n";
-        my $bag = $new->bag($b);
-        $bag->add_many($self->main->bag($b)->benchmark);
-        $bag->commit;
-    }
 
     print "New index is $new_name. Testing...\n";
     my $checkForIndex = $self->has_index($new_name);
