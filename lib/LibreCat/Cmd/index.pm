@@ -60,7 +60,7 @@ sub command {
             $start = 'y';
         }
         else {
-            my $start = <STDIN>;
+            $start = <STDIN>;
             chomp($start);
         }
         if (lc $start eq 'y') {
