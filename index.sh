@@ -3,8 +3,9 @@
 TMPDIR=/tmp/librecat-$$
 CMD=$1
 
-function f_create {
+function f_create_demo {
     echo "Creating index..."
+    carton exec "yes | bin/librecat index initialize"
     echo "user..."
     carton exec "bin/librecat user add devel/user.yml"
     echo "publication..."
@@ -16,9 +17,15 @@ function f_create {
     echo "Done"
 }
 
+function f_init {
+    echo "Creating index..."
+    carton exec "bin/librecat index initialize"
+    echo "Done"
+}
+
 function f_drop {
-    echo "Dropping index.."
-    carton exec "bin/librecat drop search"
+    echo "Dropping index..."
+    carton exec "bin/librecat index purge"
     echo "Done"
 }
 
@@ -69,19 +76,8 @@ function f_drop_reqcopy {
 }
 
 function f_reindex {
-    echo "Dropping the search"
-    carton exec bin/librecat drop search
     echo "Reindex:"
-    echo "user"
-    carton exec "bin/librecat copy -v main --bag user to search --bag user"
-    echo "publication"
-    carton exec "bin/librecat copy -v main --bag publication to search --bag publication"
-    echo "department"
-    carton exec "bin/librecat copy -v main --bag department to search --bag department"
-    echo "project"
-    carton exec "bin/librecat copy -v main --bag project to search --bag project"
-    echo "research_group."
-    carton exec "bin/librecat copy -v main --bag research_group to search --bag research_group"
+    carton exec "bin/librecat index switch"
     echo "Done"
 }
 
@@ -162,8 +158,14 @@ confirm() {
 }
 
 case "${CMD}" in
+    demo)
+        f_create_demo
+        ;;
     create)
-        f_create
+        echo "You probably mean: '$0 demo'"
+        ;;
+    init)
+        f_init
         ;;
     drop)
         confirm "Are you sure you want to drop the search index? [y/N]" && f_drop
@@ -192,6 +194,6 @@ case "${CMD}" in
         f_import
         ;;
     *)
-        echo "usage: $0 {create|reindex|drop|drop_backup|drop_version|drop_all|export|import}"
+        echo "usage: $0 {init|reindex|drop|drop_backup|drop_version|drop_all|export|import|demo}"
         exit 1
 esac
