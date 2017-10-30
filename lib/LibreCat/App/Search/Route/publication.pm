@@ -125,7 +125,7 @@ get '/embed' => sub {
     $hits->{bag}   = "publication";
     $hits->{embed} = 1;
 
-    my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
+    my $lang = h->locale_exists( $p->{lang} ) ? $p->{lang} : h->locale();
     $hits->{lang} = $lang;
 
     if (params->{fmt} && params->{fmt} eq 'js') {

@@ -4,7 +4,7 @@
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = backend ? h.get_person(session.user_id) : h.get_person(id) -%]
 [% menu = "" -%]
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lang = h.locale() -%]
 [% lf = h.config.locale.$lang -%]
 
 [% INCLUDE header.tt %]

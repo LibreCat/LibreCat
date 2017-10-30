@@ -1,6 +1,6 @@
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = h.get_person(session.user_id) -%]
-[% lang = session.lang -%]
+[% lang = h.locale() -%]
 [% lf = h.config.locale.$lang.forms -%]
 
 [% INCLUDE header.tt %]

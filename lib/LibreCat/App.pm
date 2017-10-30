@@ -214,7 +214,7 @@ get '/login' => sub {
         error_message => params->{error_message} || '',
         login         => params->{login}         || '',
         return_url    => params->{return_url}    || '',
-        lang          => session->{lang}         || h->config->{default_lang}
+        lang          => h->locale()
         };
 };
 
@@ -247,7 +247,7 @@ post '/login' => sub {
             || "user";
         session user    => $user->{login};
         session user_id => $user->{_id};
-        session lang    => $user->{lang} || h->config->{default_lang};
+        h->set_locale( $user->{lang} || h->default_locale );
 
         redirect uri_for($return_url);
     }
@@ -274,13 +274,14 @@ any '/logout' => sub {
 
 =head2 GET /set_language
 
-Route to call when changing language in session
+Route to call when changing language
 
 =cut
 
 get '/set_language' => sub {
-    my $referer = request->{referer} // '/?';
-    session lang => params->{lang};
+    my $referer = request->referer // '/?';
+    my $lang = param('lang');
+    h->set_locale( $lang ) if h->locale_exists( $lang );
     $referer =~ s/lang=\w{2}\&*//g;
     redirect $referer;
 };

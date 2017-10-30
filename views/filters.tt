@@ -1,6 +1,6 @@
 [% qp = {} -%]
 [% qp = h.extract_params -%]
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lang = h.locale() -%]
 
 <!-- BEGIN filters.tt -->
 [%- USE JSON.Escape %]

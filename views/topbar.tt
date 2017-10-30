@@ -1,8 +1,8 @@
 [%- thisPerson = h.get_person(session.user_id) -%]
 [% qp = request.params.hash %]
 [%- qp.delete('splat') %]
-[%- lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.locale.$lang -%]
+[%- current_lang = h.locale %]
+[% lf = h.config.locale.$current_lang -%]
 [% style = qp.style || 'default' -%]
 
 <!-- BEGIN navbar.tt -->
@@ -36,9 +36,16 @@
                 [%- END %]
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
-                    <a href="[% uri_base %][% IF session.user %]/librecat/person[% END %]/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="fa fa-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
-                </li>
+                [% FOREACH lang IN h.available_locales %]
+                  [% NEXT IF lang == current_lang %]
+                  <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
+                      <a href="[% h.uri_for_locale(lang) %]">
+                        <span class="fa fa-flag"></span>
+                        <span class="hidden-sm">[% h.locale_long(lang) %]</span>
+                        <span class="hidden-md hidden-xs hidden-lg">[% h.locale_long(lang) %]</span>
+                      </a>
+                  </li>
+                [% END %]
                 [%- IF session.user %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="fa fa-user"></span> [% h.loc("header.settings") %] <span class="fa fa-chevron-down"></span></a>
                     <div id="settings" class="dropdown-menu">
@@ -53,13 +60,16 @@
                 [%- END %]
             </ul>
         </div><!-- /.navbar-collapse -->
+        <!--
         <div class="container">
             <div class="row">
                 <div class="col-xs-1 col-sm-2 col-md-offset-1">
-                    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
+                    [% current_lang %]
                 </div>
             </div>
-        </div><!-- /container -->
+        </div>
+        -->
+        <!-- /container -->
     </nav>
     <div class="modal" id="selectAFF">
         <div class="modal-dialog">

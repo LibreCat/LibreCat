@@ -6,3 +6,6 @@ lexicon:
   de: ['CatmanduConfig', ['de']]
   _auto: 1
 
+locale_long:
+  en: "English"
+  de: "Deutsch"

@@ -9,9 +9,53 @@
     <![endif]-->
     <link rel="stylesheet" href="[% uri_base %]/css/main.css">
     <script type="text/javascript">
+      //librecat info
       window.librecat = {
-        uri_base: "[% uri_base %]"
+        uri_base: "[% uri_base %]",
+        locale: "[% h.locale() %]"
       };
+      //extract parameters
+      var params = [];
+      {
+        var pairs = [];
+        var search = window.location.search;
+        if (
+          search.indexOf("?") == 0 &&
+          search.length > 1
+        ) {
+          pairs = window.location.search.substring(1).split("&");
+        }
+        for ( var i = 0; i < pairs.length; i++ ) {
+          params.push(
+            pairs[i].split( "=" ).map(function(v){
+              return decodeURIComponent(v);
+            })
+          );
+        }
+        librecat.params = params;
+      }
+      //add locale to parameters
+      var lang_found = false;
+      for ( var i = 0; i < params.length; i++ ) {
+        if ( params[i][0] == "lang" ) {
+          lang_found = true;
+          params[i][1] = librecat.locale;
+          break;
+        }
+      }
+      if ( !lang_found ) {
+
+        params.push( [ "lang", librecat.locale ] );
+
+      }
+      //change url
+      {
+        var q = [];
+        for ( var i = 0; i < params.length; i++ ) {
+          q.push( encodeURIComponent(params[i][0]) + "=" + encodeURIComponent(params[i][1]) );
+        }
+        window.history.pushState( null, null, window.location.pathname + "?" + q.join("&") );
+      }
     </script>
     <script src="[% uri_base %]/javascripts/jquery.min.js"></script>
     <script src="[% uri_base %]/javascripts/jquery-ui-1.10.4.custom.min.js"></script>

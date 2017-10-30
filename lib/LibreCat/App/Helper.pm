@@ -6,7 +6,7 @@ use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:io :is :array :hash :human trim);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
-use Dancer qw(:syntax params request session vars);
+use Dancer qw(:syntax params request session vars cookie);
 use Dancer::FileUtils qw(path);
 use File::Basename;
 use POSIX qw(strftime);
@@ -159,7 +159,7 @@ sub extract_params {
 
     $p->{start} = $params->{start} if is_natural $params->{start};
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
-    $p->{lang}  = $params->{lang}  if $params->{lang};
+    $p->{lang}  = $self->locale_exists( $params->{lang} ) ? $params->{lang} : $self->locale();
     $p->{q}     = $params->{q}     if $params->{q};
     $p->{cql} = $self->string_array($params->{cql});
 
@@ -440,9 +440,10 @@ sub purge_record {
 }
 
 sub display_doctypes {
-    my $type = lc $_[1];
-    my $lang = $_[2] || "en";
-    $_[0]->config->{language}->{$lang}->{forms}->{$type}->{label};
+    my ( $self, $type, $lang ) = @_;
+    $type = lc( $type );
+    $lang = $self->locale_exists( $lang ) ? $lang :  $self->default_locale();
+    $self->config->{language}->{$lang}->{forms}->{$type}->{label};
 }
 
 sub display_name_from_value {
@@ -528,9 +529,40 @@ sub get_access_store {
     $pkg->new(%$access_opts);
 }
 
-# TODO don't store in session, make it a param
 sub locale {
-    session('lang') // $_[0]->config->{default_lang};
+    cookie('lang') // $_[0]->default_locale();
+}
+
+sub set_locale {
+    cookie( 'lang', $_[1] );
+}
+
+sub available_locales {
+    state $locales = [
+        sort
+        grep { index($_,"_") != 0 }
+        keys %{ $_[0]->config->{i18n}->{lexicon} }
+    ];
+}
+#everything that starts with an underscore is a lexicon option, not a language
+sub locale_exists {
+    is_string( $_[1] ) &&
+        index( $_[1], "_" ) != 0 &&
+        exists( $_[0]->config->{i18n}->{lexicon}->{ $_[1] } );
+}
+
+sub default_locale {
+    state $dl = do {
+        is_string( $_[0]->config->{default_lang} ) or die( "default_lang is not set in config" );
+        $_[0]->config->{default_lang};
+    };
+}
+
+sub locale_long {
+    my ( $self, $locale ) = @_;
+    is_string( $locale ) &&
+        is_string( $self->config->{i18n}->{locale_long}->{$locale} ) ?
+            $self->config->{i18n}->{locale_long}->{$locale} : $locale;
 }
 
 sub localize {
@@ -539,6 +571,15 @@ sub localize {
     my $loc = $self->locale;
     my $i18n = $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
     $i18n->localize($str);
+}
+sub uri_for_locale {
+    my ( $self, $locale ) = @_;
+    my @path;
+    if ( defined( Dancer::session("user") ) ) {
+        push @path, "/librecat/person";
+    }
+    push @path, "/set_language";
+    $self->uri_for( join('',@path), { lang => $locale } );
 }
 
 *loc = \&localize;
@@ -559,7 +600,7 @@ package LibreCat::App::Helper;
 my $h = LibreCat::App::Helper::Helpers->new;
 
 use Catmandu::Sane;
-use Dancer qw(:syntax hook);
+use Dancer qw(:syntax hook param request);
 use Dancer::Plugin;
 
 register h => sub {$h};
@@ -568,6 +609,20 @@ hook before_template => sub {
 
     $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
+
+};
+hook before => sub {
+
+    #set lang when sent
+    {
+        my $lang = param("lang");
+        if ( request->is_get() && $h->locale_exists( $lang ) ) {
+
+            $h->set_locale( $lang );
+
+        }
+
+    }
 
 };
 

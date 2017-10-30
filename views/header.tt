@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lang = h.locale -%]
 [% lf = h.config.locale.$lang -%]
 [% path_info = request.path_info -%]
 

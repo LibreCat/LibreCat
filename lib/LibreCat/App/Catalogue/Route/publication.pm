@@ -90,8 +90,8 @@ Some fields are pre-filled.
             $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
         }
 
-        if (params->{lang}) {
-            $data->{lang} = params->{lang};
+        if ( h->locale_exists( param('lang') ) ) {
+            $data->{lang} = param('lang');
         }
 
         my $templatepath = "backend/forms";

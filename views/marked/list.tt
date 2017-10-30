@@ -1,6 +1,6 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = session.lang ? session.lang : h.config.default_lang %]
+[% lang = h.locale() %]
 [%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
 [% INCLUDE header.tt %]
 
