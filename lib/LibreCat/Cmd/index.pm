@@ -3,6 +3,8 @@ package LibreCat::Cmd::index;
 use Catmandu::Sane;
 use LibreCat::JobQueue;
 use LibreCat::Index;
+use Fcntl qw(:flock);
+use File::Spec;
 use parent qw(LibreCat::Cmd);
 use Carp;
 
@@ -117,6 +119,11 @@ sub _initialize {
 
 sub _switch {
     my ($self) = @_;
+    my $pidfile = File::Spec->catfile(File::Spec->tmpdir,"librecat.index.lock");
+
+    open my $file, ">", $pidfile || die "Failed to create $pidfile: $!";
+    flock($file, LOCK_EX|LOCK_NB) || die "Running more than one indexer?";
+
     defined(LibreCat::Index->new->switch) ? 0 : 1;
 }
 

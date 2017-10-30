@@ -20,12 +20,14 @@ use LibreCat::App::Helper;
 use Search::Elasticsearch;
 use Try::Tiny;
 use Moo;
+use POSIX qw(strftime);
 
-has main    => (is => 'lazy');
-has alias   => (is => 'lazy');
-has index1  => (is => 'lazy');
-has index2  => (is => 'lazy');
-has es      => (is => 'lazy');
+has main       => (is => 'lazy');
+has alias      => (is => 'lazy');
+has index1     => (is => 'lazy');
+has index2     => (is => 'lazy');
+has main_index => (is => 'lazy');
+has es         => (is => 'lazy');
 
 sub _build_main {
     Catmandu->store('main');
@@ -53,6 +55,14 @@ sub _build_index2 {
     my $opts    = $conf->{options};
     my $ns      = 'Catmandu::Store';
     Catmandu::Util::require_package($package, $ns)->new(%$opts, index_name => $opts->{index_name} . 2);
+}
+
+sub _build_main_index {
+    my $conf    = Catmandu->config->{store}->{search};
+    my $package = $conf->{package};
+    my $opts    = $conf->{options};
+    my $ns      = 'Catmandu::Store';
+    Catmandu::Util::require_package($package, $ns)->new(%$opts);
 }
 
 sub _build_es {
@@ -362,12 +372,56 @@ sub _do_index {
     my @bags = keys %{Catmandu->config->{store}->{search}->{options}->{bags}};
 
     try {
+        my $now = strftime "%Y-%m-%dT%H:%M:%SZ" , gmtime(time);
+
+        print "Index starts at: $now\n";
+
+        # First index all records from the main database...
         for my $b (@bags) {
             print "Indexing $b into $new_name...\n";
             my $bag = $new->bag($b);
             $bag->add_many($self->main->bag($b)->benchmark);
             $bag->commit;
         }
+
+        # Check for records changed during the previous indexation...
+        my $has_changes;
+        do {
+            $has_changes = 0;
+
+            print "Checking index for updates changed since $now ...\n";
+            for my $b (@bags) {
+                print "Checking $b ...\n";
+                my $bag = $new->bag($b);
+                my $it  = $self->main_index->bag($b)->searcher(query => {
+                    range => {
+                        date_updated => {
+                            gte => $now
+                        }
+                    }
+                });
+                $it->each(sub {
+                    my $item = $_[0];
+                    my $id   = $item->{_id};
+                    my $date_updated = $item->{date_updated};
+                    my $rec  = $self->main->bag($b)->get($id);
+
+                    if ($rec) {
+                        print "Adding $id changed on $date_updated\n";
+                        $bag->add($rec);
+                    }
+                    else {
+                        carp "main database lost id `$id'?";
+                    }
+
+                    $has_changes = 1;
+                });
+
+                $bag->commit;
+
+                $now = strftime "%Y-%m-%dT%H:%M:%SZ" , gmtime(time);
+            }
+        } while ($has_changes);
     }
     catch {
         print STDERR "Failed to create the index $new_name";
