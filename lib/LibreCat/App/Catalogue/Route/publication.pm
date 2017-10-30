@@ -15,8 +15,7 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 
 sub access_denied_hook {
-    h->hook('publication-access-denied')
-        > fix_around(
+    h->hook('publication-access-denied')->fix_around(
         {_id => params->{id}, user_id => session->{user_id},});
 }
 
