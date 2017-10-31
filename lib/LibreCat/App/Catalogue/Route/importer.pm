@@ -84,10 +84,10 @@ post '/librecat/record/import' => sub {
 
             # Use config/hooks.yml to register functions
             # that should run before/after importing publications
-            LibreCat->hook('publication-import')->fix_around(
+            h->hook('import-new-' . $source)->fix_around(
                 $pub,
                 sub {
-                    $bag->add($pub);
+                    h->update_record('publication', $pub);
                 }
             );
         }
