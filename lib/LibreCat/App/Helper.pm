@@ -270,7 +270,6 @@ sub get_statistics {
         oahits       => $oahits->{total},
         projects     => $self->project->count(),
     };
-
 }
 
 sub new_record {
@@ -439,27 +438,7 @@ sub purge_record {
     return 1;
 }
 
-sub display_doctypes {
-    my $type = lc $_[1];
-    my $lang = $_[2] || "en";
-    $_[0]->config->{language}->{$lang}->{forms}->{$type}->{label};
-}
-
-sub display_name_from_value {
-    my ($self, $list, $value) = @_;
-
-    my $map = $self->config->{lists}{$list};
-    my $name;
-    foreach my $m (@$map) {
-        if ($m->{value} eq $value) {
-            $name = $m->{name};
-        }
-    }
-    $name;
-}
-
 sub uri_base {
-
     #config option 'host' is deprecated
     state $h = $_[0]->config->{uri_base} // $_[0]->config->{host}
         // "http://localhost:5001";
@@ -468,38 +447,39 @@ sub uri_base {
 sub uri_for {
     my ($self, $path, $params) = @_;
 
-    my @uri;
+    my $uri = $self->uri_base();
 
-    push @uri, $self->uri_base(), $path;
+    $uri .= $path if $path;
+
+    my @request_param;
 
     if (is_hash_ref($params)) {
-
-        my @keys = keys %$params;
-
-        push @uri, "?" if scalar(@keys);
-
-        for my $key (@keys) {
-
+        for my $key (sort keys %$params) {
             my $value = $params->{$key};
-            $value
-                = is_array_ref($value) ? $value
-                : is_string($value)    ? [$value]
-                :                        [];
 
-            push @uri, join(
-                "&",
-                map {
+            if (!defined($value) || length($value) == 0) {
+                $value = [];
+            }
+            elsif (is_array_ref($value)) {}
+            elsif (is_string($value)) {
+                $value = [$value];
+            }
+            else {
+                $self->log->error("expecting an array or string but got a $value");
+                $value = [];
+            }
 
-                    uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
-
-                } @$value
-            );
-
+            for (@$value) {
+                push @request_param , uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
+            }
         }
-
     }
 
-    join('', @uri);
+    if (@request_param) {
+        $uri .= '?' . join("&", @request_param);
+    }
+
+    return $uri
 }
 
 sub get_file_store {
