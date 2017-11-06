@@ -13,20 +13,6 @@ use Dancer::Plugin::Ajax;
 use HTML::Entities;
 use LibreCat::App::Helper;
 
-=head2 AJAX /metrics/:id
-
-Web of Science 'Times Cited' information
-
-=cut
-
-ajax '/metrics/:id' => sub {
-    my $metrics = h->get_metrics('wos', params->{id});
-    return to_json {
-        times_cited => $metrics->{times_cited},
-        citing_url  => $metrics->{citing_url},
-    };
-};
-
 =head2 AJAX /search_researcher
 
 =cut

@@ -13,8 +13,8 @@
           <div class="input-group-addon hidden-lg hidden-md">{% tree.label %}</div>
           <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" id="dp_autocomplete_0" value="" />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">Select</span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon"><span class="fa fa-plus" onclick="add_field('affiliation');"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
@@ -29,8 +29,8 @@
           <div class="input-group-addon hidden-lg hidden-md">{% tree.label %}</div>
           <input type="text" onfocus="enable_autocomplete('dp',[% loop.index %]);" class="sticky form-control" id="dp_autocomplete_[% loop.index %]" value="[% dept.name %]" disabled="disabled" />
           <div class="input-group-addon"><span onclick="selectButton(this);" class="department" id="department_select_0">Select</span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-plus" onclick="add_field('affiliation');"></span></div>
-          <div class="input-group-addon"><span class="glyphicon glyphicon-minus" onclick="remove_field(this);"></span></div>
+          <div class="input-group-addon"><span class="fa fa-plus" onclick="add_field('affiliation');"></span></div>
+          <div class="input-group-addon"><span class="fa fa-minus" onclick="remove_field(this);"></span></div>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">&hellip;</h4>
-            <div><small>Click a name to choose. Click <span class="glyphicon glyphicon-chevron-down"></span> to show more.</small></div>
+            <div><small>Click a name to choose. Click <span class="fa fa-chevron-down"></span> to show more.</small></div>
           </div>
           <div class="modal-body">
           </div>

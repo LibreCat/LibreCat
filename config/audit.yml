@@ -1,3 +1,6 @@
 ## Uncomment when audit messages need to be displayed
+## In the hook.yml the audit hooks should be added to
+## as before_fixes / after_fixes. See:
+##    https://github.com/LibreCat/LibreCat/wiki/Audit-messages
 # audit: 1
 audit: 0

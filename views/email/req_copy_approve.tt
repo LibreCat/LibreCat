@@ -3,4 +3,4 @@ Your request has been approved by the author.
 Please download the document within the next 10 days from
 [% uri_base %]/rc/[% key %]
 
-Your PUB system
+Your [% appname_short %] Team

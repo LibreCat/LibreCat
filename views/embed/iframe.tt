@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PUB &ndash; Publications at LibreCat University</title>
+    <title>[% h.config.appname %]</title>
     <link rel="icon" href="[% uri_base %]/images/brand_logo.png" type="image/png">
     [% INCLUDE head_meta.tt %]
   </head>

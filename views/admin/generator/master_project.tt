@@ -32,8 +32,8 @@
       <div class="row innerrow"><!-- button -->
         <div class="col-md-12 buttonrow">
           <span class="form-group col-md-10 col-md-offset-2">
-	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
-	  <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
+	  <button type="submit" id="id_do_nothing" class="btn btn-success change_tab"><span class="fa fa-check"></span> [% h.loc("forms.button.save") %]</button>
+	  <button type="button" class="btn btn-warning cancel-button"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</button>
           </span>
         </div>
       </div>
@@ -69,7 +69,7 @@ $('button.cancel-button').click(function() {
 $('#plusRV').click(function(){
   var items = $('#reviewer div.innerrow');
   var index = items.index($('#reviewer div.innerrow').last()) + 1;
-  $('#reviewer').append('<div class="row innerrow"><input type="hidden" name="reviewer.' + index + '.id" id="rv_idautocomplete_' + index + '" /><input type="hidden" name="reviewer.' + index + '.name" id="rv_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="rv_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#reviewer').append('<div class="row innerrow"><input type="hidden" name="reviewer.' + index + '.id" id="rv_idautocomplete_' + index + '" /><input type="hidden" name="reviewer.' + index + '.name" id="rv_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" id="rv_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button reviewer" id="reviewer_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="fa fa-minus single"></span></span></div>');
   $('#reviewer').bind("click", function(){
     $( "#rv_autocomplete_" + index ).autocomplete({
       source: librecat.uri_base + "/librecat/get_department",
@@ -87,7 +87,7 @@ $('#plusRV').click(function(){
 $('#plusDM').click(function(){
   var items = $('#data_manager div.innerrow');
   var index = items.index($('#data_manager div.innerrow').last()) + 1;
-  $('#data_manager').append('<div class="row innerrow"><input type="hidden" name="data_manager.' + index + '.id" id="dp_idautocomplete_' + index + '" /><input type="hidden" name="data_manager.' + index + '.name" id="dp_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" name="data_manager.' + index + '.name" id="dp_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="glyphicon glyphicon-minus single"></span></span></div>');
+  $('#data_manager').append('<div class="row innerrow"><input type="hidden" name="data_manager.' + index + '.id" id="dp_idautocomplete_' + index + '" /><input type="hidden" name="data_manager.' + index + '.name" id="dp_nameautocomplete_' + index + '" /><span class="form-group col-md-7"><input type="text" class="form-control" name="data_manager.' + index + '.name" id="dp_autocomplete_' + index + '" value="" /></span><span class="form-group col-md-2"><input type="button" onclick="selectButton(this);" class="btn select_button data_manager" id="data_manager_select_' + index + '" value="Select"/></span><span class="col-md-1"><span class="fa fa-minus single"></span></span></div>');
   $('#data_manager').bind("click", function(){
     $( "#dp_autocomplete_" + index ).autocomplete({
       source: librecat.uri_base + "/librecat/get_department",

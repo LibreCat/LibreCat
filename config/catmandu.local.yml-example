@@ -88,14 +88,13 @@ default_access_level: open_access
 
 ## Specity the ipranges which can download (local) files
 ip_range:
-    - 157.193.0.0/16
     - 127.0.0.1
     - 10.0.0.0/8
 
 ## Uncomment when you want to send emails when new research data becomes available
 #research_data:
 #  to: 'send@me.org'
-#  subject: '[PUB] New research data submitted'
+#  subject: '[LibreCat] New research data submitted'
 
 ## Uncomment when you want to register your research_data DOI at DataCite
 #doi:

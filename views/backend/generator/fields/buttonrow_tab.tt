@@ -4,24 +4,24 @@
     </div>
     <div class="form-group col-md-8">
       <div class="btn-group">
-        <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success change_tab"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
+        <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success change_tab"><span class="fa fa-check"></span> [% h.loc("forms.button.save") %]</button>
 	    [%- IF title %]
-            <button type="button" class="btn btn-warning cancel-button"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</span></button>
+            <button type="button" class="btn btn-warning cancel-button"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</span></button>
 	    [%- ELSE %]
-      	    <a href="[% uri_base %]/librecat/record/new" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</a>
+      	    <a href="[% uri_base %]/librecat/record/new" class="btn btn-warning"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</a>
 	    [%- END %]
         [%- UNLESS new_record %]
             [%- IF (status != "public" AND status != "submitted" AND type != "research_data") OR (status == "submitted" AND session.role == "super_admin") OR (type == "research_data" AND session.role == "super_admin") %]
-            <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% h.loc("forms.button.publish") %]</button>
+            <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="fa fa-cloud-upload"></span> [% h.loc("forms.button.publish") %]</button>
             [%- END %]
             [%- IF type == "research_data" AND session.role != "super_admin" AND status != "public" AND status != "submitted" %]
-            <button type="submit" name="finalSubmit" value="recSubmit" onclick="return confirm('[% h.loc("forms.confirm_submit") %]');" class="btn btn-success change_tab"><span class="glyphicon glyphicon-upload"></span> [% h.loc("forms.button.submitted") %]</button>
+            <button type="submit" name="finalSubmit" value="recSubmit" onclick="return confirm('[% h.loc("forms.confirm_submit") %]');" class="btn btn-success change_tab"><span class="fa fa-cloud-upload"></span> [% h.loc("forms.button.submitted") %]</button>
             [%- END %]
             [%- IF status == "public" AND (type != "research_data" OR (type == "research_data" AND session.role == "super_admin")) %]
-            <button type="submit" name="finalSubmit" value="recReturn" onclick="return confirm('[% h.loc("forms.confirm_return") %]');" class="btn btn-danger change_tab"><span class="glyphicon glyphicon-download"></span> [% h.loc("forms.button.return") %]</button>
+            <button type="submit" name="finalSubmit" value="recReturn" onclick="return confirm('[% h.loc("forms.confirm_return") %]');" class="btn btn-danger change_tab"><span class="fa fa-cloud-download"></span> [% h.loc("forms.button.return") %]</button>
             [%- END %]
             [%- IF session.role == "super_admin" %]
-            <a class="btn btn-danger" href="[% uri_base %]/librecat/record/delete/[% _id %]" onclick="return confirm('[% h.loc("forms.confirm_delete") %]');" name="delete"><span class="glyphicon glyphicon-trash"></span> [% h.loc("forms.button.delete") %]</a>
+            <a class="btn btn-danger" href="[% uri_base %]/librecat/record/delete/[% _id %]" onclick="return confirm('[% h.loc("forms.confirm_delete") %]');" name="delete"><span class="fa fa-trash"></span> [% h.loc("forms.button.delete") %]</a>
             [%- END %]
         [%- END %]
       </div>

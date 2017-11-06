@@ -59,7 +59,7 @@ post '/librecat/record/import' => sub {
     trim($p, 'id',     'whitespace');
     trim($p, 'source', 'whitespace');
 
-    state $bag = Catmandu->store('main')->bag('publication');
+    state $bag = h->main_publication;
     my $user = h->get_person(session->{user_id});
     my $id   = $p->{id};
     my $data
@@ -84,10 +84,10 @@ post '/librecat/record/import' => sub {
 
             # Use config/hooks.yml to register functions
             # that should run before/after importing publications
-            LibreCat->hook('publication-import')->fix_around(
+            h->hook('import-new-' . $source)->fix_around(
                 $pub,
                 sub {
-                    $bag->add($pub);
+                    h->update_record('publication', $pub);
                 }
             );
         }

@@ -26,7 +26,7 @@ main:
       session:
         plugins: ['Datestamps']
       publication:
-        plugins: ['Datestamps', 'Versioning', 'LibreCat::PublicationStore']
+        plugins: ['Datestamps', 'Versioning']
         id_generator: Incremental
       project:
         plugins: ['Datestamps']
@@ -38,13 +38,8 @@ main:
       research_group:
         plugins: ['Datestamps']
         # id_generator: Incremental
-
-metrics:
-  package: DBI
-  options:
-    data_source: "DBI:mysql:database=librecat_metrics"
-    username: librecat
-    password: librecat
+      reqcopy:
+        plugins: []
 
 search:
   package: ElasticSearch
@@ -69,7 +64,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             name:
               op:
@@ -358,7 +353,7 @@ search:
                 'any': true
               field: '_id'
               sort: true
-              description: "the unique PUB ID"
+              description: "the unique LibreCat ID"
             orcid:
               op:
                 '=': true
@@ -686,7 +681,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             fullname:
               op:
@@ -770,7 +765,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             id:
               op:
@@ -813,7 +808,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
             id:
               op:
                 '=': true
@@ -889,6 +884,8 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           name:
             type: multi_field
             fields:
@@ -945,6 +942,8 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           title: &titleField
             type: multi_field
             fields:
@@ -1055,7 +1054,6 @@ search:
           pubmed: {type: byte}
           inspire: {type: byte}
           scoap3: {type: byte}
-          date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
               access_level: {type: string, analyzer: tag}
@@ -1076,6 +1074,8 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           publication_hits: {type: integer}
           research_hits: {type: integer}
           combined_hits: {type: integer}
@@ -1117,7 +1117,6 @@ search:
             properties:
               _id: {type: string, index: not_analyzed}
               name: {type: string}
-          date_updated: {type: string, analyzer: datestring}
           account_status: {type: string, analyzer: tag}
           super_admin: {type: byte}
           login: {type: string, analyzer: tag}
@@ -1159,6 +1158,8 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           name:
             type: multi_field
             fields:

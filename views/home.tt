@@ -73,8 +73,8 @@
                     [% UNLESS backend %]
                     <li class="hidden-md hidden-lg hidden-sm"><a href="#facets">[% h.loc("facets.search_filter") %]</a></li>
                     <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% h.loc("facets.export_marked") %]</a></li>
-                    <li class="navbar-right">[% IF session AND session.user %]<a href="[% uri_base %]/logout" title="[% h.loc("main_page.logout") %]"><span class="glyphicon glyphicon-log-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="[% uri_base %]/login" title="[% h.loc("main_page.login") %]"><span class="glyphicon glyphicon-log-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
-                    [% IF session AND session.user %]<li class="navbar-right"><a href="[% uri_base %]/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="glyphicon glyphicon-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
+                    <li class="navbar-right">[% IF session AND session.user %]<a href="[% uri_base %]/logout" title="[% h.loc("main_page.logout") %]"><span class="fa fa-sign-out fw"></span><span class="hidden-sm hidden-xs">[% h.loc("main_page.logout") %]</span></a>[% ELSE %]<a href="[% uri_base %]/login" title="[% h.loc("main_page.login") %]"><span class="fa fa-sign-in fw"></span>[% h.loc("main_page.login") %]</a>[% END %]</li>
+                    [% IF session AND session.user %]<li class="navbar-right"><a href="[% uri_base %]/librecat" title="[% h.loc("main_page.logged_in_as") %] [% session.user %]"><span class="fa fa-user fw"></span><span class="hidden-sm hidden-xs">[% session.user %]</span></a></li>[% END %]
                 </ul>
                 [% END %]
             </ul>

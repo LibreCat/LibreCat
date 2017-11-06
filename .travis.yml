@@ -36,7 +36,7 @@ install:
   - cpanm --quiet --notest Devel::Cover
 
 script:
-  - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 2 -r t; exit $?'
+  - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit $?'
 
 after_success:
   - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
