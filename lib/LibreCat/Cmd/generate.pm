@@ -6,16 +6,16 @@ use Template;
 use LibreCat::App::Helper;
 use Carp;
 use parent qw(LibreCat::Cmd);
-use Data::Dumper;
 
 sub description {
     return <<EOF;
 Usage:
 
-librecat generate package.json
-librecat generate forms
-librecat generate departments
+librecat generate authors
 librecat generate cleanup
+librecat generate departments
+librecat generate forms
+librecat generate package.json
 
 EOF
 }
@@ -343,9 +343,11 @@ sub _generate_authors {
         } @{$hits->{hits}};
 
         @$person = grep defined, @$person;
+        mkdir "$output_path/nodes" unless -d "$output_path/nodes";
+        my $template_path = "$output_path/nodes/$c.tt";
         if ($person && @$person) {
-            open(my $fh, '>:encoding(UTF-8)', "$output_path/person_$c.tt")
-                || die "failed to write person_$c.tt: $!";
+            open(my $fh, '>:encoding(UTF-8)', $template_path)
+                || die "$template_path: $!";
             $self->_template_printer_authors($person, $fh);
             close($fh);
         }
@@ -378,9 +380,10 @@ LibreCat::Cmd::generate - generate various files
 
 =head1 SYNOPSIS
 
-    librecat generate package.json
-    librecat generate forms
-    librecat generate departments
+    librecat generate authors
     librecat generate cleanup
+    librecat generate departments
+    librecat generate forms
+    librecat generate package.json
 
 =cut

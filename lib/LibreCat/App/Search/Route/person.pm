@@ -11,18 +11,6 @@ use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 use URI::Escape;
 
-=head2 GET /person
-
-List persons alphabetically
-
-=cut
-
-get qr{/person} => sub {
-    my $c = params->{browse} // 'a';
-
-    template 'person/list', $hits;
-};
-
 =head2 GET /person/:id_or_alias{/data}
 
 Returns a person's profile page, including publications,
@@ -86,6 +74,16 @@ get qr{/person/(.*?)/?(data)*} => sub {
     $hits->{marked} = @$marked if $marked;
 
     template 'home', $hits;
+};
+
+=head2 GET /person
+
+List persons alphabetically
+
+=cut
+
+get qr{/person} => sub {
+    template "person/list";
 };
 
 =head2 GET /staffdirectory/:id

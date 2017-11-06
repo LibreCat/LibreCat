@@ -6,7 +6,7 @@ use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
-use Data::Dumper;
+
 my $pkg;
 
 BEGIN {

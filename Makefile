@@ -10,16 +10,18 @@ usage:
 generate:
 	carton exec bin/librecat generate forms
 	carton exec bin/librecat generate departments
+	carton exec bin/librecat generate authors
 
 update:
 	git pull --tags origin master
 	carton install
 	carton exec bin/librecat generate forms
 	carton exec bin/librecat generate departments
+	carton exec bin/librecat generate authors
 	./index.sh reindex
 	echo "Update complete!"
 
-# Explicit need -j 1 parallel tests will put databases in an
+# Explicit need of -j 1; parallel tests will put databases in an
 # inconsistent state
 cover:
 	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit \$?'
