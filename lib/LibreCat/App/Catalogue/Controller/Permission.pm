@@ -2,6 +2,7 @@ package LibreCat::App::Catalogue::Controller::Permission::Permissions;
 
 use Catmandu::Sane;
 use Catmandu;
+use Catmandu::Util qw(:is);
 use LibreCat::App::Helper;
 use Dancer qw(:syntax);
 use Carp;
@@ -10,71 +11,129 @@ use Exporter qw/import/;
 use Moo;
 
 sub can_edit {
-    my ($self, $id, $login, $user_role) = @_;
+    my ( $self, $pub, %opts ) = @_;
 
-    my $user = h->get_person($login);
+    my $user = delete $opts{user};
+    my $role = delete $opts{role};
 
-    my $cql = "id=$id AND (person=$user->{_id}";
+    return 0 unless defined( $user ) && defined( $pub );
 
-    if ($user_role eq 'super_admin') {
-        return 1;
-    }
-    elsif ($user_role eq 'reviewer') {
-        my @deps = map {"department=$_->{_id}"} @{$user->{reviewer}};
-        $cql .= " OR " . join(' OR ', @deps) . ")";
-    }
-    elsif ($user_role eq 'project_reviewer') {
-        my @projs = map {"project=$_->{_id}"} @{$user->{project_reviewer}};
-        $cql .= " OR " . join(' OR ', @projs) . ")";
-    }
-    elsif ($user_role eq 'data_manager') {
+    #no restrictions for super_admin
+    return 1 if $role eq "super_admin";
 
-        # not yet correct/enough!!!
-        my @deps = map {"department=$_->{_id}"} @{$user->{data_manager}};
-        $cql .= " OR " . join(' OR ', @deps) . ")";
-    }
-    elsif ($user_role eq 'delegate') {
-        my @delegate = map {"person=$_"} @{$user->{delegate}};
-        $cql .= " OR " . join(' OR ', @delegate) . ")";
-    }
-    else {
-        $cql .= " OR creator=$user->{_id})";
-    }
-    if ($user_role ne 'super_admin') {
-        $cql .= " AND locked<>1";
+    #only super_admin has access to locked publications
+    return 0 if $pub->{locked};
+
+    #collect possible person identifiers
+    my @person_ids;
+
+    push @person_ids, $pub->{creator}->{id} if is_string( $pub->{creator}->{id} );
+    push @person_ids, grep { is_string($_) } map { $_->{_id} } @{ $pub->{author} || [] };
+    push @person_ids, grep { is_string($_) } map { $_->{_id} } @{ $pub->{editor} || [] };
+    push @person_ids, grep { is_string($_) } map { $_->{_id} } @{ $pub->{translator} || [] };
+
+    #match current user on person identifier
+    for my $person_id ( @person_ids ) {
+        return 1 if $person_id eq $user->{_id};
     }
 
-    h->log->debug("can_edit cql: $cql");
+    #access for role reviewer
+    if ( $role eq "reviewer" ) {
 
-    my $hits = h->publication->search(cql_query => $cql, limit => 1);
+        for my $rev ( @{ $user->{reviewer} || [] } ) {
 
-    ($hits->{total} == 1) ? return 1 : return 0;
+            for my $dep ( @{ $pub->{department} || [] } ) {
+
+                return 1 if $rev->{_id} eq $dep->{_id};
+
+            }
+
+        }
+
+    }
+
+    #access for project_reviewer
+    elsif ( $role eq "project_reviewer" ) {
+
+        for my $proj_rev ( @{ $user->{project_reviewer} || [] } ) {
+
+            for my $proj ( @{ $pub->{project} || [] } ) {
+
+                return 1 if $proj_rev->{_id} eq $proj->{_id};
+
+            }
+
+        }
+
+    }
+    #access for role data_manager
+    elsif ( $role eq "data_manager" ) {
+
+         for my $dm ( @{ $user->{data_manager} || [] } ) {
+
+            for my $dep ( @{ $pub->{department} || [] } ) {
+
+                return 1 if $dm->{_id} eq $dep->{_id};
+
+            }
+
+        }
+
+    }
+    #access for role delegate
+    elsif ( $role eq "delegate" ) {
+
+        for my $dm ( @{ $user->{delegate} || [] } ) {
+
+            for my $person_id ( @person_ids ) {
+
+                return 1 if $person_id eq $dm;
+            }
+
+        }
+
+    }
+
+    #cannot edit
+    return 0;
 }
 
 sub can_delete {
-    my ($self, $id, $role) = @_;
-
-    ($role eq 'super_admin') ? return 1 : return 0;
+    my ($self, $pub, %opts) = @_;
+    return is_string( $opts{role} ) && $opts{role} eq "super_admin" ? 1 : 0;
 }
 
 sub can_delete_file {
-    my ($self, $id, $user) = @_;
+    my ($self, $pub, %opts) = @_;
     return 0;
 }
 
 sub can_download {
-    my ($self, $id, $file_id, $login, $role, $ip) = @_;
+    my ( $self, $pub, %opts ) = @_;
+
+    my $file_id = delete $opts{file_id};
+    my $user    = delete $opts{user};
+    my $role    = delete $opts{role};
+    my $ip      = delete $opts{ip};
 
     my $ip_range = h->config->{ip_range};
-    my $pub      = h->main_publication->get($id);
-    my $access   = "";
+    my $access;
     my $file_name;
-    map {
-        if ($_->{file_id} eq $file_id) {
+
+    for ( @{ $pub->{file} } ) {
+
+        if ( $_->{file_id} eq $file_id ) {
+
             $access    = $_->{access_level};
             $file_name = $_->{file_name};
+            last;
+
         }
-    } @{$pub->{file}};
+
+    }
+
+    return (0,"") unless defined $file_name;
+    return (0,"") unless defined $access;
 
     if ($access eq 'open_access') {
         return (1, $file_name);
@@ -86,12 +145,12 @@ sub can_download {
 
         # closed documents can be downloaded by user
         #if and only if the user can edit the record
-        return (0, '') unless $login;
-        return ($self->can_edit($id, $login, $role), $file_name);
+        return (
+            $self->can_edit( $pub, user => $user, role =>  $role ),
+            $file_name
+        );
     }
-    else {
-        return (0, '');
-    }
+    return (0, '');
 }
 
 package LibreCat::App::Catalogue::Controller::Permission;
