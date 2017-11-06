@@ -115,10 +115,9 @@ Checks if the user has permission the see/edit this record.
     get '/edit/:id' => sub {
 
         my $rec = h->main_publication->get( param("id") ) or pass;
-        my $user = h->get_person(session->{user_id});
 
         unless (
-            p->can_edit( $rec, user => $user, role => session->{role} )
+            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
         ) {
             access_denied_hook();
             status '403';
@@ -157,11 +156,10 @@ Checks if the user has the rights to update this record.
         h->log->debug("Params:" . to_dumper($p));
 
         my $rec = h->main_publication->get( $p->{_id} ) or pass;
-        my $user = h->get_person(session->{user_id});
 
         unless (
             $p->{new_record} or
-            p->can_edit($rec, user => $user, role => session->{role} )
+            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
         ) {
             access_denied_hook();
             status '403';
@@ -182,7 +180,7 @@ Checks if the user has the rights to update this record.
             $p->{status} = 'returned';
         }
 
-        $p->{user_id} = session->{user_id};
+        $p->{user_id} = session("user_id");
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
@@ -207,17 +205,16 @@ Checks if the user has the rights to edit this record.
     get '/return/:id' => sub {
 
         my $rec = h->main_publication->get( param("id") ) or pass;
-        my $user = h->get_person(session->{user_id});
 
         unless (
-            p->can_edit( $rec, user => $user, role => session->{role} )
+            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
         ) {
             access_denied_hook();
             status '403';
             forward '/access_denied';
         }
 
-        $rec->{user_id} = session->{user_id};
+        $rec->{user_id} = session("user_id");
 
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
@@ -339,10 +336,9 @@ Publishes private records, returns to the list.
     get '/publish/:id' => sub {
 
         my $rec = h->main_publication->get( param("id") ) or pass;
-        my $user = h->get_person(session->{user_id});
 
         unless (
-            p->can_edit( $rec, user => $user , role => session->{role} )
+            p->can_edit( $rec->{_id},{ user_id => session("user_id") , role => session("role") })
         ) {
             access_denied_hook();
             status '403';

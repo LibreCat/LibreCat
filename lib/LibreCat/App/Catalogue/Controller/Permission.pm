@@ -4,19 +4,37 @@ use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util qw(:is);
 use LibreCat::App::Helper;
-use Dancer qw(:syntax);
 use Carp;
 use Exporter qw/import/;
 
 use Moo;
 
+=head2 can_edit( $self, $id, $opts )
+
+=over 4
+
+=item id
+
+Publication identifier
+
+=item opts
+
+Hash reference containing "user_id" and "role". Both must be a string
+
+=back
+
+=cut
 sub can_edit {
-    my ( $self, $pub, %opts ) = @_;
+    my ( $self, $id, $opts ) = @_;
 
-    my $user = delete $opts{user};
-    my $role = delete $opts{role};
+    is_string( $id ) or return;
+    is_hash_ref( $opts ) or return;
 
-    return 0 unless defined( $user ) && defined( $pub );
+    my $user_id     = $opts->{user_id};
+    my $role        = $opts->{role};
+
+    my $pub = h->main_publication->get( $id ) or return;
+    my $user = h->get_person( $user_id ) or return;
 
     #no restrictions for super_admin
     return 1 if $role eq "super_admin";
@@ -97,24 +115,78 @@ sub can_edit {
     #cannot edit
     return 0;
 }
+=head2 can_delete( $self, $id, $opts )
+
+=over 4
+
+=item id
+
+Publication identifier
+
+=item opts
+
+Hash reference containing "user_id" and "role". Both must be a string
+
+=back
+
+=cut
 
 sub can_delete {
-    my ($self, $pub, %opts) = @_;
-    return is_string( $opts{role} ) && $opts{role} eq "super_admin" ? 1 : 0;
+    my ($self, $id, $opts) = @_;
+    return is_hash_ref($opts) && is_string( $opts->{role} ) && $opts->{role} eq "super_admin" ? 1 : 0;
 }
+=head2 can_delete_file( $self, $id, $opts )
+
+=over 4
+
+=item id
+
+Publication identifier
+
+=item opts
+
+Hash reference containing "user_id" and "role". Both must be a string
+
+=back
+
+=cut
 
 sub can_delete_file {
-    my ($self, $pub, %opts) = @_;
+    my ($self, $id, $opts) = @_;
     return 0;
 }
+=head2 can_download( $self, $id, $opts )
 
+=over 4
+
+=item id
+
+Publication identifier
+
+=item opts
+
+Hash reference containing:
+
+    * user_id (string)
+    * role (string)
+    * file_id (string)
+    * ip (string)
+
+=back
+
+=cut
 sub can_download {
-    my ( $self, $pub, %opts ) = @_;
+    my ( $self, $id, $opts ) = @_;
 
-    my $file_id = delete $opts{file_id};
-    my $user    = delete $opts{user};
-    my $role    = delete $opts{role};
-    my $ip      = delete $opts{ip};
+    is_string( $id ) or return (0,"");
+    is_hash_ref( $opts ) or return (0,"");
+
+    my $pub = h->main_publication->get( $id ) or return (0,"");
+
+    my $file_id = $opts->{file_id};
+    my $user_id = $opts->{user_id};
+    my $role    = $opts->{role};
+    my $ip      = $opts->{ip};
 
     my $ip_range = h->config->{ip_range};
     my $access;
@@ -146,7 +218,7 @@ sub can_download {
         # closed documents can be downloaded by user
         #if and only if the user can edit the record
         return (
-            $self->can_edit( $pub, user => $user, role =>  $role ),
+            $self->can_edit( $id,{ user_id => $user_id, role =>  $role }),
             $file_name
         );
     }
