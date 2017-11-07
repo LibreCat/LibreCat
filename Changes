@@ -1,6 +1,30 @@
 Revision history for LibreCat
 
 {{$NEXT}}
+    - adding seamless reindexing of the collections
+    - adding marked list buttons on every result page
+    - deleting Bielefeld specific code/language
+    - fixing Word/RTF export
+    - fixing admin search on users, projects, research_group by id
+    - moving all interactive interface tests to Cypress
+    - use font awesome in styles
+    - move all backend data into one MySQL database
+    - adding Catmandu::Store::File support for switching binary storage modules
+    - renaming 'researcher' to 'user' in command line tools
+    - GH #324: Editing of uploaded BibTex records gives internal error
+    - GH #321: index.sh doesn't abort with wrong Elasticsearch version
+    - GH #336: publication export "dc" has non serialized values like "ARRAY"
+    - GH #328: Missing quick link to marked publications on publication overview page
+    - GH #327: Hard-coded URL in scss/print.scss
+    - GH #330: Marking/unmarking of publications fires 2 XHR requests
+    - GH #219: RTF export is empty
+    - GH #319: Manage projects search on project ID doesn't give any results
+    - GH #322: index.sh create generates templates
+    - GH #317: Upload file gives internal error
+    - GH #302: Indexed in Pubmed 1
+    - GH #124: Remove inline (CSS) styles
+    - GH #201: Two person parameter in embed link
+    - GH #278: SRU and OAI interface is not layer aware
 
 0.7.3 2017-08-28
     - refactor host calling: use uri_base and middlewares
