@@ -91,8 +91,10 @@ sub _list {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+        $it = $helper->new->department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -100,7 +102,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('department');
+        $it = $helper->main_department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -150,6 +152,7 @@ sub _tree_parse {
 
     print "deleting previous departments...\n";
     $helper->department->delete_all;
+    $helper->main_department->delete_all;
 
     _tree_parse_parser(
         $HASH->{tree},
@@ -190,7 +193,8 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $it = LibreCat->store->bag('department');
+    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $it = $helper->main_department;
 
     my $HASH = {};
 
@@ -233,8 +237,10 @@ sub _export {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->department->searcher(
+        $it = $helper->department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -242,7 +248,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('department');
+        $it = $helper->main_department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -264,7 +270,9 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('department')->get($id);
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
+    my $data = $helper->main_department->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -323,22 +331,18 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
-    {
-        my $bag = LibreCat->store->bag('department');
-        $bag->delete($id);
-        $bag->commit;
-    }
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('department',
+        $id);
 
-    # Deleting search
-    {
-        my $bag = LibreCat::App::Helper::Helpers->new->department;
-        $bag->delete($id);
-        $bag->commit;
+    if ($result) {
+        print "deleted $id\n";
+        return 0;
     }
-
-    print "deleted $id\n";
-    return 0;
+    else {
+        print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
 }
 
 sub _valid {
@@ -365,13 +369,13 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
-            }
 
-            $ret = -1;
+                $ret = 2;
+            }
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 1;

@@ -21,11 +21,11 @@
     <form id="admin-account-search" role="form" action="[% uri_base %]/librecat/admin/account/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
-	  <label for="id_q"><span class="glyphicon glyphicon-search"></span> Search by name or PEVZ-ID</label>
+	  <label for="id_q"><span class="fa fa-search"></span> Search by name or PEVZ-ID</label>
 	  <div class="input-group">
 	    <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
 	    <span class="input-group-btn">
-	      <button type="submit" class="btn btn-default"><i><span class="glyphicon glyphicon-search"></span> </i>Search</button>
+	      <button type="submit" class="btn btn-default"><i><span class="fa fa-search"></span> </i>Search</button>
 	    </span>
 	  </div><!-- /input-group -->
 	</div>
@@ -33,11 +33,11 @@
     </form>
 
     [%- IF error %]
-    <p class="text-danger">[% error %] <a href="[% uri_base %]/librecat/admin/account/edit/[% qp.id %]"><span class="glyphicon glyphicon-pencil fw"></span>Edit</a></p>
+    <p class="text-danger">[% error %] <a href="[% uri_base %]/librecat/admin/account/edit/[% qp.id %]"><span class="fa fa-pencil fw"></span>Edit</a></p>
     [%- END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
-      <a href="[% uri_base %]/librecat/admin/account/new" class="btn btn-primary"><i><span class="glyphicon glyphicon-plus"></span> </i>Add new account</a>
+      <a href="[% uri_base %]/librecat/admin/account/new" class="btn btn-primary"><i><span class="fa fa-plus"></span> </i>Add new account</a>
     </div>
 
     [%- IF hits %]
@@ -54,9 +54,9 @@
     <dl class="hitlist">
     [%- FOREACH p IN hits %]
 	<dt>
-	<a href="[% uri_base %]/librecat/admin/account/edit/[% p._id %]"><span class="glyphicon glyphicon-pencil fw"></span>[% p.full_name %]</a>
+	<a href="[% uri_base %]/librecat/admin/account/edit/[% p._id %]"><span class="fa fa-pencil fw"></span>[% p.full_name %]</a>
 	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
-	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: <a href="https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=[% p._id %]">[% p._id %]</a></span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
+	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: [% p._id %]</span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
 	</dt>
 	<dd>
 	<span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>

@@ -12,14 +12,14 @@ use App::Cmd::Tester;
 for my $bag (qw(publication department project research_group user)) {
     note("deleting backup $bag");
     {
-        my $store = Catmandu->store('backup')->bag($bag);
+        my $store = Catmandu->store('main')->bag($bag);
         $store->delete_all;
         $store->commit;
     }
 
     note("deleting version $bag");
     {
-        my $store = Catmandu->store('backup')->bag("$bag\_version");
+        my $store = Catmandu->store('main')->bag("$bag\_version");
         $store->delete_all;
         $store->commit;
     }
@@ -72,11 +72,10 @@ note("loading test project");
     ok !$result->error, 'add threw no exception';
 }
 
-note("loading test researcher");
+note("loading test user");
 {
-    my $result = test_app(
-        qq|LibreCat::CLI| => ['user', 'add', 'devel/researcher.yml']);
-
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['user', 'add', 'devel/user.yml']);
     ok !$result->error, 'add threw no exception';
 }
 

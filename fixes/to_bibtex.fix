@@ -3,10 +3,6 @@
 #_citekey
 copy_field(_id, r._citekey)
 
-if any_match(type, '^bi')
-  set_field(r.school, 'Bielefeld University')
-end
-
 move_field(type, r._type)
 lookup(r._type, fixes/lookup/bibtex_types.csv, default: misc)
 

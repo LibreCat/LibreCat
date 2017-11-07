@@ -2,7 +2,7 @@ package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
-use LibreCat::Validator::Researcher;
+use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -92,7 +92,7 @@ sub _list {
 
     my $it;
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
+        $it = LibreCat::App::Helper::Helpers->new->user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -100,7 +100,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('researcher');
+        $it = Catmandu->store('main')->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -138,7 +138,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->researcher->searcher(
+        $it = LibreCat::App::Helper::Helpers->new->user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -146,7 +146,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('researcher');
+        $it = Catmandu->store('main')->bag('user');
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -168,7 +168,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('researcher')->get($id);
+    my $data = Catmandu->store('main')->bag('user')->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -188,20 +188,20 @@ sub _add {
         sub {
             my $rec = $_[0];
 
-            $rec->{_id} //= $helper->new_record('researcher');
+            $rec->{_id} //= $helper->new_record('user');
             $rec->{password} = mkpasswd($rec->{password})
                 if exists $rec->{password};
 
             my $is_ok = 1;
 
             $helper->store_record(
-                'researcher',
+                'user',
                 $rec,
                 validation_error => sub {
                     my $validator = shift;
                     print STDERR join("\n",
                         $rec->{_id},
-                        "ERROR: not a valid researcher",
+                        "ERROR: not a valid user",
                         @{$validator->last_errors}),
                         "\n";
                     $ret   = 2;
@@ -217,7 +217,7 @@ sub _add {
         }
     );
 
-    my $index = $helper->researcher;
+    my $index = $helper->user;
     $index->add_many($records);
     $index->commit;
 
@@ -229,22 +229,18 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
-    {
-        my $bag = LibreCat->store->bag('researcher');
-        $bag->delete($id);
-        $bag->commit;
-    }
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('user',
+        $id);
 
-    # Deleting search
-    {
-        my $bag = LibreCat::App::Helper::Helpers->new->researcher;
-        $bag->delete($id);
-        $bag->commit;
+    if ($result) {
+        print "deleted $id\n";
+        return 0;
     }
-
-    print "deleted $id\n";
-    return 0;
+    else {
+        print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
 }
 
 sub _valid {
@@ -252,7 +248,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Researcher->new;
+    my $validator = LibreCat::Validator::User->new;
 
     my $ret = 0;
 
@@ -271,13 +267,12 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
+                $ret = 2;
             }
-
-            $ret = -1;
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 sub _passwd {
@@ -300,6 +295,7 @@ sub _passwd {
     my $password2 = <STDIN>;
     chop($password2);
     system('/bin/stty', 'echo');
+    print "\n";
 
     unless ($password1 eq $password2) {
         print STDERR "Passwords don't match\n";
@@ -309,9 +305,9 @@ sub _passwd {
     $data->{password} = mkpasswd($password2);
 
     my $helper = LibreCat::App::Helper::Helpers->new;
-    $data = $helper->store_record('researcher', $data);
+    $helper->store_record('user', $data);
 
-    my $index = $helper->researcher;
+    my $index = $helper->user;
     $index->add($data);
     $index->commit;
 
@@ -336,7 +332,7 @@ LibreCat::Cmd::user - manage librecat users
     librecat user get <id>
     librecat user delete <id>
     librecat user valid <FILE>
-    librecat user [options] passwd <id>
+    librecat user passwd <id>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

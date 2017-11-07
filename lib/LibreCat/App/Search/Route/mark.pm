@@ -24,12 +24,12 @@ Return list of marked records in format :fmt
 
 get '/marked.:fmt' => sub {
     my $marked = session 'marked';
-    $marked    = is_array_ref( $marked ) ? $marked : [];
+    $marked = is_array_ref($marked) ? $marked : [];
     my $params = params;
-    $params->{fmt} = "yaml" unless is_string( $params->{fmt} );
-    $params->{cql} = ["(id=" . join(' OR id=', @$marked) . ")"];
+    $params->{fmt} = "yaml" unless is_string($params->{fmt});
+    $params->{cql}  = ["(id=" . join(' OR id=', @$marked) . ")"];
     $params->{sort} = "false";
-    $params->{bag} = "publication";
+    $params->{bag}  = "publication";
 
     forward "/export", $params;
 };

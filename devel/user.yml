@@ -1,0 +1,82 @@
+---
+_id: '1'
+_version: 12
+account_status: active
+date_created: 2017-09-14T07:39:22Z
+date_updated: 2017-09-14T12:10:37Z
+first_name: Test
+full_name: User, Test
+last_name: User
+login: test
+password: secret
+style: apa
+...
+---
+_id: '1234'
+_version: 10
+account_status: active
+alias: genius
+date_created: 2017-09-14T07:38:07Z
+date_updated: 2017-09-14T12:00:04Z
+department:
+- _id: 9996
+email: einstein@physics.com
+first_name: Albert
+full_name: Einstein, Albert
+last_name: Einstein
+login: einstein
+password: einstein
+super_admin: 1
+...
+---
+_id: '2'
+_version: 11
+account_status: active
+date_created: 2017-09-14T07:38:52Z
+date_updated: 2017-09-14T12:00:04Z
+first_name: Elvis
+full_name: Presley, Elvis
+last_name: Presley
+login: elvis
+password: secret
+style: apa
+...
+---
+_id: '3'
+_version: 10
+account_status: active
+date_created: 2017-09-14T07:39:48Z
+date_updated: 2017-09-14T12:00:05Z
+first_name: James
+full_name: Dean, James
+last_name: Dean
+login: james
+password: secret
+style: apa
+...
+---
+_id: '4'
+_version: 10
+account_status: active
+date_created: 2017-09-14T07:40:42Z
+date_updated: 2017-09-14T12:00:05Z
+first_name: Marilyn
+full_name: Monroe, Marilyn
+last_name: Monroe
+login: marilyn
+password: secret
+style: apa
+...
+---
+_id: '5'
+_version: 10
+account_status: active
+date_created: 2017-09-14T07:41:27Z
+date_updated: 2017-09-14T12:00:05Z
+first_name: Natalie
+full_name: Portman, Natalie
+last_name: Portman
+login: natalie
+password: secret
+style: apa
+...

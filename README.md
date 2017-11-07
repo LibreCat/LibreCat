@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 [![Build Status](https://travis-ci.org/LibreCat/LibreCat.svg)](https://travis-ci.org/LibreCat/LibreCat)
 [![Coverage Status](https://coveralls.io/repos/github/LibreCat/LibreCat/badge.svg)](https://coveralls.io/github/LibreCat/LibreCat)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
+=======
+[![Build Status](https://travis-ci.org/LibreCat/LibreCat.svg?branch=master)](https://travis-ci.org/LibreCat/LibreCat)
+[![Coverage Status](https://coveralls.io/repos/github/LibreCat/LibreCat/badge.svg?branch=master)](https://coveralls.io/github/LibreCat/LibreCat?branch=master)
+>>>>>>> dev
 
 # LibreCat - an institutional repository
 
@@ -22,9 +27,9 @@ Encyclopedia Article, Journal Article, Special Issue, Newspaper Article, Preprin
 Report, Translation, Translation (Section), Working Paper, Thesis, Research Data,
 Project, Award, Research Group
 * Drag and drop upload of full-text publications
-* Copycat from DOI, PubMED, Arxiv and Web of Science
+* Copycat from DOI, PubMED, ArXiv and Web of Science
 * Google Scholar indexation support
-* Citation Styles for  AMA, APA, Frontiers, Harvard, IEEE, LNCS, MLA, BibTeX, RIS
+* Citation styles configurable from [Zotero Style Repository](https://www.zotero.org/styles)
 * Full MathJAX Latex support to add mathematical formulas in abstracts and titles
 * Pluggable authentication modules
 * Delegate input and management to user others

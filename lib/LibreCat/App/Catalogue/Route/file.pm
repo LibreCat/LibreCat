@@ -24,11 +24,8 @@ sub _file_exists {
 
     return undef unless $store;
 
-    my $container = $store->get($key);
-
-    if (defined $container) {
-        my $file = $container->get($filename);
-        return $file;
+    if ($store->index->exists($key)) {
+        return $store->index->files($key)->get($filename);
     }
     else {
         return undef;
@@ -39,7 +36,13 @@ sub _send_it {
     my ($key, $filename, %opts) = @_;
 
     my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
-    my $container = $store->get($key);
+
+    return undef unless $store->index->exists($key);
+
+    my $files = $store->index->files($key);
+    my $file  = $files->get($filename);
+
+    return undef unless $file;
 
     send_file(
         \"dummy",    # anything, as long as it's a scalar-ref
@@ -47,13 +50,11 @@ sub _send_it {
         callbacks => {
             override => sub {
                 my ($respond, $response) = @_;
-                my $file         = $container->get($filename);
-                my $content_type = $file->content_type;
-
+                my $content_type = $file->{content_type};
                 my $http_status_code = 200;
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
+                # Tech.note: This is a hash of HTTP header/values, but the
+                #            function below requires an even-numbered array-ref.
                 my @http_headers = (
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
@@ -61,30 +62,11 @@ sub _send_it {
                     'Pragma' => 'no-cache'
                 );
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
+                # Send the HTTP headers
+                # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
-                # Avoid creating forks whenever possible...
-                if ($file->is_callback) {
-                    $file->data->($writer);
-                    $writer->close();
-                }
-                else {
-                    my $io = $file->fh;
-                    my $buffer_size
-                        = h->config->{filestore}->{api}->{buffer_size}
-                        // 1024;
-
-                    while (!$io->eof) {
-                        my $buffer;
-                        $io->read($buffer, $buffer_size);
-                        $writer->write($buffer);
-                    }
-
-                    $writer->close();
-                    $io->close();
-                }
+                $files->stream($writer,$file);
             },
         },
     );
@@ -99,7 +81,7 @@ sub _calc_date {
 
 sub _get_file_info {
     my ($pub_id, $file_id) = @_;
-    my $rec = LibreCat->store->bag('publication')->get($pub_id);
+    my $rec = h->main_publication->get($pub_id);
     if ($rec->{file} and ref $rec->{file} eq "ARRAY") {
         my $matching_items
             = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
@@ -114,14 +96,15 @@ Author approves the request. Email will be sent to user.
 =cut
 
 get '/rc/approve/:key' => sub {
-    my $bag  = Catmandu->store->bag('reqcopy');
+    my $bag  = h->main_reqcopy;
     my $data = $bag->get(params->{key});
     return "Nothing to approve." unless $data;
 
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body = export_to_string({key => params->{key}, uri_base => h->uri_base()},
+    my $body
+        = export_to_string({key => params->{key}, uri_base => h->uri_base(), appname_short => h->config->{appname_short}},
         'Template', template => 'views/email/req_copy_approve.tt');
 
     my $job = {
@@ -148,7 +131,7 @@ to user. Delete request key from database.
 =cut
 
 get '/rc/deny/:key' => sub {
-    my $bag  = Catmandu->store->bag('reqcopy');
+    my $bag  = h->main_reqcopy;
     my $data = $bag->get(params->{key});
     return "Nothing to deny." unless $data;
 
@@ -156,7 +139,7 @@ get '/rc/deny/:key' => sub {
         to      => $data->{user_email},
         subject => h->config->{request_copy}->{subject},
         body    => export_to_string(
-            {}, 'Template', template => 'views/email/req_copy_deny.tt'
+            {appname_short => h->config->{appname_short}}, 'Template', template => 'views/email/req_copy_deny.tt'
         ),
     };
 
@@ -178,7 +161,7 @@ Now get the document if time has not expired yet.
 =cut
 
 get '/rc/:key' => sub {
-    my $check = Catmandu->store->bag('reqcopy')->get(params->{key});
+    my $check = h->main_reqcopy->get(params->{key});
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
@@ -205,7 +188,7 @@ Request a copy of the publication. Email will be sent to the author.
 =cut
 
 any '/rc/:id/:file_id' => sub {
-    my $bag = Catmandu->store->bag('reqcopy');
+    my $bag  = h->main_reqcopy;
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
         forward '/publication/' . params->{id}, {method => 'GET'};
@@ -226,7 +209,8 @@ any '/rc/:id/:file_id' => sub {
 
     my $file_creator_email = h->get_person($file->{creator})->{email};
     if (params->{user_email}) {
-        my $pub       = LibreCat->store->bag('publication')->get(params->{id});
+        my $pub
+            = Catmandu->store('main')->bag('publication')->get(params->{id});
         my $mail_body = export_to_string(
             {
                 title      => $pub->{title},
@@ -234,6 +218,7 @@ any '/rc/:id/:file_id' => sub {
                 mesg       => params->{mesg} || '',
                 key        => $stored->{_id},
                 uri_base   => h->uri_base(),
+                appname_short => h->config->{appname_short},
             },
             'Template',
             template => 'views/email/req_copy.tt',
@@ -253,11 +238,11 @@ any '/rc/:id/:file_id' => sub {
         }
     }
     else {
-        my $url = uri_for("/rc/". $stored->{_id});
+        my $url = uri_for("/rc/" . $stored->{_id});
         content_type "application/json";
         return Dancer::to_json {
-            ok => 1,
-            url => "$url", # need to quotes here!
+            ok  => 1,
+            url => "$url",    # need to quotes here!
         };
     }
 };
@@ -272,6 +257,7 @@ and user rights will be checked before.
 get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     my ($id, $file_id) = splat;
 
+
     my ($ok, $file_name)
         = p->can_download($id, $file_id, session->{user}, session->{role},
         request->address);
@@ -282,7 +268,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     }
 
     if (my $file = _file_exists($id, $file_name)) {
-        _send_it($id, $file->key);
+        _send_it($id, $file->{_id});
     }
     else {
         status 404;

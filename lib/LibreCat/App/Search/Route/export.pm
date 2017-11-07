@@ -22,7 +22,7 @@ Exports data.
 get '/export' => sub {
     my $params = params;
 
-    unless ( is_string( $params->{fmt} ) ) {
+    unless (is_string($params->{fmt})) {
         content_type 'json';
         status '406';
         return to_json {error => "Parameter fmt is missing."};
@@ -32,7 +32,7 @@ get '/export' => sub {
 
     my $export_config = h->config->{route}->{exporter}->{publication};
 
-    unless ( is_hash_ref( $export_config->{$fmt} ) ) {
+    unless (is_hash_ref($export_config->{$fmt})) {
         content_type 'json';
         status '406';
         return to_json {
@@ -45,7 +45,7 @@ get '/export' => sub {
     my $p = h->extract_params();
     $p->{sort} = $p->{sort} // h->config->{default_sort};
 
-    if( is_string( $p->{sort} ) && $p->{sort} eq "false" ) {
+    if (is_string($p->{sort}) && $p->{sort} eq "false") {
         delete $p->{sort};
     }
 
@@ -55,7 +55,7 @@ get '/export' => sub {
     my $package = $spec->{package};
     my $options = $spec->{options} || {};
     $options->{style}    = $params->{style}    if $params->{style};
-    $options->{explinks} = $params->{explinks} if $params->{explinks};
+    $options->{links} = $params->{links} // 0;
 
     my $content_type = $spec->{content_type} || mime->for_name($fmt);
     my $extension    = $spec->{extension}    || $fmt;

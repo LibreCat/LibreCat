@@ -634,6 +634,18 @@ publication:
             oneOf:
               - type: string
               - type: integer
+    pmid:
+      oneOf:
+        - type: string
+          pattern: "^[01]$"
+        - type: integer
+      description: "Flag of PubMed"
+    isi:
+      oneOf:
+        - type: string
+          pattern: "^[01]$"
+        - type: integer
+      description: "Flag of ISI/WoS"
     file:
       type: array
       minItems: 0
@@ -779,8 +791,8 @@ publication:
   required: ["_id","type","title","status"]
   additionalProperties: true
 
-#used in LibreCat::Validator::Researcher
-researcher:
+#used in LibreCat::Validator::User
+user:
   "$schema": "http://json-schema.org/draft-04/schema#"
   title: "librecat researcher"
   type: "object"

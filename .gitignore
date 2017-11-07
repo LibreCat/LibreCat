@@ -20,12 +20,13 @@ META*
 MYMETA.*
 Vagrantfile
 blib/
-catmandu.local.yml
+config/catmandu.local.yml
 cover_db/
 cpanfile.snapshot
 data/file_uploads/**
 data/temp_uploads/**
 docs/
+environments/*.yml
 inc/
 layers.yml
 local/
@@ -49,4 +50,3 @@ views/backend/forms/
 views/department/nodes*
 wiki/
 ~$
-environments/*.yml

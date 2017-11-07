@@ -12,21 +12,15 @@ sub work {
 
     $self->log->debug("entering indexer");
 
-    if ($opts->{id}) {
-        return $self->index_record($opts, $job);
-    }
-    else {
-        return $self->index_all($opts, $job);
-    }
-}
-
-sub index_record {
-    my ($self, $opts, $job) = @_;
-
     my $bag = $opts->{bag};
     my $id  = $opts->{id};
 
-    my $source = Catmandu->store('backup')->bag($bag);
+    unless ($id) {
+        $self->log->error("no record $bag($id) found!");
+        return;
+    }
+
+    my $source = Catmandu->store('main')->bag($bag);
     my $target = Catmandu->store('search')->bag($bag);
 
     $self->log->debug("index one $bag : $id");
@@ -42,36 +36,6 @@ sub index_record {
     else {
         $self->log->error("no record $bag($id) found!");
     }
-}
-
-sub index_all {
-    my ($self, $opts, $job) = @_;
-
-    my $bag = $opts->{bag};
-    my $id  = $opts->{bag};
-
-    my $source = Catmandu->store('backup')->bag($bag);
-    my $target = Catmandu->store('search')->bag($bag);
-    my $total  = $source->count;
-    my $n      = 0;
-
-    $self->log->debug("index all $bag");
-
-    $target->add_many(
-        $source->tap(
-            sub {
-                if (++$n % 500 == 0) {
-                    $self->log->info("indexing $bag $n/$total");
-                    $job->send_status($n, $total);
-                }
-            }
-        )
-    );
-
-    $job->send_status($total, $total);
-    $target->commit;
-
-    $self->log->info("indexed $n");
 }
 
 1;

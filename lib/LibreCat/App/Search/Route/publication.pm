@@ -20,7 +20,12 @@ get '/publication/:id.:fmt' => sub {
     my $id = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
-    forward "/export", {cql => "(id=$id AND type<>research_data)", bag => 'publication', fmt => $fmt};
+    forward "/export",
+        {
+        cql => "(id=$id AND type<>research_data)",
+        bag => 'publication',
+        fmt => $fmt
+        };
 };
 
 =head2 GET /data/:id.:fmt
@@ -33,7 +38,12 @@ get '/data/:id.:fmt' => sub {
     my $id = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
-    forward "/export", {cql => "(id=$id AND type=research_data)", bag => 'publication', fmt => $fmt};
+    forward "/export",
+        {
+        cql => "(id=$id AND type=research_data)",
+        bag => 'publication',
+        fmt => $fmt
+        };
 };
 
 =head2 GET /{data|publication}/:id

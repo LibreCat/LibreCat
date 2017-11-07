@@ -63,44 +63,32 @@ sub alphabet {
     return ['A' .. 'Z'];
 }
 
-sub bag {
-    state $bag = Catmandu->store->bag;
+sub main_audit {
+    state $bag = Catmandu->store('main')->bag('audit');
 }
 
-sub backup_audit {
-    state $bag = Catmandu->store('backup')->bag('audit');
+sub main_publication {
+    state $bag = Catmandu->store('main')->bag('publication');
 }
 
-sub backup_publication {
-    state $bag = Catmandu->store('backup')->bag('publication');
+sub main_project {
+    state $bag = Catmandu->store('main')->bag('project');
 }
 
-sub backup_publication_static {
-    my ($self) = @_;
-    my $backup = Catmandu::Store::DBI->new(
-        'data_source' =>
-            $self->config->{store}->{backup}->{options}->{data_source},
-        username => $self->config->{store}->{backup}->{options}->{username},
-        password => $self->config->{store}->{backup}->{options}->{password},
-        bags     => {publication => {plugins => ['Versioning']}},
-    );
-    state $bag = $backup->bag('publication');
+sub main_user {
+    state $bag = Catmandu->store('main')->bag('user');
 }
 
-sub backup_project {
-    state $bag = Catmandu->store('backup')->bag('project');
+sub main_department {
+    state $bag = Catmandu->store('main')->bag('department');
 }
 
-sub backup_researcher {
-    state $bag = Catmandu->store('backup')->bag('researcher');
+sub main_research_group {
+    state $bag = Catmandu->store('main')->bag('research_group');
 }
 
-sub backup_department {
-    state $bag = Catmandu->store('backup')->bag('department');
-}
-
-sub backup_research_group {
-    state $bag = Catmandu->store('backup')->bag('research_group');
+sub main_reqcopy {
+    state $bag = Catmandu->store('main')->bag('reqcopy');
 }
 
 sub publication {
@@ -111,8 +99,8 @@ sub project {
     state $bag = Catmandu->store('search')->bag('project');
 }
 
-sub researcher {
-    state $bag = Catmandu->store('search')->bag('researcher');
+sub user {
+    state $bag = Catmandu->store('search')->bag('user');
 }
 
 sub department {
@@ -231,10 +219,8 @@ sub get_publication {
 sub get_person {
     my ($self, $id) = @_;
     if ($id) {
-        my $hits
-            = LibreCat->searcher->search('researcher', {cql => ["id=$id"]});
-        $hits
-            = LibreCat->searcher->search('researcher', {cql => ["login=$id"]})
+        my $hits = LibreCat->searcher->search('user', {cql => ["id=$id"]});
+        $hits = LibreCat->searcher->search('user', {cql => ["login=$id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
         if (my $user
@@ -252,17 +238,8 @@ sub get_project {
 
 sub get_department {
     if ($_[1] && length $_[1]) {
-        my $result = $_[0]->department->get($_[1]);
-        $result
-            = LibreCat->searcher->search('department',
-            {q => ["name=\"$_[1]\""]})->first
-            if !$result;
-        return $result;
+        $_[0]->department->get($_[1]);
     }
-}
-
-sub get_research_group {
-    $_[0]->research_group->get($_[1]);
 }
 
 sub get_list {
@@ -293,19 +270,11 @@ sub get_statistics {
         oahits       => $oahits->{total},
         projects     => $self->project->count(),
     };
-
-}
-
-sub get_metrics {
-    my ($self, $bag, $id) = @_;
-    return {} unless $bag and $id;
-
-    return Catmandu->store('metrics')->bag($bag)->get($id);
 }
 
 sub new_record {
     my ($self, $bag) = @_;
-    Catmandu->store('backup')->bag($bag)->generate_id;
+    Catmandu->store('main')->bag($bag)->generate_id;
 }
 
 sub update_record {
@@ -373,9 +342,10 @@ sub store_record {
 
     # clean all the fields that are not part of the JSON schema
     state $validators = {};
-    my $validator_pkg = $validators->{$bag}
-        //= Catmandu::Util::require_package(ucfirst($bag),
-        'LibreCat::Validator');
+    my $validator_pkg = $validators->{$bag};
+    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),'LibreCat::Validator');
+
+    my $can_store = 1;
 
     if ($validator_pkg) {
         my $validator = $validator_pkg->new;
@@ -393,21 +363,28 @@ sub store_record {
         }
 
         unless ($validator->is_valid($rec)) {
+            $can_store = 0;
             $opts{validation_error}->($validator, $rec)
                 if $opts{validation_error}
                 && ref($opts{validation_error}) eq 'CODE';
         }
     }
 
-    my $bagname = "backup_$bag";
-    $self->log->debug("storing record in $bagname...");
-    $self->log->debug(Dancer::to_json($rec));
-    $self->$bagname->add($rec);
+    if ($can_store) {
+        my $bagname = "main_$bag";
+        $self->log->debug("storing record in $bagname...");
+        $self->log->debug(Dancer::to_json($rec));
+        my $saved_record = $self->$bagname->add($rec);
+        $self->$bagname->commit;
+        return $saved_record;
+    }
+    else {
+        return undef;
+    }
 }
 
 sub index_record {
     my ($self, $bag, $rec) = @_;
-
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
     $self->log->debug(Dancer::to_json($rec));
@@ -419,94 +396,90 @@ sub index_record {
 sub delete_record {
     my ($self, $bag, $id) = @_;
 
-    my $del_record = $self->$bag->get($id);
+    if ($bag eq 'publication') {
+        my $del_record = $self->publication->get($id);
 
-    if ($bag eq 'publication'
-        && ($del_record->{oai_deleted} || $del_record->{status} eq 'public'))
-    {
-        $del_record->{oai_deleted} = 1;
-        $del_record->{locked}      = 1;
+        if ($del_record->{oai_deleted} || $del_record->{status} eq 'public') {
+            $del_record->{oai_deleted} = 1;
+            $del_record->{locked}      = 1;
+        }
+
+        $del_record->{date_deleted} = $self->now;
+        $del_record->{status}       = 'deleted';
+
+
+        my $saved   = $self->main_publication->add($del_record);
+        $self->main_publication->commit;
+        $self->publication->add($saved);
+        $self->publication->commit;
+
+        sleep 1;
+
+        return $saved;
     }
-
-    $del_record->{date_deleted} = $self->now;
-    $del_record->{status}       = 'deleted';
-
-    my $bagname = "backup_$bag";
-    my $saved   = $self->$bagname->add($del_record);
-    $self->$bag->add($saved);
-    $self->$bag->commit;
-
-    sleep 1;
-
-    return $saved;
+    else {
+        $self->purge_record($bag,$id);
+        return +{};
+    }
 }
 
 sub purge_record {
     my ($self, $bag, $id) = @_;
 
-    if ($bag eq 'publication') {
-        my $rec = $self->publication->delete($id);
-    }
-
-    my $bagname = "backup_$bag";
-    $self->$bagname->delete($id);
+    # Delete from the index store
+    $self->$bag->delete($id);
     $self->$bag->commit;
+
+    # Delete from the main store
+    my $bagname = "main_$bag";
+    $self->$bagname->delete($id);
+    $self->$bagname->commit;
 
     return 1;
 }
 
-sub display_doctypes {
-    my $type = lc $_[1];
-    my $lang = $_[2] || "en";
-    $_[0]->config->{language}->{$lang}->{forms}->{$type}->{label};
-}
-
-sub display_name_from_value {
-    my ($self, $list, $value) = @_;
-
-    my $map = $self->config->{lists}{$list};
-    my $name;
-    foreach my $m (@$map) {
-        if ($m->{value} eq $value) {
-            $name = $m->{name};
-        }
-    }
-    $name;
-}
-
 sub uri_base {
     #config option 'host' is deprecated
-    state $h = $_[0]->config->{uri_base} // $_[0]->config->{host} // "http://localhost:5001";
+    state $h = $_[0]->config->{uri_base} // $_[0]->config->{host}
+        // "http://localhost:5001";
 }
+
 sub uri_for {
-    my ( $self, $path, $params ) = @_;
+    my ($self, $path, $params) = @_;
 
-    my @uri;
+    my $uri = $self->uri_base();
 
-    push @uri, $self->uri_base(), $path;
+    $uri .= $path if $path;
 
-    if ( is_hash_ref( $params ) ) {
+    my @request_param;
 
-        my @keys = keys %$params;
-
-        push @uri,"?" if scalar(@keys);
-
-        for my $key ( @keys ) {
-
+    if (is_hash_ref($params)) {
+        for my $key (sort keys %$params) {
             my $value = $params->{$key};
-            $value    = is_array_ref( $value ) ? $value : is_string( $value ) ? [ $value ] : [];
 
-            push @uri, join( "&", map {
+            if (!defined($value) || length($value) == 0) {
+                $value = [];
+            }
+            elsif (is_array_ref($value)) {}
+            elsif (is_string($value)) {
+                $value = [$value];
+            }
+            else {
+                $self->log->error("expecting an array or string but got a $value");
+                $value = [];
+            }
 
-                uri_escape_utf8($key)."=".uri_escape_utf8($_);
-
-            } @$value );
-
+            for (@$value) {
+                push @request_param , uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
+            }
         }
-
     }
 
-    join('',@uri);
+    if (@request_param) {
+        $uri .= '?' . join("&", @request_param);
+    }
+
+    return $uri
 }
 
 sub get_file_store {
@@ -518,7 +491,7 @@ sub get_file_store {
     return undef unless $file_store;
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -531,7 +504,7 @@ sub get_access_store {
     return undef unless $access_store;
 
     my $pkg = Catmandu::Util::require_package($access_store,
-        'LibreCat::FileStore');
+        'Catmandu::Store::File');
     $pkg->new(%$access_opts);
 }
 
@@ -573,7 +546,7 @@ register h => sub {$h};
 
 hook before_template => sub {
 
-    $_[0]->{h} = $h;
+    $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
 
 };

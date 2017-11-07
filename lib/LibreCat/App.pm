@@ -84,8 +84,8 @@ sub _login_route {
             h->log->debug("not logged in redirecting to login page");
             my $query_params = params("query");
             my $data
-                = {
-                $conf->{callback_key} => uri_for(request->path_info, $query_params)
+                = {$conf->{callback_key} =>
+                    uri_for(request->path_info, $query_params)
                 };
             for my $k (@{$conf->{passthrough}}) {
                 $data->{$k} = params->{$k} if params->{$k};
@@ -119,8 +119,8 @@ sub _role_route {
         else {
             my $query_params = params("query");
             my $data
-                = {
-                $conf->{callback_key} => uri_for(request->path_info, $query_params)
+                = {$conf->{callback_key} =>
+                    uri_for(request->path_info, $query_params)
                 };
             for my $k (@{$conf->{passthrough}}) {
                 $data->{$k} = params->{$k} if params->{$k};
@@ -245,9 +245,9 @@ post '/login' => sub {
             || $data_manager
             || $delegate
             || "user";
-        session user         => $user->{login};
-        session personNumber => $user->{_id};
-        session lang         => $user->{lang} || h->config->{default_lang};
+        session user    => $user->{login};
+        session user_id => $user->{_id};
+        session lang    => $user->{lang} || h->config->{default_lang};
 
         redirect uri_for($return_url);
     }
@@ -265,9 +265,9 @@ The logout route. Destroys session.
 
 any '/logout' => sub {
 
-    session role         => undef;
-    session user         => undef;
-    session personNumber => undef;
+    session role    => undef;
+    session user    => undef;
+    session user_id => undef;
 
     redirect '/';
 };

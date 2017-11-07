@@ -1,20 +1,10 @@
 _prefix:
   store:
 
-default:
+main:
   package: DBI
   options:
-    data_source: "DBI:mysql:database=librecat_system"
-    username: librecat
-    password: librecat
-    bags:
-      session:
-        plugins: ['Datestamps']
-
-backup:
-  package: DBI
-  options:
-    data_source: "DBI:mysql:database=librecat_backup"
+    data_source: "DBI:mysql:database=librecat_main"
     username: librecat
     password: librecat
     bags:
@@ -35,30 +25,21 @@ backup:
                 type: integer
       session:
         plugins: ['Datestamps']
-      publication: &backup_settings
+      publication:
         plugins: ['Datestamps', 'Versioning']
         id_generator: Incremental
       project:
-        plugins: ['Datestamps', 'Versioning']
-        id_generator: Incremental
-      researcher: *backup_settings
-      department: *backup_settings
-      research_group:
-        plugins: ['Datestamps', 'Versioning']
-        id_generator: Incremental
-
-metrics:
-  package: DBI
-  options:
-    data_source: "DBI:mysql:database=librecat_metrics"
-    username: librecat
-    password: librecat
-    bags:
-      wos: &metrics_settings
         plugins: ['Datestamps']
-      epmc_citations: *metrics_settings
-      epmc_references: *metrics_settings
-      epmc_dblinks: *metrics_settings
+        # id_generator: Incremental
+      user:
+        plugins: ['Datestamps']
+      department:
+        plugins: ['Datestamps']
+      research_group:
+        plugins: ['Datestamps']
+        # id_generator: Incremental
+      reqcopy:
+        plugins: []
 
 search:
   package: ElasticSearch
@@ -83,7 +64,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             name:
               op:
@@ -372,7 +353,7 @@ search:
                 'any': true
               field: '_id'
               sort: true
-              description: "the unique PUB ID"
+              description: "the unique LibreCat ID"
             orcid:
               op:
                 '=': true
@@ -555,6 +536,18 @@ search:
               sort: true
               values: "date in the form yyyy-MM-ddTHH:mm:ssZ"
             datelastchanged: *date_updated
+            file_date_updated:
+              op:
+                '>': true
+                '<': true
+                '>=': true
+                '<=': true
+                '=': true
+                'exact': true
+                '<>': true
+              field: 'file.date_updated'
+              sort: true
+              values: "date in the form yyyy-MM-ddTHH:mm:ssZ"
             publication_status: &publication_status
               op:
                 '=': true
@@ -678,7 +671,7 @@ search:
                 'exact': true
               field: thematic_area
 
-      researcher:
+      user:
         cql_mapping:
           default_index: basic
           indexes:
@@ -688,7 +681,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             fullname:
               op:
@@ -772,7 +765,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
               description: "index with common fields..."
             id:
               op:
@@ -815,7 +808,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-              field: '_all'
+              field: ['_all','_id']
             id:
               op:
                 '=': true
@@ -891,6 +884,8 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           name:
             type: multi_field
             fields:
@@ -947,6 +942,8 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           title: &titleField
             type: multi_field
             fields:
@@ -1057,12 +1054,12 @@ search:
           pubmed: {type: byte}
           inspire: {type: byte}
           scoap3: {type: byte}
-          date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
               access_level: {type: string, analyzer: tag}
-              year_last_uploaded: {type: date, format: "yyyy"}
-              date_updated: {type: string}
+              date_updated: {type: date, format: date_time_no_millis}
+              open_access: {type: string, analyzer: tag}
+              embargo: {type: string, analyzer: tag}
           main_file_link:
             properties:
               url: {type: string, analyzer: tag}
@@ -1073,10 +1070,12 @@ search:
           user_id: {type: string, index: no}
           citation: {index: not_analyzed, type: object}
 
-      researcher:
+      user:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           publication_hits: {type: integer}
           research_hits: {type: integer}
           combined_hits: {type: integer}
@@ -1118,7 +1117,6 @@ search:
             properties:
               _id: {type: string, index: not_analyzed}
               name: {type: string}
-          date_updated: {type: string, analyzer: datestring}
           account_status: {type: string, analyzer: tag}
           super_admin: {type: byte}
           login: {type: string, analyzer: tag}
@@ -1160,6 +1158,8 @@ search:
         include_in_all: false
         properties:
           _id: {type: string, include_in_all: true, index: not_analyzed}
+          date_created: {type: date, format: date_time_no_millis}
+          date_updated: {type: date, format: date_time_no_millis}
           name:
             type: multi_field
             fields:

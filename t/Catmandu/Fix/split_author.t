@@ -20,12 +20,28 @@ is_deeply $pkg->new()->fix(
     }
     ),
     {
-        author => [
-            {first_name => 'A.', last_name => 'Einstein', full_name  => 'Einstein, A.'},
-            {first_name => 'Albert', last_name => 'Einstein', full_name  => 'Einstein, Albert'},
-            {first_name => 'Albert', last_name => 'Einstein Jr.', full_name  => 'Einstein Jr., Albert'},
-            {first_name => 'Albert-Heinz', last_name => 'Einstein', full_name  => 'Einstein, Albert-Heinz'},
-        ]
+    author => [
+        {
+            first_name => 'A.',
+            last_name  => 'Einstein',
+            full_name  => 'Einstein, A.'
+        },
+        {
+            first_name => 'Albert',
+            last_name  => 'Einstein',
+            full_name  => 'Einstein, Albert'
+        },
+        {
+            first_name => 'Albert',
+            last_name  => 'Einstein Jr.',
+            full_name  => 'Einstein Jr., Albert'
+        },
+        {
+            first_name => 'Albert-Heinz',
+            last_name  => 'Einstein',
+            full_name  => 'Einstein, Albert-Heinz'
+        },
+    ]
     },
     "split authors into first/last name";
 

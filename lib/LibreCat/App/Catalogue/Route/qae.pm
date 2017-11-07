@@ -16,7 +16,7 @@ post '/librecat/upload/qae/submit' => sub {
     if ($submit_or_cancel eq "Submit") {
         my $id = h->new_record('publication');
         my $person
-            = h->get_person(params->{delegate} || session->{personNumber});
+            = h->get_person(params->{delegate} || session->{user_id});
         my $department = h->get_department(params->{reviewer})
             if params->{reviewer};
         my $now = h->now();
@@ -41,8 +41,8 @@ post '/librecat/upload/qae/submit' => sub {
             year => substr($now, 0, 4),
             department => $department || $person->{department},
             creator =>
-                {id => session->{personNumber}, login => session->{user}},
-            user_id => session->{personNumber},
+                {id => session->{user_id}, login => session->{user}},
+            user_id => session->{user_id},
             file    => [
                 {
                     # Required for managing the upload

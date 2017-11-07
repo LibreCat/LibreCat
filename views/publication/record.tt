@@ -1,7 +1,6 @@
 [%- PROCESS header.tt %]
 <!-- BEGIN publication/record.tt -->
 
-<script src="[% uri_base %]/javascripts/frontend.js"></script>
 <script type="text/javascript">
 [%- PROCESS publication/javascriptShowHide.tt %]
 </script>
@@ -21,11 +20,6 @@
 [%- relLinkRd = [] %]
 [%- relLinkSw = [] %]
 [%- relFile = [] %]
-[%- IF external_id.pmid.0 %]
-  [%- epmc_cit = h.get_metrics('epmc_citations',external_id.pmid.0) %]
-  [%- epmc_ref = h.get_metrics('epmc_references',external_id.pmid.0) %]
-  [%- ebi_data = h.get_metrics('epmc_dblinks',external_id.pmid.0) %]
-[%- END -%]
 
 [%- FOREACH key IN related_material.keys %]
   [%- IF key == "record" %]
@@ -111,7 +105,7 @@
             [% END %]
             [% IF loop.count > 2 && loop.size > 3 %]
                   <span id="showFiles">
-                    <br><a href="#" onclick="ShowFiles();"><span class="glyphicon glyphicon-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
+                    <br><a href="#" onclick="ShowFiles();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
                   </span>
                   </div>
             </div>
@@ -208,22 +202,6 @@
           <li><a href="#relResData" data-toggle="tab">[% h.loc("frontdoor.tabs.data_publication.label") %]</a></li>
           [% END %]
 
-          [% IF toolkit %]
-          <li><a href="#toolkit" data-toggle="tab">[% h.loc("frontdoor.tabs.toolkit.label") %]</a></li>
-          [% END %]
-
-          [% IF ebi_data %]
-          <li><a href="#ebi_dblinks" data-toggle="tab">[% h.loc("frontdoor.tabs.ebi_links.label") %]</a></li>
-          [% END %]
-
-          [% IF epmc_cit %]
-          <li><a href="#ebi_citations" data-toggle="tab">[% h.loc("frontdoor.tabs.epmc_citation.label") %]</a></li>
-          [% END %]
-
-          [% IF epmc_ref %]
-          <li><a href="#ebi_references" data-toggle="tab">[% h.loc("frontdoor.tabs.epmc_references.label") %]</a></li>
-          [% END %]
-
           [% IF confLetter.size %]
           <li><a href="#confletter" data-toggle="tab">[% h.loc("frontdoor.tabs.confirmation_letter.label") %]</a>
           [% END %]
@@ -260,14 +238,6 @@
 
           [% IF relResData %] [% PROCESS publication/tab_relresdata.tt %] [% END %]
 
-          [% IF toolkit %] [% PROCESS publication/tab_toolkit.tt %] [% END %]
-
-          [% IF ebi_data %] [% PROCESS publication/tab_ebi_links.tt %] [% END %]
-
-          [% IF epmc_cit %] [% PROCESS publication/tab_ebi_cit.tt %] [% END %]
-
-          [% IF epmc_ref %] [% PROCESS publication/tab_ebi_ref.tt %] [% END %]
-
           [% IF relMat.size OR relLink.size %]
             [% PROCESS publication/tab_relmat.tt %]
           [% END %]
@@ -291,7 +261,7 @@
         <h3 id="edit">[% h.loc("frontdoor.editing_options") %]</h3>
         <a href="[% uri_base %]/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]
-          <a href="[% uri_base %]/librecat/record/publish/[% _id %]"><span class="glyphicon glyphicon-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
+          <a href="[% uri_base %]/librecat/record/publish/[% _id %]"><span class="fa fa-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
         [% END %]
         [% IF type == "research_data" AND status != "public" AND status != "submitted" AND session.role != "super_admin" %]
           <a href="[% uri_base %]/librecat/record/publish/[% _id %]">[% h.loc("frontdoor.submit") %]</a>
@@ -373,7 +343,7 @@
             <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
             [% IF loop.count > 14 %]
             <span id="showGen">
-              <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="glyphicon glyphicon-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
+              <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
             </span>
             [% LAST %]
             [% END %]
@@ -409,16 +379,6 @@
   </div><!-- outer col -->
 
 </div><!-- outer row-->
-
-[%- IF _id %]
-<script>
-$.getJSON( librecat.uri_base + "/metrics/[% _id %]").done(function( data ) {
-  if (data.times_cited > 0) {
-    $('#wos').after('<a href="'+ data.citing_url +'" target="_parent">Web of Science&reg; Times Cited: <strong class="wos-times-cited">'+ data.times_cited +'</strong></a></li><br>');
-  }
-});
-</script>
-[%- END %]
 
 <!-- END publication/record.tt -->
 

@@ -37,15 +37,14 @@ $(function () {
             }
         }
     });
-});
 
-$(document).ready(function() {
     var totalMarked = $('.total-marked');
     if (totalMarked.length) {
         $.ajax({
             type: 'GET',
             url: librecat.uri_base + '/marked_total',
             dataType: 'json',
+            cache: false,
             success: function(res) {
                totalMarked.text(res.total);
             }

@@ -37,7 +37,7 @@ add_field(_r.publication_status,published)
 
 # set default status and creator
 add_field(_r.status, new)
-add_field(_r.creator.login, 'PUB_WoS_Import')
+add_field(_r.creator.login, 'Admin_WoS_Import')
 
 if exists(AF)
   move_field(AF, _r.author.$append)

@@ -38,8 +38,8 @@ hooks:
 
   # Code that runs when deleting a publication
   publication-delete:
-    before_fixes: []
-    after_fixes: []
+   before_fixes: []
+   after_fixes: []
 
   # Code that runs at a 'Return' action
   publication-return:

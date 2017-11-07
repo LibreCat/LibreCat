@@ -39,7 +39,8 @@ E.g.
 =cut
 
     get '/filestore' => sub {
-        my $gen = h->get_file_store()->list;
+        my $index = h->get_file_store()->index;
+
         send_file(
             \"dummy",    # anything, as long as it's a scalar-ref
             streaming => 1,    # enable streaming
@@ -48,8 +49,8 @@ E.g.
                     my ($respond, $response) = @_;
                     my $http_status_code = 200;
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
+                    # Tech.note: This is a hash of HTTP header/values, but the
+                    #            function below requires an even-numbered array-ref.
                     my @http_headers = (
                         'Content-Type' => 'text/plain',
                         'Cache-Control' =>
@@ -57,14 +58,15 @@ E.g.
                         'Pragma' => 'no-cache'
                     );
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
+                    # Send the HTTP headers
+                    # (back to either the user or the upstream HTTP web-server front-end)
                     my $writer
                         = $respond->([$http_status_code, \@http_headers]);
 
-                    while (my $key = $gen->()) {
+                    $index->each( sub {
+                        my $key = shift->{_id};
                         $writer->write("$key\n");
-                    }
+                    });
 
                     $writer->close();
                 },
@@ -96,34 +98,35 @@ E.g.
 =cut
 
     get '/filestore/:key' => sub {
-        my $key       = param('key');
-        my $container = h->get_file_store()->get($key);
+        my $key   = param('key');
+        my $store = h->get_file_store();
 
         content_type 'application/json';
 
-        if (defined $container) {
+        if ($store->index->exists($key)) {
+            my $files = $store->index->files($key);
+
             my $doc = {
-                key      => $container->key,
-                created  => $container->created,
-                modified => $container->modified,
+                key      => $key,
             };
 
-            my @files = $container->list;
-
-            for my $file (@files) {
-                my $key      = $file->key;
-                my $size     = $file->size;
-                my $md5      = $file->md5;
-                my $modified = $file->modified;
+            $files->each(sub {
+                my $file     = shift;
+                my $key      = $file->{_id};
+                my $size     = $file->{size};
+                my $md5      = $file->{md5};
+                my $modified = $file->{modified};
+                my $created  = $file->{created};
 
                 push @{$doc->{files}},
                     {
                     key      => $key,
                     size     => $size,
                     md5      => $md5,
-                    modified => $modified
+                    modified => $modified,
+                    created  => $created
                     };
-            }
+            });
 
             return $doc;
         }
@@ -147,58 +150,43 @@ E.g.
         my $key      = param('key');
         my $filename = param('filename');
 
-        my $container = h->get_file_store()->get($key);
+        my $store = h->get_file_store();
 
-        if (defined $container) {
-            if ($container->exists($filename)) {
-                send_file(
-                    \"dummy",    # anything, as long as it's a scalar-ref
-                    streaming => 1,    # enable streaming
-                    callbacks => {
-                        override => sub {
-                            my ($respond, $response) = @_;
-                            my $file         = $container->get($filename);
-                            my $content_type = $file->content_type;
+        do_error('NOT_FOUND', 'no such container', 404) unless $store->index->exists($key);
 
-                            my $http_status_code = 200;
+        my $files = $store->index->files($key);
+        my $file  = $files->get($filename);
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
-                            my @http_headers = (
-                                'Content-Type' => $content_type,
-                                'Cache-Control' =>
-                                    'no-store, no-cache, must-revalidate, max-age=0',
-                                'Pragma' => 'no-cache'
-                            );
+        do_error('NOT_FOUND', 'no such file', 404) unless $file;
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
-                            my $writer = $respond->(
-                                [$http_status_code, \@http_headers]);
-                            my $io = $file->fh;
-                            my $buffer_size
-                                = h->config->{filestore}->{api}->{buffer_size}
-                                // 1024;
+        send_file(
+            \"dummy",    # anything, as long as it's a scalar-ref
+            streaming => 1,    # enable streaming
+            callbacks => {
+                override => sub {
+                    my ($respond, $response) = @_;
+                    my $content_type = $file->{content_type};
 
-                            while (!$io->eof) {
-                                my $buffer;
-                                $io->read($buffer, $buffer_size);
-                                $writer->write($buffer);
-                            }
+                    my $http_status_code = 200;
 
-                            $writer->close();
-                            $io->close();
-                        },
-                    },
-                );
-            }
-            else {
-                return do_error('NOT_FOUND', 'no such file', 404);
-            }
-        }
-        else {
-            return do_error('NOT_FOUND', 'no such container', 404);
-        }
+                    # Tech.note: This is a hash of HTTP header/values, but the
+                    #            function below requires an even-numbered array-ref.
+                    my @http_headers = (
+                        'Content-Type' => $content_type,
+                        'Cache-Control' =>
+                            'no-store, no-cache, must-revalidate, max-age=0',
+                        'Pragma' => 'no-cache'
+                    );
+
+                    # Send the HTTP headers
+                    # (back to either the user or the upstream HTTP web-server front-end)
+                    my $writer = $respond->(
+                        [$http_status_code, \@http_headers]);
+
+                    $files->stream($writer,$file);
+                },
+            },
+        );
     };
 
 =head2 DEL /librecat/api/filestore/:key
@@ -217,10 +205,10 @@ E.g.
 
         content_type 'application/json';
 
-        my $container = h->get_file_store()->get($key);
+        my $store = h->get_file_store();
 
-        if (defined $container) {
-            h->get_file_store()->delete($key);
+        if ($store->index->exits($key)) {
+            $store->index->delete($key);
             return {ok => 1};
         }
         else {
@@ -245,16 +233,15 @@ E.g.
 
         content_type 'application/json';
 
-        my $container = h->get_file_store()->get($key);
+        my $store = h->get_file_store();
 
-        if (defined $container) {
+        if ($store->index->exists($key)) {
+            my $files = $store->index->files($key);
 
-            my $file = $container->get($filename);
+            my $file  = $files->get($filename);
 
             if (defined $file) {
-                $container->delete($filename);
-                $container->commit;
-
+                $files->delete($filename);
                 return {ok => 1};
             }
             else {
@@ -282,30 +269,26 @@ E.g.
 
         content_type 'application/json';
 
-        my $container = h->get_file_store()->get($key);
+        my $store = h->get_file_store();
 
-        unless ($container) {
-            $container = h->get_file_store()->add($key);
+        unless ($store->index->exists($key)) {
+            $store->index->add($key);
         }
 
-        if ($container) {
-            my $file = request->upload('file');
+        my $files = $store->index->files($key);
 
-            unless ($file) {
-                return do_error('ILLEGAL_INPUT', 'need a file', 400);
-            }
+        my $file  = request->upload('file');
 
-            $container->add($file->{filename},
-                IO::File->new($file->{tempname}));
-
-            $container->commit;
-
-            return {ok => 1};
+        unless ($file) {
+            return do_error('ILLEGAL_INPUT', 'need a file', 400);
         }
-        else {
-            return do_error('SERVER_ERROR', 'failed to update container',
-                500);
-        }
+
+        $files->add(
+                    IO::File->new($file->{tempname}) ,
+                    $file->{filename}
+                    );
+
+        return {ok => 1};
     };
 
 =head2 GET /librecat/api/access/:key/:filename/thumbnail
@@ -325,65 +308,49 @@ E.g.
    # For now stay backwards compatible and keep one thumbnail per container...
         my $filename = 'thumbnail.png';
 
-        my $container = h->get_access_store()->get($key);
+        my $store = h->get_access_store();
 
-        if (defined $container) {
+        return do_error('NOT_FOUND', 'no thumbnails for this key', 404)
+            unless $store->index->exists($key);
 
-            my $file = $container->get($filename);
+        my $files = $store->index->files($key);
 
-            if (defined $file) {
-                send_file(
-                    \"dummy",    # anything, as long as it's a scalar-ref
-                    streaming => 1,    # enable streaming
-                    callbacks => {
-                        override => sub {
-                            my ($respond, $response) = @_;
-                            my $file         = $container->get($filename);
-                            my $content_type = $file->content_type;
+        my $file = $files->get($filename);
 
-                            my $http_status_code = 200;
+        return Dancer::send_file(
+            'public/images/thumbnail_dummy.png',
+            system_path => 1,
+            filename    => 'thumbnail_dummy.png'
+        ) unless $file;
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
-                            my @http_headers = (
-                                'Content-Type' => $content_type,
-                                'Cache-Control' =>
-                                    'no-store, no-cache, must-revalidate, max-age=0',
-                                'Pragma' => 'no-cache'
-                            );
+        send_file(
+            \"dummy",    # anything, as long as it's a scalar-ref
+            streaming => 1,    # enable streaming
+            callbacks => {
+                override => sub {
+                    my ($respond, $response) = @_;
+                    my $content_type = $file->{content_type};
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
-                            my $writer = $respond->(
-                                [$http_status_code, \@http_headers]);
-                            my $io = $file->fh;
-                            my $buffer_size
-                                = h->config->{filestore}->{api}->{buffer_size}
-                                // 1024;
+                    my $http_status_code = 200;
 
-                            while (!$io->eof) {
-                                my $buffer;
-                                $io->read($buffer, $buffer_size);
-                                $writer->write($buffer);
-                            }
+                    # Tech.note: This is a hash of HTTP header/values, but the
+                    #            function below requires an even-numbered array-ref.
+                    my @http_headers = (
+                        'Content-Type' => $content_type,
+                        'Cache-Control' =>
+                            'no-store, no-cache, must-revalidate, max-age=0',
+                        'Pragma' => 'no-cache'
+                    );
 
-                            $writer->close();
-                            $io->close();
-                        },
-                    },
-                );
-            }
-            else {
-                return Dancer::send_file(
-                    'public/images/thumbnail_dummy.png',
-                    system_path => 1,
-                    filename    => 'thumbnail_dummy.png'
-                );
-            }
-        }
-        else {
-            return do_error('NOT_FOUND', 'no thumbnails for this key', 404);
-        }
+                    # Send the HTTP headers
+                    # (back to either the user or the upstream HTTP web-server front-end)
+                    my $writer = $respond->(
+                        [$http_status_code, \@http_headers]);
+
+                    $files->stream($writer, $file);
+                },
+            },
+        );
     };
 
 =head2 POST /librecat/api/access/:key/:filename/thumbnail
@@ -426,34 +393,20 @@ E.g.
 =cut
 
     del '/access/:key/:filename/thumbnail' => sub {
-        my $key = param('key');
+        my $key      = param('key');
 
-   # For now stay backwards compatible and keep one thumbnail per container...
-        my $filename = 'thumbnail.png';
+        my $thumbnailer_package
+            = h->config->{filestore}->{access_thumbnailer}->{package};
+        my $thumbnailer_options
+            = h->config->{filestore}->{access_thumbnailer}->{options};
 
-        content_type 'application/json';
+        my $pkg = Catmandu::Util::require_package($thumbnailer_package,
+            'LibreCat::Worker');
+        my $worker = $pkg->new(%$thumbnailer_options);
 
-        my $container = h->get_access_store()->get($key);
+        my $response = $worker->work({key => $key, delete => 1});
 
-        if (defined $container) {
-
-            my $file = $container->get($filename);
-
-            if (defined $file) {
-                $container->delete($filename);
-                $container->commit;
-
-                return {ok => 1};
-            }
-            else {
-                return do_error('NOT_FOUND', 'no thumbail for this file',
-                    404);
-            }
-        }
-        else {
-            return do_error('NOT_FOUND', 'no thumbnails in this countainer',
-                404);
-        }
+        $response;
     };
 };
 

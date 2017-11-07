@@ -21,11 +21,11 @@
 
     <div class="col-md-12 row hidden-xs">
     <form action="[% uri_base %]/librecat/person/author_id" id="author_id_form" method="POST">
-    <input type="hidden" name="_id" value="[% session.personNumber %]" />
+    <input type="hidden" name="_id" value="[% session.user_id %]" />
     [%- IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
       <span class="text-muted">[% h.loc("person_profile.no_author_ids") %]</span>
-      <a href="#" class="helpme helpme-md" data-placement="right" title="[% h.loc("help.author_id") %]" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="#" class="helpme helpme-md" data-placement="right" title="[% h.loc("help.author_id") %]" id="author_ids_edit" onclick="editAuthorIds('edit');"><span class="fa fa-pencil"></span></a>
     </div>
     [%- END %]
 
@@ -37,27 +37,27 @@
       [%- IF h.config.lists.author_id.$k.url %]<a href="[% h.config.lists.author_id.$k.url %][% thisPerson.$k %]">[% thisPerson.$k %][% h.config.lists.author_id.$k.icon %]</a>
       [%- ELSE %][% thisPerson.$k %][% END %]
       [%- IF backend %]
-      <a href="#" class="helpme helpme-md" data-placement="right" [% IF loop.first %]title="[% h.loc("help.author_id_edit") %]"[% END %] onclick="editAuthorIds('edit');"><span class="glyphicon glyphicon-pencil"></span></a>
+      <a href="#" class="helpme helpme-md" data-placement="right" [% IF loop.first %]title="[% h.loc("help.author_id_edit") %]"[% END %] onclick="editAuthorIds('edit');"><span class="fa fa-pencil"></span></a>
       [%- END %]
       </div>
     </div>
     [%- END %]<!-- end if -->
-    <div class="row authorIds_input form-group" style="display:none;">
+    <div class="row authorIds_input form-group hidden">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
       <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% thisPerson._id %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
     </div>
     [%- END %]<!-- END foreach -->
 
-    <div class="row authorIds_input" style="display:none;">
+    <div class="row authorIds_input hidden">
       <div class="col-md-4">
-	<span class="glyphicon glyphicon-question-sign" id="authorid_help" data-toggle="tooltip" data-placement="right" title="[% h.loc("person_profile.person_id_title") %]"></span>
+	<span class="fa fa-question-circle" id="authorid_help" data-toggle="tooltip" data-placement="right" title="[% h.loc("person_profile.person_id_title") %]"></span>
 	<script>
 	  $('#authorid_help').tooltip();
 	</script>
       </div>
       <div class="col-md-6">
-	<button type="button" id="saveAuthorIds" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> [% h.loc("forms.button.save") %]</button>
-	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> [% h.loc("forms.button.cancel") %]</button>
+	<button type="button" id="saveAuthorIds" class="btn btn-success"><span class="fa fa-check"></span> [% h.loc("forms.button.save") %]</button>
+	<button type="button" onclick="editAuthorIds('cancel');" class="btn btn-warning"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</button>
       </div>
     </div>
     </form>

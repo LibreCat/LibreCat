@@ -89,13 +89,14 @@ Performs search for reviewer.
 
     get '/reviewer' => sub {
         my $account = h->get_person(session->{user});
-        redirect uri_for("/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
+        redirect uri_for(
+            "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
     };
 
     get '/reviewer/:department_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'personNumber';
+        my $id      = session 'user_id';
         my $account = h->get_person(session->{user});
 
         # if user not reviewer or not allowed to access chosen department
@@ -103,8 +104,8 @@ Performs search for reviewer.
             and grep {params->{department_id} eq $_->{_id}}
             @{$account->{reviewer}})
         {
-            return redirect
-                uri_for("/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
+            return redirect uri_for(
+                "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
         }
 
         push @{$p->{cql}}, "status<>deleted";
@@ -129,14 +130,15 @@ Performs search for reviewer.
 
     get '/project_reviewer' => sub {
         my $account = h->get_person(session->{user});
-        redirect
-            uri_for("/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}");
+        redirect uri_for(
+            "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}"
+        );
     };
 
     get '/project_reviewer/:project_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'personNumber';
+        my $id      = session 'user_id';
         my $account = h->get_person(session->{user});
 
         # if user not project_reviewer or not allowed to access chosen project
@@ -144,8 +146,9 @@ Performs search for reviewer.
             and grep {params->{project_id} eq $_->{_id}}
             @{$account->{project_reviewer}})
         {
-            return redirect
-                uri_for("/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}");
+            return redirect uri_for(
+                "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}"
+            );
         }
 
         push @{$p->{cql}}, "status<>deleted";
@@ -170,13 +173,14 @@ Performs search for data manager.
 
     get '/data_manager' => sub {
         my $account = h->get_person(session->{user});
-        redirect
-            uri_for("/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}");
+        redirect uri_for(
+            "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}"
+        );
     };
 
     get '/data_manager/:department_id' => sub {
         my $p         = h->extract_params();
-        my $id        = session 'personNumber';
+        my $id        = session 'user_id';
         my $account   = h->get_person(session->{user});
         my $dep_query = "department=" . params->{department_id};
 
@@ -202,7 +206,8 @@ according to first delegate ID.
 
     get '/delegate' => sub {
         my $account = h->get_person(session->{user});
-        redirect uri_for("/librecat/search/delegate/$account->{delegate}->[0]");
+        redirect uri_for(
+            "/librecat/search/delegate/$account->{delegate}->[0]");
     };
 
 =head2 GET '/delegate/:delegate_id'
@@ -235,7 +240,7 @@ Performs search for user.
 
     get '/' => sub {
         my $p  = h->extract_params();
-        my $id = session 'personNumber';
+        my $id = session 'user_id';
 
         push @{$p->{cql}}, "(person=$id OR creator=$id)";
         push @{$p->{cql}}, "type<>research_data";
@@ -261,7 +266,7 @@ Performs search for user.
 
     get '/data' => sub {
         my $p      = h->extract_params();
-        my $id     = session 'personNumber';
+        my $id     = session 'user_id';
         my @orig_q = @{$p->{q}};
 
         push @{$p->{cql}}, "status<>deleted";

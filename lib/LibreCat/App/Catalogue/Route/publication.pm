@@ -15,9 +15,8 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 
 sub access_denied_hook {
-    h->hook('publication-access-denied')
->fix_around(
-        {_id => params->{id}, user_id => session->{personNumber},});
+    h->hook('publication-access-denied')->fix_around(
+        {_id => params->{id}, user_id => session->{user_id},});
 }
 
 =head1 PREFIX /record
@@ -38,7 +37,7 @@ Some fields are pre-filled.
 
     get '/new' => sub {
         my $type = params->{type};
-        my $user = h->get_person(session->{personNumber});
+        my $user = h->get_person(session->{user_id});
 
         return template 'backend/add_new' unless $type;
 
@@ -50,8 +49,8 @@ Some fields are pre-filled.
             type       => $type,
             department => $user->{department},
             creator =>
-                {id => session->{personNumber}, login => session->{user},},
-            user_id => session->{personNumber},
+                {id => session->{user_id}, login => session->{user},},
+            user_id => session->{user_id},
         };
 
         # Use config/hooks.yml to register functions
@@ -68,7 +67,7 @@ Some fields are pre-filled.
                 first_name => $user->{first_name},
                 last_name  => $user->{last_name},
                 full_name  => $user->{full_name},
-                id         => session->{personNumber},
+                id         => session->{user_id},
             };
             $person->{orcid} = $user->{orcid} if $user->{orcid};
 
@@ -124,7 +123,7 @@ Checks if the user has permission the see/edit this record.
 
         forward '/' unless $id;
 
-        my $rec = LibreCat->store->bag('publication')->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -184,7 +183,7 @@ Checks if the user has the rights to update this record.
             $p->{status} = 'returned';
         }
 
-        $p->{user_id} = session->{personNumber};
+        $p->{user_id} = session->{user_id};
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
@@ -215,14 +214,14 @@ Checks if the user has the rights to edit this record.
             forward '/access_denied';
         }
 
-        my $rec = LibreCat->store->bag('publication')->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
                 {message => "No publication found with ID $id."};
         }
 
-        $rec->{user_id} = session->{personNumber};
+        $rec->{user_id} = session->{user_id};
 
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
@@ -246,14 +245,14 @@ Deletes record with id. For admins only.
     get '/delete/:id' => sub {
         my $id = params->{id};
 
-        my $rec = LibreCat->store->bag('publication')->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
                 {message => "No publication found with ID $id."};
         }
 
-        $rec->{user_id} = session->{personNumber};
+        $rec->{user_id} = session->{user_id};
 
         # Use config/hooks.yml to register functions
         # that should run before/after deleting publications
@@ -276,7 +275,7 @@ Prints the frontdoor for every record.
     get '/preview/:id' => sub {
         my $id = params->{id};
 
-        my $hits = LibreCat->store->bag('publication')->get($id);
+        my $hits = h->main_publication->get($id);
 
         $hits->{bag}
             = $hits->{type} eq "research_data" ? "data" : "publication";
@@ -297,7 +296,7 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = LibreCat->store->bag('publication')->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -319,7 +318,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
     get '/clone/:id' => sub {
         my $id  = params->{id};
-        my $rec = LibreCat->store->bag('publication')->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -350,7 +349,7 @@ Publishes private records, returns to the list.
             forward '/access_denied';
         }
 
-        my $rec = LibreCat->store->bag('publication')->get($id);
+        my $rec = h->main_publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -390,6 +389,7 @@ Publishes private records, returns to the list.
 Changes the type of the publication.
 
 =cut
+
     post '/change_type' => sub {
         my $params = params;
 

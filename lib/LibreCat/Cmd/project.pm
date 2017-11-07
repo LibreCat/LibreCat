@@ -24,7 +24,7 @@ options:
 
 E.g.
 
-librecat project export 'id = P1'
+librecat project list 'id = P1'
 librecat user --sort "name,,1" list ""  # force to use an empty query
 
 EOF
@@ -87,8 +87,10 @@ sub _list {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->project->searcher(
+        $it = $helper->project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -96,7 +98,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('project');
+        $it = $helper->main_project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -130,8 +132,10 @@ sub _export {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->project->searcher(
+        $it = $helper->project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -139,7 +143,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('project');
+        $it = $helper->main_project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -161,7 +165,9 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('project')->get($id);
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
+    my $data = $helper->main_project->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -220,22 +226,18 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
-    {
-        my $bag = LibreCat->store->bag('project');
-        $bag->delete($id);
-        $bag->commit;
-    }
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('project',
+        $id);
 
-    # Deleting search
-    {
-        my $bag = LibreCat::App::Helper::Helpers->new->project;
-        $bag->delete($id);
-        $bag->commit;
+    if ($result) {
+        print "deleted $id\n";
+        return 0;
     }
-
-    print "deleted $id\n";
-    return 0;
+    else {
+        print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
 }
 
 sub _valid {
@@ -262,13 +264,13 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
-            }
 
-            $ret = -1;
+                $ret = 2;
+            }
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 1;

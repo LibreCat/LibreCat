@@ -13,8 +13,8 @@
             <option value="[% s %]"[% IF s == "year.desc" %] selected="selected"[% END %]>[% h.config.lists.sort_text.$s %]</option>
             [% END %]
           </select>
-          <div class="input-group-addon" onclick="add_field('sorting');"><span class="glyphicon glyphicon-plus"></span></div>
-          <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+          <div class="input-group-addon" onclick="add_field('sorting');"><span class="fa fa-plus"></span></div>
+          <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
     </div>
@@ -29,8 +29,8 @@
               <option value="[% s %]"[% IF s == sor %] selected="selected"[% END %]>[% h.config.lists.sort_text.$s %]</option>
               [% END %]
             </select>
-            <div class="input-group-addon" onclick="add_field('sorting');"><span class="glyphicon glyphicon-plus"></span></div>
-            <div class="input-group-addon" onclick="remove_field(this);"><span class="glyphicon glyphicon-minus"></span></div>
+            <div class="input-group-addon" onclick="add_field('sorting');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </div>
       </div>

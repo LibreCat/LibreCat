@@ -11,7 +11,7 @@
   </div>
   [%- UNLESS request.path_info.match("/person") OR total == 0 %]
   <div class="col-xs-4 hidden-md hidden-sm hidden-lg">
-     <a href="#facets"><span class="glyphicon glyphicon-filter"></span>[% h.loc("facets.search_filter") %]</a>
+     <a href="#facets"><span class="fa fa-filter"></span>[% h.loc("facets.search_filter") %]</a>
   </div>
   [%- END %]
 </div>

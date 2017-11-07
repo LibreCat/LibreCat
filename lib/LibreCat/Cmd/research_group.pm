@@ -87,8 +87,10 @@ sub _list {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
+        $it = $helper->research_group->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -96,7 +98,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('research_group');
+        $it = $helper->main_research_group;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -106,7 +108,7 @@ sub _list {
             my ($item)  = @_;
             my $id      = $item->{_id};
             my $name    = $item->{name};
-            my $acronym = $item->{acronym};
+            my $acronym = $item->{acronym} // '---';
 
             printf "%-40.40s %5.5s %-40.40s %s\n", " "    # not used
                 , $id, $acronym, $name;
@@ -131,8 +133,10 @@ sub _export {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->research_group->searcher(
+        $it = $helper->research_group->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -140,7 +144,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('research_group');
+        $it = $helper->main_research_group;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -162,7 +166,9 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->store->bag('research_group')->get($id);
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
+    my $data = $helper->main_research_group->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -221,22 +227,18 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    # Deleting backup
-    {
-        my $bag = LibreCat->store->bag('research_group');
-        $bag->delete($id);
-        $bag->commit;
-    }
+    my $result
+        = LibreCat::App::Helper::Helpers->new->purge_record('research_group',
+        $id);
 
-    # Deleting search
-    {
-        my $bag = LibreCat::App::Helper::Helpers->new->research_group;
-        $bag->delete($id);
-        $bag->commit;
+    if ($result) {
+        print "deleted $id\n";
+        return 0;
     }
-
-    print "deleted $id\n";
-    return 0;
+    else {
+        print STDERR "ERROR: delete $id failed";
+        return 2;
+    }
 }
 
 sub _valid {
@@ -263,13 +265,13 @@ sub _valid {
                 else {
                     print STDERR "ERROR $id: not valid\n";
                 }
-            }
 
-            $ret = -1;
+                $ret = 2;
+            }
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 1;

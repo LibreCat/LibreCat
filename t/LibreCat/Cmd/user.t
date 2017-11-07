@@ -1,4 +1,5 @@
-use Catmandu::Sane;
+use strict;
+use warnings FATAL => 'all';
 use Path::Tiny;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
@@ -21,53 +22,53 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store('backup')->bag('researcher')->delete_all;
-Catmandu->store('search')->bag('researcher')->delete_all;
+Catmandu->store('main')->bag('user')->delete_all;
+Catmandu->store('search')->bag('user')->delete_all;
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['user']);
-    ok $result->error, 'ok threw an exception';
+    ok $result->error, 'missing cmd: threw an exception';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['user', 'list']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'list: ok threw no exception';
 
     my $output = $result->stdout;
-    ok $output , 'got an output';
+    ok $output , 'list: got an output';
 
     my $count = count_user($output);
 
-    ok $count == 0, 'got no users';
+    ok $count == 0, 'list: got no users';
 }
 
 {
     my $result = test_app(
         qq|LibreCat::CLI| => ['user', 'add', 't/records/invalid-user.yml']);
-    ok $result->error, 'ok threw an exception';
+    ok $result->error, 'add invalid user: threw an exception';
 }
 
 {
     my $result = test_app(
         qq|LibreCat::CLI| => ['user', 'add', 't/records/valid-user.yml']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'add valid user: threw no exception';
 
     my $output = $result->stdout;
-    ok $output , 'got an output';
+    ok $output , 'add valid user: got an output';
 
-    like $output , qr/^added 999111999/, 'added 999111999';
+    like $output , qr/^added 999111999/, 'add valid user: id is 99111999';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| => ['user', 'get', '999111999']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'get: threw no exception';
 
     my $output = $result->stdout;
 
-    ok $output , 'got an output';
+    ok $output , 'get: got an output';
 
     my $importer = Catmandu->importer('YAML', file => \$output);
 
@@ -81,10 +82,10 @@ Catmandu->store('search')->bag('researcher')->delete_all;
     my $result
         = test_app(qq|LibreCat::CLI| => ['user', 'delete', '999111999']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'delete: threw no exception';
 
     my $output = $result->stdout;
-    ok $output , 'got an output';
+    ok $output , 'delete: got an output';
 
     like $output , qr/^deleted 999111999/, 'deleted 999111999';
 }

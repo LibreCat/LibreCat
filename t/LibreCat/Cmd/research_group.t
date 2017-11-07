@@ -21,7 +21,7 @@ BEGIN {
 require_ok $pkg;
 
 # empty db
-Catmandu->store('backup')->bag('research_group')->delete_all;
+Catmandu->store('main')->bag('research_group')->delete_all;
 Catmandu->store('search')->bag('research_group')->delete_all;
 
 {
@@ -47,17 +47,17 @@ Catmandu->store('search')->bag('research_group')->delete_all;
         = test_app(qq|LibreCat::CLI| =>
             ['research_group', 'add', 't/records/invalid-research_group.yml']
         );
-    ok $result->error, 'ok threw an exception';
+    ok $result->error, 'add invalid RG: threw an exception';
 }
 
 {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['research_group', 'add', 't/records/valid-research_group.yml']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'add valid RG: threw no exception';
 
     my $output = $result->stdout;
-    ok $output , 'got an output';
+    ok $output , 'add: got an output';
 
     like $output , qr/^added RG999000999/, 'added RG999000999';
 }
@@ -65,10 +65,10 @@ Catmandu->store('search')->bag('research_group')->delete_all;
 {
     my $result = test_app(qq|LibreCat::CLI| => ['research_group', 'list']);
 
-    ok !$result->error, 'ok threw no exception';
+    ok !$result->error, 'list';
 
     my $output = $result->stdout;
-    ok $output, 'got an output';
+    ok $output, 'list: got an output';
 
     my $count = count_research_group($output);
 

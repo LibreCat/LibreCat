@@ -3,6 +3,7 @@ package LibreCat::Cmd;
 use Catmandu::Sane;
 use I18N::Langinfo qw(langinfo CODESET);
 use Encode qw(decode);
+use Log::Any ();
 use namespace::clean;
 
 our $VERSION = '0.01';
@@ -43,6 +44,12 @@ sub execute {
 # these should be implemented by the LibreCat::Cmd's
 sub command_opt_spec { }
 sub command          { }
+
+# Set access to the logger
+sub log {
+    my ($package, $filename, $line) = caller;
+    Log::Any->get_logger(category => $package);
+}
 
 1;
 

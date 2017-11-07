@@ -1,5 +1,5 @@
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
-[% thisPerson = h.get_person(session.personNumber) -%]
+[% thisPerson = h.get_person(session.user_id) -%]
 [% lang = session.lang -%]
 [% lf = h.config.locale.$lang.forms -%]
 
@@ -15,8 +15,11 @@
       [%- IF title %]
 	    <h1>[% title %]</h1>
       [%- ELSE %]
-	<h1 class="margin-top0">[% h.loc("forms.${type}.label") %]</h1>
-      [% END%]
+	    <h1 class="margin-top0">[% h.loc("forms.${type}.label") %]</h1>
+      [%- END%]
+      [%- IF _validation_errors %]
+        <h3 class="alert-danger">[% _validation_errors.join(' | ')%]</h3>
+      [%- END %]
       </div>
       <div class="col-sm-4 text-right">
       </div>

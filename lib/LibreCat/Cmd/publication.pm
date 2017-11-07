@@ -157,8 +157,10 @@ sub _list {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
+        $it = $helper->publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -166,7 +168,7 @@ sub _list {
         );
     }
     else {
-        $it = LibreCat->store->bag('publication');
+        $it = $helper->main_publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -205,8 +207,10 @@ sub _export {
 
     my $it;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     if (defined($query)) {
-        $it = LibreCat::App::Helper::Helpers->new->publication->searcher(
+        $it = $helper->publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -214,7 +218,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->store->bag('publication');
+        $it = $helper->main_publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -236,7 +240,10 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $bag = LibreCat->store->bag('publication');
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
+    my $bag = $helper->main_publication;
+
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {
@@ -406,13 +413,13 @@ sub _valid {
                 if (my $msg = $self->opts->{log}) {
                     audit_message($id, 'valid', $msg);
                 }
-            }
 
-            $ret = -1;
+                $ret = 2;
+            }
         }
     );
 
-    return $ret == 0;
+    return $ret;
 }
 
 sub _fetch {
@@ -517,6 +524,8 @@ sub _files {
 sub _files_list {
     my ($self, $id) = @_;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     my $exporter = Catmandu->exporter('YAML');
 
     my $printer = sub {
@@ -540,15 +549,15 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = LibreCat->store->bag('publication')->get_($id);
+        my $data = $helper->main_publication->get($id);
         $printer->($data);
     }
     elsif (defined($id)) {
-        LibreCat::App::Helper::Helpers->new->publication->searcher(
+        $helper->publication->searcher(
             cql_query => $id)->each($printer);
     }
     else {
-        LibreCat::App::Helper::Helpers->new->publication->each($printer);
+        $helper->publication->each($printer);
     }
     $exporter->commit;
 }
@@ -565,7 +574,7 @@ sub _files_load {
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = LibreCat->store->bag('publication')->get($id)) {
+        if (my $data = $helper->main_publication->get($id)) {
             $self->_file_process($data, $files)
                 && $helper->update_record('publication', $data);
         }
@@ -703,7 +712,7 @@ sub _files_reporter {
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
 
     my $pkg
-        = Catmandu::Util::require_package($file_store, 'LibreCat::FileStore');
+        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
     my $files = $pkg->new(%$file_opt);
 
     my $exporter = Catmandu->exporter('YAML');
@@ -720,8 +729,8 @@ sub _files_reporter {
                 my $status = 'OK';
                 my $error  = '';
 
-                if (my $container = $files->get($pub_id)) {
-                    if ($container->exists($file_name)) {
+                if ($files->index->exists($pub_id)) {
+                    if ($files->index->files($pub_id)->exists($file_name)) {
                         $status = 'OK';
                     }
                     else {

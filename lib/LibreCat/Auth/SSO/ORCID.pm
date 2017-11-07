@@ -41,7 +41,10 @@ sub to_app {
         #already got here before
         if (is_hash_ref($auth_sso)) {
 
-            return [302, [Location => $self->uri_for($self->authorization_path)], []];
+            return [
+                302, [Location => $self->uri_for($self->authorization_path)],
+                []
+            ];
 
         }
 
@@ -92,13 +95,17 @@ sub to_app {
                 }
             );
 
-            return [302, [Location => $self->uri_for($self->authorization_path)], []];
+            return [
+                302, [Location => $self->uri_for($self->authorization_path)],
+                []
+            ];
         }
 
         #request phase
         else {
 
-            my $redirect_uri = URI->new($self->uri_for($request->script_name));
+            my $redirect_uri
+                = URI->new($self->uri_for($request->script_name));
             $redirect_uri->query_form({_callback => "true"});
 
             my $auth_url

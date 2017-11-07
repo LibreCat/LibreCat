@@ -11,12 +11,8 @@ use namespace::clean;
 with 'LibreCat::Auth::SSO';
 
 has cas_url => (is => 'ro', isa => sub {check_string($_[0]);}, required => 1);
-has cas => (
-    is => 'ro',
-    lazy => 1,
-    builder => '_build_cas',
-    init_arg => undef
-);
+has cas =>
+    (is => 'ro', lazy => 1, builder => '_build_cas', init_arg => undef);
 
 sub _build_cas {
     my $self = $_[0];
@@ -42,7 +38,10 @@ sub to_app {
         #already got here before
         if (is_hash_ref($auth_sso)) {
 
-            return [302, [Location => $self->uri_for($self->authorization_path)], []];
+            return [
+                302, [Location => $self->uri_for($self->authorization_path)],
+                []
+            ];
 
         }
 
@@ -71,7 +70,11 @@ sub to_app {
                     }
                 );
 
-                return [302, [Location => $self->uri_for($self->authorization_path)], []];
+                return [
+                    302,
+                    [Location => $self->uri_for($self->authorization_path)],
+                    []
+                ];
 
             }
 

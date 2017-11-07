@@ -99,11 +99,11 @@
       [% IF entry.status == "public" %]
       [% file.file_name %]
       <button type="button" class="btn btn-default btn-xs" onclick="generate_link([% file.file_id %], [% entry._id %])" data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share</button>
-      <ul id="[% tabmodus %]_rac_dd_[% file.file_id %]" class="dropdown-menu col-md-12" role="menu" aria-labelledby="dLabel" style="border:0;border-radius:0;box-shadow:none;position:relative;">
-        <li><input type="text" val="" onclick="this.focus();this.select()" style="width:100%;"></li>
+      <ul id="[% tabmodus %]_rac_dd_[% file.file_id %]" class="dropdown-menu col-md-12" role="menu" aria-labelledby="dLabel">
+        <li><input type="text" val="" onclick="this.focus();this.select()"></li>
       </ul>
       [% ELSE %]
-      <span class="text-danger"><span class="glyphicon glyphicon-remove"></span> [% h.loc("main_page.links.request_a_copy_not_public") %]</span>
+      <span class="text-danger"><span class="fa fa-times"></span> [% h.loc("main_page.links.request_a_copy_not_public") %]</span>
       [% END %]
     </div>
     [% END %]

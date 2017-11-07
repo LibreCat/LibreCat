@@ -38,7 +38,7 @@ Opens an empty form. The ID is automatically generated.
 
     get '/account/new' => sub {
         template 'admin/forms/edit_account',
-            {_id => h->new_record('researcher')};
+            {_id => h->new_record('user')};
     };
 
 =head2 GET /account/search
@@ -50,7 +50,7 @@ Searches the authority database. Prints the search form + result list.
     get '/account/search' => sub {
         my $p = params;
         h->log->debug("query for researcher: " . to_dumper($p));
-        my $hits = LibreCat->searcher->search('researcher', $p);
+        my $hits = LibreCat->searcher->search('user', $p);
         template 'admin/account', $hits;
     };
 
@@ -61,7 +61,7 @@ Opens the record with ID id.
 =cut
 
     get '/account/edit/:id' => sub {
-        my $person = LibreCat->store->bag('researcher')->get(params->{id});
+        my $person = h->main_user('user')->get(params->{id});
         template 'admin/forms/edit_account', $person;
     };
 
@@ -80,7 +80,7 @@ Saves the data in the authority database.
         $p->{password} = mkpasswd($p->{password})
             if ($p->{password} and $p->{password} !~ /\$.{15,}/);
 
-        h->update_record('researcher', $p);
+        h->update_record('user', $p);
         template 'admin/account';
     };
 
@@ -91,20 +91,8 @@ Deletes the account with ID :id.
 =cut
 
     get '/account/delete/:id' => sub {
-        h->delete_record('researcher', params->{id});
+        h->delete_record('user', params->{id});
         redirect uri_for('/librecat');
-    };
-
-=head2 GET /account/import
-
-Input is person id. Returns warning if person is already in the database.
-
-=cut
-
-    get '/account/import' => sub {
-
-        # todo: was Bielefeld specific....
-        template 'admin/account';
     };
 
     get '/project' => sub {
@@ -127,7 +115,7 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/project/edit/:id' => sub {
-        my $project = LibreCat->store->bag('project')->get(params->{id});
+        my $project = h->main_project->get(params->{id});
         template 'admin/forms/edit_project', $project;
     };
 
@@ -157,7 +145,8 @@ Input is person id. Returns warning if person is already in the database.
     };
 
     get '/research_group/edit/:id' => sub {
-        my $research_group = LibreCat->store->bag('research_group')->get(params->{id});
+        my $research_group
+            = h->main_research_group->get(params->{id});
         template 'admin/forms/edit_research_group', $research_group;
     };
 

@@ -1,0 +1,15 @@
+# fix user data at update
+
+unless exists(account_status)
+    add_field(account_status,inactive)
+end
+
+copy_field(last_name, full_name.$append)
+copy_field(first_name, full_name.$append)
+join_field(full_name, ', ')
+
+copy_field(old_last_name, old_full_name.$append)
+copy_field(old_first_name, old_full_name.$append)
+join_field(old_full_name, ', ')
+
+compact(department)

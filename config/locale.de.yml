@@ -57,14 +57,14 @@ tabs:
   departments: "Einrichtungen"
   authors: "Autoren"
 hits:
-  id: "PUB-ID"
+  id: "LibreCat-ID"
   author: "Autorin / Autor"
   authors: "Autorinnen / Autoren"
   publication: "Publikation"
   publications: "Publikationen"
   data_publication: "Datenpublikation"
 home:
-  search_placeholder: "Publikationen in PUB suchen"
+  search_placeholder: "Publikationen in LibreCat suchen"
   fields: "Felder"
   operators: "Operatoren"
   stats:
@@ -91,7 +91,7 @@ main_page:
     clone: "Klonen"
     edit: "Editieren"
     details: "Details"
-    view_details: "Publikationsseite in PUB anzeigen (Frontdoor)"
+    view_details: "Publikationsseite in LibreCat anzeigen (Frontdoor)"
     files: "Dateien verf&uuml;gbar"
     file: "Datei"
     internal_view: "Interne Sicht"
@@ -160,7 +160,7 @@ facets:
   export_as: "Exportieren als"
   export_marked: "Markierte exportieren"
   export_options: "Exportoptionen"
-  export_withlinks: "Liste mit Links exportieren (PUB | DOI | WoS etc.)"
+  export_withlinks: "Liste mit Links exportieren (LibreCat | DOI | WoS etc.)"
   export_withoutlinks: "Liste ohne Links exportieren"
   exports:
     rtf: "RTF (z.B. Word, Office)"
@@ -195,7 +195,7 @@ frontdoor:
   editing_options: "Editing Options"
   make_public: "Make this record public"
   submit: "Submit this record"
-  open_data_pub: "Open Data PUB"
+  open_data_pub: "Open Data LibreCat"
   marked: "Markierte Publikationen"
   cite_this: "Zitieren"
   citation: "Zitation"
@@ -233,7 +233,7 @@ frontdoor:
     file_details:
       label: "Dateien"
       external_material: "Externes Material:"
-      internal_material: "Material in PUB:"
+      internal_material: "Material in LibreCat:"
       name: "Name"
       title: "Titel"
       description: "Beschreibung"
@@ -419,7 +419,7 @@ forms:
         heading: "Urheberrecht / Lizenzen"
         pub_license:
           label: "Hinweise zum Urheberrecht"
-          disclaimer_text: "Hiermit stelle ich der Universit&auml;t LibreCat dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf PUB, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r PUB dargestellt sind, zur Verf&uuml;gung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy / Rechtliche Rahmenbedingungen</a>"
+          disclaimer_text: "Hiermit stelle ich der Universit&auml;t LibreCat dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf LibreCat, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r LibreCat dargestellt sind, zur Verf&uuml;gung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>LibreCat Deposit Policy / Rechtliche Rahmenbedingungen</a>"
           accept_text: "Ich stimme zu"
           alert: "Sie m&uuml;ssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angeh&auml;ngt haben."
         info:
@@ -459,7 +459,7 @@ forms:
         label: "Abstract"
         label2: "Sprache"
         placeholder: "Abstract Text (Sie k&ouml;nnen Markdown f&uuml;r Formatierungen verwenden)"
-        explain: "Verwenden Sie <a href='/docs/howto/markdown' target='_blank'>Markdown</a> f&uuml;r Formatierungen. Klicken Sie nach dem Speichern auf den Link 'PUB', um sich eine Vorschau anzuzeigen und die Formatierungen zu pr&uuml;fen."
+        explain: "Verwenden Sie <a href='/docs/howto/markdown' target='_blank'>Markdown</a> f&uuml;r Formatierungen. Klicken Sie nach dem Speichern auf den Link 'LibreCat', um sich eine Vorschau anzuzeigen und die Formatierungen zu pr&uuml;fen."
       keyword: &keyword
         label: "Stichworte"
         placeholder: "Stichworte (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
@@ -491,8 +491,8 @@ forms:
         label_short: "Ret. Rec. IDs"
         placeholder: ""
       related_material.record: &related_material_record
-        label: "Link zu PUB-Eintrag"
-        label_short: "PUB-Eintr."
+        label: "Link zu LibreCat-Eintrag"
+        label_short: "LibreCat-Eintr."
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
       related_material.select: "Art des Zusatzmaterials w&auml;hlen &hellip;"
       related_material.link: &related_material_link
@@ -1335,8 +1335,8 @@ forms:
       alternative_id: *alternative_id
       ddc: *ddc
       related_material.rd:
-        label: "Link zu PUB Eintrag"
-        label_short: "PUB-Rec."
+        label: "Link zu LibreCat Eintrag"
+        label_short: "LibreCat-Rec."
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
       related_material.link: *related_material_link
       locked: *locked
@@ -1536,7 +1536,7 @@ forms:
   form_change_type: "Publikationstyp &auml;ndern"
   form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu &auml;ndern"
   form_add_field: "Feld hinzuf&uuml;gen (+) or dieses Feld l&ouml;schen (-)"
-  form_relmat_record: "Eigene Publikation aus PUB mit dieser verbinden. Nach Auswahl w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
+  form_relmat_record: "Eigene Publikation aus LibreCat mit dieser verbinden. Nach Auswahl w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
   form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf (+) w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
   confirm_return: "M&ouml;chten Sie diesen Datensatz wirklich zur&uuml;ckstellen und damit von &ouml;ffentlichen Publikationsliste entfernen?"
   confirm_delete: "M&ouml;chten Sie diesen Datensatz wirklich l&ouml;schen?"
@@ -1640,14 +1640,14 @@ forms:
       display: "Sp&auml;tere Version"
       select: "Sp&auml;tere Version"
     contains:
-      display: "Publikation, die diesen PUB Eintrag enth&auml;lt"
-      select: "Publikation, die diesen PUB Eintrag enth&auml;lt"
+      display: "Publikation, die diesen LibreCat Eintrag enth&auml;lt"
+      select: "Publikation, die diesen LibreCat Eintrag enth&auml;lt"
     published_in:
-      display: "Teil von PUB Eintrag"
-      select: "Teil von PUB Eintrag"
+      display: "Teil von LibreCat Eintrag"
+      select: "Teil von LibreCat Eintrag"
     dissertation_contains:
-      display: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
-      select: "Dissertation, die diesen PUB Eintrag enth&auml;lt"
+      display: "Dissertation, die diesen LibreCat Eintrag enth&auml;lt"
+      select: "Dissertation, die diesen LibreCat Eintrag enth&auml;lt"
     part_of_dissertation:
       display: "Teil dieser Dissertation"
       select: "Teil dieser Dissertation"
@@ -1704,15 +1704,15 @@ help:
   user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
   author_id: "Alias (zus&auml;tzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
   author_id_edit: "ID &auml;ndern / IDs erg&auml;nzen."
-  add_new_button: "Neuen Eintrag in PUB anlegen: Bestehende Daten z.B. via DOI importieren oder &uuml;ber Formular selbst eintragen."
+  add_new_button: "Neuen Eintrag in LibreCat anlegen: Bestehende Daten z.B. via DOI importieren oder &uuml;ber Formular selbst eintragen."
   quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollst&auml;ndigen den Eintrag f&uuml;r Sie und machen ihn &ouml;ffentlich sichtbar."
   publication_user: "Ihre pers&ouml;nliche Publikationsliste. Wenn alle Ihre Publikationen &ouml;ffentlich sichtbar sind, sieht diese Liste genau so aus, wie Ihre &ouml;ffentliche Publikationsliste."
   publication_user_rd: "Ihre pers&ouml;nliche Publikationsliste - Forschungsdaten."
-  publication_delegate: "Jeder dieser Tabs zeigt Ihnen die Publikationsliste einer bestimmten Person, zu der Ihnen Zugriff gew&auml;hrt wurde. Die Publikationen wurden nach Personen gruppiert, um Ihnen einen besseren &Uuml;berblick &uuml;ber Ihren Arbeitsbereich in PUB zu geben."
+  publication_delegate: "Jeder dieser Tabs zeigt Ihnen die Publikationsliste einer bestimmten Person, zu der Ihnen Zugriff gew&auml;hrt wurde. Die Publikationen wurden nach Personen gruppiert, um Ihnen einen besseren &Uuml;berblick &uuml;ber Ihren Arbeitsbereich in LibreCat zu geben."
   publication_reviewer: "Diese Liste zeigt Ihnen alle Publikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
   publication_project_reviewer: "Diese Liste zeigt Ihnen alle Publikationen des Projektes, für das Sie die Reviewer-Rechte erhalten haben."
   publication_data_manager: "Diese Liste zeigt Ihnen alle Datenpublikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
-  publication_admin: "Diese Liste zeigt Ihnen alle Publikationen in PUB."
+  publication_admin: "Diese Liste zeigt Ihnen alle Publikationen in LibreCat."
   statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>&Auml;nderung &uuml;ber den Link 'Editieren'."
   citation: "Publikationsdaten im ausgew&auml;hlten Zitationsstil."
   search: "In dieser Publikationsliste suchen."
