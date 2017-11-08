@@ -1,7 +1,8 @@
 Revision history for LibreCat
 
 {{$NEXT}}
-
+    - Hiding the 'Citation Style' menu when no CSL engine is enabled
+    
 1.0.0 2017-11-07
     - adding seamless reindexing of the collections
     - adding marked list buttons on every result page
