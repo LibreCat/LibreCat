@@ -1,0 +1,11 @@
+[Unit]
+Description=Librecat application
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/home/vagrant/LibreCat/etc/librecat.initd start
+ExecStop=/home/vagrant/LibreCat/etc/librecat.initd stop
+
+[Install]
+WantedBy=multi-user.target
