@@ -1,0 +1,11 @@
+[Unit]
+Description=Librecat Gearman workers
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/home/vagrant/LibreCat/etc/librecat-workers.initd start
+ExecStop=/home/vagrant/LibreCat/etc/librecat-workers.initd stop
+
+[Install]
+WantedBy=multi-user.target
