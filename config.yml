@@ -95,10 +95,10 @@ plugins:
         fix: ["fixes/to_xmdp.fix"]
       -
         metadataPrefix: oai_datacite
-        schema: http://schema.datacite.org/meta/kernel-2.2/metadata.xsd
-        metadataNamespace: http://www.datacite.org/schema/namespace
-        template: views/export/datacite.tt
-        cql: 'status exact public AND type=researchData'
+        schema: http://schema.datacite.org/meta/kernel-4.1/metadata.xsd
+        metadataNamespace: http://datacite.org/schema/kernel-4
+        template: views/export/datacite_v4.1.tt
+        cql: 'status exact public AND type=research_data'
         fix: ["fixes/to_datacite.fix"]
       -
         metadataPrefix: rdf

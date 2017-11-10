@@ -26,7 +26,7 @@ SKIP: {
     }
 
     my @dois = (
-        "doi:10.1002/0470841559.ch1", "http://doi.org/10.1002/0470841559.ch1"
+        "doi:10.1002/0470841559.ch1", "http://doi.org/10.1002/0470841559.ch1", "10.5281/zenodo.31298"
     );
     for (@dois) {
         my $pub = $x->fetch($_);
@@ -37,7 +37,7 @@ SKIP: {
         ok $pub->[0]->{type},  'got a type';
     }
 
-    my $rec = $x->fetch('doi:10.1002/1223455677889');
+    my $rec = $x->fetch('doi:10.1002/1223455677889812736128736');
 
     ok !$rec, "empty rec";
 
