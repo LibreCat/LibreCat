@@ -638,50 +638,45 @@ function full_remove_field(object){
           });
 }
 
-function enable_autocomplete(field, index){
-        var type;
-        switch(field) {
+function enable_autocomplete(field, index) {
+    var type;
+    switch(field) {
         case "pj":
-                type = "project"
-                break;
+            type = "project"
+            break;
         case "pm":
             type = "project";
-                break;
+            break;
         case "rg":
-                type = "research_group"
-                break;
+            type = "research_group"
+            break;
         case "person_aff":
-                type = "department"
-                break;
+            type = "department"
+            break;
         default:
-                type = "department"
-        }
-        $( "#" + field + "_autocomplete_" + index ).autocomplete({
-                source: librecat.uri_base + "/get_" + type,
-                minLength: 0,
-            response: function( event, ui ) {
-            if (ui.content.length === 0) {
-                $("#" + field + "_autocomplete_" + index).focus();
-            }
-        },
+            type = "department"
+    }
+    
+    $( "#" + field + "_autocomplete_" + index ).autocomplete({
+        source: librecat.uri_base + "/get_" + type,
+        minLength: 0,
         messages: {
-                noResults: '',
-                results: function() {}
-            },
-                select: function( event, ui ) {
-                        $( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
+            noResults: '',
+            results: function() {}
+        },
+        select: function( event, ui ) {
+            $( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_idautocomplete_" + index ).val( ui.item.id );
             $( "#" + field + "_autocomplete_" + index ).attr("disabled", "disabled");
             $('input.sticky').blur();
         },
-            close: function(){
-                $('input.sticky').blur();
-                if(field == "person_aff"){
-                        $('#id_save_aff').submit();
-                }
-            },
-        });
+        close: function() {
+            if (field == "person_aff") {
+                $('#id_save_aff').submit();
+            }
+        },
+    });
 }
 
 
