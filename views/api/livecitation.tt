@@ -1,8 +1,8 @@
 <html>
 <head>
-<title>PUB - Livecitation Test</title>
+<title>Livecitation Test</title>
 <body>
-<h2>Citation directly from Citeproc Processor</h2>
+<h2>Citations directly from Citeproc Processor</h2>
 [% citation %]
 <hr/>
 </body>

@@ -92,7 +92,7 @@ $(document).ready(function(){
                 if(resp.success){
                     $(file.previewElement).addClass("alert alert-success");
 
-                    var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-12 padded text-muted\" id=\"filename_" + resp.tempid + "\"><span class=\"glyphicon glyphicon-file text-muted\"></span> <strong>" + file.name + "</strong></div></div>");
+                    var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-12 padded text-muted\" id=\"filename_" + resp.tempid + "\"><span class=\"fa fa-file text-muted\"></span> <strong>" + file.name + "</strong></div></div>");
                     file.previewElement.appendChild(fileName);
 
                     var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-3 text-muted\">Upload Date:</div><div class=\"col-md-3 text-muted\">User:</div><div class=\"col-md-4 text-muted\">Relation:</div></div>");
@@ -112,14 +112,14 @@ $(document).ready(function(){
 
                     file.previewElement.appendChild(accessString);
 
-                    var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.tempid + "\"><a href=\"#\"><span class=\"glyphicon glyphicon-remove\"></span></a></div>");
+                    var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.tempid + "\"><a href=\"#\"><span class=\"fa fa-times\"></span></a></div>");
                     removeLink.addEventListener("click", function(e) {
                         window.delete_file(resp.tempid);
                         e.preventDefault();
                     });
                     file.previewElement.appendChild(removeLink);
 
-                    var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.tempid + "\"><a href=\"#\" onclick=\"return false;\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div>");
+                    var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.tempid + "\"><a href=\"#\" onclick=\"return false;\"><span class=\"fa fa-pencil\"></span></a></div>");
                     editLink.addEventListener("click", function(e) {
                         window.edit_file(resp.tempid, "[% _id %]");
                     });

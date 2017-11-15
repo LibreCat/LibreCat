@@ -16,6 +16,7 @@ BEGIN {
 
 require_ok $_ for @worker_pkg;
 
+note("Validate user");
 {
     my $x = LibreCat::Validator::User->new;
 
@@ -47,6 +48,7 @@ require_ok $_ for @worker_pkg;
     ok !$errors2, 'got no errors';
 }
 
+note("Validate research_group");
 {
     my $x = LibreCat::Validator::Research_group->new;
 
@@ -64,11 +66,12 @@ require_ok $_ for @worker_pkg;
 
     ok $errors , 'got errors';
 
-    my $errors2 = $x->validate_data({_id => '1234', name => 'Ducks inc.'});
+    my $errors2 = $x->validate_data({_id => '1234', name => 'Ducks inc.', acronym => 'Quack'});
 
     ok !$errors2, 'got no errors';
 }
 
+note("Validate department");
 {
     my $x = LibreCat::Validator::Department->new;
 
@@ -98,6 +101,7 @@ require_ok $_ for @worker_pkg;
     ok !$errors2, 'got no errors';
 }
 
+note("Validate project");
 {
     my $x = LibreCat::Validator::Project->new;
 
@@ -115,11 +119,12 @@ require_ok $_ for @worker_pkg;
 
     ok $errors , 'got errors';
 
-    my $errors2 = $x->validate_data({_id => '1234', name => 'Duck Project',});
+    my $errors2 = $x->validate_data({_id => '1234', name => 'Duck Project'});
 
     ok !$errors2, 'got no errors';
 }
 
+note("Validate publiction");
 {
     my $x = LibreCat::Validator::Publication->new;
 

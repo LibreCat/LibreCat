@@ -44,6 +44,7 @@ subtest 'list' => sub {
 subtest 'validate' => sub {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['department', 'valid', 't/records/invalid-department.yml']);
+
     ok $result->error, "file not valid";
     like $result->output, qr/^ERROR/, "output for not valid file";
 

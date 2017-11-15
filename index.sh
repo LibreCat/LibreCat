@@ -3,73 +3,87 @@
 TMPDIR=/tmp/librecat-$$
 CMD=$1
 
-function f_create {
+function whoops {
+    DATE=`date`
+    error "caught an $? at line $1 exiting"
+    exit 2
+}
+
+function f_create_demo {
     echo "Creating index..."
+    carton exec "yes | bin/librecat index initialize" || return $?
     echo "user..."
-    carton exec "bin/librecat user add devel/user.yml"
+    carton exec "bin/librecat user add devel/user.yml" || return $?
     echo "publication..."
-    carton exec "bin/librecat publication add devel/publications.yml"
+    carton exec "bin/librecat publication add devel/publications.yml" || return $?
     echo "department..."
-    carton exec "bin/librecat department tree devel/department-tree.yml"
+    carton exec "bin/librecat department tree devel/department-tree.yml" || return $?
     echo "project..."
-    carton exec "bin/librecat project add devel/project.yml"
-    echo "Generating tree"
-    carton exec "bin/librecat generate departments"
+    carton exec "bin/librecat project add devel/project.yml" || return $?
+    echo "Done"
+}
+
+function f_init {
+    echo "Creating index..."
+    carton exec "bin/librecat index initialize" || return $?
     echo "Done"
 }
 
 function f_drop {
-    echo "Dropping index.."
-    carton exec "bin/librecat drop search"
+    echo "Dropping index..."
+    carton exec "bin/librecat index purge" || return $?
     echo "Done"
 }
 
 function f_drop_backup {
     echo "Dropping backup..."
     echo "ids..."
-    carton exec "bin/librecat delete main --bag data"
+    carton exec "bin/librecat delete main --bag data" || return $?
     echo "user..."
-    carton exec "bin/librecat delete main --bag user"
+    carton exec "bin/librecat delete main --bag user" || return $?
     echo "publication..."
-    carton exec "bin/librecat delete main --bag publication"
+    carton exec "bin/librecat delete main --bag publication" || return $?
     echo "department..."
-    carton exec "bin/librecat delete main --bag department"
+    carton exec "bin/librecat delete main --bag department" || return $?
     echo "project..."
-    carton exec "bin/librecat delete main --bag project"
+    carton exec "bin/librecat delete main --bag project" || return $?
     echo "research_group..."
-    carton exec "bin/librecat delete main --bag research_group"
+    carton exec "bin/librecat delete main --bag research_group" || return $?
     echo "Done"
 }
 
 function f_drop_version {
     echo "Dropping versions..."
     echo "user..."
-    carton exec "bin/librecat delete main --bag user_version"
+    carton exec "bin/librecat delete main --bag user_version" || return $?
     echo "publication..."
-    carton exec "bin/librecat delete main --bag publication_version"
+    carton exec "bin/librecat delete main --bag publication_version" || return $?
     echo "department..."
-    carton exec "bin/librecat delete main --bag department_version"
+    carton exec "bin/librecat delete main --bag department_version" || return $?
     echo "project..."
-    carton exec "bin/librecat delete main --bag project_version"
+    carton exec "bin/librecat delete main --bag project_version" || return $?
     echo "research_group..."
-    carton exec "bin/librecat delete main --bag research_group_version"
+    carton exec "bin/librecat delete main --bag research_group_version" || return $?
+    echo "Done"
+}
+
+function f_drop_audit {
+    echo "Dropping audit..."
+    echo "audit..."
+    carton exec "bin/librecat delete main --bag audit" || return $?
+    echo "Done"
+}
+
+function f_drop_reqcopy {
+    echo "Dropping reqcopy..."
+    echo "reqcopy..."
+    carton exec "bin/librecat delete main --bag reqcopy" || return $?
     echo "Done"
 }
 
 function f_reindex {
-    echo "Dropping the search"
-    carton exec bin/librecat drop search
     echo "Reindex:"
-    echo "user"
-    carton exec "bin/librecat copy -v main --bag user to search --bag user"
-    echo "publication"
-    carton exec "bin/librecat copy -v main --bag publication to search --bag publication"
-    echo "department"
-    carton exec "bin/librecat copy -v main --bag department to search --bag department"
-    echo "project"
-    carton exec "bin/librecat copy -v main --bag project to search --bag project"
-    echo "research_group."
-    carton exec "bin/librecat copy -v main --bag research_group to search --bag research_group"
+    carton exec "bin/librecat index switch" || return $?
     echo "Done"
 }
 
@@ -79,20 +93,20 @@ function f_export {
     mkdir -p ${TMPDIR}
 
     echo "user..."
-    carton exec "bin/librecat user list" > ${TMPDIR}/user.yml
+    carton exec "bin/librecat user list" > ${TMPDIR}/user.yml || return $?
     echo "publication..."
-    carton exec "bin/librecat publication list" > ${TMPDIR}/publications.yml
+    carton exec "bin/librecat publication list" > ${TMPDIR}/publications.yml || return $?
     echo "department..."
-    carton exec "bin/librecat department list" > ${TMPDIR}/department.yml
+    carton exec "bin/librecat department list" > ${TMPDIR}/department.yml || return $?
     echo "project..."
-    carton exec "bin/librecat project list" > ${TMPDIR}/project.yml
+    carton exec "bin/librecat project list" > ${TMPDIR}/project.yml || return $?
     echo "research_group..."
-    carton exec "bin/librecat research_group list" > ${TMPDIR}/research_group.yml
+    carton exec "bin/librecat research_group list" > ${TMPDIR}/research_group.yml || return $?
 
     cd ${TMPDIR}
 
     OUTFILE=/tmp/librecat-index-export.$$.zip
-    zip ${OUTFILE}  *
+    zip ${OUTFILE} *
 
     cd -
 
@@ -121,15 +135,15 @@ function f_import {
     cd -
 
     echo "user..."
-    carton exec "bin/librecat user add" ${TMPDIR}/user.yml
+    carton exec "bin/librecat user add" ${TMPDIR}/user.yml || return $?
     echo "publications..."
-    carton exec "bin/librecat publication add" ${TMPDIR}/publications.yml
+    carton exec "bin/librecat publication add" ${TMPDIR}/publications.yml || return $?
     echo "department..."
-    carton exec "bin/librecat department add" ${TMPDIR}/department.yml
+    carton exec "bin/librecat department add" ${TMPDIR}/department.yml || return $?
     echo "project..."
-    carton exec "bin/librecat project add" ${TMPDIR}/project.yml
+    carton exec "bin/librecat project add" ${TMPDIR}/project.yml || return $?
     echo "research_group..."
-    carton exec "bin/librecat research_group add" ${TMPDIR}/research_group.yml
+    carton exec "bin/librecat research_group add" ${TMPDIR}/research_group.yml || return $?
 
     rm -rf ${TMPDIR}
 
@@ -149,9 +163,17 @@ confirm() {
     esac
 }
 
+trap 'whoops $LINENO' ERR
+
 case "${CMD}" in
+    demo)
+        f_create_demo
+        ;;
     create)
-        f_create
+        echo "You probably mean: '$0 demo'"
+        ;;
+    init)
+        f_init
         ;;
     drop)
         confirm "Are you sure you want to drop the search index? [y/N]" && f_drop
@@ -167,6 +189,8 @@ case "${CMD}" in
             f_drop && \
             f_drop_backup && \
             f_drop_version
+        confirm "Drop audit data? [y/N]" && f_drop_audit
+        confirm "Drop reqcopy data? [y/N]" && f_drop_reqcopy
         ;;
     reindex)
         f_reindex
@@ -178,6 +202,6 @@ case "${CMD}" in
         f_import
         ;;
     *)
-        echo "usage: $0 {create|drop|drop_backup|drop_version|drop_all|export|import}"
+        echo "usage: $0 {init|reindex|drop|drop_backup|drop_version|drop_all|export|import|demo}"
         exit 1
 esac

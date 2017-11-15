@@ -1,4 +1,4 @@
-# Mapping: Import BibTex to PUB
+# Mapping: Import BibTex to DB
 
 add_field(r.status, new)
 

@@ -1,7 +1,7 @@
 <!-- BEGIN links.tt -->
 
 [% bag = entry.type == "research_data" ? "data" : "publication" %]
-<a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% h.loc("main_page.links.view_details") %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>PUB</a>
+<a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% h.loc("main_page.links.view_details") %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.config.appname_short %]</a>
   [% IF entry.type == "research_data" AND (entry.file || entry.related_material || entry.externalFiles == "1") %]
   | <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
   [% ELSIF entry.type != "research_data" AND entry.file AND entry.file.size > 1 %]

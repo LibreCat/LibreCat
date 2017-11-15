@@ -2,9 +2,6 @@ _prefix:
   queue:
 
 workers:
-  indexer:
-    count: 1
-    supervise: 1
   audit:
     count: 1
     supervise: 1

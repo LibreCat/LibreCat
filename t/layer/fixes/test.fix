@@ -1,0 +1,2 @@
+# Just an test fix for testing layers
+add_field('magic','hello, world!')
