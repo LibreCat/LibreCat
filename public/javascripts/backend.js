@@ -237,22 +237,23 @@ function link_person(element){
                         }
                         if(key == "old_name"){
                             old_name = value;
-                            //old_first_name = value;
-                            //old_first_nameLc = value.toLowerCase();
                         }
                         if(key == "last_name"){
                             last_name = value;
                             last_nameLc = value.toLowerCase();
                         }
-                        if(key == "old_last_name"){
-                            old_last_name = value;
-                            old_last_nameLc = value.toLowerCase();
-                        }
                     });
 
-                    if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
+                    if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase())){
                         rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
-                        //if(old_first_name || old_last_name){
+                        if(old_name[0]){
+                            for(var j=0;j<old_name.length;j++){
+                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_name[j].first_name + '" data-lastname="' + old_name[j].last_name + '"><a href="#" class="person_link">' + old_name[j].first_name + " " + old_name[j].last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                            }
+                        }
+                    }
+                    else if( (old_name.find(o => o.first_name.toLowerCase() === firstname) && lastname == "") || (old_name.find(o => o.last_name.toLowerCase() === lastname) && firstname == "") || (old_name.find(o => o.last_name.toLowerCase() === lastname) && old_name.find(o => o.first_name.toLowerCase() === firstname)) ){
+                        rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                         if(old_name[0]){
                             for(var j=0;j<old_name.length;j++){
                                 rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_name[j].first_name + '" data-lastname="' + old_name[j].last_name + '"><a href="#" class="person_link">' + old_name[j].first_name + " " + old_name[j].last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
