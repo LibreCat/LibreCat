@@ -698,9 +698,9 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: 'old_full_name.exact'}
-              field: old_full_name
-              sort: {field: 'old_full_name.exact'}
+                'exact': {field: 'old_name.full_name.exact'}
+              field: old_name.full_name
+              sort: {field: 'old_name.full_name.exact'}
             lastname:
               op:
                 'any': true
@@ -708,7 +708,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: ["last_name","old_last_name"]
+              field: ["last_name","old_name.last_name"]
               sort: {field: 'last_name'}
             firstname:
               op:
@@ -717,7 +717,7 @@ search:
                 '=': true
                 '<>': true
                 'exact': true
-              field: ["first_name","old_first_name"]
+              field: ["first_name","old_name.first_name"]
               sort: {field: 'first_name'}
             id:
               op:
@@ -1084,15 +1084,17 @@ search:
             fields:
               full_name: {type: string, include_in_all: true, analyzer: name}
               exact: {type: string, analyzer: tag}
-          old_full_name:
-            type: multi_field
-            fields:
-              old_full_name: {type: string, include_in_all: true, analyzer: name}
-              exact: {type: string, analyzer: tag}
           last_name: {type: string, analyzer: name}
-          old_last_name: {type: string, analyzer: name}
           first_name: {type: string, analyzer: name}
-          old_first_name: {type: string, analyzer: name}
+          old_name:
+            properties:
+              full_name:
+                type: multi_field
+                fields:
+                  full_name: {type: string, include_in_all: true, analyzer: name}
+                  exact: {type: string, analyzer: tag}
+              first_name: {type: string, analyzer: name}
+              last_name: {type: string, analyzer: name}
           idm_title: {type: string}
           former: {type: byte}
           nonexist: {type: byte}
