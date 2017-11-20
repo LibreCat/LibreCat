@@ -46,9 +46,9 @@ sub can_edit {
     my @person_ids;
 
     push @person_ids, $pub->{creator}->{id} if is_string( $pub->{creator}->{id} );
-    push @person_ids, grep { is_string($_) } map { $_->{_id} } @{ $pub->{author} || [] };
-    push @person_ids, grep { is_string($_) } map { $_->{_id} } @{ $pub->{editor} || [] };
-    push @person_ids, grep { is_string($_) } map { $_->{_id} } @{ $pub->{translator} || [] };
+    push @person_ids, grep { is_string($_) } map { $_->{id} } @{ $pub->{author} || [] };
+    push @person_ids, grep { is_string($_) } map { $_->{id} } @{ $pub->{editor} || [] };
+    push @person_ids, grep { is_string($_) } map { $_->{id} } @{ $pub->{translator} || [] };
 
     #match current user on person identifier
     for my $person_id ( @person_ids ) {
@@ -69,7 +69,6 @@ sub can_edit {
         }
 
     }
-
     #access for project_reviewer
     elsif ( $role eq "project_reviewer" ) {
 
@@ -115,6 +114,7 @@ sub can_edit {
     #cannot edit
     return 0;
 }
+
 =head2 can_delete( $self, $id, $opts )
 
 =over 4
@@ -130,11 +130,11 @@ Hash reference containing "user_id" and "role". Both must be a string
 =back
 
 =cut
-
 sub can_delete {
     my ($self, $id, $opts) = @_;
     return is_hash_ref($opts) && is_string( $opts->{role} ) && $opts->{role} eq "super_admin" ? 1 : 0;
 }
+
 =head2 can_delete_file( $self, $id, $opts )
 
 =over 4
@@ -150,11 +150,11 @@ Hash reference containing "user_id" and "role". Both must be a string
 =back
 
 =cut
-
 sub can_delete_file {
     my ($self, $id, $opts) = @_;
     return 0;
 }
+
 =head2 can_download( $self, $id, $opts )
 
 =over 4
