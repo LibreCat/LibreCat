@@ -75,7 +75,7 @@ ajax '/get_project' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
 
     my @terms     = split(' ', params->{term});
-    $terms[-1] .= "*";
+    $terms[-1] .= "*" if @terms;
     my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
@@ -104,10 +104,11 @@ ajax '/get_project' => sub {
 =cut
 
 ajax '/get_department' => sub {
-    my $limit = length(params->{term}) ? 10 : 1000;
+    my $term      = params->{term} // '';
+    my $limit     = length($term) ? 10 : 1000;
 
-    my @terms     = split(' ', params->{term});
-    $terms[-1] .= "*";
+    my @terms     = split('\s', $term);
+    $terms[-1] .= "*" if @terms;
     my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
@@ -139,7 +140,7 @@ ajax '/get_research_group' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
 
     my @terms     = split(' ', params->{term});
-    $terms[-1] .= "*";
+    $terms[-1] .= "*" if @terms;
     my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
