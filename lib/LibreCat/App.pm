@@ -247,7 +247,7 @@ post '/login' => sub {
             || "user";
         session user    => $user->{login};
         session user_id => $user->{_id};
-        h->set_locale( $user->{lang} || params->{lang} || h->default_locale);
+        h->set_locale( $user->{lang} || h->default_locale );
 
         redirect uri_for($return_url);
     }
