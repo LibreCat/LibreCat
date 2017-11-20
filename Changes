@@ -1,8 +1,11 @@
 Revision history for LibreCat
 
 {{$NEXT}}
+    - Adding support for multiple old_names for users [requires data migration!]
+    - Fixing department, project, research autocomplete lookups on partial input
+    - Deleting migration command
     - Hiding the 'Citation Style' menu when no CSL engine is enabled
-    
+
 1.0.0 2017-11-07
     - adding seamless reindexing of the collections
     - adding marked list buttons on every result page
