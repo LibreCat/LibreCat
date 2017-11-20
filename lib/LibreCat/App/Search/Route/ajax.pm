@@ -80,7 +80,7 @@ ajax '/get_project' => sub {
 
     my $cql_query = join(" AND ", @cql_parts);
 
-    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'display,,1');
+    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'name,,1');
 
     h->log->debug("executing project->search: " . to_dumper(\%search_params));
 
@@ -145,7 +145,7 @@ ajax '/get_research_group' => sub {
 
     my $cql_query = join(" AND ", @cql_parts);
 
-    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'display,,1');
+    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'name,,1');
 
     h->log->debug("executing research_group->search: " . to_dumper(\%search_params));
 
