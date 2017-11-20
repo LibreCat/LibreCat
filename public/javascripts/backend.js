@@ -168,7 +168,7 @@ function link_person(element){
 
         $.get(narrowurl, function(objJSON) {
             // If only one hit... fill out fields and change img to green
-            if(objJSON.length == 1 && (!objJSON[0].old_full_name || !objJSON[0].full_name)){
+            if(objJSON.length == 1 && (!objJSON[0].old_name || !objJSON[0].full_name)){
                 var data = objJSON[0];
                 var personId = "";
                 var orcid = "";
@@ -206,7 +206,7 @@ function link_person(element){
                 last_name = "";
             }
             // If more than one hit... show modal with choices
-            else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_full_name && objJSON[0].full_name)) {
+            else if(objJSON.length > 1 || (objJSON.length == 1 && objJSON[0].old_name && objJSON[0].full_name)) {
                 var container_title = $('#' + type + 'link_person_modal').find('.modal-title').first();
                 container_title.html('');
                 var title = '<span class="fa fa-indent text-default"></span>Author: Choose name';
@@ -222,9 +222,8 @@ function link_person(element){
                     var personId = "";
                     var orcid = "";
                     var first_name = "";
-                    var old_first_name = "";
                     var last_name = "";
-                    var old_last_name = "";
+                    var old_name = [];
                     $.each(data, function(key, value){
                         if(key == "_id"){
                             personId = value;
@@ -236,30 +235,37 @@ function link_person(element){
                             first_name = value;
                             first_nameLc = value.toLowerCase();
                         }
-                        if(key == "old_first_name"){
-                            old_first_name = value;
-                            old_first_nameLc = value.toLowerCase();
+                        if(key == "old_name"){
+                            old_name = value;
                         }
                         if(key == "last_name"){
                             last_name = value;
                             last_nameLc = value.toLowerCase();
                         }
-                        if(key == "old_last_name"){
-                            old_last_name = value;
-                            old_last_nameLc = value.toLowerCase();
-                        }
                     });
 
-                    if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase()) || (firstname == old_first_name.toLowerCase() && lastname == "") || (lastname == old_last_name.toLowerCase() && firstname == "") || (lastname == old_last_name.toLowerCase() && firstname == old_first_name.toLowerCase())){
+                    if((firstname == first_name.toLowerCase() && lastname == "") || (lastname == last_name.toLowerCase() && firstname == "") || (lastname == last_name.toLowerCase() && firstname == first_name.toLowerCase())){
                         rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
-                        if(old_first_name || old_last_name){
-                            rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                        if(old_name[0]){
+                            for(var j=0;j<old_name.length;j++){
+                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_name[j].first_name + '" data-lastname="' + old_name[j].last_name + '"><a href="#" class="person_link">' + old_name[j].first_name + " " + old_name[j].last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                            }
+                        }
+                    }
+                    else if( (old_name.find(o => o.first_name.toLowerCase() === firstname) && lastname == "") || (old_name.find(o => o.last_name.toLowerCase() === lastname) && firstname == "") || (old_name.find(o => o.last_name.toLowerCase() === lastname) && old_name.find(o => o.first_name.toLowerCase() === firstname)) ){
+                        rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                        if(old_name[0]){
+                            for(var j=0;j<old_name.length;j++){
+                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_name[j].first_name + '" data-lastname="' + old_name[j].last_name + '"><a href="#" class="person_link">' + old_name[j].first_name + " " + old_name[j].last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                            }
                         }
                     }
                     else {
                         rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
-                        if(old_first_name || old_last_name){
-                            rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_first_name + '" data-lastname="' + old_last_name + '"><a href="#" class="person_link">' + old_first_name + " " + old_last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                        if(old_name[0]){
+                            $.each(old_name, function(index){
+                                rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + $(this).first_name + '" data-lastname="' + $(this).last_name + '"><a href="#" class="person_link">' + $(this).first_name + " " + $(this).last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                            });
                         }
                     }
 
@@ -638,50 +644,45 @@ function full_remove_field(object){
           });
 }
 
-function enable_autocomplete(field, index){
-        var type;
-        switch(field) {
+function enable_autocomplete(field, index) {
+    var type;
+    switch(field) {
         case "pj":
-                type = "project"
-                break;
+            type = "project"
+            break;
         case "pm":
             type = "project";
-                break;
+            break;
         case "rg":
-                type = "research_group"
-                break;
+            type = "research_group"
+            break;
         case "person_aff":
-                type = "department"
-                break;
+            type = "department"
+            break;
         default:
-                type = "department"
-        }
-        $( "#" + field + "_autocomplete_" + index ).autocomplete({
-                source: librecat.uri_base + "/get_" + type,
-                minLength: 0,
-            response: function( event, ui ) {
-            if (ui.content.length === 0) {
-                $("#" + field + "_autocomplete_" + index).focus();
-            }
-        },
+            type = "department"
+    }
+    
+    $( "#" + field + "_autocomplete_" + index ).autocomplete({
+        source: librecat.uri_base + "/get_" + type,
+        minLength: 0,
         messages: {
-                noResults: '',
-                results: function() {}
-            },
-                select: function( event, ui ) {
-                        $( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
+            noResults: '',
+            results: function() {}
+        },
+        select: function( event, ui ) {
+            $( "#" + field + "_autocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_nameautocomplete_" + index ).val( ui.item.label );
             $( "#" + field + "_idautocomplete_" + index ).val( ui.item.id );
             $( "#" + field + "_autocomplete_" + index ).attr("disabled", "disabled");
             $('input.sticky').blur();
         },
-            close: function(){
-                $('input.sticky').blur();
-                if(field == "person_aff"){
-                        $('#id_save_aff').submit();
-                }
-            },
-        });
+        close: function() {
+            if (field == "person_aff") {
+                $('#id_save_aff').submit();
+            }
+        },
+    });
 }
 
 
