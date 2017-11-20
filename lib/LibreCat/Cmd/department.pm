@@ -94,7 +94,7 @@ sub _list {
     my $helper = LibreCat::App::Helper::Helpers->new;
 
     if (defined($query)) {
-        $it = $helper->new->department->searcher(
+        $it = $helper->department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
