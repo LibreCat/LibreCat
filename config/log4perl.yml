@@ -4,7 +4,7 @@ log4perl: |
   log4perl.category.LibreCat::App=INFO,FILE
   log4perl.category.LibreCat::Hook=DEBUG,FILE
   log4perl.category.LibreCat::FetchRecord=INFO,FILE
-  log4perl.category.LibreCat::Search=DEBUG,STDERR,FILE
+  log4perl.category.LibreCat::Search=INFO,FILE
   log4perl.category.LibreCat::Queue=INFO,FILE2
   log4perl.appender.STDERR=Log::Log4perl::Appender::Screen
   log4perl.appender.STDERR.stderr=1
