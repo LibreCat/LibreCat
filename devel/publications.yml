@@ -569,10 +569,10 @@ year: '2016'
 _id: '2737394'
 _version: 2
 author:
-- first_name: Elvis
-  full_name: Presley, Elvis
+- first_name: Test
+  full_name: User, Test
   id: '1'
-  last_name: Presley
+  last_name: Test
 - first_name: Alan
   full_name: Smith, Alan
   last_name: Smith
