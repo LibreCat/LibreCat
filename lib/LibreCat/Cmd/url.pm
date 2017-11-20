@@ -75,7 +75,7 @@ sub _check {
                         );
                     }
                     else {
-                        print "$rec->{_id} | $hdr->{Status} | $rec->{url}\n";
+                        printf "%s\t%s\t%s\n", $rec->{_id}, $hdr->{Status}, $rec->{url};
                     }
                     $cv->end;
                     }
@@ -100,12 +100,14 @@ LibreCat::Cmd::url - check urls
 
 =head1 SYNOPSIS
 
-    librecat schemas url check <FILE> <OUTFILE>
+    librecat schemas url check <FILE> [OUTFILE]
 
 =head1 commands
 
-=head2 check
+=head2 check <FILE> [OUTFILE]
 
-check all provided URLs
+Check all provided URLs. <FILE> must be a valid YAML file with '_id' and 'url' fields.
+
+This command returns a YAML formatted output file if [OUTFILE] is provided or a tabs-separated list to STDOUT.
 
 =cut
