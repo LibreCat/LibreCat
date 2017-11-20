@@ -73,23 +73,30 @@ ajax '/get_alias/:id/:alias' => sub {
 
 ajax '/get_project' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map {$_ . "*"} split(' ', params->{term});
 
-    my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
+    my @terms     = split(' ', params->{term});
+    $terms[-1] .= "*";
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'display,,1');
+
     h->log->debug("executing project->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('project', \%search_params);
+    my $hits = h->project->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
         my $map;
-        @$map
-            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
+        @$map = map {{id => $_->{_id}, label => $_->{name}};}
+            @{$hits->{hits}};
         return to_json $map;
     }
     else {
         return to_json [];
     }
-
 };
 
 =head2 AJAX /get_department
@@ -98,13 +105,20 @@ ajax '/get_project' => sub {
 
 ajax '/get_department' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map {$_ . "*"} split(' ', params->{term});
 
-    my %search_params = (q => \@q, limit => $limit, sort => 'display.asc');
-    h->log->debug(
-        "executing department->search: " . to_dumper(\%search_params));
+    my @terms     = split(' ', params->{term});
+    $terms[-1] .= "*";
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
-    my $hits = LibreCat->searcher->search('department', \%search_params);
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'display,,1');
+
+    h->log->debug("executing department->search: " . to_dumper(\%search_params));
+
+    my $hits = h->department->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
         my $map;
@@ -123,18 +137,25 @@ ajax '/get_department' => sub {
 
 ajax '/get_research_group' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map {$_ . "*"} split(' ', params->{term});
 
-    my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
-    h->log->debug(
-        "executing research_group->search: " . to_dumper(\%search_params));
+    my @terms     = split(' ', params->{term});
+    $terms[-1] .= "*";
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
-    my $hits = LibreCat->searcher->search('research_group', \%search_params);
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'display,,1');
+
+    h->log->debug("executing research_group->search: " . to_dumper(\%search_params));
+
+    my $hits = h->research_group->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
         my $map;
-        @$map
-            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
+        @$map = map {{id => $_->{_id}, label => $_->{name}};}
+            @{$hits->{hits}};
         return to_json $map;
     }
     else {
