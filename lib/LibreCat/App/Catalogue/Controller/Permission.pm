@@ -5,6 +5,7 @@ use Catmandu;
 use Catmandu::Util qw(:is);
 use LibreCat::App::Helper;
 use Carp;
+use Dancer qw(:syntax);
 use Exporter qw/import/;
 
 use Moo;
@@ -30,10 +31,12 @@ sub can_edit {
     is_string( $id ) or return;
     is_hash_ref( $opts ) or return;
 
+    h->log->debug("id: $id ; opts:" . to_dumper($opts));
+
     my $user_id     = $opts->{user_id};
     my $role        = $opts->{role};
 
-    my $pub = h->main_publication->get( $id ) or return;
+    my $pub  = h->main_publication->get( $id ) or return;
     my $user = h->get_person( $user_id ) or return;
 
     #no restrictions for super_admin

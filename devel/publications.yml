@@ -572,7 +572,7 @@ author:
 - first_name: Test
   full_name: User, Test
   id: '1'
-  last_name: Test
+  last_name: User
 - first_name: Alan
   full_name: Smith, Alan
   last_name: Smith

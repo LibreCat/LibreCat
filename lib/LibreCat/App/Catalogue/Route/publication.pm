@@ -155,11 +155,9 @@ Checks if the user has the rights to update this record.
 
         h->log->debug("Params:" . to_dumper($p));
 
-        my $rec = h->main_publication->get( $p->{_id} ) or pass;
-
         unless (
             $p->{new_record} or
-            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
+            p->can_edit( $p->{_id},{ user_id => session("user_id"), role => session("role") })
         ) {
             access_denied_hook();
             status '403';
