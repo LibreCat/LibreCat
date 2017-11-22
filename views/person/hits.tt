@@ -9,28 +9,14 @@
     </ul>
   </div>
 </div>
-
-[%- IF error %]
-<div class="row">
-  <div class="col-md-10">
-    <div class="alert alert-danger"><strong>[% error %]</strong>
-    </div>
-  </div>
-</div>
-[%- END %]
-
 <div class="row">
   <div class="col-md-12">
-    <dl class="hitlist">
-    [%- FOREACH person IN hits %]
-      <dt><a href="[% uri_base %]/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a></dt>
-        <dd>
-        [%- FOREACH affil IN person.department %]
-          <span class="text-muted">[% h.get_department(affil._id).display %]</span>[% IF !loop.last %], [% END %]
-        [%- END %]
-        </dd>
-    [%- END %]
-    </dl>
+  [%- tmpl_name = "person/nodes/" _ browse _ ".tt" %]
+  [%- TRY %]
+    [%- INCLUDE $tmpl_name %]
+  [%- CATCH %]
+    <!-- No authors found. -->
+  [%- END %]
   </div>
 </div>
 <!-- END person/hits.tt -->

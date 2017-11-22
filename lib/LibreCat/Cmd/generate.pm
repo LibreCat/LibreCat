@@ -11,10 +11,11 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat generate package.json
-librecat generate forms
-librecat generate departments
+librecat generate authors
 librecat generate cleanup
+librecat generate departments
+librecat generate forms
+librecat generate package.json
 
 EOF
 }
@@ -27,7 +28,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/^(package\.json|forms|departments|cleanup)$/;
+    my $commands = qr/^(package\.json|forms|departments|authors|cleanup)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -47,6 +48,9 @@ sub command {
     }
     elsif ($cmd eq 'departments') {
         return $self->_generate_departments;
+    }
+    elsif ($cmd eq 'authors') {
+        return $self->_generate_authors;
     }
     elsif ($cmd eq 'cleanup') {
         return $self->_generate_cleanup;
@@ -306,6 +310,64 @@ sub _template_printer {
     print $io "</ul>\n";
 }
 
+sub _generate_authors {
+    my ($self) = @_;
+
+    my $h = $self->_helper;
+
+    my $layers         = $h->layers;
+    my $template_paths = $layers->template_paths;
+    my $output_path    = $template_paths->[0] . '/person';
+
+    foreach my $c ( ('a'..'z') ) {
+        my %search_params = (
+            cql   => ["lastname=" . lc $c . "*"],
+            sort  => h->config->{default_person_sort},
+            start => 0,
+            limit => 1000,
+        );
+
+        my $hits = LibreCat->searcher->search('user', \%search_params);
+
+        my $person;
+        @$person = map {
+            my $rec = $_;
+            my $pub = LibreCat->searcher->search('publication',
+                {cql => ["person=$rec->{_id}"], start => 0, limit => 1});
+            if ($pub->{total} > 0) {
+                $rec->{number_of_publicaions} = $pub->{total};
+                $rec;
+            } else {
+                undef;
+            }
+        } @{$hits->{hits}};
+
+        @$person = grep defined, @$person;
+        mkdir "$output_path/nodes" unless -d "$output_path/nodes";
+        my $template_path = "$output_path/nodes/$c.tt";
+        if ($person && @$person) {
+            open(my $fh, '>:encoding(UTF-8)', $template_path)
+                || die "$template_path: $!";
+            $self->_template_printer_authors($person, $fh);
+            close($fh);
+        }
+    }
+
+    return 0;
+}
+
+sub _template_printer_authors {
+    my($self, $person, $io) = @_;
+
+    print $io "<ul>\n";
+
+    foreach my $p (@$person) {
+        print $io "<li><a href=\"/person/$p->{_id}\">$p->{full_name} ($p->{number_of_publicaions})</a></li>\n"
+    }
+
+    print $io "</ul>\n";
+}
+
 1;
 
 __END__
@@ -318,9 +380,10 @@ LibreCat::Cmd::generate - generate various files
 
 =head1 SYNOPSIS
 
-    librecat generate package.json
-    librecat generate forms
-    librecat generate departments
+    librecat generate authors
     librecat generate cleanup
+    librecat generate departments
+    librecat generate forms
+    librecat generate package.json
 
 =cut

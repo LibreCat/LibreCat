@@ -59,6 +59,16 @@ require_ok $pkg;
         "departments backend generated";
 }
 
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'authors']);
+
+    print $result->stdout;
+
+    print $result->stderr if $result->stderr;
+
+    ok !$result->error, 'ok generate authors';
+}
+
 done_testing;
 
 END {

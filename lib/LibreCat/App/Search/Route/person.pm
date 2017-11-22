@@ -11,41 +11,6 @@ use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 use URI::Escape;
 
-=head2 GET /person
-
-List persons alphabetically
-
-=cut
-
-get qr{/person} => sub {
-    my $c = params->{browse} // 'a';
-
-    my %search_params = (
-        cql   => ["lastname=" . lc $c . "*"],
-        sort  => h->config->{default_person_sort},
-        start => 0,
-        limit => 1000
-    );
-
-    h->log->debug("executing user->search: " . to_dumper(\%search_params));
-
-    my $hits = LibreCat->searcher->search('user', \%search_params);
-
-    @{$hits->{hits}} = map {
-        my $rec = $_;
-        my $pub = LibreCat->searcher->search('publication',
-            {cql => ["person=$rec->{_id}"], start => 0, limit => 1,});
-        ($pub->{total} > 0) ? $rec : undef;
-    } @{$hits->{hits}};
-
-    @{$hits->{hits}} = grep defined, @{$hits->{hits}};
-
-    # override the total number since we deleted some entries
-    $hits->{total} = scalar @{$hits->{hits}};
-
-    template 'person/list', $hits;
-};
-
 =head2 GET /person/:id_or_alias{/data}
 
 Returns a person's profile page, including publications,
@@ -109,6 +74,16 @@ get qr{/person/(.*?)/?(data)*} => sub {
     $hits->{marked} = @$marked if $marked;
 
     template 'home', $hits;
+};
+
+=head2 GET /person
+
+List persons alphabetically
+
+=cut
+
+get qr{/person} => sub {
+    template "person/list";
 };
 
 =head2 GET /staffdirectory/:id

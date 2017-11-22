@@ -3,3 +3,4 @@
 
 # Update the departments page every hour
 0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat generate departments' > /dev/null 2>&1
+0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat generate authors' > /dev/null 2>&1

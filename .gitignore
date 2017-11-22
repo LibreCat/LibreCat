@@ -48,5 +48,6 @@ vendor/
 views/admin/forms/
 views/backend/forms/
 views/department/nodes*
+views/person/nodes/*
 wiki/
 ~$

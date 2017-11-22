@@ -1,7 +1,6 @@
 [%- qp = request.params.hash %]
 [%- qp.delete('splat') %]
 [%- PROCESS header.tt %]
-
 <!-- BEGIN person/list.tt -->
 <span id="language_id" class="hidden">[% lang %]</span>
 <div class="row"><!-- outer border -->
@@ -27,9 +26,7 @@
     </div>
     [% INCLUDE person/hits.tt %]
     </div>
-  </div><!-- main content left -->
-</div><!-- outer border -->
-
+  </div>
+</div>
 <!-- END person/list.tt -->
-
 [% INCLUDE footer.tt %]
