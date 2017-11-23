@@ -1,0 +1,10 @@
+<!-- BEGIN index_tabs.tt -->
+<div class="col-md-12">
+  <ul class="nav nav-tabs" id="indexTab">
+    <li [% IF request.path == "/" %]class="active"[% END %]><a href="[% uri_base %]/">[% h.loc("tabs.home") %]</a></li>
+    [%- FOREACH item IN ["publication", "data", "person", "project", "department"] %]
+      <li [% IF request.path.match(item) %]class="active"[% END %]><a href="[% uri_base %]/[% item %]">[% h.loc("tabs.${item}") %]</a></li>
+    [%- END%]
+  </ul>
+</div>
+<!-- END index_tabs.tt -->

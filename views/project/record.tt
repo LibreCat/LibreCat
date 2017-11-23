@@ -40,7 +40,7 @@
       <div class="col-md-12">
 	    <ul class="nav nav-tabs">
 	      <li class="active"><a href="#project_details" data-toggle="tab">[% h.loc("frontdoor.tabs.details.label") %]</a></li>
-          [%- IF project_publication %]<li><a href="#project_publications" data-toggle="tab">[% h.loc("tabs.publications") %]</a></li>[% END %]
+          [%- IF project_publication %]<li><a href="#project_publications" data-toggle="tab">[% h.loc("tabs.publication") %]</a></li>[% END %]
         </ul>
       </div>
     </div>
