@@ -319,6 +319,7 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{file};
         delete $rec->{related_material};
         $rec->{_id} = h->new_record('publication');
+        $rec->{new_record} = 1;
 
         my $template = $rec->{type} . ".tt";
 
