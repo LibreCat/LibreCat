@@ -257,7 +257,7 @@
         <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
         <!-- Edit -->
-        [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
+        [% IF p.can_edit( _id, user_id = session.user_id, role = session.role ) %]
         <h3 id="edit">[% h.loc("frontdoor.editing_options") %]</h3>
         <a href="[% uri_base %]/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]

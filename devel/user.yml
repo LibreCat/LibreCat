@@ -64,6 +64,11 @@ first_name: Marilyn
 full_name: Monroe, Marilyn
 last_name: Monroe
 login: marilyn
+orcid: 0000-0002-1825-0097
+old_name:
+- first_name: 'Norma Jeane'
+  full_name: 'Mortenson,  Norma Jeane'
+  last_name: Mortenson
 password: secret
 style: apa
 ...
@@ -76,6 +81,10 @@ date_updated: 2017-09-14T12:00:05Z
 first_name: Natalie
 full_name: Portman, Natalie
 last_name: Portman
+old_name:
+- first_name: 'Neta-Lee '
+  full_name: 'Hershlag,  Neta-Lee'
+  last_name: Hershlag
 login: natalie
 password: secret
 style: apa
