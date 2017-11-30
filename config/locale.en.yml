@@ -51,11 +51,11 @@ styles:
 tabs:
   home: "Home"
   all_publications: "All Publications"
-  publication: "Publications"
-  data: "Data Publications"
-  project: "Projects"
-  department: "Departments"
-  person: "Authors"
+  publications: "Publications"
+  data_publications: "Data Publications"
+  projects: "Projects"
+  departments: "Departments"
+  authors: "Authors"
 hits:
   id: "LibreCat-ID"
   author: "Author"

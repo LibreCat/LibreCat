@@ -3,7 +3,9 @@
   <ul class="nav nav-tabs" id="indexTab">
     <li [% IF request.path == "/" %]class="active"[% END %]><a href="[% uri_base %]/">[% h.loc("tabs.home") %]</a></li>
     [%- FOREACH item IN ["publication", "data", "person", "project", "department"] %]
-      <li [% IF request.path.match(item) %]class="active"[% END %]><a href="[% uri_base %]/[% item %]">[% h.loc("tabs.${item}") %]</a></li>
+      [%- tmp.publication = "publications"; tmp.data = "data_publications"; tmp.person = "authors"; tmp.project = "projects"; tmp.department = "departments" %]
+      [%- item2 = tmp.$item %]
+      <li [% IF request.path.match(item) %]class="active"[% END %]><a href="[% uri_base %]/[% item %]">[% h.loc("tabs.${item2}") %]</a></li>
     [%- END%]
   </ul>
 </div>
