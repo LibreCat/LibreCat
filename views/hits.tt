@@ -3,7 +3,7 @@
 [%- UNLESS request.path_info.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path_info.match("/person") OR total == 0 %] col-xs-8[% END %]">
-    <h3 class="margin-top0">[% total %] [% IF total == 1 %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("hits.data_publication") %][% ELSE %][% h.loc("hits.publication") %][% END %][% ELSE %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("tabs.data_publications") %][% ELSE %][% h.loc("hits.publications") %][% END %][% END %]
+    <h3 class="margin-top0">[% total %] [% IF total == 1 %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("hits.data_publication") %][% ELSE %][% h.loc("hits.publication") %][% END %][% ELSE %][% IF bag == "data" OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("tabs.data") %][% ELSE %][% h.loc("hits.publications") %][% END %][% END %]
     [% IF backend AND session.role == "delegate" %]
     [% h.loc("main_page.by") %] [% delegate_name %]
     [% END %]
