@@ -190,7 +190,7 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">[% h.loc("frontdoor.tabs.details.label") %]</a></li>
-          [% IF (mainFile AND mainFile.size) OR (relFile AND relFile.size) %]
+          [% IF mainFile AND mainFile.size OR relFile AND relFile.size OR main_file_link AND main_file_link.size %]
           <li><a href="#fileDetails" data-toggle="tab">[% h.loc("frontdoor.tabs.file_details.label") %]</a></li>
           [% END %]
 
@@ -232,7 +232,7 @@
 
           [% PROCESS publication/tab_details.tt %]
 
-          [% IF file AND file.size %] [% PROCESS publication/tab_filedetails.tt %] [% END %]
+          [% IF file AND file.size OR relFile AND relFile.size OR main_file_link AND main_file_link.size %] [% PROCESS publication/tab_filedetails.tt %] [% END %]
 
           [% IF relPubl %] [% PROCESS publication/tab_relpubl.tt %] [% END %]
 
