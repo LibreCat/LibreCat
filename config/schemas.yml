@@ -669,16 +669,17 @@ publication:
              description: "Related records"
       description: "Links to related materials"
     main_file_link:
-      type: object
-      properties:
-        url:
-          type: string
-          minItems: 0
-          description: "Link to external source for fulltext"
-        open_access:
-          type: integer
-          minItems: 0
-          description: "Is external fulltext open access (1) or not (0)?"
+      type: array
+      minItems: 0
+      items:
+        type: object
+        properties:
+          url:
+            type: string
+            description: "Link to external source for fulltext"
+          open_access:
+            type: string
+            description: "Is external fulltext open access (1) or not (0)?"
     link:
       type: string
       description: "URL to resource"

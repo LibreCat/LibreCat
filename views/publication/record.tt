@@ -195,7 +195,7 @@
           [% END %]
 
           [% IF relPubl.size %]
-          <li><a href="#relPubl" data-toggle="tab">[% h.loc("frontdoor.tabs.publication.label") %]</a></li>
+          <li><a href="#relPubl" data-toggle="tab">[% h.loc("frontdoor.tabs.publications.label") %]</a></li>
           [% END %]
 
           [% IF relResData.size %]
