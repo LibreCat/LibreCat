@@ -237,6 +237,7 @@ frontdoor:
       title: "File Title"
       description: "Description"
       url: "URL"
+      main_file_link: "Link(s) to Main File(s)"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
