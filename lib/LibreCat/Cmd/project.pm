@@ -98,6 +98,7 @@ sub _list {
         );
     }
     else {
+        carp "sort not available without a query" if $sort;
         $it = $helper->main_project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));

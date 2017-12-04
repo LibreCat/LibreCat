@@ -100,7 +100,8 @@ sub _list {
         );
     }
     else {
-        $it = Catmandu->store('main')->bag('user');
+        carp "sort not available without a query" if $sort;
+        $it = $helper->main_user;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }

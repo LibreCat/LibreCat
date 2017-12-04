@@ -41,7 +41,7 @@ E.g.
 librecat publication list 'status exact private'
 
 # Sort all publications by tite (force a query using empty quotes)
-librecat publication list --sort "title,,1" list
+librecat publication --sort "title,,1" list ""
 
 # Get the metadata for publication '2737383'
 librecat publication get 2737383 > /tmp/data.yml
@@ -168,6 +168,7 @@ sub _list {
         );
     }
     else {
+        carp "sort not available without a query" if $sort;
         $it = $helper->main_publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
