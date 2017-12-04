@@ -90,6 +90,8 @@ sub _list {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     my $it;
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->user->searcher(
