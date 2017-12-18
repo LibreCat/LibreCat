@@ -457,7 +457,7 @@ sub _move_files {
         else { # Child
             $pipe->writer();
             $source_files->stream($pipe,$file)
-                || croak "faied to stream $name : $!";
+                || croak "failed to stream $name : $!";
             exit(0);
         }
 

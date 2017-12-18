@@ -20,7 +20,7 @@
                     <img id="user_photo" src="[% photo_url %]" class="img-thumbnail" />
                     [%- ELSE %]
                     [%- USE Gravatar %]
-                    <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
+                    <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c', size => 140 ) | html %]" alt="[% thisPerson.full_name | html %]" />
                     [%- END %]
                 </div>
                 <div class="col-md-6 col-sm-5 col-xs-12">
