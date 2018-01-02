@@ -1,11 +1,7 @@
 Revision history for LibreCat
 
 {{$NEXT}}
-
-
-1.1.0 2017-12-13
-    - Adding support for multiple old_names for users
-      (Requires data migration! See release notes: https://github.com/LibreCat/LibreCat/wiki/Upgrade-1.0.0-to-1.1.0)
+    - Adding support for multiple old_names for users [requires data migration!]
     - Fixing department, project, research autocomplete lookups on partial input
     - Deleting migration command
     - Hiding the 'Citation Style' menu when no CSL engine is enabled
