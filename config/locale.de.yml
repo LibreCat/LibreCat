@@ -238,7 +238,6 @@ frontdoor:
       title: "Titel"
       description: "Beschreibung"
       url: "URL"
-      main_file_link: "Link(s) zu Volltext(en)"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
