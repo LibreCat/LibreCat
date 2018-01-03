@@ -189,8 +189,11 @@ sub _list {
         for (@$file_array) {
             $modified = $_->{modified} if (!defined($modified) || $_->{modified} > $modified);
             $created  = $_->{created}  if (!defined($created) || $_->{created} > $created);
-            $size += $_->{size};
+            $size    += $_->{size} // 0;
         }
+
+        $modified //= 0;
+        $created  //= 0;
 
         if ($self->app->global_options->{csv}) {
             for (@$file_array) {
@@ -260,9 +263,9 @@ sub _get {
 
         for my $file (@$file_array) {
             my $key          = $file->{_id};
-            my $size         = $file->{size};
+            my $size         = $file->{size} // 0;
             my $md5          = $file->{md5};
-            my $modified     = $file->{modified};
+            my $modified     = $file->{modified} // 0;
             my $content_type = $file->{content_type} // '???';
 
             printf "%-40.40s %9d $md5 %s %s\n", $content_type, $size,
@@ -449,14 +452,14 @@ sub _move_files {
         if (my $pid = fork()) { # Parent
             $pipe->reader();
 
-            $target_files->upload($pipe,$name)
+            $target_files->upload($pipe,$name) >= 0
                 || croak "failed to upload $name : $!";
 
             waitpid($pid,0);
         }
         else { # Child
             $pipe->writer();
-            $source_files->stream($pipe,$file)
+            $source_files->stream($pipe,$file) >= 0
                 || croak "failed to stream $name : $!";
             exit(0);
         }
