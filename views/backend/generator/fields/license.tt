@@ -71,7 +71,7 @@
       {% IF fields.file_upload.license.cc_license %}
       <strong>[% h.loc("forms.${type}.field.license.cc_license.label") %]</strong>
       <div class="row innerrow">
-        <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.cc_license.mandatory %} mandatory{% END %}">
+        <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.cc_license.mandatory == "oa_file" %}[% IF file AND file.0 %] mandatory[% END %]{% ELSIF fields.file_upload.license.cc_license.mandatory %} mandatory{% END %}" id="cc_license_alert">
         {% IF fields.file_upload.license.cc_license %}
         [% h.loc("forms.${type}.field.license.cc_license.select_text") %]
         <select name="cc_license" id="id_cc_license" class="form-control">
@@ -157,6 +157,20 @@ $('#id_pub_license').click(function(){
   else {
     $('#pub_license_alert').removeClass('alert-danger');
     $('#pub_license_alert').addClass('alert-info');
+  }
+});
+
+$('#id_cc_license').change(function() {
+  if(!$(this).children("option:selected").val()){
+    if ($('.dropzone').first().children().length > 1){
+      $('#cc_license_alert').removeClass('alert-info');
+      $('#cc_license_alert').addClass('alert-danger');
+    }
+  }
+  else {
+    $('#cc_license_alert').removeClass('alert-danger');
+    $('#cc_license_alert').addClass('alert-info');
+    $('#id_cc_license').removeClass('has-error');
   }
 });
 

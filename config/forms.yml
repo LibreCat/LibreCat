@@ -206,7 +206,7 @@ publication_types:
           pub_license:
             mandatory: 1
           cc_license:
-            mandatory: 0
+            mandatory: oa_file
           urn:
             mandatory: 0
             readonly: admin
