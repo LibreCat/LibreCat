@@ -21,7 +21,7 @@
     <form id="admin-account-search" role="form" action="[% uri_base %]/librecat/admin/account/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
-	  <label for="id_q"><span class="fa fa-search"></span> Search by name or PEVZ-ID</label>
+	  <label for="id_q"><span class="fa fa-search"></span> Search by name or ID</label>
 	  <div class="input-group">
 	    <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
 	    <span class="input-group-btn">
