@@ -21,7 +21,7 @@ get qr{/project/([a-zA-Z0-9].*)} => sub {
     my $proj = h->project->get($id);
 
     my $pub = LibreCat->searcher->search('publication',
-        {cql => ["project=$id", "status=public"], limit => 100,});
+        {cql => ["project=$id", "status=public"], limit => 100});
     $proj->{project_publication} = $pub if $pub->{total} > 0;
 
     template 'project/record', $proj;
@@ -36,7 +36,7 @@ Project page with alphabetical browsing.
 get qr{/project/*} => sub {
     my $c = params->{browse} // 'a';
     my %search_params
-        = (query => {prefix => {'name.exact' => lc($c)}}, limit => 1000);
+        = (query => {prefix => {'name.exact' => lc($c)}}, sru_sortkeys => "name,,1", limit => 1000);
 
     h->log->debug(
         "executing project->native_search: " . to_dumper(\%search_params));
