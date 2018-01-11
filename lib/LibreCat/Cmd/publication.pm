@@ -16,10 +16,10 @@ Usage:
 
 librecat publication [options] list [<cql-query>]
 librecat publication [options] export [<cql-query>]
-librecat publication [options] get <id>
+librecat publication [options] get <id> | <IDFILE>
 librecat publication [options] add <FILE> <OUTFILE>
-librecat publication [options] delete <id>
-librecat publication [options] purge <id>
+librecat publication [options] delete <id> | <IDFILE>
+librecat publication [options] purge <id> | <IDFILE>
 librecat publication [options] valid <FILE>
 librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
 librecat publication [options] fetch <source> <id>
@@ -109,16 +109,28 @@ sub command {
         return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_get(shift);
+        });
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-        return $self->_delete(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_delete(shift);
+        });
     }
     elsif ($cmd eq 'purge') {
-        return $self->_purge(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_purge(shift);
+        });
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -146,6 +158,22 @@ sub audit_message {
             message => $message,
         }
     );
+}
+
+sub _on_all {
+    my ($self,$id_file,$callback) = @_;
+
+    if (-r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
+    }
 }
 
 sub _list {
@@ -237,7 +265,7 @@ sub _export {
 }
 
 sub _get {
-    my ($self, $id, @opts) = @_;
+    my ($self, $id) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
 
@@ -771,16 +799,16 @@ LibreCat::Cmd::publication - manage librecat publications
 
 =head1 SYNOPSIS
 
-    librecat publication list [<cql-query>]
-    librecat publication export
-	librecat publication get <id>
-	librecat publication add <FILE>
-	librecat publication delete <id>
-    librecat publication purge <id>
-    librecat publication valid <FILE>
-    librecat publication files [<id>]|[<cql-query>]|[<FILE>]|REPORT
-    librecat publication fetch <source> <id>
-    librecat publication embargo ['update']
+    librecat publication [options] list [<cql-query>]
+    librecat publication [options] export [<cql-query>]
+    librecat publication [options] get <id> | <IDFILE>
+    librecat publication [options] add <FILE> <OUTFILE>
+    librecat publication [options] delete <id> | <IDFILE>
+    librecat publication [options] purge <id> | <IDFILE>
+    librecat publication [options] valid <FILE>
+    librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
+    librecat publication [options] fetch <source> <id>
+    librecat publication [options] embargo ['update']
 
     options:
         --sort=STR         (sorting results [only in combination with cql-query])
