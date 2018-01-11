@@ -3,6 +3,7 @@ package LibreCat::Cmd::research_group;
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Research_group;
+use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -13,8 +14,8 @@ Usage:
 librecat research_group [options] list [<cql-query>]
 librecat research_group [options] export [<cql-query>]
 librecat research_group [options] add <FILE>
-librecat research_group [options] get <id>
-librecat research_group [options] delete <id>
+librecat research_group [options] get <id> | <IDFILE>
+librecat research_group [options] delete <id> | <IDFILE>
 librecat research_group [options] valid <FILE>
 
 options:
@@ -65,16 +66,40 @@ sub command {
         return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_get(shift);
+        });
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-        return $self->_delete(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_delete(shift);
+        });
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
+    }
+}
+
+sub _on_all {
+    my ($self,$id_file,$callback) = @_;
+
+    if (-r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
     }
 }
 
@@ -290,8 +315,8 @@ LibreCat::Cmd::research_group - manage librecat research_group-s
     librecat research_group list [<cql-query>]
     librecat research_group export [<cql-query>]
     librecat research_group add <FILE>
-    librecat research_group get <id>
-    librecat research_group delete <id>
+    librecat research_group get <id> | <IDFILE>
+    librecat research_group delete <id> | <IDFILE>
     librecat research_group valid <FILE>
 
     options:

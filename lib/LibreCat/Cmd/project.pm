@@ -3,6 +3,7 @@ package LibreCat::Cmd::project;
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use LibreCat::Validator::Project;
+use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -13,8 +14,8 @@ Usage:
 librecat project [options] list [<cql-query>]
 librecat project [options] export [<cql-query>]
 librecat project [options] add <FILE>
-librecat project [options] get <id>
-librecat project [options] delete <id>
+librecat project [options] get <id> | <IDFILE>
+librecat project [options] delete <id> | <IDFILE>
 librecat project [options] valid <FILE>
 
 options:
@@ -65,16 +66,40 @@ sub command {
         return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_get(shift);
+        });
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-        return $self->_delete(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_delete(shift);
+        });
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
+    }
+}
+
+sub _on_all {
+    my ($self,$id_file,$callback) = @_;
+
+    if (-r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
     }
 }
 
@@ -289,8 +314,8 @@ LibreCat::Cmd::project - manage librecat projects
     librecat project list [<cql-query>]
     librecat project export [<cql-query>]
     librecat project add <FILE>
-    librecat project get <id>
-    librecat project delete <id>
+    librecat project get <id> | <IDFILE>
+    librecat project delete <id> | <IDFILE>
     librecat project valid <FILE>
 
     options:
