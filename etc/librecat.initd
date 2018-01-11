@@ -18,7 +18,7 @@ SERVER_PORT=5000
 SERVER_WORKERS=15
 SERVER_USER="vagrant"
 SERVER_GROUP="vagrant"
-DANCER_TMP="tmp"
+DANCER_TMP="/tmp"
 DANCER_DIR="/home/vagrant/LibreCat"
 DANCER_APP="$DANCER_DIR/bin/app.pl"
 # If a config.yml is in a layers directory, use this line:
@@ -37,7 +37,7 @@ do_start()
         if [ ! -f "$lock_file" ] ; then
                 cd $DANCER_DIR
                 echo -n $"Starting $webapp: "
-                TMPDIR="${DANCER_TMP}" DANCER_CONFDIR="${LIBRECAT_LAYERS}" $CARTON exec plackup $plackup_args -a $DANCER_APP 
+                TMPDIR="${DANCER_TMP}" DANCER_CONFDIR="${LIBRECAT_LAYERS}" $CARTON exec plackup $plackup_args -a $DANCER_APP
                 RETVAL=$?
                 if [ $RETVAL -eq 0 ]; then
                     touch $lock_file

@@ -1,6 +1,6 @@
 [% PROCESS header.tt %]
 
-<!-- BEGIN websites/error.tt -->
+<!-- BEGIN error.tt -->
 
 <div class="row"><!-- outer border -->
 
@@ -16,6 +16,6 @@
 
 </div>
 
-<!-- END websites/418.tt -->
+<!-- END error.tt -->
 
 [% INCLUDE footer.tt %]

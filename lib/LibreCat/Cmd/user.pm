@@ -90,6 +90,8 @@ sub _list {
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
+    my $helper = LibreCat::App::Helper::Helpers->new;
+
     my $it;
     if (defined($query)) {
         $it = LibreCat::App::Helper::Helpers->new->user->searcher(
@@ -100,7 +102,8 @@ sub _list {
         );
     }
     else {
-        $it = Catmandu->store('main')->bag('user');
+        carp "sort not available without a query" if $sort;
+        $it = $helper->main_user;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
