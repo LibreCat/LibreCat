@@ -157,7 +157,7 @@ publication:
                   - confirmation
                   - hidden
             status:
-                enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
+                enum: ["new","submitted","public","returned","private", "deleted"]
 
     file:
         type: object

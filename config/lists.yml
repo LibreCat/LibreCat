@@ -105,10 +105,7 @@ external_identifier:
   arxiv: "ArXiv"
   pmid: "PMID"
   inspire: "Inspire"
-  ahf: "AHF"
   scoap3: "SCOAP3"
-  phillister: "PhilLister"
-  opac: "Katalog.plus!"
 
 publication_identifier:
   issn: "ISSN"
