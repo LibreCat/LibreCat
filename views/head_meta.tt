@@ -20,7 +20,7 @@
     <script src="[% uri_base %]/javascripts/[% IF backend %]backend[% ELSE %]frontend[% END %].js"></script>
     [% IF backend %]
     <script src="[% uri_base %]/javascripts/dropzone.min.js"></script>
-    <script src="[% uri_base %]/javascripts/pub_dropzones.js"></script>
+    <script src="[% uri_base %]/javascripts/librecat_dropzones.js"></script>
     [% END %]
 
 <!-- END head_meta.tt -->
