@@ -133,6 +133,7 @@ $(document).ready(function(){
                         if(!limatch){
                             licenses.setAttribute("class", "collapse in");
                         }
+                        $('#licenses').find('#id_cc_license').closest('div.alert-info').addClass('mandatory');
                         $("#licenses").find('div.alert-info.mandatory').addClass('alert-danger');
                         $("#licenses").find('div.alert-info.mandatory').removeClass('alert-info');
                         $("#licenses").find('input[name="accept"]').attr('checked', false);
@@ -141,6 +142,7 @@ $(document).ready(function(){
                         $('#licenses').find('#select_ddc_0').addClass('has-error');
                         $('#licenses').find('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
                         $('#licenses').find('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
+                        $('#licenses').find('#id_cc_license').addClass('required');
                     }
 
                     file.previewElement.setAttribute("id", resp.tempid);
