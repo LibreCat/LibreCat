@@ -1,7 +1,6 @@
 use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
-use Data::Dumper;
 
 my $pkg;
 
@@ -81,7 +80,6 @@ SKIP: {
     });
 
     ok $res;
-    note Dumper $res;
 }
 
 done_testing;
