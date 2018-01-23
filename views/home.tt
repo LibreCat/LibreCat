@@ -30,13 +30,16 @@
                 </div>
                 [% IF backend %]
                 <div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-12">
-                    <div class="well">
-                        [% INCLUDE backend/add_new_button.tt %]
-                    </div>
+                    [% INCLUDE backend/home_right.tt %]
                 </div>
                 [% END %]
             </div>
         </div>
+
+        [% IF backend %]
+          [% INCLUDE backend/info_box.tt %]
+        [% END %]
+
         [% UNLESS !thisPerson %]
         <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
             <div class="col-md-12">

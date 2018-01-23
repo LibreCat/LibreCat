@@ -1,0 +1,1 @@
+[% INCLUDE backend/add_new_button.tt %]
