@@ -1,6 +1,6 @@
 Revision history for LibreCat
 
-{{$NEXT}}
+1.1.1 2017-01-31
     - Fixing broken download links
     - Remove Bielefeld specific code
     - Fixing quick links on homepage
