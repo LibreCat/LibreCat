@@ -257,15 +257,15 @@ and user rights will be checked before.
 get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     my ($id, $file_id) = splat;
 
-    my $rec = h->main_publication->get( $id ) or pass;
     my $user = h->get_person(session->{user_id});
 
     my ($ok, $file_name) = p->can_download(
-        $rec,
-        file_id => $file_id,
-        user => $user,
-        role => session->{role},
-        ip => request->address
+        $id, {
+            file_id => $file_id,
+            user => $user,
+            role => session->{role},
+            ip => request->address
+        }
     );
 
     unless ($ok) {
