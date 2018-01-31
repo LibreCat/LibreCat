@@ -1,6 +1,7 @@
 [% qp = request.params.hash -%]
 [% qp.delete('splat') -%]
 [% lf = h.config.locale.$lang -%]
+[% style = qp.style ? qp.style : h.config.citation.csl.default_style -%]
 <!DOCTYPE html>
 <html>
   <head>

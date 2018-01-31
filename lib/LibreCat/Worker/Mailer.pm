@@ -37,7 +37,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::Worker::Mailer - a worker for sending mails
+LibreCat::Worker::Mailer - a worker for mail notifications
 
 =head1 SYNOPSIS
 
@@ -50,5 +50,22 @@ LibreCat::Worker::Mailer - a worker for sending mails
         subject => 'important',
         body => 'hello world',
     });
+
+    # or better queue it via helper functions
+
+    use LibreCat::App::Helper;
+
+    my $job = {
+        to => 'me',
+        from => 'system_mailer',
+        subject => 'important',
+        body => 'hello world',
+    }
+
+    h->queue->add_job('mailer', $job)
+
+=head2 SEE ALSO
+
+L<LibreCat::Worker>
 
 =cut

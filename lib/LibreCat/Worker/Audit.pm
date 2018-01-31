@@ -13,7 +13,7 @@ sub work {
     my $store = Catmandu->store('main')->bag('audit');
 
     unless ($store) {
-        $self->log->error("failed to find 'backup.audit' store");
+        $self->log->error("failed to find 'main.audit' store");
         return;
     }
 
@@ -34,3 +34,46 @@ sub work {
 }
 
 1;
+
+_END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Worker::Audit - a worker for audits (if configured)
+
+=head1 SYNOPSIS
+
+    use LibreCat::Worker::Audit;
+
+    my $audit = LibreCat::Worker::Audit->new;
+    $audit->work({
+        id      => $opts->{id},
+        bag     => $opts->{bag},
+        process => $opts->{process},
+        action  => $opts->{action},
+        message => $opts->{message},
+        time    => time
+    });
+
+    # or better queue it via helper functions
+
+    use LibreCat::App::Helper;
+
+    my $job = {{
+        id      => $opts->{id},
+        bag     => $opts->{bag},
+        process => $opts->{process},
+        action  => $opts->{action},
+        message => $opts->{message},
+        time    => time
+    }
+
+    h->queue->add_job('mailer', $job)
+
+=head2 SEE ALSO
+
+L<LibreCat::Worker>
+
+=cut
