@@ -17,7 +17,7 @@
     <script src="[% uri_base %]/javascripts/bootstrap.min.js"></script><!-- main bootstrap file -->
     <script src="[% uri_base %]/javascripts/bootstrap-select.min.js"></script><!-- dropdown-like selects -->
     <script src="[% uri_base %]/javascripts/librecat.js"></script>
-    [%⁻ IF backend %]
+    [%- IF backend %]
     <script src="[% uri_base %]/javascripts/dropzone.min.js"></script>
     <script src="[% uri_base %]/javascripts/librecat_dropzones.js"></script>
     [%- END %]
