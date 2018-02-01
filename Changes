@@ -1,7 +1,14 @@
 Revision history for LibreCat
 
-{{$NEXT}}
-
+1.1.1 2017-01-31
+    - Fixing broken download links
+    - Remove Bielefeld specific code
+    - Fixing quick links on homepage
+    - Removed SSO authentication, there are available in https://github.com/LibreCat/LibreCat-Auth-SSO
+    - Command line tools 'get' command accepts a file of identifiers to export
+    - Sorted project list on the website
+    - Bug fixes in web embed codes
+    - Bug fixes displaying all main file links
 
 1.1.0 2017-12-13
     - Adding support for multiple old_names for users

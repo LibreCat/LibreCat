@@ -1,2 +1,2 @@
 Branch: master of https://github.com/LibreCat/LibreCat,
-Version: 1.1.0
+Version: 1.1.1
