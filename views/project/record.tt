@@ -50,13 +50,13 @@
 	<div class="tab tab-content">
 	[% INCLUDE project/record_details.tt %]
 	<div class="tab-pane" id="project_publications">
-         [% IF project_publication %]
-           [% style = 'default' %]
-           [% limit = project_publication.limit %]
-           [% hits = project_publication.hits %]
-           [% total = project_publication.total %]
+         [%- IF project_publication %]
+           [%- style = h.config.citation.csl.default_style %]
+           [%- limit = project_publication.limit %]
+           [%- hits = project_publication.hits %]
+           [%- total = project_publication.total %]
            [% INCLUDE hits.tt %]
-         [% END %]
+         [%- END %]
 	</div>
       </div>
     </div>

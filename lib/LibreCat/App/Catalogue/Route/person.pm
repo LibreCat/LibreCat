@@ -124,13 +124,13 @@ new publication form.
 
     post '/affiliation' => sub {
 
-        my $fix = Catmandu::Fix->new(fixes => ['compact("department")']);
+        my $fix = Catmandu::Fix->new(fixes => ['compact("department")', 'vacuum()']);
 
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
         my $person = h->get_person(session('user_id'));
-        $person->{department} = $p->{department};
+        $person->{department} = $p->{department} // [];
         h->update_record('user', $person);
 
         redirect uri_for('/librecat');
