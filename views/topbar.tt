@@ -1,9 +1,9 @@
 [%- thisPerson = h.get_person(session.user_id) -%]
-[% qp = request.params.hash %]
+[%- qp = request.params.hash %]
 [%- qp.delete('splat') %]
 [%- lang = session.lang ? session.lang : h.config.default_lang %]
 [% lf = h.config.locale.$lang -%]
-[% style = qp.style || 'default' -%]
+[%- style = qp.style || h.config.citation.csl.default_style -%]
 
 <!-- BEGIN navbar.tt -->
 <header>
