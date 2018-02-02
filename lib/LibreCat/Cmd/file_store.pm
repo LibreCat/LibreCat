@@ -197,16 +197,26 @@ sub _list {
 
         if ($self->app->global_options->{csv}) {
             for (@$file_array) {
-                next if $_->{_id} eq 'thumbnail.png';
                 printf join("\t", $key, $_->{_id}, '', '', '') . "\n";
             }
         }
         else {
             if ($args[0] && $args[0] eq 'recursive') {
                 for (@$file_array) {
-                    printf "%s %s %s %s %s\n", $key, $_->{key},
-                        strftime("%Y-%m-%dT%H:%M:%S",
-                        localtime($_->{modified})), $_->{size}, $_->{md5};
+                    my $file_name     = $_->{_id}  // '';
+                    my $file_size     = $_->{size} // 0;
+                    my $file_modified = $_->{modified} // 0;
+                    my $file_md5      = $_->{md5}  // '';
+
+                    printf "%s %s %s %s %s\n",
+                        $key,
+                        strftime(
+                            "%Y-%m-%dT%H:%M:%S",
+                            localtime($file_modified)
+                        ),
+                        $file_size,
+                        $file_md5,
+                        $file_name;
                 }
             }
             else {
