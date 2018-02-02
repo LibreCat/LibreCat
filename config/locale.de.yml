@@ -230,6 +230,7 @@ frontdoor:
       investigator: "Leiter"
       member: "Mitglieder"
       cooperator: "Mitwirkende"
+      grant_number: "Bewilligungsnummer"
     file_details:
       label: "Dateien"
       external_material: "Externes Material:"
