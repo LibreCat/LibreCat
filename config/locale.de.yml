@@ -3,6 +3,7 @@ _prefix:
     de:
 
 appname: "LibreCat"
+appname_short: "LibreCat"
 general:
   plural: "en"
   where: "in"
