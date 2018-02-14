@@ -661,7 +661,9 @@ publication:
             - type: integer
       description: "Keywords"
     thematic_area:
-      type: string
+      type: array
+      items:
+        type: string
       description: "Thematic publication area"
     jel:
       type: array
