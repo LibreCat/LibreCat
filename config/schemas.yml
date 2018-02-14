@@ -651,7 +651,7 @@ publication:
       type: array
       items:
          type: string
-         pattern: "^[0-9]{3}$"
+         pattern: "^[0-9]{3}.?[0-9]?"
       description: "Dewey Decimal Classification"
     keyword:
       type: array
