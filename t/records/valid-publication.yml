@@ -67,9 +67,6 @@ creator:
 date_created: 2015-05-22T08:35:10Z
 date_submitted: 2015-05-22T08:36:49Z
 date_updated: 2015-09-10T13:35:40Z
-ddc:
-  - 510
-  - 660.6
 department:
 - _id: '2685177'
 doi: 10.1093/jxb/erv066
@@ -93,9 +90,6 @@ publication_identifier:
 publication_status: published
 quality_controlled: '1'
 status: public
-thematic_area:
-  - ecology
-  - diversity
 title: Valid Test Publication
 type: journal_article
 volume: 66
