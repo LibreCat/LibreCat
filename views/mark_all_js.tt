@@ -1,3 +1,4 @@
+[%- USE JSON.Escape %]
 <script>
 var path = '[% request.uri_for(request.path_info) %]',
 searchParams = [% h.extract_params.json %];
