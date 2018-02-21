@@ -3,15 +3,14 @@
     <label for="rg_autocomplete_0">
       [% h.loc("forms.${type}.field.research_group.label") %]
     </label>
-    {% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %}<span class="starMandatory"></span>{% END %}
+    {%- IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10 col-xs-12" id="research_group">
-    {% IF fields.basic_fields.research_group.multiple OR fields.supplementary_fields.research_group.multiple %}
-    [% IF !research_group %]
+    {%- IF fields.basic_fields.research_group.multiple OR fields.supplementary_fields.research_group.multiple %}
+    [%- IF !research_group %]
     <div class="row innerrow multirow">
-      <input type="hidden" name="research_group.0.id" id="rg_idautocomplete_0" value="" />
+      <input type="hidden" name="research_group.0._id" id="rg_idautocomplete_0" value="" />
       <input type="hidden" name="research_group.0.name" id="rg_nameautocomplete_0" value="" />
-      
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
@@ -21,12 +20,11 @@
         </div>
       </div>
     </div>
-    [% ELSE %]
-    [% FOREACH proj IN research_group %]
+    [%- ELSE %]
+    [%- FOREACH rg IN research_group %]
     <div class="row innerrow multirow">
-      <input type="hidden" name="research_group.[% loop.index %].id" id="rg_idautocomplete_[% loop.index %]" value="[% proj.id %]" />
-      <input type="hidden" name="research_group.[% loop.index %].name" id="rg_nameautocomplete_[% loop.index %]" value="[% proj.name %]" />
-      
+      <input type="hidden" name="research_group.[% loop.index %]._id" id="rg_idautocomplete_[% loop.index %]" value="[% rg._id %]" />
+      <input type="hidden" name="research_group.[% loop.index %].name" id="rg_nameautocomplete_[% loop.index %]" value="[% rg.name %]" />
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
@@ -36,13 +34,12 @@
         </div>
       </div>
     </div>
-    [% END %]
-    [% END %]
-    {% ELSE %}
+    [%- END %]
+    [%- END %]
+    {%- ELSE %}
     <div class="row innerrow">
-      <input type="hidden" name="research_group.0.id" id="rg_idautocomplete_0" value="" />
+      <input type="hidden" name="research_group.0._id" id="rg_idautocomplete_0" value="" />
       <input type="hidden" name="research_group.0.name" id="rg_nameautocomplete_0" value="" />
-      
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.research_group.mandatory OR fields.supplementary_fields.research_group.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.research_group.label_short || lf.$type.field.research_group.label %]</div>
@@ -51,7 +48,6 @@
         </div>
       </div>
     </div>
-    {% END %}
-    
+    {%- END %}
   </div>
 </div>
