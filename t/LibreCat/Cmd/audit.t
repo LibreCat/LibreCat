@@ -15,7 +15,7 @@ BEGIN {
 
     LibreCat::Layers->new(layer_paths => [qw(t/layer)])->load;
 
-    $pkg = 'LibreCat::Cmd::schemas';
+    $pkg = 'LibreCat::Cmd::audit';
     use_ok $pkg;
 }
 
