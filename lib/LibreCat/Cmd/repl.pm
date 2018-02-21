@@ -17,7 +17,9 @@ librecat repl
 Install rlwrap for a better experience with support for line editing and
 history:
 
-rlwrap librecat repl
+   \$ rlwrap librecat repl
+   re.pl(main):001:0> use LibreCat::App::Helper;
+   re.pl(main):002:0> h->within_ip_range('10.0.0.1','10.0.0.0/8');
 
 EOF
 }
@@ -57,6 +59,12 @@ __END__
 
 LibreCat::Cmd::repl - Interactive perl shell for librecat
 
+=head1 SYNOPSIS
+
+    # Start a Perl interactive shell and test some LibreCat commands
+    
+    $ rlwrap librecat repl
+    re.pl(main):001:0> use LibreCat::App::Helper;
+    re.pl(main):002:0> h->within_ip_range('10.0.0.1','10.0.0.0/8');
+
 =cut
-
-
