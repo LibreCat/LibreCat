@@ -44,5 +44,5 @@ file_date_updated - calculate the latest update date of record files
 
     # Search for files updates after a date
     $ bin/librecat publication list "file_date_updated > 2017-01-01T00:00:00Z"
-    
+
 =cut
