@@ -229,6 +229,7 @@ frontdoor:
       investigator: "Principal Investigator"
       member: "Member"
       cooperator: "Cooperator"
+      grant_number: "Grant Number"
     file_details:
       label: "Files"
       external_material: "External material:"
