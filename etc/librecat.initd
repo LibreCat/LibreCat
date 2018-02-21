@@ -21,7 +21,7 @@ SERVER_GROUP="vagrant"
 DANCER_TMP="/tmp"
 DANCER_DIR="/home/vagrant/LibreCat"
 DANCER_APP="$DANCER_DIR/bin/app.pl"
-# If a config.yml is in a layers directory, use this line:
+# If the LibreCat/config.yml is in a layers directory, use this line:
 # export LIBRECAT_LAYERS="/opt/librecat-ugent"
 PLACK_ENV="deployment"
 ACCESS_LOG="/var/log/librecat/access.log"

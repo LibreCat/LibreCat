@@ -2,7 +2,6 @@
 !t/tmp/.gitkeep
 *.log
 *.pid
-*.spec
 *.swp
 .DS_Store
 .last_cover_stats
