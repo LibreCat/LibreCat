@@ -729,7 +729,7 @@ forms:
     label: "Conference (Editor)"
     tab: *tab
     field:
-      editor.label: "Editor"
+      editor: "Editor"
       document_type: *document_type
       doi: *doi
       title: *booktitle

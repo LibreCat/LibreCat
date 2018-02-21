@@ -730,7 +730,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
-      editor.label: "Herausgeber"
+      editor: "Herausgeber"
       document_type: *document_type
       doi: *doi
       title: *booktitle
