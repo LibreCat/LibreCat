@@ -170,11 +170,11 @@ publication:
                 description: "User name"
             date_created:
                 type: string
-                format: date-time
+                pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
                 description: "Upload date"
             date_updated:
                 type: string
-                format: date-time
+                pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
                 description: "Last modification date"
             embargo:
                 type: string
@@ -290,11 +290,11 @@ publication:
     user_id: *id
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Record creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Record last update date"
     doi:
       oneOf:
@@ -910,11 +910,11 @@ user:
       description: "Researcher Scopus identifier"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The user creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The user last modification date"
 
   required: ["_id","account_status","first_name","last_name","full_name"]
@@ -943,11 +943,11 @@ department:
       description: "Department name"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Department creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Department last update date"
     tree:
       type: array
@@ -1011,11 +1011,11 @@ project:
       description: "Ending date"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The project creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The project last modification date"
     affiliation:
       type: string
@@ -1126,11 +1126,11 @@ research_group:
       description: "The research group's ending date"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The research group creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The research group last modification date"
     department:
       type: array
