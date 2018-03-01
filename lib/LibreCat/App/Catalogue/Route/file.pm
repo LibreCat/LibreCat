@@ -110,6 +110,7 @@ get '/rc/approve/:key' => sub {
     my $job = {
         to      => $data->{user_email},
         subject => h->config->{request_copy}->{subject},
+        from    => h->config->{request_copy}->{from},
         body    => $body,
     };
 
@@ -138,6 +139,7 @@ get '/rc/deny/:key' => sub {
     my $job = {
         to      => $data->{user_email},
         subject => h->config->{request_copy}->{subject},
+        from    => h->config->{request_copy}->{from},
         body    => export_to_string(
             {appname_short => h->config->{appname_short}}, 'Template', template => 'views/email/req_copy_deny.tt'
         ),
@@ -165,7 +167,7 @@ get '/rc/:key' => sub {
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
-            _send_it($check->{record_id}, $file->key);
+            _send_it($check->{record_id}, $file->{_id});
         }
         else {
             status 404;
@@ -294,7 +296,7 @@ get '/thumbnail/:id' => sub {
     my $thumbnail_name = 'thumbnail.png';
 
     if (my $file = _file_exists($key, $thumbnail_name, access => 1)) {
-        _send_it($key, $file->key, access => 1);
+        _send_it($key, $file->{_id}, access => 1);
     }
     else {
         redirect uri_for('/images/thumbnail_dummy.png');

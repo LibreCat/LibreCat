@@ -35,7 +35,7 @@ sub work {
 
 1;
 
-_END__
+__END__
 
 =pod
 
