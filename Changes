@@ -1,5 +1,17 @@
 Revision history for LibreCat
 
+1.1.2 2018-03-01
+    - Fixing managing research groups
+    - Fixing date validation rules
+    - Adding mailer to the default gearman jobs
+    - Fixing requesta copy service
+    - Fixing broken access level links
+    - Fixing file_date_updated index to find last edited files
+    - Save after editing records will return to the previous page
+    - Adding a REPL librecat command
+    - Improved handling of language in embed views
+    - Changed doi.org urls to https
+
 1.1.1 2018-01-31
     - Fixing broken download links
     - Remove Bielefeld specific code
