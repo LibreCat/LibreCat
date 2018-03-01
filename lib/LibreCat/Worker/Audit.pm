@@ -70,7 +70,7 @@ LibreCat::Worker::Audit - a worker for audits (if configured)
         time    => time
     }
 
-    h->queue->add_job('mailer', $job)
+    h->queue->add_job('audit', $job)
 
 =head2 SEE ALSO
 

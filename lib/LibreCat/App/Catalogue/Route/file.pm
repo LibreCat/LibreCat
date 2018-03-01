@@ -213,6 +213,7 @@ any '/rc/:id/:file_id' => sub {
     if (params->{user_email}) {
         my $pub
             = Catmandu->store('main')->bag('publication')->get(params->{id});
+            
         my $mail_body = export_to_string(
             {
                 title      => $pub->{title},
@@ -225,9 +226,11 @@ any '/rc/:id/:file_id' => sub {
             'Template',
             template => 'views/email/req_copy.tt',
         );
+
         my $job = {
             to      => $file_creator_email,
             subject => h->config->{request_copy}->{subject},
+            from    => h->config->{request_copy}->{from},
             body    => $mail_body,
         };
 
