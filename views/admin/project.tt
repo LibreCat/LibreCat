@@ -47,18 +47,16 @@
       [% INCLUDE pagination.tt %]
     </div>
 
-    [% FOREACH p IN hits %]
-    <div class="row innerrow">
-      <div class="col-md-3">
-	<a href="[% uri_base %]/project/[% p._id %]"><span class="label label-success"><strong>[% p._id %]</strong></span></a>
-      </div>
-      <div class="col-md-9">
-	<a href="[% uri_base %]/librecat/admin/project/edit/[% p._id %]"><span class="fa fa-pencil fw"></span>[% IF p.acronym %][% p.acronym %] | [% END %][% p.name %]</a>
-	<br />
-	<span class="text-muted">[% FOREACH dep IN p.department %][% h.get_department(dep._id).display %][% UNLESS loop.last %] | [% END %][% END %]</span>
-      </div>
-    </div>
-    [% END %]
+    <dl class="hitlist">
+    [%- FOREACH p IN hits %]
+	<dt>
+	<a href="[% uri_base %]/librecat/admin/project/edit/[% p._id %]"><span class="fa fa-pencil fw"></span>[% p.name %]</a>
+    | <span class="text-muted">ID: [% p._id %]</span>
+    </dt>
+	<dd>
+	</dd>
+    [%- END %]
+    </dl>
 
     <div class="row">
       [% INCLUDE pagination.tt %]
