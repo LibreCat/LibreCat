@@ -152,6 +152,7 @@ Checks if the user has the rights to update this record.
 
     post '/update' => sub {
         my $p = params;
+        my $return_url = $p->{return_url};
 
         h->log->debug("Params:" . to_dumper($p));
 
@@ -189,7 +190,7 @@ Checks if the user has the rights to update this record.
             }
         );
 
-        redirect uri_for('/librecat');
+        redirect $return_url || uri_for('/librecat');
     };
 
 =head2 GET /return/:id
