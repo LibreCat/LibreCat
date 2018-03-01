@@ -264,7 +264,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
             file_id => $file_id,
             user => $user,
             role => session->{role},
-            ip => request->address
+            ip   => request->address
         }
     );
 
