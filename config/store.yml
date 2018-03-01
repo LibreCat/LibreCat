@@ -201,6 +201,8 @@ search:
               field: 'project_type'
 
       publication:
+        fix:
+            - file_date_updated()
         cql_mapping:
           default_index: basic
           indexes:
@@ -545,7 +547,7 @@ search:
                 '=': true
                 'exact': true
                 '<>': true
-              field: 'file.date_updated'
+              field: 'file_date_updated'
               sort: true
               values: "date in the form yyyy-MM-ddTHH:mm:ssZ"
             publication_status: &publication_status
@@ -1054,6 +1056,7 @@ search:
           pubmed: {type: byte}
           inspire: {type: byte}
           scoap3: {type: byte}
+          file_date_updated: {type: date, format: date_time_no_millis}
           file:
             properties:
               access_level: {type: string, analyzer: tag}
