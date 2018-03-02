@@ -71,6 +71,7 @@ request_copy:
   # period in days
   period: 7
   subject: 'Request for a copy of your publication'
+  from: 'einstein@librecat.org'
 
 # Default format to display dates
 time_format: "%Y-%m-%dT%H:%M:%SZ"

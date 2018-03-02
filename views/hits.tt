@@ -32,16 +32,17 @@
 [%- END %]
 [%- END %]
 
-[% UNLESS request.path_info.match("/marked") %]
-[% IF next_page or previous_page %]
+[%- UNLESS request.path_info.match("/marked") %]
+[%- IF next_page or previous_page %]
 <div class="row">
   [% INCLUDE pagination.tt %]
-[% ELSE %]
+[%- ELSE %]
 <div class="row margin-top1">
-[% END %]
+[%- END %]
 </div>
-[% END %]
+[%- END %]
 
+[%- style = style || h.config.citation.csl.default_style %]
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
 [% IF request.path_info == "/marked" %]<ul class="list-unstyled" id="sortable">[% END %]

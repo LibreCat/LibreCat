@@ -22,7 +22,7 @@
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="[% uri_base %]/download/[% entry._id  %]/[% supp.file.file_id %]/[% supp.file.file_name | uri %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
 
-  [% IF entry.doi %]| <a href="http://doi.org/[% entry.doi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>DOI</a>[% END %]
+  [% IF entry.doi %]| <a href="https://doi.org/[% entry.doi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>DOI</a>[% END %]
   [% IF entry.external_id.isi %] | <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% entry.external_id.isi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>WoS</a>[% END %]
   [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
   [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>arXiv</a>[% END %]

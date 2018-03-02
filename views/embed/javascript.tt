@@ -1,5 +1,7 @@
 <!-- BEGIN embed/javascript.tt -->
-[% qp = request.params.hash %]
+[% qp = request.params.hash -%]
+[% lang = qp.lang ? qp.lang : h.config.default_lang -%]
+[% lf = h.config.locale.$lang -%]
 document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
 [%- style = qp.style %]
 [%- FOREACH entry IN hits %]

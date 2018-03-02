@@ -38,7 +38,7 @@ sub command {
                         = $rec->{type} eq 'research_data'
                         ? 'data'
                         : 'publication';
-                    my $loc = "$config->{host}/$type/$rec->{_id}";
+                    my $loc = "$config->{uri_base}/$type/$rec->{_id}";
                     my $mod = substr(
                         $rec->{date_updated}
                             || $rec->{date_created}
@@ -60,7 +60,7 @@ sub command {
     $file->say(
         '<sitemap xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
     for my $i (1 .. $n) {
-        my $loc = sprintf("$config->{host}/sitemap-%05d.xml", $i);
+        my $loc = sprintf("$config->{uri_base}/sitemap-%05d.xml", $i);
         $file->say("<url><loc>$loc</loc><lastmod>$today</lastmod></url>");
     }
     $file->say('</sitemap>');

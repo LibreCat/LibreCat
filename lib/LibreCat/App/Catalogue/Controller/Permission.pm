@@ -196,19 +196,15 @@ sub can_download {
     my $file_name;
 
     for ( @{ $pub->{file} } ) {
-
         if ( $_->{file_id} eq $file_id ) {
-
             $access    = $_->{access_level};
             $file_name = $_->{file_name};
             last;
-
         }
-
     }
 
-    return (0,"") unless defined $file_name;
-    return (0,"") unless defined $access;
+    return (0,'') unless defined $file_name;
+    return (0,'') unless defined $access;
 
     if ($access eq 'open_access') {
         return (1, $file_name);
@@ -217,14 +213,12 @@ sub can_download {
         return (1, $file_name);
     }
     elsif ($access eq 'closed') {
-
         # closed documents can be downloaded by user
-        #if and only if the user can edit the record
-        return (
-            $self->can_edit( $id,{ user_id => $user_id, role =>  $role }),
-            $file_name
-        );
+        # if and only if the user can edit the record
+        my $can_edit = $self->can_edit( $id,{ user_id => $user_id, role =>  $role });
+        return ($can_edit,$file_name);
     }
+
     return (0, '');
 }
 

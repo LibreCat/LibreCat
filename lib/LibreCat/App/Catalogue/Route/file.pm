@@ -110,6 +110,7 @@ get '/rc/approve/:key' => sub {
     my $job = {
         to      => $data->{user_email},
         subject => h->config->{request_copy}->{subject},
+        from    => h->config->{request_copy}->{from},
         body    => $body,
     };
 
@@ -138,6 +139,7 @@ get '/rc/deny/:key' => sub {
     my $job = {
         to      => $data->{user_email},
         subject => h->config->{request_copy}->{subject},
+        from    => h->config->{request_copy}->{from},
         body    => export_to_string(
             {appname_short => h->config->{appname_short}}, 'Template', template => 'views/email/req_copy_deny.tt'
         ),
@@ -165,7 +167,7 @@ get '/rc/:key' => sub {
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
-            _send_it($check->{record_id}, $file->key);
+            _send_it($check->{record_id}, $file->{_id});
         }
         else {
             status 404;
@@ -211,6 +213,7 @@ any '/rc/:id/:file_id' => sub {
     if (params->{user_email}) {
         my $pub
             = Catmandu->store('main')->bag('publication')->get(params->{id});
+            
         my $mail_body = export_to_string(
             {
                 title      => $pub->{title},
@@ -223,9 +226,11 @@ any '/rc/:id/:file_id' => sub {
             'Template',
             template => 'views/email/req_copy.tt',
         );
+
         my $job = {
             to      => $file_creator_email,
             subject => h->config->{request_copy}->{subject},
+            from    => h->config->{request_copy}->{from},
             body    => $mail_body,
         };
 
@@ -257,15 +262,15 @@ and user rights will be checked before.
 get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     my ($id, $file_id) = splat;
 
-    my $rec = h->main_publication->get( $id ) or pass;
     my $user = h->get_person(session->{user_id});
 
     my ($ok, $file_name) = p->can_download(
-        $rec,
-        file_id => $file_id,
-        user => $user,
-        role => session->{role},
-        ip => request->address
+        $id, {
+            file_id => $file_id,
+            user => $user,
+            role => session->{role},
+            ip   => request->address
+        }
     );
 
     unless ($ok) {
@@ -294,7 +299,7 @@ get '/thumbnail/:id' => sub {
     my $thumbnail_name = 'thumbnail.png';
 
     if (my $file = _file_exists($key, $thumbnail_name, access => 1)) {
-        _send_it($key, $file->key, access => 1);
+        _send_it($key, $file->{_id}, access => 1);
     }
     else {
         redirect uri_for('/images/thumbnail_dummy.png');

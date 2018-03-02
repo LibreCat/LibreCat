@@ -136,8 +136,7 @@ sub _list {
             my $name    = $item->{name};
             my $acronym = $item->{acronym} // '---';
 
-            printf "%-40.40s %5.5s %-40.40s %s\n", " "    # not used
-                , $id, $acronym, $name;
+            printf "%-40.40s %s %s\n", $id, $acronym, $name;
         }
     );
     print "count: $count\n";

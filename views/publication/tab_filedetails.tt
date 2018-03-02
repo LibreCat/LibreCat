@@ -47,6 +47,9 @@
       <strong>[% fi.file_name | html %]</strong>
       [% END %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
+      [% IF fi.request_a_copy %]
+        [% PROCESS publication/modal_requestcopy.tt %]
+      [% END %]
     </div>
   </div>
   [% IF fi.title %]

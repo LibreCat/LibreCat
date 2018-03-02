@@ -14,7 +14,7 @@ sub work {
     my $mail = Email::Simple->create(
         header => [
             To      => $opts->{to},
-            From    => $opts->{from},
+            From    => $opts->{from} // 'unknown@librecat.org',
             Subject => $opts->{subject},
         ],
         body => $opts->{body},

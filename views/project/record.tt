@@ -40,7 +40,7 @@
       <div class="col-md-12">
 	    <ul class="nav nav-tabs">
 	      <li class="active"><a href="#project_details" data-toggle="tab">[% h.loc("frontdoor.tabs.details.label") %]</a></li>
-          [%- IF project_publication %]<li><a href="#project_publications" data-toggle="tab">[% h.loc("tabs.publication") %]</a></li>[% END %]
+          [%- IF project_publication %]<li><a href="#project_publications" data-toggle="tab">[% h.loc("tabs.publications") %]</a></li>[% END %]
         </ul>
       </div>
     </div>
@@ -50,13 +50,13 @@
 	<div class="tab tab-content">
 	[% INCLUDE project/record_details.tt %]
 	<div class="tab-pane" id="project_publications">
-         [% IF project_publication %]
-           [% style = 'default' %]
-           [% limit = project_publication.limit %]
-           [% hits = project_publication.hits %]
-           [% total = project_publication.total %]
+         [%- IF project_publication %]
+           [%- style = h.config.citation.csl.default_style %]
+           [%- limit = project_publication.limit %]
+           [%- hits = project_publication.hits %]
+           [%- total = project_publication.total %]
            [% INCLUDE hits.tt %]
-         [% END %]
+         [%- END %]
 	</div>
       </div>
     </div>
