@@ -846,8 +846,7 @@ user:
       description: "Reviewer for departments"
     delegate:
       type: array
-      items:
-        oneOf: *id
+      items: *id
       description: "Delegate for researchers"
     department:
       type: array
