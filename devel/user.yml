@@ -9,6 +9,7 @@ full_name: User, Test
 last_name: User
 login: test
 password: secret
+show: 1
 style: apa
 ...
 ---
@@ -52,6 +53,7 @@ full_name: Dean, James
 last_name: Dean
 login: james
 password: secret
+show: 1
 style: apa
 ...
 ---
@@ -70,6 +72,7 @@ old_name:
   full_name: 'Mortenson,  Norma Jeane'
   last_name: Mortenson
 password: secret
+show: 1
 style: apa
 ...
 ---
@@ -87,5 +90,6 @@ old_name:
   last_name: Hershlag
 login: natalie
 password: secret
+show: 1
 style: apa
 ...

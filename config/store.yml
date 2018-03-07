@@ -756,6 +756,11 @@ search:
                 'all': true
                 'exact': true
               field: alias
+            show:
+              op:
+                '=': true
+                '<>': true
+              field: show
 
       department:
         cql_mapping:

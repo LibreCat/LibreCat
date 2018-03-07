@@ -915,6 +915,12 @@ user:
       type: string
       pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The user last modification date"
+    show:
+      oneOf:
+        - type: string
+          pattern: "^[01]$"
+        - type: integer
+      description: "Flag if person should be displayed on /person list"
 
   required: ["_id","account_status","first_name","last_name","full_name"]
   additionalProperties: true
