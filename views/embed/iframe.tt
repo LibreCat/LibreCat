@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[% h.config.appname %]</title>
+    <title>[% h.loc("appname") %]</title>
     <link rel="icon" href="[% uri_base %]/images/brand_logo.png" type="image/png">
     [% INCLUDE head_meta.tt %]
   </head>

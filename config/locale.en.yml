@@ -2,7 +2,7 @@ _prefix:
   locale:
     en:
 
-appname: "LibreCat"
+appname: "LibreCat &ndash; Publication List Manager"
 appname_short: "LibreCat"
 general:
   plural: "s"
