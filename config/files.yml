@@ -8,12 +8,12 @@ default: &filestore_settings
     package: Simple
     options:
         root: data/file_uploads
-        
+
 api:
     buffer_size: 8192
     access:
         # Which ip-ranges can access the file api (not for end-users)
-        ip_ranges:
+        ip_range:
             - 127.0.0.1
             - 10.0.0.0/8
 

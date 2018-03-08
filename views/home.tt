@@ -14,13 +14,13 @@
     <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
         <div class="page-header">
             <div class="row">
-                <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_photo") %]">
+                <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% thisPerson.full_name | html %]">
                     [%- IF thisPerson.photo %]
                     [%- photo_url=thisPerson.photo.replace('http:','') -%]
-                    <img id="user_photo" src="[% photo_url %]" class="img-thumbnail" />
+                    <img id="user_photo" src="[% photo_url %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
                     [%- ELSE %]
                     [%- USE Gravatar %]
-                    <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
+                    <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c', size => 140 ) | html %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
                     [%- END %]
                 </div>
                 <div class="col-md-6 col-sm-5 col-xs-12">
@@ -47,7 +47,7 @@
                     [% IF session.role == 'user' OR !backend %]
                     <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% h.loc("help.publication_user") %]"><a href="[% uri_base %][% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% h.loc("tabs.publications") %]</a></li>
                     [% IF researchhits AND researchhits.total != 0 %]
-                    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% uri_base %][% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data_publications") %]</a></li>
+                    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% uri_base %][% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data") %]</a></li>
                     [% END %]
                     [% END %]
                     [% IF backend AND session.role == 'reviewer' %]

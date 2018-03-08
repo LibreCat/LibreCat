@@ -229,6 +229,7 @@ frontdoor:
       investigator: "Principal Investigator"
       member: "Member"
       cooperator: "Cooperator"
+      grant_number: "Grant Number"
     file_details:
       label: "Files"
       external_material: "External material:"
@@ -237,6 +238,7 @@ frontdoor:
       title: "File Title"
       description: "Description"
       url: "URL"
+      main_file_link: "Link(s) to Main File(s)"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
@@ -727,7 +729,7 @@ forms:
     label: "Conference (Editor)"
     tab: *tab
     field:
-      editor.label: "Editor"
+      editor: "Editor"
       document_type: *document_type
       doi: *doi
       title: *booktitle
@@ -1230,7 +1232,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       main_file_link: *main_file_link
-      editor.label: "Editor"
+      editor: "Editor"
   research_data:
     label: "Research Data"
     tab:

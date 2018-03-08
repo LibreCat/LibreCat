@@ -7,6 +7,14 @@ publication:
   title: "librecat publication"
   type: "object"
   definitions:
+    _id: &id
+      #in perl, its hard to distinguish between integer and string that look like an integer
+      oneOf:
+        - type: string
+          minLength: 1
+        - type: integer
+          minimum: 0
+      description: "A general identifier scheme"
     iso_language: &iso_language
       type: object
       properties:
@@ -29,28 +37,13 @@ publication:
       type: object
       properties:
         #TODO: _id must refer to valid department? Possible in JSON-Schema?
-        _id:
-          #in perl, its hard to distinguish between integer and string that look like an integer
-          oneOf:
-            - type: string
-              #pattern: "^[0-9]+$"
-              minLength: 1
-            - type: integer
-              minimum: 0
-          description: "Department identifier"
+        _id: *id
         tree:
           type: array
           items:
             type: object
             properties:
-              _id:
-                oneOf:
-                  - type: string
-                    #pattern: "^[0-9]+$"
-                    minLength: 1
-                  - type: integer
-                    minimum: 0
-                description: "Parent department"
+              _id: *id
           description: "Hierarchical structure"
       required: ["_id"]
       additionalProperties: false
@@ -157,7 +150,7 @@ publication:
                   - confirmation
                   - hidden
             status:
-                enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
+                enum: ["new","submitted","public","returned","private", "deleted"]
 
     file:
         type: object
@@ -177,11 +170,11 @@ publication:
                 description: "User name"
             date_created:
                 type: string
-                format: date-time
+                pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
                 description: "Upload date"
             date_updated:
                 type: string
-                format: date-time
+                pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
                 description: "Last modification date"
             embargo:
                 type: string
@@ -234,11 +227,7 @@ publication:
     project: &project
       type: object
       properties:
-        _id:
-          type: string
-          #pattern: "^P[0-9]+$"
-          minLength: 1
-          description: "Project identifier"
+        _id: *id
         name:
           type: string
           description: "Project name"
@@ -247,25 +236,14 @@ publication:
     research_group: &research_group
       type: object
       properties:
-        _id:
-          type: string
-          #pattern: "^RG[0-9]+$"
-          minLength: 1
-          description: "Research group identifier"
+        _id: *id
         name:
           type: string
           description: "Research group name"
       required: ["_id"]
 
   properties:
-    _id:
-      oneOf:
-        - type: string
-          #pattern: "^[0-9]+$"
-          minLength: 1
-        - type: integer
-          minimum: 0
-      description: "Publication identifier"
+    _id: *id
     _version:
       type: integer
       minimum: 0
@@ -304,33 +282,19 @@ publication:
     creator:
       type: object
       properties:
-        id:
-          oneOf:
-            - type: string
-              #pattern: "^[0-9]+$"
-              minLength: 1
-            - type: integer
-              minimum: 0
-          description: "Creator id"
+        id: *id
         login:
           type: string
           description: "Creator user name"
       description: "Creator"
-    user_id:
-      oneOf:
-        - type: string
-          #pattern: "^[0-9]+$"
-          minLength: 1
-        - type: integer
-          minimum: 0
-      description: "Id of the user that saved this version"
+    user_id: *id
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Record creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Record last update date"
     doi:
       oneOf:
@@ -669,16 +633,17 @@ publication:
              description: "Related records"
       description: "Links to related materials"
     main_file_link:
-      type: object
-      properties:
-        url:
-          type: string
-          minItems: 0
-          description: "Link to external source for fulltext"
-        open_access:
-          type: integer
-          minItems: 0
-          description: "Is external fulltext open access (1) or not (0)?"
+      type: array
+      minItems: 0
+      items:
+        type: object
+        properties:
+          url:
+            type: string
+            description: "Link to external source for fulltext"
+          open_access:
+            type: string
+            description: "Is external fulltext open access (1) or not (0)?"
     link:
       type: string
       description: "URL to resource"
@@ -696,7 +661,9 @@ publication:
             - type: integer
       description: "Keywords"
     thematic_area:
-      type: string
+      type: array
+      items:
+        type: string
       description: "Thematic publication area"
     jel:
       type: array
@@ -800,15 +767,7 @@ user:
     department: *department
 
   properties:
-    _id:
-      #in perl, its hard to distinguish between integer and string that look like an integer
-      oneOf:
-        - type: string
-          #pattern: "^[0-9]+$"
-          minLength: 1
-        - type: integer
-          minimum: 0
-      description: "Researcher identifier"
+    _id: *id
     _version:
       type: integer
       minimum: 0
@@ -841,18 +800,23 @@ user:
       type: string
       minLength: 0
       description: "Full name"
-    old_first_name:
-      type: string
-      minLength: 0
-      description: "Older First name"
-    old_last_name:
-      type: string
-      minLength: 0
-      description: "Older Last name"
-    old_full_name:
-      type: string
-      minLength: 0
-      description: "Older Full name"
+    old_name:
+      type: array
+      items:
+        type: object
+        properties:
+          first_name:
+            type: string
+            minLength: 0
+            description: "Older first name"
+          last_name:
+            type: string
+            minLength: 0
+            description: "Older last name"
+          full_name:
+            type: string
+            minLength: 0
+            description: "Older full name"
     super_admin:
       oneOf:
         - type: string
@@ -864,64 +828,36 @@ user:
       items:
         type: object
         properties:
-          _id:
-            oneOf:
-              - type: string
-                #pattern: "^[0-9]+$"
-                minLength: 1
-              - type: integer
-                minimum: 0
-            description: "Department identifier"
+          _id: *id
       description: "Data manager for departments"
     reviewer:
       type: array
       items:
         type: object
         properties:
-          _id:
-            oneOf:
-              - type: string
-                #pattern: "^[0-9]+$"
-                minLength: 1
-              - type: integer
-                minimum: 0
-            description: "Department identifier"
+          _id: *id
       description: "Reviewer for departments"
     project_reviewer:
       type: array
       items:
         type: object
         properties:
-          _id:
-            type: string
-            #pattern: "^P[0-9]+$"
-            description: "Project identifier"
+          _id: *id
       description: "Reviewer for departments"
     delegate:
       type: array
-      items:
-        oneOf:
-          - type: string
-            #pattern: "^[0-9]+$"
-            minLength: 1
-          - type: integer
-            minimum: 0
-        description: "Researcher identifier"
+      items: *id
       description: "Delegate for researchers"
     department:
       type: array
       items:
         type: object
         properties:
-          _id:
-            oneOf:
-              - type: string
-                #pattern: "^[0-9]+$"
-                minLength: 1
-              - type: integer
-                minimum: 0
-            description: "Department identifier"
+          _id: *id
       description: "Department"
+    ext_institution:
+      type: string
+      description: "External Institution"
     style:
        type: string
        description: "Preferred citation style"
@@ -973,11 +909,11 @@ user:
       description: "Researcher Scopus identifier"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The user creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The user last modification date"
 
   required: ["_id","account_status","first_name","last_name","full_name"]
@@ -987,15 +923,7 @@ department:
   type: object
   properties:
     #TODO: _id must refer to valid department? Possible in JSON-Schema?
-    _id:
-      #in perl, its hard to distinguish between integer and string that look like an integer
-      oneOf:
-        - type: string
-          #pattern: "^[0-9]+$"
-          minLength: 1
-        - type: integer
-          minimum: 0
-      description: "Department identifier"
+    _id: *id
     _version:
       type: integer
       minimum: 0
@@ -1014,25 +942,18 @@ department:
       description: "Department name"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Department creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "Department last update date"
     tree:
       type: array
       items:
         type: object
         properties:
-          _id:
-            oneOf:
-              - type: string
-                #pattern: "^[0-9]+$"
-                minLength: 1
-              - type: integer
-                minimum: 0
-            description: "Parent department"
+          _id: *id
       description: "Hierarchical structure"
   required: ["_id","tree","layer"]
   additionalProperties: false
@@ -1042,10 +963,7 @@ project:
   title: "librecat project"
   type: "object"
   properties:
-    _id:
-      type: string
-      #pattern: "^P[0-9]+$"
-      description: "Project identifier"
+    _id: *id
     _version:
       type: integer
       minimum: 0
@@ -1092,11 +1010,11 @@ project:
       description: "Ending date"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The project creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The project last modification date"
     affiliation:
       type: string
@@ -1169,11 +1087,7 @@ project:
         type: string
         minLength: 1
       description: "Funding agency"
-    call_identifier:
-      oneOf:
-       - type: string
-       - type: integer
-      description: "Identifier of the call"
+    call_identifier: *id
     funded:
       oneOf:
         - type: string
@@ -1189,10 +1103,7 @@ research_group:
   title: "librecat research group"
   type: "object"
   properties:
-    _id:
-      type: string
-      #pattern: "^RG[0-9]+$"
-      description: "Research group identifier"
+    _id: *id
     _version:
       type: integer
       minimum: 0
@@ -1214,25 +1125,18 @@ research_group:
       description: "The research group's ending date"
     date_created:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The research group creation date"
     date_updated:
       type: string
-      format: date-time
+      pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
       description: "The research group last modification date"
     department:
       type: array
       items:
         type: object
         properties:
-          _id:
-            oneOf:
-              - type: string
-                #pattern: "^[0-9]+$"
-                minLength: 1
-              - type: integer
-                minimum: 0
-            description: "The department identifier"
+          _id: *id
       description: "Affiliation of the research group"
 
   required: ["_id","name"]

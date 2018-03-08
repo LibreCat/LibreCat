@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use LibreCat::App::Helper;
 use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
+use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -14,8 +15,8 @@ Usage:
 librecat user [options] list [<cql-query>]
 librecat user [options] export [<cql-query>]
 librecat user [options] add <FILE>
-librecat user [options] get <id>
-librecat user [options] delete <id>
+librecat user [options] get <id> | <IDFILE>
+librecat user [options] delete <id> | <IDFILE>
 librecat user [options] valid <FILE>
 librecat user [options] passwd <id>
 
@@ -67,13 +68,21 @@ sub command {
         return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_get(shift);
+        });
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-        return $self->_delete(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all($id, sub {
+             $self->_delete(shift);
+        });
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -83,12 +92,30 @@ sub command {
     }
 }
 
+sub _on_all {
+    my ($self,$id_file,$callback) = @_;
+
+    if (-r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
+    }
+}
+
 sub _list {
     my ($self, $query) = @_;
 
     my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
+
+    my $helper = LibreCat::App::Helper::Helpers->new;
 
     my $it;
     if (defined($query)) {
@@ -100,7 +127,8 @@ sub _list {
         );
     }
     else {
-        $it = Catmandu->store('main')->bag('user');
+        carp "sort not available without a query" if $sort;
+        $it = $helper->main_user;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -329,8 +357,8 @@ LibreCat::Cmd::user - manage librecat users
     librecat user list [<cql-query>]
     librecat user export [<cql-query>]
     librecat user add <FILE>
-    librecat user get <id>
-    librecat user delete <id>
+    librecat user get <id> | <IDFILE>
+    librecat user delete <id> | <IDFILE>
     librecat user valid <FILE>
     librecat user passwd <id>
 

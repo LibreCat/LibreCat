@@ -2,6 +2,6 @@ _prefix:
   queue:
 
 workers:
-  audit:
+  mailer:
     count: 1
     supervise: 1

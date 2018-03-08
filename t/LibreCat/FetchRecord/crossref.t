@@ -26,7 +26,7 @@ SKIP: {
     }
 
     my @dois = (
-        "doi:10.1002/0470841559.ch1", "http://doi.org/10.1002/0470841559.ch1", "10.5281/zenodo.31298"
+        "doi:10.1002/0470841559.ch1", "https://doi.org/10.1002/0470841559.ch1"
     );
     for (@dois) {
         my $pub = $x->fetch($_);

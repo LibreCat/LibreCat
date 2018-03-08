@@ -143,7 +143,7 @@
         [%- IF doi %]
         <div class="row">
           <div class="col-xs-2 text-muted">[% h.loc("forms.${type}.field.doi.label") %]</div>
-          <div class="col-xs-10"><a itemprop="url" href="http://doi.org/[% doi %]" title="[% doi %]">[% doi | html %]</a></div>
+          <div class="col-xs-10"><a itemprop="url" href="https://doi.org/[% doi %]" title="[% doi %]">[% doi | html %]</a></div>
         </div>
         [%- END %]
         [%- IF urn %]
@@ -190,12 +190,12 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">[% h.loc("frontdoor.tabs.details.label") %]</a></li>
-          [% IF (mainFile AND mainFile.size) OR (relFile AND relFile.size) %]
+          [% IF mainFile AND mainFile.size OR relFile AND relFile.size OR main_file_link AND main_file_link.size %]
           <li><a href="#fileDetails" data-toggle="tab">[% h.loc("frontdoor.tabs.file_details.label") %]</a></li>
           [% END %]
 
           [% IF relPubl.size %]
-          <li><a href="#relPubl" data-toggle="tab">[% h.loc("frontdoor.tabs.publication.label") %]</a></li>
+          <li><a href="#relPubl" data-toggle="tab">[% h.loc("frontdoor.tabs.publications.label") %]</a></li>
           [% END %]
 
           [% IF relResData.size %]
@@ -232,7 +232,7 @@
 
           [% PROCESS publication/tab_details.tt %]
 
-          [% IF file AND file.size %] [% PROCESS publication/tab_filedetails.tt %] [% END %]
+          [% IF file AND file.size OR relFile AND relFile.size OR main_file_link AND main_file_link.size %] [% PROCESS publication/tab_filedetails.tt %] [% END %]
 
           [% IF relPubl %] [% PROCESS publication/tab_relpubl.tt %] [% END %]
 
@@ -257,7 +257,7 @@
         <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
         <!-- Edit -->
-        [% IF session.user AND session.role AND p.can_edit(_id, session.user, session.role) %]
+        [% IF p.can_edit( _id, user_id = session.user_id, role = session.role ) %]
         <h3 id="edit">[% h.loc("frontdoor.editing_options") %]</h3>
         <a href="[% uri_base %]/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id AND (!type.match("^bi") OR session.role == "super_admin") AND (type != "research_data" OR session.role == "super_admin") %]

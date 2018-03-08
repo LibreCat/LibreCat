@@ -1,8 +1,34 @@
 Revision history for LibreCat
 
-{{$NEXT}}
+1.1.2 2018-03-01
+    - Fixing managing research groups
+    - Fixing date validation rules
+    - Adding mailer to the default gearman jobs
+    - Fixing requesta copy service
+    - Fixing broken access level links
+    - Fixing file_date_updated index to find last edited files
+    - Save after editing records will return to the previous page
+    - Adding a REPL librecat command
+    - Improved handling of language in embed views
+    - Changed doi.org urls to https
+
+1.1.1 2018-01-31
+    - Fixing broken download links
+    - Remove Bielefeld specific code
+    - Fixing quick links on homepage
+    - Removed SSO authentication, there are available in https://github.com/LibreCat/LibreCat-Auth-SSO
+    - Command line tools 'get' command accepts a file of identifiers to export
+    - Sorted project list on the website
+    - Bug fixes in web embed codes
+    - Bug fixes displaying all main file links
+
+1.1.0 2017-12-13
+    - Adding support for multiple old_names for users
+      (Requires data migration! See release notes: https://github.com/LibreCat/LibreCat/wiki/Upgrade-1.0.0-to-1.1.0)
+    - Fixing department, project, research autocomplete lookups on partial input
+    - Deleting migration command
     - Hiding the 'Citation Style' menu when no CSL engine is enabled
-    
+
 1.0.0 2017-11-07
     - adding seamless reindexing of the collections
     - adding marked list buttons on every result page

@@ -113,21 +113,15 @@ Checks if the user has permission the see/edit this record.
 =cut
 
     get '/edit/:id' => sub {
-        my $id = params->{id};
 
-        unless (p->can_edit($id, session->{user}, session->{role})) {
+        my $rec = h->main_publication->get( param("id") ) or pass;
+
+        unless (
+            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
+        ) {
             access_denied_hook();
             status '403';
-            forward '/access_denied', {referer => request->{referer}};
-        }
-
-        forward '/' unless $id;
-
-        my $rec = h->main_publication->get($id);
-
-        unless ($rec) {
-            return template 'error',
-                {message => "No publication found with ID $id."};
+            forward '/access_denied', { referer => request->referer };
         }
 
         # Use config/hooks.yml to register functions
@@ -139,7 +133,7 @@ Checks if the user has permission the see/edit this record.
         my $templatepath = "backend/forms";
         my $template = $rec->{meta}->{template} // $rec->{type};
 
-        $rec->{return_url} = request->{referer} if request->{referer};
+        $rec->{return_url} = request->referer if request->referer;
 
         # --- End setting edit mode
 
@@ -158,12 +152,14 @@ Checks if the user has the rights to update this record.
 
     post '/update' => sub {
         my $p = params;
+        my $return_url = $p->{return_url};
 
         h->log->debug("Params:" . to_dumper($p));
 
-        unless ($p->{new_record}
-            or p->can_edit($p->{_id}, session->{user}, session->{role}))
-        {
+        unless (
+            $p->{new_record} or
+            p->can_edit( $p->{_id},{ user_id => session("user_id"), role => session("role") })
+        ) {
             access_denied_hook();
             status '403';
             forward '/access_denied';
@@ -183,7 +179,7 @@ Checks if the user has the rights to update this record.
             $p->{status} = 'returned';
         }
 
-        $p->{user_id} = session->{user_id};
+        $p->{user_id} = session("user_id");
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
@@ -194,7 +190,7 @@ Checks if the user has the rights to update this record.
             }
         );
 
-        redirect uri_for('/librecat');
+        redirect $return_url || uri_for('/librecat');
     };
 
 =head2 GET /return/:id
@@ -206,22 +202,18 @@ Checks if the user has the rights to edit this record.
 =cut
 
     get '/return/:id' => sub {
-        my $id = params->{id};
 
-        unless (p->can_edit($id, session->{user}, session->{role})) {
+        my $rec = h->main_publication->get( param("id") ) or pass;
+
+        unless (
+            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
+        ) {
             access_denied_hook();
             status '403';
             forward '/access_denied';
         }
 
-        my $rec = h->main_publication->get($id);
-
-        unless ($rec) {
-            return template 'error',
-                {message => "No publication found with ID $id."};
-        }
-
-        $rec->{user_id} = session->{user_id};
+        $rec->{user_id} = session("user_id");
 
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
@@ -328,6 +320,7 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{file};
         delete $rec->{related_material};
         $rec->{_id} = h->new_record('publication');
+        $rec->{new_record} = 1;
 
         my $template = $rec->{type} . ".tt";
 
@@ -341,19 +334,15 @@ Publishes private records, returns to the list.
 =cut
 
     get '/publish/:id' => sub {
-        my $id = params->{id};
 
-        unless (p->can_edit($id, session->{user}, session->{role})) {
+        my $rec = h->main_publication->get( param("id") ) or pass;
+
+        unless (
+            p->can_edit( $rec->{_id},{ user_id => session("user_id") , role => session("role") })
+        ) {
             access_denied_hook();
             status '403';
             forward '/access_denied';
-        }
-
-        my $rec = h->main_publication->get($id);
-
-        unless ($rec) {
-            return template 'error',
-                {message => "No publication found with ID $id."};
         }
 
         my $old_status = $rec->{status};

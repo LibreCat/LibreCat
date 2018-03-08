@@ -189,21 +189,34 @@ sub _list {
         for (@$file_array) {
             $modified = $_->{modified} if (!defined($modified) || $_->{modified} > $modified);
             $created  = $_->{created}  if (!defined($created) || $_->{created} > $created);
-            $size += $_->{size};
+            $size    += $_->{size} // 0;
         }
+
+        $modified //= 0;
+        $created  //= 0;
 
         if ($self->app->global_options->{csv}) {
             for (@$file_array) {
-                next if $_->{_id} eq 'thumbnail.png';
                 printf join("\t", $key, $_->{_id}, '', '', '') . "\n";
             }
         }
         else {
             if ($args[0] && $args[0] eq 'recursive') {
                 for (@$file_array) {
-                    printf "%s %s %s %s %s\n", $key, $_->{key},
-                        strftime("%Y-%m-%dT%H:%M:%S",
-                        localtime($_->{modified})), $_->{size}, $_->{md5};
+                    my $file_name     = $_->{_id}  // '';
+                    my $file_size     = $_->{size} // 0;
+                    my $file_modified = $_->{modified} // 0;
+                    my $file_md5      = $_->{md5}  // '';
+
+                    printf "%s %s %s %s %s\n",
+                        $key,
+                        strftime(
+                            "%Y-%m-%dT%H:%M:%S",
+                            localtime($file_modified)
+                        ),
+                        $file_size,
+                        $file_md5,
+                        $file_name;
                 }
             }
             else {
@@ -260,9 +273,9 @@ sub _get {
 
         for my $file (@$file_array) {
             my $key          = $file->{_id};
-            my $size         = $file->{size};
+            my $size         = $file->{size} // 0;
             my $md5          = $file->{md5};
-            my $modified     = $file->{modified};
+            my $modified     = $file->{modified} // 0;
             my $content_type = $file->{content_type} // '???';
 
             printf "%-40.40s %9d $md5 %s %s\n", $content_type, $size,
@@ -449,15 +462,15 @@ sub _move_files {
         if (my $pid = fork()) { # Parent
             $pipe->reader();
 
-            $target_files->upload($pipe,$name)
+            $target_files->upload($pipe,$name) >= 0
                 || croak "failed to upload $name : $!";
 
             waitpid($pid,0);
         }
         else { # Child
             $pipe->writer();
-            $source_files->stream($pipe,$file)
-                || croak "faied to stream $name : $!";
+            $source_files->stream($pipe,$file) >= 0
+                || croak "failed to stream $name : $!";
             exit(0);
         }
 
