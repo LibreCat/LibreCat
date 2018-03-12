@@ -1,35 +1,52 @@
 package Catmandu::Fix::person;
 
+=pod
+
+=head1 NAME
+
+Catmandu::Fix::person - generate a full_name and orcid if not exists
+
+=cut
+
 use Catmandu::Sane;
+use Catmandu::Util qw(:is);
+use LibreCat::App::Helper;
 use Moo;
+
+has 'helper' => (is => 'lazy');
+
+sub _build_helper {
+    LibreCat::App::Helper::Helpers->new;
+}
 
 sub fix {
     my ($self, $data) = @_;
-    my @p = qw(author editor translator supervisor honoree);
+    my @types = qw(author editor translator supervisor corporate_editor applicant);
 
-    foreach my $pers (@p) {
-        next unless $data->{$pers};
+    my $users = $self->helper->main_user;
 
-        @{$data->{$pers}} = grep defined, @{$data->{$pers}};
-        my $splice_me;
-        my $i = 0;
-
-        foreach (@{$data->{$pers}}) {
-            if ($_->{first_name} and $_->{last_name}) {
-                $_->{full_name} = $_->{last_name} . ", " . $_->{first_name};
-                $i++;
+    foreach my $author_type (@types) {
+        next unless $data->{$author_type};
+        foreach my $au (@{$data->{$author_type}}) {
+            # Update the full_name
+            if (is_string($au->{full_name})) {
+                # ok
             }
-            else {
-                push @$splice_me, $i;
+            elsif (is_string($au->{first_name}) && is_string($au->{last_name})) {
+                $au->{full_name} = $au->{last_name} . ", " . $au->{first_name};
             }
-        }
 
-        if ($splice_me) {
-            foreach (@$splice_me) {
-                splice @{$data->{$pers}}, $_, 1;
+            # Update the orcid
+            if ($au->{orcid}) {
+                # ok
+            }
+            elsif (is_string($au->{id})) {
+                my $user = $users->get($au->{id});
+                $au->{orcid} = $user->{orcid} if ($user && $user->{orcid});
             }
         }
     }
+
     return $data;
 }
 

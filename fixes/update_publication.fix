@@ -12,39 +12,6 @@ person()
 volume_sort()
 research_data_doi()
 
-if exists(author)
-  do list(path:author, var:loop)
-    do identity()
-      copy_field(loop.id,loop.tmp)
-      lookup_in_store(loop.tmp, search, bag:user)
-      move_field(loop.tmp.orcid, loop.orcid)
-      remove_field(loop.tmp)
-    end
-  end
-end
-
-if exists(editor)
-  do list(path:editor, var:loop)
-    do identity()
-      copy_field(loop.id,loop.tmp)
-      lookup_in_store(loop.tmp, search, bag:user)
-      move_field(loop.tmp.orcid, loop.orcid)
-      remove_field(loop.tmp)
-    end
-  end
-end
-
-if exists(translator)
-  do list(path:translator, var:loop)
-    do identity()
-      copy_field(loop.id,loop.tmp)
-      lookup_in_store(loop.tmp, search, bag:user)
-      move_field(loop.tmp.orcid, loop.orcid)
-      remove_field(loop.tmp)
-    end
-  end
-end
-
 if exists(department)
   do list(path:department, var:loop)
     do identity()
@@ -77,7 +44,6 @@ end
 if all_match(external_id.pmid.0, '^.+$')
   add_field(pmid, 1)
 end
-
 
 split_field(nasc, ';|,')
 trim(nasc.*)
