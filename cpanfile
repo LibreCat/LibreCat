@@ -75,7 +75,6 @@ requires 'all';
 requires 'AnyEvent','7.13';
 requires 'AnyEvent::HTTP','2.23';
 requires 'App::bmkpasswd', '2.010001';
-requires 'Authen::CAS::Client','0.06';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
 requires 'Clone';
