@@ -535,6 +535,29 @@ sub uri_for_file {
     $self->uri_base() . "/download/$pub_id/$file_id$ext";
 }
 
+sub login_user {
+
+    my ( $self, $user ) = @_;
+
+    my %attrs = LibreCat->user->to_session( $user );
+
+    for ( keys %attrs ) {
+
+        session( $_ => $attrs{$_} );
+
+    }
+
+}
+
+sub logout_user {
+
+    session role    => undef;
+    session user    => undef;
+    session user_id => undef;
+    session auth_sso => undef;
+
+}
+
 package LibreCat::App::Helper;
 
 my $h = LibreCat::App::Helper::Helpers->new;
