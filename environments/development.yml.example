@@ -4,3 +4,16 @@ show_errors: 1
 warnings: 1
 template_debug: 0
 #traces: 1
+
+#auth_sso:
+#  - path: "/auth/cas"
+#    class: "auth-sso-cas"
+#    i18n: "auth_sso.cas.label"
+#    package: "CAS"
+#    options:
+#      cas_url: "https://localhost:8443/cas"
+#      authorization_path: "/authorize/sso"
+#
+#authorization_sso:
+#  - path: "/authorize/sso"
+#    package: "Simple"
