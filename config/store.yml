@@ -726,6 +726,13 @@ search:
                 '=': true
                 '<>': true
               field: _id
+            department:
+               op:
+                 'all': true
+                 'any': true
+                 '=': true
+                 'exact': {field: 'department.name.exact'}
+               field: [ "department._id" , "department.tree._id" ]
             former:
               op:
                 '=': true
