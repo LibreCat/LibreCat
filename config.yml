@@ -25,6 +25,9 @@ session_store:
     store: main
     bag: session
 
+auth_sso: []
+authorization_sso: []
+
 plugins:
   'Auth::Tiny':
 
