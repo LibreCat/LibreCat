@@ -726,16 +726,11 @@ search:
                 '=': true
                 '<>': true
               field: _id
-            forschend:
-              op:
-                '=': true
-                '<>': true
-              field: bis.forschend
             former:
               op:
                 '=': true
                 '<>': true
-              field: bis.former
+              field: former
             publcount:
               op:
                 '=': true
