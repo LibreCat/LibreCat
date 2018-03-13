@@ -29,4 +29,17 @@ is_deeply $pkg->new()->fix({
                 file_date_updated => '2050-01-01T00:00:00Z'
             };
 
+is_deeply $pkg->new()->fix({
+                file => [
+                    { date_created => '1970-01-01T00:00:00Z' } ,
+                    { date_created => '2050-01-01T00:00:00Z' } ,
+                ]
+            }),
+            {
+                file => [
+                    { date_created => '1970-01-01T00:00:00Z' } ,
+                    { date_created => '2050-01-01T00:00:00Z' } ,
+                ]
+            };
+
 done_testing;

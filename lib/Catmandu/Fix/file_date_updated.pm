@@ -32,12 +32,11 @@ sub fix {
     my ($self, $data) = @_;
 
     return $data unless $data->{file};
-    
+
     my @dates = ();
 
     for my $file (@{ $data->{file} }) {
-	    my $date_updated = $file->{date_updated};
-	    push @dates , $date_updated;
+	    push @dates , $file->{date_updated} if $file->{date_updated};
     }
 
     $data->{file_date_updated} = [ sort @dates ]->[-1] if @dates;
