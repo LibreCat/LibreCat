@@ -64,6 +64,9 @@ $app->add(sub {
     Dancer->dance(Dancer::Request->new(env => $_[0]));
 });
 
+#get rid of Plack warning stating that this package has been converted to psgi..
+$app = $app->to_app();
+
 # setup sessions
 my $config = config;
 my $session_store_package = is_string($config->{session_store}->{package}) ?
