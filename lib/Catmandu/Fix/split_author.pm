@@ -39,4 +39,39 @@ sub fix {
     return $pub;
 }
 
+=head1 NAME
+
+Catmandu::Fix::split_author - split author strings into subfields "first_name", "last_name" and "full_name"
+
+=head1 SYNOPSIS
+
+   # author => 'Albert Einstein'
+   split_author()
+   # author => [{
+   #     first_name => 'Albert',
+   #     last_name => 'Einstein',
+   #     full_name => 'Einstein, Albert'
+   # }]
+
+   # or
+   # author => ["Einstein, Albert", "Monroe, Marylin"]
+   # author => [
+   # {
+   #     first_name => 'Albert',
+   #     last_name => 'Einstein',
+   #     full_name => 'Einstein, Albert'
+   # },
+   # {
+   #     first_name => 'Marylin',
+   #     last_name => 'Monroe',
+   #     full_name => 'Monroe, Marylin'
+   # },
+   #]
+
+=head1 SEE ALSO
+
+L<Catmandu::Fix>
+
+=cut
+
 1;
