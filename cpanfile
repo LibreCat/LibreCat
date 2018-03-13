@@ -5,6 +5,7 @@ on 'test' => sub {
     requires 'Test::More';
     requires 'Test::TCP';
     requires 'Test::Exception', '0.43';
+    requires 'Test::Pod';
     requires 'Dancer::Test';
     requires 'File::Slurp';
     requires 'IO::File';
