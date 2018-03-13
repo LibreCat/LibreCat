@@ -6,6 +6,8 @@ usage:
 	@echo "  update"
 	@echo "  test"
 	@echo "  cover"
+	@echo
+	@echo "optional: NETWORK_TEST=1 make test"
 
 generate:
 	carton exec bin/librecat generate forms
