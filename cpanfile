@@ -113,4 +113,4 @@ requires 'URL::Encode';
 requires 'XML::RSS';
 requires 'YAML';
 requires 'YAML::XS';
-requires 'Plack::Auth::SSO','0.0131';
+requires 'Plack::Auth::SSO','0.0132';
