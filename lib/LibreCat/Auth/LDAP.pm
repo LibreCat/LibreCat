@@ -1,6 +1,7 @@
 package LibreCat::Auth::LDAP;
 
 use Catmandu::Sane;
+use Catmandu::Util qw(:is);
 use Net::LDAP;
 use Moo;
 use Carp;
@@ -44,19 +45,21 @@ sub _build_ldap {
 # TODO use exceptions for programming errors
 sub _authenticate {
     my ($self, $params) = @_;
-    my $username = $params->{username} // "";
+
+    return undef unless is_hash_ref($params);
+
+    my $username = $params->{username};
     my $password = $params->{password} // "";
 
-    return 0 unless defined $self->ldap;
+    return undef unless defined $username;
+    return undef unless defined $self->ldap;
 
     # Check if we need to translate the username
     if ($self->search_filter && (my $res = $self->search($username))) {
         $username = $res;
     }
 
-    $self->log->debug(
-        "username: $username ; password: " . length($password) . " bytes");
-    return undef unless defined($username) & defined($password);
+    $self->log->debug("username: $username ; password: " . length($password) . " bytes");
 
     my $base = sprintf($self->auth_base, $username);
 
@@ -85,6 +88,7 @@ sub search {
     croak "need search_base"   unless $self->search_base;
     croak "need search_attr"   unless $self->search_attr;
 
+    return undef unless is_string($username);
     $self->log->debug("searching $username");
 
     my %args;
