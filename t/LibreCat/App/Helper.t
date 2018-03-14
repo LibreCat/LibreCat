@@ -339,4 +339,6 @@ is h->file_extension('/foo/bar/test.pdf') , '.pdf' , 'h->file_extension';
 
 is h->uri_for_file(123,456,'test.pdf') , 'http://localhost:5001/download/123/456.pdf' , 'h->uri_for_file';
 
+ok h->can('my_helper'), 'load helpers';
+
 done_testing;

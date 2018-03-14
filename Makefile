@@ -1,11 +1,11 @@
 usage:
-	@echo "usage: make TARGET"
+	@echo "usage: [ NETWORK_TEST=1 ] make TARGET"
 	@echo
 	@echo "targets:"
 	@echo "  generate"
 	@echo "  update"
 	@echo "  test"
-	@echo "  cover"
+	@echo "  cover [ FILE=<path> ]"
 
 generate:
 	carton exec bin/librecat generate forms
@@ -22,7 +22,12 @@ update:
 # Explicit need -j 1 parallel tests will put databases in an
 # inconsistent state
 cover:
-	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit \$?'
+	cover -delete
+ifeq ($(strip $(FILE)),)
+	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; echo'
+else
+	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r $(FILE); echo'
+endif
 
 test:
 	prove -l -j 1 -r t

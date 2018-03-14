@@ -1,5 +1,13 @@
 package Catmandu::Fix::page_range_number;
 
+=pod
+
+=head1 NAME
+
+Catmandu::Fix::page_range_number - translates the form page_range_number into article_number and page
+
+=cut
+
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Moo;

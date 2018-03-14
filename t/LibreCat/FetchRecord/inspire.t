@@ -2,6 +2,9 @@ use strict;
 use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
+use Test::TCP;
+use t::HTTPServer;
+use Path::Tiny;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
@@ -19,24 +22,44 @@ lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $pkg, $_ for qw(fetch);
 
-SKIP: {
+test_tcp(
+    client => sub {
+       my $port = shift;
+       my $x    = $pkg->new(baseurl => "http://127.0.0.1:$port/record/");
+       my $pub  = $x->fetch('1632116');
 
-    unless ($ENV{NETWORK_TEST}) {
-        skip("No network. Set NETWORK_TEST to run these tests.", 5);
-    }
+       ok $pub , 'got a publication';
 
-    my $pub = $x->fetch('1496182');
+       is $pub->[0]{title} , 'Properties of expanding universes' , 'got a title';
+       is $pub->[0]{type}, 'journal_article', 'type == journal_article';
+       is_deeply $pub->[0]->{author} , [{
+                            'first_name' => 'S.W.',
+                            'last_name' => 'Hawking'
+                        }] , 'got an author';
+       is $pub->[0]{external_id}->{inspire}->[0], 1632116 , 'got the inspire id';
 
-    ok $pub , 'got a publication';
-
-    is $pub->[0]{title},
-        'Quantum scattering in one-dimensional systems satisfying the minimal length uncertainty relation',
-        'got a title';
-    is $pub->[0]{type}, 'journal_article', 'type == journal_article';
-
-    $pub = $x->fetch('123456789876543212345');
-
-    ok !$pub, "empty record";
-}
+       ok ! $x->fetch('6666');
+    },
+    server => sub {
+       my $port = shift;
+       t::HTTPServer->new(port => $port)->run(sub {;
+           my $env = shift;
+           if ($env->{REQUEST_URI} =~ /\/record\/1632116/) {
+               my $body = path("t/records/inspire.js")->slurp_utf8;
+               return [ 200,
+                   [ 'Content-Length' => length($body) ],
+                   [ $body ]
+               ];
+           }
+           else {
+               my $body = 'bad boy';
+               return [ 404,
+                   [ 'Content-Length' => length($body) ],
+                   [ $body ]
+               ];
+           }
+       });
+   }
+);
 
 done_testing;
