@@ -1,19 +1,20 @@
 requires 'perl', 'v5.10.1';
 
 on 'test' => sub {
-    requires 'Test::Lib';
-    requires 'Test::More';
-    requires 'Test::TCP';
-    requires 'Test::Exception', '0.43';
-    requires 'Test::Pod';
+    requires 'App::Cmd::Tester';
     requires 'Dancer::Test';
+    requires 'Devel::Cover';
+    requires 'File::Path';
     requires 'File::Slurp';
     requires 'IO::File';
-    requires 'File::Path';
     requires 'Test::Code::TidyAll', '0.20';
+    requires 'Test::Exception', '0.43';
+    requires 'Test::Lib';
+    requires 'Test::More';
+    requires 'Test::Net::LDAP';
+    requires 'Test::Pod';
+    requires 'Test::TCP';
     requires 'Test::WWW::Mechanize::Dancer';
-    requires 'App::Cmd::Tester';
-    requires 'Devel::Cover';
 };
 
 requires 'Business::ISBN', 0;
