@@ -19,9 +19,20 @@ require_ok $pkg;
 Catmandu->store('main')->bag('publication')->delete_all;
 Catmandu->store('search')->bag('publication')->delete_all;
 
+note("testing basic options");
 {
     my $result = test_app(qq|LibreCat::CLI| => ['publication']);
     ok $result->error, 'ok threw an exception';
+
+    my $result2 = test_app(qq|LibreCat::CLI| => ['help', 'publication']);
+
+    my $output2 = $result2->stdout;
+    ok $output2 , 'got an output';
+
+    like $output2 , qr/Usage:/ , 'got help documentation';
+
+    my $result3 = test_app(qq|LibreCat::CLI| => ['publication','aaaargh']);
+    ok $result3->error, 'ok threw an exception';
 }
 
 note("testing publication lists");
@@ -56,6 +67,44 @@ note("testing adding valid publications");
     ok $output , 'got an output';
 
     like $output , qr/^added 999999999/, 'added 999999999';
+}
+
+note("testing exporting publications");
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['publication', 'export']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->output;
+
+    my $importer = Catmandu->importer('YAML', file => \$output);
+
+    ok $importer , 'got a YAML output';
+
+    my $records = $importer->to_array;
+
+    ok $records , 'got records';
+
+    is @$records , 1 , 'got 1 record';
+}
+
+note("testing searching publications");
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['publication', 'export', 'basic = Valid']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->output;
+
+    my $importer = Catmandu->importer('YAML', file => \$output);
+
+    ok $importer , 'got a YAML output';
+
+    my $records = $importer->to_array;
+
+    ok $records , 'got records';
+
+    is @$records , 1 , 'got 1 record';
 }
 
 note("testing getting publication metadata");
