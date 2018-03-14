@@ -1,11 +1,12 @@
 package LibreCat::FetchRecord::inspire;
 
 use Catmandu::Util qw(:io);
+use URI::Escape;
 use Moo;
 
 with 'LibreCat::FetchRecord';
 
-has 'baseurl' => (is => 'ro' , default => sub { "http://inspirehep.net/record" });
+has 'baseurl' => (is => 'ro' , default => sub { "http://inspirehep.net/record/" });
 
 sub fetch {
     my ($self, $id) = @_;
@@ -14,7 +15,7 @@ sub fetch {
 
     $self->log->debug("requesting $id from inspire");
 
-    my $url  = sprintf "%s/%s?of=recjson" , $self->baseurl , $id;
+    my $url  = sprintf "%s%s?of=recjson" , $self->baseurl , uri_escape_utf8($id);
     my $data = Catmandu->importer('getJSON', from => $url)->to_array;
 
     unless (@$data) {

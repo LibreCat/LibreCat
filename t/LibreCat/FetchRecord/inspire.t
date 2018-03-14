@@ -25,7 +25,7 @@ can_ok $pkg, $_ for qw(fetch);
 test_tcp(
     client => sub {
        my $port = shift;
-       my $x    = $pkg->new(baseurl => "http://127.0.0.1:$port/record");
+       my $x    = $pkg->new(baseurl => "http://127.0.0.1:$port/record/");
        my $pub  = $x->fetch('1632116');
 
        ok $pub , 'got a publication';
