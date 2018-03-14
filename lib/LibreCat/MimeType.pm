@@ -28,4 +28,15 @@ sub content_type {
     return $type;
 }
 
+=head1 NAME
+
+LibreCat::MimeType - package that calculates mimetypes
+
+=head1 SYNOPSIS
+
+    my $mt = LibreCat::MimeType->new;
+    $mt->content_type("test.pdf");
+
+=cut
+
 1;
