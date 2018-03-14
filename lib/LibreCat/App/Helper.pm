@@ -3,7 +3,7 @@ package LibreCat::App::Helper::Helpers;
 use FindBin;
 use Catmandu::Sane;
 use Catmandu qw(export_to_string);
-use Catmandu::Util qw(:io :is :array :hash :human trim);
+use Catmandu::Util qw(:io :is :array :hash :human trim require_package);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
 use Dancer qw(:syntax params request session vars);
@@ -17,7 +17,15 @@ use LibreCat::JobQueue;
 use Log::Log4perl ();
 use NetAddr::IP::Lite;
 use URI::Escape qw(uri_escape_utf8);
+use Role::Tiny ();
 use Moo;
+
+sub BUILD {
+    my ($self) = @_;
+    if (my $plugins = $self->config->{helper_plugins}) {
+         Role::Tiny->apply_roles_to_object($self, @$plugins);
+    }
+}
 
 sub log {
     my ($self) = @_;
