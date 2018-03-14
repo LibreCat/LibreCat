@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::App::Catalogue::Controller::Material';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 

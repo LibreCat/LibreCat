@@ -10,14 +10,15 @@ my $pkg;
 BEGIN {
     $pkg = 'Catmandu::Fix::add_doi';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 
-is_deeply $pkg->new()->fix({ foo => 'bar'}), { foo => 'bar' };
+is_deeply $pkg->new()->fix({foo => 'bar'}), {foo => 'bar'};
 
-h->config->{doi} = { prefix => '10.001/test'};
+h->config->{doi} = {prefix => '10.001/test'};
 
-is_deeply $pkg->new()->fix({ _id => 'bar'}), { _id => 'bar' , doi => '10.001/test/bar' };
+is_deeply $pkg->new()->fix({_id => 'bar'}),
+    {_id => 'bar', doi => '10.001/test/bar'};
 
 done_testing;

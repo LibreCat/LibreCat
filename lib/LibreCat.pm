@@ -46,8 +46,8 @@ sub import {
 }
 
 sub user {
-    state $user
-        = require_package('LibreCat::User')->new($_[0]->config->{user});
+    state $user = require_package('LibreCat::Model::User')
+        ->new($_[0]->config->{user});
 }
 
 sub hook {

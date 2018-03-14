@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Cmd::copy';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 

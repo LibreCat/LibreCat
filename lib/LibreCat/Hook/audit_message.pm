@@ -24,7 +24,7 @@ sub fix {
         return $data;
     }
 
-    my $id      = $data->{_id}     // '<new>';
+    my $id      = $data->{_id} // '<new>';
     my $user_id = $data->{user_id} // '<unknown>';
     my $login   = '<unknown>';
 

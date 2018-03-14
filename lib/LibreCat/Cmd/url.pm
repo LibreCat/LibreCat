@@ -75,10 +75,11 @@ sub _check {
                         );
                     }
                     else {
-                        printf "%s\t%s\t%s\n", $rec->{_id}, $hdr->{Status}, $rec->{url};
+                        printf "%s\t%s\t%s\n", $rec->{_id}, $hdr->{Status},
+                            $rec->{url};
                     }
                     $cv->end;
-                }
+                    }
             }
         }
     );

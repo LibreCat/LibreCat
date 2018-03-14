@@ -70,9 +70,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -80,9 +83,12 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -93,7 +99,7 @@ sub command {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
     if (-r $id_file) {
         my $r = 0;
@@ -111,7 +117,7 @@ sub _on_all {
 sub _list {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -135,12 +141,12 @@ sub _list {
 
     my $count = $it->each(
         sub {
-            my ($item) = @_;
-            my $id = $item->{_id};
-            my $login    = $item->{login}          // '---';
-            my $name     = $item->{full_name}      // '---';
+            my ($item)   = @_;
+            my $id       = $item->{_id};
+            my $login    = $item->{login} // '---';
+            my $name     = $item->{full_name} // '---';
             my $status   = $item->{account_status} // '---';
-            my $is_admin = $item->{super_admin}    // 0;
+            my $is_admin = $item->{super_admin} // 0;
 
             printf "%-2.2s %-40.40s %-20.20s %-40.40s %-10.10s\n",
                 $is_admin ? "*" : " ", $id, $login, $name, $status;
@@ -159,7 +165,7 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -223,8 +229,7 @@ sub _add {
             my $is_ok = 1;
 
             $helper->store_record(
-                'user',
-                $rec,
+                'user', $rec,
                 validation_error => sub {
                     my $validator = shift;
                     print STDERR join("\n",
@@ -258,8 +263,7 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('user',
-        $id);
+        = LibreCat::App::Helper::Helpers->new->purge_record('user', $id);
 
     if ($result) {
         print "deleted $id\n";
@@ -286,7 +290,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id = $item->{_id} // '';
+                my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";

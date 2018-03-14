@@ -28,12 +28,12 @@ sub command {
     my ($self, $opts, $args) = @_;
 
     my @plugins = qw(
-       Colors
-       DDC
-       History
-       LexEnv
-       MultiLine::PPI
-       FancyPrompt
+        Colors
+        DDC
+        History
+        LexEnv
+        MultiLine::PPI
+        FancyPrompt
     );
 
     my $init = <<PERL;

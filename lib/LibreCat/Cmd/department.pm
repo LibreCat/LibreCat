@@ -69,9 +69,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -79,9 +82,12 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -92,7 +98,7 @@ sub command {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
     if (-r $id_file) {
         my $r = 0;
@@ -110,7 +116,7 @@ sub _on_all {
 sub _list {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -220,7 +226,7 @@ sub _tree_parse_parser {
 
 sub _tree_display {
     my $helper = LibreCat::App::Helper::Helpers->new;
-    my $it = $helper->main_department;
+    my $it     = $helper->main_department;
 
     my $HASH = {};
 
@@ -257,7 +263,7 @@ sub _tree_display {
 sub _export {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -386,7 +392,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id = $item->{_id} // '';
+                my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";

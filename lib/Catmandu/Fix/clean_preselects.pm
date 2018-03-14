@@ -33,7 +33,7 @@ sub fix {
         my @new_link;
 
         for my $rm (@{$pub->{related_material}->{link}}) {
-            push @new_link, $rm if  ($rm->{relation} && $rm->{url});
+            push @new_link, $rm if ($rm->{relation} && $rm->{url});
         }
 
         if (@new_link) {

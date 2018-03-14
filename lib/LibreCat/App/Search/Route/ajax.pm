@@ -74,13 +74,14 @@ ajax '/get_alias/:id/:alias' => sub {
 ajax '/get_project' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
 
-    my @terms     = split(' ', params->{term});
+    my @terms = split(' ', params->{term});
     $terms[-1] .= "*" if @terms;
     my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
 
-    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'name,,1');
+    my %search_params = (cql_query => $cql_query, limit => $limit,
+        sru_sortkeys => 'name,,1');
 
     h->log->debug("executing project->search: " . to_dumper(\%search_params));
 
@@ -90,8 +91,8 @@ ajax '/get_project' => sub {
 
     if ($hits->{total}) {
         my $map;
-        @$map = map {{id => $_->{_id}, label => $_->{name}};}
-            @{$hits->{hits}};
+        @$map
+            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
         return to_json $map;
     }
     else {
@@ -104,18 +105,23 @@ ajax '/get_project' => sub {
 =cut
 
 ajax '/get_department' => sub {
-    my $term      = params->{term} // '';
-    my $limit     = length($term) ? 10 : 1000;
+    my $term = params->{term} // '';
+    my $limit = length($term) ? 10 : 1000;
 
-    my @terms     = split('\s', $term);
+    my @terms = split('\s', $term);
     $terms[-1] .= "*" if @terms;
     my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
 
-    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'display,,1');
+    my %search_params = (
+        cql_query    => $cql_query,
+        limit        => $limit,
+        sru_sortkeys => 'display,,1'
+    );
 
-    h->log->debug("executing department->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing department->search: " . to_dumper(\%search_params));
 
     my $hits = h->department->search(%search_params);
 
@@ -139,15 +145,17 @@ ajax '/get_department' => sub {
 ajax '/get_research_group' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
 
-    my @terms     = split(' ', params->{term});
+    my @terms = split(' ', params->{term});
     $terms[-1] .= "*" if @terms;
     my @cql_parts = map {"(basic all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
 
-    my %search_params = (cql_query => $cql_query, limit => $limit, sru_sortkeys => 'name,,1');
+    my %search_params = (cql_query => $cql_query, limit => $limit,
+        sru_sortkeys => 'name,,1');
 
-    h->log->debug("executing research_group->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing research_group->search: " . to_dumper(\%search_params));
 
     my $hits = h->research_group->search(%search_params);
 
@@ -155,8 +163,8 @@ ajax '/get_research_group' => sub {
 
     if ($hits->{total}) {
         my $map;
-        @$map = map {{id => $_->{_id}, label => $_->{name}};}
-            @{$hits->{hits}};
+        @$map
+            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
         return to_json $map;
     }
     else {

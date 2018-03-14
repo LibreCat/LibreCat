@@ -34,9 +34,12 @@ Project page with alphabetical browsing.
 =cut
 
 get qr{/project/*} => sub {
-    my $c = params->{browse} // 'a';
-    my %search_params
-        = (query => {prefix => {'name.exact' => lc($c)}}, sru_sortkeys => "name,,1", limit => 1000);
+    my $c             = params->{browse} // 'a';
+    my %search_params = (
+        query        => {prefix => {'name.exact' => lc($c)}},
+        sru_sortkeys => "name,,1",
+        limit        => 1000
+    );
 
     h->log->debug(
         "executing project->native_search: " . to_dumper(\%search_params));

@@ -66,7 +66,8 @@ note("Validate research_group");
 
     ok $errors , 'got errors';
 
-    my $errors2 = $x->validate_data({_id => '1234', name => 'Ducks inc.', acronym => 'Quack'});
+    my $errors2 = $x->validate_data(
+        {_id => '1234', name => 'Ducks inc.', acronym => 'Quack'});
 
     ok !$errors2, 'got no errors';
 }

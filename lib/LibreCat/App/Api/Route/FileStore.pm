@@ -49,8 +49,8 @@ E.g.
                     my ($respond, $response) = @_;
                     my $http_status_code = 200;
 
-                    # Tech.note: This is a hash of HTTP header/values, but the
-                    #            function below requires an even-numbered array-ref.
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
                     my @http_headers = (
                         'Content-Type' => 'text/plain',
                         'Cache-Control' =>
@@ -58,15 +58,17 @@ E.g.
                         'Pragma' => 'no-cache'
                     );
 
-                    # Send the HTTP headers
-                    # (back to either the user or the upstream HTTP web-server front-end)
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
                     my $writer
                         = $respond->([$http_status_code, \@http_headers]);
 
-                    $index->each( sub {
-                        my $key = shift->{_id};
-                        $writer->write("$key\n");
-                    });
+                    $index->each(
+                        sub {
+                            my $key = shift->{_id};
+                            $writer->write("$key\n");
+                        }
+                    );
 
                     $writer->close();
                 },
@@ -106,27 +108,27 @@ E.g.
         if ($store->index->exists($key)) {
             my $files = $store->index->files($key);
 
-            my $doc = {
-                key      => $key,
-            };
+            my $doc = {key => $key,};
 
-            $files->each(sub {
-                my $file     = shift;
-                my $key      = $file->{_id};
-                my $size     = $file->{size};
-                my $md5      = $file->{md5};
-                my $modified = $file->{modified};
-                my $created  = $file->{created};
+            $files->each(
+                sub {
+                    my $file     = shift;
+                    my $key      = $file->{_id};
+                    my $size     = $file->{size};
+                    my $md5      = $file->{md5};
+                    my $modified = $file->{modified};
+                    my $created  = $file->{created};
 
-                push @{$doc->{files}},
-                    {
-                    key      => $key,
-                    size     => $size,
-                    md5      => $md5,
-                    modified => $modified,
-                    created  => $created
-                    };
-            });
+                    push @{$doc->{files}},
+                        {
+                        key      => $key,
+                        size     => $size,
+                        md5      => $md5,
+                        modified => $modified,
+                        created  => $created
+                        };
+                }
+            );
 
             return $doc;
         }
@@ -152,7 +154,8 @@ E.g.
 
         my $store = h->get_file_store();
 
-        do_error('NOT_FOUND', 'no such container', 404) unless $store->index->exists($key);
+        do_error('NOT_FOUND', 'no such container', 404)
+            unless $store->index->exists($key);
 
         my $files = $store->index->files($key);
         my $file  = $files->get($filename);
@@ -169,8 +172,8 @@ E.g.
 
                     my $http_status_code = 200;
 
-                    # Tech.note: This is a hash of HTTP header/values, but the
-                    #            function below requires an even-numbered array-ref.
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
                     my @http_headers = (
                         'Content-Type' => $content_type,
                         'Cache-Control' =>
@@ -178,12 +181,12 @@ E.g.
                         'Pragma' => 'no-cache'
                     );
 
-                    # Send the HTTP headers
-                    # (back to either the user or the upstream HTTP web-server front-end)
-                    my $writer = $respond->(
-                        [$http_status_code, \@http_headers]);
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
+                    my $writer
+                        = $respond->([$http_status_code, \@http_headers]);
 
-                    $files->stream($writer,$file);
+                    $files->stream($writer, $file);
                 },
             },
         );
@@ -238,7 +241,7 @@ E.g.
         if ($store->index->exists($key)) {
             my $files = $store->index->files($key);
 
-            my $file  = $files->get($filename);
+            my $file = $files->get($filename);
 
             if (defined $file) {
                 $files->delete($filename);
@@ -277,16 +280,13 @@ E.g.
 
         my $files = $store->index->files($key);
 
-        my $file  = request->upload('file');
+        my $file = request->upload('file');
 
         unless ($file) {
             return do_error('ILLEGAL_INPUT', 'need a file', 400);
         }
 
-        $files->add(
-                    IO::File->new($file->{tempname}) ,
-                    $file->{filename}
-                    );
+        $files->add(IO::File->new($file->{tempname}), $file->{filename});
 
         return {ok => 1};
     };
@@ -333,8 +333,8 @@ E.g.
 
                     my $http_status_code = 200;
 
-                    # Tech.note: This is a hash of HTTP header/values, but the
-                    #            function below requires an even-numbered array-ref.
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
                     my @http_headers = (
                         'Content-Type' => $content_type,
                         'Cache-Control' =>
@@ -342,10 +342,10 @@ E.g.
                         'Pragma' => 'no-cache'
                     );
 
-                    # Send the HTTP headers
-                    # (back to either the user or the upstream HTTP web-server front-end)
-                    my $writer = $respond->(
-                        [$http_status_code, \@http_headers]);
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
+                    my $writer
+                        = $respond->([$http_status_code, \@http_headers]);
 
                     $files->stream($writer, $file);
                 },
@@ -393,7 +393,7 @@ E.g.
 =cut
 
     del '/access/:key/:filename/thumbnail' => sub {
-        my $key      = param('key');
+        my $key = param('key');
 
         my $thumbnailer_package
             = h->config->{filestore}->{access_thumbnailer}->{package};
