@@ -161,7 +161,7 @@ sub extract_params {
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
     $p->{lang}  = $params->{lang}  if $params->{lang};
     $p->{q}     = $params->{q}     if $params->{q};
-    $p->{cql}   = $self->string_array($params->{cql});
+    $p->{cql} = $self->string_array($params->{cql});
 
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
@@ -175,9 +175,9 @@ sub extract_params {
 }
 
 sub now {
-    my $time        = $_[1] // time;
+    my $time = $_[1] // time;
     my $time_format = $_[0]->config->{time_format} // '%Y-%m-%dT%H:%M:%SZ';
-    my $now         = strftime($time_format, gmtime($time));
+    my $now = strftime($time_format, gmtime($time));
     return $now;
 }
 

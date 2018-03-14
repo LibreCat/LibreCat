@@ -1,4 +1,4 @@
-package LibreCat::Backend::Controller::Api;
+package LibreCat::Controller::Api;
 
 use Catmandu::Sane;
 use Mojo::Base 'Mojolicious::Controller';
