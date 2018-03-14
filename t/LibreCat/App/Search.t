@@ -2,7 +2,7 @@ use Catmandu::Sane;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 use Dancer;
 use Path::Tiny;
-use Test::More;
+use Test::More import => ['!pass'];
 use Test::Exception;
 use warnings FATAL => 'all';
 
