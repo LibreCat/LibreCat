@@ -1,4 +1,4 @@
-package LibreCat::Authorization::SSO;
+package LibreCat::Auth::SSO;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:is :check);
@@ -47,7 +47,7 @@ sub uri_for {
 sub _check_plack_session {
 
     defined( $_[0]->session )
-        or die( "LibreCat::Authorization::SSO requires a Plack::Session" );
+        or die( "LibreCat::Auth::SSO requires a Plack::Session" );
 
 }
 
@@ -63,11 +63,11 @@ sub get_auth_sso {
 
 =head1 NAME
 
-LibreCat::Authorization::SSO - role for Single Sign On (SSO) authorization
+LibreCat::Auth::SSO - role for Single Sign On (SSO) authorization
 
 =head1 IMPLEMENTATIONS
 
-* Simple: L<LibreCat::Authorization::SSO::Simple>
+* Simple: L<LibreCat::Auth::SSO::Simple>
 
 =head1 DESCRIPTION
 

@@ -1,11 +1,11 @@
-package LibreCat::Authorization::SSO::Simple;
+package LibreCat::Auth::SSO::Simple;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:is);
 use LibreCat;
 use Moo;
 
-with "LibreCat::Authorization::SSO";
+with "LibreCat::Auth::SSO";
 
 sub to_app {
 
@@ -62,7 +62,7 @@ sub to_app {
 
 =head1 NAME
 
-LibreCat::Authorization::SSO::Simple - uid based implementation of LibreCat::Authorization::SSO
+LibreCat::Auth::SSO::Simple - uid based implementation of LibreCat::Auth::SSO
 
 =head1 SYNOPSIS
 
@@ -70,7 +70,7 @@ LibreCat::Authorization::SSO::Simple - uid based implementation of LibreCat::Aut
 
 builder {
 
-    mount "/authorize/sso" => LibreCat::Authorization::SSO::Simple->new(
+    mount "/authorize/sso" => LibreCat::Auth::SSO::Simple->new(
         uri_base => "http://localhost:5001",
         session_key => "auth_sso",
         success_path => "/",
@@ -81,7 +81,7 @@ builder {
 
 =head1 DESCRIPTION
 
-This is an implementation of L<LibreCat::Authorization::SSO>.
+This is an implementation of L<LibreCat::Auth::SSO>.
 
 What it does:
 
@@ -95,7 +95,7 @@ It inherits all configuration options from its parent.
 
 =head1 SEE ALSO
 
-L<LibreCat::Authorization::SSO>
+L<LibreCat::Auth::SSO>
 
 L<Plack::Auth::SSO>
 
