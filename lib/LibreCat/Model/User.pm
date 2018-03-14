@@ -11,10 +11,8 @@ with 'LibreCat::Model';
 sub add {
     my ($self, $rec) = @_;
 
-
-    my $saved_record = $self->add($rec);
-    $self->$bagname->commit;
-    return $saved_record;
+    my $valid_rec = $self->_validate($rec);
+    $self->_add($valid_rec) unless $valid_rec->{validation_error};
 }
 
 sub delete {

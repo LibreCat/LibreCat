@@ -9,13 +9,31 @@ with 'LibreCat::Logger';
 
 has bag        => (is => 'ro', required => 1);
 has search_bag => (is => 'ro', required => 1);
-
-has validator => (is => 'lazy');
+has validator  => (is => 'lazy');
 
 sub _build_validator {
     my ($self) = @_;
 
     require_package(ucfirst($self->bag), 'LibreCat::Validator')->new;
+}
+
+sub generate_id {
+    my ($self) = @_;
+
+    $self->bag->generate_id;
+}
+
+sub get {
+    my ($self, $id) = @_;
+
+    $self->bag->get($id);
+}
+
+sub _add {
+    my ($self, $rec) = @_;
+
+    $self->bag->add($rec);
+    $self->_index($rec);
 }
 
 sub _index {
@@ -44,7 +62,7 @@ sub _validate {
 
     my $can_store = 1;
 
-    my $validator = $self->validator;
+    my $validator     = $self->validator;
     my $validator_pkg = ref $validator;
 
     my @white_list = $validator->white_list;
@@ -61,9 +79,10 @@ sub _validate {
 
     unless ($validator->is_valid($rec)) {
         $can_store = 0;
-        $opts{validation_error}->($validator, $rec)
-            if $opts{validation_error}
-            && ref($opts{validation_error}) eq 'CODE';
+
+        # $opts{validation_error}->($validator, $rec)
+        #     if $opts{validation_error}
+        #     && ref($opts{validation_error}) eq 'CODE';
     }
 }
 

@@ -15,6 +15,7 @@ BEGIN {
 require_ok $pkg;
 
 {
+
     package T::Logger;
     use Moo;
 
