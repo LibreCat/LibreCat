@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Furl;
 use HTTP::Headers;
 use HTTP::Request;
+
 # use Term::ReadKey;
 # use URI;
 # use URI::Escape;
@@ -14,14 +15,16 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
-has base_url => (is => 'lazy');
-has user     => (is => 'ro', required => 1);
-has password => (is => 'ro', required => 1);
+has base_url  => (is => 'lazy');
+has user      => (is => 'ro', required => 1);
+has password  => (is => 'ro', required => 1);
 has test_mode => (is => 'ro');
 
 sub _build_base_url {
     my $self = shift;
-    $self->test_mode ? return 'https://mds.test.datacite.org' : return 'https://mds.datacite.org';
+    $self->test_mode
+        ? return 'https://mds.test.datacite.org'
+        : return 'https://mds.datacite.org';
 }
 
 sub work {
@@ -43,8 +46,8 @@ sub mint {
     my $uri = URI->new($self->base_url);
     $uri->path("doi");
     $uri->query_form(
-        doi => $doi,
-        url => $landing_url,
+        doi      => $doi,
+        url      => $landing_url,
         testMode => $self->test_mode ? 'true' : 'false',
     );
     $self->_do_request('POST', $uri->as_string, 'text/plain;charset=UTF-8',);
@@ -59,11 +62,9 @@ sub metadata {
 
     my $uri = URI->new($self->base_url);
     $uri->path("doi");
-    $uri->query_form(
-        testMode => $self->test_mode ? 'true' : 'false',
-    );
-    $self->_do_request(
-        'POST', $uri->as_string, $datacite_xml, 'application/xml;charset=UTF-8',
+    $uri->query_form(testMode => $self->test_mode ? 'true' : 'false',);
+    $self->_do_request('POST', $uri->as_string, $datacite_xml,
+        'application/xml;charset=UTF-8',
     );
 }
 
@@ -91,7 +92,8 @@ sub _do_request {
         return $status;
     }
     catch {
-        $self->log->error("Error registering at DataCite: $_\ņHTTP-Result: $res")
+        $self->log->error(
+            "Error registering at DataCite: $_\ņHTTP-Result: $res")
     }
 }
 

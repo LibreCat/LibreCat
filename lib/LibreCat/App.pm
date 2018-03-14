@@ -149,8 +149,8 @@ sub _api_route {
 }
 
 sub _ip_match {
-    my $ip        = shift;
-    my $access    = h->config->{filestore}->{api}->{access} // {};
+    my $ip       = shift;
+    my $access   = h->config->{filestore}->{api}->{access} // {};
     my $ip_range = $access->{ip_range} // [];
 
     h->within_ip_range($ip, $ip_range);

@@ -246,8 +246,8 @@ sub update_file {
     my $file_store = h->config->{filestore}->{default}->{package};
     my $file_opt   = h->config->{filestore}->{default}->{options};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
 
     my $store = $pkg->new(%$file_opt);
 
@@ -260,7 +260,7 @@ sub update_file {
 
     my $files = $store->index->files($key);
 
-    my $res   = $files->get($filename);
+    my $res = $files->get($filename);
 
     unless ($res) {
         h->log->error("file $filename not found in container $key");

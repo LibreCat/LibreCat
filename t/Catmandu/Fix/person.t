@@ -10,13 +10,8 @@ BEGIN {
 }
 require_ok $pkg;
 
-is_deeply $pkg->new()->fix(
-    {
-        author => [
-            {first_name => 'A.', last_name => 'Einstein'},
-        ]
-    }
-    ),
+is_deeply $pkg->new()
+    ->fix({author => [{first_name => 'A.', last_name => 'Einstein'},]}),
     {
     author => [
         {

@@ -31,18 +31,18 @@ lives_ok {
 }
 "Calling work is safe.";
 
-is_deeply $ret , {ok => 1} , 'work returned the correct response code';
+is_deeply $ret , {ok => 1}, 'work returned the correct response code';
 
-ok -r $thumbnail_path , "found a thumbnail";
-ok -s $thumbnail_path , "thumbnail is not empty";
+ok -r $thumbnail_path, "found a thumbnail";
+ok -s $thumbnail_path, "thumbnail is not empty";
 
 lives_ok {
     $ret = $resizer->work({key => 1, delete => 1})
 }
 "Calling work is safe.";
 
-is $ret , 1 , 'work returned the correct response code';
+is $ret , 1, 'work returned the correct response code';
 
-ok ! -r $thumbnail_path , "thumbnail is deleted";
+ok !-r $thumbnail_path, "thumbnail is deleted";
 
 done_testing;

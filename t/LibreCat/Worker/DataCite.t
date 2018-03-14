@@ -14,16 +14,17 @@ require_ok $pkg;
 dies_ok {$pkg->new()} "missing user/password";
 dies_ok {$pkg->new(user => 'me')} "missing password";
 dies_ok {$pkg->new(password => 'secret')} "missing user";
-lives_ok {$pkg->new(user => 'me', password => 'secret')} "object lives with user/password";
+lives_ok {$pkg->new(user => 'me', password => 'secret')}
+"object lives with user/password";
 
 my $datacite = $pkg->new(user => 'me', password => 'secret', test_mode => 1);
 
 can_ok $datacite, $_ for qw(work mint metadata);
 
-my $user = $ENV{DATACITE_USER} || "";
+my $user     = $ENV{DATACITE_USER}     || "";
 my $password = $ENV{DATACITE_PASSWORD} || "";
 
-my $datacite_xml=<<EOF;
+my $datacite_xml = <<EOF;
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
 <identifier identifierType="DOI">10.5072/LibreCatTestDOI871263127836</identifier>
 <creators>
@@ -68,16 +69,21 @@ We developed an instrument, Critical Engineering Literacy Test (CELT), which is 
 EOF
 
 SKIP: {
-    skip "No DataCite environment settings found (DATACITE_USER, DATACITE_PASSWORD).",
-        5 if (!$user || !$password);
+    skip
+        "No DataCite environment settings found (DATACITE_USER, DATACITE_PASSWORD).",
+        5
+        if (!$user || !$password);
 
-    my $registry = $pkg->new(user => $user, password => $password, test_mode => 1);
+    my $registry
+        = $pkg->new(user => $user, password => $password, test_mode => 1);
 
-    my $res = $registry->work({
-        doi => "10.5072/LibreCatTestDOI871263127836",
-        landing_url => "http://pub.uni-bielefeld.de/mytest/dataset",
-        datacite_xml => $datacite_xml,
-    });
+    my $res = $registry->work(
+        {
+            doi          => "10.5072/LibreCatTestDOI871263127836",
+            landing_url  => "http://pub.uni-bielefeld.de/mytest/dataset",
+            datacite_xml => $datacite_xml,
+        }
+    );
 
     ok $res;
 }

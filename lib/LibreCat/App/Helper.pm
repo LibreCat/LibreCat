@@ -161,7 +161,7 @@ sub extract_params {
     $p->{limit} = $params->{limit} if is_natural $params->{limit};
     $p->{lang}  = $params->{lang}  if $params->{lang};
     $p->{q}     = $params->{q}     if $params->{q};
-    $p->{cql} = $self->string_array($params->{cql});
+    $p->{cql}   = $self->string_array($params->{cql});
 
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
@@ -175,9 +175,9 @@ sub extract_params {
 }
 
 sub now {
-    my $time = $_[1] // time;
+    my $time        = $_[1] // time;
     my $time_format = $_[0]->config->{time_format} // '%Y-%m-%dT%H:%M:%SZ';
-    my $now = strftime($time_format, gmtime($time));
+    my $now         = strftime($time_format, gmtime($time));
     return $now;
 }
 
@@ -344,7 +344,8 @@ sub store_record {
     # clean all the fields that are not part of the JSON schema
     state $validators = {};
     my $validator_pkg = $validators->{$bag};
-    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),'LibreCat::Validator');
+    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),
+        'LibreCat::Validator');
 
     my $can_store = 1;
 
@@ -386,6 +387,7 @@ sub store_record {
 
 sub index_record {
     my ($self, $bag, $rec) = @_;
+
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
     $self->log->debug(Dancer::to_json($rec));
@@ -408,8 +410,7 @@ sub delete_record {
         $del_record->{date_deleted} = $self->now;
         $del_record->{status}       = 'deleted';
 
-
-        my $saved   = $self->main_publication->add($del_record);
+        my $saved = $self->main_publication->add($del_record);
         $self->main_publication->commit;
         $self->publication->add($saved);
         $self->publication->commit;
@@ -419,7 +420,7 @@ sub delete_record {
         return $saved;
     }
     else {
-        $self->purge_record($bag,$id);
+        $self->purge_record($bag, $id);
         return +{};
     }
 }
@@ -440,6 +441,7 @@ sub purge_record {
 }
 
 sub uri_base {
+
     #config option 'host' is deprecated
     state $h = $_[0]->config->{uri_base} // $_[0]->config->{host}
         // "http://localhost:5001";
@@ -461,17 +463,19 @@ sub uri_for {
             if (!defined($value) || length($value) == 0) {
                 $value = [];
             }
-            elsif (is_array_ref($value)) {}
+            elsif (is_array_ref($value)) { }
             elsif (is_string($value)) {
                 $value = [$value];
             }
             else {
-                $self->log->error("expecting an array or string but got a $value");
+                $self->log->error(
+                    "expecting an array or string but got a $value");
                 $value = [];
             }
 
             for (@$value) {
-                push @request_param , uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
+                push @request_param,
+                    uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
             }
         }
     }
@@ -480,7 +484,7 @@ sub uri_for {
         $uri .= '?' . join("&", @request_param);
     }
 
-    return $uri
+    return $uri;
 }
 
 sub get_file_store {
@@ -491,8 +495,8 @@ sub get_file_store {
 
     return undef unless $file_store;
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 

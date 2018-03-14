@@ -110,7 +110,7 @@ sub print_properties {
     $prefix = '' unless $prefix;
 
     my $properties = $section->{'properties'} // {};
-    my $required   = $section->{'required'}   // [];
+    my $required = $section->{'required'} // [];
 
     for my $name (sort keys %$properties) {
         my $prop    = $properties->{$name};

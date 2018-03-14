@@ -111,9 +111,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -121,16 +124,22 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'purge') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_purge(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_purge(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -161,7 +170,7 @@ sub audit_message {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
     if (-r $id_file) {
         my $r = 0;
@@ -179,7 +188,7 @@ sub _on_all {
 sub _list {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -204,12 +213,12 @@ sub _list {
 
     my $count = $it->each(
         sub {
-            my ($item) = @_;
-            my $id = $item->{_id};
-            my $title   = $item->{title}            // '---';
+            my ($item)  = @_;
+            my $id      = $item->{_id};
+            my $title   = $item->{title} // '---';
             my $creator = $item->{creator}->{login} // '---';
             my $status  = $item->{status};
-            my $type    = $item->{type}             // '---';
+            my $type    = $item->{type} // '---';
 
             printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n",
                 " "    # not use
@@ -230,7 +239,7 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -429,7 +438,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id = $item->{_id} // '';
+                my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";
@@ -516,9 +525,9 @@ sub _embargo {
                     ? $embargo_to
                     : $file->{access_level},
                     request_a_copy => $process ? 0 : $file->{request_a_copy},
-                    embargo => $process ? 'NA' : $embargo // 'NA',
+                    embargo    => $process ? 'NA' : $embargo // 'NA',
                     embargo_to => $process ? 'NA' : $embargo_to // 'NA',
-                    file_name => $file->{file_name},
+                    file_name  => $file->{file_name},
                 }
             );
         }
@@ -582,8 +591,7 @@ sub _files_list {
         $printer->($data);
     }
     elsif (defined($id)) {
-        $helper->publication->searcher(
-            cql_query => $id)->each($printer);
+        $helper->publication->searcher(cql_query => $id)->each($printer);
     }
     else {
         $helper->publication->each($printer);
@@ -740,8 +748,8 @@ sub _files_reporter {
     my $file_store = Catmandu->config->{filestore}->{default}->{package};
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     my $files = $pkg->new(%$file_opt);
 
     my $exporter = Catmandu->exporter('YAML');

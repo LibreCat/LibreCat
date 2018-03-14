@@ -15,8 +15,8 @@ use Dancer qw(:syntax);
 use Encode qw(encode);
 
 sub access_denied_hook {
-    h->hook('publication-access-denied')->fix_around(
-        {_id => params->{id}, user_id => session->{user_id},});
+    h->hook('publication-access-denied')
+        ->fix_around({_id => params->{id}, user_id => session->{user_id},});
 }
 
 =head1 PREFIX /record
@@ -48,8 +48,7 @@ Some fields are pre-filled.
             _id        => $id,
             type       => $type,
             department => $user->{department},
-            creator =>
-                {id => session->{user_id}, login => session->{user},},
+            creator => {id => session->{user_id}, login => session->{user},},
             user_id => session->{user_id},
         };
 
@@ -114,14 +113,18 @@ Checks if the user has permission the see/edit this record.
 
     get '/edit/:id' => sub {
 
-        my $rec = h->main_publication->get( param("id") ) or pass;
+        my $rec = h->main_publication->get(param("id")) or pass;
 
         unless (
-            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
-        ) {
+            p->can_edit(
+                $rec->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             access_denied_hook();
             status '403';
-            forward '/access_denied', { referer => request->referer };
+            forward '/access_denied', {referer => request->referer};
         }
 
         # Use config/hooks.yml to register functions
@@ -131,7 +134,7 @@ Checks if the user has permission the see/edit this record.
         $hook->fix_before($rec);
 
         my $templatepath = "backend/forms";
-        my $template = $rec->{meta}->{template} // $rec->{type};
+        my $template     = $rec->{meta}->{template} // $rec->{type};
 
         $rec->{return_url} = request->referer if request->referer;
 
@@ -151,15 +154,19 @@ Checks if the user has the rights to update this record.
 =cut
 
     post '/update' => sub {
-        my $p = params;
+        my $p          = params;
         my $return_url = $p->{return_url};
 
         h->log->debug("Params:" . to_dumper($p));
 
         unless (
-            $p->{new_record} or
-            p->can_edit( $p->{_id},{ user_id => session("user_id"), role => session("role") })
-        ) {
+            $p->{new_record}
+            or p->can_edit(
+                $p->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             access_denied_hook();
             status '403';
             forward '/access_denied';
@@ -203,11 +210,15 @@ Checks if the user has the rights to edit this record.
 
     get '/return/:id' => sub {
 
-        my $rec = h->main_publication->get( param("id") ) or pass;
+        my $rec = h->main_publication->get(param("id")) or pass;
 
         unless (
-            p->can_edit( $rec->{_id},{ user_id => session("user_id"), role => session("role") })
-        ) {
+            p->can_edit(
+                $rec->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             access_denied_hook();
             status '403';
             forward '/access_denied';
@@ -319,7 +330,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
         delete $rec->{file};
         delete $rec->{related_material};
-        $rec->{_id} = h->new_record('publication');
+        $rec->{_id}        = h->new_record('publication');
         $rec->{new_record} = 1;
 
         my $template = $rec->{type} . ".tt";
@@ -335,11 +346,15 @@ Publishes private records, returns to the list.
 
     get '/publish/:id' => sub {
 
-        my $rec = h->main_publication->get( param("id") ) or pass;
+        my $rec = h->main_publication->get(param("id")) or pass;
 
         unless (
-            p->can_edit( $rec->{_id},{ user_id => session("user_id") , role => session("role") })
-        ) {
+            p->can_edit(
+                $rec->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             access_denied_hook();
             status '403';
             forward '/access_denied';

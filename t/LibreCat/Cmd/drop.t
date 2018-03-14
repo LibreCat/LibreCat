@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Cmd::drop';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 
