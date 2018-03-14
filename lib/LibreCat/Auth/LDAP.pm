@@ -8,8 +8,8 @@ use namespace::clean;
 
 with 'LibreCat::Auth';
 
-has host          => (is => 'ro', required => 1);
-has base          => (is => 'ro');
+has host => (is => 'ro', required => 1);
+has base => (is => 'ro');
 has password      => (is => 'ro');
 has auth_base     => (is => 'ro', required => 1);
 has search_filter => (is => 'ro');

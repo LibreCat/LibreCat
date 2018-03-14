@@ -68,8 +68,8 @@ sub _list {
 
     my $count = $it->each(
         sub {
-            my ($item)  = @_;
-            my $id      = $item->{id} // '';
+            my ($item) = @_;
+            my $id      = $item->{id}      // '';
             my $process = $item->{process} // '';
             my $message = $item->{message} // '';
             my $time    = strftime("%Y-%m-%dT%H:%M:%S",

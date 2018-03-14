@@ -37,7 +37,7 @@ post '/librecat/upload/qae/submit' => sub {
                     id         => $person->{_id},
                 }
             ],
-            year       => substr($now, 0, 4),
+            year => substr($now, 0, 4),
             department => $department || $person->{department},
             creator => {id => session->{user_id}, login => session->{user}},
             user_id => session->{user_id},

@@ -5,7 +5,7 @@ use Mojo::Base 'Mojolicious::Controller';
 use LibreCat;
 
 sub get {
-    my $c    = shift;
+    my $c = shift;
     $c->render(json => {data => LibreCat->user->get($c->param('id'))});
 }
 

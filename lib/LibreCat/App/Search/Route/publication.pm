@@ -17,7 +17,7 @@ Export normal publication in format :fmt
 =cut
 
 get '/publication/:id.:fmt' => sub {
-    my $id  = params->{id};
+    my $id = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
     forward "/export",
@@ -35,7 +35,7 @@ Export data publication in format :fmt
 =cut
 
 get '/data/:id.:fmt' => sub {
-    my $id  = params->{id};
+    my $id = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
     forward "/export",

@@ -44,7 +44,7 @@ sub _validate {
 
     my $can_store = 1;
 
-    my $validator = $self->validator;
+    my $validator     = $self->validator;
     my $validator_pkg = ref $validator;
 
     my @white_list = $validator->white_list;

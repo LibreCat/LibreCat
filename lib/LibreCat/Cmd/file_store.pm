@@ -206,10 +206,10 @@ sub _list {
             else {
                 if ($args[0] && $args[0] eq 'recursive') {
                     for (@$file_array) {
-                        my $file_name     = $_->{_id} // '';
-                        my $file_size     = $_->{size} // 0;
+                        my $file_name     = $_->{_id}      // '';
+                        my $file_size     = $_->{size}     // 0;
                         my $file_modified = $_->{modified} // 0;
-                        my $file_md5      = $_->{md5} // '';
+                        my $file_md5      = $_->{md5}      // '';
 
                         printf "%s %s %s %s %s\n", $key,
                             strftime(

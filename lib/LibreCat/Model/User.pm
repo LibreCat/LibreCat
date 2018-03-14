@@ -11,7 +11,6 @@ with 'LibreCat::Model';
 sub add {
     my ($self, $rec) = @_;
 
-
     my $saved_record = $self->add($rec);
     $self->$bagname->commit;
     return $saved_record;
