@@ -46,7 +46,7 @@ ldap_mockify {
 
     ok ! $auth->_authenticate();
     ok ! $auth->_authenticate({});
-    
+
     my $res =  $auth->_authenticate({ username => "felix", password => "test" });
 
     is_deeply $res , {
@@ -59,14 +59,14 @@ ldap_mockify {
                 host          => 'localhost',
                 auth_base     => 'ID=%s,ou=people',
                 ldap          => $ldap)->search('felix')
-            } , 'need search_filter';
+            } 'need search_filter';
 
     dies_ok { $pkg->new(
                 host          => 'localhost',
                 auth_base     => 'ID=%s,ou=people',
                 search_filter => '(uid=%s)',
                 ldap          => $ldap)->search('felix')
-            } , 'need search_base';
+            } 'need search_base';
 
     dies_ok { $pkg->new(
                 host          => 'localhost',
@@ -74,7 +74,7 @@ ldap_mockify {
                 search_filter => '(uid=%s)',
                 search_base   => 'dc=example, dc=com',
                 ldap          => $ldap)->search('felix')
-            } , 'need search_attr';
+            } 'need search_attr';
 
     ok ! $pkg->new(
                 host          => 'localhost',
