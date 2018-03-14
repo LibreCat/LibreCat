@@ -56,44 +56,36 @@ ldap_mockify {
         package    => 'LibreCat::Auth::LDAP',
         uid        => '2381938120381',
         package_id => 'LibreCat::Auth::LDAP'
-        },
-        "got an authenticated user";
+    } , "got an authenticated user";
 
-    dies_ok {
-        $pkg->new(
-            host      => 'localhost',
-            auth_base => 'ID=%s,ou=people',
-            ldap      => $ldap
-        )->search('felix')
-    }, 'need search_filter';
+    dies_ok { $pkg->new(
+                host          => 'localhost',
+                auth_base     => 'ID=%s,ou=people',
+                ldap          => $ldap)->search('felix')
+            } 'need search_filter';
 
-    dies_ok {
-        $pkg->new(
-            host          => 'localhost',
-            auth_base     => 'ID=%s,ou=people',
-            search_filter => '(uid=%s)',
-            ldap          => $ldap
-        )->search('felix')
-    }, 'need search_base';
+    dies_ok { $pkg->new(
+                host          => 'localhost',
+                auth_base     => 'ID=%s,ou=people',
+                search_filter => '(uid=%s)',
+                ldap          => $ldap)->search('felix')
+            } 'need search_base';
 
-    dies_ok {
-        $pkg->new(
-            host          => 'localhost',
-            auth_base     => 'ID=%s,ou=people',
-            search_filter => '(uid=%s)',
-            search_base   => 'dc=example, dc=com',
-            ldap          => $ldap
-        )->search('felix')
-    }, 'need search_attr';
+    dies_ok { $pkg->new(
+                host          => 'localhost',
+                auth_base     => 'ID=%s,ou=people',
+                search_filter => '(uid=%s)',
+                search_base   => 'dc=example, dc=com',
+                ldap          => $ldap)->search('felix')
+            } 'need search_attr';
 
-    ok !$pkg->new(
-        host          => 'localhost',
-        auth_base     => 'ID=%s,ou=test',
-        search_filter => '(uid=%s)',
-        search_base   => 'dc=test',
-        search_attr   => 'personID',
-        ldap          => $ldap
-    )->search('felix'), "can't find felix";
+    ok ! $pkg->new(
+                host          => 'localhost',
+                auth_base     => 'ID=%s,ou=test',
+                search_filter => '(uid=%s)',
+                search_base   => 'dc=test',
+                search_attr   => 'personID',
+                ldap          => $ldap)->search('felix'), "can't find felix";
 };
 
 done_testing;
