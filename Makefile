@@ -22,10 +22,11 @@ update:
 # Explicit need -j 1 parallel tests will put databases in an
 # inconsistent state
 cover:
+	cover -delete
 ifeq ($(strip $(FILE)),)
-	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit \$?'
+	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; echo'
 else
-	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r $(FILE); exit \$?'
+	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r $(FILE); echo'
 endif
 
 test:
