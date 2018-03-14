@@ -20,6 +20,7 @@ use Plack::App::File;
 use Plack::App::Cascade;
 use Dancer;
 use LibreCat::App;
+use Mojo::Server::PSGI;
 
 # setup template paths
 config->{engines}{template_toolkit}{INCLUDE_PATH} = LibreCat->layers->template_paths;
@@ -64,6 +65,14 @@ $app->add(sub {
     Dancer->dance(Dancer::Request->new(env => $_[0]));
 });
 
+# mojo app
+{ 
+    my $server = Mojo::Server::PSGI->new;
+    my $script = Path::Tiny->new(__FILE__)->parent->parent->child('script/app.pl')->stringify;
+    $server->load_app($script);
+    $app->add($server->to_psgi_app);
+}
+
 # setup sessions
 my $config = config;
 my $session_store_package = is_string($config->{session_store}->{package}) ?
@@ -83,5 +92,5 @@ builder {
     enable 'Session',
         store => require_package( $session_store_package )->new( %$session_store_options ),
         state => require_package( $session_state_package )->new( %$session_state_options );
-    $app;
+    $app->to_app;
 };
