@@ -46,8 +46,10 @@ sub import {
 }
 
 sub user {
+    my $config = $_[0]->config->{user};
+    my $c = {%$config, bag =>  Catmandu->store('main')->bag('user'), search_bag => Catmandu->store('search')->bag('user')};
     state $user = require_package('LibreCat::Model::User')
-        ->new($_[0]->config->{user});
+        ->new($c);
 }
 
 sub hook {
