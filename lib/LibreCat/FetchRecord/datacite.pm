@@ -7,6 +7,8 @@ use Moo;
 
 with 'LibreCat::FetchRecord';
 
+has 'baseurl' => (is => 'ro' , default => sub { "http://data.datacite.org/" });
+
 sub fetch {
     my ($self, $id) = @_;
 
@@ -20,7 +22,7 @@ sub fetch {
         headers => [Accept => 'application/x-datacite+xml'],
     );
 
-    my $res = $furl->get('http://data.datacite.org/' . $id);
+    my $res = $furl->get($self->baseurl . $id);
 
     return undef unless $res;
 

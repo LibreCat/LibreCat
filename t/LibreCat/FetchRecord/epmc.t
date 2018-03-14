@@ -46,7 +46,7 @@ test_tcp(
                             'first_name' => 'S'
                           }
                         ] , 'got 2 authors';
-                        
+
        ok ! $x->fetch('6666');
     },
     server => sub {
@@ -54,7 +54,7 @@ test_tcp(
        t::HTTPServer->new(port => $port)->run(sub {;
            my $env = shift;
            if ($env->{QUERY_STRING} =~ /query=27740824/) {
-               my $body = path("t/records/epmc.js")->slurp_utf8;
+               my $body = path("t/records/epmc.js")->slurp;
                return [ 200,
                    [ 'Content-Length' => length($body) ],
                    [ $body ]
