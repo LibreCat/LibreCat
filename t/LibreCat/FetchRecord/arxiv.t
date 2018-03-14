@@ -1,11 +1,11 @@
 use strict;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
 use Test::TCP;
-use t::HTTPServer;
+use HTTPServer;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
 
