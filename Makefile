@@ -5,7 +5,6 @@ usage:
 	@echo "  generate"
 	@echo "  update"
 	@echo "  test"
-	@echo "  test"
 	@echo "  cover [ FILE=<path> ]"
 
 generate:
