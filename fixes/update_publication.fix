@@ -10,7 +10,12 @@ clean_preselects()
 add_urn()
 person()
 volume_sort()
-research_data_doi()
+
+unless exists(doi)
+    if all_match(type,research_data)
+        add_doi()
+    end
+end
 
 if exists(department)
   do list(path:department, var:loop)
