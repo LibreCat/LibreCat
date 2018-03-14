@@ -35,13 +35,10 @@ has field => (fix_arg => 1);
 
 sub fix {
     my ($self, $data) = @_;
-
     my $field = $self->field;
-
-    if (my $path = $data->{$field} && ref $data->{$field} eq 'ARRAY') {
+    if (my $path = $data->{$field} and ref $data->{$field} eq 'ARRAY') {
         my $out;
-
-        for my $pid (@$path) {
+        foreach my $pid (@$path) {
             $pid->{type} = 'unknown'
                 unless $pid->{type} && length $pid->{type};
             $out->{$pid->{type}} = [] unless $out->{$pid->{type}};
