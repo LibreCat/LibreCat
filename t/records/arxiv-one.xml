@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <link href="http://arxiv.org/api/query?search_query%3D1609.01725%26id_list%3D%26start%3D0%26max_results%3D10" rel="self" type="application/atom+xml"/>
+  <title type="html">ArXiv Query: search_query=1609.01725&amp;id_list=&amp;start=0&amp;max_results=10</title>
+  <id>http://arxiv.org/api/5V/khm/msutEYd9x7yPxNB9ccUU</id>
+  <updated>2018-03-14T00:00:00-04:00</updated>
+  <opensearch:totalResults xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">1</opensearch:totalResults>
+  <opensearch:startIndex xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">0</opensearch:startIndex>
+  <opensearch:itemsPerPage xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">10</opensearch:itemsPerPage>
+  <entry>
+    <id>http://arxiv.org/abs/1609.01725v1</id>
+    <updated>2016-09-06T20:00:04Z</updated>
+    <published>2016-09-06T20:00:04Z</published>
+    <title>The Good, the Bad, and the Ugly of Gravity and Information</title>
+    <summary>  Various contenders for a complete theory of quantum gravity are at odds with
+each other. This is in particular seen in the ways they relate to information
+and black holes, and how to effectively treat quantization of the background
+spacetime. Modern perspectives on black hole evaporation suggest that quantum
+gravity effects in the near-horizon region can perturb the local geometry. The
+approaches differ, however, in the time scale on which one can expect these
+effects to become important. This panel session presents three points of view
+on these problems, and considers the ultimate prospect of observational tests
+in the near future.
+</summary>
+    <author>
+      <name>Gerard 't Hooft</name>
+    </author>
+    <author>
+      <name>Steven B. Giddings</name>
+    </author>
+    <author>
+      <name>Carlo Rovelli</name>
+    </author>
+    <author>
+      <name>Piero Nicolini</name>
+    </author>
+    <author>
+      <name>Jonas Mureika</name>
+    </author>
+    <author>
+      <name>Matthias Kaminski</name>
+    </author>
+    <author>
+      <name>Marcus Bleicher</name>
+    </author>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">23 pages, 1 figure, panel discussion held at the 2nd Karl
+  Schwarzschild Meeting, Frankfurt am Main, Germany, July 2015; to be published
+  in Springer Proceedings in Physics</arxiv:comment>
+    <link href="http://arxiv.org/abs/1609.01725v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/1609.01725v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+</feed>

@@ -1,8 +1,11 @@
 use strict;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use Test::TCP;
+use HTTPServer;
+use Path::Tiny;
 
 my $pkg;
 
@@ -19,28 +22,39 @@ lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $pkg, $_ for qw(fetch);
 
-SKIP: {
+test_tcp(
+    client => sub {
+       my $port = shift;
+       my $x    = $pkg->new(baseurl => "http://127.0.0.1:$port/works/");
+       my $pub  = $x->fetch('10.1002/0470841559.ch1');
 
-    unless ($ENV{NETWORK_TEST}) {
-        skip("No network. Set NETWORK_TEST to run these tests.", 5);
-    }
+       ok $pub , 'got a publication';
 
-    my @dois = (
-        "doi:10.1002/0470841559.ch1", "https://doi.org/10.1002/0470841559.ch1"
-    );
-    for (@dois) {
-        my $pub = $x->fetch($_);
+       is $pub->[0]{title} , 'Network Concepts' , 'got a title';
+       is $pub->[0]{type}, 'book_chapter', 'type == book_chapter';
 
-        ok $pub , 'got a publication for ' . $_;
-
-        ok $pub->[0]->{title}, 'got a title';
-        ok $pub->[0]->{type},  'got a type';
-    }
-
-    my $rec = $x->fetch('doi:10.1002/1223455677889');
-
-    ok !$rec, "empty rec";
-
-}
+       ok ! $x->fetch('6666');
+    },
+    server => sub {
+       my $port = shift;
+       t::HTTPServer->new(port => $port)->run(sub {;
+           my $env = shift;
+           if ($env->{REQUEST_URI} =~ /\/works\/10.1002%2F0470841559.ch1/) {
+               my $body = path("t/records/crossref.js")->slurp_utf8;
+               return [ 200,
+                   [ 'Content-Length' => length($body) ],
+                   [ $body ]
+               ];
+           }
+           else {
+               my $body = 'bad boy';
+               return [ 404,
+                   [ 'Content-Length' => length($body) ],
+                   [ $body ]
+               ];
+           }
+       });
+   }
+);
 
 done_testing;

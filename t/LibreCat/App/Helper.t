@@ -329,7 +329,7 @@ is h->uri_for('/foo') , 'http://localhost:5001/foo' , 'h->uri_for(/foo)';
 
 is h->uri_for('/foo',{q => 'a',z => [1,2],我=>'能'}) ,
     'http://localhost:5001/foo?q=a&z=1&z=2&%E6%88%91=%E8%83%BD' ,
-    'h->uri_for(/foo,{q=>a,z=>[1,2],我=>能})';
+    'params with unicode characters encoded corectly by h->uri_for';
 
 isa_ok h->get_file_store , 'Catmandu::Store::File::Simple' , 'h->get_file_store';
 
@@ -338,5 +338,7 @@ isa_ok h->get_access_store , 'Catmandu::Store::File::Simple' , 'h->get_access_st
 is h->file_extension('/foo/bar/test.pdf') , '.pdf' , 'h->file_extension';
 
 is h->uri_for_file(123,456,'test.pdf') , 'http://localhost:5001/download/123/456.pdf' , 'h->uri_for_file';
+
+ok h->can('my_helper'), 'load helpers';
 
 done_testing;
