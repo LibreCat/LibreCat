@@ -9,18 +9,22 @@ perl:
 cache:
   directories:
     - perl_modules
+    - es_download
 
-env:
+env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1
 matrix:
   include:
     - perl: "5.26"
-      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
+#      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1
   allow_failures:
     - perl: "5.26"
-      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1
+#      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1  CSL_TEST=1
 
 before_install:
-  - curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.5.deb && sudo dpkg -i --force-confnew elasticsearch-1.7.5.deb && sudo service elasticsearch restart
+  - docker pull librecat/citeproc-node
+  - docker run -d -p 8085:8085 librecat/citeproc-node
+  - test -e es_download/elasticsearch-* || wget -P es_download/ https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.5.deb
+  - sudo dpkg -i --force-confnew elasticsearch-1.7.5.deb && sudo service elasticsearch restart
   - sudo apt-get install --yes --force-yes gearman gearman-tools gearman-job-server libgearman-dev imagemagick ghostscript
   - cpanm local::lib
   - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
@@ -30,6 +34,7 @@ before_script:
 
 service:
   - sqlite3
+  - docker
 
 install:
   - cpanm --quiet --installdeps --notest --force .
