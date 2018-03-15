@@ -23,7 +23,8 @@
   <div class="col-md-12">
     <dl class="hitlist">
     [%- FOREACH person IN hits %]
-      <dt><a href="[% uri_base %]/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a></dt>
+      <dt><a href="[% uri_base %]/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a>
+          | [% IF person.publication_count %][% person.publication_count %] [% END %][% IF person.data_count %]| [% person.data_count %][% END %]</dt>
         <dd>
         [%- FOREACH affil IN person.department %]
           <span class="text-muted">[% h.get_department(affil._id).display %]</span>[% IF !loop.last %], [% END %]

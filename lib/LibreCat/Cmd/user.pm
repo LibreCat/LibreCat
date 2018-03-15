@@ -8,6 +8,7 @@ use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
+use Data::Dumper;
 
 sub description {
     return <<EOF;
@@ -355,11 +356,19 @@ sub _prepare_search {
 
     my $records = $index->select(sub {
         my $rec = $_[0];
-        my $pub = LibreCat->searcher->search('publication', {cql => ["person=$rec->{_id}"], start => 0, limit => 1});
+        my $pub = LibreCat->searcher->search('publication', {cql => ["person=$rec->{_id} AND type<>research_data"], start => 0, limit => 1});
+        my $ret = 0;
         if ($pub->{total} > 0) {
-            $rec->{show} = 1;
+            $rec->{publication_count} = $pub->{total};
+            $ret = 1;
         }
-        return 1;
+        my $data = LibreCat->searcher->search('publication', {cql => ["person=$rec->{_id} AND type=research_data"], start => 0, limit => 1});
+        if ($data->{total} > 0) {
+            $rec->{data_count} = $data->{total};
+            $ret = 1;
+        }
+        #print Dumper $rec;
+        return $ret;
     });
 
     $index->add_many($records);

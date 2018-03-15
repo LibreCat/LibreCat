@@ -758,11 +758,18 @@ search:
                 'all': true
                 'exact': true
               field: alias
-            show:
+            publication_count:
               op:
                 '=': true
-                '<>': true
-              field: show
+                '>': true
+                '<': true
+              field: publication_count
+            data_count:
+              op:
+                '=': true
+                '>': true
+                '<': true
+              field: data_count
 
       department:
         cql_mapping:

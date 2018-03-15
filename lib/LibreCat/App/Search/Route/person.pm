@@ -21,7 +21,7 @@ get qr{/person} => sub {
     my $c = params->{browse} // 'a';
 
     my %search_params = (
-        cql   => ["show=1 AND lastname=" . lc $c . "*"],
+        cql   => ["(publication_count = 1 OR data_count = 1) AND lastname=" . lc $c . "*"],
         sort  => h->config->{default_person_sort},
         start => 0,
         limit => 1000
