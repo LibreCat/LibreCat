@@ -52,6 +52,10 @@ librecat publication valid /tmp/data.yml
 # Update/add the metadata for a publication from a YAML file
 librecat publication add /tmp/data.yml
 
+# Fetch a record from arxiv
+librecat publication fetch arxiv abs/1401.5761 > /tmp/record.yml
+librecat publication add /tmp/record.yml
+
 # Find all files with an expired embargo date
 librecat publication embargo
 
@@ -377,11 +381,12 @@ sub _delete {
         = LibreCat::App::Helper::Helpers->new->delete_record('publication',
         $id);
 
-    if (my $msg = $self->opts->{log}) {
-        audit_message($id, 'delete', $msg);
-    }
-
     if ($result) {
+
+        if (my $msg = $self->opts->{log}) {
+            audit_message($id, 'delete', $msg);
+        }
+
         print "deleted $id\n";
         return 0;
     }
@@ -400,11 +405,12 @@ sub _purge {
         = LibreCat::App::Helper::Helpers->new->purge_record('publication',
         $id);
 
-    if (my $msg = $self->opts->{log}) {
-        audit_message($id, 'purge', $msg);
-    }
-
     if ($result) {
+
+        if (my $msg = $self->opts->{log}) {
+            audit_message($id, 'purge', $msg);
+        }
+
         print "purged $id\n";
         return 0;
     }
@@ -439,10 +445,6 @@ sub _valid {
                     print STDERR "ERROR $id: not valid\n";
                 }
 
-                if (my $msg = $self->opts->{log}) {
-                    audit_message($id, 'valid', $msg);
-                }
-
                 $ret = 2;
             }
         }
@@ -466,10 +468,12 @@ sub _fetch {
 
     $id = path($id)->slurp_utf8 if -r $id;
 
-    my @perl = $pkg->new->fetch($id);
+    my @records = $pkg->new->fetch($id);
 
+    return 0 unless @records;
+    
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($perl[0]);
+    $exporter->add_many(@records);
     $exporter->commit;
 
     return 0;

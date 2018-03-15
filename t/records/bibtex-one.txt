@@ -1,0 +1,10 @@
+@article{Sh:1,
+author = {Shelah, Saharon},
+ams-subject = {(02.50)},
+journal = {Israel Journal of Mathematics},
+review = {MR 40-7102},
+pages = {187--202},
+title = {{Stable theories}},
+volume = {7},
+year = {1969},
+}
