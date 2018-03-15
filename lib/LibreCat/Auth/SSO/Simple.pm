@@ -15,44 +15,61 @@ sub to_app {
 
         my $env = $_[0];
 
-        my $request = Plack::Request->new( $env );
-        my $session = Plack::Session->new( $env );
+        my $request = Plack::Request->new($env);
+        my $session = Plack::Session->new($env);
 
         my $auth_sso = $self->get_auth_sso($session);
 
-        if ( is_hash_ref( $auth_sso ) ) {
+        if (is_hash_ref($auth_sso)) {
 
-            my $user = LibreCat->user->find_by_username( $auth_sso->{uid} );
+            my $user = LibreCat->user->find_by_username($auth_sso->{uid});
 
-            if ( $user ) {
+            if ($user) {
 
-                my %attrs = LibreCat->user->to_session( $user );
+                my %attrs = LibreCat->user->to_session($user);
 
-                for ( keys %attrs ) {
+                for (keys %attrs) {
 
-                    $session->set( $_ => $attrs{$_} );
+                    $session->set($_ => $attrs{$_});
 
                 }
 
-                return
-                    [ 302, [ "Content-Type" => "text/html", Location => $self->uri_for( $self->success_path ) ], [] ];
+                return [
+                    302,
+                    [
+                        "Content-Type" => "text/html",
+                        Location       => $self->uri_for($self->success_path)
+                    ],
+                    []
+                ];
 
             }
             else {
 
-                return
-                    [ 302, [ "Content-Type" => "text/html", Location => $self->uri_for( $self->denied_path ) ], [] ];
+                return [
+                    302,
+                    [
+                        "Content-Type" => "text/html",
+                        Location       => $self->uri_for($self->denied_path)
+                    ],
+                    []
+                ];
 
             }
 
         }
         else {
 
-            return
-                [ 302, [ "Content-Type" => "text/html", Location => $self->uri_for( $self->denied_path ) ], [] ];
+            return [
+                302,
+                [
+                    "Content-Type" => "text/html",
+                    Location       => $self->uri_for($self->denied_path)
+                ],
+                []
+            ];
 
         }
-
 
     };
 
