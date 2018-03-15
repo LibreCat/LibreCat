@@ -24,7 +24,7 @@ before_install:
   - docker pull librecat/citeproc-node
   - docker run -d -p 8085:8085 librecat/citeproc-node
   - test -e es_download/elasticsearch-* || wget -P es_download/ https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.5.deb
-  - sudo dpkg -i --force-confnew elasticsearch-1.7.5.deb && sudo service elasticsearch restart
+  - sudo dpkg -i --force-confnew es_download/elasticsearch-1.7.5.deb && sudo service elasticsearch restart
   - sudo apt-get install --yes --force-yes gearman gearman-tools gearman-job-server libgearman-dev imagemagick ghostscript
   - cpanm local::lib
   - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
