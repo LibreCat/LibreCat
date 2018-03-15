@@ -329,7 +329,7 @@ is h->uri_for('/foo') , 'http://localhost:5001/foo' , 'h->uri_for(/foo)';
 
 is h->uri_for('/foo',{q => 'a',z => [1,2],我=>'能'}) ,
     'http://localhost:5001/foo?q=a&z=1&z=2&%E6%88%91=%E8%83%BD' ,
-    'h->uri_for(/foo,{q=>a,z=>[1,2],我=>能})';
+    'params with unicode characters encoded corectly by h->uri_for';
 
 isa_ok h->get_file_store , 'Catmandu::Store::File::Simple' , 'h->get_file_store';
 

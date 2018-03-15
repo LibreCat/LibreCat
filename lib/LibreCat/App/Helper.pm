@@ -3,7 +3,7 @@ package LibreCat::App::Helper::Helpers;
 use FindBin;
 use Catmandu::Sane;
 use Catmandu qw(export_to_string);
-use Catmandu::Util qw(:io :is :array :hash :human trim require_package);
+use Catmandu::Util qw(:io :is :array :hash :human trim);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
 use Dancer qw(:syntax params request session vars);
