@@ -11,13 +11,13 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat department [options] list [<cql-query>]
-librecat department [options] export [<cql-query>]
-librecat department [options] add <FILE>
-librecat department [options] get <id> | <IDFILE>
-librecat department [options] delete <id> | <IDFILE>
-librecat department [options] valid <FILE>
-librecay department [options] tree [<FILE>]
+librecat department list   [options] [<cql-query>]
+librecat department export [options] [<cql-query>]
+librecat department add    [options] <FILE>
+librecat department get    [options] <id> | <IDFILE>
+librecat department delete [options] <id> | <IDFILE>
+librecat department valid  [options] <FILE>
+librecay department tree   [options] [<FILE>]
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -27,7 +27,7 @@ options:
 E.g.
 
 librecat department list 'layer = 1'
-librecat department --sort "name,,1" list ""  # force to use an empty query
+librecat department list --sort "name,,1" ""  # force to use an empty query
 
 EOF
 }
@@ -416,13 +416,13 @@ LibreCat::Cmd::department - manage librecat departments
 
 =head1 SYNOPSIS
 
-    librecat department list [<cql-query>]
-    librecat department export [<cql-query>]
-    librecat department add <FILE>
-    librecat department get <id> | <IDFILE>
-    librecat department delete <id> | <IDFILE>
-    librecat department valid <FILE>
-    librecat department tree [<FILE>]
+    librecat department list   [options] [<cql-query>]
+    librecat department export [options] [<cql-query>]
+    librecat department add    [options] <FILE>
+    librecat department get    [options] <id> | <IDFILE>
+    librecat department delete [options] <id> | <IDFILE>
+    librecat department valid  [options] <FILE>
+    librecay department tree   [options] [<FILE>]
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

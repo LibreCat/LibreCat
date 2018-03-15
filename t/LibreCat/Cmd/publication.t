@@ -71,7 +71,12 @@ note("testing adding valid publications");
 
 note("testing exporting publications");
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication', 'export']);
+    my $result = test_app(qq|LibreCat::CLI| => [
+        'publication',
+          'export',
+          '--start',0,
+          '--total',10
+    ]);
 
     ok !$result->error, 'ok threw no exception';
 
@@ -90,7 +95,14 @@ note("testing exporting publications");
 
 note("testing searching publications");
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['publication', 'export', 'basic = Valid']);
+    my $result = test_app(qq|LibreCat::CLI| => [
+        'publication',
+          'export',
+          '--sort','"title,,1"',
+          '--start',1,
+          '--total',10,
+          'basic = Valid'
+    ]);
 
     ok !$result->error, 'ok threw no exception';
 

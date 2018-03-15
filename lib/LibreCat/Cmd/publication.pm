@@ -14,16 +14,16 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat publication [options] list [<cql-query>]
-librecat publication [options] export [<cql-query>]
-librecat publication [options] get <id> | <IDFILE>
-librecat publication [options] add <FILE> <OUTFILE>
-librecat publication [options] delete <id> | <IDFILE>
-librecat publication [options] purge <id> | <IDFILE>
-librecat publication [options] valid <FILE>
-librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
-librecat publication [options] fetch <source> <id>
-librecat publication [options] embargo ['update']
+librecat publication list    [options] [<cql-query>]
+librecat publication export  [options] [<cql-query>]
+librecat publication get     [options] <id> | <IDFILE>
+librecat publication add     [options] <FILE> <OUTFILE>
+librecat publication delete  [options] <id> | <IDFILE>
+librecat publication purge   [options] <id> | <IDFILE>
+librecat publication valid   [options] <FILE>
+librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
+librecat publication fetch   [options] <source> <id>
+librecat publication embargo [options] ['update']
 
 options:
     --sort=STR         (sorting results [only in combination with cql-query])
@@ -41,7 +41,7 @@ E.g.
 librecat publication list 'status exact private'
 
 # Sort all publications by tite (force a query using empty quotes)
-librecat publication --sort "title,,1" list ""
+librecat publication list --sort "title,,1" ""
 
 # Get the metadata for publication '2737383'
 librecat publication get 2737383 > /tmp/data.yml
@@ -799,16 +799,16 @@ LibreCat::Cmd::publication - manage librecat publications
 
 =head1 SYNOPSIS
 
-    librecat publication [options] list [<cql-query>]
-    librecat publication [options] export [<cql-query>]
-    librecat publication [options] get <id> | <IDFILE>
-    librecat publication [options] add <FILE> <OUTFILE>
-    librecat publication [options] delete <id> | <IDFILE>
-    librecat publication [options] purge <id> | <IDFILE>
-    librecat publication [options] valid <FILE>
-    librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
-    librecat publication [options] fetch <source> <id>
-    librecat publication [options] embargo ['update']
+    librecat publication list    [options] [<cql-query>]
+    librecat publication export  [options] [<cql-query>]
+    librecat publication get     [options] <id> | <IDFILE>
+    librecat publication add     [options] <FILE> <OUTFILE>
+    librecat publication delete  [options] <id> | <IDFILE>
+    librecat publication purge   [options] <id> | <IDFILE>
+    librecat publication valid   [options] <FILE>
+    librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
+    librecat publication fetch   [options] <source> <id>
+    librecat publication embargo [options] ['update']
 
     options:
         --sort=STR         (sorting results [only in combination with cql-query])

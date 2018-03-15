@@ -13,7 +13,7 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat worker [options] <worker> start|stop|restart|status
+librecat worker <worker> start|stop|restart|status [options]
 
 Examples:
 
