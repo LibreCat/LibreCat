@@ -77,6 +77,6 @@ LibreCat::Hook::audit_message - a hook to submit audit messages
     hooks:
       publication-update:
         before_fixes:
-         - read_only_fields
+         - audit_message
 
 =cut
