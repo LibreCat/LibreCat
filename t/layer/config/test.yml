@@ -1,3 +1,5 @@
+audit: 1
+
 uri_base: "http://localhost:5001"
 
 default_lang: en
@@ -179,4 +181,3 @@ worker:
 
 helper_plugins:
   - MyHelperPlugin
-
