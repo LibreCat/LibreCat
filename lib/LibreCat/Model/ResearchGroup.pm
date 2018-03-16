@@ -1,4 +1,4 @@
-package LibreCat::Model::Publication;
+package LibreCat::Model::ResearchGroup;
 
 use Catmandu::Sane;
 use Moo;

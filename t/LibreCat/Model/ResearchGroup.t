@@ -8,7 +8,7 @@ use Data::Dumper;
 my $pkg;
 
 BEGIN {
-    $pkg = 'LibreCat::Model::Research_group';
+    $pkg = 'LibreCat::Model::ResearchGroup';
     use_ok $pkg;
 }
 

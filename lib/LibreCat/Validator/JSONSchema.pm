@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Moo::Role;
 use namespace::clean;
 
-with 'Catmandu::Validator';
+with 'LibreCat::Validator';
 
 requires 'schema_validator';
 
@@ -18,10 +18,6 @@ sub validate_data {
     return unless defined $errors;
 
     [map {$_->{property} . ": " . $_->{message}} @$errors];
-}
-
-sub white_list {
-    return ();
 }
 
 1;

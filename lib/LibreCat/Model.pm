@@ -7,20 +7,22 @@ use namespace::clean;
 
 with 'LibreCat::Logger';
 
-has bag        => (is => 'ro', required => 1);
+has bag        => (is => 'ro', required => 1, handles => [qw(generate_id)]);
 has search_bag => (is => 'ro', required => 1);
+has validator_package => (is => 'lazy');
 has validator  => (is => 'lazy');
+
+sub _build_validator_package {
+    my ($self) = @_;
+    my $name = ref $self;
+    $name =~ s/Model/Validator/;
+    $name;
+}
 
 sub _build_validator {
     my ($self) = @_;
 
-    require_package(ucfirst($self->bag), 'LibreCat::Validator')->new;
-}
-
-sub generate_id {
-    my ($self) = @_;
-
-    $self->bag->generate_id;
+    require_package($self->validator_package)->new;
 }
 
 sub get {
@@ -29,20 +31,31 @@ sub get {
     $self->bag->get($id);
 }
 
+sub add {
+    my ($self, $rec) = @_;
+
+    $self->_validate($rec);
+    $rec = $self->_add($rec) unless $rec->{validation_error};
+
+    $rec;
+}
+
 sub _add {
     my ($self, $rec) = @_;
 
-    $self->bag->add($rec);
-    $self->_index($rec);
+    $rec = $self->bag->add($rec);
+    $rec = $self->_index($rec);
+
+    $rec;
 }
 
 sub _index {
     my ($self, $rec) = @_;
 
-    $self->search_bag->add($rec);
+    $rec = $self->search_bag->add($rec);
     $self->search_bag->commit;
 
-    # $rec;
+    $rec;
 }
 
 sub _purge {
@@ -54,7 +67,8 @@ sub _purge {
     $self->search_bag->delete($id);
     $self->search_bag->commit;
 
-    return +{};
+    # TODO should return undef if the record doesn't exist
+    $id;
 }
 
 sub _validate {

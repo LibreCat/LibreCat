@@ -23,18 +23,12 @@ L<log4perl.conf>
 
 =cut
 
-BEGIN {
-    use Catmandu::Sane;
-    use Path::Tiny;
-    use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-    use LibreCat::Layers;
-
-    LibreCat::Layers->new->load;
-}
-
+use Catmandu::Sane;
+use Path::Tiny;
+use lib path(__FILE__)->parent->parent->child('lib')->stringify;
+use LibreCat qw(:load);
+use Catmandu::Util qw(require_package);
 use Catmandu;
-use Catmandu::Util;
-use LibreCat::User;
 use Getopt::Long;
 use Log::Log4perl;
 
@@ -60,10 +54,10 @@ else {
     die "need a password. Try `$0 -p $user'";
 }
 
-my $pkg    = Catmandu::Util::require_package($package);
+my $pkg    = require_package($package);
 my $auth   = $pkg->new(%$param);
 
-my $users   = LibreCat::User->new(Catmandu->config->{user});
+my $users   = LibreCat->user;
 my $userobj = $users->find_by_username($user);
 my $verify  = $auth->authenticate( { username => $user , password => $password });
 

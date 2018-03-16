@@ -14,9 +14,13 @@ BEGIN {
 
 require_ok $pkg;
 
-my $user = $pkg->new();
+my $user = $pkg->new(
+    %{LibreCat->config->{user}},
+    bag =>  Catmandu->store('main')->bag('user'),
+    search_bag => Catmandu->store('search')->bag('user')
+);
 
-isa_ok $user, "LibreCat::Model";
+ok $user->does('LibreCat::Model');
 
 ok my $u = $user->get(1234);
 
