@@ -31,17 +31,18 @@ require_ok $pkg;
 my $m = T::Model->new(
     bag => Catmandu->store('main')->bag('model_test'),
     search_bag => Catmandu->store('search')->bag('model_test'),
+    validator => T::Validator->new,
     );
 
 ok $m->does('LibreCat::Model');
-can_ok $m, $_ for qw(generate_id get _validate _add _index _purge);
+can_ok $m, $_ for qw(generate_id get add delete is_valid);
 
 my $id;
 subtest 'generate_id' => sub {
     $id = $m->generate_id;
     ok $id, "generate id";
 
-    # generate another ID
+    # generate another id
     ok $id ne $m->generate_id, "different IDs";
 };
 
@@ -51,24 +52,7 @@ subtest 'get' => sub {
 
     #$d = $m->get($id);
     #ok !!$d;
-    #is $d->{_id}, $id, "got correct ID";
-};
-
-subtest '_validate' => sub {
-    #$m->validate($rec);
-    ok 1;
-};
-
-subtest '_add' => sub {
-    ok 1;
-};
-
-subtest '_index' => sub {
-    ok 1;
-};
-
-subtest '_purge' => sub {
-    ok 1;
+    #is $d->{_id}, $id, "got correct id";
 };
 
 done_testing;

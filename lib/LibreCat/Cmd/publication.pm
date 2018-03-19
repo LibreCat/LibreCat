@@ -4,7 +4,6 @@ use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util;
 use LibreCat::App::Helper;
-use LibreCat::Validator::Publication;
 use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
@@ -428,7 +427,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Publication->new;
+    my $validator = LibreCat->publication->validator;
 
     my $ret = 0;
 

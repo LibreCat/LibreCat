@@ -2,28 +2,13 @@ package LibreCat::Model;
 
 use Catmandu::Sane;
 use Moo::Role;
-use Catmandu::Util qw(require_package);
 use namespace::clean;
 
 with 'LibreCat::Logger';
 
 has bag        => (is => 'ro', required => 1, handles => [qw(generate_id)]);
 has search_bag => (is => 'ro', required => 1);
-has validator_package => (is => 'lazy');
-has validator  => (is => 'lazy');
-
-sub _build_validator_package {
-    my ($self) = @_;
-    my $name = ref $self;
-    $name =~ s/Model/Validator/;
-    $name;
-}
-
-sub _build_validator {
-    my ($self) = @_;
-
-    require_package($self->validator_package)->new;
-}
+has validator  => (is => 'ro', required => 1, handles => [qw(is_valid)]);
 
 sub get {
     my ($self, $id) = @_;
@@ -34,13 +19,23 @@ sub get {
 sub add {
     my ($self, $rec) = @_;
 
-    $self->_validate($rec);
-    $rec = $self->_add($rec) unless $rec->{validation_error};
+    $rec = $self->prepare($rec);
+
+    if ($self->is_valid($rec)) {
+        $self->_store($rec);
+        $self->_index($rec);
+    }
 
     $rec;
 }
 
-sub _add {
+sub delete {
+    my ($self, $id) = @_;
+    return unless $self->get($id);
+    $self->_purge($id);
+}
+
+sub _store {
     my ($self, $rec) = @_;
 
     $rec = $self->bag->add($rec);
@@ -67,37 +62,26 @@ sub _purge {
     $self->search_bag->delete($id);
     $self->search_bag->commit;
 
-    # TODO should return undef if the record doesn't exist
     $id;
 }
 
-sub _validate {
+sub prepare {
     my ($self, $rec) = @_;
+    $self->_apply_whitelist($rec);
+    $rec;
+}
 
-    my $can_store = 1;
-
-    my $validator     = $self->validator;
-    my $validator_pkg = ref $validator;
-
-    my @white_list = $validator->white_list;
-
-    $self->log->fatal("no white_list found for $validator_pkg ??!")
-        unless @white_list;
-
+sub _apply_whitelist {
+    my ($self, $rec) = @_;
+    my $validator = $self->validator;
+    my $whitelist = $validator->whitelist;
     for my $key (keys %$rec) {
-        unless (grep(/^$key$/, @white_list)) {
+        unless (grep { $_ eq $key } @$whitelist) {
             $self->log->debug("deleting invalid key: $key");
             delete $rec->{$key};
         }
     }
-
-    unless ($validator->is_valid($rec)) {
-        $can_store = 0;
-
-        # $opts{validation_error}->($validator, $rec)
-        #     if $opts{validation_error}
-        #     && ref($opts{validation_error}) eq 'CODE';
-    }
+    $rec;
 }
 
 1;

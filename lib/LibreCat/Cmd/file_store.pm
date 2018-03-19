@@ -3,7 +3,6 @@ package LibreCat::Cmd::file_store;
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat::App::Helper;
-use LibreCat::Validator::Publication;
 use Carp;
 use IO::File;
 use IO::Pipe;

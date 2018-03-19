@@ -1,5 +1,6 @@
 use Catmandu::Sane;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat::Validator::JSONSchema;
 use Test::More;
 use Test::Exception;
 use warnings FATAL => 'all';
@@ -17,7 +18,8 @@ require_ok $pkg;
 my $user = $pkg->new(
     %{LibreCat->config->{user}},
     bag =>  Catmandu->store('main')->bag('user'),
-    search_bag => Catmandu->store('search')->bag('user')
+    search_bag => Catmandu->store('search')->bag('user'),
+    validator => LibreCat::Validator::JSONSchema->new(schema => Catmandu->config->{schemas}{user})
 );
 
 ok $user->does('LibreCat::Model');

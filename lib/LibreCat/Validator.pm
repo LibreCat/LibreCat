@@ -5,8 +5,10 @@ use Moo::Role;
 
 with 'Catmandu::Validator';
 
-sub white_list {
-    return ();
+has whitelist => (is => 'lazy');
+
+sub _build_whitelist {
+    [];
 }
 
 1;

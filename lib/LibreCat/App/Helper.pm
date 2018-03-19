@@ -349,32 +349,14 @@ sub store_record {
         $cite_fix->fix($rec) unless $opts{skip_citation};
     }
 
-    # clean all the fields that are not part of the JSON schema
-    state $validators = {};
-    my $validator_pkg = $validators->{$bag};
-    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),
-        'LibreCat::Validator');
-
     my $can_store = 1;
 
-    if ($validator_pkg) {
-        my $validator = $validator_pkg->new;
+    if (LibreCat->can($bag)) {
+        my $model = LibreCat->$bag;
 
-        my @white_list = $validator->white_list;
-
-        $self->log->fatal("no white_list found for $validator_pkg ??!")
-            unless @white_list;
-
-        for my $key (keys %$rec) {
-            unless (grep(/^$key$/, @white_list)) {
-                $self->log->debug("deleting invalid key: $key");
-                delete $rec->{$key};
-            }
-        }
-
-        unless ($validator->is_valid($rec)) {
+        unless ($model->is_valid($rec)) {
             $can_store = 0;
-            $opts{validation_error}->($validator, $rec)
+            $opts{validation_error}->($model->validator, $rec)
                 if $opts{validation_error}
                 && ref($opts{validation_error}) eq 'CODE';
         }

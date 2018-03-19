@@ -2,10 +2,11 @@ package LibreCat;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
+use String::CamelCase qw(camelize);
+use Data::Util qw(install_subroutine);
 use LibreCat::Layers;
 use LibreCat::Hook;
 use Catmandu;
-use Carp;
 use namespace::clean;
 
 our $VERSION = '0.3.2';
@@ -35,8 +36,14 @@ sub import {
 
     sub load {
         my ($self, @args) = @_;
-        $layers ||= LibreCat::Layers->new(@args)->load;
+        $self->_load(@args) unless $self->loaded;
         $self;
+    }
+
+    sub _load {
+        my ($self, @args) = @_;
+        $layers = LibreCat::Layers->new(@args)->load;
+        $self->install_models;
     }
 
     sub config {
@@ -45,17 +52,33 @@ sub import {
     }
 }
 
-sub user {
-    my $config = $_[0]->config->{user};
-    my $c = {%$config, bag =>  Catmandu->store('main')->bag('user'), search_bag => Catmandu->store('search')->bag('user')};
-    state $user = require_package('LibreCat::Model::User')
-        ->new($c);
+sub models {
+    [qw(publication department research_group user project)];
+}
+
+sub install_models {
+    my ($self) = @_;
+    my $models = $self->models;
+    for my $name (@$models) {
+        my $config = $self->config->{$name} // {};
+        my $pkg_name = camelize($name);
+        my $pkg = require_package($pkg_name, 'LibreCat::Model');
+        my $validator_pkg = require_package('LibreCat::Validator::JSONSchema');
+        my $validator = $validator_pkg->new(schema => $self->config->{schemas}{$name});
+        my $model = $pkg->new(
+            bag => Catmandu->store('main')->bag($name),
+            search_bag => Catmandu->store('search')->bag($name),
+            validator => $validator,
+            %$config,
+        );
+        install_subroutine(__PACKAGE__, $name => sub { $model });
+    }
 }
 
 sub hook {
     my ($self, $name) = @_;
 
-    croak "need a name" unless $name;
+    $name // Catmandu::Error->throw("need a name");
 
     state $hooks = {};
 

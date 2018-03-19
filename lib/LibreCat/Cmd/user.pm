@@ -2,7 +2,6 @@ package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
-use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Path::Tiny;
 use Carp;
@@ -280,7 +279,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::User->new;
+    my $validator = LibreCat->user->validator;
 
     my $ret = 0;
 

@@ -18,17 +18,17 @@ require_ok $_ for @worker_pkg;
 
 note("Validate user");
 {
-    my $x = LibreCat::Validator::User->new;
+    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{user});
 
     ok $x , 'got a user validator';
 
-    my @white_list = $x->white_list;
+    my $whitelist = $x->whitelist;
 
-    ok @white_list > 0, 'got a non-empty white list';
+    ok @$whitelist > 0, 'got a non-empty whitelist';
 
     # Check for some fields
-    ok grep(/^login$/,    @white_list), 'found login in white list';
-    ok grep(/^password$/, @white_list), 'found password in white list';
+    ok grep(/^login$/,    @$whitelist), 'found login in whitelist';
+    ok grep(/^password$/, @$whitelist), 'found password in whitelist';
 
     my $errors = $x->validate_data({});
 
@@ -50,17 +50,17 @@ note("Validate user");
 
 note("Validate research_group");
 {
-    my $x = LibreCat::Validator::Research_group->new;
+    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{research_group});
 
     ok $x , 'got a research_group validator';
 
-    my @white_list = $x->white_list;
+    my $whitelist = $x->whitelist;
 
-    ok @white_list > 0, 'got a non-empty white list';
+    ok @$whitelist > 0, 'got a non-empty whitelist';
 
     # Check for some fields
-    ok grep(/^name$/,       @white_list), 'found name in white list';
-    ok grep(/^department$/, @white_list), 'found department in white list';
+    ok grep(/^name$/,       @$whitelist), 'found name in whitelist';
+    ok grep(/^department$/, @$whitelist), 'found department in whitelist';
 
     my $errors = $x->validate_data({});
 
@@ -74,17 +74,17 @@ note("Validate research_group");
 
 note("Validate department");
 {
-    my $x = LibreCat::Validator::Department->new;
+    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{department});
 
     ok $x , 'got a department validator';
 
-    my @white_list = $x->white_list;
+    my $whitelist = $x->whitelist;
 
-    ok @white_list > 0, 'got a non-empty white list';
+    ok @$whitelist > 0, 'got a non-empty whitelist';
 
     # Check for some fields
-    ok grep(/^name$/,   @white_list), 'found name in white list';
-    ok grep(/^display/, @white_list), 'found display in white list';
+    ok grep(/^name$/,   @$whitelist), 'found name in whitelist';
+    ok grep(/^display/, @$whitelist), 'found display in whitelist';
 
     my $errors = $x->validate_data({});
 
@@ -104,17 +104,17 @@ note("Validate department");
 
 note("Validate project");
 {
-    my $x = LibreCat::Validator::Project->new;
+    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{project});
 
     ok $x , 'got a project validator';
 
-    my @white_list = $x->white_list;
+    my $whitelist = $x->whitelist;
 
-    ok @white_list > 0, 'got a non-empty white list';
+    ok @$whitelist > 0, 'got a non-empty whitelist';
 
     # Check for some fields
-    ok grep(/^name$/,       @white_list), 'found name in white list';
-    ok grep(/^description/, @white_list), 'found description in white list';
+    ok grep(/^name$/,       @$whitelist), 'found name in whitelist';
+    ok grep(/^description/, @$whitelist), 'found description in whitelist';
 
     my $errors = $x->validate_data({});
 
@@ -127,17 +127,17 @@ note("Validate project");
 
 note("Validate publiction");
 {
-    my $x = LibreCat::Validator::Publication->new;
+    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{publication});
 
     ok $x , 'got a publication validator';
 
-    my @white_list = $x->white_list;
+    my $whitelist = $x->whitelist;
 
-    ok @white_list > 0, 'got a non-empty white list';
+    ok @$whitelist > 0, 'got a non-empty whitelist';
 
     # Check for some fields
-    ok grep(/^title/,  @white_list), 'found title in white list';
-    ok grep(/^author/, @white_list), 'found author in white list';
+    ok grep(/^title/,  @$whitelist), 'found title in whitelist';
+    ok grep(/^author/, @$whitelist), 'found author in whitelist';
 
     my $errors = $x->validate_data({});
 

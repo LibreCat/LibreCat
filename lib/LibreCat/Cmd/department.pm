@@ -2,7 +2,6 @@ package LibreCat::Cmd::department;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
-use LibreCat::Validator::Department;
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -382,7 +381,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Department->new;
+    my $validator = LibreCat->department->validator;
 
     my $ret = 0;
 
