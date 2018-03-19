@@ -18,7 +18,8 @@ require_ok $_ for @worker_pkg;
 
 note("Validate user");
 {
-    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{user});
+    my $x = LibreCat::Validator::JSONSchema->new(
+        schema => LibreCat->config->{schemas}{user});
 
     ok $x , 'got a user validator';
 
@@ -50,7 +51,8 @@ note("Validate user");
 
 note("Validate research_group");
 {
-    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{research_group});
+    my $x = LibreCat::Validator::JSONSchema->new(
+        schema => LibreCat->config->{schemas}{research_group});
 
     ok $x , 'got a research_group validator';
 
@@ -74,7 +76,8 @@ note("Validate research_group");
 
 note("Validate department");
 {
-    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{department});
+    my $x = LibreCat::Validator::JSONSchema->new(
+        schema => LibreCat->config->{schemas}{department});
 
     ok $x , 'got a department validator';
 
@@ -104,7 +107,8 @@ note("Validate department");
 
 note("Validate project");
 {
-    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{project});
+    my $x = LibreCat::Validator::JSONSchema->new(
+        schema => LibreCat->config->{schemas}{project});
 
     ok $x , 'got a project validator';
 
@@ -127,7 +131,8 @@ note("Validate project");
 
 note("Validate publiction");
 {
-    my $x = LibreCat::Validator::JSONSchema->new(schema => LibreCat->config->{schemas}{publication});
+    my $x = LibreCat::Validator::JSONSchema->new(
+        schema => LibreCat->config->{schemas}{publication});
 
     ok $x , 'got a publication validator';
 

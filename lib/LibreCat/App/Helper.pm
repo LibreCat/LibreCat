@@ -23,7 +23,7 @@ use Moo;
 sub BUILD {
     my ($self) = @_;
     if (my $plugins = $self->config->{helper_plugins}) {
-         Role::Tiny->apply_roles_to_object($self, @$plugins);
+        Role::Tiny->apply_roles_to_object($self, @$plugins);
     }
 }
 

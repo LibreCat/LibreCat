@@ -25,14 +25,14 @@ require_ok $pkg;
 
     with 'LibreCat::Validator';
 
-    sub validate_data {}
+    sub validate_data { }
 }
 
 my $m = T::Model->new(
-    bag => Catmandu->store('main')->bag('model_test'),
+    bag        => Catmandu->store('main')->bag('model_test'),
     search_bag => Catmandu->store('search')->bag('model_test'),
-    validator => T::Validator->new,
-    );
+    validator  => T::Validator->new,
+);
 
 ok $m->does('LibreCat::Model');
 can_ok $m, $_ for qw(generate_id get add delete is_valid);

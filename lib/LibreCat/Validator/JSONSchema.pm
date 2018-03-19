@@ -17,7 +17,7 @@ sub _build_whitelist {
 around last_errors => sub {
     my $orig = shift;
     my $errors = $orig->(@_) // return;
-    [map { "$_->{property}: $_->{message}" } @$errors];
+    [map {"$_->{property}: $_->{message}"} @$errors];
 };
 
 1;

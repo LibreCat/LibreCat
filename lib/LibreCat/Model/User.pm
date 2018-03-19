@@ -7,9 +7,9 @@ use namespace::clean;
 
 with 'LibreCat::Model';
 
-has sources => (is => 'ro', default => sub {[]},);
+has sources       => (is => 'ro', default => sub {[]},);
 has username_attr => (is => 'ro', default => sub {'username'},);
-has _bags => (is => 'lazy',);
+has _bags         => (is => 'lazy',);
 has _username_attrs => (is => 'lazy');
 
 sub _build__username_attrs {
@@ -60,6 +60,7 @@ sub find_by_username {
         $self->log->debug("..probing $bag");
 
         if ($bag->does('Catmandu::Searchable')) {
+
             # for now we assume the Searchable store is ElasticSearch
             my $query = sprintf "%s:%s", $attrs->[$i], $username;
 

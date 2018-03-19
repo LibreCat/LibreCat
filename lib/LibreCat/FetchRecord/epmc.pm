@@ -6,7 +6,10 @@ use Moo;
 
 with 'LibreCat::FetchRecord';
 
-has 'baseurl' => (is => 'ro', default => sub { "https://www.ebi.ac.uk/europepmc/webservices/rest/search" });
+has 'baseurl' => (
+    is      => 'ro',
+    default => sub {"https://www.ebi.ac.uk/europepmc/webservices/rest/search"}
+);
 
 sub fetch {
     my ($self, $id) = @_;
@@ -15,9 +18,8 @@ sub fetch {
 
     $self->log->debug("requesting $id from epmc");
 
-    my $url = sprintf "%s?query=%s&format=json"
-                            , $self->baseurl
-                            , uri_escape_utf8($id);
+    my $url = sprintf "%s?query=%s&format=json", $self->baseurl,
+        uri_escape_utf8($id);
 
     my $data = Catmandu->importer('getJSON', from => $url)->to_array;
 

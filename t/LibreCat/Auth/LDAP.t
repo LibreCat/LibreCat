@@ -64,8 +64,9 @@ ldap_mockify {
             host      => 'localhost',
             auth_base => 'ID=%s,ou=people',
             ldap      => $ldap
-        )->search('felix')
-    } 'need search_filter';
+            )->search('felix')
+    }
+    'need search_filter';
 
     dies_ok {
         $pkg->new(
@@ -73,8 +74,9 @@ ldap_mockify {
             auth_base     => 'ID=%s,ou=people',
             search_filter => '(uid=%s)',
             ldap          => $ldap
-        )->search('felix')
-    } 'need search_base';
+            )->search('felix')
+    }
+    'need search_base';
 
     dies_ok {
         $pkg->new(
@@ -83,8 +85,9 @@ ldap_mockify {
             search_filter => '(uid=%s)',
             search_base   => 'dc=example, dc=com',
             ldap          => $ldap
-        )->search('felix')
-    } 'need search_attr';
+            )->search('felix')
+    }
+    'need search_attr';
 
     ok !$pkg->new(
         host          => 'localhost',

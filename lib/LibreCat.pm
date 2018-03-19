@@ -60,18 +60,20 @@ sub install_models {
     my ($self) = @_;
     my $models = $self->models;
     for my $name (@$models) {
-        my $config = $self->config->{$name} // {};
+        my $config   = $self->config->{$name} // {};
         my $pkg_name = camelize($name);
-        my $pkg = require_package($pkg_name, 'LibreCat::Model');
-        my $validator_pkg = require_package('LibreCat::Validator::JSONSchema');
-        my $validator = $validator_pkg->new(schema => $self->config->{schemas}{$name});
+        my $pkg      = require_package($pkg_name, 'LibreCat::Model');
+        my $validator_pkg
+            = require_package('LibreCat::Validator::JSONSchema');
+        my $validator
+            = $validator_pkg->new(schema => $self->config->{schemas}{$name});
         my $model = $pkg->new(
-            bag => Catmandu->store('main')->bag($name),
+            bag        => Catmandu->store('main')->bag($name),
             search_bag => Catmandu->store('search')->bag($name),
-            validator => $validator,
+            validator  => $validator,
             %$config,
         );
-        install_subroutine(__PACKAGE__, $name => sub { $model });
+        install_subroutine(__PACKAGE__, $name => sub {$model});
     }
 }
 

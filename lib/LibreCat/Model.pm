@@ -6,9 +6,9 @@ use namespace::clean;
 
 with 'LibreCat::Logger';
 
-has bag        => (is => 'ro', required => 1, handles => [qw(generate_id)]);
+has bag => (is => 'ro', required => 1, handles => [qw(generate_id)]);
 has search_bag => (is => 'ro', required => 1);
-has validator  => (is => 'ro', required => 1, handles => [qw(is_valid)]);
+has validator => (is => 'ro', required => 1, handles => [qw(is_valid)]);
 
 sub get {
     my ($self, $id) = @_;
@@ -76,7 +76,7 @@ sub _apply_whitelist {
     my $validator = $self->validator;
     my $whitelist = $validator->whitelist;
     for my $key (keys %$rec) {
-        unless (grep { $_ eq $key } @$whitelist) {
+        unless (grep {$_ eq $key} @$whitelist) {
             $self->log->debug("deleting invalid key: $key");
             delete $rec->{$key};
         }
