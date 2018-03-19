@@ -73,7 +73,7 @@ sub install_models {
             validator  => $validator,
             %$config,
         );
-        install_subroutine(__PACKAGE__, $name => sub {$model});
+        install_subroutine($self, $name => sub {$model});
     }
 }
 
