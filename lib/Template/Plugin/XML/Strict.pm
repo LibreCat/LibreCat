@@ -27,4 +27,14 @@ sub filter {
     $text;
 }
 
+=head1 NAME
+
+Template::Plugin::XML::Strict - a really strict xml filter for templates
+
+=head1 SYNOPSIS
+
+    # in your templates
+    [% my_bad_chars | xml_strict %]
+
+=cut
 1;
