@@ -12,26 +12,6 @@ BEGIN {
 }
 require_ok $pkg;
 
-throws_ok {
-    $pkg->new()->fix(
-        {
-            type => 'journal_article',
-            file => [{access_level => 'open_access', relation => 'main_file'}]
-        }
-    );
-}
-qr /type and _id are required/, "caught missing _id";
-
-throws_ok {
-    $pkg->new()->fix(
-        {
-            _id  => 1,
-            file => [{access_level => 'open_access', relation => 'main_file'}]
-        }
-    );
-}
-qr /type and _id are required/, "caught missing type";
-
 is_deeply $pkg->new()->fix(
     {
         _id  => 1,

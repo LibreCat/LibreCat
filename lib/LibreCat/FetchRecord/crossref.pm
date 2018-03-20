@@ -1,10 +1,12 @@
 package LibreCat::FetchRecord::crossref;
 
 use Catmandu::Util qw(:io :hash);
-use URL::Encode qw(url_decode);
+use URI::Escape;
 use Moo;
 
 with 'LibreCat::FetchRecord';
+
+has 'baseurl' => (is => 'ro' , default => sub { "https://api.crossref.org/works/" });
 
 sub fetch {
     my ($self, $id) = @_;
@@ -14,8 +16,9 @@ sub fetch {
 
     $self->log->debug("requesting $id from crossref");
 
-    my $data = Catmandu->importer('getJSON',
-        from => url_decode("http://api.crossref.org/works/$id"),)->to_array;
+    my $url  = sprintf "%s%s" , $self->baseurl , uri_escape_utf8($id);
+
+    my $data = Catmandu->importer('getJSON', from => $url)->to_array;
 
     unless (@$data) {
         $self->log->error(

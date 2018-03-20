@@ -628,8 +628,9 @@ function add_field(name, placeholder){
 function remove_field(object){
         var container = $(object).closest('div.multirow');
         var index = $(container).index();
+        var total = $(container).parent().children('div.multirow').size();
 
-        if(parseInt(index) > 0){
+        if(parseInt(total) > 1){
           var all_containers = $(container).parent().children('div.multirow');
           $(container).remove();
           var cont = $(all_containers).slice(index + 1);
@@ -654,7 +655,7 @@ function remove_field(object){
                   });
           });
         }
-        else if(parseInt(index) == 0){
+        else if(parseInt(total) == 1){
                 $(container).find('input, textarea, img, select').each(function(){
                         $(this).val('');
                         $(this).attr('disabled',false);
@@ -721,7 +722,7 @@ function enable_autocomplete(field, index) {
         default:
             type = "department"
     }
-    
+
     $( "#" + field + "_autocomplete_" + index ).autocomplete({
         source: librecat.uri_base + "/get_" + type,
         minLength: 0,

@@ -1,8 +1,11 @@
 use strict;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use Test::TCP;
+use HTTPServer;
+use Path::Tiny;
 
 my $pkg;
 
@@ -13,29 +16,47 @@ BEGIN {
 
 require_ok $pkg;
 
-my $x;
+test_tcp(
+    client => sub {
+       my $port = shift;
+       my $x    = $pkg->new(baseurl => "http://127.0.0.1:$port/");
+       my $pub  = $x->fetch('10.6084');
 
-lives_ok {$x = $pkg->new()} 'lives_ok';
+       ok $pub , 'got a publication';
 
-can_ok $pkg, $_ for qw(fetch);
+       is $pub->[0]{title} , 'Gravity as Entanglement, and Entanglement as Gravity' , 'got a title';
+       is $pub->[0]{type}, 'research_data', 'type == research_data';
 
-SKIP: {
-
-    unless ($ENV{NETWORK_TEST}) {
-        skip("No network. Set NETWORK_TEST to run these tests.", 5);
-    }
-
-    my $pub = $x->fetch('10.6084/M9.FIGSHARE.94301.V1');
-
-    ok $pub , 'got a publication';
-
-    is $pub->[0]{title},
-        'Gravity as Entanglement, and Entanglement as Gravity', 'got a title';
-    is $pub->[0]{type}, 'research_data', 'type == research_data';
-
-    $pub = $x->fetch('10.23432/3432');
-
-    ok !$pub, "empty record";
-}
+       ok ! $x->fetch('10.6085');
+       ok ! $x->fetch('6666');
+    },
+    server => sub {
+       my $port = shift;
+       t::HTTPServer->new(port => $port)->run(sub {;
+           my $env = shift;
+           if ($env->{PATH_INFO} =~ /10\.6084/) {
+               my $body = path("t/records/datacite.xml")->slurp;
+               return [ 200,
+                   [ 'Content-Length' => length($body) ],
+                   [ $body ]
+               ];
+           }
+           elsif ($env->{PATH_INFO} =~ /10\.6085/) {
+               my $body = '';
+               return [ 200,
+                   [ 'Content-Length' => length($body) ],
+                   [ $body ]
+               ];
+           }
+           else {
+               my $body = 'bad boy';
+               return [ 404,
+                   [ 'Content-Length' => length($body) ],
+                   [ $body ]
+               ];
+           }
+       });
+   }
+);
 
 done_testing;

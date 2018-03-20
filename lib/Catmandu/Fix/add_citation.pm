@@ -1,5 +1,13 @@
 package Catmandu::Fix::add_citation;
 
+=pod
+
+=head1 NAME
+
+Catmandu::Fix::add_citation - add a 'citation' field calculated from the data
+
+=cut
+
 use Catmandu::Sane;
 use LibreCat::Citation;
 use Moo;

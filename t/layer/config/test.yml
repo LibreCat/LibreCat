@@ -176,3 +176,7 @@ queue:
 
 worker:
     logdir: /tmp
+
+helper_plugins:
+  - MyHelperPlugin
+

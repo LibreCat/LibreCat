@@ -78,7 +78,7 @@ sub _check {
                         printf "%s\t%s\t%s\n", $rec->{_id}, $hdr->{Status}, $rec->{url};
                     }
                     $cv->end;
-                    }
+                }
             }
         }
     );

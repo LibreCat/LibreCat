@@ -12,13 +12,13 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat user [options] list [<cql-query>]
-librecat user [options] export [<cql-query>]
-librecat user [options] add <FILE>
-librecat user [options] get <id> | <IDFILE>
-librecat user [options] delete <id> | <IDFILE>
-librecat user [options] valid <FILE>
-librecat user [options] passwd <id>
+librecat user list   [options] [<cql-query>]
+librecat user export [options] [<cql-query>]
+librecat user add    [options] <FILE>
+librecat user get    [options] <id> | <IDFILE>
+librecat user delete [options] <id> | <IDFILE>
+librecat user valid  [options] <FILE>
+librecat user passwd [options] <id>
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -354,13 +354,13 @@ LibreCat::Cmd::user - manage librecat users
 
 =head1 SYNOPSIS
 
-    librecat user list [<cql-query>]
-    librecat user export [<cql-query>]
-    librecat user add <FILE>
-    librecat user get <id> | <IDFILE>
-    librecat user delete <id> | <IDFILE>
-    librecat user valid <FILE>
-    librecat user passwd <id>
+    librecat user list   [options] [<cql-query>]
+    librecat user export [options] [<cql-query>]
+    librecat user add    [options] <FILE>
+    librecat user get    [options] <id> | <IDFILE>
+    librecat user delete [options] <id> | <IDFILE>
+    librecat user valid  [options] <FILE>
+    librecat user passwd [options] <id>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])
