@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(require_package);
 use String::CamelCase qw(camelize);
 use Data::Util qw(install_subroutine);
+use POSIX qw(strftime);
 use LibreCat::Layers;
 use LibreCat::Hook;
 use Catmandu;
@@ -52,6 +53,11 @@ sub import {
     }
 }
 
+# TODO this duplicates LibreCat::Logger
+sub log {
+    state $log = Log::Log4perl::get_logger($_[0]);
+}
+
 sub models {
     [qw(publication department research_group user project)];
 }
@@ -67,10 +73,12 @@ sub install_models {
             = require_package('LibreCat::Validator::JSONSchema');
         my $validator
             = $validator_pkg->new(schema => $self->config->{schemas}{$name});
-        my $model = $pkg->new(
-            bag        => Catmandu->store('main')->bag($name),
-            search_bag => Catmandu->store('search')->bag($name),
-            validator  => $validator,
+        my $update_fixer = $self->fixer("update_${name}.fix");
+        my $model        = $pkg->new(
+            bag               => Catmandu->store('main')->bag($name),
+            search_bag        => Catmandu->store('search')->bag($name),
+            validator         => $validator,
+            append_before_add => [update_fixer => $update_fixer],
             %$config,
         );
         install_subroutine($self, $name => sub {$model});
@@ -104,9 +112,36 @@ sub hook {
     };
 }
 
+sub fixer {
+    my ($self, $file) = @_;
+
+    $self->log->debug("searching for fix '$file'");
+
+    for my $path (@{$self->layers->fixes_paths}) {
+        $self->log->debug("testing '$path/$file'");
+        if (-r "$path/$file") {
+            $self->log->debug("found '$path/$file'");
+            return Catmandu::Fix->new(fixes => ["$path/$file"]);
+        }
+    }
+
+    $self->log->error("can't find a fixer for '$file'");
+
+    # TODO this should throw an error and not be called at all if there is no
+    # fix
+    Catmandu::Fix->new;
+}
+
 sub searcher {
     state $searcher = require_package('LibreCat::Search')
         ->new(store => Catmandu->store('search'));
+}
+
+sub timestamp {
+    my $time = $_[1] // time;
+    my $time_format = $_[0]->config->{time_format} // '%Y-%m-%dT%H:%M:%SZ';
+    my $now = strftime($time_format, gmtime($time));
+    $now;
 }
 
 1;

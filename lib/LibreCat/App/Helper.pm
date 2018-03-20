@@ -221,7 +221,7 @@ sub all_marked {
 }
 
 sub get_publication {
-    $_[0]->publication->get($_[1]);
+    LibreCat->publication->get($_[1]);
 }
 
 # TODO clean this up
@@ -242,12 +242,12 @@ sub get_person {
 }
 
 sub get_project {
-    $_[0]->project->get($_[1]);
+    LibreCat->project->get($_[1]);
 }
 
 sub get_department {
     if ($_[1] && length $_[1]) {
-        $_[0]->department->get($_[1]);
+        LibreCat->department->get($_[1]);
     }
 }
 
