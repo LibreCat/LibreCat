@@ -25,6 +25,9 @@ before_install:
   - cpanm local::lib
   - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"
 
+after_install:
+  - bin/librecat queue start
+
 before_script:
   - sleep 3
 
