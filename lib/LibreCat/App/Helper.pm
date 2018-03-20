@@ -267,7 +267,7 @@ sub get_statistics {
     my ($self) = @_;
 
     my $hits = LibreCat->searcher->search('publication',
-        {cql => ["status=public", "type<>research_data"]});
+        {cql => ["status=public"]});
     my $reshits = LibreCat->searcher->search('publication',
         {cql => ["status=public", "type=research_data"]});
     my $oahits = LibreCat->searcher->search('publication',
@@ -409,7 +409,7 @@ sub delete_record {
         my $del_record = $self->publication->get($id);
 
         return undef unless $del_record;
-        
+
         if ($del_record->{oai_deleted} || $del_record->{status} eq 'public') {
             $del_record->{oai_deleted} = 1;
             $del_record->{locked}      = 1;
