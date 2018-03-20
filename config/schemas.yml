@@ -919,7 +919,6 @@ user:
     publication_count: &publication_count
       type: integer
       description: "Flag if person should be displayed on /person list"
-    data_count: *publication_count
 
   required: ["_id","account_status","first_name","last_name","full_name"]
   additionalProperties: true

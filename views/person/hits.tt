@@ -21,17 +21,17 @@
 
 <div class="row">
   <div class="col-md-12">
-    <dl class="hitlist">
-    [%- FOREACH person IN hits %]
-      <dt><a href="[% uri_base %]/person/[% person._id %]">[% person.full_name %][% IF person.idm_title %], [% person.idm_title %][% END %]</a>
-          | [% IF person.publication_count %][% person.publication_count %] [% END %][% IF person.data_count %]| [% person.data_count %][% END %]</dt>
-        <dd>
-        [%- FOREACH affil IN person.department %]
-          <span class="text-muted">[% h.get_department(affil._id).display %]</span>[% IF !loop.last %], [% END %]
-        [%- END %]
-        </dd>
-    [%- END %]
-    </dl>
+      <dl class="hitlist">
+      [%- FOREACH p IN hits %]
+  	  <dt>
+  	    <a href="[% uri_base %]/person/[% p._id %]">[% p.full_name %]</a>
+  	    | <span class="text-muted">ID: [% p._id %]</span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: [% p.publication_count || 0 %]</span></span><br />
+  	  </dt>
+  	  <dd>
+  	    <span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>
+  	  </dd>
+      [%- END %]
+      </dl>
   </div>
 </div>
 <!-- END person/hits.tt -->
