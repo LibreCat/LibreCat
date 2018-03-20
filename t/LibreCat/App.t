@@ -38,11 +38,6 @@ response_status_is    [GET => '/person'], 200, 'GET /person status is ok';
 response_content_like [GET => '/person'], qr/Authors/,
     "content looks good for /person";
 
-route_exists          [GET => '/data'], "GET /data is handled";
-response_status_is    [GET => '/data'], 200, 'GET /data status is ok';
-response_content_like [GET => '/data'], qr/Data Publications/,
-    "content looks good for /data";
-
 route_exists          [GET => '/project'], "GET /data is handled";
 response_status_is    [GET => '/project'], 200, 'GET /data status is ok';
 response_content_like [GET => '/project'], qr/Project/,
