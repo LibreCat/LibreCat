@@ -24,7 +24,7 @@ sub BUILD {
 }
 
 sub delete {
-    my ($self, $id) = @_;
+    my ($self, $id, %opts) = @_;
 
     my $rec = $self->get($id) || return;
 
@@ -36,7 +36,7 @@ sub delete {
     $rec->{date_deleted} = LibreCat->timestamp;
     $rec->{status}       = 'deleted';
 
-    $self->add($rec);
+    $self->add($rec, %opts);
 }
 
 sub _store_file {

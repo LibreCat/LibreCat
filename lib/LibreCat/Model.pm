@@ -72,9 +72,10 @@ sub add {
     if ($self->is_valid($rec)) {
         $self->_store($rec, %opts);
         $self->_index($rec, %opts);
+        $opts{on_success}->($rec) if $opts{on_success};
     }
     elsif ($opts{on_validation_error}) {
-        $opts{on_validation_error}->($rec);
+        $opts{on_validation_error}->($rec, $self->validator->last_errors);
     }
 
     $rec;
@@ -83,6 +84,11 @@ sub add {
 sub delete {
     my ($self, $id, %opts) = @_;
     $self->purge($id, %opts);
+}
+
+sub delete_all {
+    my ($self, %opts) = @_;
+    $self->purge_all(%opts);
 }
 
 sub _store {
@@ -122,6 +128,28 @@ sub purge {
     sleep 1 unless $opts{skip_commit};    # TODO move to controller
 
     $id;
+}
+
+sub purge_all {
+    my ($self, %opts) = @_;
+
+    $self->bag->delete_all;
+    $self->bag->commit unless $opts{skip_commit};
+
+    $self->search_bag->delete_all;
+    $self->search_bag->commit unless $opts{skip_commit};
+
+    sleep 1 unless $opts{skip_commit};    # TODO move to controller
+
+    # TODO return value
+}
+
+sub commit {
+    my ($self) = @_;
+    $self->bag->commit;
+    $self->search_bag->commit;
+
+    # TODO return value
 }
 
 # TODO compile this
