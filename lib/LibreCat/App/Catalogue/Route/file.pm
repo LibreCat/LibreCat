@@ -104,7 +104,7 @@ get '/rc/approve/:key' => sub {
     $bag->add($data);
 
     my $body
-        = export_to_string({key => params->{key}, uri_base => h->uri_base(), appname_short => h->config->{appname_short}},
+        = export_to_string({key => params->{key}, uri_base => h->uri_base(), appname_short => h->loc("appname_short")},
         'Template', template => 'views/email/req_copy_approve.tt');
 
     my $job = {
@@ -141,7 +141,7 @@ get '/rc/deny/:key' => sub {
         subject => h->config->{request_copy}->{subject},
         from    => h->config->{request_copy}->{from},
         body    => export_to_string(
-            {appname_short => h->config->{appname_short}}, 'Template', template => 'views/email/req_copy_deny.tt'
+            {appname_short => h->loc("appname_short")}, 'Template', template => 'views/email/req_copy_deny.tt'
         ),
     };
 
@@ -213,7 +213,7 @@ any '/rc/:id/:file_id' => sub {
     if (params->{user_email}) {
         my $pub
             = Catmandu->store('main')->bag('publication')->get(params->{id});
-            
+
         my $mail_body = export_to_string(
             {
                 title      => $pub->{title},
@@ -221,7 +221,7 @@ any '/rc/:id/:file_id' => sub {
                 mesg       => params->{mesg} || '',
                 key        => $stored->{_id},
                 uri_base   => h->uri_base(),
-                appname_short => h->config->{appname_short},
+                appname_short => h->loc("appname_short"),
             },
             'Template',
             template => 'views/email/req_copy.tt',
