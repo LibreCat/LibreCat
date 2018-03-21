@@ -174,11 +174,12 @@ sub extract_params {
             $p->{$key} = $params->{$key} if is_natural $params->{$key};
         }
         elsif($self->config->{helper}->{extract_params}->{$key} eq "string_array"){
-            $p->{$key} = $self->string_array($params->{$key}) if $params->{$key};
+            $p->{$key} = $self->string_array($params->{$key});
         }
     }
 
     # additional parameters with more complex logic
+    $p->{sort} = $self->string_array($params->{sort}) if $params->{sort};
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
         : (push @{$p->{q}}, join(" AND ", split(/ |-/, $params->{text})))

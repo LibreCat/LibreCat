@@ -9,4 +9,3 @@ extract_params:
   cql: "string_array"
   links: "exists"
   style: "exists"
-  sort: "string_array"
