@@ -591,6 +591,11 @@ search:
                 '=': true
                 '<>': true
               field: 'main_file_link.open_access'
+            oa:
+              op:
+                '=': true
+                '<>': true
+              field: ['main_file_link.open_access', 'file.open_access']
             embargo:
               op:
                 '=': true
