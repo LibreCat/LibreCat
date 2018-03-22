@@ -86,11 +86,36 @@ my $session_state_options = is_hash_ref($config->{session_state}->{options}) ?
 
 my $uri_base = Catmandu->config->{uri_base} // Catmandu->config->{host} // "http://localhost:5001";
 
+my $auth_sso = is_array_ref( $config->{auth_sso} ) ? $config->{auth_sso} : [];
+my $session_sso = is_array_ref( $config->{session_sso} ) ? $config->{session_sso} : [];
+
 builder {
     enable '+Dancer::Middleware::Rebase', base => $uri_base, strip => 0 if is_string( $uri_base );
     enable 'Deflater';
     enable 'Session',
         store => require_package( $session_store_package )->new( %$session_store_options ),
         state => require_package( $session_state_package )->new( %$session_state_options );
-    $app->to_app;
+
+    for my $as ( @$auth_sso ) {
+
+        mount $as->{path} => require_package( $as->{package}, "Plack::Auth::SSO" )->new(
+
+            %{ $as->{options} || {} },
+            uri_base => $uri_base
+
+        )->to_app();
+
+    }
+    for my $as ( @$session_sso ) {
+
+        mount $as->{path} => require_package( $as->{package}, "LibreCat::Auth::SSO" )->new(
+
+            %{ $as->{options} || {} },
+            uri_base => $uri_base
+
+        )->to_app();
+
+    }
+
+    mount '/' => $app->to_app;
 };

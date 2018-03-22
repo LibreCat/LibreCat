@@ -15,7 +15,7 @@ my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 note("homepage");
 {
     $mech->get_ok('/');
-    $mech->title_is('LibreCat', 'testing title');
+    $mech->title_like(qr/LibreCat/, 'testing title');
     $mech->has_tag('h1', 'Publications at LibreCat University');
 
     # check if all links work

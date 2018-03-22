@@ -103,15 +103,9 @@ get '/rc/approve/:key' => sub {
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body = export_to_string(
-        {
-            key           => params->{key},
-            uri_base      => h->uri_base(),
-            appname_short => h->config->{appname_short}
-        },
-        'Template',
-        template => 'views/email/req_copy_approve.tt'
-    );
+    my $body
+        = export_to_string({key => params->{key}, uri_base => h->uri_base(), appname_short => h->loc("appname_short")},
+        'Template', template => 'views/email/req_copy_approve.tt');
 
     my $job = {
         to      => $data->{user_email},
@@ -147,9 +141,13 @@ get '/rc/deny/:key' => sub {
         subject => h->config->{request_copy}->{subject},
         from    => h->config->{request_copy}->{from},
         body    => export_to_string(
+<<<<<<< HEAD
             {appname_short => h->config->{appname_short}},
             'Template',
             template => 'views/email/req_copy_deny.tt'
+=======
+            {appname_short => h->loc("appname_short")}, 'Template', template => 'views/email/req_copy_deny.tt'
+>>>>>>> dev
         ),
     };
 
@@ -224,12 +222,21 @@ any '/rc/:id/:file_id' => sub {
 
         my $mail_body = export_to_string(
             {
+<<<<<<< HEAD
                 title         => $pub->{title},
                 user_email    => params->{user_email},
                 mesg          => params->{mesg} || '',
                 key           => $stored->{_id},
                 uri_base      => h->uri_base(),
                 appname_short => h->config->{appname_short},
+=======
+                title      => $pub->{title},
+                user_email => params->{user_email},
+                mesg       => params->{mesg} || '',
+                key        => $stored->{_id},
+                uri_base   => h->uri_base(),
+                appname_short => h->loc("appname_short"),
+>>>>>>> dev
             },
             'Template',
             template => 'views/email/req_copy.tt',
@@ -270,15 +277,19 @@ and user rights will be checked before.
 get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     my ($id, $file_id) = splat;
 
-    my $user = h->get_person(session->{user_id});
-
     my ($ok, $file_name) = p->can_download(
         $id,
         {
             file_id => $file_id,
+<<<<<<< HEAD
             user    => $user,
             role    => session->{role},
             ip      => request->address
+=======
+            user_id => session->{user_id},
+            role => session->{role},
+            ip   => request->address
+>>>>>>> dev
         }
     );
 
