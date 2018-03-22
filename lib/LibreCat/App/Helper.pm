@@ -165,19 +165,24 @@ sub extract_params {
     my $p = {};
     return $p if ref $params ne 'HASH';
 
-    $p->{start} = $params->{start} if is_natural $params->{start};
-    $p->{limit} = $params->{limit} if is_natural $params->{limit};
-    $p->{lang}  = $params->{lang}  if $params->{lang};
-    $p->{q}     = $params->{q}     if $params->{q};
-    $p->{cql} = $self->string_array($params->{cql});
+    # parameters configured in helper.yml
+    foreach my $key (keys %{$self->config->{helper}->{extract_params}}){
+        if($self->config->{helper}->{extract_params}->{$key} eq "exists"){
+            $p->{$key} = $params->{$key} if $params->{$key};
+        }
+        elsif($self->config->{helper}->{extract_params}->{$key} eq "is_natural"){
+            $p->{$key} = $params->{$key} if is_natural $params->{$key};
+        }
+        elsif($self->config->{helper}->{extract_params}->{$key} eq "string_array"){
+            $p->{$key} = $self->string_array($params->{$key}) if $params->{$key};
+        }
+    }
 
+    # additional parameters with more complex logic
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
         : (push @{$p->{q}}, join(" AND ", split(/ |-/, $params->{text})))
         if $params->{text};
-
-    $p->{style} = $params->{style} if $params->{style};
-    $p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
 
     $p;
 }
@@ -409,7 +414,7 @@ sub delete_record {
         my $del_record = $self->publication->get($id);
 
         return undef unless $del_record;
-        
+
         if ($del_record->{oai_deleted} || $del_record->{status} eq 'public') {
             $del_record->{oai_deleted} = 1;
             $del_record->{locked}      = 1;
