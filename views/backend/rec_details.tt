@@ -84,11 +84,23 @@
     <div class="col-md-2 text-muted">Departments</div>
     <div class="col-md-10">
     [% FOREACH dept IN entry.department %]
-      [% h.get_department(dept._id).display %]<br>
+      <a href="[% uri_base %]/librecat?cql=department=[% dept._id %]">[% h.get_department(dept._id).display %]</a><br>
     [% END %]
     </div>
   </div>
 [% END %]
+
+[% IF entry.project %]
+  <div class="col-md-12">
+    <div class="col-md-2 text-muted">Projects</div>
+    <div class="col-md-10">
+    [% FOREACH proj IN entry.project %]
+      <a href="[% uri_base %]/librecat?cql=project=[% proj._id %]">[% h.get_project(proj._id).name %]</a><br>
+    [% END %]
+    </div>
+  </div>
+[% END %]
+
 </div>
 
 [% IF entry.file %]
