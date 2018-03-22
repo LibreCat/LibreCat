@@ -42,7 +42,7 @@ sub hook {
 }
 
 sub queue {
-    state $config = LibreCat::JobQueue->new;
+    LibreCat->queue;
 }
 
 sub layers {
@@ -393,7 +393,7 @@ sub delete_record {
         my $del_record = $self->publication->get($id);
 
         return undef unless $del_record;
-        
+
         if ($del_record->{oai_deleted} || $del_record->{status} eq 'public') {
             $del_record->{oai_deleted} = 1;
             $del_record->{locked}      = 1;

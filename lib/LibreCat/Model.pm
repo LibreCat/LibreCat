@@ -6,6 +6,7 @@ use List::Util qw(pairs);
 use Moo::Role;
 use namespace::clean;
 
+with 'Catmandu::Pluggable';
 with 'LibreCat::Logger';
 
 has bag => (is => 'ro', required => 1, handles => 'Catmandu::Iterable');
@@ -14,6 +15,10 @@ has search_bag =>
 has validator =>
     (is => 'ro', required => 1, handles => [qw(is_valid whitelist)]);
 has before_add => (is => 'lazy');
+
+sub plugin_namespace {
+    'LibreCat::Model::Plugin';
+}
 
 sub _build_before_add {
     [whitelist => 'apply_whitelist'];
@@ -31,6 +36,7 @@ sub append_before_add {
 
 sub BUILD {
     my ($self, $opts) = @_;
+
     for my $method (qw(prepend_before_add append_before_add)) {
         if (my $hooks = $opts->{$method}) {
             $self->$method(@$hooks);

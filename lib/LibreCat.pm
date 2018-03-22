@@ -66,17 +66,22 @@ sub install_models {
     my ($self) = @_;
     my $models = $self->models;
     for my $name (@$models) {
-        my $config   = $self->config->{$name} // {};
-        my $pkg_name = camelize($name);
-        my $pkg      = require_package($pkg_name, 'LibreCat::Model');
+        my $config         = $self->config->{$name} // {};
+        my $bag            = Catmandu->store('main')->bag($name),
+            my $search_bag = Catmandu->store('search')->bag($name),
+            my $pkg_name   = camelize($name);
+        my $pkg = require_package($pkg_name, 'LibreCat::Model');
+        if ($bag->does('Catmandu::Plugin::Versioning')) {
+            $pkg = $pkg->with_plugins('Versioning');
+        }
         my $validator_pkg
             = require_package('LibreCat::Validator::JSONSchema');
         my $validator
             = $validator_pkg->new(schema => $self->config->{schemas}{$name});
         my $update_fixer = $self->fixer("update_${name}.fix");
         my $model        = $pkg->new(
-            bag               => Catmandu->store('main')->bag($name),
-            search_bag        => Catmandu->store('search')->bag($name),
+            bag               => $bag,
+            search_bag        => $search_bag,
             validator         => $validator,
             append_before_add => [update_fixer => $update_fixer],
             %$config,
@@ -142,6 +147,10 @@ sub timestamp {
     my $time_format = $_[0]->config->{time_format} // '%Y-%m-%dT%H:%M:%SZ';
     my $now = strftime($time_format, gmtime($time));
     $now;
+}
+
+sub queue {
+    state $queue = require_package('LibreCat::JobQueue')->new;
 }
 
 1;

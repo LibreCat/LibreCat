@@ -36,7 +36,11 @@ sub delete {
     $rec->{date_deleted} = LibreCat->timestamp;
     $rec->{status}       = 'deleted';
 
-    $self->add($rec, %opts);
+    # TODO can't call add because date_deleted & co aren't whitelisted
+    $self->_store($rec, %opts);
+    $self->_index($rec, %opts);
+
+    $id;
 }
 
 sub _store_file {

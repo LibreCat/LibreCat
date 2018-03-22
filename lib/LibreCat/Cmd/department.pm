@@ -176,7 +176,7 @@ sub _tree_parse {
     croak "usage: $0 tree <file>" unless defined($file) && -r $file;
 
     my $importer = Catmandu->importer('YAML', file => $file);
-    my $HASH     = $importer->first;
+    my $HASH = $importer->first;
 
     print "deleting previous departments...\n";
     LibreCat->department->delete_all;
@@ -304,16 +304,15 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret      = 0;
+    my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
 
-    LibreCat->department->add_many($importer,
+    LibreCat->department->add_many(
+        $importer,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
             say STDERR join("\n",
-                $rec->{_id},
-                "ERROR: not a valid department",
-                @$errors);
+                $rec->{_id}, "ERROR: not a valid department", @$errors);
             $ret = 2;
         },
         on_success => sub {
