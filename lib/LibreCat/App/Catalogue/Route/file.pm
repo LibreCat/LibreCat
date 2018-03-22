@@ -141,13 +141,7 @@ get '/rc/deny/:key' => sub {
         subject => h->config->{request_copy}->{subject},
         from    => h->config->{request_copy}->{from},
         body    => export_to_string(
-<<<<<<< HEAD
-            {appname_short => h->config->{appname_short}},
-            'Template',
-            template => 'views/email/req_copy_deny.tt'
-=======
             {appname_short => h->loc("appname_short")}, 'Template', template => 'views/email/req_copy_deny.tt'
->>>>>>> dev
         ),
     };
 
@@ -222,21 +216,12 @@ any '/rc/:id/:file_id' => sub {
 
         my $mail_body = export_to_string(
             {
-<<<<<<< HEAD
-                title         => $pub->{title},
-                user_email    => params->{user_email},
-                mesg          => params->{mesg} || '',
-                key           => $stored->{_id},
-                uri_base      => h->uri_base(),
-                appname_short => h->config->{appname_short},
-=======
                 title      => $pub->{title},
                 user_email => params->{user_email},
                 mesg       => params->{mesg} || '',
                 key        => $stored->{_id},
                 uri_base   => h->uri_base(),
                 appname_short => h->loc("appname_short"),
->>>>>>> dev
             },
             'Template',
             template => 'views/email/req_copy.tt',
@@ -281,15 +266,9 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
         $id,
         {
             file_id => $file_id,
-<<<<<<< HEAD
-            user    => $user,
-            role    => session->{role},
-            ip      => request->address
-=======
             user_id => session->{user_id},
             role => session->{role},
             ip   => request->address
->>>>>>> dev
         }
     );
 
