@@ -24,13 +24,11 @@ subtest 'person list alphabetical index' => sub {
 subtest 'person profile with single digit id' => sub {
     $mech->get_ok('/person/1');
     $mech->content_like(qr/Test User/);
-    $mech->get_ok('/person/1/data');
 };
 
 subtest 'person profile with id' => sub {
     $mech->get_ok('/person/1234');
     $mech->content_like(qr/Albert Einstein/);
-    $mech->get_ok('/person/1234/data');
 };
 
 subtest 'person profile with alias' => sub {

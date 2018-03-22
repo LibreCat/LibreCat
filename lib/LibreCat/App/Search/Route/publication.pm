@@ -27,7 +27,7 @@ get '/publication/:id.:fmt' => sub {
         };
 };
 
-=head2 GET /{data|publication}/:id
+=head2 GET /publication/:id
 
 Splash page for :id.
 
