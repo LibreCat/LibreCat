@@ -8,6 +8,9 @@ use LibreCat load => (layer_paths => [qw(t/layer)]);
     like $loaded, qr/0|1/;
 }
 
+isa_ok(LibreCat->user, "LibreCat::Model::User",
+    "LibreCat->user returns a LibreCat::Model::User");
+
 # hooks
 
 {

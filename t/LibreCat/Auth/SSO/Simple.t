@@ -27,9 +27,6 @@ Catmandu->config->{store}->{builtin_users} = {
 Catmandu->config->{user}
     = {sources => [{store => "builtin_users", username_attr => "login"}]};
 
-isa_ok(LibreCat->user, "LibreCat::User",
-    "LibreCat->user returns a LibreCat::User");
-
 $Plack::Test::Impl = "MockHTTP";
 my $auth;
 my $uri_base = "http://localhost.local";
