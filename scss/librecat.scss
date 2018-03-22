@@ -157,6 +157,11 @@ a.anchor {
     visibility: hidden;
 }
 
+div.anchor {
+    padding-top: 52px;
+    margin-top: -52px;
+}
+
 /* Some margin for row'ed paragraphs */
 
 .row > p {
