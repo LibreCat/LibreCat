@@ -11,12 +11,12 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat research_group [options] list [<cql-query>]
-librecat research_group [options] export [<cql-query>]
-librecat research_group [options] add <FILE>
-librecat research_group [options] get <id> | <IDFILE>
-librecat research_group [options] delete <id> | <IDFILE>
-librecat research_group [options] valid <FILE>
+librecat research_group list   [options] [<cql-query>]
+librecat research_group export [options] [<cql-query>]
+librecat research_group add    [options] <FILE>
+librecat research_group get    [options] <id> | <IDFILE>
+librecat research_group delete [options] <id> | <IDFILE>
+librecat research_group valid  [options] <FILE>
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -311,12 +311,12 @@ LibreCat::Cmd::research_group - manage librecat research_group-s
 
 =head1 SYNOPSIS
 
-    librecat research_group list [<cql-query>]
-    librecat research_group export [<cql-query>]
-    librecat research_group add <FILE>
-    librecat research_group get <id> | <IDFILE>
-    librecat research_group delete <id> | <IDFILE>
-    librecat research_group valid <FILE>
+    librecat research_group list   [options] [<cql-query>]
+    librecat research_group export [options] [<cql-query>]
+    librecat research_group add    [options] <FILE>
+    librecat research_group get    [options] <id> | <IDFILE>
+    librecat research_group delete [options] <id> | <IDFILE>
+    librecat research_group valid  [options] <FILE>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

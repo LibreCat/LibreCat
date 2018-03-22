@@ -1,7 +1,5 @@
 <!-- BEGIN person_profile.tt -->
-[%- IF thisPerson.department.0.name %]
-<a class="helpme helpme-md" data-placement="top">[% thisPerson.department.0.name %]</a><br>
-[%- END %]
+<div class="text-muted">[% h.get_department(thisPerson.department.0._id).display | html %]</div>
 [%- IF thisPerson.email_encoded || thisPerson.email %]
 <a class="helpme helpme-md" data-placement="top" title="[% h.loc("help.email") %]" href="mailto:[% thisPerson.email_encoded || thisPerson.email %]" itemprop="email">[% thisPerson.email_encoded.replace('@|&#64;', ' [at] ') || thisPerson.email %]</a><br>
 [%- END %]

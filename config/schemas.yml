@@ -51,7 +51,7 @@ publication:
     author: &author
       type: object
       properties:
-        first_name: &hn
+        first_name:
           type: string
           minLength: 1
           description: "Person first name"
@@ -74,6 +74,7 @@ publication:
         orcid:
           type: string
           description: "Person's ORCID iD"
+      required: ["first_name","last_name"]
 
     related_link: &related_link
         type: object

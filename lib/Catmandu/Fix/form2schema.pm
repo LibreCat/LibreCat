@@ -1,34 +1,5 @@
 package Catmandu::Fix::form2schema;
 
-use Catmandu::Sane;
-use Moo;
-use Catmandu::Fix::Has;
-
-has field => (fix_arg => 1);
-
-sub fix {
-    my ($self, $data) = @_;
-    my $field = $self->field;
-    if (my $path = $data->{$field} and ref $data->{$field} eq 'ARRAY') {
-        my $out;
-        foreach my $pid (@$path) {
-            $pid->{type} = 'unknown'
-                unless $pid->{type} && length $pid->{type};
-            $out->{$pid->{type}} = [] unless $out->{$pid->{type}};
-            push @{$out->{$pid->{type}}}, $pid->{value};
-        }
-
-        delete $data->{$field};
-        $data->{$field} = $out if $out;
-    }
-
-    return $data;
-}
-
-1;
-
-__END__
-
 =pod
 
 =head1 NAME
@@ -55,3 +26,30 @@ Catmandu::Fix::form2schema - transforms data from form into a schema-valid struc
     # }
 
 =cut
+
+use Catmandu::Sane;
+use Moo;
+use Catmandu::Fix::Has;
+
+has field => (fix_arg => 1);
+
+sub fix {
+    my ($self, $data) = @_;
+    my $field = $self->field;
+    if (my $path = $data->{$field} and ref $data->{$field} eq 'ARRAY') {
+        my $out;
+        foreach my $pid (@$path) {
+            $pid->{type} = 'unknown'
+                unless $pid->{type} && length $pid->{type};
+            $out->{$pid->{type}} = [] unless $out->{$pid->{type}};
+            push @{$out->{$pid->{type}}}, $pid->{value};
+        }
+
+        delete $data->{$field};
+        $data->{$field} = $out if $out;
+    }
+
+    return $data;
+}
+
+1;

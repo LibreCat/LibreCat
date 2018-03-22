@@ -1,5 +1,6 @@
 use Catmandu::Sane;
 use Test::More;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
 
@@ -12,9 +13,7 @@ require_ok $pkg;
 is_deeply $pkg->new()->fix(
     {
         author => [
-            {first_name => 'DeleteMe'},
-            {last_name  => 'DeleteMeEither'},
-            {first_name => 'A.', last_name => 'Einstein'}, {},
+            {first_name => 'A.', last_name => 'Einstein'},
         ]
     }
     ),

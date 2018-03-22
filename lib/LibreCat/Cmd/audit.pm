@@ -10,8 +10,8 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat audit [options] list [<RECORD-ID>]
-librecat audit [options] get <AUDIT-ID>
+librecat audit list [options] [<RECORD-ID>]
+librecat audit get  [options] <AUDIT-ID>
 
 An 'audit' worker should be up and running to
 store messages:
@@ -109,8 +109,8 @@ LibreCat::Cmd::audit - manage librecat audit messages
 
 =head1 SYNOPSIS
 
-    librecat audit list [<RECORD-ID>]
-    librecat audit get <AUDIT-ID>
+    librecat audit list [options] [<RECORD-ID>]
+    librecat audit get  [options] <AUDIT-ID>
 
     An 'audit' worker should be up and running to
     store messages:

@@ -726,16 +726,18 @@ search:
                 '=': true
                 '<>': true
               field: _id
-            forschend:
-              op:
-                '=': true
-                '<>': true
-              field: bis.forschend
+            department:
+               op:
+                 'all': true
+                 'any': true
+                 '=': true
+                 'exact': {field: 'department.name.exact'}
+               field: [ "department._id" , "department.tree._id" ]
             former:
               op:
                 '=': true
                 '<>': true
-              field: bis.former
+              field: former
             publcount:
               op:
                 '=': true

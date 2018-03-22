@@ -11,12 +11,12 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat project [options] list [<cql-query>]
-librecat project [options] export [<cql-query>]
-librecat project [options] add <FILE>
-librecat project [options] get <id> | <IDFILE>
-librecat project [options] delete <id> | <IDFILE>
-librecat project [options] valid <FILE>
+librecat project list   [options] [<cql-query>]
+librecat project export [options] [<cql-query>]
+librecat project add    [options] <FILE>
+librecat project get    [options] <id> | <IDFILE>
+librecat project delete [options] <id> | <IDFILE>
+librecat project valid  [options] <FILE>
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -26,7 +26,7 @@ options:
 E.g.
 
 librecat project list 'id = P1'
-librecat user --sort "name,,1" list ""  # force to use an empty query
+librecat user list --sort "name,,1"  ""  # force to use an empty query
 
 EOF
 }
@@ -311,12 +311,12 @@ LibreCat::Cmd::project - manage librecat projects
 
 =head1 SYNOPSIS
 
-    librecat project list [<cql-query>]
-    librecat project export [<cql-query>]
-    librecat project add <FILE>
-    librecat project get <id> | <IDFILE>
-    librecat project delete <id> | <IDFILE>
-    librecat project valid <FILE>
+    librecat project list   [options] [<cql-query>]
+    librecat project export [options] [<cql-query>]
+    librecat project add    [options] <FILE>
+    librecat project get    [options] <id> | <IDFILE>
+    librecat project delete [options] <id> | <IDFILE>
+    librecat project valid  [options] <FILE>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

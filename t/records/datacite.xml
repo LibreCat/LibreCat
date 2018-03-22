@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
+  <identifier identifierType="DOI">10.6084/M9.FIGSHARE.94301.V1</identifier>
+  <creators>
+    <creator>
+      <creatorName>Васил Пенчев</creatorName>
+    </creator>
+  </creators>
+  <titles>
+    <title>Gravity as Entanglement, and Entanglement as Gravity</title>
+  </titles>
+  <publisher>Figshare</publisher>
+  <publicationYear/>
+  <resourceType resourceTypeGeneral="Dataset">Dataset</resourceType>
+  <subjects>
+    <subject>Quantum Mechanics</subject>
+    <subject>General Relativity</subject>
+  </subjects>
+  <dates>
+    <date dateType="Created">2012-08-15</date>
+    <date dateType="Issued">2012</date>
+    <date dateType="Updated">2016-01-11</date>
+  </dates>
+  <version>6</version>
+  <rightsList>
+    <rights rightsURI="http://creativecommons.org/licenses/by/3.0/us">CC-BY</rights>
+  </rightsList>
+  <descriptions>
+    <description descriptionType="Abstract">Describes the connection between gravity and entanglement</description>
+  </descriptions>
+</resource>

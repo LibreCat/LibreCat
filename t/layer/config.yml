@@ -1,0 +1,637 @@
+# main configuration file for Dancer
+appname: "LibreCat %ndash; Publication List Manager"
+appname_short: "LibreCat"
+charset: "UTF-8"
+
+# Template Engine
+template: "template_toolkit"
+engines:
+  template_toolkit:
+    encoding:  'utf8'
+    start_tag: '[%'
+    end_tag:   '%]'
+
+session: "PSGI"
+session_state:
+  package: "Plack::Session::State::Cookie"
+  options:
+    path: "/"
+    ## Turn in in https installations
+    # secure: 1
+    expires: 1209600
+session_store:
+  package: "Plack::Session::Store::Catmandu"
+  options:
+    store: main
+    bag: session
+
+plugins:
+  'Auth::Tiny':
+
+  Ajax:
+    content_type: 'application/json'
+
+  Passphrase:
+    default: Bcrypt
+    Bcrypt:
+      cost: 8
+
+  'Catmandu::SRU':
+    store: search
+    bag: publication
+    cql_filter: 'status exact public'
+    default_record_schema: mods
+    record_schemas:
+      -
+        identifier: "info:srw/schema/1/mods-v3.3"
+        name: mods
+        fix: ['fixes/to_mods.fix']
+        template: views/export/mods.tt
+
+  'Catmandu::OAI':
+    store: search
+    bag: publication
+    datestamp_field: date_updated
+    repositoryName: 'PUB - Publications at LibreCat University'
+    uri_base: "http://localhost:5001/oai"
+    adminEmail: helpdesk@librecat.org
+    earliestDatestamp: "1970-01-01T00:00:01Z"
+    deletedRecord: persistent
+    repositoryIdentifier: pub.librecat.org
+    get_record_cql_pattern: 'id exact "%s"'
+    cql_filter: 'status exact public OR oai_deleted=1'
+    limit: 200
+    delimiter: ":"
+    sampleIdentifier: "oai:pub.librecat.org:1585315"
+    xsl_stylesheet: "/oai.xsl"
+    metadata_formats:
+      -
+        metadataPrefix: oai_dc
+        schema: "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+        metadataNamespace: "http://www.openarchives.org/OAI/2.0/oai_dc/"
+        template: views/export/oai_dc.tt
+        #cql: '(status exact public OR status exact deleted)'
+        fix: ["fixes/to_dc.fix"]
+      -
+        metadataPrefix: mods
+        schema: "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"
+        metadataNamespace: "http://www.loc.gov/mods/v3"
+        template: views/export/mods.tt
+        cql: 'status exact public'
+        fix: ["fixes/to_mods.fix"]
+      -
+        metadataPrefix: epicur
+        schema: http://www.persistent-identifier.de/xepicur/version1.0/xepicur.xsd
+        metadataNamespace: urn:nbn:de:1111-2004033116
+        template: views/export/oai_epicur.tt
+        cql: 'status exact public AND fulltext exact 1'
+        fix: ["fixes/to_epicur.fix"]
+      -
+        metadataPrefix: xMetaDissPlus
+        schema: http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd
+        metadataNamespace: http://www.d-nb.de/standards/xmetadissplus
+        template: views/export/oai_xmdp.tt
+        cql: 'status exact public AND type=bi*'
+        fix: ["fixes/to_xmdp.fix"]
+      -
+        metadataPrefix: oai_datacite
+        schema: http://schema.datacite.org/meta/kernel-2.2/metadata.xsd
+        metadataNamespace: http://www.datacite.org/schema/namespace
+        template: views/export/datacite.tt
+        cql: 'status exact public AND type=researchData'
+        fix: ["fixes/to_datacite.fix"]
+      -
+        metadataPrefix: rdf
+        template: views/export/rdf.tt
+        fix: ["fixes/to_rdf.fix"]
+        cql: 'status exact public'
+        schema: http://www.openarchives.org/OAI/2.0/rdf.xsd
+        metadataNamespace: http://www.openarchives.org/OAI/2.0/rdf/
+    sets:
+      - setSpec: openaire_data
+        setName: OpenAire_data
+        cql: 'type exact researchData'
+      -
+        setSpec: bookChapterFtxt
+        setName: Book Chapter with fulltext
+        cql: 'type exact bookChapter AND fulltext exact 1'
+      -
+        setSpec: bookEditor
+        setName: Book Editor
+        cql: 'type exact bookEditor'
+      -
+        setSpec: bookEditorFtxt
+        setName: Book Editor with fulltext
+        cql: 'type exact bookEditor AND fulltext exact 1'
+      -
+        setSpec: bookFtxt
+        setName: Book
+        cql: 'type exact book AND fulltext exact 1'
+      -
+        setSpec: caseStudy
+        setName: Case Study
+        cql: 'type exact caseStudy'
+      -
+        setSpec: caseStudyFtxt
+        setName: Case Study with fulltext
+        cql: 'type exact caseStudy AND fulltext exact 1'
+      -
+        setSpec: conferenceAbstracFtxt
+        setName: Conference Abstract with fulltext
+        cql: 'type exact conferenceAbstract AND fulltext exact 1'
+      -
+        setSpec: conferenceAbstract
+        setName: Conference Abstract
+        cql: 'type exact conferenceAbstract'
+      -
+        setSpec: conferenceEditor
+        setName: Conference Editor
+        cql: 'type exact conferenceEditor'
+      -
+        setSpec: conferenceEditorFtxt
+        setName: Conference Editor with fulltext
+        cql: 'type exact conferenceEditor AND fulltext exact 1'
+      -
+        setSpec: conferenceFtxt
+        setName: Conference Proceeding/Paper with fulltext
+        cql: 'type exact conference AND fulltext exact 1'
+      -
+        setSpec: ddc:000
+        setName: Generalities, knowledge, the book
+        cql: 'fulltext exact 1 AND ddc exact 000'
+      -
+        setSpec: ddc:004
+        setName: Data processing, computer science, computer systems
+        cql: 'fulltext exact 1 AND ddc exact 004'
+      -
+        setSpec: ddc:010
+        setName: Bibliographies
+        cql: 'fulltext exact 1 AND ddc exact 010'
+      -
+        setSpec: ddc:020
+        setName: Library and information sciences
+        cql: 'fulltext exact 1 AND ddc exact 020'
+      -
+        setSpec: ddc:030
+        setName: Encyclopedias and books of facts
+        cql: 'fulltext exact 1 AND ddc exact 030'
+      -
+        setSpec: ddc:050
+        setName: Magazines, journals and serials
+        cql: 'fulltext exact 1 AND ddc exact 050'
+      -
+        setSpec: ddc:060
+        setName: Associations, organizations, and museum science
+        cql: 'fulltext exact 1 AND ddc exact 060'
+      -
+        setSpec: ddc:070
+        setName: News media, journalism and publishing
+        cql: 'fulltext exact 1 AND ddc exact 070'
+      -
+        setSpec: ddc:080
+        setName: General collections
+        cql: 'fulltext exact 1 AND ddc exact 080'
+      -
+        setSpec: ddc:090
+        setName: Manuscripts and rare books
+        cql: 'fulltext exact 1 AND ddc exact 090'
+      -
+        setSpec: ddc:100
+        setName: Philosophy
+        cql: 'fulltext exact 1 AND ddc exact 100'
+      -
+        setSpec: ddc:130
+        setName: Parapsychology and occultism
+        cql: 'fulltext exact 1 AND ddc exact 130'
+      -
+        setSpec: ddc:150
+        setName: Psychology
+        cql: 'fulltext exact 1 AND ddc exact 150'
+      -
+        setSpec: ddc:200
+        setName: Religion, Philosophy and theory of religion
+        cql: 'fulltext exact 1 AND ddc exact 200'
+      -
+        setSpec: ddc:220
+        setName: Bible
+        cql: 'fulltext exact 1 AND ddc exact 220'
+      -
+        setSpec: ddc:230
+        setName: Christianity and Christian theology
+        cql: 'fulltext exact 1 AND ddc exact 230'
+      -
+        setSpec: ddc:290
+        setName: Comparative religion and other religions
+        cql: 'fulltext exact 1 AND ddc exact 290'
+      -
+        setSpec: ddc:300
+        setName: Social sciences, sociology and anthropology
+        cql: 'fulltext exact 1 AND ddc exact 300'
+      -
+        setSpec: ddc:310
+        setName: Statistics
+        cql: 'fulltext exact 1 AND ddc exact 310'
+      -
+        setSpec: ddc:320
+        setName: Political science
+        cql: 'fulltext exact 1 AND ddc exact 320'
+      -
+        setSpec: ddc:330
+        setName: Economics
+        cql: 'fulltext exact 1 AND ddc exact 330'
+      -
+        setSpec: ddc:340
+        setName: Law
+        cql: 'fulltext exact 1 AND ddc exact 340'
+      -
+        setSpec: ddc:350
+        setName: Public administration
+        cql: 'fulltext exact 1 AND ddc exact 350'
+      -
+        setSpec: ddc:355
+        setName: Military science
+        cql: 'fulltext exact 1 AND ddc exact 355'
+      -
+        setSpec: ddc:360
+        setName: Social problems and social services
+        cql: 'fulltext exact 1 AND ddc exact 360'
+      -
+        setSpec: ddc:370
+        setName: Education
+        cql: 'fulltext exact 1 AND ddc exact 370'
+      -
+        setSpec: ddc:380
+        setName: Commerce, communications, transportation
+        cql: 'fulltext exact 1 AND ddc exact 380'
+      -
+        setSpec: ddc:390
+        setName: Customs, etiquette, folklore
+        cql: 'fulltext exact 1 AND ddc exact 390'
+      -
+        setSpec: ddc:400
+        setName: Language, linguistics
+        cql: 'fulltext exact 1 AND ddc exact 400'
+      -
+        setSpec: ddc:420
+        setName: English and Old English languages
+        cql: 'fulltext exact 1 AND ddc exact 420'
+      -
+        setSpec: ddc:430
+        setName: German language
+        cql: 'fulltext exact 1 AND ddc exact 430'
+      -
+        setSpec: ddc:439
+        setName: Other Germanic languages
+        cql: 'fulltext exact 1 AND ddc exact 439'
+      -
+        setSpec: ddc:440
+        setName: French and related languages
+        cql: 'fulltext exact 1 AND ddc exact 440'
+      -
+        setSpec: ddc:450
+        setName: Italian, Romanian and related languages
+        cql: 'fulltext exact 1 AND ddc exact 450'
+      -
+        setSpec: ddc:460
+        setName: Spanish and Portuguese languages
+        cql: 'fulltext exact 1 AND ddc exact 460'
+      -
+        setSpec: ddc:470
+        setName: Latin and Italic languages
+        cql: 'fulltext exact 1 AND ddc exact 470'
+      -
+        setSpec: ddc:480
+        setName: Classical and modern Greek languages
+        cql: 'fulltext exact 1 AND ddc exact 480'
+      -
+        setSpec: ddc:490
+        setName: Other languages
+        cql: 'fulltext exact 1 AND ddc exact 490'
+      -
+        setSpec: ddc:500
+        setName: Science
+        cql: 'fulltext exact 1 AND ddc exact 500'
+      -
+        setSpec: ddc:510
+        setName: Mathematics
+        cql: 'fulltext exact 1 AND ddc exact 510'
+      -
+        setSpec: ddc:520
+        setName: Astronomy and allied sciences
+        cql: 'fulltext exact 1 AND ddc exact 520'
+      -
+        setSpec: ddc:530
+        setName: Physics
+        cql: 'fulltext exact 1 AND ddc exact 530'
+      -
+        setSpec: ddc:540
+        setName: Chemistry and allied sciences
+        cql: 'fulltext exact 1 AND ddc exact 540'
+      -
+        setSpec: ddc:550
+        setName: Earth sciences and geology
+        cql: 'fulltext exact 1 AND ddc exact 550'
+      -
+        setSpec: ddc:560
+        setName: Fossils and prehistoric life
+        cql: 'fulltext exact 1 AND ddc exact 560'
+      -
+        setSpec: ddc:570
+        setName: Life sciences, biology
+        cql: 'fulltext exact 1 AND ddc exact 570'
+      -
+        setSpec: ddc:580
+        setName: Plants (Botany)
+        cql: 'fulltext exact 1 AND ddc exact 580'
+      -
+        setSpec: ddc:590
+        setName: Animals (Zoology)
+        cql: 'fulltext exact 1 AND ddc exact 590'
+      -
+        setSpec: ddc:600
+        setName: Technology (Applied sciences)
+        cql: 'fulltext exact 1 AND ddc exact 600'
+      -
+        setSpec: ddc:610
+        setName: Medicine and health
+        cql: 'fulltext exact 1 AND ddc exact 610'
+      -
+        setSpec: ddc:620
+        setName: Engineering
+        cql: 'fulltext exact 1 AND ddc exact 620'
+      -
+        setSpec: ddc:630
+        setName: Agriculture and related technologies (including veterinary medicine)
+        cql: 'fulltext exact 1 AND ddc exact 630'
+      -
+        setSpec: ddc:640
+        setName: Home and family management
+        cql: 'fulltext exact 1 AND ddc exact 640'
+      -
+        setSpec: ddc:650
+        setName: Management and public relations
+        cql: 'fulltext exact 1 AND ddc exact 650'
+      -
+        setSpec: ddc:660
+        setName: Chemical engineering
+        cql: 'fulltext exact 1 AND ddc exact 660'
+      -
+        setSpec: ddc:670
+        setName: Manufacturing
+        cql: 'fulltext exact 1 AND ddc exact 670'
+      -
+        setSpec: ddc:690
+        setName: Building and construction
+        cql: 'fulltext exact 1 AND ddc exact 690'
+      -
+        setSpec: ddc:700
+        setName: Arts
+        cql: 'fulltext exact 1 AND ddc exact 700'
+      -
+        setSpec: ddc:710
+        setName: Landscaping and area planning
+        cql: 'fulltext exact 1 AND ddc exact 710'
+      -
+        setSpec: ddc:720
+        setName: Architecture
+        cql: 'fulltext exact 1 AND ddc exact 720'
+      -
+        setSpec: ddc:730
+        setName: Sculpture, numismatics, ceramics, and metalwork
+        cql: 'fulltext exact 1 AND ddc exact 730'
+      -
+        setSpec: ddc:740
+        setName: Drawing and decorative arts
+        cql: 'fulltext exact 1 AND ddc exact 740'
+      -
+        setSpec: ddc:741.5
+        setName: Cartoons, caricatures
+        cql: 'fulltext exact 1 AND ddc exact 741.5'
+      -
+        setSpec: ddc:750
+        setName: Painting
+        cql: 'fulltext exact 1 AND ddc exact 750'
+      -
+        setSpec: ddc:760
+        setName: Graphic arts, prints
+        cql: 'fulltext exact 1 AND ddc exact 760'
+      -
+        setSpec: ddc:770
+        setName: Photography and computer art
+        cql: 'fulltext exact 1 AND ddc exact 770'
+      -
+        setSpec: ddc:780
+        setName: Music
+        cql: 'fulltext exact 1 AND ddc exact 780'
+      -
+        setSpec: ddc:790
+        setName: Recreational and performing arts
+        cql: 'fulltext exact 1 AND ddc exact 790'
+      -
+        setSpec: ddc:791
+        setName: Public performances
+        cql: 'fulltext exact 1 AND ddc exact 791'
+      -
+        setSpec: ddc:792
+        setName: Stage presentations
+        cql: 'fulltext exact 1 AND ddc exact 792'
+      -
+        setSpec: ddc:793
+        setName: Indoor games and amusements
+        cql: 'fulltext exact 1 AND ddc exact 793'
+      -
+        setSpec: ddc:796
+        setName: Athletic and outdoor sports and games
+        cql: 'fulltext exact 1 AND ddc exact 796'
+      -
+        setSpec: ddc:800
+        setName: Literature, rhetoric, and criticism
+        cql: 'fulltext exact 1 AND ddc exact 800'
+      -
+        setSpec: ddc:810
+        setName: American literature in English
+        cql: 'fulltext exact 1 AND ddc exact 810'
+      -
+        setSpec: ddc:820
+        setName: English and Old English literatures
+        cql: 'fulltext exact 1 AND ddc exact 820'
+      -
+        setSpec: ddc:830
+        setName: German literature
+        cql: 'fulltext exact 1 AND ddc exact 830'
+      -
+        setSpec: ddc:839
+        setName: Other Germanic literatures
+        cql: 'fulltext exact 1 AND ddc exact 839'
+      -
+        setSpec: ddc:840
+        setName: French and related literatures
+        cql: 'fulltext exact 1 AND ddc exact 840'
+      -
+        setSpec: ddc:850
+        setName: Italian, Romanian and related literatures
+        cql: 'fulltext exact 1 AND ddc exact 850'
+      -
+        setSpec: ddc:860
+        setName: Spanish and Portuguese literatures
+        cql: 'fulltext exact 1 AND ddc exact 860'
+      -
+        setSpec: ddc:870
+        setName: Latin and Italic literatures
+        cql: 'fulltext exact 1 AND ddc exact 870'
+      -
+        setSpec: ddc:880
+        setName: Classical and modern Greek literatures
+        cql: 'fulltext exact 1 AND ddc exact 880'
+      -
+        setSpec: ddc:890
+        setName: Literatures of other languages
+        cql: 'fulltext exact 1 AND ddc exact 890'
+      -
+        setSpec: ddc:900
+        setName: History
+        cql: 'fulltext exact 1 AND ddc exact 900'
+      -
+        setSpec: ddc:910
+        setName: Geography and travel
+        cql: 'fulltext exact 1 AND ddc exact 910'
+      -
+        setSpec: ddc:914.3
+        setName: Geography of and travel in Germany
+        cql: 'fulltext exact 1 AND ddc exact 914.3'
+      -
+        setSpec: ddc:920
+        setName: 'Biography, genealogy, and insignia'
+        cql: 'fulltext exact 1 AND ddc exact 920'
+      -
+        setSpec: ddc:930
+        setName: 'History of ancient world (to ca. 499), archaeology'
+        cql: 'fulltext exact 1 AND ddc exact 930'
+      -
+        setSpec: ddc:940
+        setName: History of Europe
+        cql: 'fulltext exact 1 AND ddc exact 940'
+      -
+        setSpec: ddc:943
+        setName: History of Germany
+        cql: 'fulltext exact 1 AND ddc exact 943'
+      -
+        setSpec: ddc:950
+        setName: History of Asia
+        cql: 'fulltext exact 1 AND ddc exact 950'
+      -
+        setSpec: ddc:960
+        setName: History of Africa
+        cql: 'fulltext exact 1 AND ddc exact 960'
+      -
+        setSpec: ddc:970
+        setName: History of North America
+        cql: 'fulltext exact 1 AND ddc exact 970'
+      -
+        setSpec: ddc:980
+        setName: History of South America
+        cql: 'fulltext exact 1 AND ddc exact 980'
+      -
+        setSpec: ddc:990
+        setName: History of other areas
+        cql: 'fulltext exact 1 AND ddc exact 990'
+      -
+        setSpec: dissertationFtxt
+        setName: Dissertation with fulltext
+        cql: 'type exact dissertation AND fulltext exact 1'
+      -
+        setSpec: doc-type:article
+        setName: Article
+        cql: 'type exact journalArticle'
+      -
+        setSpec: doc-type:book
+        setName: Book
+        cql: 'type exact book'
+      -
+        setSpec: doc-type:bookPart
+        setName: BookPart
+        cql: 'type exact bookChapter'
+      -
+        setSpec: doc-type:conferenceObject
+        setName: ConferenceObject
+        cql: 'type exact conference'
+      -
+        setSpec: doc-type:doctoralThesis
+        setName: DoctoralThesis
+        cql: 'type exact dissertation'
+      -
+        setSpec: doc-type:preprint
+        setName: Preprint
+        cql: 'type exact preprint'
+      -
+        setSpec: doc-type:report
+        setName: Report
+        cql: 'type exact report'
+      -
+        setSpec: doc-type:review
+        setName: Review
+        cql: 'type exact review'
+      -
+        setSpec: doc-type:workingPaper
+        setName: Working Paper
+        cql: 'type exact workingPaper'
+      -
+        setSpec: driver
+        setName: All documents with fulltext
+        cql: 'fulltext exact 1'
+      -
+        setSpec: ec_fundedresources
+        setName: EC funded (OpenAire)
+        cql: 'ecfunded=1'
+      -
+        setSpec: openaire
+        setName: EC funded or open access
+        cql: '(ecfunded=1 OR fulltext exact 1) AND type<>researchData'
+      -
+        setSpec: journalArticleFtxt
+        setName: Journal Article with fulltext
+        cql: 'type exact journalArticle AND fulltext exact 1'
+      -
+        setSpec: licentiateThesis
+        setName: Licentiate Thesis
+        cql: 'type exact licentiateThesis'
+      -
+        setSpec: licentiateThesisFtxt
+        setName: Licentiate Thesis with fulltext
+        cql: 'type exact licentiateThesis AND fulltext exact 1'
+      -
+        setSpec: newspaperArticle
+        setName: Newspaper Article
+        cql: 'type exact newspaperArticle'
+      -
+        setSpec: newspaperArticleFtxt
+        setName: Newspaper Article with fulltext
+        cql: 'type exact newspaperArticle AND fulltext exact 1'
+      -
+        setSpec: open_access
+        setName: All documents with fulltext
+        cql: 'fulltext exact 1'
+      -
+        setSpec: preprintFtxt
+        setName: Preprint with fulltext
+        cql: 'type exact preprint AND fulltext exact 1'
+      -
+        setSpec: reportFtxt
+        setName: Report with fulltext
+        cql: 'type exact report AND fulltext exact 1'
+      -
+        setSpec: reviewFtxt
+        setName: Book Review with fulltext
+        cql: 'type exact review AND fulltext exact 1'
+      -
+        setSpec: translation
+        setName: Translation
+        cql: 'type exact translation'
+      -
+        setSpec: translationFtxt
+        setName: Translation with fulltext
+        cql: 'type exact translation AND fulltext exact 1'
+      -
+        setSpec: workingPaperFtxt
+        setName: Working Paper with fulltext
+        cql: 'type exact workingPaper AND fulltext exact 1'

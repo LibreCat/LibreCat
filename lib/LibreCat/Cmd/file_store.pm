@@ -18,16 +18,15 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat file_store [options] list [recursive]
-librecat file_store [options] get <key> [<file>]
-librecat file_store [options] add <key> <file>
-librecat file_store [options] delete <key> <file>
-librecat file_store [options] purge <key>
-librecat file_store [options] export <key> <zip>
-librecat file_store [options] import <key> <zip>
-librecat file_store [options] move <key|store_name> <store_name>
-
-librecat file_store [options] thumbnail <key> <file>
+librecat file_store list      [options] [recursive]
+librecat file_store get       [options] <key> [<file>]
+librecat file_store add       [options] <key> <file>
+librecat file_store delete    [options] <key> <file>
+librecat file_store purge     [options] <key>
+librecat file_store export    [options] <key> <zip>
+librecat file_store import    [options] <key> <zip>
+librecat file_store move      [options] <key|store_name> <store_name>
+librecat file_store thumbnail [options] <key> <file>
 
 options:
     --store=...       - Store name
@@ -632,16 +631,15 @@ LibreCat::Cmd::file_store - manage librecat file stores
 
 =head1 SYNOPSIS
 
-    librecat file_store list [recursive]
-    librecat file_store get <key> [<file>]
-    librecat file_store add <key> <file>
-    librecat file_store delete <key> <file>
-    librecat file_store purge <key>
-    librecat file_store export <key> <zip>
-    librecat file_store import <key> <zip>
-    librecat file_store move <key|store_name> <store_name>
-
-    librecat store thumbnail <key> <file>
+    librecat file_store list      [options] [recursive]
+    librecat file_store get       [options] <key> [<file>]
+    librecat file_store add       [options] <key> <file>
+    librecat file_store delete    [options] <key> <file>
+    librecat file_store purge     [options] <key>
+    librecat file_store export    [options] <key> <zip>
+    librecat file_store import    [options] <key> <zip>
+    librecat file_store move      [options] <key|store_name> <store_name>
+    librecat file_store thumbnail [options] <key> <file>
 
     options:
         --store=...       - Store name

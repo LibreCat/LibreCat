@@ -1,6 +1,5 @@
 # main configuration file for Dancer
 appname: "LibreCat %ndash; Publication List Manager"
-appname_short: "LibreCat"
 charset: "UTF-8"
 
 # Template Engine
