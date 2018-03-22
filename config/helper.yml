@@ -6,6 +6,7 @@ extract_params:
   limit: "is_natural"
   lang: "exists"
   q: "exists"
-  cql: "string_array"
   links: "exists"
   style: "exists"
+  cql: "string_array"
+  sort: "string_array"
