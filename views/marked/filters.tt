@@ -48,9 +48,9 @@
 <ul class="nav nav-tabs nav-stacked ul3[% IF backend %] helpme" data-placement="left" title="[% h.loc("help.display_block") %][% END %]">
   [% IF (!request.path_info.match('person') OR bag == "person") AND !request.path_info.match('marked') AND total > 9 %]
   <li>
-    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="fa fa-chevron-down fw"></span>[% h.loc("facets.hits_per_page") %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
+    <button data-toggle="collapse" data-target="#hitsperpage" class="btn-link"><span class="fa fa-chevron-down fw"></span>[% h.loc("facets.hits_per_page") %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
     <div class="facettecollapse">
-    <ul id="hitsperpage_[% tabmodus %][% menu %]" class="collapse">
+    <ul id="hitsperpage" class="collapse">
       [%- FOREACH lim IN h.config.pagination_options %]
         [%- IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
         <li>[% lim %]</li>

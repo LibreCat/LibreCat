@@ -1,8 +1,5 @@
-
 <!-- BEGIN backend/rec_details.tt -->
-
-<div id="[% tabmodus %]_[% entry.item('_id') %]" class="collapse margin-top1-4">
-
+<div id="[% entry.item('_id') %]" class="collapse margin-top1-4">
 [% IF entry.author %]
   <div class="col-md-12">
     <div class="col-md-2 text-muted">Authors</div>
@@ -92,14 +89,14 @@
 </div>
 
 [% IF entry.file %]
-  <div id="[% tabmodus %]_rac_[% entry._id %]" class="collapse">
+  <div id="rac_[% entry._id %]" class="collapse">
   [% FOREACH file in entry.file %]
     [% IF file.request_a_copy %]
     <div class="row col-md-12">
       [% IF entry.status == "public" %]
       [% file.file_name %]
       <button type="button" class="btn btn-default btn-xs" onclick="generate_link([% file.file_id %], [% entry._id %])" data-toggle="tooltip" data-placement="right" title="Generates sharable link, valid for 7 days."><span class="fa fa-share-alt"></span> Share</button>
-      <ul id="[% tabmodus %]_rac_dd_[% file.file_id %]" class="dropdown-menu col-md-12" role="menu" aria-labelledby="dLabel">
+      <ul id="rac_dd_[% file.file_id %]" class="dropdown-menu col-md-12" role="menu" aria-labelledby="dLabel">
         <li><input type="text" val="" onclick="this.focus();this.select()"></li>
       </ul>
       [% ELSE %]
@@ -110,5 +107,4 @@
   [% END %]
   </div>
 [% END %]
-
 <!-- END backend/rec_details.tt -->
