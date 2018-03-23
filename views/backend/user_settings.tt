@@ -13,18 +13,12 @@
       [%- IF session.role != "user" %]
       <a href="[% uri_base %]/librecat/change_role/user">[% h.loc("header.role.user") %]</a>
       [%- END %]
-      [%- IF thisPerson.delegate AND session.role != "delegate" %]
-      | <a href="[% uri_base %]/librecat/change_role/delegate">[% h.loc("header.role.delegate") %]</a>
-	  [%- END %]
-	  [%- IF thisPerson.reviewer AND session.role != "reviewer" %]
-	  | <a href="[% uri_base %]/librecat/change_role/reviewer">[% h.loc("header.role.reviewer") %]</a>
-	  [%- END %]
-      [%- IF thisPerson.project_reviewer AND session.role != "project_reviewer" %]
-      | <a href="[% uri_base %]/librecat/change_role/project_reviewer">[% lf.header.role.project_reviewer %]</a>
-      [%- END %]
-      [%- IF thisPerson.data_manager AND session.role != "data_manager" %]
-	  | <a href="[% uri_base %]/librecat/change_role/data_manager">[% h.loc("header.role.data_manager") %]</a>
-	  [%- END %]
+      [%- FOREACH r IN ['delegate', 'reviewer', 'project_reviewer', 'project_reviewer', 'data_manager'] -%]
+          [%- FOREACH item IN thisPerson.$r -%]
+          [%- item = item._id ? item._id : item -%]
+          | <a href="[% uri_base %]/librecat/change_role/[% r %]/[% item %]">[% h.loc("header.role.${r}") %] -- [% item %]</a>
+    	  [%- END -%]
+      [%- END -%]
 	  [%- IF thisPerson.super_admin AND session.role != "super_admin" %]
 	  | <a href="[% uri_base %]/librecat/change_role/admin">[% h.loc("header.role.super_admin") %]</a>
 	  [%- END %]
