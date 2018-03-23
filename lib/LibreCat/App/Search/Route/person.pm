@@ -88,7 +88,6 @@ get qr{/person/(.*?)/?} => sub {
 
     $p->{limit}    = h->config->{maximum_page_size};
     $hits->{id}    = $id;
-    $hits->{modus} = "user";
 
     my $marked = session 'marked';
     $hits->{marked} = @$marked if $marked;

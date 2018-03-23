@@ -33,8 +33,6 @@ Performs search for admin.
 
         my $hits = LibreCat->searcher->search('publication', $p);
 
-        $hits->{modus} = "admin";
-
         template "home", $hits;
     };
 
@@ -75,8 +73,6 @@ Performs search for similar titles, admin only
             }
         );
 
-        $hits->{modus} = "admin";
-
         template "home", $hits;
 
     };
@@ -115,7 +111,6 @@ Performs search for reviewer.
         push @{$p->{cql}}, $dep_query;
 
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{modus}         = "reviewer_" . params->{department_id};
         $hits->{department_id} = params->{department_id};
 
         template "home", $hits;
@@ -158,7 +153,6 @@ Performs search for reviewer.
         push @{$p->{cql}}, $dep_query;
 
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{modus}      = "project_reviewer_" . params->{project_id};
         $hits->{project_id} = params->{project_id};
 
         template "home", $hits;
@@ -190,7 +184,6 @@ Performs search for data manager.
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{modus}         = "data_manager_" . params->{department_id};
         $hits->{department_id} = params->{department_id};
 
         template "home", $hits;
@@ -225,7 +218,6 @@ publications.
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = LibreCat->searcher->search('publication', $p);
-        $hits->{modus}       = "delegate_" . $id;
         $hits->{delegate_id} = $id;
 
         template "home", $hits;
@@ -251,43 +243,10 @@ Performs search for user.
 
         my $hits = LibreCat->searcher->search('publication', $p);
 
-        my $researchhits;
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
-        push @{$p->{cql}}, "type=research_data";
-
-        $researchhits = LibreCat->searcher->search('publication', $p);
-        $hits->{researchhits} = $researchhits if $researchhits;
-
-        $hits->{modus} = "user";
-
         template "home", $hits;
 
     };
 
-    get '/data' => sub {
-        my $p      = h->extract_params();
-        my $id     = session 'user_id';
-        my @orig_q = @{$p->{q}};
-
-        push @{$p->{cql}}, "status<>deleted";
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
-        push @{$p->{cql}}, "(type=research_data OR type=data)";
-        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
-
-        my $hits = LibreCat->searcher->search('publication', $p);
-
-        my $researchhits;
-        @{$p->{q}} = @orig_q;
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
-        push @{$p->{cql}}, "(type=research_data OR type=data)";
-        $researchhits = LibreCat->searcher->search('publication', $p);
-        $hits->{researchhits} = $researchhits if $researchhits;
-
-        $hits->{modus} = "data";
-
-        template "home", $hits;
-
-    };
 };
 
 1;
