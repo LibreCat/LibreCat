@@ -111,14 +111,22 @@
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.year.label || h.loc("forms.${type}.field.year_extern.label") %]</div>
     <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="[% uri_base %]/[% IF type == 'research_data' %]data[% ELSE %]publication[% END %]?cql=year=[% year %]">[% year %]</a></span></div>
   </div>
-  [%- FOREACH item IN ['publication', 'volume', 'issue', 'article_number', 'page'] %]
-    [%- IF $item %]
-      <div class="row">
-        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.${item}") %]</div>
-        <div class="col-lg-10 col-md-9"><span>[% $item %]</span></div>
-      </div>
-    [%- END %]
+
+[%- IF publication %]
+  <div class="row">
+    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.publication.label") %]</div>
+    <div class="col-lg-10 col-md-9"><span>[% publication %]</span></div>
+  </div>
+[%- END %]
+
+[%- FOREACH item IN ['volume', 'issue', 'article_number', 'page'] %]
+  [%- IF $item %]
+    <div class="row">
+      <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.${item}") %]</div>
+      <div class="col-lg-10 col-md-9"><span>[% $item %]</span></div>
+    </div>
   [%- END %]
+[%- END %]
 
 [%- IF data_reuse_license %]
   <div class="row">
