@@ -50,21 +50,7 @@ sub layers {
 }
 
 sub create_fixer {
-    my ($self, $file) = @_;
-
-    $self->log->debug("searching for fix `$file'");
-
-    for my $p (@{$self->layers->fixes_paths}) {
-        $self->log->debug("testing `$p/$file'");
-        if (-r "$p/$file") {
-            $self->log->debug("found `$p/$file'");
-            return Catmandu::Fix->new(fixes => ["$p/$file"]);
-        }
-    }
-
-    $self->log->error("can't find a fixer for: `$file'");
-
-    return Catmandu::Fix->new();
+    LibreCat->fixer($_[1]);
 }
 
 sub alphabet {
@@ -183,10 +169,7 @@ sub extract_params {
 }
 
 sub now {
-    my $time = $_[1] // time;
-    my $time_format = $_[0]->config->{time_format} // '%Y-%m-%dT%H:%M:%SZ';
-    my $now = strftime($time_format, gmtime($time));
-    return $now;
+    LibreCat->timestamp($_[1]);
 }
 
 sub pretty_byte_size {
