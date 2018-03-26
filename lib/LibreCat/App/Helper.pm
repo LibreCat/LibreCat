@@ -152,15 +152,20 @@ sub extract_params {
     return $p if ref $params ne 'HASH';
 
     # parameters configured in helper.yml
-    foreach my $key (keys %{$self->config->{helper}->{extract_params}}){
-        if($self->config->{helper}->{extract_params}->{$key} eq "exists"){
+    foreach my $key (keys %{$self->config->{helper}->{extract_params}}) {
+        if ($self->config->{helper}->{extract_params}->{$key} eq "exists") {
             $p->{$key} = $params->{$key} if $params->{$key};
         }
-        elsif($self->config->{helper}->{extract_params}->{$key} eq "is_natural"){
+        elsif (
+            $self->config->{helper}->{extract_params}->{$key} eq "is_natural")
+        {
             $p->{$key} = $params->{$key} if is_natural $params->{$key};
         }
-        elsif($self->config->{helper}->{extract_params}->{$key} eq "string_array"){
-            $p->{$key} = $self->string_array($params->{$key}) if $params->{$key};
+        elsif ($self->config->{helper}->{extract_params}->{$key} eq
+            "string_array")
+        {
+            $p->{$key} = $self->string_array($params->{$key})
+                if $params->{$key};
         }
     }
 
@@ -514,13 +519,13 @@ sub uri_for_file {
 
 sub login_user {
 
-    my ( $self, $user ) = @_;
+    my ($self, $user) = @_;
 
-    my %attrs = LibreCat->user->to_session( $user );
+    my %attrs = LibreCat->user->to_session($user);
 
-    for ( keys %attrs ) {
+    for (keys %attrs) {
 
-        session( $_ => $attrs{$_} );
+        session($_ => $attrs{$_});
 
     }
 
@@ -528,9 +533,9 @@ sub login_user {
 
 sub logout_user {
 
-    session role    => undef;
-    session user    => undef;
-    session user_id => undef;
+    session role     => undef;
+    session user     => undef;
+    session user_id  => undef;
     session auth_sso => undef;
 
 }

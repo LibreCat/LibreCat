@@ -142,7 +142,7 @@ is_deeply h->nested_params({'a.0' => 1}), {a => [1]}, 'h->nested_params';
 is_deeply h->nested_params({'a.0' => 1, 'b.0' => undef, 'c.0' => ''}),
     {a => [1]}, 'h->nested_params';
 
-is_deeply h->extract_params({}) , {} , 'h->extract_params';
+is_deeply h->extract_params({}), {}, 'h->extract_params';
 
 is_deeply h->extract_params(
     {
@@ -166,11 +166,8 @@ is_deeply h->extract_params(
     },
     'h->extract_params';
 
-is_deeply h->extract_params({
-    text  => 'a b c'
-}) , {
-    q     => ['a AND b AND c'] ,
-} , 'h->extract_params';
+is_deeply h->extract_params({text => 'a b c'}), {q => ['a AND b AND c'],},
+    'h->extract_params';
 
 like h->now, qr{^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$}, 'h->now';
 

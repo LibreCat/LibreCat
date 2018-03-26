@@ -234,7 +234,7 @@ post '/login' => sub {
 
     if ($user) {
 
-        h->login_user( $user );
+        h->login_user($user);
         redirect uri_for($return_url);
 
     }

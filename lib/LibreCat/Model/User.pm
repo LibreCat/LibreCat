@@ -56,10 +56,7 @@ sub find {
         $hits = LibreCat->searcher->search('user', {cql => ["login=$id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
-        if (my $user
-            = $self->get($id)
-            || $self->find_by_username($id))
-        {
+        if (my $user = $self->get($id) || $self->find_by_username($id)) {
             return $user;
         }
     }
@@ -105,14 +102,13 @@ sub find_by_username {
 # TODO does this belong here?
 sub to_session {
 
-    my ( $self, $user ) = @_;
+    my ($self, $user) = @_;
 
-    my $super_admin      = "super_admin" if $user->{super_admin};
-    my $reviewer         = "reviewer" if $user->{reviewer};
-    my $project_reviewer = "project_reviewer"
-        if $user->{project_reviewer};
-    my $data_manager     = "data_manager" if $user->{data_manager};
-    my $delegate         = "delegate" if $user->{delegate};
+    my $super_admin      = "super_admin"      if $user->{super_admin};
+    my $reviewer         = "reviewer"         if $user->{reviewer};
+    my $project_reviewer = "project_reviewer" if $user->{project_reviewer};
+    my $data_manager     = "data_manager"     if $user->{data_manager};
+    my $delegate         = "delegate"         if $user->{delegate};
 
     (
         role => $super_admin

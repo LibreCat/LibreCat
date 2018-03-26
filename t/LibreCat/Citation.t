@@ -14,9 +14,11 @@ BEGIN {
 
 require_ok $pkg;
 
-lives_ok { $pkg->new } 'lives_ok';
+lives_ok {$pkg->new} 'lives_ok';
 
-my $rec = Catmandu->importer('YAML', file => 't/records/valid-publication.yml')->first;
+my $rec
+    = Catmandu->importer('YAML', file => 't/records/valid-publication.yml')
+    ->first;
 
 subtest 'engine none' => sub {
     Catmandu->config->{citation}->{engine} = 'none';
@@ -38,7 +40,7 @@ SKIP: {
     Catmandu->config->{citation}->{engine} = 'csl';
 
     subtest 'styles' => sub {
-        my $c = $pkg->new;
+        my $c         = $pkg->new;
         my $style_obj = $c->create($rec);
         ok $style_obj, "default style";
 

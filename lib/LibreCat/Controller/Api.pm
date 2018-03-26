@@ -9,27 +9,25 @@ sub default {
 }
 
 sub show {
-    my $c = $_[0];
+    my $c     = $_[0];
     my $model = $c->param('model');
-    my $id = $c->param('id');
-    my $recs = LibreCat->$model;
-    my $rec  = $recs->get($id) || return $c->not_found;
+    my $id    = $c->param('id');
+    my $recs  = LibreCat->$model;
+    my $rec   = $recs->get($id) || return $c->not_found;
     delete $rec->{_id};
     my $data = {
         type       => $model,
         id         => $id,
         attributes => $rec,
-        links      => {
-            self => $c->url_for->to_abs,
-        },
+        links      => {self => $c->url_for->to_abs,},
     };
     $c->render(json => {data => $data});
 }
 
 sub not_found {
-    my $c = $_[0];
+    my $c     = $_[0];
     my $model = $c->param('model');
-    my $id = $c->param('id');
+    my $id    = $c->param('id');
     my $error = {
         status => '404',
         title  => "$model $id not found",

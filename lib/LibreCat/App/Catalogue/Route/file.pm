@@ -103,9 +103,15 @@ get '/rc/approve/:key' => sub {
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body
-        = export_to_string({key => params->{key}, uri_base => h->uri_base(), appname_short => h->loc("appname_short")},
-        'Template', template => 'views/email/req_copy_approve.tt');
+    my $body = export_to_string(
+        {
+            key           => params->{key},
+            uri_base      => h->uri_base(),
+            appname_short => h->loc("appname_short")
+        },
+        'Template',
+        template => 'views/email/req_copy_approve.tt'
+    );
 
     my $job = {
         to      => $data->{user_email},
@@ -141,7 +147,9 @@ get '/rc/deny/:key' => sub {
         subject => h->config->{request_copy}->{subject},
         from    => h->config->{request_copy}->{from},
         body    => export_to_string(
-            {appname_short => h->loc("appname_short")}, 'Template', template => 'views/email/req_copy_deny.tt'
+            {appname_short => h->loc("appname_short")},
+            'Template',
+            template => 'views/email/req_copy_deny.tt'
         ),
     };
 
@@ -216,11 +224,11 @@ any '/rc/:id/:file_id' => sub {
 
         my $mail_body = export_to_string(
             {
-                title      => $pub->{title},
-                user_email => params->{user_email},
-                mesg       => params->{mesg} || '',
-                key        => $stored->{_id},
-                uri_base   => h->uri_base(),
+                title         => $pub->{title},
+                user_email    => params->{user_email},
+                mesg          => params->{mesg} || '',
+                key           => $stored->{_id},
+                uri_base      => h->uri_base(),
                 appname_short => h->loc("appname_short"),
             },
             'Template',
@@ -267,8 +275,8 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
         {
             file_id => $file_id,
             user_id => session->{user_id},
-            role => session->{role},
-            ip   => request->address
+            role    => session->{role},
+            ip      => request->address
         }
     );
 

@@ -8,14 +8,17 @@ use LibreCat load => (layer_paths => [qw(t/layer)]);
     like $loaded, qr/0|1/;
 }
 
-isa_ok(LibreCat->user, "LibreCat::Model::User",
-    "LibreCat->user returns a LibreCat::Model::User");
-
+isa_ok(
+    LibreCat->user,
+    "LibreCat::Model::User",
+    "LibreCat->user returns a LibreCat::Model::User"
+);
 
 {
     LibreCat->publication->purge_all;
 
-    like(LibreCat->publication->generate_id, qr{^[A-Z0-9-]+$}, 'publication generate id');
+    like(LibreCat->publication->generate_id,
+        qr{^[A-Z0-9-]+$}, 'publication generate id');
 
     my $pub = Catmandu->importer('YAML',
         file => 't/records/valid-publication.yml')->first;
@@ -30,11 +33,17 @@ isa_ok(LibreCat->user, "LibreCat::Model::User",
     is $pub_stored->{title}, '我能吞下玻璃而不伤身体',
         '..check title (return value)';
 
-    is(LibreCat->publication->get($id)->{title}, '我能吞下玻璃而不伤身体',
-        '..check title (main)');
+    is(
+        LibreCat->publication->get($id)->{title},
+        '我能吞下玻璃而不伤身体',
+        '..check title (main)'
+    );
 
-    is(LibreCat->publication->search_bag->get($id)->{title}, '我能吞下玻璃而不伤身体',
-        '..check title (index)');
+    is(
+        LibreCat->publication->search_bag->get($id)->{title},
+        '我能吞下玻璃而不伤身体',
+        '..check title (index)'
+    );
 
     $pub->{title}
         = 'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती';
@@ -47,12 +56,17 @@ isa_ok(LibreCat->user, "LibreCat::Model::User",
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (return value)';
 
-    is(LibreCat->publication->get($id)->{title},
+    is(
+        LibreCat->publication->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (main)');
+        '..check title (main)'
+    );
 
-    is(LibreCat->publication->search_bag->get($id)->{title}, '我能吞下玻璃而不伤身体',
-        '..check title (index)');
+    is(
+        LibreCat->publication->search_bag->get($id)->{title},
+        '我能吞下玻璃而不伤身体',
+        '..check title (index)'
+    );
 
     my $indexed_record = LibreCat->publication->index($pub);
 
@@ -62,23 +76,41 @@ isa_ok(LibreCat->user, "LibreCat::Model::User",
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (return value)';
 
-    is(LibreCat->publication->get($id)->{title},
+    is(
+        LibreCat->publication->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (main)');
+        '..check title (main)'
+    );
 
-    is(LibreCat->publication->search_bag->get($id)->{title},
+    is(
+        LibreCat->publication->search_bag->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (index)');
+        '..check title (index)'
+    );
 
-    ok(LibreCat->publication->delete($id), 'delete existing publication returns id');
-    ok(!LibreCat->publication->delete(99999999999), 'delete non existing publication returns nil');
+    ok(
+        LibreCat->publication->delete($id),
+        'delete existing publication returns id'
+    );
+    ok(
+        !LibreCat->publication->delete(99999999999),
+        'delete non existing publication returns nil'
+    );
 
-    is(LibreCat->publication->get($id)->{status}, 'deleted', '..check title (main)');
+    is(LibreCat->publication->get($id)->{status},
+        'deleted', '..check title (main)');
 
-    is(LibreCat->publication->search_bag->get($id)->{status}, 'deleted', '..check title (index)');
+    is(LibreCat->publication->search_bag->get($id)->{status},
+        'deleted', '..check title (index)');
 
-    ok(LibreCat->publication->purge($id), 'purge existing publication returns id');
-    ok(!LibreCat->publication->purge(99999999999), 'purge non existing publication returns nil');
+    ok(
+        LibreCat->publication->purge($id),
+        'purge existing publication returns id'
+    );
+    ok(
+        !LibreCat->publication->purge(99999999999),
+        'purge non existing publication returns nil'
+    );
 
     ok(!LibreCat->publication->get($id), '...purged (main)');
 

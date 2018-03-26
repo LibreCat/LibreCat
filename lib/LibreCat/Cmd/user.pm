@@ -211,21 +211,23 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret      = 0;
+    my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
 
-    $importer = $importer->tap(sub {
-        my $rec = $_[0];
-        $rec->{password} = mkpasswd($rec->{password})
-            if exists $rec->{password};
-    });
+    $importer = $importer->tap(
+        sub {
+            my $rec = $_[0];
+            $rec->{password} = mkpasswd($rec->{password})
+                if exists $rec->{password};
+        }
+    );
 
     LibreCat->user->add_many(
         $importer,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
-            say STDERR join("\n",
-                $rec->{_id}, "ERROR: not a valid user", @$errors);
+            say STDERR
+                join("\n", $rec->{_id}, "ERROR: not a valid user", @$errors);
             $ret = 2;
         },
         on_success => sub {

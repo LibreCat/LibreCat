@@ -204,7 +204,7 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret      = 0;
+    my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
 
     LibreCat->research_group->add_many(

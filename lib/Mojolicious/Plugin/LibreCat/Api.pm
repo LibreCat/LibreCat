@@ -9,15 +9,18 @@ sub register {
 
     my $r = $app->routes;
 
-    $r->add_shortcut(librecat_api => sub {
-       my ($r, $model) = @_;
+    $r->add_shortcut(
+        librecat_api => sub {
+            my ($r, $model) = @_;
 
-       my $model_api = $r->any("/$model")->to('api#', model => $model);
+            my $model_api = $r->any("/$model")->to('api#', model => $model);
 
-       $model_api->get('/:id')->to('#show', model => $model)->name($model);
+            $model_api->get('/:id')->to('#show', model => $model)
+                ->name($model);
 
-       $model_api;
-   });
+            $model_api;
+        }
+    );
 
     my $api = $r->get('/api')->to('api#default');
 
