@@ -7,6 +7,7 @@ use Mojo::Base 'Mojolicious::Plugin';
 sub register {
     my ($self, $app, $conf) = @_;
 
+    my $models = LibreCat->models;
     my $r = $app->routes;
 
     $r->add_shortcut(
@@ -24,7 +25,7 @@ sub register {
 
     my $api = $r->get('/api')->to('api#default');
 
-    $api->librecat_api($_) for @{LibreCat->models};
+    $api->librecat_api($_) for @$models;
 }
 
 1;
