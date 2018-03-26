@@ -102,6 +102,7 @@ sub find_by_username {
     return;
 }
 
+# TODO does this belong here?
 sub to_session {
 
     my ( $self, $user ) = @_;
