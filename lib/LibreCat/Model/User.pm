@@ -1,6 +1,7 @@
 package LibreCat::Model::User;
 
 use Catmandu::Sane;
+use LibreCat;
 use Catmandu;
 use Moo;
 use namespace::clean;
@@ -43,6 +44,27 @@ sub get {
     }
 
     $self->log->debug("..no results");
+
+    return;
+}
+
+# TODO clean this up
+sub find {
+    my ($self, $id) = @_;
+
+    $id // return;
+
+    my $hits = LibreCat->searcher->search('user', {cql => ["id=$id"]});
+    $hits = LibreCat->searcher->search('user', {cql => ["login=$id"]})
+        if !$hits->{total};
+    return $hits->{hits}->[0] if $hits->{total};
+
+    if (my $user
+        = $self->get($id)
+        || $self->find_by_username($id))
+    {
+        return $user;
+    }
 
     return;
 }

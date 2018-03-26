@@ -1,7 +1,7 @@
 package LibreCat::Cmd::research_group;
 
 use Catmandu::Sane;
-use LibreCat::App::Helper;
+use LibreCat;
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -117,10 +117,8 @@ sub _list {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->research_group->searcher(
+        $it = LibreCat->research_group->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -129,7 +127,7 @@ sub _list {
     }
     else {
         carp "sort not available without a query" if $sort;
-        $it = $helper->main_research_group;
+        $it = LibreCat->research_group;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -163,10 +161,8 @@ sub _export {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->research_group->searcher(
+        $it = LibreCat->research_group->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -174,7 +170,7 @@ sub _export {
         );
     }
     else {
-        $it = $helper->main_research_group;
+        $it = LibreCat->research_group;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -196,9 +192,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
-    my $data = $helper->main_research_group->get($id);
+    my $data = LibreCat->research_group->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -212,42 +206,20 @@ sub _add {
 
     my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper   = LibreCat::App::Helper::Helpers->new;
 
-    my $records = $importer->select(
-        sub {
-            my $rec = $_[0];
-
-            $rec->{_id} //= $helper->new_record('research_group');
-
-            my $is_ok = 1;
-
-            $helper->store_record(
-                'research_group',
-                $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid research_group",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
-                }
-            );
-
-            return 0 unless $is_ok;
-
-            print "added $rec->{_id}\n";
-
-            return 1;
-        }
+    LibreCat->research_group->add_many(
+        $importer,
+        on_validation_error => sub {
+            my ($rec, $errors) = @_;
+            say STDERR join("\n",
+                $rec->{_id}, "ERROR: not a valid research_group", @$errors);
+            $ret = 2;
+        },
+        on_success => sub {
+            my ($rec) = @_;
+            say "added $rec->{_id}";
+        },
     );
-
-    my $index = $helper->research_group;
-    $index->add_many($records);
-    $index->commit;
 
     $ret;
 }
@@ -257,11 +229,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('research_group',
-        $id);
-
-    if ($result) {
+    if (LibreCat->research_group->delete($id)) {
         print "deleted $id\n";
         return 0;
     }
@@ -285,15 +253,15 @@ sub _valid {
             my $item = $_[0];
 
             unless ($validator->is_valid($item)) {
-                my $errors = $validator->last_errors();
+                my $errors = $validator->last_errors;
                 my $id = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        print STDERR "ERROR $id: $err\n";
+                        say STDERR "ERROR $id: $err";
                     }
                 }
                 else {
-                    print STDERR "ERROR $id: not valid\n";
+                    say STDERR "ERROR $id: not valid";
                 }
 
                 $ret = 2;
