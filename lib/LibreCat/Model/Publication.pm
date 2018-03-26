@@ -37,8 +37,8 @@ sub delete {
     $rec->{status}       = 'deleted';
 
     # TODO can't call add because date_deleted & co aren't whitelisted
-    $self->_store($rec, %opts);
-    $self->_index($rec, %opts);
+    $self->store($rec, %opts);
+    $self->index($rec, %opts);
 
     $id;
 }

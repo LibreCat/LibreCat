@@ -75,9 +75,8 @@ sub add {
     $rec = $self->apply_hooks_to_record($self->before_add, $rec,
         skip => $opts{skip_before_add});
 
-    if ($self->is_valid($rec)) {
-        $self->_store($rec, %opts);
-        $self->_index($rec, %opts);
+    if ($self->store($rec, %opts)) {
+        $self->index($rec, %opts) unless $opts{skip_index};
         $opts{on_success}->($rec) if $opts{on_success};
     }
     elsif ($opts{on_validation_error}) {
@@ -97,14 +96,19 @@ sub delete_all {
     $self->purge_all(%opts);
 }
 
-sub _store {
+sub store {
     my ($self, $rec, %opts) = @_;
 
-    $self->bag->add($rec);
-    $self->bag->commit unless $opts{skip_commit};
+    if ($self->is_valid($rec)) {
+        $rec = $self->bag->add($rec);
+        $self->bag->commit unless $opts{skip_commit};
+        return $rec;
+    }
+    return;
 }
 
-sub _index {
+# TODO get from bag if rec is an id
+sub index {
     my ($self, $rec, %opts) = @_;
 
     if ($self->log->is_debug) {

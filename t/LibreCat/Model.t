@@ -35,7 +35,16 @@ my $m = T::Model->new(
 );
 
 ok $m->does('LibreCat::Model');
-can_ok $m, $_ for qw(generate_id get add delete is_valid);
+can_ok $m, 'generate_id';
+can_ok $m, 'get';
+can_ok $m, 'add';
+can_ok $m, 'add_many';
+can_ok $m, 'delete';
+can_ok $m, 'is_valid';
+can_ok $m, 'store';
+can_ok $m, 'purge';
+can_ok $m, 'generator';
+can_ok $m, 'each';
 
 my $id;
 subtest 'generate_id' => sub {
