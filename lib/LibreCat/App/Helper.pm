@@ -212,21 +212,8 @@ sub get_publication {
     LibreCat->publication->get($_[1]);
 }
 
-# TODO clean this up
 sub get_person {
-    my ($self, $id) = @_;
-    if ($id) {
-        my $hits = LibreCat->searcher->search('user', {cql => ["id=$id"]});
-        $hits = LibreCat->searcher->search('user', {cql => ["login=$id"]})
-            if !$hits->{total};
-        return $hits->{hits}->[0] if $hits->{total};
-        if (my $user
-            = LibreCat->user->get($id)
-            || LibreCat->user->find_by_username($id))
-        {
-            return $user;
-        }
-    }
+    LibreCat->user->find($_[1]);
 }
 
 sub get_project {
@@ -269,11 +256,13 @@ sub get_statistics {
     };
 }
 
+# TODO mark as deprecated
 sub new_record {
     my ($self, $bag) = @_;
     Catmandu->store('main')->bag($bag)->generate_id;
 }
 
+# TODO mark as deprecated
 sub update_record {
     my ($self, $bag, $rec) = @_;
 
@@ -301,6 +290,7 @@ sub update_record {
     $rec;
 }
 
+# TODO mark as deprecated
 sub store_record {
     my ($self, $bag, $rec, %opts) = @_;
 
@@ -363,6 +353,7 @@ sub store_record {
     }
 }
 
+# TODO mark as deprecated
 sub index_record {
     my ($self, $bag, $rec) = @_;
 
@@ -374,6 +365,7 @@ sub index_record {
     $rec;
 }
 
+# TODO mark as deprecated
 sub delete_record {
     my ($self, $bag, $id) = @_;
 
@@ -405,6 +397,7 @@ sub delete_record {
     }
 }
 
+# TODO mark as deprecated
 sub purge_record {
     my ($self, $bag, $id) = @_;
 
