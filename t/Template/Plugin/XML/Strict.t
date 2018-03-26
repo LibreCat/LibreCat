@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'Template::Plugin::XML::Strict';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 

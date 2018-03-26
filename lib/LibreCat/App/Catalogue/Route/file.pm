@@ -50,11 +50,11 @@ sub _send_it {
         callbacks => {
             override => sub {
                 my ($respond, $response) = @_;
-                my $content_type = $file->{content_type};
+                my $content_type     = $file->{content_type};
                 my $http_status_code = 200;
 
-                # Tech.note: This is a hash of HTTP header/values, but the
-                #            function below requires an even-numbered array-ref.
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
                 my @http_headers = (
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
@@ -62,11 +62,11 @@ sub _send_it {
                     'Pragma' => 'no-cache'
                 );
 
-                # Send the HTTP headers
-                # (back to either the user or the upstream HTTP web-server front-end)
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
-                $files->stream($writer,$file);
+                $files->stream($writer, $file);
             },
         },
     );
@@ -103,9 +103,15 @@ get '/rc/approve/:key' => sub {
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body
-        = export_to_string({key => params->{key}, uri_base => h->uri_base(), appname_short => h->loc("appname_short")},
-        'Template', template => 'views/email/req_copy_approve.tt');
+    my $body = export_to_string(
+        {
+            key           => params->{key},
+            uri_base      => h->uri_base(),
+            appname_short => h->loc("appname_short")
+        },
+        'Template',
+        template => 'views/email/req_copy_approve.tt'
+    );
 
     my $job = {
         to      => $data->{user_email},
@@ -141,7 +147,9 @@ get '/rc/deny/:key' => sub {
         subject => h->config->{request_copy}->{subject},
         from    => h->config->{request_copy}->{from},
         body    => export_to_string(
-            {appname_short => h->loc("appname_short")}, 'Template', template => 'views/email/req_copy_deny.tt'
+            {appname_short => h->loc("appname_short")},
+            'Template',
+            template => 'views/email/req_copy_deny.tt'
         ),
     };
 
@@ -190,7 +198,7 @@ Request a copy of the publication. Email will be sent to the author.
 =cut
 
 any '/rc/:id/:file_id' => sub {
-    my $bag  = h->main_reqcopy;
+    my $bag = h->main_reqcopy;
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
         forward '/publication/' . params->{id}, {method => 'GET'};
@@ -216,11 +224,11 @@ any '/rc/:id/:file_id' => sub {
 
         my $mail_body = export_to_string(
             {
-                title      => $pub->{title},
-                user_email => params->{user_email},
-                mesg       => params->{mesg} || '',
-                key        => $stored->{_id},
-                uri_base   => h->uri_base(),
+                title         => $pub->{title},
+                user_email    => params->{user_email},
+                mesg          => params->{mesg} || '',
+                key           => $stored->{_id},
+                uri_base      => h->uri_base(),
                 appname_short => h->loc("appname_short"),
             },
             'Template',
@@ -263,11 +271,12 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     my ($id, $file_id) = splat;
 
     my ($ok, $file_name) = p->can_download(
-        $id, {
+        $id,
+        {
             file_id => $file_id,
             user_id => session->{user_id},
-            role => session->{role},
-            ip   => request->address
+            role    => session->{role},
+            ip      => request->address
         }
     );
 

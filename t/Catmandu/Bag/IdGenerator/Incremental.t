@@ -14,22 +14,17 @@ require_ok $pkg;
 Catmandu->config->{store} = {
     id_test => {
         "package" => "Hash",
-        options => {
-            bags => {
-                data => {id_generator => "Incremental"}
-            }
-        }
+        options   => {bags => {data => {id_generator => "Incremental"}}}
     }
 };
 
 {
-    my $expected     = [1 .. 10];
-    my $generated    = [];
-    my $bag = Catmandu->store('id_test')->bag('data');
+    my $expected  = [1 .. 10];
+    my $generated = [];
+    my $bag       = Catmandu->store('id_test')->bag('data');
 
     push @$generated, map {$bag->generate_id} @$expected;
-    is_deeply $generated, $expected,
-        "generated ids correct";
+    is_deeply $generated, $expected, "generated ids correct";
 }
 
 done_testing;

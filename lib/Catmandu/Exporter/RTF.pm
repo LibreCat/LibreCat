@@ -6,9 +6,9 @@ use Moo;
 
 with 'Catmandu::Exporter';
 
-has host => (is => 'lazy');
-has links => (is => 'ro', default => sub {});
-has name => (is => 'ro', default => sub { 'LibreCat' });
+has host  => (is => 'lazy');
+has links => (is => 'ro', default => sub { });
+has name  => (is => 'ro', default => sub {'LibreCat'});
 has style => (is => 'lazy');
 
 my $HEADER = <<EOF;
@@ -31,9 +31,10 @@ sub _build_style {
     my ($self) = @_;
 
     state $style = do {
-        grep( $self->style, keys %{Catmandu->config->{citation}->{csl}->{styles}} )
-        ? $self->style
-        : Catmandu->config->{citation}->{csl}->{default_style};
+        grep($self->style,
+            keys %{Catmandu->config->{citation}->{csl}->{styles}})
+            ? $self->style
+            : Catmandu->config->{citation}->{csl}->{default_style};
     };
 }
 
@@ -45,17 +46,18 @@ EOF
 # all those hexadecimal characters longer than 2 (\\' in rtf will treat the following two characters as hex - but only two!)
 my $HEXMAP = {
     "152" => "\\'4f\\'45",
+
     # latin capital letter OE - substituted by capital letters O and E
     "153" => "\\'6f\\'65"
     ,    # latin small letter oe - substituted by small letters o and e
     "160" => "\\'53"
-    , # latin capital letter S with caron - substituted by capital etter S
+    ,    # latin capital letter S with caron - substituted by capital etter S
     "161" => "\\'73"
     ,    # latin small letter s with caron - substituted by small letter s
     "178" => "\\'59"
     , # latin capital letter Y with diaeresis - substituted by capital letter Y
     "192" => "\\'66"
-    ,  # latin small f with hook, function - substituted by small letter f
+    ,    # latin small f with hook, function - substituted by small letter f
     "2013" => "\\endash",
     "2014" => "\\emdash",
     "2018" => "\\lquote",
@@ -89,7 +91,7 @@ sub commit {
 sub _add_citation {
     my ($self, $pub) = @_;
 
-    my $host = $self->host;
+    my $host  = $self->host;
     my $links = $self->links;
 
     my $cite = $pub->{citation}{$self->style} // '';
@@ -144,13 +146,14 @@ sub _add_citation {
     }
 
     my $citestring = "{\\pard ";
+
     # in case you want the title displayed as link
     if ($self->style eq "short") {
         my $title = $pub->{title};
         $title =~ s/ /___/g if $title;
         $title
-        =~ s/([^\\\\u|\\\\i|\\\\line|___|\{|\}|\(|\)|[0-9]|\s])/sprintf("\\'%02x",ord($1))/eg;
-        while ($title =~ /\\\'(\d{3,4})/) { # why while??
+            =~ s/([^\\\\u|\\\\i|\\\\line|___|\{|\}|\(|\)|[0-9]|\s])/sprintf("\\'%02x",ord($1))/eg;
+        while ($title =~ /\\\'(\d{3,4})/) {    # why while??
             my $hexv = $1;
             if ($HEXMAP->{$hexv}) {
                 $title =~ s/\\\'$hexv/$HEXMAP->{$hexv} /g;
@@ -162,9 +165,10 @@ sub _add_citation {
 
         my $bag = $pub->{type} eq "research_data" ? "data" : "publication";
 
-        $citestring .= "{\\field{\\*\\fldinst HYPERLINK $host/$bag/$pub->{_id}}{\\fldrslt "
-        . $title
-        . "}}\\line ";
+        $citestring
+            .= "{\\field{\\*\\fldinst HYPERLINK $host/$bag/$pub->{_id}}{\\fldrslt "
+            . $title
+            . "}}\\line ";
     }
 
     $citestring .= $cite;
@@ -185,23 +189,26 @@ sub _add_citation {
 sub _add_links {
     my ($self, $pub) = @_;
 
-    my $host = $self->host;
+    my $host  = $self->host;
     my $links = $self->links;
-    my $name = $self->name;
+    my $name  = $self->name;
 
     my $bag = $pub->{type} eq "research_data" ? "data" : "publication";
 
     my $line;
-    $line = "\\line $name: {\\field{\\*\\fldinst HYPERLINK $host/$bag/$pub->{_id}}{\\fldrslt $host/$bag/$pub->{_id}}}";
+    $line
+        = "\\line $name: {\\field{\\*\\fldinst HYPERLINK $host/$bag/$pub->{_id}}{\\fldrslt $host/$bag/$pub->{_id}}}";
 
     if ($links && $links == 1) {
         if ($pub->{doi}) {
-            $line .= "\\line DOI: {\\field{\\*\\fldinst HYPERLINK https://doi.org/$pub->{doi}}{\\fldrslt $pub->{doi}}}";
+            $line
+                .= "\\line DOI: {\\field{\\*\\fldinst HYPERLINK https://doi.org/$pub->{doi}}{\\fldrslt $pub->{doi}}}";
         }
 
         if (my $ext = $pub->{external_id}) {
             if ($ext->{isi}->[0]) {
-                $line .= "\\line WoS: {\\field{\\*\\fldinst HYPERLINK https://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&rft_id=info:ut/$ext->{isi}->[0]}{\\fldrslt $ext->{isi}->[0]}}";
+                $line
+                    .= "\\line WoS: {\\field{\\*\\fldinst HYPERLINK https://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&rft_id=info:ut/$ext->{isi}->[0]}{\\fldrslt $ext->{isi}->[0]}}";
             }
 
             if ($ext->{pmid}->[0]) {
@@ -209,11 +216,13 @@ sub _add_links {
             }
 
             if ($ext->{arxiv}->[0]) {
-                $line .= "\\line arXiv: {\\field{\\*\\fldinst HYPERLINK http://arxiv.org/abs/$ext->{arxiv}->[0]}{\\fldrslt $ext->{arxiv}->[0]}}";
+                $line
+                    .= "\\line arXiv: {\\field{\\*\\fldinst HYPERLINK http://arxiv.org/abs/$ext->{arxiv}->[0]}{\\fldrslt $ext->{arxiv}->[0]}}";
             }
 
             if ($ext->{inspire}->[0]) {
-                $line .= "\\line Inspire: {\\field{\\*\\fldinst HYPERLINK http://inspirehep.net/record/$ext->{inspire}->[0]}{\\fldrslt $ext->{inspire}->[0]}}";
+                $line
+                    .= "\\line Inspire: {\\field{\\*\\fldinst HYPERLINK http://inspirehep.net/record/$ext->{inspire}->[0]}{\\fldrslt $ext->{inspire}->[0]}}";
             }
         }
     }

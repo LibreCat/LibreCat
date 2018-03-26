@@ -6,33 +6,33 @@ use Moo::Role;
 
 has session_key => (
     is       => "ro",
-    isa      => sub { check_string( $_[0] ); },
+    isa      => sub {check_string($_[0]);},
     lazy     => 1,
-    default  => sub { "auth_sso" },
+    default  => sub {"auth_sso"},
     required => 1
 );
 
 has success_path => (
     is       => "ro",
-    isa      => sub { check_string( $_[0] ); },
+    isa      => sub {check_string($_[0]);},
     lazy     => 1,
-    default  => sub { "/"; },
+    default  => sub {"/";},
     required => 1
 );
 
 has denied_path => (
     is       => "ro",
-    isa      => sub { check_string( $_[0] ); },
+    isa      => sub {check_string($_[0]);},
     lazy     => 1,
-    default  => sub { "/access_denied"; },
+    default  => sub {"/access_denied";},
     required => 1
 );
 
 has uri_base => (
     is       => "ro",
-    isa      => sub { check_string( $_[0] ); },
+    isa      => sub {check_string($_[0]);},
     required => 1,
-    default  => sub { "http://localhost:5000"; }
+    default  => sub {"http://localhost:5000";}
 );
 
 requires "to_app";
@@ -46,16 +46,16 @@ sub uri_for {
 
 sub _check_plack_session {
 
-    defined( $_[0]->session )
-        or die( "LibreCat::Auth::SSO requires a Plack::Session" );
+    defined($_[0]->session)
+        or die("LibreCat::Auth::SSO requires a Plack::Session");
 
 }
 
 sub get_auth_sso {
 
     my ($self, $session) = @_;
-    _check_plack_session( $session );
-    $session->get( $self->session_key );
+    _check_plack_session($session);
+    $session->get($self->session_key);
 
 }
 

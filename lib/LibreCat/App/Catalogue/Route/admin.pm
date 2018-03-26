@@ -37,8 +37,7 @@ Opens an empty form. The ID is automatically generated.
 =cut
 
     get '/account/new' => sub {
-        template 'admin/forms/edit_account',
-            {_id => h->new_record('user')};
+        template 'admin/forms/edit_account', {_id => h->new_record('user')};
     };
 
 =head2 GET /account/search
@@ -145,8 +144,7 @@ Deletes the account with ID :id.
     };
 
     get '/research_group/edit/:id' => sub {
-        my $research_group
-            = h->main_research_group->get(params->{id});
+        my $research_group = h->main_research_group->get(params->{id});
         template 'admin/forms/edit_research_group', $research_group;
     };
 

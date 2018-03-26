@@ -25,7 +25,8 @@ require_ok $pkg;
 }
 
 SKIP: {
-    skip("No network. Set NETWORK_TEST to run these tests.", 5) unless $ENV{NETWORK_TEST};
+    skip("No network. Set NETWORK_TEST to run these tests.", 5)
+        unless $ENV{NETWORK_TEST};
 
     my $result = test_app(qq|LibreCat::CLI| => ['url', 'check']);
     ok $result->error, 'threw an exception';

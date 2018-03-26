@@ -29,9 +29,9 @@ note("testing basic options");
     my $output2 = $result2->stdout;
     ok $output2 , 'got an output';
 
-    like $output2 , qr/Usage:/ , 'got help documentation';
+    like $output2 , qr/Usage:/, 'got help documentation';
 
-    my $result3 = test_app(qq|LibreCat::CLI| => ['publication','aaaargh']);
+    my $result3 = test_app(qq|LibreCat::CLI| => ['publication', 'aaaargh']);
     ok $result3->error, 'ok threw an exception';
 }
 
@@ -51,15 +51,17 @@ note("testing publication lists");
 
 note("testing valid");
 {
-    ok test_app(qq|LibreCat::CLI| => ['publication', 'valid'])->error , "no file == error";
+    ok test_app(qq|LibreCat::CLI| => ['publication', 'valid'])->error,
+        "no file == error";
 
-    ok test_app(qq|LibreCat::CLI| => ['publication', 'valid','t/blabla'])->error , "not existing file";
+    ok test_app(qq|LibreCat::CLI| => ['publication', 'valid', 't/blabla'])
+        ->error, "not existing file";
 
     my $result = test_app(qq|LibreCat::CLI| =>
             ['publication', 'valid', 't/records/invalid-publication.yml']);
     ok $result->error, 'invalid publication';
 
-    like $result->stderr , qr/type: Missing property/ , 'missing title';
+    like $result->stderr, qr/type: Missing property/, 'missing title';
 
     my $result2 = test_app(qq|LibreCat::CLI| =>
             ['publication', 'valid', 't/records/valid-publication.yml']);
@@ -88,12 +90,8 @@ note("testing adding valid publications");
 
 note("testing exporting publications");
 {
-    my $result = test_app(qq|LibreCat::CLI| => [
-        'publication',
-          'export',
-          '--start',0,
-          '--total',10
-    ]);
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['publication', 'export', '--start', 0, '--total', 10]);
 
     ok !$result->error, 'ok threw no exception';
 
@@ -107,19 +105,18 @@ note("testing exporting publications");
 
     ok $records , 'got records';
 
-    is @$records , 1 , 'got 1 record';
+    is @$records, 1, 'got 1 record';
 }
 
 note("testing searching publications");
 {
-    my $result = test_app(qq|LibreCat::CLI| => [
-        'publication',
-          'export',
-          '--sort','"title,,1"',
-          '--start',1,
-          '--total',10,
-          'basic = Valid'
-    ]);
+    my $result = test_app(
+        qq|LibreCat::CLI| => [
+            'publication', 'export', '--sort',  '"title,,1"',
+            '--start',     1,        '--total', 10,
+            'basic = Valid'
+        ]
+    );
 
     ok !$result->error, 'ok threw no exception';
 
@@ -133,7 +130,7 @@ note("testing searching publications");
 
     ok $records , 'got records';
 
-    is @$records , 1 , 'got 1 record';
+    is @$records, 1, 'got 1 record';
 }
 
 note("testing getting publication metadata");
@@ -252,31 +249,33 @@ note("testing embargo");
 {
     my $result = test_app(qq|LibreCat::CLI| => ['publication', 'embargo']);
 
-    ok ! $result->error , 'got not an error';
+    ok !$result->error, 'got not an error';
 
-    ok ! $result->stdout, 'got an empty result';
+    ok !$result->stdout, 'got an empty result';
 
     my $record = get_publication('999999999');
 
-    $record->{file} = [{
-        access_level => 'local' ,
-        content_type => 'application/pdf' ,
-        creator      => 'einstein' ,
-        date_created => '1970-01-01T00:00:00Z' ,
-        date_updated => '1970-01-01T00:00:00Z' ,
-        file_id      => 1 ,
-        file_name    => 'test.pdf' ,
-        file_size    => '1024' ,
-        relation     => 'main_file' ,
-        embargo_to   => 'open_access' ,
-        embargo      => '2000-01-01' ,
-    }];
+    $record->{file} = [
+        {
+            access_level => 'local',
+            content_type => 'application/pdf',
+            creator      => 'einstein',
+            date_created => '1970-01-01T00:00:00Z',
+            date_updated => '1970-01-01T00:00:00Z',
+            file_id      => 1,
+            file_name    => 'test.pdf',
+            file_size    => '1024',
+            relation     => 'main_file',
+            embargo_to   => 'open_access',
+            embargo      => '2000-01-01',
+        }
+    ];
 
     add_publication($record);
 
     my $result2 = test_app(qq|LibreCat::CLI| => ['publication', 'embargo']);
 
-    ok ! $result2->error , 'got not an error';
+    ok !$result2->error, 'got not an error';
 
     my $output2 = $result2->stdout;
 
@@ -286,13 +285,14 @@ note("testing embargo");
 
     ok $record2 , 'got yaml output';
 
-    is $record2->{id} , '999999999' , 'id = 999999999';
+    is $record2->{id}, '999999999', 'id = 999999999';
 
-    is $record2->{access_level} , 'local' , 'still local access_level';
+    is $record2->{access_level}, 'local', 'still local access_level';
 
-    my $result3 = test_app(qq|LibreCat::CLI| => ['publication', 'embargo','update']);
+    my $result3
+        = test_app(qq|LibreCat::CLI| => ['publication', 'embargo', 'update']);
 
-    ok ! $result3->error , 'got not an error';
+    ok !$result3->error, 'got not an error';
 
     my $output3 = $result3->stdout;
 
@@ -300,17 +300,18 @@ note("testing embargo");
 
     ok $record3 , 'got yaml output';
 
-    is $record3->{id} , '999999999' , 'id = 999999999';
+    is $record3->{id}, '999999999', 'id = 999999999';
 
-    is $record3->{access_level} , 'open_access' , 'still local open_access';
+    is $record3->{access_level}, 'open_access', 'still local open_access';
 }
 
 note("testing deleting a publication");
 {
-    ok test_app(qq|LibreCat::CLI| => ['publication', 'delete'])->error , "no id == error";
+    ok test_app(qq|LibreCat::CLI| => ['publication', 'delete'])->error,
+        "no id == error";
 
-    my $result = test_app(
-        qq|LibreCat::CLI| => ['publication', 'delete', '666']);
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['publication', 'delete', '666']);
 
     ok $result->error, 'delete threw an exception';
 
@@ -320,10 +321,7 @@ note("testing deleting a publication");
     like $output , qr/delete 666 failed/, 'delete 666 failed';
 
     my $result2 = test_app(qq|LibreCat::CLI| =>
-                ['publication',
-                 'delete',
-                 '--log','test',
-                 '999999999']);
+            ['publication', 'delete', '--log', 'test', '999999999']);
 
     ok !$result2->error, 'delete threw no exception';
 
@@ -336,13 +334,14 @@ note("testing deleting a publication");
 
     ok $record , 'got record 999999999';
 
-    is $record->{status} , 'deleted' , 'status = deleted';
-    ok $record->{date_deleted} , 'got a date_deleted';
+    is $record->{status}, 'deleted', 'status = deleted';
+    ok $record->{date_deleted}, 'got a date_deleted';
 }
 
 note("testing purging a publication");
 {
-    ok test_app(qq|LibreCat::CLI| => ['publication', 'purge'])->error , "no id == error";
+    ok test_app(qq|LibreCat::CLI| => ['publication', 'purge'])->error,
+        "no id == error";
 
     my $result = test_app(
         qq|LibreCat::CLI| => ['publication', 'purge', '999999999']);
@@ -356,7 +355,7 @@ note("testing purging a publication");
 
     my $record = get_publication('999999999');
 
-    ok ! $record , 'record 999999999 is gone';
+    ok !$record, 'record 999999999 is gone';
 }
 
 note("testing adding publication with --no-citation");
@@ -389,19 +388,21 @@ note("testing adding publication with --no-citation");
 
 note("testing fetch");
 {
-    ok test_app(qq|LibreCat::CLI| => ['publication', 'fetch'])->error , "no source == error";
-    ok test_app(qq|LibreCat::CLI| => ['publication', 'fetch','bibtex'])->error , "no id == error";
-    ok test_app(qq|LibreCat::CLI| => ['publication', 'fetch','blabla','123'])->error , "no exising source == error";
+    ok test_app(qq|LibreCat::CLI| => ['publication', 'fetch'])->error,
+        "no source == error";
+    ok test_app(qq|LibreCat::CLI| => ['publication', 'fetch', 'bibtex'])
+        ->error, "no id == error";
+    ok test_app(
+        qq|LibreCat::CLI| => ['publication', 'fetch', 'blabla', '123'])
+        ->error, "no exising source == error";
 
-    my $result = test_app(qq|LibreCat::CLI| => [
-                    'publication', 'fetch','bibtex','t/does/not/exists'
-                    ]);
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['publication', 'fetch', 'bibtex', 't/does/not/exists']);
 
     ok !$result->error, "importing a non existing id doesn't give an error";
 
-    my $result2 = test_app(qq|LibreCat::CLI| => [
-                    'publication', 'fetch','bibtex','t/records/bibtex-one.txt'
-                    ]);
+    my $result2 = test_app(qq|LibreCat::CLI| =>
+            ['publication', 'fetch', 'bibtex', 't/records/bibtex-one.txt']);
 
     ok !$result2->error, "valid input";
 
@@ -415,7 +416,7 @@ note("testing fetch");
 
     ok $record , 'got a yaml output';
 
-    is $record->{status} , 'new' , 'got a new record';
+    is $record->{status}, 'new', 'got a new record';
 }
 
 done_testing;

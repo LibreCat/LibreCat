@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Hook::publication_change_type';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 
