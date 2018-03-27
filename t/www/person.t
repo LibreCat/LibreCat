@@ -23,9 +23,8 @@ subtest 'person list alphabetical index' => sub {
     $mech->get_ok('/person?browse=E');
     $mech->content_unlike(qr/Einstein,, Albert/);
 
-    $mech->get_ok('/person?browse=P');
-    $mech->content_like(qr/Portman, Natalie/);
-    $mech->content_unlike(qr/Presley, Elvis/);
+    $mech->get_ok('/person?browse=M');
+    $mech->content_like(qr/Monroe, Marilyn/);
 };
 
 subtest 'person profile with single digit id' => sub {

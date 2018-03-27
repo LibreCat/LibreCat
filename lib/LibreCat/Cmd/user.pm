@@ -21,6 +21,7 @@ librecat user get    [options] <id> | <IDFILE>
 librecat user delete [options] <id> | <IDFILE>
 librecat user valid  [options] <FILE>
 librecat user passwd [options] <id>
+librecat user update_stats
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -49,7 +50,7 @@ sub command {
 
     $self->opts($opts);
 
-    my $commands = qr/list|export|get|add|delete|valid|passwd|prepare_search/;
+    my $commands = qr/list|export|get|add|delete|valid|passwd|update_stats/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -98,8 +99,8 @@ sub command {
     elsif ($cmd eq 'passwd') {
         return $self->_passwd(@$args);
     }
-    elsif ($cmd eq 'prepare_search') {
-        return $self->_prepare_search(@$args);
+    elsif ($cmd eq 'update_stats') {
+        return $self->_update_stats(@$args);
     }
 }
 
@@ -351,7 +352,7 @@ sub _passwd {
     return 0;
 }
 
-sub _prepare_search {
+sub _update_stats {
     my ($self) = @_;
 
     my $helper = LibreCat::App::Helper::Helpers->new;
@@ -365,7 +366,6 @@ sub _prepare_search {
             $rec->{publication_count} = $pub->{total};
             $ret = 1;
         }
-        #print Dumper $rec;
         return $ret;
     });
 
@@ -394,6 +394,7 @@ LibreCat::Cmd::user - manage librecat users
     librecat user delete [options] <id> | <IDFILE>
     librecat user valid  [options] <FILE>
     librecat user passwd [options] <id>
+    librecat user update_stats
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

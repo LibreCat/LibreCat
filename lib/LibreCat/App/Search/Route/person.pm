@@ -56,7 +56,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
         if (!$hits->{total}) {
             status '404';
             return template 'error',
-                {message => "No user found found with ID $id"};
+                {message => "No user found with ID $id"};
         }
         else {
             my $person = $hits->first;

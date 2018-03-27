@@ -100,7 +100,7 @@ Catmandu->store('search')->bag('user')->delete_all;
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['user', 'prepare_search']);
+    my $result = test_app(qq|LibreCat::CLI| => ['user', 'update_stats']);
 
     ok !$result->error, 'ok no exception';
 
