@@ -14,7 +14,7 @@ has search_bag =>
     (is => 'ro', required => 1, handles => [qw(search searcher)]);
 has validator =>
     (is => 'ro', required => 1, handles => [qw(is_valid whitelist)]);
-has before_add => (is => 'lazy');
+has before_add => (is => 'lazy', init_arg => undef);
 
 sub plugin_namespace {
     'LibreCat::Model::Plugin';
@@ -86,14 +86,14 @@ sub add {
     $rec;
 }
 
-sub delete {
-    my ($self, $id, %opts) = @_;
-    $self->purge($id, %opts);
-}
-
 sub delete_all {
     my ($self, %opts) = @_;
     $self->purge_all(%opts);
+}
+
+sub delete {
+    my ($self, $id, %opts) = @_;
+    $self->purge($id, %opts);
 }
 
 sub store {
@@ -124,6 +124,20 @@ sub index {
     $rec;
 }
 
+sub purge_all {
+    my ($self, %opts) = @_;
+
+    $self->bag->delete_all;
+    $self->bag->commit unless $opts{skip_commit};
+
+    $self->search_bag->delete_all;
+    $self->search_bag->commit unless $opts{skip_commit};
+
+    sleep 1 unless $opts{skip_commit};    # TODO move to controller
+
+    # TODO return value
+}
+
 sub purge {
     my ($self, $id, %opts) = @_;
 
@@ -138,20 +152,6 @@ sub purge {
     sleep 1 unless $opts{skip_commit};    # TODO move to controller
 
     $id;
-}
-
-sub purge_all {
-    my ($self, %opts) = @_;
-
-    $self->bag->delete_all;
-    $self->bag->commit unless $opts{skip_commit};
-
-    $self->search_bag->delete_all;
-    $self->search_bag->commit unless $opts{skip_commit};
-
-    sleep 1 unless $opts{skip_commit};    # TODO move to controller
-
-    # TODO return value
 }
 
 sub commit {
@@ -185,7 +185,7 @@ sub apply_whitelist {
     my $whitelist = $self->whitelist;
     for my $key (keys %$rec) {
         unless (grep {$_ eq $key} @$whitelist) {
-            $self->log->debug("deleting invalid key: $key");
+     $self->log->debug("deleting invalid key: $key");
             delete $rec->{$key};
         }
     }
@@ -193,3 +193,72 @@ sub apply_whitelist {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Model - Base role for Librecat models
+
+=head1 CONFIGURATION
+
+=head2 bag
+
+=head2 search_bag
+
+=head2 validator
+
+=head2 prepend_before_add
+
+=head2 append_before_add
+
+=head1 METHODS
+
+All L<Catmandu::Iterable> methods as well as C<search> and C<searcher> from
+L<Catmandu::Searchable> are available. This role also adds the following
+methods:
+
+=head2 generate_id
+
+=head2 get
+
+=head2 add_many
+
+=head2 add
+
+=head2 delete_all
+
+=head2 delete
+
+=head2 store
+
+=head2 index
+
+=head2 purge_all
+
+=head2 purge
+
+=head2 commit
+
+=head2 validator
+
+=head2 is_valid
+
+=head2 whitelist
+
+=head2 bag
+
+=head2 search_bag
+
+=head2 before_add
+
+=head2 prepend_before_add
+
+=head2 append_before_add
+
+=head1 SEE ALSO
+
+L<Catmandu::Iterable>, L<Catmandu::Searchable>
+=end
