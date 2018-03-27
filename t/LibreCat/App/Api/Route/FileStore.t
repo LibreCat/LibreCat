@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::App::Api::Route::FileStore';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 

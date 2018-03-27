@@ -71,7 +71,7 @@ sub search {
         $self->log->error(
             "$bag_name->search failed: " . to_dumper(\%search_params));
         $hits = Catmandu::Hits->new(
-            start => $search_params{start} // 0 ,
+            start => $search_params{start} // 0,
             limit => $search_params{limit},
             total => 0,
             hits  => [],

@@ -17,8 +17,8 @@ sub _build_file_store {
     my $file_store = $self->files->{package};
     my $file_opts = $self->files->{options} // {};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -80,7 +80,7 @@ sub do_upload {
     unless ($self->file_store->index->exists($key)) {
         $self->log->info("$key not found");
         $self->log->info("creating a new container $key");
-        $self->file_store->index->add({ _id => $key });
+        $self->file_store->index->add({_id => $key});
     }
 
     my $files = $self->file_store->index->files($key);

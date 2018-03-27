@@ -35,6 +35,19 @@
 
   </div>
 </div>
+[% IF settings.auth_sso.size %]
+<div class="row margin-top2">
+  <div class="col-md-6 col-md-offset-2 auth-sso-list">
+    <ul>
+    [% FOREACH as IN settings.auth_sso %]
+      <li>
+        <a class="[% as.class %] auth-sso-link" href="[% uri_base %][% as.path %]">[% h.loc(as.i18n) %]</a>
+      </li>
+    [% END %]
+    </ul>
+  </div>
+</div>
+[% END %]
 
 <script>
 $(document).ready(function(){

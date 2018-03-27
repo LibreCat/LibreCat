@@ -9,8 +9,14 @@ my $pkg;
 BEGIN {
     $pkg = 'Locale::Maketext::Lexicon::CatmanduConfig';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
+
+my $lexicon = Locale::Maketext::Lexicon::CatmanduConfig->parse('en');
+
+ok $lexicon, "lexicon exists";
+
+is $lexicon->{hello}, "How are you?", "get corret value from lexicon";
 
 done_testing;

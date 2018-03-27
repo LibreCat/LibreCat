@@ -1,0 +1,12 @@
+_prefix:
+  helper:
+
+extract_params:
+  start: "is_natural"
+  limit: "is_natural"
+  lang: "exists"
+  q: "exists"
+  links: "exists"
+  style: "exists"
+  cql: "string_array"
+  sort: "string_array"

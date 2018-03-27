@@ -3,6 +3,11 @@ use Test::More;
 use Path::Tiny;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
 
+{
+    my $loaded = LibreCat->loaded;
+    like $loaded, qr/0|1/;
+}
+
 # hooks
 
 {

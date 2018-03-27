@@ -7,7 +7,7 @@ use Moo;
 
 with 'LibreCat::FetchRecord';
 
-has 'baseurl' => (is => 'ro' , default => sub { "http://data.datacite.org/" });
+has 'baseurl' => (is => 'ro', default => sub {"http://data.datacite.org/"});
 
 sub fetch {
     my ($self, $id) = @_;

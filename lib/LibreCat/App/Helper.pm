@@ -23,7 +23,7 @@ use Moo;
 sub BUILD {
     my ($self) = @_;
     if (my $plugins = $self->config->{helper_plugins}) {
-         Role::Tiny->apply_roles_to_object($self, @$plugins);
+        Role::Tiny->apply_roles_to_object($self, @$plugins);
     }
 }
 
@@ -165,19 +165,29 @@ sub extract_params {
     my $p = {};
     return $p if ref $params ne 'HASH';
 
-    $p->{start} = $params->{start} if is_natural $params->{start};
-    $p->{limit} = $params->{limit} if is_natural $params->{limit};
-    $p->{lang}  = $params->{lang}  if $params->{lang};
-    $p->{q}     = $params->{q}     if $params->{q};
-    $p->{cql} = $self->string_array($params->{cql});
+    # parameters configured in helper.yml
+    foreach my $key (keys %{$self->config->{helper}->{extract_params}}) {
+        if ($self->config->{helper}->{extract_params}->{$key} eq "exists") {
+            $p->{$key} = $params->{$key} if $params->{$key};
+        }
+        elsif (
+            $self->config->{helper}->{extract_params}->{$key} eq "is_natural")
+        {
+            $p->{$key} = $params->{$key} if is_natural $params->{$key};
+        }
+        elsif ($self->config->{helper}->{extract_params}->{$key} eq
+            "string_array")
+        {
+            $p->{$key} = $self->string_array($params->{$key})
+                if $params->{$key};
+        }
+    }
 
+    # additional parameters with more complex logic
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
         : (push @{$p->{q}}, join(" AND ", split(/ |-/, $params->{text})))
         if $params->{text};
-
-    $p->{style} = $params->{style} if $params->{style};
-    $p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
 
     $p;
 }
@@ -352,7 +362,8 @@ sub store_record {
     # clean all the fields that are not part of the JSON schema
     state $validators = {};
     my $validator_pkg = $validators->{$bag};
-    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),'LibreCat::Validator');
+    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),
+        'LibreCat::Validator');
 
     my $can_store = 1;
 
@@ -394,6 +405,7 @@ sub store_record {
 
 sub index_record {
     my ($self, $bag, $rec) = @_;
+
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
     $self->log->debug(Dancer::to_json($rec));
@@ -408,6 +420,8 @@ sub delete_record {
     if ($bag eq 'publication') {
         my $del_record = $self->publication->get($id);
 
+        return undef unless $del_record;
+
         if ($del_record->{oai_deleted} || $del_record->{status} eq 'public') {
             $del_record->{oai_deleted} = 1;
             $del_record->{locked}      = 1;
@@ -416,8 +430,7 @@ sub delete_record {
         $del_record->{date_deleted} = $self->now;
         $del_record->{status}       = 'deleted';
 
-
-        my $saved   = $self->main_publication->add($del_record);
+        my $saved = $self->main_publication->add($del_record);
         $self->main_publication->commit;
         $self->publication->add($saved);
         $self->publication->commit;
@@ -427,7 +440,7 @@ sub delete_record {
         return $saved;
     }
     else {
-        $self->purge_record($bag,$id);
+        $self->purge_record($bag, $id);
         return +{};
     }
 }
@@ -448,6 +461,7 @@ sub purge_record {
 }
 
 sub uri_base {
+
     #config option 'host' is deprecated
     state $h = $_[0]->config->{uri_base} // $_[0]->config->{host}
         // "http://localhost:5001";
@@ -469,17 +483,19 @@ sub uri_for {
             if (!defined($value) || length($value) == 0) {
                 $value = [];
             }
-            elsif (is_array_ref($value)) {}
+            elsif (is_array_ref($value)) { }
             elsif (is_string($value)) {
                 $value = [$value];
             }
             else {
-                $self->log->error("expecting an array or string but got a $value");
+                $self->log->error(
+                    "expecting an array or string but got a $value");
                 $value = [];
             }
 
             for (@$value) {
-                push @request_param , uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
+                push @request_param,
+                    uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
             }
         }
     }
@@ -488,7 +504,7 @@ sub uri_for {
         $uri .= '?' . join("&", @request_param);
     }
 
-    return $uri
+    return $uri;
 }
 
 sub get_file_store {
@@ -499,8 +515,8 @@ sub get_file_store {
 
     return undef unless $file_store;
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -541,6 +557,29 @@ sub uri_for_file {
     my ($self, $pub_id, $file_id, $file_name) = @_;
     my $ext = $self->file_extension($file_name);
     $self->uri_base() . "/download/$pub_id/$file_id$ext";
+}
+
+sub login_user {
+
+    my ($self, $user) = @_;
+
+    my %attrs = LibreCat->user->to_session($user);
+
+    for (keys %attrs) {
+
+        session($_ => $attrs{$_});
+
+    }
+
+}
+
+sub logout_user {
+
+    session role     => undef;
+    session user     => undef;
+    session user_id  => undef;
+    session auth_sso => undef;
+
 }
 
 package LibreCat::App::Helper;
