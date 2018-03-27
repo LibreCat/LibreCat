@@ -272,15 +272,15 @@ $("#id_conference_location").autocomplete("option", "delay", 100);
 // connect publications
 $(function() {
   var puburl = '';
-  [% IF session.role == "super_admin" %]
+  [% IF modus == "super_admin" OR session.role == "super_admin" %]
     puburl = '/librecat/search/admin?fmt=autocomplete';
-  [% ELSIF session.role == "reviewer" %]
+  [% ELSIF modus == "reviewer" OR session.role == "reviewer" %]
     puburl = '/librecat/search/reviewer?fmt=autocomplete';
-  [% ELSIF session.role == "project_reviewer" %]
+  [% ELSIF modus == "project_reviewer" OR session.role == "project_reviewer" %]
     puburl = '/librecat/search/project_reviewer?fmt=autocomplete';
-  [% ELSIF session.role == "dataManager" %]
+  [% ELSIF modus == "dataManager" OR session.role == "dataManager" %]
     puburl = '/librecat/search/data_manager?fmt=autocomplete';
-  [% ELSIF session.role == "delegate" %]
+  [% ELSIF modus == "delegate" OR session.role == "delegate" %]
     puburl = '/librecat/search/delegate?fmt=autocomplete';
   [% ELSE %]
     puburl = '/librecat/search?fmt=autocomplete';

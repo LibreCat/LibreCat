@@ -52,9 +52,9 @@
 <ul class="nav nav-tabs nav-stacked ul3[% IF backend %] helpme" data-placement="left" title="[% h.loc("help.display_block") %][% END %]">
   [% IF (!request.path_info.match('person') OR bag == "person") AND total > 9 %]
   <li>
-    <button data-toggle="collapse" data-target="#hitsperpage" class="btn-link"><span class="fa fa-chevron-down fw"></span>[% h.loc("facets.hits_per_page") %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
+    <button data-toggle="collapse" data-target="#hitsperpage_[% tabmodus %][% menu %]" class="btn-link"><span class="fa fa-chevron-down fw"></span>[% h.loc("facets.hits_per_page") %][% IF qp.limit %]: [% limit %][% ELSE %]: [% h.config.default_page_size %][% END %]</button>
     <div class="facettecollapse">
-    <ul id="hitsperpage" class="collapse">
+    <ul id="hitsperpage_[% tabmodus %][% menu %]" class="collapse">
       [%- FOREACH lim IN h.config.pagination_options %]
         [%- IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
         <li>[% lim %]</li>
@@ -83,8 +83,8 @@
         [%- IF gray %]
           <span class="text-muted">[% h.loc("facets.sort_options.${s}") %]</span><br />
         [%- ELSE %]
-          <li><a href="#" class="facet" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% h.loc("facets.sort_options.${s}") %] <span class="fa fa-arrow-up"></span></a>
-          <a href="#" class="facet" data-key="sort" data-value="[% s %].desc" rel="nofollow">
+          <li><a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].asc" rel="nofollow">[% h.loc("facets.sort_options.${s}") %] <span class="fa fa-arrow-up"></span></a>
+          <a href="#" class="facet_[% tabmodus %]" data-key="sort" data-value="[% s %].desc" rel="nofollow">
           <span class="fa fa-arrow-down"></span></a></li>
         [%- END %]
       [%- END %]
@@ -134,11 +134,11 @@
   </li>
   [%- UNLESS backend OR request.path_info.match('embed') %]
   <li>
-    <button data-toggle="collapse" data-target="#embed" id="id_button_embed" class="btn-link">
+    <button data-toggle="collapse" data-target="#embed_[% tabmodus %][% menu %]" id="id_button_embed_[% tabmodus %][% menu %]" class="btn-link">
       <span class="fa fa-chevron-down fw"></span>[% h.loc("facets.embed") %]
     </button>
     <div class="facettecollapse">
-    <ul id="embed" class="collapse">
+    <ul id="embed_[% tabmodus %][% menu %]" class="collapse">
     [%- FOREACH emb IN ['js', 'iframe', 'link'] %]
         <li><span class="fa fa-fw fa-arrow-circle-o-down"></span><strong>[% emb %]</strong>
         <span class="input-group">
@@ -190,7 +190,7 @@ $('.rtfmodal').click(function(){
 var path = '[% request.path %]',
 searchParams = [% qp.json %];
 
-$('#id_button_embed').click(function() {
+$('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
     var person_id  = embed_link.match(/\/person\/([^\?]+)/);
 
@@ -215,7 +215,7 @@ $('#id_button_embed').click(function() {
     $('#id_linktext').val(emb_link);
 });
 
-$('a.facet').click(function() {
+$('a.facet_[% tabmodus %]').click(function() {
   var par_key = $(this).data('key');
   if(!searchParams[par_key]){
     searchParams[par_key] = [];
