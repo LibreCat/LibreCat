@@ -731,7 +731,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
-      editor: "Herausgeber"
+      editor: *editor
       document_type: *document_type
       doi: *doi
       title: *booktitle
