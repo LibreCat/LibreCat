@@ -11,14 +11,14 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat sitemap <DIRECTORY>
+librecat sitemap [-v] <DIRECTORY>
 
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    ();
+    (['v',          ""],);
 }
 
 sub command {
@@ -67,10 +67,12 @@ sub command {
             );
             $file->say('</urlset>');
             $file->close;
+            print STDERR "Generating $path\n" if $opts->{v};
         }
         );
 
-    my $file = io(join_path($dir, "siteindex.xml"), mode => 'w');
+    my $path = join_path($dir, "siteindex.xml");
+    my $file = io($path, mode => 'w');
     $file->say('<?xml version="1.0" encoding="UTF-8"?>');
     $file->say(
         '<sitemap xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
@@ -80,6 +82,7 @@ sub command {
     }
     $file->say('</sitemap>');
     $file->close;
+    print STDERR "Generating $path\n" if $opts->{v};
 
     return 0;
 }
@@ -96,6 +99,6 @@ LibreCat::Cmd::sitemap - generate siteindex and sitemaps
 
 =head1 SYNOPSIS
 
-    librecat sitemap <DIRECTORY>
+    librecat sitemap [-v] <DIRECTORY>
 
 =cut

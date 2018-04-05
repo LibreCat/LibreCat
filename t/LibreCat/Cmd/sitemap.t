@@ -39,11 +39,13 @@ require_ok $pkg;
 
 {
     my $result = test_app(
-        qq|LibreCat::CLI| => ['sitemap', 't/tmp/sitemap']);
+        qq|LibreCat::CLI| => ['sitemap', '-v', 't/tmp/sitemap']);
 
     ok !$result->error, 'ok threw no exception';
 
     ok !$result->stdout, 'silent';
+
+    like $result->stderr, qr/Generating/, 'verbose';
 
     ok -f 't/tmp/sitemap/siteindex.xml',     'index site exists';
     ok -f 't/tmp/sitemap/sitemap-00001.xml', 'first sitemap exists';
