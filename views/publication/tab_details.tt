@@ -216,7 +216,7 @@
     </div>
   </div>
   [%- IF display_citation %]
-    <div id="citethis">
+    <div id="citethis" class="anchor">
       <h3 id="cite">[% h.loc("frontdoor.cite_this") %]</h3>
       <ul class="nav nav-tabs">
         [%- FOREACH style IN h.config.citation.csl.styles.keys.sort %]

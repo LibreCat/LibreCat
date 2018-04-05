@@ -514,6 +514,7 @@ forms:
         label_short: "Locked"
       main_file_link: &main_file_link
         label: "Fulltext URL"
+        label_short: "Fulltext URL"
         placeholder: "Ext. location of your main file"
         open_access: "<img src='/images/access_open.png' /> Open Access"
   book_editor:
