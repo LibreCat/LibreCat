@@ -38,8 +38,8 @@ require_ok $pkg;
 }
 
 {
-    my $result = test_app(
-        qq|LibreCat::CLI| => ['sitemap', '-v', 't/tmp/sitemap']);
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['sitemap', '-v', 't/tmp/sitemap']);
 
     ok !$result->error, 'ok threw no exception';
 

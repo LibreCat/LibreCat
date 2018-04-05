@@ -31,15 +31,20 @@ SKIP: {
     my $result = test_app(qq|LibreCat::CLI| => ['url', 'check']);
     ok $result->error, 'threw an exception';
 
-    $result = test_app(
-        qq|LibreCat::CLI| => ['url', 'check' , '--importer=YAML', 't/records/urls.yml']);
+    $result = test_app(qq|LibreCat::CLI| =>
+            ['url', 'check', '--importer=YAML', 't/records/urls.yml']);
     ok !$result->error, 'threw no exception';
 
     like $result->stdout, qr/200.*pub\.uni-bielefeld/, 'result looks good';
     like $result->stdout, qr/200.*biblio\.ugent/,      'result looks good';
 
-    $result = test_app(qq|LibreCat::CLI| =>
-            ['url', 'check', '--importer=YAML', 't/records/urls.yml', 't/tmp/urls.out']);
+    $result = test_app(
+        qq|LibreCat::CLI| => [
+            'url',             'check',
+            '--importer=YAML', 't/records/urls.yml',
+            't/tmp/urls.out'
+        ]
+    );
     ok !$result->error, 'threw no exception with outfile';
 
     unlink('t/tmp/urls.out');

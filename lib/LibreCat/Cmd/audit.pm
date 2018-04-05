@@ -75,12 +75,8 @@ sub _list {
             my $time    = strftime("%Y-%m-%dT%H:%M:%S",
                 localtime($item->{time} // 0));
 
-            printf "%s %s %s %s %s\n"
-                    , $time
-                    , $id
-                    , $process
-                    , $action
-                    , $message;
+            printf "%s %s %s %s %s\n", $time, $id, $process, $action,
+                $message;
         }
     );
 

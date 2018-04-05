@@ -23,10 +23,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (
-        ['importer=s',   ""],
-        ['exporter=s',   ""],
-    );
+    (['importer=s', ""], ['exporter=s', ""],);
 }
 
 sub command {
@@ -47,11 +44,7 @@ sub command {
     binmode(STDOUT, ":encoding(utf-8)");
 
     $self->app->set_global_options(
-        {
-            importer => $opts->importer,
-            exporter => $opts->exporter,
-        }
-    );
+        {importer => $opts->importer, exporter => $opts->exporter,});
 
     if ($cmd eq 'check') {
         return $self->_check(@$args);
@@ -63,18 +56,23 @@ sub _check {
 
     croak "usage: $0 check <FILE>" unless defined($file) && -r $file;
 
-    my $importer =
-        $self->app->global_options->{importer} ?
-        Catmandu->importer($self->app->global_options->{importer}) :
-        Catmandu->importer('TSV', file => $file , fields => [qw(_id url)], header => 0);
+    my $importer
+        = $self->app->global_options->{importer}
+        ? Catmandu->importer($self->app->global_options->{importer})
+        : Catmandu->importer(
+        'TSV',
+        file   => $file,
+        fields => [qw(_id url)],
+        header => 0
+        );
 
     my %exporter_opts = (fields => [qw(_id url http_status)], header => 0);
     $exporter_opts{file} = $out_file if $out_file;
 
-    my $exporter =
-        $self->app->global_options->{exporter} ?
-        Catmandu->exporter($self->app->global_options->{exporter}) :
-        Catmandu->exporter('TSV', %exporter_opts);
+    my $exporter
+        = $self->app->global_options->{exporter}
+        ? Catmandu->exporter($self->app->global_options->{exporter})
+        : Catmandu->exporter('TSV', %exporter_opts);
 
     my $cv = AnyEvent->condvar;
 
@@ -95,15 +93,10 @@ sub _check {
             http_head $url, sub {
                 my ($body, $hdr) = @_;
                 $exporter->add(
-                    {
-                        _id         => $id,
-                        url         => $url,
-                        http_status => $hdr->{Status}
-                    }
-                );
+                    {_id => $id, url => $url, http_status => $hdr->{Status}});
 
                 $cv->end;
-            }
+                }
         }
     );
 

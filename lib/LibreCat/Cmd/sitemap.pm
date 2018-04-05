@@ -18,7 +18,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['v',          ""],);
+    (['v', ""],);
 }
 
 sub command {
