@@ -3,18 +3,19 @@ package LibreCat::Model;
 use Catmandu::Sane;
 use Catmandu::Util qw(is_string is_code_ref is_able);
 use List::Util qw(pairs);
+use Types::Standard qw(ConsumerOf);
+use LibreCat::Types qw(+Pairs);
 use Moo::Role;
 use namespace::clean;
 
-with 'Catmandu::Pluggable';
-with 'LibreCat::Logger';
+with 'Catmandu::Pluggable', 'LibreCat::Logger';
 
-has bag => (is => 'ro', required => 1, handles => 'Catmandu::Iterable');
+has bag => (is => 'ro', required => 1, handles => 'Catmandu::Iterable', isa => ConsumerOf['Catmandu::Bag']);
 has search_bag =>
-    (is => 'ro', required => 1, handles => [qw(search searcher)]);
+    (is => 'ro', required => 1, handles => [qw(search searcher)], isa => ConsumerOf['Catmandu::Bag', 'Catmandu::Searchable']);
 has validator =>
-    (is => 'ro', required => 1, handles => [qw(is_valid whitelist)]);
-has before_add => (is => 'lazy', init_arg => undef);
+    (is => 'ro', required => 1, handles => [qw(is_valid whitelist)], isa => ConsumerOf['LibreCat::Validator']);
+has before_add => (is => 'lazy', init_arg => undef, isa => Pairs);
 
 sub plugin_namespace {
     'LibreCat::Model::Plugin';
@@ -25,13 +26,15 @@ sub _build_before_add {
 }
 
 sub prepend_before_add {
-    my $self = shift;
-    unshift @{$self->before_add}, @_;
+    my ($self, $hooks) = @_;
+    assert_Pairs($hooks);
+    unshift @{$self->before_add}, @$hooks;
 }
 
 sub append_before_add {
-    my $self = shift;
-    push @{$self->before_add}, @_;
+    my ($self, $hooks) = @_;
+    assert_Pairs($hooks);
+    push @{$self->before_add}, @$hooks;
 }
 
 sub BUILD {
@@ -39,7 +42,7 @@ sub BUILD {
 
     for my $method (qw(prepend_before_add append_before_add)) {
         if (my $hooks = $opts->{$method}) {
-            $self->$method(@$hooks);
+            $self->$method($hooks);
         }
     }
 }
@@ -55,15 +58,17 @@ sub get {
 
 sub add_many {
     my ($self, $recs, %opts) = @_;
+    my $n = 0;
+
     $recs->each(
         sub {
-            $self->add($_[0], %opts, skip_commit => 1);
+            $n += $self->add($_[0], %opts, skip_commit => 1);
         }
     );
     $self->bag->commit;
     $self->search_bag->commit;
 
-    # TODO return value
+    $n;
 }
 
 sub add {
@@ -75,15 +80,17 @@ sub add {
     $rec = $self->apply_hooks_to_record($self->before_add, $rec,
         skip => $opts{skip_before_add});
 
-    if ($self->store($rec, %opts)) {
+    if ($self->is_valid($rec)) {
+        $self->store($rec, %opts);
         $self->index($rec, %opts) unless $opts{skip_index};
         $opts{on_success}->($rec) if $opts{on_success};
+        return 1;
     }
     elsif ($opts{on_validation_error}) {
         $opts{on_validation_error}->($rec, $self->validator->last_errors);
     }
 
-    $rec;
+    0;
 }
 
 sub delete_all {
@@ -99,12 +106,9 @@ sub delete {
 sub store {
     my ($self, $rec, %opts) = @_;
 
-    if ($self->is_valid($rec)) {
-        $rec = $self->bag->add($rec);
-        $self->bag->commit unless $opts{skip_commit};
-        return $rec;
-    }
-    return;
+    $self->bag->add($rec);
+    $self->bag->commit unless $opts{skip_commit};
+    $rec;
 }
 
 # TODO get from bag if rec is an id
@@ -135,7 +139,7 @@ sub purge_all {
 
     sleep 1 unless $opts{skip_commit};    # TODO move to controller
 
-    # TODO return value
+    1;
 }
 
 sub purge {
@@ -159,7 +163,7 @@ sub commit {
     $self->bag->commit;
     $self->search_bag->commit;
 
-    # TODO return value
+    1;
 }
 
 # TODO compile this
@@ -185,7 +189,7 @@ sub apply_whitelist {
     my $whitelist = $self->whitelist;
     for my $key (keys %$rec) {
         unless (grep {$_ eq $key} @$whitelist) {
-     $self->log->debug("deleting invalid key: $key");
+            $self->log->debug("deleting invalid key: $key");
             delete $rec->{$key};
         }
     }
@@ -206,13 +210,23 @@ LibreCat::Model - Base role for Librecat models
 
 =head2 bag
 
+The main store for this model. Required and must be a L<Catmandu::Bag>.
+
 =head2 search_bag
+
+The index for this model. Required and must be a L<Catmandu::Bag> and a L<Catmandu::Searchable>.
 
 =head2 validator
 
+The validator for this model. Required and must be a L<LibreCat::Validator>.
+
 =head2 prepend_before_add
 
+Add hooks that will be executed before a record is added.
+
 =head2 append_before_add
+
+Add hooks that will be executed before a record is added.
 
 =head1 METHODS
 
@@ -222,43 +236,191 @@ methods:
 
 =head2 generate_id
 
-=head2 get
+Generate and return a new id that is unique to this model.
 
-=head2 add_many
+=head2 get($id)
 
-=head2 add
+Returns the record identified by C<$id> if it exists, C<undef> otherwise.
 
-=head2 delete_all
+=head2 add_many($iterator, %opts)
 
-=head2 delete
+Add all the records in C<$iterator>. $<iterator> must be a
+L<Catmandu::Iterator>. Returns the number of records that passed
+validation and were succesfully added.
 
-=head2 store
+Using this method is more efficient than
+successively calling C<add> for each record in the iterator.
 
-=head2 index
+Possible options:
 
-=head2 purge_all
+=over
+ 
+=item *
+ 
+C<skip_before_add>
+ 
+=item *
+ 
+C<skip_index>
 
-=head2 purge
+=item *
+ 
+C<on_success>
+
+=item *
+ 
+C<on_validation_error>
+ 
+=back
+
+=head2 add($rec, %opts)
+
+Insert or update the record identified by it's C<_id> key. If no C<_id> is given, a
+new one will be generated for you. Returns C<1> if the record was valid and
+succesfully stored and indexed, C<0> otherwise.
+
+Options are the same as for C<add_many>, plus:
+
+=over
+ 
+=item *
+ 
+C<skip_commit>
+
+=back
+
+=head2 delete_all(%opts)
+
+Delete all records.
+
+Options are:
+
+=over
+ 
+=item *
+ 
+C<skip_commit>
+
+=back
+
+=head2 delete($id, %opts)
+
+Delete the record identified by C<$id>. Returns C<$id> if the record was
+deleted, C<undef> if no record was found.
+
+Options are:
+
+=over
+ 
+=item *
+ 
+C<skip_commit>
+
+=back
+
+=head2 store($rec, %opts)
+
+This is a lower level method that inserts or updates the record in the main store. An
+C<_id> is generated if none is given, but no validation is done. Returns the given C<$rec>.
+You would normally use the higher level C<add> method.
+
+Options are:
+
+=over
+ 
+=item *
+ 
+C<skip_commit>
+
+=back
+
+=head2 index($rec)
+
+Index the given record. An C<_id> is generated if none is given, but no
+validation is done. Returns the given C<$rec>. You would normally use the
+higher level C<add> method.
+
+Options are:
+
+=over
+ 
+=item *
+ 
+C<skip_commit>
+
+=back
+
+=head2 purge_all(%opts)
+
+This is a lower level method that removes all records from the main store and the index. Always returns C<1>. You would normally use the
+higher level C<delete_all> method.
+
+Options are:
+
+=over
+ 
+=item *
+ 
+C<skip_commit>
+
+=back
+
+=head2 purge($rec)
+
+Remove the record identified by C<$id> from the main store and the index. Returns C<$id> if the record was
+removed, C<undef> if no record was found.
+
+Options are:
+
+=over
+ 
+=item *
+ 
+C<skip_commit>
+
+=back
 
 =head2 commit
 
+Commit any unsaved changes, for example after C<skip_commit => 1>. Always returns C<1>.
+
 =head2 validator
 
-=head2 is_valid
+Returns the validator for this model.
+
+=head2 is_valid($rec)
+
+Return 1 if the given C<$rec> is valid, C<0> otherwise.
 
 =head2 whitelist
 
+Returns all whitelisted field names for this model. Any fields not in this list
+will be removed before adding the record. C<skip_before_filter> can be used to used to override this:
+
+    $model->add($rec, skip_before_add => ['whitelist']);
+
 =head2 bag
+
+Return the onderlying main store for this model.
 
 =head2 search_bag
 
+Return the onderlying index for this model.
+
 =head2 before_add
+
+Returns the hooks that will be executed before a record is added.
 
 =head2 prepend_before_add
 
+Add hooks that will be executed before a record is added.
+
 =head2 append_before_add
+
+Add hooks that will be executed before a record is added.
 
 =head1 SEE ALSO
 
 L<Catmandu::Iterable>, L<Catmandu::Searchable>
-=end
+
+=cut

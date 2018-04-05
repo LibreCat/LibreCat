@@ -26,11 +26,9 @@ isa_ok(
 
     $pub->{title} = '我能吞下玻璃而不伤身体';
 
-    my $pub_stored = LibreCat->publication->add($pub);
+    ok(LibreCat->publication->add($pub), 'publication add');
 
-    ok $pub_stored , 'publication add';
-
-    is $pub_stored->{title}, '我能吞下玻璃而不伤身体',
+    is $pub->{title}, '我能吞下玻璃而不伤身体',
         '..check title (return value)';
 
     is(

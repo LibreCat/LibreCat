@@ -122,7 +122,7 @@ Deletes the account with ID :id.
 
     post '/project/update' => sub {
         my $p      = h->nested_params();
-        my $return = LibreCat->project->add($p);
+        LibreCat->project->add($p);
         redirect uri_for('/librecat/admin/project');
     };
 
@@ -152,7 +152,7 @@ Deletes the account with ID :id.
 
     post '/research_group/update' => sub {
         my $p      = h->nested_params();
-        my $return = LibreCat->research_group->add($p);
+        LibreCat->research_group->add($p);
         redirect uri_for('/librecat/admin/research_group');
     };
 

@@ -61,7 +61,7 @@ post '/librecat/upload/qae/submit' => sub {
         h->hook('qae-new')->fix_around(
             $record,
             sub {
-                my $response = LibreCat->publication->add($record);
+                LibreCat->publication->add($record);
             }
         );
 

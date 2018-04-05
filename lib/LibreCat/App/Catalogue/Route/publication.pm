@@ -380,9 +380,9 @@ Publishes private records, returns to the list.
 
             $hook->fix_before($rec);
 
-            my $res = LibreCat->publication->add($rec);
+            LibreCat->publication->add($rec);
 
-            $hook->fix_after($res);
+            $hook->fix_after($rec);
         }
 
         redirect uri_for('/librecat');

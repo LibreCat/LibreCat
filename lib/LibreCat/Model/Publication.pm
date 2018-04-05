@@ -12,7 +12,7 @@ with 'LibreCat::Model';
 
 sub BUILD {
     my ($self) = @_;
-    $self->append_before_add(
+    $self->append_before_add([
 
         # TODO this is very dirty and executes even if validation fails
         file             => '_store_file',
@@ -20,7 +20,7 @@ sub BUILD {
 
         # TODO move to config
         citation => Catmandu::Fix::add_citation->new,
-    );
+    ]);
 }
 
 sub delete {
