@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use parent qw(Catmandu::Cmd::count);
 
 sub description {
-    return <<EOF
+    return <<EOF;
 WARNING - Low level command
 
 WARNING - These low level commands will skip all validation/business rules!

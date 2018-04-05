@@ -4,6 +4,7 @@ usage:
 	@echo "targets:"
 	@echo "  generate"
 	@echo "  update"
+	@echo "  tidy"
 	@echo "  test"
 	@echo "  cover [ FILE=<path> ]"
 
@@ -31,3 +32,6 @@ endif
 
 test:
 	prove -l -j 1 -r t
+
+tidy:
+	tidyall -r lib t
