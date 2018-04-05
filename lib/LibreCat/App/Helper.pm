@@ -62,23 +62,23 @@ sub main_audit {
 }
 
 sub main_publication {
-    state $bag = Catmandu->store('main')->bag('publication');
+    LibreCat->publication->bag;
 }
 
 sub main_project {
-    state $bag = Catmandu->store('main')->bag('project');
+    LibreCat->project->bag;
 }
 
 sub main_user {
-    state $bag = Catmandu->store('main')->bag('user');
+    LibreCat->user->bag;
 }
 
 sub main_department {
-    state $bag = Catmandu->store('main')->bag('department');
+    LibreCat->department->bag;
 }
 
 sub main_research_group {
-    state $bag = Catmandu->store('main')->bag('research_group');
+    LibreCat->research_group->bag;
 }
 
 sub main_reqcopy {
@@ -86,23 +86,23 @@ sub main_reqcopy {
 }
 
 sub publication {
-    state $bag = Catmandu->store('search')->bag('publication');
+    LibreCat->publication->search_bag;
 }
 
 sub project {
-    state $bag = Catmandu->store('search')->bag('project');
+    LibreCat->project->search_bag;
 }
 
 sub user {
-    state $bag = Catmandu->store('search')->bag('user');
+    LibreCat->user->search_bag;
 }
 
 sub department {
-    state $bag = Catmandu->store('search')->bag('department');
+    LibreCat->department->search_bag;
 }
 
 sub research_group {
-    state $bag = Catmandu->store('search')->bag('research_group');
+    LibreCat->research_group->search_bag;
 }
 
 sub within_ip_range {
@@ -261,15 +261,15 @@ sub get_statistics {
     };
 }
 
-# TODO mark as deprecated
 sub new_record {
     my ($self, $bag) = @_;
+    $self->log->warn('DEPRECATION NOTICE: new_record is deprecated. Use LibreCat->$model->generate_id instead');
     Catmandu->store('main')->bag($bag)->generate_id;
 }
 
-# TODO mark as deprecated
 sub update_record {
     my ($self, $bag, $rec) = @_;
+    $self->log->warn('DEPRECATION NOTICE: update_record is deprecated. Use LibreCat->$model->add instead');
 
     $self->log->info("updating $bag");
 
@@ -295,9 +295,9 @@ sub update_record {
     $rec;
 }
 
-# TODO mark as deprecated
 sub store_record {
     my ($self, $bag, $rec, %opts) = @_;
+    $self->log->warn('DEPRECATION NOTICE: store_record is deprecated. Use LibreCat->$model->add instead');
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
@@ -358,9 +358,9 @@ sub store_record {
     }
 }
 
-# TODO mark as deprecated
 sub index_record {
     my ($self, $bag, $rec) = @_;
+    $self->log->warn('DEPRECATION NOTICE: index_record is deprecated. Use LibreCat->$model->add instead');
 
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
@@ -370,9 +370,9 @@ sub index_record {
     $rec;
 }
 
-# TODO mark as deprecated
 sub delete_record {
     my ($self, $bag, $id) = @_;
+    $self->log->warn('DEPRECATION NOTICE: delete_record is deprecated. Use LibreCat->$model->delete instead');
 
     if ($bag eq 'publication') {
         my $del_record = $self->publication->get($id);
@@ -402,9 +402,9 @@ sub delete_record {
     }
 }
 
-# TODO mark as deprecated
 sub purge_record {
     my ($self, $bag, $id) = @_;
+    $self->log->warn('DEPRECATION NOTICE: delete_record is deprecated. Use LibreCat->$model->purge instead');
 
     # Delete from the index store
     $self->$bag->delete($id);
