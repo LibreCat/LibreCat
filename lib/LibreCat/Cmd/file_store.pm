@@ -35,6 +35,7 @@ options:
     --tmp_dir=...     - Temporary directory
     --zip=...         - Zip program
     --unzip=...       - Unzip program
+    --log=...         - Log message
 
 EOF
 }
@@ -53,6 +54,7 @@ sub command_opt_spec {
         ["zip=s",   "zipper",   {default => '/usr/bin/zip'}],
         ["unzip=s", "unzipper", {default => '/usr/bin/unzip'}],
         ["csv",     "to CSV (get)"],
+        ["log=s",   "log message"],
     );
 }
 
@@ -119,6 +121,7 @@ sub command {
             zipper   => $opts->zip,
             unzipper => $opts->unzip,
             csv      => $opts->csv,
+            log      => $opts->log,
         }
     );
 
@@ -160,6 +163,20 @@ sub command {
     elsif ($cmd eq 'thumbnail') {
         return $self->_thumbnail(@$args);
     }
+}
+
+sub audit_message {
+    my ($id, $action, $message) = @_;
+    LibreCat::App::Helper::Helpers->new->queue->add_job(
+        'audit',
+        {
+            id      => $id,
+            bag     => 'publication',
+            process => 'librecat file_store',
+            action  => $action,
+            message => $message,
+        }
+    );
 }
 
 sub _list {
@@ -280,6 +297,10 @@ sub _get {
         }
     }
 
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, 'get', $msg);
+    }
+
     return 0;
 }
 
@@ -301,6 +322,10 @@ sub _fetch {
     binmode(STDOUT, ':raw');
 
     my $bytes = $files->stream(IO::File->new('>&STDOUT'), $file);
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "fetch $filename", $msg);
+    }
 
     $bytes > 0;
 }
@@ -329,6 +354,10 @@ sub _add {
 
     $files->upload(IO::File->new("<$path/$name"), $name);
 
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "add $file", $msg);
+    }
+
     return $self->_get($key);
 }
 
@@ -346,6 +375,10 @@ sub _delete {
 
     $files->delete($name);
 
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "delete $name", $msg);
+    }
+
     return $self->_get($key);
 }
 
@@ -359,6 +392,10 @@ sub _purge {
     croak "purge - failed to find $key" unless $store->index->exists($key);
 
     $store->index->delete($key);
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, 'purge', $msg);
+    }
 
     return 0;
 }
@@ -403,6 +440,10 @@ sub _move {
     }
     else {
         $self->_move_files($source_store, $target_store, $key);
+    }
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "move $name", $msg);
     }
 
     0;
@@ -534,6 +575,10 @@ sub _export {
         croak "Failed to remove $workdir";
     }
 
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "export $zip_file", $msg);
+    }
+
     0;
 }
 
@@ -583,6 +628,10 @@ sub _import {
         croak "Failed to remove $workdir";
     }
 
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "import $zip_file", $msg);
+    }
+
     0;
 }
 
@@ -604,6 +653,10 @@ sub _thumbnail {
     my $worker = $pkg->new(%$thumbnailer_options);
 
     my $response = $worker->work({key => $key, filename => $filename,});
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "thumbnail $filename", $msg);
+    }
 
     $response && $response->{ok};
 }
@@ -650,4 +703,5 @@ LibreCat::Cmd::file_store - manage librecat file stores
         --tmp_dir=...     - Temporary directory
         --zip=...         - Zip program
         --unzip=...       - Unzip program
+        --log=...         - Log message
 =cut

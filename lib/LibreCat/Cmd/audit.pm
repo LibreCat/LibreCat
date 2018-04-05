@@ -11,7 +11,6 @@ sub description {
 Usage:
 
 librecat audit list [options] [<RECORD-ID>]
-librecat audit get  [options] <AUDIT-ID>
 
 An 'audit' worker should be up and running to
 store messages:
@@ -71,30 +70,23 @@ sub _list {
             my ($item)  = @_;
             my $id      = $item->{id} // '';
             my $process = $item->{process} // '';
+            my $action  = $item->{action} // '';
             my $message = $item->{message} // '';
             my $time    = strftime("%Y-%m-%dT%H:%M:%S",
                 localtime($item->{time} // 0));
 
-            printf "%s %s %s %s %s\n", $item->{_id}, $time, $id, $process,
-                $message;
+            printf "%s %s %s %s %s\n"
+                    , $time
+                    , $id
+                    , $process
+                    , $action
+                    , $message;
         }
     );
 
     print "count: $count\n";
 
     return 0;
-}
-
-sub _get {
-    my ($seld, $id) = @_;
-
-    croak "usage: $0 get <id>" unless defined($id);
-
-    my $data = Catmandu->store('main')->bag('audit')->get($id);
-
-    Catmandu->export($data, 'YAML') if $data;
-
-    return $data ? 0 : 2;
 }
 
 1;
@@ -110,7 +102,6 @@ LibreCat::Cmd::audit - manage librecat audit messages
 =head1 SYNOPSIS
 
     librecat audit list [options] [<RECORD-ID>]
-    librecat audit get  [options] <AUDIT-ID>
 
     An 'audit' worker should be up and running to
     store messages:
