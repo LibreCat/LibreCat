@@ -257,20 +257,25 @@ Possible options:
  
 =item *
  
-C<skip_before_add>
- 
-=item *
- 
-C<skip_index>
+C<skip_before_add>: You can supply an arrayref of hook names that will not be executed.
+
+    $model->add($rec, skip_before_add => ['whitelist']);
 
 =item *
  
-C<on_success>
+C<skip_index>: The record will be added to the main store but not indexed if
+this option is C<1>.
 
 =item *
  
-C<on_validation_error>
+C<on_success>: You can supply a callback function that will be called
+with the record if the record was succesfully added.
+
+=item *
  
+C<on_validation_error>: You can supply a callback function that will be called
+with the record and an arrayref of errors if validation fails.
+
 =back
 
 =head2 add($rec, %opts)
@@ -279,13 +284,15 @@ Insert or update the record identified by it's C<_id> key. If no C<_id> is given
 new one will be generated for you. Returns C<1> if the record was valid and
 succesfully stored and indexed, C<0> otherwise.
 
+Any C<before_add> hooks will be applied before validation.
+
 Options are the same as for C<add_many>, plus:
 
 =over
  
 =item *
  
-C<skip_commit>
+C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
 
@@ -299,7 +306,7 @@ Options are:
  
 =item *
  
-C<skip_commit>
+C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
 
@@ -314,7 +321,7 @@ Options are:
  
 =item *
  
-C<skip_commit>
+C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
 
@@ -330,7 +337,7 @@ Options are:
  
 =item *
  
-C<skip_commit>
+C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
 
@@ -346,7 +353,7 @@ Options are:
  
 =item *
  
-C<skip_commit>
+C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
 
@@ -361,7 +368,7 @@ Options are:
  
 =item *
  
-C<skip_commit>
+C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
 
@@ -376,7 +383,7 @@ Options are:
  
 =item *
  
-C<skip_commit>
+C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
 
