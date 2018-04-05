@@ -8,7 +8,7 @@ use Dancer qw(:syntax);
 with 'LibreCat::FetchRecord';
 
 has 'baseurl' =>
-    (is => 'ro', default => sub {"http://export.arxiv.org/api/query?"});
+    (is => 'ro', default => sub {"https://export.arxiv.org/api/query?"});
 
 sub fetch {
     my ($self, $id) = @_;
