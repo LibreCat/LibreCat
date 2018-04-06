@@ -84,9 +84,9 @@ Some fields are pre-filled.
             }
         }
 
-        #if ($type eq "research_data" && h->config->{doi}) {
-        #    $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
-        #}
+        if ($type eq "research_data" && h->config->{doi}) {
+           $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
+        }
 
         if (params->{lang}) {
             $data->{lang} = params->{lang};
