@@ -1,4 +1,4 @@
-[%- USE XML::Strict -%]
+/record[%- USE XML::Strict -%]
 <resource xmlns="http://datacite.org/schema/kernel-34 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
 [%- IF doi %]<identifier identifierType="DOI">[% doi | xml_strict %]</identifier>[% END -%]
 <creators>
