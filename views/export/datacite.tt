@@ -1,4 +1,4 @@
-/record[%- USE XML::Strict -%]
+[%- USE XML::Strict -%]
 <resource xmlns="http://datacite.org/schema/kernel-34 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
 [%- IF doi %]<identifier identifierType="DOI">[% doi | xml_strict %]</identifier>[% END -%]
 <creators>
@@ -47,7 +47,7 @@
 [%- IF related_material %]
 <relatedIdentifiers>
 [% FOREACH rm IN related_material.record %]
-<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% uri_base %]/publication/[% rm.id %]</relatedIdentifier>
+<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% uri_base %]/record/[% rm.id %]</relatedIdentifier>
 [%- END %]
 </relatedIdentifiers>
 [%- END %]

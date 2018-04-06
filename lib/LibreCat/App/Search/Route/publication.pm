@@ -16,8 +16,8 @@ Redirect legacy routes to /record
 
 =cut
 
-get qr{/publication/*(.*?)} => sub {
-    my ($path) = splat;
+get qr{/(publication|data)/*(.*?)} => sub {
+    my ($bag, $path) = splat;
     my $params = params;
 
     forward "/record/$path", $params;
@@ -25,7 +25,7 @@ get qr{/publication/*(.*?)} => sub {
 
 =head2 GET /record/:id.:fmt
 
-Export normal publication in format :fmt
+Export publication with ID :id in format :fmt
 
 =cut
 
@@ -64,7 +64,7 @@ get qr{/record/([A-Fa-f0-9-]+)} => sub {
         push @{$p->{cql}}, ("status=public", "altid=$id");
 
         $hits = LibreCat->searcher->search('publication', $p);
-        return redirect "/publication/" . $hits->first->{_id}, 301
+        return redirect "/record/" . $hits->first->{_id}, 301
             if $hits->{total};
     }
 
