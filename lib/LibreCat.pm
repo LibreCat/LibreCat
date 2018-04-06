@@ -36,9 +36,8 @@ sub import {
     }
 
     sub load {
-        $layers && Catmandu::Error->throw("LibreCat is already loaded");
-        my ($self, @args) = @_;
-        $self->_load(@args);
+        my $self = shift;
+        $self->_load(@_) unless $self->loaded;
         $self;
     }
 
