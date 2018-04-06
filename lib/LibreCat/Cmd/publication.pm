@@ -178,7 +178,7 @@ sub audit_message {
 sub _on_all {
     my ($self, $id_file, $callback) = @_;
 
-    if (-r $id_file) {
+    if (defined($id_file) && -r $id_file) {
         my $r = 0;
         for (path($id_file)->lines) {
             chomp;
