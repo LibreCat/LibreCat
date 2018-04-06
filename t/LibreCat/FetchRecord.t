@@ -44,7 +44,10 @@ require_ok $pkg;
     }
 }
 
-throws_ok { Role::Tiny->apply_role_to_package(' T::FetchRecordWithoutFetch', $pkg) } qr/missing fetch/;
+throws_ok {
+    Role::Tiny->apply_role_to_package(' T::FetchRecordWithoutFetch', $pkg)
+}
+qr/missing fetch/;
 
 {
     my $fetcher = T::FetchRecord->new;
@@ -53,7 +56,8 @@ throws_ok { Role::Tiny->apply_role_to_package(' T::FetchRecordWithoutFetch', $pk
 
     my $res = $fetcher->fetch(1);
 
-    is_deeply $res, {_id => 1, magic => 'hello, world!'}, "fetch and apply fix";
+    is_deeply $res, {_id => 1, magic => 'hello, world!'},
+        "fetch and apply fix";
 }
 
 {

@@ -112,7 +112,7 @@ sub _on_all {
 sub _list {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort} // undef;
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -158,7 +158,7 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort} // undef;
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -286,7 +286,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id     = $item->{_id} // '';
+                my $id = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";

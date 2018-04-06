@@ -134,7 +134,7 @@ Checks if the user has permission the see/edit this record.
         $hook->fix_before($rec);
 
         my $templatepath = "backend/forms";
-        my $template     = $rec->{meta}->{template} // $rec->{type};
+        my $template = $rec->{meta}->{template} // $rec->{type};
 
         $rec->{return_url} = request->referer if request->referer;
 

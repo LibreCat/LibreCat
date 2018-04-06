@@ -58,7 +58,8 @@ sub _check {
 
     my $importer
         = $self->app->global_options->{importer}
-        ? Catmandu->importer($self->app->global_options->{importer},file=>$file)
+        ? Catmandu->importer($self->app->global_options->{importer},
+        file => $file)
         : Catmandu->importer(
         'TSV',
         file   => $file,
@@ -71,7 +72,8 @@ sub _check {
 
     my $exporter
         = $self->app->global_options->{exporter}
-        ? Catmandu->exporter($self->app->global_options->{exporter}, %exporter_opts)
+        ? Catmandu->exporter($self->app->global_options->{exporter},
+        %exporter_opts)
         : Catmandu->exporter('TSV', %exporter_opts);
 
     my $cv = AnyEvent->condvar;
@@ -80,7 +82,7 @@ sub _check {
         sub {
             my $rec = $_[0];
 
-            my $id  = $rec->{_id} // '<undef>';
+            my $id = $rec->{_id} // '<undef>';
             my $url = $rec->{url};
 
             unless ($id && $url) {
