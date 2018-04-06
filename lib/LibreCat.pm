@@ -36,8 +36,9 @@ sub import {
     }
 
     sub load {
+        $layers && Catmandu::Error->throw("LibreCat is already loaded");
         my ($self, @args) = @_;
-        $self->_load(@args) unless $self->loaded;
+        $self->_load(@args);
         $self;
     }
 
@@ -58,14 +59,14 @@ sub log {
     state $log = Log::Log4perl::get_logger($_[0]);
 }
 
-sub models {
+sub model_names {
     [qw(publication department research_group user project)];
 }
 
 sub install_models {
     my ($self) = @_;
-    my $models = $self->models;
-    for my $name (@$models) {
+    my $names = $self->model_names;
+    for my $name (@$names) {
         my $config         = $self->config->{$name} // {};
         my $bag            = Catmandu->store('main')->bag($name),
             my $search_bag = Catmandu->store('search')->bag($name),
