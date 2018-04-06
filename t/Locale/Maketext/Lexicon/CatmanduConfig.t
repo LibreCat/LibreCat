@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'Locale::Maketext::Lexicon::CatmanduConfig';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 

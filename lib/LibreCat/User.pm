@@ -89,14 +89,13 @@ sub find_by_username {
 
 sub to_session {
 
-    my ( $self, $user ) = @_;
+    my ($self, $user) = @_;
 
-    my $super_admin      = "super_admin" if $user->{super_admin};
-    my $reviewer         = "reviewer" if $user->{reviewer};
-    my $project_reviewer = "project_reviewer"
-        if $user->{project_reviewer};
-    my $data_manager     = "data_manager" if $user->{data_manager};
-    my $delegate         = "delegate" if $user->{delegate};
+    my $super_admin      = "super_admin"      if $user->{super_admin};
+    my $reviewer         = "reviewer"         if $user->{reviewer};
+    my $project_reviewer = "project_reviewer" if $user->{project_reviewer};
+    my $data_manager     = "data_manager"     if $user->{data_manager};
+    my $delegate         = "delegate"         if $user->{delegate};
 
     (
         role => $super_admin

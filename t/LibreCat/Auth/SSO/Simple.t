@@ -8,6 +8,7 @@ use Plack::Builder;
 use Plack::Session;
 use HTTP::Request::Common;
 use HTTP::Cookies;
+use LibreCat load => (layer_paths => [qw(t/layer)]);
 
 my $pkg;
 
@@ -16,9 +17,6 @@ BEGIN {
     use_ok $pkg;
 }
 require_ok $pkg;
-
-use_ok "LibreCat";
-LibreCat->load();
 
 Catmandu->config->{store}->{builtin_users} = {
     package => 'Hash',

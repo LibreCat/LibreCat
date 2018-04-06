@@ -59,7 +59,8 @@ sub _authenticate {
         $username = $res;
     }
 
-    $self->log->debug("username: $username ; password: " . length($password) . " bytes");
+    $self->log->debug(
+        "username: $username ; password: " . length($password) . " bytes");
 
     my $base = sprintf($self->auth_base, $username);
 

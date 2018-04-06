@@ -3,8 +3,8 @@ package T::TestEngine;
 use Moo;
 
 sub create {
-    my ($self,$data) = @_;
-    +{ test => "this is a citation" };
+    my ($self, $data) = @_;
+    +{test => "this is a citation"};
 }
 
 package main;
@@ -20,17 +20,14 @@ my $pkg;
 BEGIN {
     $pkg = 'Catmandu::Fix::add_citation';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 
-is_deeply $pkg->new()->fix({ foo => 'bar'}), { foo => 'bar' };
+is_deeply $pkg->new()->fix({foo => 'bar'}), {foo => 'bar'};
 
 is_deeply $pkg->new(citation_engine => T::TestEngine->new)
-              ->fix({ foo => 'bar'}),
-              {
-                  foo => 'bar' ,
-                  citation => { test => 'this is a citation' },
-              };
+    ->fix({foo => 'bar'}),
+    {foo => 'bar', citation => {test => 'this is a citation'},};
 
 done_testing;
