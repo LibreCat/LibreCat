@@ -10,13 +10,26 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 
-=head2 GET /publication/:id.:fmt
+=head2 GET /publication
+
+Redirect legacy routes to /record
+
+=cut
+
+get qr{/publication/*(.*?)} => sub {
+    my ($path) = splat;
+    my $params = params;
+
+    forward "/record/$path", $params;
+};
+
+=head2 GET /record/:id.:fmt
 
 Export normal publication in format :fmt
 
 =cut
 
-get '/publication/:id.:fmt' => sub {
+get '/record/:id.:fmt' => sub {
     my $id  = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
@@ -27,13 +40,13 @@ get '/publication/:id.:fmt' => sub {
         };
 };
 
-=head2 GET /publication/:id
+=head2 GET /record/:id
 
 Splash page for :id.
 
 =cut
 
-get qr{/publication/([A-Fa-f0-9-]+)} => sub {
+get qr{/record/([A-Fa-f0-9-]+)} => sub {
     my ($id) = splat;
 
     my $p = h->extract_params();
@@ -60,13 +73,13 @@ get qr{/publication/([A-Fa-f0-9-]+)} => sub {
 
 };
 
-=head2 GET /publication
+=head2 GET /record
 
 Search API to (data) publications.
 
 =cut
 
-get qr{/publication/*} => sub {
+get qr{/record/*} => sub {
     my $p = h->extract_params();
 
     push @{$p->{cql}}, "status=public";
