@@ -10,11 +10,24 @@ use namespace::clean;
 
 with 'Catmandu::Pluggable', 'LibreCat::Logger';
 
-has bag => (is => 'ro', required => 1, handles => 'Catmandu::Iterable', isa => ConsumerOf['Catmandu::Bag']);
-has search_bag =>
-    (is => 'ro', required => 1, handles => [qw(search searcher)], isa => ConsumerOf['Catmandu::Bag', 'Catmandu::Searchable']);
-has validator =>
-    (is => 'ro', required => 1, handles => [qw(is_valid whitelist)], isa => ConsumerOf['LibreCat::Validator']);
+has bag => (
+    is       => 'ro',
+    required => 1,
+    handles  => 'Catmandu::Iterable',
+    isa      => ConsumerOf ['Catmandu::Bag']
+);
+has search_bag => (
+    is       => 'ro',
+    required => 1,
+    handles  => [qw(search searcher)],
+    isa      => ConsumerOf ['Catmandu::Bag', 'Catmandu::Searchable']
+);
+has validator => (
+    is       => 'ro',
+    required => 1,
+    handles  => [qw(is_valid whitelist)],
+    isa      => ConsumerOf ['LibreCat::Validator']
+);
 has before_add => (is => 'lazy', init_arg => undef, isa => Pairs);
 
 sub plugin_namespace {

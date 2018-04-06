@@ -12,15 +12,17 @@ with 'LibreCat::Model';
 
 sub BUILD {
     my ($self) = @_;
-    $self->append_before_add([
+    $self->append_before_add(
+        [
 
-        # TODO this is very dirty and executes even if validation fails
-        file             => '_store_file',
-        related_material => '_store_related_material',
+            # TODO this is very dirty and executes even if validation fails
+            file             => '_store_file',
+            related_material => '_store_related_material',
 
-        # TODO move to config
-        citation => Catmandu::Fix::add_citation->new,
-    ]);
+            # TODO move to config
+            citation => Catmandu::Fix::add_citation->new,
+        ]
+    );
 }
 
 sub delete {

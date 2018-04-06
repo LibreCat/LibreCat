@@ -263,13 +263,17 @@ sub get_statistics {
 
 sub new_record {
     my ($self, $bag) = @_;
-    $self->log->warn('DEPRECATION NOTICE: new_record is deprecated. Use LibreCat->$model->generate_id instead');
+    $self->log->warn(
+        'DEPRECATION NOTICE: new_record is deprecated. Use LibreCat->$model->generate_id instead'
+    );
     Catmandu->store('main')->bag($bag)->generate_id;
 }
 
 sub update_record {
     my ($self, $bag, $rec) = @_;
-    $self->log->warn('DEPRECATION NOTICE: update_record is deprecated. Use LibreCat->$model->add instead');
+    $self->log->warn(
+        'DEPRECATION NOTICE: update_record is deprecated. Use LibreCat->$model->add instead'
+    );
 
     $self->log->info("updating $bag");
 
@@ -297,7 +301,9 @@ sub update_record {
 
 sub store_record {
     my ($self, $bag, $rec, %opts) = @_;
-    $self->log->warn('DEPRECATION NOTICE: store_record is deprecated. Use LibreCat->$model->add instead');
+    $self->log->warn(
+        'DEPRECATION NOTICE: store_record is deprecated. Use LibreCat->$model->add instead'
+    );
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
@@ -360,7 +366,9 @@ sub store_record {
 
 sub index_record {
     my ($self, $bag, $rec) = @_;
-    $self->log->warn('DEPRECATION NOTICE: index_record is deprecated. Use LibreCat->$model->add instead');
+    $self->log->warn(
+        'DEPRECATION NOTICE: index_record is deprecated. Use LibreCat->$model->add instead'
+    );
 
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
@@ -372,7 +380,9 @@ sub index_record {
 
 sub delete_record {
     my ($self, $bag, $id) = @_;
-    $self->log->warn('DEPRECATION NOTICE: delete_record is deprecated. Use LibreCat->$model->delete instead');
+    $self->log->warn(
+        'DEPRECATION NOTICE: delete_record is deprecated. Use LibreCat->$model->delete instead'
+    );
 
     if ($bag eq 'publication') {
         my $del_record = $self->publication->get($id);
@@ -404,7 +414,9 @@ sub delete_record {
 
 sub purge_record {
     my ($self, $bag, $id) = @_;
-    $self->log->warn('DEPRECATION NOTICE: delete_record is deprecated. Use LibreCat->$model->purge instead');
+    $self->log->warn(
+        'DEPRECATION NOTICE: delete_record is deprecated. Use LibreCat->$model->purge instead'
+    );
 
     # Delete from the index store
     $self->$bag->delete($id);
