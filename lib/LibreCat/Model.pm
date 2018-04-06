@@ -204,7 +204,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::Model - Base role for Librecat models
+LibreCat::Model - Base role for LibreCat models
 
 =head1 CONFIGURATION
 
