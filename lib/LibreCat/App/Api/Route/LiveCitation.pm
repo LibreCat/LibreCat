@@ -15,21 +15,20 @@ use LibreCat::Citation;
 get '/livecitation' => sub {
     my $params = params;
     unless (($params->{id} and $params->{style})
-        or $params->{info}
-        or $params->{styles})
+        or $params->{info})
     {
         return "Required parameters are 'id' and 'style'.";
     }
 
-    if ($params->{styles}) {
+    if ($params->{info}) {
         return to_json h->config->{citation}->{csl}->{styles};
     }
 
     my $pub = Catmandu->store('main')->bag('publication')->get($params->{id});
 
-    my $response = LibreCat::Citation->new(styles => [$params->{style}],)
+    my $response = LibreCat::Citation->new(style => $params->{style})
         ->create($pub);
-    return to_dumper $response;
+#    return to_dumper $response;
     my $citation = $response ? $response->{$params->{style}} : undef;
 
     if (!defined $citation) {
