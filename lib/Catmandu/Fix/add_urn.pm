@@ -1,5 +1,13 @@
 package Catmandu::Fix::add_urn;
 
+=pod
+
+=head1 NAME
+
+Catmandu::Fix::add_urn - create a urn field from the input data
+
+=cut
+
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Carp;
@@ -10,9 +18,7 @@ sub fix {
 
     return $pub if $pub->{urn};
 
-    unless ($pub->{type} and $pub->{_id}) {
-        croak "type and _id are required.";
-    }
+    return $pub unless ($pub->{type} and $pub->{_id});
 
     if ($pub->{file}) {
         my $oa = 0;

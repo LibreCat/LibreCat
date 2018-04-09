@@ -22,7 +22,7 @@ EOF
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['yes!', ""] );
+    (['yes!', ""]);
 }
 
 sub opts {
@@ -56,7 +56,8 @@ sub command {
     }
     elsif ($cmd eq 'initialize') {
         my $start;
-        print "Use this command during installation only.\nThis command will delete existing indices!\nAre you sure you want to run it [y/N]:";
+        print
+            "Use this command during installation only.\nThis command will delete existing indices!\nAre you sure you want to run it [y/N]:";
 
         if ($opts->{yes}) {
             $start = 'y';
@@ -78,7 +79,7 @@ sub command {
 }
 
 sub _create {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
 
     croak "need a bag" unless $name;
 
@@ -93,7 +94,7 @@ sub _create {
 }
 
 sub _drop {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
 
     croak "need a bag" unless $name;
 
@@ -119,10 +120,11 @@ sub _initialize {
 
 sub _switch {
     my ($self) = @_;
-    my $pidfile = File::Spec->catfile(File::Spec->tmpdir,"librecat.index.lock");
+    my $pidfile
+        = File::Spec->catfile(File::Spec->tmpdir, "librecat.index.lock");
 
     open my $file, ">", $pidfile || die "Failed to create $pidfile: $!";
-    flock($file, LOCK_EX|LOCK_NB) || die "Running more than one indexer?";
+    flock($file, LOCK_EX | LOCK_NB) || die "Running more than one indexer?";
 
     defined(LibreCat::Index->new->switch) ? 0 : 1;
 }

@@ -18,16 +18,15 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat file_store [options] list [recursive]
-librecat file_store [options] get <key> [<file>]
-librecat file_store [options] add <key> <file>
-librecat file_store [options] delete <key> <file>
-librecat file_store [options] purge <key>
-librecat file_store [options] export <key> <zip>
-librecat file_store [options] import <key> <zip>
-librecat file_store [options] move <key|store_name> <store_name>
-
-librecat file_store [options] thumbnail <key> <file>
+librecat file_store list      [options] [recursive]
+librecat file_store get       [options] <key> [<file>]
+librecat file_store add       [options] <key> <file>
+librecat file_store delete    [options] <key> <file>
+librecat file_store purge     [options] <key>
+librecat file_store export    [options] <key> <zip>
+librecat file_store import    [options] <key> <zip>
+librecat file_store move      [options] <key|store_name> <store_name>
+librecat file_store thumbnail [options] <key> <file>
 
 options:
     --store=...       - Store name
@@ -36,6 +35,7 @@ options:
     --tmp_dir=...     - Temporary directory
     --zip=...         - Zip program
     --unzip=...       - Unzip program
+    --log=...         - Log message
 
 EOF
 }
@@ -54,6 +54,7 @@ sub command_opt_spec {
         ["zip=s",   "zipper",   {default => '/usr/bin/zip'}],
         ["unzip=s", "unzipper", {default => '/usr/bin/unzip'}],
         ["csv",     "to CSV (get)"],
+        ["log=s",   "log message"],
     );
 }
 
@@ -71,8 +72,8 @@ sub file_opt {
 
 sub load {
     my ($self, $file_store, $file_opt) = @_;
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     $pkg->new(%$file_opt);
 }
 
@@ -120,6 +121,7 @@ sub command {
             zipper   => $opts->zip,
             unzipper => $opts->unzip,
             csv      => $opts->csv,
+            log      => $opts->log,
         }
     );
 
@@ -163,6 +165,20 @@ sub command {
     }
 }
 
+sub audit_message {
+    my ($id, $action, $message) = @_;
+    LibreCat::App::Helper::Helpers->new->queue->add_job(
+        'audit',
+        {
+            id      => $id,
+            bag     => 'publication',
+            process => 'librecat file_store',
+            action  => $action,
+            message => $message,
+        }
+    );
+}
+
 sub _list {
     my ($self, @args) = @_;
     my $store = $self->app->global_options->{store};
@@ -173,62 +189,60 @@ sub _list {
             . "\n";
     }
 
-    $index->each(sub {
-        my $key   = $_[0]->{_id};
-        my $files = $index->files($key);
+    $index->each(
+        sub {
+            my $key   = $_[0]->{_id};
+            my $files = $index->files($key);
 
-        croak "failed to find the files for key `$key`"
-            unless defined($files);
+            croak "failed to find the files for key `$key`"
+                unless defined($files);
 
-        my $file_array = $files->to_array;
+            my $file_array = $files->to_array;
 
-        my $modified;
-        my $created;
-        my $size = 0;
+            my $modified;
+            my $created;
+            my $size = 0;
 
-        for (@$file_array) {
-            $modified = $_->{modified} if (!defined($modified) || $_->{modified} > $modified);
-            $created  = $_->{created}  if (!defined($created) || $_->{created} > $created);
-            $size    += $_->{size} // 0;
-        }
-
-        $modified //= 0;
-        $created  //= 0;
-
-        if ($self->app->global_options->{csv}) {
             for (@$file_array) {
-                printf join("\t", $key, $_->{_id}, '', '', '') . "\n";
+                $modified = $_->{modified}
+                    if (!defined($modified) || $_->{modified} > $modified);
+                $created = $_->{created}
+                    if (!defined($created) || $_->{created} > $created);
+                $size += $_->{size} // 0;
             }
-        }
-        else {
-            if ($args[0] && $args[0] eq 'recursive') {
-                for (@$file_array) {
-                    my $file_name     = $_->{_id}  // '';
-                    my $file_size     = $_->{size} // 0;
-                    my $file_modified = $_->{modified} // 0;
-                    my $file_md5      = $_->{md5}  // '';
 
-                    printf "%s %s %s %s %s\n",
-                        $key,
-                        strftime(
-                            "%Y-%m-%dT%H:%M:%S",
-                            localtime($file_modified)
-                        ),
-                        $file_size,
-                        $file_md5,
-                        $file_name;
+            $modified //= 0;
+            $created  //= 0;
+
+            if ($self->app->global_options->{csv}) {
+                for (@$file_array) {
+                    printf join("\t", $key, $_->{_id}, '', '', '') . "\n";
                 }
             }
             else {
-                printf "%-40.40s %4d %9d %-20.20s %-20.20s\n",
-                    $key,
-                    int(@$file_array),
-                    $size,
-                    strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)),
-                    strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
+                if ($args[0] && $args[0] eq 'recursive') {
+                    for (@$file_array) {
+                        my $file_name     = $_->{_id}      // '';
+                        my $file_size     = $_->{size}     // 0;
+                        my $file_modified = $_->{modified} // 0;
+                        my $file_md5      = $_->{md5}      // '';
+
+                        printf "%s %s %s %s %s\n", $key,
+                            strftime(
+                            "%Y-%m-%dT%H:%M:%S", localtime($file_modified)
+                            ),
+                            $file_size, $file_md5, $file_name;
+                    }
+                }
+                else {
+                    printf "%-40.40s %4d %9d %-20.20s %-20.20s\n", $key,
+                        int(@$file_array), $size,
+                        strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)),
+                        strftime("%Y-%m-%dT%H:%M:%S", localtime($created));
+                }
             }
         }
-    });
+    );
 
     return 0;
 }
@@ -251,7 +265,7 @@ sub _get {
 
     croak "get - need a key" unless defined($key);
 
-    my $store  = $self->app->global_options->{store};
+    my $store = $self->app->global_options->{store};
 
     croak "get - failed to load $key" unless $store->index->exists($key);
 
@@ -268,8 +282,8 @@ sub _get {
         }
     }
     else {
-        printf "key: %s\n",      $key;
-        printf "#files: %d\n",   int(@$file_array);
+        printf "key: %s\n",    $key;
+        printf "#files: %d\n", int(@$file_array);
 
         for my $file (@$file_array) {
             my $key          = $file->{_id};
@@ -281,6 +295,10 @@ sub _get {
             printf "%-40.40s %9d $md5 %s %s\n", $content_type, $size,
                 strftime("%Y-%m-%dT%H:%M:%S", localtime($modified)), $key;
         }
+    }
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, 'get', $msg);
     }
 
     return 0;
@@ -305,6 +323,10 @@ sub _fetch {
 
     my $bytes = $files->stream(IO::File->new('>&STDOUT'), $file);
 
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "fetch $filename", $msg);
+    }
+
     $bytes > 0;
 }
 
@@ -314,7 +336,7 @@ sub _add {
     croak "add - need a key and a file"
         unless defined($key) && defined($file) && -r $file;
 
-    my $store  = $self->app->global_options->{store};
+    my $store = $self->app->global_options->{store};
 
     my $files;
 
@@ -322,7 +344,7 @@ sub _add {
         $files = $store->index->files($key);
     }
     else {
-        $store->index->add({ _id => $key }) || croak "add - failed to add $key";
+        $store->index->add({_id => $key}) || croak "add - failed to add $key";
         $files = $store->index->files($key);
     }
 
@@ -330,7 +352,11 @@ sub _add {
 
     my ($name, $path, $suffix) = fileparse($file);
 
-    $files->upload(IO::File->new("<$path/$name"),$name);
+    $files->upload(IO::File->new("<$path/$name"), $name);
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "add $file", $msg);
+    }
 
     return $self->_get($key);
 }
@@ -341,13 +367,17 @@ sub _delete {
     croak "delete - need a key and a file"
         unless defined($key) && defined($name);
 
-    my $store  = $self->app->global_options->{store};
+    my $store = $self->app->global_options->{store};
 
     croak "delete - failed to find $key" unless $store->index->exists($key);
 
-    my $files  = $store->index->files($key);
+    my $files = $store->index->files($key);
 
     $files->delete($name);
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "delete $name", $msg);
+    }
 
     return $self->_get($key);
 }
@@ -362,6 +392,10 @@ sub _purge {
     croak "purge - failed to find $key" unless $store->index->exists($key);
 
     $store->index->delete($key);
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, 'purge', $msg);
+    }
 
     return 0;
 }
@@ -396,14 +430,20 @@ sub _move {
         my $key_opt = $self->file_opt($key);
         my $key_store = $self->load($key_store, $key_opt);
 
-        $key_store->index->each(sub {
-            my $file = shift;
-            my $key  = $file->{_id};
-            $self->_move_files($key_store, $target_store, $key);
-        });
+        $key_store->index->each(
+            sub {
+                my $file = shift;
+                my $key  = $file->{_id};
+                $self->_move_files($key_store, $target_store, $key);
+            }
+        );
     }
     else {
         $self->_move_files($source_store, $target_store, $key);
+    }
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "move $name", $msg);
     }
 
     0;
@@ -445,38 +485,40 @@ sub _move_files {
         $target_files = $target_store->index->files($key);
     }
     else {
-        $target_store->index->add({ _id => $key })
+        $target_store->index->add({_id => $key})
             || croak "failed to add $key to target";
         $target_files = $target_store->index->files($key);
     }
 
     print "OK\n";
 
-    $source_files->each(sub {
-        my $file = shift;
-        my $name = $file->{_id};
-        my $size = $file->{size};
+    $source_files->each(
+        sub {
+            my $file = shift;
+            my $name = $file->{_id};
+            my $size = $file->{size};
 
-        my $pipe = new IO::Pipe;
+            my $pipe = new IO::Pipe;
 
-        if (my $pid = fork()) { # Parent
-            $pipe->reader();
+            if (my $pid = fork()) {    # Parent
+                $pipe->reader();
 
-            $target_files->upload($pipe,$name) >= 0
-                || croak "failed to upload $name : $!";
+                $target_files->upload($pipe, $name) >= 0
+                    || croak "failed to upload $name : $!";
 
-            waitpid($pid,0);
+                waitpid($pid, 0);
+            }
+            else {                     # Child
+                $pipe->writer();
+                $source_files->stream($pipe, $file) >= 0
+                    || croak "failed to stream $name : $!";
+                exit(0);
+            }
+
+            printf STDERR "%s [%-3.3f] $key/$name\n", $curr_time->(),
+                $self->_mb_sec($size);
         }
-        else { # Child
-            $pipe->writer();
-            $source_files->stream($pipe,$file) >= 0
-                || croak "failed to stream $name : $!";
-            exit(0);
-        }
-
-        printf STDERR "%s [%-3.3f] $key/$name\n", $curr_time->(),
-            $self->_mb_sec($size);
-    });
+    );
 }
 
 sub _export {
@@ -506,8 +548,8 @@ sub _export {
     for my $file (@$file_array) {
         my $key = $file->{_id};
 
-        $files->stream(IO::File->new("> $export_dir/$key"),$file) ||
-            croak "failed to stream key to $export_dir/$key";
+        $files->stream(IO::File->new("> $export_dir/$key"), $file)
+            || croak "failed to stream key to $export_dir/$key";
     }
 
     my $zipper = $self->app->global_options->{zipper};
@@ -531,6 +573,10 @@ sub _export {
 
     unless (File::Path::remove_tree($workdir) > 0) {
         croak "Failed to remove $workdir";
+    }
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "export $zip_file", $msg);
     }
 
     0;
@@ -582,6 +628,10 @@ sub _import {
         croak "Failed to remove $workdir";
     }
 
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "import $zip_file", $msg);
+    }
+
     0;
 }
 
@@ -603,6 +653,10 @@ sub _thumbnail {
     my $worker = $pkg->new(%$thumbnailer_options);
 
     my $response = $worker->work({key => $key, filename => $filename,});
+
+    if (my $msg = $self->app->global_options->{log}) {
+        audit_message($key, "thumbnail $filename", $msg);
+    }
 
     $response && $response->{ok};
 }
@@ -632,16 +686,15 @@ LibreCat::Cmd::file_store - manage librecat file stores
 
 =head1 SYNOPSIS
 
-    librecat file_store list [recursive]
-    librecat file_store get <key> [<file>]
-    librecat file_store add <key> <file>
-    librecat file_store delete <key> <file>
-    librecat file_store purge <key>
-    librecat file_store export <key> <zip>
-    librecat file_store import <key> <zip>
-    librecat file_store move <key|store_name> <store_name>
-
-    librecat store thumbnail <key> <file>
+    librecat file_store list      [options] [recursive]
+    librecat file_store get       [options] <key> [<file>]
+    librecat file_store add       [options] <key> <file>
+    librecat file_store delete    [options] <key> <file>
+    librecat file_store purge     [options] <key>
+    librecat file_store export    [options] <key> <zip>
+    librecat file_store import    [options] <key> <zip>
+    librecat file_store move      [options] <key|store_name> <store_name>
+    librecat file_store thumbnail [options] <key> <file>
 
     options:
         --store=...       - Store name
@@ -650,4 +703,5 @@ LibreCat::Cmd::file_store - manage librecat file stores
         --tmp_dir=...     - Temporary directory
         --zip=...         - Zip program
         --unzip=...       - Unzip program
+        --log=...         - Log message
 =cut

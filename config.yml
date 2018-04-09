@@ -1,6 +1,5 @@
 # main configuration file for Dancer
 appname: "LibreCat %ndash; Publication List Manager"
-appname_short: "LibreCat"
 charset: "UTF-8"
 
 # Template Engine
@@ -24,6 +23,9 @@ session_store:
   options:
     store: main
     bag: session
+
+auth_sso: []
+session_sso: []
 
 plugins:
   'Auth::Tiny':

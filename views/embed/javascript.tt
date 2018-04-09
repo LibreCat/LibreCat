@@ -13,7 +13,7 @@ document.write('<a href="[% uri_base %]/[% bag %]/[% entry._id %]">[% entry.titl
     [%- END %]
 document.write('[% cite_string FILTER replace("'", "\\'")  %]<br />[% INCLUDE embed/links_js.tt %]');
   [%- ELSE %]
-document.write('[% PROCESS citation.tt entry=entry FILTER replace("'", "\\'") %]<br />[% INCLUDE embed/links_js.tt %]');
+document.write('[% PROCESS citation.tt entry=entry FILTER replace("'", "\\'") %]<br />[%- l = PROCESS links.tt -%][%- USE String; l.replace('\n', ' ') -%]');
   [%- END %]
 document.write('</li>');
 [%- END %]

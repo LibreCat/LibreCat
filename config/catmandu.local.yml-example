@@ -103,6 +103,12 @@ ip_range:
 #  user: user
 #  passwd: secret
 
+## Uncomment when you want to register extra functionality in the LibreCat
+## helper utility. All the methods defined in these plugins will become
+## available as `h->...` subroutines.
+#helper_plugins:
+#  - LibreCat::App::Helper::my_plugin
+
 store:
   builtin_users:
     package: Hash

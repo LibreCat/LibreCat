@@ -46,7 +46,8 @@ sub _build_index1 {
     my $package = $conf->{package};
     my $opts    = $conf->{options};
     my $ns      = 'Catmandu::Store';
-    Catmandu::Util::require_package($package, $ns)->new(%$opts, index_name => $opts->{index_name} . 1);
+    Catmandu::Util::require_package($package, $ns)
+        ->new(%$opts, index_name => $opts->{index_name} . 1);
 }
 
 sub _build_index2 {
@@ -54,7 +55,8 @@ sub _build_index2 {
     my $package = $conf->{package};
     my $opts    = $conf->{options};
     my $ns      = 'Catmandu::Store';
-    Catmandu::Util::require_package($package, $ns)->new(%$opts, index_name => $opts->{index_name} . 2);
+    Catmandu::Util::require_package($package, $ns)
+        ->new(%$opts, index_name => $opts->{index_name} . 2);
 }
 
 sub _build_main_index {
@@ -74,12 +76,11 @@ sub _build_es {
 Return true when the index is up and running.
 
 =cut
+
 sub is_availabe {
     my ($self) = @_;
 
-    eval {
-        $self->es->info;
-    };
+    eval {$self->es->info;};
     if ($@) {
         return undef;
     }
@@ -92,23 +93,18 @@ sub is_availabe {
 Return the active index
 
 =cut
+
 sub active {
     my ($self) = @_;
 
     my $i_status = $self->get_status;
 
     if (my $active = $i_status->{active_index}) {
-        if ($self->index1->{index_name} eq $active ) {
-            return {
-                active   => $self->index1 ,
-                inactive => $self->index2
-            };
+        if ($self->index1->{index_name} eq $active) {
+            return {active => $self->index1, inactive => $self->index2};
         }
         else {
-            return {
-                active   => $self->index2 ,
-                inactive => $self->index1
-            };
+            return {active => $self->index2, inactive => $self->index1};
         }
     }
 
@@ -120,8 +116,9 @@ sub active {
 Return true when an index exists
 
 =cut
+
 sub has_index {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
     return $self->es->indices->exists(index => $name);
 }
 
@@ -130,10 +127,12 @@ sub has_index {
 Return true when an alias exists
 
 =cut
+
 sub has_alias {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
     my $alias_name = $self->alias;
-    return $self->es->indices->exists_alias(index => $name, name => $alias_name);
+    return $self->es->indices->exists_alias(index => $name,
+        name => $alias_name);
 }
 
 =head2 create_alias($name)
@@ -141,16 +140,12 @@ sub has_alias {
 Create an alias for $name
 
 =cut
+
 sub create_alias {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
     my $alias_name = $self->alias;
-    $self->es->indices->update_aliases(
-        body => {
-            actions => [
-                { add => { alias => $alias_name, index => $name }},
-            ]
-        }
-    );
+    $self->es->indices->update_aliases(body =>
+            {actions => [{add => {alias => $alias_name, index => $name}},]});
 }
 
 =head2 remove_alias($name)
@@ -158,16 +153,16 @@ sub create_alias {
 Remove the alias for $name
 
 =cut
+
 sub remove_alias {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
     my $alias_name = $self->alias;
     if ($self->es->indices->exists(index => $name)) {
         try {
             $self->es->indices->update_aliases(
                 body => {
-                    actions => [
-                        { remove => { alias => $alias_name, index => $name }}
-                    ]
+                    actions =>
+                        [{remove => {alias => $alias_name, index => $name}}]
                 }
             );
             return 1;
@@ -186,11 +181,12 @@ sub remove_alias {
 Remove the alias for $name
 
 =cut
+
 sub remove_index {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
     if ($self->es->indices->exists(index => $name)) {
         $self->es->indices->delete(index => $name);
-        return 1
+        return 1;
     }
     else {
         return 0;
@@ -202,8 +198,9 @@ sub remove_index {
 Remove the alias for $name
 
 =cut
+
 sub remove_all {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
     my $index1_name = $self->index1->{index_name};
     my $index2_name = $self->index2->{index_name};
 
@@ -215,20 +212,20 @@ sub remove_all {
     $ret > 0;
 }
 
-
 =head2 touch_index($name)
 
 Create a sample record for the indexes.
 
 =cut
+
 sub touch_index {
-    my ($self,$name) = @_;
+    my ($self, $name) = @_;
     my $index1 = $self->index1->bag('init');
-    $index1->add({'time' => time , date => scalar(localtime(time))});
+    $index1->add({'time' => time, date => scalar(localtime(time))});
     $index1->commit;
 
     my $index2 = $self->index2->bag('init');
-    $index2->add({'time' => time , date => scalar(localtime(time))});
+    $index2->add({'time' => time, date => scalar(localtime(time))});
     $index2->commit;
 }
 
@@ -245,6 +242,7 @@ Return a HASH containing active indexes and aliases:
     ...
 
 =cut
+
 sub get_status {
     my ($self) = @_;
 
@@ -263,16 +261,19 @@ sub get_status {
 
     my $result;
 
-    $result->{configured_index_name}  = $ind_name;
-    $result->{all_indices} = [];
-    push @{$result->{all_indices}}, $ind_name if ($ind_exists and !$alias_exists_for_1 and !$alias_exists_for_2);
+    $result->{configured_index_name} = $ind_name;
+    $result->{all_indices}           = [];
+    push @{$result->{all_indices}}, $ind_name
+        if ($ind_exists and !$alias_exists_for_1 and !$alias_exists_for_2);
     push @{$result->{all_indices}}, $ind1 if $ind1_exists;
     push @{$result->{all_indices}}, $ind2 if $ind2_exists;
     $result->{number_of_indices} = @{$result->{all_indices}};
     $result->{active_index} = $ind1 if ($ind1_exists and $alias_exists_for_1);
     $result->{active_index} = $ind2 if ($ind2_exists and $alias_exists_for_2);
-    $result->{active_index} = $ind_name if (!$ind1_exists and !$ind2_exists and $ind_exists);
-    $result->{alias} = $ind_name if ($alias_exists_for_1 or $alias_exists_for_2);
+    $result->{active_index} = $ind_name
+        if (!$ind1_exists and !$ind2_exists and $ind_exists);
+    $result->{alias} = $ind_name
+        if ($alias_exists_for_1 or $alias_exists_for_2);
 
     return $result;
 }
@@ -282,6 +283,7 @@ sub get_status {
 Set up the search alias and indexes. This need to be executed at installation time.
 
 =cut
+
 sub initialize {
     my ($self) = @_;
 
@@ -289,13 +291,13 @@ sub initialize {
 
     if ($status->{active_index}) {
         $self->remove_alias($status->{active_index});
-        print "Removed alias " .  $status->{alias} . "...\n";
+        print "Removed alias " . $status->{alias} . "...\n";
     }
     else {
         print "Alias not present, but everything is still ok\n";
     }
 
-    foreach my $index (@{$status->{all_indices}}){
+    foreach my $index (@{$status->{all_indices}}) {
         print "Removing index $index...\n";
         $self->remove_index($index);
     }
@@ -319,6 +321,7 @@ sub initialize {
 Index all records and switch the alias to the new index
 
 =cut
+
 sub switch {
     my ($self) = @_;
 
@@ -338,8 +341,8 @@ sub switch {
 
         $self->touch_index;
 
-        $ret =  $self->_do_index($active->{inactive}) &&
-                $self->_do_switch($active->{active},$active->{inactive});
+        $ret = $self->_do_index($active->{inactive})
+            && $self->_do_switch($active->{active}, $active->{inactive});
     }
     else {
         print "No active index found...\n";
@@ -349,10 +352,11 @@ sub switch {
 
         $self->touch_index;
 
-        print "Switching: No index -> " . $self->index1->{index_name} . "..\n";
+        print "Switching: No index -> "
+            . $self->index1->{index_name} . "..\n";
 
-        $ret =  $self->_do_index($self->index1) &&
-                $self->_do_switch(undef, $self->index1);
+        $ret = $self->_do_index($self->index1)
+            && $self->_do_switch(undef, $self->index1);
     }
 
     if ($ret) {
@@ -366,13 +370,13 @@ sub switch {
 }
 
 sub _do_index {
-    my ($self,$new) = @_;
+    my ($self, $new) = @_;
 
     my $new_name = $new->{index_name};
     my @bags = keys %{Catmandu->config->{store}->{search}->{options}->{bags}};
 
     try {
-        my $now = strftime "%Y-%m-%dT%H:%M:%SZ" , gmtime(time);
+        my $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
 
         print "Index starts at: $now\n";
 
@@ -393,33 +397,32 @@ sub _do_index {
             for my $b (@bags) {
                 print "Checking $b ...\n";
                 my $bag = $new->bag($b);
-                my $it  = $self->main_index->bag($b)->searcher(query => {
-                    range => {
-                        date_updated => {
-                            gte => $now
+                my $it
+                    = $self->main_index->bag($b)
+                    ->searcher(
+                    query => {range => {date_updated => {gte => $now}}});
+                $it->each(
+                    sub {
+                        my $item         = $_[0];
+                        my $id           = $item->{_id};
+                        my $date_updated = $item->{date_updated};
+                        my $rec          = $self->main->bag($b)->get($id);
+
+                        if ($rec) {
+                            print "Adding $id changed on $date_updated\n";
+                            $bag->add($rec);
                         }
-                    }
-                });
-                $it->each(sub {
-                    my $item = $_[0];
-                    my $id   = $item->{_id};
-                    my $date_updated = $item->{date_updated};
-                    my $rec  = $self->main->bag($b)->get($id);
+                        else {
+                            carp "main database lost id `$id'?";
+                        }
 
-                    if ($rec) {
-                        print "Adding $id changed on $date_updated\n";
-                        $bag->add($rec);
+                        $has_changes = 1;
                     }
-                    else {
-                        carp "main database lost id `$id'?";
-                    }
-
-                    $has_changes = 1;
-                });
+                );
 
                 $bag->commit;
 
-                $now = strftime "%Y-%m-%dT%H:%M:%SZ" , gmtime(time);
+                $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
             }
         } while ($has_changes);
     }
@@ -444,7 +447,8 @@ sub _do_switch {
     my $checkForAlias = $self->has_alias($new_name);
 
     if ($checkForIndex) {
-        print "Index $new_name exists. Setting index alias $alias_name to $new_name and testing again.\n";
+        print
+            "Index $new_name exists. Setting index alias $alias_name to $new_name and testing again.\n";
 
         $self->remove_alias($old_name);
         $self->create_alias($new_name);
@@ -452,6 +456,7 @@ sub _do_switch {
         $checkForAlias = $self->has_alias($new_name);
 
         if ($checkForAlias) {
+
             # First run, no old index to be deleted
             print "Alias $alias_name is ok and points to index $new_name.\n";
         }

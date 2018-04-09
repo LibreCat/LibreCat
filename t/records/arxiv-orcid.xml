@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Simeon Warner's articles on arXiv</title>
+  <link rel="describes" href="https://orcid.org/0000-0002-7970-7855"/>
+  <updated>2018-03-14T00:00:00-04:00</updated>
+  <id>https://arxiv.org/a/0000-0002-7970-7855</id>
+  <link href="https://arxiv.org/a/0000-0002-7970-7855.atom2" rel="self" type="application/atom+xml"/>
+  <link rel="describes" href="https://arxiv.org/a/0000-0002-7970-7855"/>
+  <entry>
+    <id>http://arxiv.org/abs/1305.1476v1</id>
+    <updated>2013-05-07T07:42:52-04:00</updated>
+    <published>2013-05-07T07:42:52-04:00</published>
+    <title>ResourceSync: Leveraging Sitemaps for Resource Synchronization</title>
+    <summary>Many applications need up-to-date copies of collections of changing Web resources. Such synchronization is currently achieved using ad-hoc or proprietary solutions. We propose ResourceSync, a general Web resource synchronization protocol that leverages XML Sitemaps. It provides a set of capabilities that can be combined in a modular manner to meet local or community requirements. We report on work to implement this protocol for arXiv.org and also provide an experimental prototype for the English Wikipedia as well as a client API.</summary>
+    <author>
+      <name>Bernhard Haslhofer, Simeon Warner, Carl Lagoze, Martin Klein, Robert Sanderson, Michael L. Nelson, Herbert van de Sompel</name>
+    </author>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">3 pages, WWW 2013 developer track</arxiv:comment>
+    <link href="http://arxiv.org/abs/1305.1476v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/1305.1476v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1003.1345v1</id>
+    <updated>2010-03-05T20:37:01-05:00</updated>
+    <published>2010-03-05T20:37:01-05:00</published>
+    <title>Author Identifiers in Scholarly Repositories</title>
+    <summary>Bibliometric and usage-based analyses and tools highlight the value of information about scholarship contained within the network of authors, articles and usage data. Less progress has been made on populating and using the author side of this network than the article side, in part because of the difficulty of unambiguously identifying authors. I briefly review a sample of author identifier schemes, and consider use in scholarly repositories. I then describe preliminary work at arXiv to implement public author identifiers, services based on them, and plans to make this information useful beyond the boundaries of arXiv.</summary>
+    <author>
+      <name>Simeon Warner</name>
+    </author>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">10 pages. Based on a presentation given at Open Repositories 2009</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">Journal of Digital Information, Vol 11, No 1 (2010)</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/1003.1345v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/1003.1345v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0811.0573v1</id>
+    <updated>2008-11-04T14:07:36-05:00</updated>
+    <published>2008-11-04T14:07:36-05:00</published>
+    <title>A Web-Based Resource Model for eScience: Object Reuse &amp; Exchange</title>
+    <summary>Work in the Open Archives Initiative - Object Reuse and Exchange (OAI-ORE) focuses on an important aspect of infrastructure for eScience: the specification of the data model and a suite of implementation standards to identify and describe compound objects. These are objects that aggregate multiple sources of content including text, images, data, visualization tools, and the like. These aggregations are an essential product of eScience, and will become increasingly common in the age of data-driven scholarship. The OAI-ORE specifications conform to the core concepts of the Web architecture and the semantic Web, ensuring that applications that use them will integrate well into the general Web environment.</summary>
+    <author>
+      <name>Carl Lagoze, Herbert Van de Sompel, Michael Nelson, Simeon Warner, Robert Sanderson, Pete Johnston</name>
+    </author>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">2008 Microsoft eScience Workshop, Indianapolis</arxiv:comment>
+    <link href="http://arxiv.org/abs/0811.0573v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/0811.0573v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0804.2273v1</id>
+    <updated>2008-04-14T17:02:00-04:00</updated>
+    <published>2008-04-14T17:02:00-04:00</published>
+    <title>Object Re-Use &amp; Exchange: A Resource-Centric Approach</title>
+    <summary>The OAI Object Reuse and Exchange (OAI-ORE) framework recasts the repository-centric notion of digital object to a bounded aggregation of Web resources. In this manner, digital library content is more integrated with the Web architecture, and thereby more accessible to Web applications and clients. This generalized notion of an aggregation that is independent of repository containment conforms more closely with notions in eScience and eScholarship, where content is distributed across multiple services and databases. We provide a motivation for the OAI-ORE project, review previous interoperability efforts, describe draft ORE specifications and report on promising results from early experimentation that illustrate improved interoperability and reuse of digital objects.</summary>
+    <author>
+      <name>Carl Lagoze, Herbert Van de Sompel, Michael L. Nelson, Simeon Warner, Robert Sanderson, Pete Johnston</name>
+    </author>
+    <link href="http://arxiv.org/abs/0804.2273v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/0804.2273v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom" label="Networking and Internet Architecture (cs.NI)"/>
+    <category term="C.2.3" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0702012v1</id>
+    <updated>2007-02-01T15:52:13-05:00</updated>
+    <published>2007-02-01T15:52:13-05:00</published>
+    <title>Plagiarism Detection in arXiv</title>
+    <summary>We describe a large-scale application of methods for finding plagiarism in research document collections. The methods are applied to a collection of 284,834 documents collected by arXiv.org over a 14 year period, covering a few different research disciplines. The methodology efficiently detects a variety of problematic author behaviors, and heuristics are developed to reduce the number of false positives. The methods are also efficient enough to implement as a real-time submission screen for a collection many times larger.</summary>
+    <author>
+      <name>Daria Sorokina, Johannes Gehrke, Simeon Warner, Paul Ginsparg</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1109/ICDM.2006.126</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">Sixth International Conference on Data Mining (ICDM'06), Dec 2006</arxiv:comment>
+    <link href="http://arxiv.org/abs/cs/0702012v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cs/0702012v1" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1109/ICDM.2006.126" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DB" scheme="http://arxiv.org/schemas/atom" label="Databases (cs.DB)"/>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom" label="Databases (cs.DB)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom" label="Information Retrieval (cs.IR)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0610031v1</id>
+    <updated>2006-10-05T15:55:09-04:00</updated>
+    <published>2006-10-05T15:55:09-04:00</published>
+    <title>Pathways: Augmenting interoperability across scholarly repositories</title>
+    <summary>In the emerging eScience environment, repositories of papers, datasets, software, etc., should be the foundation of a global and natively-digital scholarly communications system. The current infrastructure falls far short of this goal. Cross-repository interoperability must be augmented to support the many workflows and value-chains involved in scholarly communication. This will not be achieved through the promotion of single repository architecture or content representation, but instead requires an interoperability framework to connect the many heterogeneous systems that will exist.
+  We present a simple data model and service architecture that augments repository interoperability to enable scholarly value-chains to be implemented. We describe an experiment that demonstrates how the proposed infrastructure can be deployed to implement the workflow involved in the creation of an overlay journal over several different repository systems (Fedora, aDORe, DSpace and arXiv).</summary>
+    <author>
+      <name>Simeon Warner, Jeroen Bekaert, Carl Lagoze, Xiaoming Liu, Sandy Payette, Herbert Van de Sompel</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1007/s00799-007-0016-7</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">18 pages. Accepted for International Journal on Digital Libraries special issue on Digital Libraries and eScience</arxiv:comment>
+    <link href="http://arxiv.org/abs/cs/0610031v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cs/0610031v1" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1007/s00799-007-0016-7" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="H.3.7" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0609126v1</id>
+    <updated>2006-09-22T10:16:00-04:00</updated>
+    <published>2006-09-22T10:16:00-04:00</published>
+    <title>E-prints and Journal Articles in Astronomy: a Productive Co-existence</title>
+    <summary>Are the e-prints (electronic preprints) from the arXiv repository being used instead of the journal articles? In this paper we show that the e-prints have not undermined the usage of journal papers in the astrophysics community. As soon as the journal article is published, the astronomical community prefers to read the journal article and the use of e-prints through the NASA Astrophysics Data System drops to zero. This suggests that the majority of astronomers have access to institutional subscriptions and that they choose to read the journal article when given the choice. Within the NASA Astrophysics Data System they are given this choice, because the e-print and the journal article are treated equally, since both are just one click away. In other words, the e-prints have not undermined journal use in the astrophysics community and thus currently do not pose a financial threat to the publishers. We present readership data for the arXiv category "astro-ph" and the 4 core journals in astronomy (Astrophysical Journal, Astronomical Journal, Monthly Notices of the Royal Astronomical Society and Astronomy &amp; Astrophysics). Furthermore, we show that the half-life (the point where the use of an article drops to half the use of a newly published article) for an e-print is shorter than for a journal paper.
+  The ADS is funded by NASA Grant NNG06GG68G. arXiv receives funding from NSF award #0404553</summary>
+    <author>
+      <name>Edwin A. Henneken, Michael J. Kurtz, Simeon Warner, Paul Ginsparg, Guenther Eichhorn, Alberto Accomazzi, Carolyn S. Grant, Donna Thompson, Elizabeth Bohlen, Stephen S. Murray</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1087/095315107779490661</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">8 pages, 4 figures, submitted to Learned Publishing</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">Learn.Publ.20:16-22,2007</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/cs/0609126v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cs/0609126v1" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1087/095315107779490661" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom" label="Astrophysics (astro-ph)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0506010v1</id>
+    <updated>2005-06-03T13:15:04-04:00</updated>
+    <published>2005-06-03T13:15:04-04:00</published>
+    <title>The OAI Data-Provider Registration and Validation Service</title>
+    <summary>I present a summary of recent use of the Open Archives Initiative (OAI) registration and validation services for data-providers. The registration service has seen a steady stream of registrations since its launch in 2002, and there are now over 220 registered repositories. I examine the validation logs to produce a breakdown of reasons why repositories fail validation. This breakdown highlights some common problems and will be used to guide work to improve the validation service.</summary>
+    <author>
+      <name>Simeon Warner</name>
+    </author>
+    <link href="http://arxiv.org/abs/cs/0506010v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cs/0506010v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="H.3.7" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0307008v1</id>
+    <updated>2003-07-03T23:33:49-04:00</updated>
+    <published>2003-07-03T23:33:49-04:00</published>
+    <title>Eprints and the Open Archives Initiative</title>
+    <summary>The Open Archives Initiative (OAI) was created as a practical way to promote interoperability between eprint repositories. Although the scope of the OAI has been broadened, eprint repositories still represent a significant fraction of OAI data providers. In this article I present a brief survey of OAI eprint repositories, and of services using metadata harvested from eprint repositories using the OAI protocol for metadata harvesting (OAI-PMH). I then discuss several situations where metadata harvesting may be used to further improve the utility of eprint archives as a component of the scholarly communication infrastructure.</summary>
+    <author>
+      <name>Simeon Warner</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1108/07378830310479794</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">13 pages</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">Library Hi Tech, Volume 21, Number 2, 151-158 (2003)</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/cs/0307008v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cs/0307008v1" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1108/07378830310479794" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="H.3.7" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0106057v1</id>
+    <updated>2001-06-28T19:08:20-04:00</updated>
+    <published>2001-06-28T19:08:20-04:00</published>
+    <title>Exposing and harvesting metadata using the OAI metadata harvesting protocol: A tutorial</title>
+    <summary>In this article I outline the ideas behind the Open Archives Initiative metadata harvesting protocol (OAIMH), and attempt to clarify some common misconceptions. I then consider how the OAIMH protocol can be used to expose and harvest metadata. Perl code examples are given as practical illustration.</summary>
+    <author>
+      <name>Simeon Warner</name>
+    </author>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">13 pages, 1 figure. Example programs included (download source). HEPLW version (HTML) available online at http://library.cern.ch/HEPLW/4/papers/3/</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">High Energy Physics Libraries Webzine, Issue 4, June 2001</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/cs/0106057v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cs/0106057v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="H.3.7" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-lat/0105002v1</id>
+    <updated>2001-05-02T19:24:24-04:00</updated>
+    <published>2001-05-02T19:24:24-04:00</published>
+    <title>The Ising Model on a Dynamically Triangulated Disk with a Boundary Magnetic Field</title>
+    <summary>We use Monte Carlo simulations to study a dynamically triangulated disk with Ising spins on the vertices and a boundary magnetic field. For the case of zero magnetic field we show that the model possesses three phases. For one of these the boundary length grows linearly with disk area, while the other two phases are characterized by a boundary whose size is on the order of the cut-off. A line of continuous magnetic transitions separates the two small boundary phases. We determine the critical exponents of the continuous magnetic phase transition and relate them to predictions from continuum 2-d quantum gravity. This line of continuous transitions appears to terminate on a line of discontinuous phase transitions dividing the small boundary phases from the large boundary phase. We examine the scaling of bulk magnetization and boundary magnetization as a function of boundary magnetic field in the vicinity of this tricritical point.</summary>
+    <author>
+      <name>Scott McGuire, Simon Catterall, Mark Bowick, Simeon Warner</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1016/S0550-3213(01)00405-9</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">32 pages, latex</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">Nucl.Phys. B614 (2001) 467-493</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/hep-lat/0105002v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/hep-lat/0105002v1" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1016/S0550-3213(01)00405-9" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Theory (hep-th)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cs/0101027v1</id>
+    <updated>2001-01-25T19:05:04-05:00</updated>
+    <published>2001-01-25T19:05:04-05:00</published>
+    <title>Open Archives Initiative protocol development and implementation at arXiv</title>
+    <summary>I outline the involvement of the Los Alamos e-print archive (arXiv) within the Open Archives Initiative (OAI) and describe the implementation of the data provider side of the OAI protocol v1.0. I highlight the ways in which we map the existing structure of arXiv onto elements of the protocol.</summary>
+    <author>
+      <name>Simeon Warner</name>
+    </author>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">15 pages. Expanded version of talk presented at Open Archives Initiative Open Meeting in Washington, DC, USA on 23 January 2001</arxiv:comment>
+    <link href="http://arxiv.org/abs/cs/0101027v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cs/0101027v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom" label="Digital Libraries (cs.DL)"/>
+    <category term="H.3.7" scheme="http://arxiv.org/schemas/atom"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-lat/9808006v2</id>
+    <updated>2000-12-19T12:35:14-05:00</updated>
+    <published>1998-08-06T14:44:56-04:00</published>
+    <title>Phase diagram of three-dimensional dynamical triangulations with a boundary</title>
+    <summary>We use Monte Carlo simulation to study the phase diagram of three-dimensional dynamical triangulations with a boundary. Three phases are indentified and characterized. One of these phases is a new, boundary dominated phase; a simple argument is presented to explain its existence. First-order transitions are shown to occur along the critical lines separating phases.</summary>
+    <author>
+      <name>Simeon Warner, Simon Catterall, Ray Renken</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1016/S0370-2693(98)01216-7</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">9 pages, 5 EPS figures. v2 corrects typos in table 1</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">Phys.Lett. B442 (1998) 266-272</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/hep-lat/9808006v2" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/hep-lat/9808006v2" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1016/S0370-2693(98)01216-7" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-lat/0008015v1</id>
+    <updated>2000-08-14T19:00:41-04:00</updated>
+    <published>2000-08-14T19:00:41-04:00</published>
+    <title>Phase diagram of four-dimensional dynamical triangulations with a boundary</title>
+    <summary>We report on simulations of DT simplicial gravity for manifolds with the topology of the 4-disk. We find evidence for four phases in a two-dimensional parameter space. In two of these the boundary plays no dynamical role and the geometries are equivalent to those observed earlier for the sphere $S^4$. In another phase the boundary is maximal and the quantum geometry degenerates to a one dimensional branched polymer. In contrast we provide evidence that the fourth phase is effectively three-dimensional. We find discontinuous phase transitions at all the phase boundaries.</summary>
+    <author>
+      <name>Simeon Warner, Simon Catterall</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1016/S0370-2693(00)01154-0</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">13 pages, latex</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">Phys.Lett. B493 (2000) 389-394</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/hep-lat/0008015v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/hep-lat/0008015v1" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1016/S0370-2693(00)01154-0" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/cond-mat/9404102v1</id>
+    <updated>2000-05-16T15:03:20-04:00</updated>
+    <published>2000-05-16T15:03:20-04:00</published>
+    <title>NMR Spectroscopy and the Crystal-Field Interaction in Holmium Trifluoride</title>
+    <summary>The work to be described falls into three parts:
+  (1) The computer-controlled CW spectrometer was designed to supplement the Manchester pulsed microwave spectrometer in situations where rapid nuclear relaxation makes spin-echo spectroscopy difficult. Its operating range is 4-8 GHz. Resonator designs and modulation strategies will be discussed in the light of practical experience.
+  (2) Both CW and pulsed NMR have been used to study the field dependence of the hyperfine splittings of $^{165}$Ho in HoF$_3$ and, as a dilute substituent, in YF$_3$. The low site symmetry results in a singlet crystal-field ground state for the Ho$^{3+}$ ion, giving Van Vleck paramagnetism and enhanced nuclear magnetism at low temperatures. The measurements were made at temperatures in the range 1.5 to 4.2 K and in fields of up to 8 T. This work has revealed, for the first time, distinct spectra from the two subtly inequivalent rare-earth sites in the orthorhombic unit cell. Because of the non-colinear spin structure of HoF$_3$, the NMR and magnetometry measurements give independent and complimentary information about the ionic moments.
+  (3) The measured hyperfine splittings have been interpreted in terms of a 15-parameter crystal-field Hamiltonian appropriate to the $C_{1h}$ site symmetry. This work has entailed a substantial effort to clarify the notational confusion that exists in the literature. A computer program has been developed to automate conversion between notational conventions prior to diagonalization of the 136-dimensional electronic-nuclear Hamiltonian comprising the Zeeman, crystal-field and hyperfine interactions.
+  [abridged]</summary>
+    <author>
+      <name>Simeon Warner</name>
+    </author>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">171 pages, latex. PhD Thesis, Dept. of Physics, University of Manchester, UK (April 1994)</arxiv:comment>
+    <link href="http://arxiv.org/abs/cond-mat/9404102v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/cond-mat/9404102v1" rel="related" type="application/pdf"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cond-mat" scheme="http://arxiv.org/schemas/atom" label="Condensed Matter (cond-mat)"/>
+    <category term="cond-mat" scheme="http://arxiv.org/schemas/atom" label="Condensed Matter (cond-mat)"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-lat/9809112v1</id>
+    <updated>1998-09-15T14:40:19-04:00</updated>
+    <published>1998-09-15T14:40:19-04:00</published>
+    <title>Anisotropic Membranes</title>
+    <summary>We describe the statistical behavior of anisotropic crystalline membranes. In particular we give the phase diagram and critical exponents for phantom membranes and discuss the generalization to self-avoiding membranes.</summary>
+    <author>
+      <name>M. Bowick, S. Catterall, S. Warner, G. Thorleifsson, M. Falcioni</name>
+    </author>
+    <arxiv:doi xmlns:arxiv="http://arxiv.org/schemas/atom">10.1016/S0920-5632(99)85209-8</arxiv:doi>
+    <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">LATTICE98(surfaces) 5 pages, 4 Postscript figures</arxiv:comment>
+    <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">Nucl.Phys.Proc.Suppl. 73 (1999) 804-806</arxiv:journal_ref>
+    <link href="http://arxiv.org/abs/hep-lat/9809112v1" rel="alternate" type="text/html"/>
+    <link title="pdf" href="http://arxiv.org/pdf/hep-lat/9809112v1" rel="related" type="application/pdf"/>
+    <link title="doi" href="http://dx.doi.org/10.1016/S0920-5632(99)85209-8" rel="related"/>
+    <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom" label="High Energy Physics - Lattice (hep-lat)"/>
+  </entry>
+</feed>

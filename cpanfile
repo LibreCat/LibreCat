@@ -1,18 +1,20 @@
 requires 'perl', 'v5.10.1';
 
 on 'test' => sub {
-    requires 'Test::Lib';
-    requires 'Test::More';
-    requires 'Test::TCP';
-    requires 'Test::Exception', '0.43';
+    requires 'App::Cmd::Tester';
     requires 'Dancer::Test';
+    requires 'Devel::Cover';
+    requires 'File::Path';
     requires 'File::Slurp';
     requires 'IO::File';
-    requires 'File::Path';
     requires 'Test::Code::TidyAll', '0.20';
+    requires 'Test::Exception', '0.43';
+    requires 'Test::Lib';
+    requires 'Test::More';
+    requires 'Test::Net::LDAP';
+    requires 'Test::Pod';
+    requires 'Test::TCP';
     requires 'Test::WWW::Mechanize::Dancer';
-    requires 'App::Cmd::Tester';
-    requires 'Devel::Cover';
 };
 
 requires 'Business::ISBN', 0;
@@ -75,7 +77,6 @@ requires 'all';
 requires 'AnyEvent','7.13';
 requires 'AnyEvent::HTTP','2.23';
 requires 'App::bmkpasswd', '2.010001';
-requires 'Authen::CAS::Client','0.06';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
 requires 'Clone';
@@ -114,3 +115,4 @@ requires 'URL::Encode';
 requires 'XML::RSS';
 requires 'YAML';
 requires 'YAML::XS';
+requires 'Plack::Auth::SSO','0.0132';

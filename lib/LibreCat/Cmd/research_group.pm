@@ -11,12 +11,12 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat research_group [options] list [<cql-query>]
-librecat research_group [options] export [<cql-query>]
-librecat research_group [options] add <FILE>
-librecat research_group [options] get <id> | <IDFILE>
-librecat research_group [options] delete <id> | <IDFILE>
-librecat research_group [options] valid <FILE>
+librecat research_group list   [options] [<cql-query>]
+librecat research_group export [options] [<cql-query>]
+librecat research_group add    [options] <FILE>
+librecat research_group get    [options] <id> | <IDFILE>
+librecat research_group delete [options] <id> | <IDFILE>
+librecat research_group valid  [options] <FILE>
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -68,9 +68,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -78,9 +81,12 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -88,7 +94,7 @@ sub command {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
     if (-r $id_file) {
         my $r = 0;
@@ -131,9 +137,9 @@ sub _list {
 
     my $count = $it->each(
         sub {
-            my ($item)  = @_;
-            my $id      = $item->{_id};
-            my $name    = $item->{name};
+            my ($item) = @_;
+            my $id     = $item->{_id};
+            my $name   = $item->{name};
             my $acronym = $item->{acronym} // '---';
 
             printf "%-40.40s %s %s\n", $id, $acronym, $name;
@@ -311,12 +317,12 @@ LibreCat::Cmd::research_group - manage librecat research_group-s
 
 =head1 SYNOPSIS
 
-    librecat research_group list [<cql-query>]
-    librecat research_group export [<cql-query>]
-    librecat research_group add <FILE>
-    librecat research_group get <id> | <IDFILE>
-    librecat research_group delete <id> | <IDFILE>
-    librecat research_group valid <FILE>
+    librecat research_group list   [options] [<cql-query>]
+    librecat research_group export [options] [<cql-query>]
+    librecat research_group add    [options] <FILE>
+    librecat research_group get    [options] <id> | <IDFILE>
+    librecat research_group delete [options] <id> | <IDFILE>
+    librecat research_group valid  [options] <FILE>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

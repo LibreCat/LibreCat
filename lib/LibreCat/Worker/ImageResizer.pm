@@ -23,8 +23,8 @@ sub _build_file_store {
     my $file_store = $self->files->{package};
     my $file_opts = $self->files->{options} // {};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -34,8 +34,8 @@ sub _build_access_store {
     my $file_store = $self->access->{package};
     my $file_opts = $self->access->{options} // {};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -93,7 +93,7 @@ sub do_upload {
 
     my $files = $self->file_store->index->files($key);
 
-    my $file  = $files->get($filename);
+    my $file = $files->get($filename);
 
     unless (defined $file) {
         $self->log->error("no file $filename in container $key found");
@@ -130,13 +130,14 @@ sub do_upload {
     unless ($self->access_store->index->exists($key)) {
         $self->log->info("$key not found");
         $self->log->info("creating a new access container $key");
-        $self->access_store->index->add({ _id => $key });
+        $self->access_store->index->add({_id => $key});
     }
 
     $thumbs = $self->access_store->index->files($key);
 
     $self->log->info("storing $tmpdir/thumb.png in access container $key");
-    my $bytes =  $thumbs->upload(IO::File->new("$tmpdir/thumb.png"),$thumbnail_name);
+    my $bytes = $thumbs->upload(IO::File->new("$tmpdir/thumb.png"),
+        $thumbnail_name);
 
     $self->log->info("uploaded $bytes bytes");
 

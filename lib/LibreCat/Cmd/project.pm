@@ -11,12 +11,12 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat project [options] list [<cql-query>]
-librecat project [options] export [<cql-query>]
-librecat project [options] add <FILE>
-librecat project [options] get <id> | <IDFILE>
-librecat project [options] delete <id> | <IDFILE>
-librecat project [options] valid <FILE>
+librecat project list   [options] [<cql-query>]
+librecat project export [options] [<cql-query>]
+librecat project add    [options] <FILE>
+librecat project get    [options] <id> | <IDFILE>
+librecat project delete [options] <id> | <IDFILE>
+librecat project valid  [options] <FILE>
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -26,7 +26,7 @@ options:
 E.g.
 
 librecat project list 'id = P1'
-librecat user --sort "name,,1" list ""  # force to use an empty query
+librecat user list --sort "name,,1"  ""  # force to use an empty query
 
 EOF
 }
@@ -68,9 +68,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -78,9 +81,12 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -88,7 +94,7 @@ sub command {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
     if (-r $id_file) {
         my $r = 0;
@@ -253,8 +259,7 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('project',
-        $id);
+        = LibreCat::App::Helper::Helpers->new->purge_record('project', $id);
 
     if ($result) {
         print "deleted $id\n";
@@ -311,12 +316,12 @@ LibreCat::Cmd::project - manage librecat projects
 
 =head1 SYNOPSIS
 
-    librecat project list [<cql-query>]
-    librecat project export [<cql-query>]
-    librecat project add <FILE>
-    librecat project get <id> | <IDFILE>
-    librecat project delete <id> | <IDFILE>
-    librecat project valid <FILE>
+    librecat project list   [options] [<cql-query>]
+    librecat project export [options] [<cql-query>]
+    librecat project add    [options] <FILE>
+    librecat project get    [options] <id> | <IDFILE>
+    librecat project delete [options] <id> | <IDFILE>
+    librecat project valid  [options] <FILE>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

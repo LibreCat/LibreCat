@@ -2,7 +2,8 @@ _prefix:
   locale:
     de:
 
-appname: "LibreCat"
+appname: "LibreCat &ndash; Publikationslisten Manager"
+appname_short: "LibreCat"
 general:
   plural: "en"
   where: "in"
@@ -514,6 +515,7 @@ forms:
         label_short: "Locked"
       main_file_link: &main_file_link
         label: "Volltext URL"
+        label_short: "Volltext URL"
         placeholder: "Ext. Ort Ihres Volltextes"
         open_access: "<img src='/images/access_open.png' /> Open Access"
   book_editor:
@@ -730,7 +732,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
-      editor: "Herausgeber"
+      editor: *editor
       document_type: *document_type
       doi: *doi
       title: *booktitle
