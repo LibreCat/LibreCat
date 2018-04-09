@@ -3,7 +3,6 @@ use LibreCat load => (layer_paths => [qw(t/layer)]);
 use warnings FATAL => "all";
 use Test::More;
 use Test::Exception;
-use Data::Dumper;
 
 my $pkg;
 
