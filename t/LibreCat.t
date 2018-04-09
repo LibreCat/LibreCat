@@ -1,7 +1,7 @@
 use Catmandu::Sane;
+use POSIX qw(strftime);
 use Test::More;
 use Test::Exception;
-use Path::Tiny;
 use LibreCat;
 
 # class methods and loading
@@ -36,6 +36,12 @@ isa_ok(
 {
 
     my $model = $instance->model('publication');
+
+    isa_ok(
+        $instance->model('publication'),
+        "LibreCat::Model::Publication",
+        "librecat->publication returns a LibreCat::Model::Publication"
+    );
 
     $model->purge_all;
 
@@ -136,6 +142,28 @@ isa_ok(
 
     ok(!$model->search_bag->get($id), '...purged (index)');
 }
+
+# timestamp
+
+{
+    my $time = time;
+    my $str = $instance->timestamp($time);
+    is($str, strftime('%Y-%m-%dT%H:%M:%SZ', gmtime($time)));
+
+    $instance->config->{time_format} = '%Y-%m-%d';
+    $str = $instance->timestamp($time);
+    is($str, strftime('%Y-%m-%d', gmtime($time)));
+
+    ok($instance->timestamp, 'time argument is optional');
+}
+
+# searcher
+
+isa_ok(
+    $instance->searcher,
+    "LibreCat::Search",
+    "librecat->search returns a LibreCat::Search"
+);
 
 # queue
 
