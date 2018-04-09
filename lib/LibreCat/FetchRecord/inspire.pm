@@ -7,7 +7,7 @@ use Moo;
 with 'LibreCat::FetchRecord';
 
 has 'baseurl' =>
-    (is => 'ro', default => sub {"http://inspirehep.net/record/"});
+    (is => 'ro', default => sub {"https://inspirehep.net/record/"});
 
 sub fetch {
     my ($self, $id) = @_;

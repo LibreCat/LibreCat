@@ -23,7 +23,7 @@ sub fetch {
 
     unless (@$data) {
         $self->log->error(
-            "failed to request http://api.crossref.org/works/$id");
+            "failed to request https://api.crossref.org/works/$id");
         return ();
     }
 
