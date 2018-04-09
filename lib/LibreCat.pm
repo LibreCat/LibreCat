@@ -348,7 +348,20 @@ LibreCat - LibreCat configuration and state
 
 =head1 SYNOPSIS
 
-   use LibreCat qw(:self hook);
+   use LibreCat qw(:self);
+   librecat->model('publication')->add($rec);
+   # l is a shortcut for librecat
+   l->model('publication')->add($rec);
+   # even shorter but slower
+   l->publication->add($rec);
+
+   # shortest and fastest
+   use LibreCat qw(publication);
+   publication->add($rec);
+
+   # without importing
+   use LibreCat;
+   LibreCat->instance->model('publication');
 
    # Given this configuration file, like: config/hooks.yml
    # --
@@ -359,6 +372,7 @@ LibreCat - LibreCat configuration and state
    #      before_fixes: [BeforeFix1,BeforeFix2]
    #      after_fixes:  [AfterFix]
 
+   use LibreCat qw(hook);
    my $hook = hook('eat');
 
    $hook->fix_before($data);  # BeforeFix1->fix($data) and
