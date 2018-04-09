@@ -8,6 +8,7 @@ Route handler for publications.
 
 use Catmandu::Sane;
 use Catmandu;
+use LibreCat qw(publication);
 use Catmandu::Fix qw(expand);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
@@ -41,7 +42,7 @@ Some fields are pre-filled.
 
         return template 'backend/add_new' unless $type;
 
-        my $id = LibreCat->publication->generate_id;
+        my $id = publication->generate_id;
 
         # set some basic values
         my $data = {
@@ -113,7 +114,7 @@ Checks if the user has permission the see/edit this record.
 
     get '/edit/:id' => sub {
 
-        my $rec = LibreCat->publication->get(param("id")) or pass;
+        my $rec = publication->get(param("id")) or pass;
 
         unless (
             p->can_edit(
@@ -193,7 +194,7 @@ Checks if the user has the rights to update this record.
         h->hook('publication-update')->fix_around(
             $p,
             sub {
-                LibreCat->publication->add($p);
+                publication->add($p);
             }
         );
 
@@ -210,7 +211,7 @@ Checks if the user has the rights to edit this record.
 
     get '/return/:id' => sub {
 
-        my $rec = LibreCat->publication->get(param("id")) or pass;
+        my $rec = publication->get(param("id")) or pass;
 
         unless (
             p->can_edit(
@@ -232,7 +233,7 @@ Checks if the user has the rights to edit this record.
             $rec,
             sub {
                 $rec->{status} = "returned";
-                LibreCat->publication->add($rec);
+                publication->add($rec);
             }
         );
 
@@ -248,7 +249,7 @@ Deletes record with id. For admins only.
     get '/delete/:id' => sub {
         my $id = params->{id};
 
-        my $rec = LibreCat->publication->get($id);
+        my $rec = publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -262,7 +263,7 @@ Deletes record with id. For admins only.
         h->hook('publication-delete')->fix_around(
             $rec,
             sub {
-                LibreCat->publication->delete($id);
+                publication->delete($id);
             }
         );
 
@@ -278,7 +279,7 @@ Prints the frontdoor for every record.
     get '/preview/:id' => sub {
         my $id = params->{id};
 
-        my $hits = LibreCat->publication->get($id);
+        my $hits = publication->get($id);
 
         $hits->{bag}
             = $hits->{type} eq "research_data" ? "data" : "publication";
@@ -299,7 +300,7 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = LibreCat->publication->get($id);
+        my $rec = publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -321,7 +322,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
     get '/clone/:id' => sub {
         my $id  = params->{id};
-        my $rec = LibreCat->publication->get($id);
+        my $rec = publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -330,7 +331,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
         delete $rec->{file};
         delete $rec->{related_material};
-        $rec->{_id}        = LibreCat->publication->generate_id;
+        $rec->{_id}        = publication->generate_id;
         $rec->{new_record} = 1;
 
         my $template = $rec->{type} . ".tt";
@@ -346,7 +347,7 @@ Publishes private records, returns to the list.
 
     get '/publish/:id' => sub {
 
-        my $rec = LibreCat->publication->get(param("id")) or pass;
+        my $rec = publication->get(param("id")) or pass;
 
         unless (
             p->can_edit(
@@ -380,7 +381,7 @@ Publishes private records, returns to the list.
 
             $hook->fix_before($rec);
 
-            LibreCat->publication->add($rec);
+            publication->add($rec);
 
             $hook->fix_after($rec);
         }

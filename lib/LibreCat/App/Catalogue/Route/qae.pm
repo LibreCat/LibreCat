@@ -7,7 +7,7 @@ Route handler for uploading the Quick and Easy upload.
 =cut
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(publication department timestamp);
 use LibreCat::App::Helper;
 use Dancer ':syntax';
 
@@ -15,11 +15,11 @@ post '/librecat/upload/qae/submit' => sub {
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
 
     if ($submit_or_cancel eq "Submit") {
-        my $id = LibreCat->publication->generate_id;
+        my $id = publication->generate_id;
         my $person = h->get_person(params->{delegate} || session->{user_id});
-        my $department = LibreCat->department->get(params->{reviewer})
+        my $department = department->get(params->{reviewer})
             if params->{reviewer};
-        my $now = LibreCat->timestamp;
+        my $now = timestamp;
 
         my $record = {
             _id    => $id,
@@ -61,7 +61,7 @@ post '/librecat/upload/qae/submit' => sub {
         h->hook('qae-new')->fix_around(
             $record,
             sub {
-                LibreCat->publication->add($record);
+                publication->add($record);
             }
         );
 

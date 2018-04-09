@@ -5,7 +5,7 @@ use Test::Exception;
 use App::Cmd::Tester;
 use LibreCat::CLI;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use Data::Dumper;
 
 my $pkg;

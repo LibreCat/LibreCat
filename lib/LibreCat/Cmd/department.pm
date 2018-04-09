@@ -1,7 +1,7 @@
 package LibreCat::Cmd::department;
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(department);
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -122,7 +122,7 @@ sub _list {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->department->searcher(
+        $it = department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -131,7 +131,7 @@ sub _list {
     }
     else {
         carp "sort not available without a query" if $sort;
-        $it = LibreCat->department;
+        $it = department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -179,17 +179,17 @@ sub _tree_parse {
     my $HASH = $importer->first;
 
     print "deleting previous departments...\n";
-    LibreCat->department->delete_all;
+    department->delete_all;
 
     _tree_parse_parser(
         $HASH->{tree},
         sub {
             my $rec = shift;
-            LibreCat->department->add($rec, skip_commit => 1);
+            department->add($rec, skip_commit => 1);
             print "added $rec->{_id}\n";
         }
     );
-    LibreCat->department->commit;
+    department->commit;
 }
 
 sub _tree_parse_parser {
@@ -222,7 +222,7 @@ sub _tree_parse_parser {
 sub _tree_display {
     my $HASH = {};
 
-    LibreCat->department->each(
+    department->each(
         sub {
             my ($item) = @_;
 
@@ -262,7 +262,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->department->searcher(
+        $it = department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -270,7 +270,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->department;
+        $it = department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -292,7 +292,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->department->get($id);
+    my $data = department->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -307,7 +307,7 @@ sub _add {
     my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
 
-    LibreCat->department->add_many(
+    department->add_many(
         $importer,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
@@ -329,7 +329,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    if (LibreCat->department->delete($id)) {
+    if (department->delete($id)) {
         say "deleted $id";
         return 0;
     }
@@ -344,7 +344,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat->department->validator;
+    my $validator = department->validator;
 
     my $ret = 0;
 

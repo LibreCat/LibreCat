@@ -52,9 +52,9 @@ LibreCat::Hook - create call back functions to be executed at important LibreCat
     # test.pl:
     use Path::Tiny;
     use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-    use LibreCat qw(:load);
+    use LibreCat qw(:load hook);
 
-    my $hook = LibreCat->hook('my-event');
+    my $hook = hook('my-event');
 
     # This will execute: LibreCat::Hook::foo , LibreCat::Hook::bar
     $hook->fix_before({ param1 => ... , param2 => ... } );

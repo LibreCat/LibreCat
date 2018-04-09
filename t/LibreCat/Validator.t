@@ -1,5 +1,5 @@
 use Catmandu::Sane;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -self => -load => {layer_paths => [qw(t/layer)]};
 use Test::More;
 use File::Slurp;
 
@@ -19,7 +19,7 @@ require_ok $_ for @worker_pkg;
 note("Validate user");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
-        schema => LibreCat->config->{schemas}{user});
+        schema => librecat->config->{schemas}{user});
 
     ok $x , 'got a user validator';
 
@@ -52,7 +52,7 @@ note("Validate user");
 note("Validate research_group");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
-        schema => LibreCat->config->{schemas}{research_group});
+        schema => librecat->config->{schemas}{research_group});
 
     ok $x , 'got a research_group validator';
 
@@ -77,7 +77,7 @@ note("Validate research_group");
 note("Validate department");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
-        schema => LibreCat->config->{schemas}{department});
+        schema => librecat->config->{schemas}{department});
 
     ok $x , 'got a department validator';
 
@@ -108,7 +108,7 @@ note("Validate department");
 note("Validate project");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
-        schema => LibreCat->config->{schemas}{project});
+        schema => librecat->config->{schemas}{project});
 
     ok $x , 'got a project validator';
 
@@ -132,7 +132,7 @@ note("Validate project");
 note("Validate publiction");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
-        schema => LibreCat->config->{schemas}{publication});
+        schema => librecat->config->{schemas}{publication});
 
     ok $x , 'got a publication validator';
 

@@ -3,7 +3,7 @@ package LibreCat::Cmd::publication;
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util;
-use LibreCat;
+use LibreCat qw(queue publication timestamp);
 use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
@@ -163,7 +163,7 @@ sub command {
 
 sub audit_message {
     my ($id, $action, $message) = @_;
-    LibreCat->queue->add_job(
+    queue->add_job(
         'audit',
         {
             id      => $id,
@@ -201,7 +201,7 @@ sub _list {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->publication->searcher(
+        $it = publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -210,7 +210,7 @@ sub _list {
     }
     else {
         carp "sort not available without a query" if $sort;
-        $it = LibreCat->publication;
+        $it = publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -250,7 +250,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->publication->searcher(
+        $it = publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -258,7 +258,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->publication;
+        $it = publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -279,7 +279,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $pubs = LibreCat->publication;
+    my $pubs = publication;
 
     my $rec;
 
@@ -323,7 +323,7 @@ sub _add {
 
     my $skip_before_add = $self->opts->{no_citation} ? ['citation'] : [];
 
-    LibreCat->publication->add_many(
+    publication->add_many(
         $importer,
         skip_before_add     => $skip_before_add,
         on_validation_error => sub {
@@ -356,7 +356,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result = LibreCat->publication->delete($id);
+    my $result = publication->delete($id);
 
     if ($result) {
 
@@ -378,7 +378,7 @@ sub _purge {
 
     croak "usage: $0 purge <id>" unless defined($id);
 
-    my $result = LibreCat->publication->purge($id);
+    my $result = publication->purge($id);
 
     if ($result) {
 
@@ -400,7 +400,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat->publication->validator;
+    my $validator = publication->validator;
 
     my $ret = 0;
 
@@ -459,11 +459,11 @@ sub _embargo {
 
     my $update = $args[0] && $args[0] eq 'update';
 
-    my $now = LibreCat->timestamp;
+    my $now = timestamp;
     $now =~ s/T.*//;
 
     my $query = "embargo < $now";
-    my $it = LibreCat->publication->searcher(cql_query => $query);
+    my $it = publication->searcher(cql_query => $query);
 
     my $exporter = Catmandu->exporter('YAML');
 
@@ -554,14 +554,14 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = LibreCat->publication->get($id);
+        my $data = publication->get($id);
         $printer->($data);
     }
     elsif (defined($id)) {
-        LibreCat->publication->searcher(cql_query => $id)->each($printer);
+        publication->searcher(cql_query => $id)->each($printer);
     }
     else {
-        LibreCat->publication->each($printer);
+        publication->each($printer);
     }
     $exporter->commit;
 }
@@ -577,9 +577,9 @@ sub _files_load {
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = LibreCat->publication->get($id)) {
+        if (my $data = publication->get($id)) {
             $self->_file_process($data, $files)
-                && LibreCat->publication->add($data);
+                && publication->add($data);
         }
         else {
             warn "$id - no such publication";
@@ -720,7 +720,7 @@ sub _files_reporter {
 
     my $exporter = Catmandu->exporter('YAML');
 
-    LibreCat->publication->each(
+    publication->each(
         sub {
             my ($item) = @_;
             return unless $item->{file} && ref($item->{file}) eq 'ARRAY';

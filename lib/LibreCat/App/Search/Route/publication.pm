@@ -9,6 +9,7 @@ LibreCat::App::Search::Route::publication - handling public record routes.
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
 
 =head2 GET /publication/:id.:fmt
 
@@ -65,14 +66,14 @@ get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
     push @{$p->{cql}},
         ($bag eq 'data') ? "type=research_data" : "type<>research_data";
 
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     unless ($hits->{total}) {
         $p->{cql} = [];
         push @{$p->{cql}}, ("status=public", "altid=$id");
         push @{$p->{cql}},
             ($bag eq 'data') ? "type=research_data" : "type<>research_data";
-        $hits = LibreCat->searcher->search('publication', $p);
+        $hits = searcher->search('publication', $p);
         return redirect "/" . $bag . "/" . $hits->first->{_id}, 301
             if $hits->{total};
     }
@@ -99,7 +100,7 @@ get qr{/(data|publication)/*} => sub {
 
     $p->{sort} = $p->{sort} // h->config->{default_sort};
 
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     template 'publication/list', $hits;
 
@@ -120,7 +121,7 @@ get '/embed' => sub {
     $p->{start} = params->{start};
     $p->{limit} = h->config->{maximum_page_size};
 
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     $hits->{bag}   = "publication";
     $hits->{embed} = 1;

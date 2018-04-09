@@ -13,7 +13,7 @@ use Dancer::ModuleLoader;
 use Catmandu::Sane;
 use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-use LibreCat qw(:load);
+use LibreCat qw(:load :self);
 use Catmandu::Util qw(require_package :is);
 use Plack::Builder;
 use Plack::App::File;
@@ -22,7 +22,7 @@ use Dancer;
 use LibreCat::App;
 
 # setup template paths
-config->{engines}{template_toolkit}{INCLUDE_PATH} = LibreCat->layers->template_paths;
+config->{engines}{template_toolkit}{INCLUDE_PATH} = librecat->template_paths;
 config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_debug};
 
 # Overwrite the default Dancer template for finding the
@@ -35,7 +35,7 @@ config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_d
     sub Dancer::Template::Abstract::view {
         my ($self, $view) = @_;
 
-        my $views_dir = LibreCat->layers->template_paths;
+        my $views_dir = librecat->template_paths;
 
         for my $template ($self->_template_name($view)) {
             if (is_array_ref($views_dir)) {
@@ -57,7 +57,7 @@ config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_d
 
 # setup static file serving
 my $app = Plack::App::Cascade->new;
-$app->add(map {Plack::App::File->new(root => $_)->to_app} @{LibreCat->layers->public_paths});
+$app->add(map {Plack::App::File->new(root => $_)->to_app} @{librecat->public_paths});
 
 # dancer app
 $app->add(sub {
@@ -75,7 +75,7 @@ my $session_state_package = is_string($config->{session_state}->{package}) ?
 my $session_state_options = is_hash_ref($config->{session_state}->{options}) ?
     $config->{session_state}->{options} : {};
 
-my $uri_base = Catmandu->config->{uri_base} // Catmandu->config->{host} // "http://localhost:5001";
+my $uri_base = librecat->config->{uri_base} // Catmandu->config->{host} // "http://localhost:5001";
 
 my $auth_sso = is_array_ref( $config->{auth_sso} ) ? $config->{auth_sso} : [];
 my $session_sso = is_array_ref( $config->{session_sso} ) ? $config->{session_sso} : [];

@@ -1,7 +1,7 @@
 package LibreCat::Cmd::project;
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(project);
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -118,7 +118,7 @@ sub _list {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->project->searcher(
+        $it = project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -127,7 +127,7 @@ sub _list {
     }
     else {
         carp "sort not available without a query" if $sort;
-        $it = LibreCat->project;
+        $it = project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -162,7 +162,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->project->searcher(
+        $it = project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -170,7 +170,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->project;
+        $it = project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -192,7 +192,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->project->get($id);
+    my $data = project->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -207,7 +207,7 @@ sub _add {
     my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
 
-    LibreCat->project->add_many(
+    project->add_many(
         $importer,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
@@ -229,7 +229,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    if (LibreCat->project->delete($id)) {
+    if (project->delete($id)) {
         print "deleted $id\n";
         return 0;
     }
@@ -244,7 +244,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat->project->validator;
+    my $validator = project->validator;
 
     my $ret = 0;
 

@@ -26,14 +26,14 @@ L<log4perl.conf>
 use Catmandu::Sane;
 use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-use LibreCat qw(:load);
+use LibreCat qw(:load :self);
 use Catmandu::Util qw(require_package);
 use Catmandu;
 use Getopt::Long;
 use Log::Log4perl;
 
-my $package  = Catmandu->config->{authentication}{package};
-my $param    = Catmandu->config->{authentication}{options} // {};
+my $package  = librecat->config->{authentication}{package};
+my $param    = librecat->config->{authentication}{options} // {};
 my $password;
 
 my $logger = Log::Log4perl->get_logger('authentication_admin');
@@ -57,7 +57,7 @@ else {
 my $pkg    = require_package($package);
 my $auth   = $pkg->new(%$param);
 
-my $users   = LibreCat->user;
+my $users   = librecat->model('user');
 my $userobj = $users->find_by_username($user);
 my $verify  = $auth->authenticate( { username => $user , password => $password });
 

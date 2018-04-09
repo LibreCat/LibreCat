@@ -1,7 +1,7 @@
 package LibreCat::Model::Publication;
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(timestamp);
 use LibreCat::App::Catalogue::Controller::File     ();
 use LibreCat::App::Catalogue::Controller::Material ();
 use Catmandu::Fix::add_citation;
@@ -35,7 +35,7 @@ sub delete {
         $rec->{locked}      = 1;
     }
 
-    $rec->{date_deleted} = LibreCat->timestamp;
+    $rec->{date_deleted} = timestamp;
     $rec->{status}       = 'deleted';
 
     # TODO can't call add because date_deleted & co aren't whitelisted

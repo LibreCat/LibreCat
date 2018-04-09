@@ -1,23 +1,28 @@
 use Catmandu::Sane;
 use Test::More;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 {
     my $loaded = LibreCat->loaded;
     like $loaded, qr/0|1/;
 }
 
+my $instance = LibreCat->instance;
+
 isa_ok(
-    LibreCat->user,
+    $instance->model('user'),
     "LibreCat::Model::User",
-    "LibreCat->user returns a LibreCat::Model::User"
+    "librecat->user returns a LibreCat::Model::User"
 );
 
 {
-    LibreCat->publication->purge_all;
 
-    like(LibreCat->publication->generate_id,
+    my $model = $instance->model('publication');
+
+    $model->purge_all;
+
+    like($model->generate_id,
         qr{^[A-Z0-9-]+$}, 'publication generate id');
 
     my $pub = Catmandu->importer('YAML',
@@ -26,19 +31,19 @@ isa_ok(
 
     $pub->{title} = '我能吞下玻璃而不伤身体';
 
-    ok(LibreCat->publication->add($pub), 'publication add');
+    ok($model->add($pub), 'publication add');
 
     is $pub->{title}, '我能吞下玻璃而不伤身体',
         '..check title (return value)';
 
     is(
-        LibreCat->publication->get($id)->{title},
+        $model->get($id)->{title},
         '我能吞下玻璃而不伤身体',
         '..check title (main)'
     );
 
     is(
-        LibreCat->publication->search_bag->get($id)->{title},
+        $model->search_bag->get($id)->{title},
         '我能吞下玻璃而不伤身体',
         '..check title (index)'
     );
@@ -46,7 +51,7 @@ isa_ok(
     $pub->{title}
         = 'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती';
 
-    my $saved_record = LibreCat->publication->store($pub);
+    my $saved_record = $model->store($pub);
 
     ok $saved_record , 'publication add (skip index)';
 
@@ -55,18 +60,18 @@ isa_ok(
         '..check title (return value)';
 
     is(
-        LibreCat->publication->get($id)->{title},
+        $model->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (main)'
     );
 
     is(
-        LibreCat->publication->search_bag->get($id)->{title},
+        $model->search_bag->get($id)->{title},
         '我能吞下玻璃而不伤身体',
         '..check title (index)'
     );
 
-    my $indexed_record = LibreCat->publication->index($pub);
+    my $indexed_record = $model->index($pub);
 
     ok $indexed_record , 'publication index';
 
@@ -75,50 +80,50 @@ isa_ok(
         '..check title (return value)';
 
     is(
-        LibreCat->publication->get($id)->{title},
+        $model->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (main)'
     );
 
     is(
-        LibreCat->publication->search_bag->get($id)->{title},
+        $model->search_bag->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (index)'
     );
 
     ok(
-        LibreCat->publication->delete($id),
+        $model->delete($id),
         'delete existing publication returns id'
     );
     ok(
-        !LibreCat->publication->delete(99999999999),
+        !$model->delete(99999999999),
         'delete non existing publication returns nil'
     );
 
-    is(LibreCat->publication->get($id)->{status},
+    is($model->get($id)->{status},
         'deleted', '..check title (main)');
 
-    is(LibreCat->publication->search_bag->get($id)->{status},
+    is($model->search_bag->get($id)->{status},
         'deleted', '..check title (index)');
 
     ok(
-        LibreCat->publication->purge($id),
+        $model->purge($id),
         'purge existing publication returns id'
     );
     ok(
-        !LibreCat->publication->purge(99999999999),
+        !$model->purge(99999999999),
         'purge non existing publication returns nil'
     );
 
-    ok(!LibreCat->publication->get($id), '...purged (main)');
+    ok(!$model->get($id), '...purged (main)');
 
-    ok(!LibreCat->publication->search_bag->get($id), '...purged (index)');
+    ok(!$model->search_bag->get($id), '...purged (index)');
 }
 
 # hooks
 
 {
-    my $hook = LibreCat->hook('eat');
+    my $hook = $instance->hook('eat');
     is scalar(@{$hook->before_fixes}), 2;
     is scalar(@{$hook->after_fixes}),  1;
     my $data = {};
@@ -129,7 +134,7 @@ isa_ok(
 }
 
 {
-    my $hook = LibreCat->hook('idontexist');
+    my $hook = $instance->hook('idontexist');
 
     is scalar(@{$hook->before_fixes}), 0;
     is scalar(@{$hook->after_fixes}),  0;

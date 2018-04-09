@@ -2,7 +2,7 @@ package LibreCat::Auth::SSO::Simple;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:is);
-use LibreCat;
+use LibreCat qw(user);
 use Moo;
 
 with "LibreCat::Auth::SSO";
@@ -22,11 +22,11 @@ sub to_app {
 
         if (is_hash_ref($auth_sso)) {
 
-            my $user = LibreCat->user->find_by_username($auth_sso->{uid});
+            my $user = user->find_by_username($auth_sso->{uid});
 
             if ($user) {
 
-                my %attrs = LibreCat->user->to_session($user);
+                my %attrs = user->to_session($user);
 
                 for (keys %attrs) {
 
@@ -102,9 +102,9 @@ This is an implementation of L<LibreCat::Auth::SSO>.
 
 What it does:
 
-* find user by LibreCat->user->find_by_username( $auth_sso->{uid} )
+* find user by user->find_by_username( $auth_sso->{uid} )
 
-* convert user to session attributes using LibreCat->user->to_session
+* convert user to session attributes using user->to_session
 
 * save attributes to session
 

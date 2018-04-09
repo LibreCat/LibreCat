@@ -12,6 +12,7 @@ use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
 use HTML::Entities;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
 
 =head2 AJAX /search_researcher
 
@@ -25,7 +26,7 @@ ajax '/search_researcher' => sub {
         sort => h->config->{default_person_sort});
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('user', \%search_params)->{hits};
+    my $hits = searcher->search('user', \%search_params)->{hits};
 
     return to_json $hits;
 };
@@ -46,7 +47,7 @@ ajax '/num_of_publ/:id' => sub {
     h->log->debug(
         "executing publication->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('publication', \%search_params);
+    my $hits = searcher->search('publication', \%search_params);
 
     return to_json {total => $hits->{total}};
 };
@@ -62,7 +63,7 @@ ajax '/get_alias/:id/:alias' => sub {
     my %search_params = (cql => ["alias=$term", "id<>$id"]);
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('user', \%search_params);
+    my $hits = searcher->search('user', \%search_params);
 
     return to_json {ok => $hits->{total} ? 0 : 1};
 };
