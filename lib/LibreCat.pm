@@ -90,7 +90,7 @@ with 'LibreCat::Logger';
 
 has root_path   => (is => 'lazy');
 has layer_paths => (is => 'lazy');
-has config      => (is => 'lazy', init_arg => undef);
+has config      => (is => 'lazy');
 has css_paths   => (is => 'lazy', init_arg => undef);
 has paths => (is => 'ro', init_arg => undef, default => sub {[]});
 has lib_paths => (is => 'ro', init_arg => undef, default => sub {[]});
@@ -399,6 +399,8 @@ variable, in which case the C<layers.yml> file will be ignored.
 
     LIBRECAT_LAYERS=/path/to/layer2,/path/to/layer1 bin/librecat
 
+=head1 EXPORTED FUNCTIONS
+
 =head1 CONFIGURATION
 
 =head2 root_path
@@ -406,6 +408,24 @@ variable, in which case the C<layers.yml> file will be ignored.
 =head2 layer_paths
 
 =head1 METHODS
+
+=head2 config
+
+=head2 models
+
+=head2 has_model($name)
+
+=head2 model($name)
+
+=head2 searcher
+
+=head2 queue
+
+=head2 hook
+
+=head2 fixer
+
+=head2 timestamp($time)
 
 =head2 root_path
 
