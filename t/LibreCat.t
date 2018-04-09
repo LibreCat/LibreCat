@@ -1,14 +1,31 @@
 use Catmandu::Sane;
+use POSIX qw(strftime);
 use Test::More;
-use Path::Tiny;
-use LibreCat -load => {layer_paths => [qw(t/layer)]};
+use Test::Exception;
+use LibreCat;
 
-{
-    my $loaded = LibreCat->loaded;
-    like $loaded, qr/0|1/;
-}
+# class methods and loading
+
+ok(LibreCat->loaded == 0);
+
+dies_ok { LibreCat->instance } qr/must be loaded first/i;
+
+LibreCat->load({layer_paths => [qw(t/layer)]});
+
+ok(LibreCat->loaded == 1);
 
 my $instance = LibreCat->instance;
+
+ok($instance == LibreCat->instance, "instance is a singleton");
+
+# config
+
+is(ref $instance->config, 'HASH');
+ok($instance->config == Catmandu->config, "LibreCat and Catmandu share a config hash");
+
+# models
+ok($instance->has_model('user') == 1);
+ok($instance->has_model('gremlin') == 0);
 
 isa_ok(
     $instance->model('user'),
@@ -19,6 +36,12 @@ isa_ok(
 {
 
     my $model = $instance->model('publication');
+
+    isa_ok(
+        $instance->model('publication'),
+        "LibreCat::Model::Publication",
+        "librecat->publication returns a LibreCat::Model::Publication"
+    );
 
     $model->purge_all;
 
@@ -119,6 +142,35 @@ isa_ok(
 
     ok(!$model->search_bag->get($id), '...purged (index)');
 }
+
+# timestamp
+
+{
+    my $time = time;
+    my $str = $instance->timestamp($time);
+    is($str, strftime('%Y-%m-%dT%H:%M:%SZ', gmtime($time)));
+
+    $instance->config->{time_format} = '%Y-%m-%d';
+    $str = $instance->timestamp($time);
+    is($str, strftime('%Y-%m-%d', gmtime($time)));
+
+    ok($instance->timestamp, 'time argument is optional');
+}
+
+# searcher
+
+isa_ok(
+    $instance->searcher,
+    "LibreCat::Search",
+    "librecat->search returns a LibreCat::Search"
+);
+
+# queue
+
+isa_ok(
+    $instance->queue,
+    "LibreCat::JobQueue"
+);
 
 # hooks
 
