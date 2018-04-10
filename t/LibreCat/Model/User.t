@@ -4,7 +4,6 @@ use LibreCat::Validator::JSONSchema;
 use Test::More;
 use Test::Exception;
 use warnings FATAL => 'all';
-use Data::Dumper;
 
 my $pkg;
 
@@ -33,5 +32,7 @@ is $u->{_id}, '1234';
 ok $u = $user->find_by_username('einstein');
 
 is $u->{login}, 'einstein';
+
+ok !$user->get('unknown_ID');
 
 done_testing;

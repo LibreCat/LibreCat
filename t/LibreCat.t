@@ -138,6 +138,15 @@ isa_ok(
         'purge non existing publication returns nil'
     );
 
+    ok($model->add($pub, skip_commit => 1), 'add publication with skip_commit option');
+
+    ok($model->commit, 'commit after add');
+
+    ok(
+        $model->delete_all,
+        'delete all existing publications'
+    );
+
     ok(!$model->get($id), '...purged (main)');
 
     ok(!$model->search_bag->get($id), '...purged (index)');
