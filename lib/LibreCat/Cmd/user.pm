@@ -1,6 +1,7 @@
 package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
+use LibreCat;
 use LibreCat::App::Helper;
 use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
@@ -19,6 +20,7 @@ librecat user get    [options] <id> | <IDFILE>
 librecat user delete [options] <id> | <IDFILE>
 librecat user valid  [options] <FILE>
 librecat user passwd [options] <id>
+librecat user update_stats
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -47,7 +49,7 @@ sub command {
 
     $self->opts($opts);
 
-    my $commands = qr/list|export|get|add|delete|valid|passwd/;
+    my $commands = qr/list|export|get|add|delete|valid|passwd|update_stats/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -95,6 +97,9 @@ sub command {
     }
     elsif ($cmd eq 'passwd') {
         return $self->_passwd(@$args);
+    }
+    elsif ($cmd eq 'update_stats') {
+        return $self->_update_stats(@$args);
     }
 }
 
@@ -346,6 +351,29 @@ sub _passwd {
     return 0;
 }
 
+sub _update_stats {
+    my ($self) = @_;
+
+    my $helper = LibreCat::App::Helper::Helpers->new;
+    my $index = $helper->user;
+
+    my $records = $index->benchmark()->select(sub {
+        my $rec = $_[0];
+        my $pub = LibreCat->searcher->search('publication', {cql => ["person=$rec->{_id}", "status=public"], start => 0, limit => 1});
+        my $ret = 0;
+        if ($pub->{total} > 0) {
+            $rec->{publication_count} = $pub->{total};
+            $ret = 1;
+        }
+        return $ret;
+    });
+
+    $index->add_many($records);
+    $index->commit;
+
+    return 0;
+}
+
 1;
 
 __END__
@@ -365,6 +393,7 @@ LibreCat::Cmd::user - manage librecat users
     librecat user delete [options] <id> | <IDFILE>
     librecat user valid  [options] <FILE>
     librecat user passwd [options] <id>
+    librecat user update_stats
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

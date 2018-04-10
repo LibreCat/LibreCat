@@ -18,7 +18,13 @@ subtest 'person overview page' => sub {
 subtest 'person list alphabetical index' => sub {
     $mech->get_ok('/person?browse=a');
     $mech->get_ok('/person?browse=A');
+
+
     $mech->get_ok('/person?browse=E');
+    $mech->content_unlike(qr/Einstein,, Albert/);
+
+    $mech->get_ok('/person?browse=M');
+    $mech->content_like(qr/Monroe, Marilyn/);
 };
 
 subtest 'person profile with single digit id' => sub {
