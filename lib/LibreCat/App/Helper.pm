@@ -193,9 +193,9 @@ sub extract_params {
 }
 
 sub now {
-    my $time        = $_[1] // time;
+    my $time = $_[1] // time;
     my $time_format = $_[0]->config->{time_format} // '%Y-%m-%dT%H:%M:%SZ';
-    my $now         = strftime($time_format, gmtime($time));
+    my $now = strftime($time_format, gmtime($time));
     return $now;
 }
 

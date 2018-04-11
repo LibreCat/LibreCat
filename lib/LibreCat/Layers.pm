@@ -10,7 +10,7 @@ use Path::Tiny;
 use Moo;
 use namespace::clean;
 
-has loaded      => (is => 'rwp', default => sub {0});
+has loaded => (is => 'rwp', default => sub {0});
 has root_path   => (is => 'lazy');
 has layer_paths => (is => 'lazy');
 has config      => (is => 'lazy', init_arg => undef);
