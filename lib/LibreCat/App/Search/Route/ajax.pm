@@ -13,6 +13,41 @@ use Dancer::Plugin::Ajax;
 use HTML::Entities;
 use LibreCat::App::Helper;
 
+=head2 AJA /search_publication
+
+Ajax route for autocomplete feature in forms.
+
+=cut
+
+ajax '/search_publication' => sub {
+    my $limit = length(params->{term}) ? 10 : 1000;
+
+    my @terms = split(' ', params->{term});
+    $terms[-1] .= "*" if @terms;
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (cql_query => $cql_query, limit => $limit,
+        sru_sortkeys => 'title,,1');
+
+    h->log->debug("executing publication->search: " . to_dumper(\%search_params));
+
+    my $hits = h->publication->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
+
+    if ($hits->{total}) {
+        my $map;
+        @$map
+            = map {{id => $_->{_id}, label => $_->{title}};} @{$hits->{hits}};
+        return to_json $map;
+    }
+    else {
+        return to_json [];
+    }
+};
+
 =head2 AJAX /search_researcher
 
 =cut
@@ -37,18 +72,6 @@ ajax '/search_researcher' => sub {
 ajax '/authority_user/:id' => sub {
     my $person = h->get_person(params->{id}) || {error => "No user found."};
     to_json $person;
-};
-
-ajax '/num_of_publ/:id' => sub {
-    my $id = params->{id};
-
-    my %search_params = (cql => ["person=$id"]);
-    h->log->debug(
-        "executing publication->search: " . to_dumper(\%search_params));
-
-    my $hits = LibreCat->searcher->search('publication', \%search_params);
-
-    return to_json {total => $hits->{total}};
 };
 
 =head2 AJAX /get_alias/:id/:alias
