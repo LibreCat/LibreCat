@@ -60,8 +60,7 @@
 [%- IF h.config.citation.engine == 'csl' AND citation %][% display_citation = 1 %][% END %]
 [%- style = h.config.citation.csl.default_style %]
 
-[% mypath = request.path_info.match('/publication') ? 'publication' : 'data' %]
-<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% uri_base %]/[% mypath %]/[% _id %]"><!-- outer row-->
+<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% uri_base %]/record/[% _id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
       [%- UNLESS _id %]

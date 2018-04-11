@@ -40,7 +40,7 @@
               <div class="row margin-top2">
                 <div class="col-md-12">
                   <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="[% uri_base %]/record">[% h.loc("home.stats.publications") %]</a></p>
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researchdata %]</span> <a href="[% uri_base %]/record?cql=type=research_data">[% h.loc("home.stats.data_publications") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researcher %]</span> <a href="[% uri_base %]/person">[% h.loc("home.stats.researcher") %]</a></p>
                   <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="[% uri_base %]/record?cql=fulltext=1">[% h.loc("home.stats.oa_publications") %]</a></p>
                   <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.projects %]</span> <a href="[% uri_base %]/project">[% h.loc("home.stats.projects") %]</a></p>
                 </div>

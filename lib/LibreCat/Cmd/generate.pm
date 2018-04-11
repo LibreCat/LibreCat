@@ -249,7 +249,7 @@ sub _generate_departments {
 
             my $hits
                 = $pubs->search(cql_query =>
-                    "department=$id AND status=public AND type<>research_data"
+                    "department=$id AND status=public"
                 );
             my $total = $hits->{total};
 

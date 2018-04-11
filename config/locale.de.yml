@@ -53,7 +53,6 @@ tabs:
   home: "Startseite"
   all_publications: "Alle Publikationen"
   publications: "Publikationen"
-  data_publications: "Datenpublikationen"
   projects: "Projekte"
   departments: "Einrichtungen"
   authors: "Autoren"
@@ -70,7 +69,7 @@ home:
   operators: "Operatoren"
   stats:
     publications: "Publikationen"
-    data_publications: "Datenpublikationen"
+    researcher: "Persönliche Publikationslisten"
     oa_publications: "Open-Access-Publikationen"
     projects: "Projekte"
 main_page:

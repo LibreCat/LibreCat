@@ -185,7 +185,7 @@ Performs search for data manager.
         my $dep_query = "department=" . params->{department_id};
 
         push @{$p->{cql}}, "status<>deleted";
-        push @{$p->{cql}}, "(type=research_data OR type=data)";
+        push @{$p->{cql}}, "type=research_data";
         push @{$p->{cql}}, $dep_query;
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
