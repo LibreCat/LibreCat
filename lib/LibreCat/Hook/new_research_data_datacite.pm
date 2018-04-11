@@ -26,7 +26,7 @@ sub fix {
         user         => h->config->{doi}->{user},
         password     => h->config->{doi}->{passwd},
         doi          => $data->{doi},
-        landing_url  => h->uri_base() . "/data/$data->{_id}",
+        landing_url  => h->uri_base() . "/record/$data->{_id}",
         datacite_xml => $datacite_xml
     };
 

@@ -42,7 +42,7 @@
 [%- END %]
 <resourceType resourceTypeGeneral="[% IF type == 'reasearch_data' %]Dataset[% ELSE %]Text[% END%]">[% type %]</resourceType>
 <alternateIdentifiers>
-	<alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/data/[% _id %]</alternateIdentifier>
+	<alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/record/[% _id %]</alternateIdentifier>
 </alternateIdentifiers>
 [%- IF related_material %]
 <relatedIdentifiers>
