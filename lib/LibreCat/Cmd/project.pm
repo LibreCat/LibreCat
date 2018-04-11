@@ -246,8 +246,10 @@ sub _add {
         }
     );
 
+    my $fixer = $helper->create_fixer("index_publication.fix");
+
     my $index = $helper->project;
-    $index->add_many($records);
+    $index->add_many($fixer->fix($records));
     $index->commit;
 
     $ret;

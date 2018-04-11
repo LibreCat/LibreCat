@@ -351,8 +351,10 @@ sub _add {
         }
     );
 
+    my $fixer = $helper->create_fixer("index_department.fix");
+
     my $index = $helper->department;
-    $index->add_many($records);
+    $index->add_many($fixer->fix($records));
     $index->commit;
 
     $ret;
