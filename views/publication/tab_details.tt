@@ -199,12 +199,12 @@
     <div class="col-lg-10 col-md-9">[% ipc | html %]</div>
   </div>
 [%- END %]
-[%- IF ubi_funded OR external_id.scoap3 %]
+[%- IF ubi_funded OR external_id.scoap3.0 %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.financial_disclosure") %]</div>
     [%- IF ubi_funded %]
     <div class="col-lg-10 col-md-9">[% h.loc("frontdoor.tabs.details.ubi_funded") %]</div>
-    [%- ELSIF external_id.scoap3 %]
+    [%- ELSIF external_id.scoap3.0 %]
     <div class="col-lg-10 col-md-9">[% h.loc("frontdoor.tabs.details.scoap3") %]</div>
     [%- END %]
   </div>
