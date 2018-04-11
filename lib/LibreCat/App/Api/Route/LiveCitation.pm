@@ -28,7 +28,7 @@ get '/livecitation' => sub {
 
     my $response = LibreCat::Citation->new(style => $params->{style})
         ->create($pub);
-#    return to_dumper $response;
+
     my $citation = $response ? $response->{$params->{style}} : undef;
 
     if (!defined $citation) {
