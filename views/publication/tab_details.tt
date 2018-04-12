@@ -215,23 +215,7 @@
     <a itemprop="url" href="[% request.uri_for(request.path_info) %]" title="[% h.loc("frontdoor.id_title") %]">[% _id %]</a>
     </div>
   </div>
-  [%- IF display_citation %]
-    <div id="citethis" class="anchor">
-      <h3 id="cite">[% h.loc("frontdoor.cite_this") %]</h3>
-      <ul class="nav nav-tabs">
-        [%- FOREACH style IN h.config.citation.csl.styles.keys.sort %]
-          [%- NEXT IF style == 'short' %]
-          <li [% IF loop.first %]class="active"[% END %]><a href="#[% style %]" data-toggle="tab">[% h.loc("citation.${style}") %]</a></li>
-        [%- END %]
-      </ul>
-      <div class="tab-content">
-        [%- FOREACH style IN h.config.citation.csl.styles.keys.sort %]
-          [%- NEXT IF style == 'short' %]
-          <div id="[% style %]" class="tab-pane[% IF loop.first %] active[% END %] cmark">[% citation.$style %]</div>
-        [%- END %]
-      </div>
-    </div>
-  [%- END %]
+  [%- IF display_citation %][% PROCESS publication/citation_box.tt %][%- END %]
 </div>
 
 <!-- END publication/tab_details.tt -->
