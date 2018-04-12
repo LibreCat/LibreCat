@@ -1,0 +1,17 @@
+<!-- BEGIN backend/rec_abstract.tt -->
+
+[% IF entry.abstract %]
+  <div id="[% tabmodus %]_[% entry.item('_id') %]_abstract" class="collapse margin-top1-4">
+    <div class="col-md-12">
+      <div class="col-md-2 text-muted">[% h.loc("main_page.links.abstract") %]</div>
+      <div class="col-md-10 cmark abstract">
+        [% FOREACH ab IN entry.abstract %]
+          [% UNLESS loop.first %]<br /><hr>[% END %]
+          [% ab.text | html %]
+        [% END %]
+      </div>
+    </dv>
+  </div>
+[% END %]
+
+<!-- END backend/rec_abstract.tt -->
