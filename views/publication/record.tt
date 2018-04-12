@@ -1,21 +1,17 @@
 [%- PROCESS header.tt %]
 <!-- BEGIN publication/record.tt -->
-
 <script type="text/javascript">
 [%- PROCESS publication/javascriptShowHide.tt %]
 </script>
 [%- IF status != "public" AND _id %]
-<div id="preview">[% h.loc("frontdoor.preview") %]</div>
+  <div id="preview">[% h.loc("frontdoor.preview") %]</div>
 [%- END %]
-[% ip = request.address %]
-[% ip_range = h.config.ip_range %]
-[% local_user = h.within_ip_range(ip, ip_range) %]
+[%- ip = request.address %]
+[%- ip_range = h.config.ip_range %]
+[%- local_user = h.within_ip_range(ip, ip_range) %]
 
 [%- mainFile = [] %]
 [%- relMat = [] %]
-[%- relPubl = [] %]
-[%- relResData = [] %]
-[%- confLetter = [] %]
 [%- relLink = [] %]
 [%- relLinkRd = [] %]
 [%- relLinkSw = [] %]
@@ -40,10 +36,8 @@
 [%- END %]
 [%- FOREACH fi IN file %]
   [%- SWITCH fi.relation %]
-    [%- CASE "confirmation" %]
-    [%- confLetter.push(fi) %]
     [%- CASE "main_file" %]
-    [%- mainFile.push(fi) %]
+      [%- mainFile.push(fi) %]
     [%- CASE "hidden" %]
     [%- CASE %]
     [%- relFile.push(fi) %]
@@ -190,14 +184,6 @@
           <li><a href="#relPubl" data-toggle="tab">[% h.loc("frontdoor.tabs.publications.label") %]</a></li>
           [% END %]
 
-          [% IF relResData.size %]
-          <li><a href="#relResData" data-toggle="tab">[% h.loc("frontdoor.tabs.data_publication.label") %]</a></li>
-          [% END %]
-
-          [% IF confLetter.size %]
-          <li><a href="#confletter" data-toggle="tab">[% h.loc("frontdoor.tabs.confirmation_letter.label") %]</a>
-          [% END %]
-
           [% IF relMat.size OR relLink.size %]
           <li><a href="#relMat" data-toggle="tab">[% h.loc("frontdoor.tabs.related_material") %]</a></li>
           [% END %]
@@ -209,9 +195,9 @@
           <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% h.loc("frontdoor.tabs.cite_this") %]</a></li>
           <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% h.loc("frontdoor.tabs.export_search") %]</a></li>
 
-          [% IF status == "public" %]
-          <li class="navbar-right"><a class="mark btn btn-xs" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %] [% h.loc("mark.mark_unmark") %]</a></li>
-          [% END %]
+          [%- IF status == "public" %]
+            <li class="navbar-right"><a class="mark btn btn-xs" data-marked="[% h.is_marked(_id) %]" data-id="[% _id %]">[% IF h.is_marked(_id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %] [% h.loc("mark.mark_unmark") %]</a></li>
+          [%- END -%]
 
         </ul>
       </div>
@@ -219,29 +205,16 @@
 
     <div class="row">
       <div class="col-md-8"><!-- tab-content -->
-
         <div class="tab tab-content">
+          [%- PROCESS publication/tab_details.tt -%]
 
-          [% PROCESS publication/tab_details.tt %]
+          [% IF file AND file.size OR relFile AND relFile.size OR main_file_link AND main_file_link.size %] [% PROCESS publication/tab_filedetails.tt %] [% END -%]
 
-          [% IF file AND file.size OR relFile AND relFile.size OR main_file_link AND main_file_link.size %] [% PROCESS publication/tab_filedetails.tt %] [% END %]
+          [%- IF relMat.size OR relLink.size %] [% PROCESS publication/tab_relmat.tt %] [% END -%]
 
-          [% IF relPubl %] [% PROCESS publication/tab_relpubl.tt %] [% END %]
-
-          [% IF relResData %] [% PROCESS publication/tab_relresdata.tt %] [% END %]
-
-          [% IF relMat.size OR relLink.size %]
-            [% PROCESS publication/tab_relmat.tt %]
-          [% END %]
-
-          [% IF relLinkRd.size OR relLinkSw.size %] [% PROCESS publication/tab_extrd.tt %] [% END %]
-
-          [% IF confLetter.size %]
-            [% PROCESS publication/tab_confletter.tt %]
-          [% END %]
+          [%- IF relLinkRd.size OR relLinkSw.size %] [% PROCESS publication/tab_extrd.tt %] [% END -%]
 
         </div><!-- tab-content -->
-
       </div>
 
       <div class="col-md-3 col-md-offset-1">
