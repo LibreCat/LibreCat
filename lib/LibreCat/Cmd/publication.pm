@@ -348,6 +348,10 @@ sub _add {
         },
     );
 
+    if ($exporter) {
+        $exporter->commit;
+    }
+
     $ret;
 }
 

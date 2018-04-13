@@ -2,7 +2,7 @@
 [% qp.delete('splat') %]
 [% lang = session.lang ? session.lang : h.config.default_lang %]
 [%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
-[% INCLUDE header.tt %]
+[% PROCESS header.tt %]
 
 <!-- BEGIN marked/list.tt -->
 <script src="[% uri_base %]/javascripts/jquery-sortable-min.js"></script>

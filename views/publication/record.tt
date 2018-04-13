@@ -313,11 +313,11 @@
 
 	    [%- IF external_id.pmid.0 %]
 	    <p><img src="[% uri_base %]/images/icon_pubmed.png" class="img-thumbnail" alt="">PMID: [% external_id.pmid.0 %]<br>
-	    <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid.0 %]">PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% external_id.pmid.0 %]">Europe PMC</a></p>
+	    <a href="https://www.ncbi.nlm.nih.gov/pubmed/[% external_id.pmid.0 %]">PubMed</a> | <a href="https://europepmc.org/abstract/MED/[% external_id.pmid.0 %]">Europe PMC</a></p>
 	    [%- END %]
 
 	    [%- IF external_id.arxiv.0 %]
-	    <p><img src="[% uri_base %]/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="http://arxiv.org/abs/[% external_id.arxiv.0 %]">[% external_id.arxiv.0 %]</a></p>
+	    <p><img src="[% uri_base %]/images/icon_arxiv.png" class="img-thumbnail" alt="">arXiv <a href="https://arxiv.org/abs/[% external_id.arxiv.0 %]">[% external_id.arxiv.0 %]</a></p>
 	    [%- END %]
 
 	    [%- IF external_id.inspire.0 %]
@@ -325,7 +325,7 @@
 	    [%- END %]
 
 	    [%- IF external_id.scoap3.0 %]
-	    <p><img src="[% uri_base %]/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="http://repo.scoap3.org/record/[% external_id.scoap3.0 %]">[% external_id.scoap3.0 %]</a></p>
+	    <p><img src="[% uri_base %]/images/icon_scoap3.ico" class="img-thumbnail" alt="">SCOAP3 <a href="https://repo.scoap3.org/record/[% external_id.scoap3.0 %]">[% external_id.scoap3.0 %]</a></p>
 	    [%- END %]
 	  [%- END %]
     [%- END %]
@@ -340,7 +340,7 @@
             [% IF loop.first %]
             <img src="[% uri_base %]/images/icon_genbank.gif" class="img-thumbnail" alt=""><strong>GenBank</strong><br>
             [% END %]
-            <a href="http://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
+            <a href="https://www.ncbi.nlm.nih.gov/nuccore/[% id_entry %]">[% id_entry %]</a>
             [% IF loop.count > 14 %]
             <span id="showGen">
               <br><a href="#supplements" onclick="ShowGenBankIDs();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
@@ -366,9 +366,9 @@
         <!-- Search title in -->
         <h3>[% h.loc("frontdoor.search_this") %]</h3>
         <p>
-          <a href="http://scholar.google.com/scholar?q=allintitle%3A[% title | uri %]"><img src="[% uri_base %]/images/icon_gs.png" alt="" class="img-thumbnail">Google Scholar</a><br>
+          <a href="https://scholar.google.com/scholar?q=allintitle%3A[% title | uri %]"><img src="[% uri_base %]/images/icon_gs.png" alt="" class="img-thumbnail">Google Scholar</a><br>
           [%- IF publication_identifier.isbn %]
-          <a href="http://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% publication_identifier.isbn.0 %]"><img src="[% uri_base %]/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.isbn_search") %]</a><br>
+          <a href="https://de.wikipedia.org/wiki/Spezial:ISBN-Suche/[% publication_identifier.isbn.0 %]"><img src="[% uri_base %]/images/icon_wikipedia.png" alt="" class="img-thumbnail">[% h.loc("frontdoor.isbn_search") %]</a><br>
           [%- END %]
         </p>
       </div>
