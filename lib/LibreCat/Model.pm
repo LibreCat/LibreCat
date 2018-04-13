@@ -29,6 +29,7 @@ has validator => (
     isa      => ConsumerOf ['LibreCat::Validator']
 );
 has before_add => (is => 'lazy', init_arg => undef, isa => Pairs);
+has before_index => (is => 'lazy', init_arg => undef, isa => Pairs);
 
 sub plugin_namespace {
     'LibreCat::Model::Plugin';
@@ -36,6 +37,10 @@ sub plugin_namespace {
 
 sub _build_before_add {
     [whitelist => 'apply_whitelist'];
+}
+
+sub _build_before_index {
+    [];
 }
 
 sub prepend_before_add {
@@ -50,10 +55,22 @@ sub append_before_add {
     push @{$self->before_add}, @$hooks;
 }
 
+sub prepend_before_index {
+    my ($self, $hooks) = @_;
+    assert_Pairs($hooks);
+    unshift @{$self->before_index}, @$hooks;
+}
+
+sub append_before_index {
+    my ($self, $hooks) = @_;
+    assert_Pairs($hooks);
+    push @{$self->before_index}, @$hooks;
+}
+
 sub BUILD {
     my ($self, $opts) = @_;
 
-    for my $method (qw(prepend_before_add append_before_add)) {
+    for my $method (qw(prepend_before_add append_before_add prepend_before_index append_before_index)) {
         if (my $hooks = $opts->{$method}) {
             $self->$method($hooks);
         }
@@ -127,6 +144,9 @@ sub store {
 # TODO get from bag if rec is an id
 sub index {
     my ($self, $rec, %opts) = @_;
+
+    $rec = $self->apply_hooks_to_record($self->before_index, $rec,
+        skip => $opts{skip_before_index});
 
     if ($self->log->is_debug) {
         my $bag_name = $self->search_bag->name;
@@ -240,6 +260,14 @@ Add hooks that will be executed before a record is added.
 =head2 append_before_add
 
 Add hooks that will be executed before a record is added.
+
+=head2 prepend_before_index
+
+Add hooks that will be executed before a record is indexed.
+
+=head2 append_before_index
+
+Add hooks that will be executed before a record is indexed.
 
 =head1 METHODS
 
@@ -368,6 +396,12 @@ Options are:
  
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
+=item *
+
+C<skip_before_index>: You can supply an arrayref of hook names that will not be executed.
+
+    $model->index($rec, skip_before_index => ['index_publication']);
+
 =back
 
 =head2 purge_all(%opts)
@@ -438,6 +472,18 @@ Add hooks that will be executed before a record is added.
 =head2 append_before_add
 
 Add hooks that will be executed before a record is added.
+
+=head2 before_index
+
+Returns the hooks that will be executed before a record is indexed.
+
+=head2 prepend_before_index
+
+Add hooks that will be executed before a record is indexed.
+
+=head2 append_before_index
+
+Add hooks that will be executed before a record is indexed.
 
 =head1 SEE ALSO
 

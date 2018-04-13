@@ -250,12 +250,14 @@ sub _new_model {
     my $validator
         = $validator_pkg->new(schema => $self->config->{schemas}{$name});
     my $update_fixer = $self->fixer("update_${name}.fix");
+    my $index_fixer = $self->fixer("index_${name}.fix");
 
     $pkg->new(
-        bag               => $bag,
-        search_bag        => $search_bag,
-        validator         => $validator,
-        append_before_add => [update_fixer => $update_fixer],
+        bag                 => $bag,
+        search_bag          => $search_bag,
+        validator           => $validator,
+        append_before_add   => [update_fixer => $update_fixer],
+        append_before_index => [index_fixer  => $index_fixer],
         %$config,
     );
 }
