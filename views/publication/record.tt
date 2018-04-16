@@ -71,7 +71,7 @@
           [% IF fi.file_name %]
             [% IF loop.first %]
             <div class="row">
-              <div class="col-xs-3 text-muted">[% h.loc("frontdoor.download") %]</div>
+              <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
               <div class="col-xs-9">
                   [% PROCESS publication/oa_lock.tt %]
                   [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]

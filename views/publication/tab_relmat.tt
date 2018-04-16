@@ -1,5 +1,4 @@
 <!-- BEGIN publication/tab_relmat.tt -->
-[%- default_style = h.config.csl.default_style %]
 <div class="tab-pane" id="relMat">
   [% IF relMat.size %]
   <div class="row">
@@ -17,7 +16,7 @@
     <div class="col-md-12">
       [%- rec = h.get_publication(rm.id) %]
       <a href="[% uri_base %]/publication/[% rm.id %]">[% rec.title %]</a><br />
-      [% rec.citation.$default_style %]<br />
+      [% rec.citation.$style %]<br />
     </div>
   </div>
   [% END %] <!-- FOREACH -->
