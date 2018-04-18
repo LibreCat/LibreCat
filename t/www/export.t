@@ -46,4 +46,10 @@ subtest 'valid formats' => sub {
     $mech->content_like(qr/\<mods version/);
 };
 
+subtest 'private records' => sub {
+    $mech->get('/publication/2737399.json');
+    is $mech->status, '404', 'private record not found in public interface';
+
+};
+
 done_testing;
