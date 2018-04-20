@@ -38,10 +38,16 @@ ajax '/search_publication' => sub {
     h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
-        my $map;
-        @$map
-            = map {{id => $_->{_id}, label => $_->{title}};} @{$hits->{hits}};
-        return to_json $map;
+        my @map = map {
+            my $author = $_->{author}->[0]->{full_name} // $_->{editor}->[0]->{full_name} // $_->{translator}->[0]->{full_name};
+            {
+                id => $_->{_id},
+                label => "$author ($_->{year}): $_->{title} [$_->{type}]",
+                title => $_->{title},
+            };
+        } @{$hits->{hits}};
+
+        return to_json \@map;
     }
     else {
         return to_json [];
