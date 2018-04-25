@@ -148,6 +148,7 @@ publication_types:
         doi: &doi
           mandatory: 0
           multiple: 0
+          register: 1
         title: &title
           mandatory: 1
           multiple: 0
