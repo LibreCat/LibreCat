@@ -595,7 +595,7 @@ search:
               op:
                 '=': true
                 '<>': true
-              field: ['main_file_link.open_access', 'file.open_access']
+              field: ['oa']
             embargo:
               op:
                 '=': true
@@ -1073,6 +1073,7 @@ search:
             properties:
               url: {type: string, analyzer: tag}
               open_access: {type: byte}
+          oa: {type: byte}
           alternative_id: {type: string, analyzer: tag, include_in_all: true}
           defense_date: {type: date, index: no}
           locked: {type: byte}
