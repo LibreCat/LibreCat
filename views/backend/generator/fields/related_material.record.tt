@@ -1,11 +1,10 @@
 <!-- related_material.record.tt -->
-
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
     <label for="connect_autocomplete" class="helpme" data-placement="bottom" title="[% h.loc("forms.form_relmat_record") %]">
       [% lf.$type.field.item('related_material.record').label %]
     </label>
-    {% IF fields.related_material.item('related_material.record').mandatory %}<span class="starMandatory"></span>{% END %}
+    {%- IF fields.related_material.item('related_material.record').mandatory %}<span class="starMandatory"></span>{% END -%}
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
@@ -21,21 +20,18 @@
 </div>
 
 <div id="relatesTo" class="row innerrow">
-  [% IF related_material %]
-  [% FOREACH rel IN related_material.record %]
-  [% index = loop.index %]
-  [% NEXT IF rel.id == "" %]
-  [% record = h.publication.get(rel.id) %]
+  [%- IF related_material %]
+  [%- FOREACH rel IN related_material.record %]
+    [%- index = loop.index %]
+    [%- NEXT IF rel.id == "" %]
+    [%- record = h.publication.get(rel.id) %]
   <div class="col-md-10 col-xs-12 col-md-offset-2 multirow">
     <div class="row innerrow">
       <div class="col-xs-3">
         <select class="relmat form-control" name="related_material.record.[% index %].relation">
-        [% IF rel.relation == "cites" %]
-          <option value="cites" selected="selected">Cites</option>
-        [% END %]
-        [% FOREACH key IN h.config.lists.relations_record %]
+        [%- FOREACH key IN h.config.lists.relations_record %]
           <option value="[% key.relation %]"[% IF key.relation == rel.relation %] selected="selected"[% END %]>[% lf.relation.${key.relation}.select %]</option>
-        [% END %]
+        [%- END %]
         </select>
       </div>
       <div class="col-md-7 col-xs-9">
@@ -51,8 +47,8 @@
       </div>
     </div>
   </div>
-  [% END %]
-  [% END %]
+  [%- END %]
+  [%- END %]
 </div>
 
 <div class="row">

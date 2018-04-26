@@ -91,7 +91,7 @@ main_page:
     audit: Audit
     clone: "Klonen"
     edit: "Editieren"
-    details: "Details"
+    details: "Vollansicht"
     view_details: "Publikationsseite in LibreCat anzeigen (Frontdoor)"
     files: "Dateien verf&uuml;gbar"
     file: "Datei"
@@ -219,6 +219,7 @@ frontdoor:
   items: "Eintr&auml;ge"
   volume: "Band"
   issue: "Zeitschriftennummer"
+  article_number: "Artikelnummer"
   page: "Seite"
   tabs:
     details:

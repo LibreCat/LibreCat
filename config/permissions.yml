@@ -77,7 +77,6 @@ routes:
     - [ 'ANY'  , '/ris '                         , 'default' ]
     - [ 'ANY'  , '/search_researcher '           , 'default' ]
     - [ 'ANY'  , '/authority_user'               , 'default' ]
-    - [ 'ANY'  , '/num_of_publ'                  , 'default' ]
     - [ 'ANY'  , '/get_alias'                    , 'default' ]
     - [ 'ANY'  , '/get_project'                  , 'default' ]
     - [ 'ANY'  , '/get_department'               , 'default' ]
