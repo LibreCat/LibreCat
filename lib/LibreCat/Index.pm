@@ -16,7 +16,7 @@ Create a new instance of LibreCat::Index
 
 use Catmandu::Sane;
 use Catmandu::Util;
-use LibreCat::App::Helper;
+use LibreCat qw(fixer);
 use Search::Elasticsearch;
 use Try::Tiny;
 use Moo;
@@ -383,8 +383,9 @@ sub _do_index {
         # First index all records from the main database...
         for my $b (@bags) {
             print "Indexing $b into $new_name...\n";
-            my $bag = $new->bag($b);
-            $bag->add_many($self->main->bag($b)->benchmark);
+            my $fixer = fixer("index_$b.fix");
+            my $bag   = $new->bag($b);
+            $bag->add_many($fixer->fix($self->main->bag($b)->benchmark));
             $bag->commit;
         }
 
@@ -396,11 +397,11 @@ sub _do_index {
             print "Checking index for updates changed since $now ...\n";
             for my $b (@bags) {
                 print "Checking $b ...\n";
-                my $bag = $new->bag($b);
-                my $it
-                    = $self->main_index->bag($b)
-                    ->searcher(
-                    query => {range => {date_updated => {gte => $now}}});
+                my $bag   = $new->bag($b);
+                my $fixer = fixer("index_$b.fix");
+                my $it    = $self->main_index->bag($b)->searcher(
+                                query => {range => {date_updated => {gte => $now}}}
+                                );
                 $it->each(
                     sub {
                         my $item         = $_[0];
@@ -410,7 +411,7 @@ sub _do_index {
 
                         if ($rec) {
                             print "Adding $id changed on $date_updated\n";
-                            $bag->add($rec);
+                            $bag->add($fixer->fix($rec));
                         }
                         else {
                             carp "main database lost id `$id'?";

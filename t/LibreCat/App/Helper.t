@@ -2,7 +2,7 @@ use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat 'model', -load => {layer_paths => [qw(t/layer)]};
 use utf8;
 
 my $pkg;
@@ -28,8 +28,6 @@ is h->config->{store}->{main}->{options}->{data_source},
 isa_ok h->hook('publication-update'), 'LibreCat::Hook', 'h->hook';
 
 isa_ok h->queue, 'LibreCat::JobQueue', 'h->queue';
-
-isa_ok h->layers, 'LibreCat::Layers', 'h->layers';
 
 isa_ok h->create_fixer('blabalbla'), 'Catmandu::Fix',
     'h->create_fixer(blabalbla)';
@@ -179,11 +177,11 @@ is h->pretty_byte_size(1230231), '1.23 MB', 'h->pretty_byte_size';
     my $id = $rec->{_id};
 
     # Add some sample date
-    LibreCat->publication->add($rec);
+    model('publication')->add($rec);
 
     ok h->get_publication($id), 'h->get_publication';
 
-    LibreCat->publication->purge($id);
+    model('publication')->purge($id);
 }
 
 ok !h->get_publication('999999999'), 'h->get_publication';
@@ -202,11 +200,11 @@ is $person->{login}, 'einstein', 'person = einstein';
         ->first;
     my $id = $rec->{_id};
 
-    LibreCat->project->add($rec);
+    model('project')->add($rec);
 
     ok h->get_project($id), 'h->get_project';
 
-    LibreCat->project->purge($id);
+    model('project')->purge($id);
 }
 
 ok !h->get_project(0), 'h->get_project';
@@ -217,11 +215,11 @@ ok !h->get_project(0), 'h->get_project';
         ->first;
     my $id = $rec->{_id};
 
-    LibreCat->department->add($rec);
+    model('department')->add($rec);
 
     ok h->get_department($id), 'h->get_department';
 
-    LibreCat->department->purge($id);
+    model('department')->purge($id);
 }
 
 ok !h->get_department(0), 'h->get_department';

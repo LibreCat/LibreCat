@@ -7,7 +7,7 @@ LibreCat::App::Catalogue::Route::person - handles person settings
 =cut
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(user);
 use Catmandu::Util qw(:array);
 use Dancer qw(:syntax);
 use LibreCat::App::Helper;
@@ -69,7 +69,7 @@ for his own publication list.
             $person->{style} = undef;
         }
 
-        LibreCat->user->add($person);
+        user->add($person);
 
         redirect uri_for('/librecat');
     };
@@ -90,7 +90,7 @@ be displayed on author's profile page.
         map {$person->{$_} = params->{$_} ? params->{$_} : ""} @identifier;
         redirect uri_for('/librecat') if scalar(keys %{$person}) > 1;
 
-        LibreCat->user->add($person);
+        user->add($person);
 
     };
 
@@ -108,7 +108,7 @@ User can choose default language for the librecat backend
         my $lang   = params->{lang};
         if ($lang eq "en" or $lang eq "de") {
             $person->{lang} = $lang;
-            LibreCat->user->add($person);
+            user->add($person);
             session lang => $lang;
         }
 
@@ -133,7 +133,7 @@ new publication form.
         $fix->fix($p);
         my $person = h->get_person(session('user_id'));
         $person->{department} = $p->{department} // [];
-        LibreCat->user->add($person);
+        user->add($person);
 
         redirect uri_for('/librecat');
 

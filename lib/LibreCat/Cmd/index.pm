@@ -3,6 +3,7 @@ package LibreCat::Cmd::index;
 use Catmandu::Sane;
 use LibreCat::JobQueue;
 use LibreCat::Index;
+use LibreCat::App::Helper;
 use Fcntl qw(:flock);
 use File::Spec;
 use parent qw(LibreCat::Cmd);
@@ -83,11 +84,15 @@ sub _create {
 
     croak "need a bag" unless $name;
 
+    my $h = LibreCat::App::Helper::Helpers->new;
+
     my $main_store = Catmandu->store('main');
     my $store      = Catmandu->store('search');
 
+    my $fixer = $h->create_fixer("index_$name.fix");
+
     my $bag = $store->bag($name);
-    $bag->add_many($main_store->bag($name)->benchmark);
+    $bag->add_many($fixer->fix($main_store->bag($name)->benchmark));
     $bag->commit;
 
     return 0;

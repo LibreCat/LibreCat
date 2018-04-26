@@ -9,6 +9,7 @@ LibreCat::App::Search::Route::person - handles routes for person sites
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
 use URI::Escape;
 
 =head2 GET /person
@@ -21,7 +22,7 @@ get qr{/person} => sub {
     my $c = params->{browse} // 'a';
 
     my %search_params = (
-        cql   => ["lastname=" . lc $c . "*"],
+        cql   => ["publication_count>0 AND lastname=" . lc $c . "*"],
         sort  => h->config->{default_person_sort},
         start => 0,
         limit => 1000
@@ -29,19 +30,7 @@ get qr{/person} => sub {
 
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('user', \%search_params);
-
-    @{$hits->{hits}} = map {
-        my $rec = $_;
-        my $pub = LibreCat->searcher->search('publication',
-            {cql => ["person=$rec->{_id}"], start => 0, limit => 1,});
-        ($pub->{total} > 0) ? $rec : undef;
-    } @{$hits->{hits}};
-
-    @{$hits->{hits}} = grep defined, @{$hits->{hits}};
-
-    # override the total number since we deleted some entries
-    $hits->{total} = scalar @{$hits->{hits}};
+    my $hits = searcher->search('user', \%search_params);
 
     template 'person/list', $hits;
 };
@@ -56,19 +45,19 @@ research data and author IDs.
 get qr{/person/(.*?)/?(data)*} => sub {
     my ($id, $modus) = splat;
 
-    # Redirect to the alias if the other can't be found
+    # Redirect to the alias if the ID cannot be found
     h->log->debug("trying to find user $id");
     unless (my $user = h->main_user->get($id)) {
         h->log->debug("trying to find user alias $id");
 
         my %search_params = (cql => ["alias=$id"]);
 
-        my $hits = LibreCat->searcher->search('user', \%search_params);
+        my $hits = searcher->search('user', \%search_params);
 
         if (!$hits->{total}) {
             status '404';
             return template 'error',
-                {message => "No user found found with ID $id"};
+                {message => "No user found with ID $id"};
         }
         else {
             my $person = $hits->first;
@@ -91,7 +80,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
     $p->{limit} = h->config->{maximum_page_size};
 
     h->log->debug("executing publication->search: " . to_dumper($p));
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     # search for research hits (only to see if present and to display tab)
     my $r;
@@ -99,7 +88,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
     $r->{limit} = 1;
 
     h->log->debug("executing publication->search: " . to_dumper($r));
-    $hits->{researchhits} = LibreCat->searcher->search('publication', $r);
+    $hits->{researchhits} = searcher->search('publication', $r);
 
     $p->{limit}    = h->config->{maximum_page_size};
     $hits->{id}    = $id;

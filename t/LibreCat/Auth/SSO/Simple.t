@@ -8,7 +8,7 @@ use Plack::Builder;
 use Plack::Session;
 use HTTP::Request::Common;
 use HTTP::Cookies;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 my $pkg;
 

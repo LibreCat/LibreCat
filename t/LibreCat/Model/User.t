@@ -1,10 +1,9 @@
 use Catmandu::Sane;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -self => -load => {layer_paths => [qw(t/layer)]};
 use LibreCat::Validator::JSONSchema;
 use Test::More;
 use Test::Exception;
 use warnings FATAL => 'all';
-use Data::Dumper;
 
 my $pkg;
 
@@ -16,7 +15,7 @@ BEGIN {
 require_ok $pkg;
 
 my $user = $pkg->new(
-    %{LibreCat->config->{user}},
+    %{librecat->config->{user}},
     bag        => Catmandu->store('main')->bag('user'),
     search_bag => Catmandu->store('search')->bag('user'),
     validator  => LibreCat::Validator::JSONSchema->new(
@@ -33,5 +32,7 @@ is $u->{_id}, '1234';
 ok $u = $user->find_by_username('einstein');
 
 is $u->{login}, 'einstein';
+
+ok !$user->get('unknown_ID');
 
 done_testing;

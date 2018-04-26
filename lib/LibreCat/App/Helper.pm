@@ -11,7 +11,7 @@ use Dancer::FileUtils qw(path);
 use File::Basename;
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
-use LibreCat;
+use LibreCat qw(:self);
 use LibreCat::I18N;
 use LibreCat::JobQueue;
 use Log::Log4perl ();
@@ -38,19 +38,15 @@ sub config {
 }
 
 sub hook {
-    LibreCat->hook($_[1]);
+    librecat->hook($_[1]);
 }
 
 sub queue {
-    LibreCat->queue;
-}
-
-sub layers {
-    LibreCat->layers;
+    librecat->queue;
 }
 
 sub create_fixer {
-    LibreCat->fixer($_[1]);
+    librecat->fixer($_[1]);
 }
 
 sub alphabet {
@@ -62,23 +58,23 @@ sub main_audit {
 }
 
 sub main_publication {
-    state $bag = Catmandu->store('main')->bag('publication');
+    librecat->model('publication')->bag;
 }
 
 sub main_project {
-    state $bag = Catmandu->store('main')->bag('project');
+    librecat->model('project')->bag;
 }
 
 sub main_user {
-    state $bag = Catmandu->store('main')->bag('user');
+    librecat->model('user')->bag;
 }
 
 sub main_department {
-    state $bag = Catmandu->store('main')->bag('department');
+    librecat->model('department')->bag;
 }
 
 sub main_research_group {
-    state $bag = Catmandu->store('main')->bag('research_group');
+    librecat->model('research_group')->bag;
 }
 
 sub main_reqcopy {
@@ -86,23 +82,23 @@ sub main_reqcopy {
 }
 
 sub publication {
-    state $bag = Catmandu->store('search')->bag('publication');
+    librecat->model('publication')->search_bag;
 }
 
 sub project {
-    state $bag = Catmandu->store('search')->bag('project');
+    librecat->model('project')->search_bag;
 }
 
 sub user {
-    state $bag = Catmandu->store('search')->bag('user');
+    librecat->model('user')->search_bag;
 }
 
 sub department {
-    state $bag = Catmandu->store('search')->bag('department');
+    librecat->model('department')->search_bag;
 }
 
 sub research_group {
-    state $bag = Catmandu->store('search')->bag('research_group');
+    librecat->model('research_group')->search_bag;
 }
 
 sub within_ip_range {
@@ -179,7 +175,7 @@ sub extract_params {
 }
 
 sub now {
-    LibreCat->timestamp($_[1]);
+    librecat->timestamp($_[1]);
 }
 
 sub pretty_byte_size {
@@ -198,7 +194,7 @@ sub all_marked {
     my $p = $self->extract_params();
     push @{$p->{q}}, "status=public";
 
-    my $hits       = LibreCat->searcher->search('publication', $p);
+    my $hits       = librecat->searcher->search('publication', $p);
     my $marked     = Dancer::session 'marked';
     my $all_marked = 1;
 
@@ -214,20 +210,20 @@ sub all_marked {
 }
 
 sub get_publication {
-    LibreCat->publication->get($_[1]);
+    librecat->model('publication')->get($_[1]);
 }
 
 sub get_person {
-    LibreCat->user->find($_[1]);
+    librecat->model('user')->find($_[1]);
 }
 
 sub get_project {
-    LibreCat->project->get($_[1]);
+    librecat->model('project')->get($_[1]);
 }
 
 sub get_department {
     if ($_[1] && length $_[1]) {
-        LibreCat->department->get($_[1]);
+        librecat->model('department')->get($_[1]);
     }
 }
 
@@ -246,11 +242,11 @@ sub get_relation {
 sub get_statistics {
     my ($self) = @_;
 
-    my $hits = LibreCat->searcher->search('publication',
+    my $hits = librecat->searcher->search('publication',
         {cql => ["status=public", "type<>research_data"]});
-    my $reshits = LibreCat->searcher->search('publication',
+    my $reshits = librecat->searcher->search('publication',
         {cql => ["status=public", "type=research_data"]});
-    my $oahits = LibreCat->searcher->search('publication',
+    my $oahits = librecat->searcher->search('publication',
         {cql => ["status=public", "fulltext=1", "type<>research_data",]});
 
     return {
@@ -261,43 +257,34 @@ sub get_statistics {
     };
 }
 
-# TODO mark as deprecated
 sub new_record {
     my ($self, $bag) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: new_record is deprecated. Use librecat->model($model)->generate_id instead'
+    );
     Catmandu->store('main')->bag($bag)->generate_id;
 }
 
-# TODO mark as deprecated
 sub update_record {
     my ($self, $bag, $rec) = @_;
-
-    $self->log->info("updating $bag");
-
-    if ($self->log->is_debug) {
-        $self->log->debug(Dancer::to_json($rec));
-    }
-
-    $rec = $self->store_record(
-        $bag, $rec,
-        validation_error => sub {
-            my $validator = shift;
-
-            # At least cry foul when the record doesn't validate
-            $self->log->error($rec->{_id} . " not a valid publication!");
-            $self->log->error(Dancer::to_json($validator->last_errors));
-        }
+    $self->log->warn(
+        'DEPRECATION NOTICE: update_record is deprecated. Use librecat->model($model)->add instead'
     );
 
-    $self->index_record($bag, $rec);
+    my $saved_record = $self->store_record($bag,$rec);
+
+    $self->index_record($bag, $saved_record);
 
     sleep 1;    # bad hack!
 
     $rec;
 }
 
-# TODO mark as deprecated
 sub store_record {
     my ($self, $bag, $rec, %opts) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: store_record is deprecated. Use librecat->model($model)->add instead'
+    );
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
@@ -334,8 +321,8 @@ sub store_record {
 
     my $can_store = 1;
 
-    if (LibreCat->can($bag)) {
-        my $model = LibreCat->$bag;
+    if (librecat->has_model($bag)) {
+        my $model = librecat->model($bag);
 
         unless ($model->is_valid($rec)) {
             $can_store = 0;
@@ -358,21 +345,31 @@ sub store_record {
     }
 }
 
-# TODO mark as deprecated
 sub index_record {
     my ($self, $bag, $rec) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: index_record is deprecated. Use librecat->model($model)->add instead'
+    );
 
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
+
+    # memoize fixes
+    state $fixes = {};
+    my $fix = $fixes->{$bag} //= $self->create_fixer("index_$bag.fix");
+    $fix->fix($rec);
+
     $self->log->debug(Dancer::to_json($rec));
     $self->$bag->add($rec);
     $self->$bag->commit;
     $rec;
 }
 
-# TODO mark as deprecated
 sub delete_record {
     my ($self, $bag, $id) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: delete_record is deprecated. Use librecat->model($model)->delete instead'
+    );
 
     if ($bag eq 'publication') {
         my $del_record = $self->publication->get($id);
@@ -402,9 +399,11 @@ sub delete_record {
     }
 }
 
-# TODO mark as deprecated
 sub purge_record {
     my ($self, $bag, $id) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: delete_record is deprecated. Use librecat->model($model)->purge instead'
+    );
 
     # Delete from the index store
     $self->$bag->delete($id);
@@ -521,7 +520,7 @@ sub login_user {
 
     my ($self, $user) = @_;
 
-    my %attrs = LibreCat->user->to_session($user);
+    my %attrs = librecat->model('user')->to_session($user);
 
     for (keys %attrs) {
 

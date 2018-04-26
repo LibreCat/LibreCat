@@ -7,9 +7,9 @@ use warnings FATAL => 'all';
 my $pkg;
 
 BEGIN {
-    $pkg = 'LibreCat::App::Api::Route::FileStore';
+    $pkg = 'LibreCat::Types';
     use_ok $pkg;
-}
+};
 
 require_ok $pkg;
 

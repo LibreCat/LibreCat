@@ -1,23 +1,51 @@
 use Catmandu::Sane;
+use POSIX qw(strftime);
 use Test::More;
-use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use Test::Exception;
+use LibreCat;
 
-{
-    my $loaded = LibreCat->loaded;
-    like $loaded, qr/0|1/;
-}
+# class methods and loading
+
+ok(LibreCat->loaded == 0);
+
+dies_ok { LibreCat->instance } qr/must be loaded first/i;
+
+LibreCat->load({layer_paths => [qw(t/layer)]});
+
+ok(LibreCat->loaded == 1);
+
+my $instance = LibreCat->instance;
+
+ok($instance == LibreCat->instance, "instance is a singleton");
+
+# config
+
+is(ref $instance->config, 'HASH');
+ok($instance->config == Catmandu->config, "LibreCat and Catmandu share a config hash");
+
+# models
+ok($instance->has_model('user') == 1);
+ok($instance->has_model('gremlin') == 0);
 
 isa_ok(
-    LibreCat->user,
+    $instance->model('user'),
     "LibreCat::Model::User",
-    "LibreCat->user returns a LibreCat::Model::User"
+    "librecat->user returns a LibreCat::Model::User"
 );
 
 {
-    LibreCat->publication->purge_all;
 
-    like(LibreCat->publication->generate_id,
+    my $model = $instance->model('publication');
+
+    isa_ok(
+        $instance->model('publication'),
+        "LibreCat::Model::Publication",
+        "librecat->publication returns a LibreCat::Model::Publication"
+    );
+
+    $model->purge_all;
+
+    like($model->generate_id,
         qr{^[A-Z0-9-]+$}, 'publication generate id');
 
     my $pub = Catmandu->importer('YAML',
@@ -26,21 +54,19 @@ isa_ok(
 
     $pub->{title} = '我能吞下玻璃而不伤身体';
 
-    my $pub_stored = LibreCat->publication->add($pub);
+    ok($model->add($pub), 'publication add');
 
-    ok $pub_stored , 'publication add';
-
-    is $pub_stored->{title}, '我能吞下玻璃而不伤身体',
+    is $pub->{title}, '我能吞下玻璃而不伤身体',
         '..check title (return value)';
 
     is(
-        LibreCat->publication->get($id)->{title},
+        $model->get($id)->{title},
         '我能吞下玻璃而不伤身体',
         '..check title (main)'
     );
 
     is(
-        LibreCat->publication->search_bag->get($id)->{title},
+        $model->search_bag->get($id)->{title},
         '我能吞下玻璃而不伤身体',
         '..check title (index)'
     );
@@ -48,7 +74,7 @@ isa_ok(
     $pub->{title}
         = 'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती';
 
-    my $saved_record = LibreCat->publication->store($pub);
+    my $saved_record = $model->store($pub);
 
     ok $saved_record , 'publication add (skip index)';
 
@@ -57,18 +83,18 @@ isa_ok(
         '..check title (return value)';
 
     is(
-        LibreCat->publication->get($id)->{title},
+        $model->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (main)'
     );
 
     is(
-        LibreCat->publication->search_bag->get($id)->{title},
+        $model->search_bag->get($id)->{title},
         '我能吞下玻璃而不伤身体',
         '..check title (index)'
     );
 
-    my $indexed_record = LibreCat->publication->index($pub);
+    my $indexed_record = $model->index($pub);
 
     ok $indexed_record , 'publication index';
 
@@ -77,50 +103,88 @@ isa_ok(
         '..check title (return value)';
 
     is(
-        LibreCat->publication->get($id)->{title},
+        $model->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (main)'
     );
 
     is(
-        LibreCat->publication->search_bag->get($id)->{title},
+        $model->search_bag->get($id)->{title},
         'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
         '..check title (index)'
     );
 
     ok(
-        LibreCat->publication->delete($id),
+        $model->delete($id),
         'delete existing publication returns id'
     );
     ok(
-        !LibreCat->publication->delete(99999999999),
+        !$model->delete(99999999999),
         'delete non existing publication returns nil'
     );
 
-    is(LibreCat->publication->get($id)->{status},
+    is($model->get($id)->{status},
         'deleted', '..check title (main)');
 
-    is(LibreCat->publication->search_bag->get($id)->{status},
+    is($model->search_bag->get($id)->{status},
         'deleted', '..check title (index)');
 
     ok(
-        LibreCat->publication->purge($id),
+        $model->purge($id),
         'purge existing publication returns id'
     );
     ok(
-        !LibreCat->publication->purge(99999999999),
+        !$model->purge(99999999999),
         'purge non existing publication returns nil'
     );
 
-    ok(!LibreCat->publication->get($id), '...purged (main)');
+    ok($model->add($pub, skip_commit => 1), 'add publication with skip_commit option');
 
-    ok(!LibreCat->publication->search_bag->get($id), '...purged (index)');
+    ok($model->commit, 'commit after add');
+
+    ok(
+        $model->delete_all,
+        'delete all existing publications'
+    );
+
+    ok(!$model->get($id), '...purged (main)');
+
+    ok(!$model->search_bag->get($id), '...purged (index)');
 }
+
+# timestamp
+
+{
+    my $time = time;
+    my $str = $instance->timestamp($time);
+    is($str, strftime('%Y-%m-%dT%H:%M:%SZ', gmtime($time)));
+
+    $instance->config->{time_format} = '%Y-%m-%d';
+    $str = $instance->timestamp($time);
+    is($str, strftime('%Y-%m-%d', gmtime($time)));
+
+    ok($instance->timestamp, 'time argument is optional');
+}
+
+# searcher
+
+isa_ok(
+    $instance->searcher,
+    "LibreCat::Search",
+    "librecat->search returns a LibreCat::Search"
+);
+
+# queue
+
+isa_ok(
+    $instance->queue,
+    "LibreCat::JobQueue"
+);
 
 # hooks
 
 {
-    my $hook = LibreCat->hook('eat');
+    my $hook = $instance->hook('eat');
     is scalar(@{$hook->before_fixes}), 2;
     is scalar(@{$hook->after_fixes}),  1;
     my $data = {};
@@ -131,7 +195,7 @@ isa_ok(
 }
 
 {
-    my $hook = LibreCat->hook('idontexist');
+    my $hook = $instance->hook('idontexist');
 
     is scalar(@{$hook->before_fixes}), 0;
     is scalar(@{$hook->after_fixes}),  0;

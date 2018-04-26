@@ -5,7 +5,7 @@ use Test::Exception;
 use App::Cmd::Tester;
 use LibreCat::CLI;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use Data::Dumper;
 
 my $pkg;
@@ -38,12 +38,14 @@ require_ok $pkg;
 }
 
 {
-    my $result = test_app(
-        qq|LibreCat::CLI| => ['sitemap', '--dir', 't/tmp/sitemap']);
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['sitemap', '-v', 't/tmp/sitemap']);
 
     ok !$result->error, 'ok threw no exception';
 
     ok !$result->stdout, 'silent';
+
+    like $result->stderr, qr/Generating/, 'verbose';
 
     ok -f 't/tmp/sitemap/siteindex.xml',     'index site exists';
     ok -f 't/tmp/sitemap/sitemap-00001.xml', 'first sitemap exists';

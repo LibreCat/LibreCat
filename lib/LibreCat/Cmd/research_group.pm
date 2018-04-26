@@ -1,7 +1,7 @@
 package LibreCat::Cmd::research_group;
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(research_group);
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
@@ -118,7 +118,7 @@ sub _list {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->research_group->searcher(
+        $it = research_group->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -127,7 +127,7 @@ sub _list {
     }
     else {
         carp "sort not available without a query" if $sort;
-        $it = LibreCat->research_group;
+        $it = research_group;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -162,7 +162,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->research_group->searcher(
+        $it = research_group->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -170,7 +170,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->research_group;
+        $it = research_group;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -192,7 +192,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->research_group->get($id);
+    my $data = research_group->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -207,7 +207,7 @@ sub _add {
     my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
 
-    LibreCat->research_group->add_many(
+    research_group->add_many(
         $importer,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
@@ -229,7 +229,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    if (LibreCat->research_group->delete($id)) {
+    if (research_group->delete($id)) {
         print "deleted $id\n";
         return 0;
     }
@@ -244,7 +244,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat->research_group->validator;
+    my $validator = research_group->validator;
 
     my $ret = 0;
 

@@ -8,7 +8,7 @@ LibreCat::App::Catalogue::Route::importer - central handler for import routes
 
 use Catmandu::Sane;
 use Catmandu::Util;
-use LibreCat;
+use LibreCat qw(publication);
 use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
 use LibreCat::App::Helper;
@@ -25,7 +25,7 @@ sub _fetch_record {
 
         my $data = Catmandu->importer(
             'getJSON',
-            from    => url_decode("http://api.crossref.org/works/$id/agency"),
+            from => url_decode("https://api.crossref.org/works/$id/agency"),
             timeout => 10,
         )->first;
 
@@ -88,7 +88,7 @@ post '/librecat/record/import' => sub {
             h->hook('import-new-' . $source)->fix_around(
                 $pub,
                 sub {
-                    LibreCat->publication->add($pub);
+                    publication->add($pub);
                 }
             );
         }

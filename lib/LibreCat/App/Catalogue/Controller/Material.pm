@@ -2,6 +2,7 @@ package LibreCat::App::Catalogue::Controller::Material;
 
 use Catmandu::Sane;
 use Catmandu;
+use LibreCat qw(searcher);
 use LibreCat::App::Helper;
 use Exporter qw/import/;
 
@@ -96,7 +97,7 @@ sub update_related_material {
 
             $q->{limit} = 1000;
 
-            my $hits = LibreCat->searcher->search('publication', $q);
+            my $hits = searcher->search('publication', $q);
             my $return_hit;
 
             if ($hits->{total}) {

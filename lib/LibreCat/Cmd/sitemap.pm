@@ -3,15 +3,30 @@ package LibreCat::Cmd::sitemap;
 use Catmandu::Sane;
 use Catmandu::Util qw(io join_path);
 use Catmandu;
+use Carp;
 use POSIX qw(strftime);
 use parent 'LibreCat::Cmd';
 
+sub description {
+    return <<EOF;
+Usage:
+
+librecat sitemap [-v] <DIRECTORY>
+
+EOF
+}
+
 sub command_opt_spec {
-    (["dir=s", "", {required => 1}],);
+    my ($class) = @_;
+    (['v', ""],);
 }
 
 sub command {
     my ($self, $opts, $args) = @_;
+
+    croak "usage: $0 sitemap <DIRECTORY>" unless (@$args);
+
+    my $dir = shift @$args;
 
     my $config = Catmandu->config;
     my $bag    = Catmandu->store('search')->bag('publication');
@@ -24,7 +39,7 @@ sub command {
             my $group = $_[0];
             $n++;
 
-            my $path = join_path($opts->dir, sprintf("sitemap-%05d.xml", $n));
+            my $path = join_path($dir, sprintf("sitemap-%05d.xml", $n));
             my $file = io($path, mode => 'w');
 
             $file->say('<?xml version="1.0" encoding="UTF-8"?>');
@@ -52,10 +67,12 @@ sub command {
             );
             $file->say('</urlset>');
             $file->close;
+            print STDERR "Generating $path\n" if $opts->{v};
         }
         );
 
-    my $file = io(join_path($opts->dir, "siteindex.xml"), mode => 'w');
+    my $path = join_path($dir, "siteindex.xml");
+    my $file = io($path, mode => 'w');
     $file->say('<?xml version="1.0" encoding="UTF-8"?>');
     $file->say(
         '<sitemap xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
@@ -65,6 +82,7 @@ sub command {
     }
     $file->say('</sitemap>');
     $file->close;
+    print STDERR "Generating $path\n" if $opts->{v};
 
     return 0;
 }
@@ -78,5 +96,9 @@ __END__
 =head1 NAME
 
 LibreCat::Cmd::sitemap - generate siteindex and sitemaps
+
+=head1 SYNOPSIS
+
+    librecat sitemap [-v] <DIRECTORY>
 
 =cut

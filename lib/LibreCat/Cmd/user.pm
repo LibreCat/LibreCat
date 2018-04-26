@@ -1,7 +1,7 @@
 package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(user);
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Path::Tiny;
 use Carp;
@@ -122,7 +122,7 @@ sub _list {
 
     my $it;
     if (defined($query)) {
-        $it = LibreCat->user->searcher(
+        $it = user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -131,7 +131,7 @@ sub _list {
     }
     else {
         carp "sort not available without a query" if $sort;
-        $it = LibreCat->user;
+        $it = user;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -169,7 +169,7 @@ sub _export {
     my $it;
 
     if (defined($query)) {
-        $it = LibreCat->user->searcher(
+        $it = user->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -177,7 +177,7 @@ sub _export {
         );
     }
     else {
-        $it = LibreCat->user;
+        $it = user;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -222,7 +222,7 @@ sub _add {
         }
     );
 
-    LibreCat->user->add_many(
+    user->add_many(
         $importer,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
@@ -244,7 +244,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    if (LibreCat->user->delete($id)) {
+    if (user->delete($id)) {
         print "deleted $id\n";
         return 0;
     }
@@ -259,7 +259,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat->user->validator;
+    my $validator = user->validator;
 
     my $ret = 0;
 
@@ -291,7 +291,7 @@ sub _passwd {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $data = LibreCat->user->find($id);
+    my $data = user->find($id);
 
     my $name = $data->{full_name};
 
@@ -315,7 +315,7 @@ sub _passwd {
 
     $data->{password} = mkpasswd($password2);
 
-    LibreCat->user->add($data);
+    user->add($data);
 
     return 0;
 }

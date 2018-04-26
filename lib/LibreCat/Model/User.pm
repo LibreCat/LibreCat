@@ -1,7 +1,7 @@
 package LibreCat::Model::User;
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat qw(:self);
 use Catmandu;
 use Moo;
 use namespace::clean;
@@ -52,8 +52,8 @@ sub get {
 sub find {
     my ($self, $id) = @_;
     if ($id) {
-        my $hits = LibreCat->searcher->search('user', {cql => ["id=$id"]});
-        $hits = LibreCat->searcher->search('user', {cql => ["login=$id"]})
+        my $hits = librecat->searcher->search('user', {cql => ["id=$id"]});
+        $hits = librecat->searcher->search('user', {cql => ["login=$id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
         if (my $user = $self->get($id) || $self->find_by_username($id)) {

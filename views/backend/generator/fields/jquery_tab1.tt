@@ -271,23 +271,8 @@ $("#id_conference_location").autocomplete("option", "delay", 100);
 
 // connect publications
 $(function() {
-  var puburl = '';
-  [% IF modus == "super_admin" OR session.role == "super_admin" %]
-    puburl = '/librecat/search/admin?fmt=autocomplete';
-  [% ELSIF modus == "reviewer" OR session.role == "reviewer" %]
-    puburl = '/librecat/search/reviewer?fmt=autocomplete';
-  [% ELSIF modus == "project_reviewer" OR session.role == "project_reviewer" %]
-    puburl = '/librecat/search/project_reviewer?fmt=autocomplete';
-  [% ELSIF modus == "dataManager" OR session.role == "dataManager" %]
-    puburl = '/librecat/search/data_manager?fmt=autocomplete';
-  [% ELSIF modus == "delegate" OR session.role == "delegate" %]
-    puburl = '/librecat/search/delegate?fmt=autocomplete';
-  [% ELSE %]
-    puburl = '/librecat/search?fmt=autocomplete';
-  [% END %]
-
   $( "#connect_autocomplete" ).autocomplete({
-    source: librecat.uri_base + puburl,
+    source: librecat.uri_base + "/search_publication",
     minLength: 0,
     messages: {
 	    noResults: '',
