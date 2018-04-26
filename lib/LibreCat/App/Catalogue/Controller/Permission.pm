@@ -40,6 +40,9 @@ sub can_edit {
     my $pub  = h->main_publication->get($id) or return;
     my $user = h->get_person($user_id)       or return;
 
+    # do not touch deleted records
+    return 0 if $pub->{status} && $pub->{status} eq 'deleted';
+
     #no restrictions for super_admin
     return 1 if $role eq "super_admin";
 
