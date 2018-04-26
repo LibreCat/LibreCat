@@ -219,6 +219,7 @@ frontdoor:
   items: "Eintr&auml;ge"
   volume: "Band"
   issue: "Zeitschriftennummer"
+  article_number: "Artikelnummer"
   page: "Seite"
   tabs:
     details:
