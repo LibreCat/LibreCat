@@ -12,14 +12,14 @@ function whoops {
 function f_create_demo {
     echo "Creating index..."
     carton exec "yes | bin/librecat index initialize" || return $?
-    echo "user..."
-    carton exec "bin/librecat user add devel/user.yml" || return $?
     echo "publication..."
     carton exec "bin/librecat publication add devel/publications.yml" || return $?
     echo "department..."
     carton exec "bin/librecat department tree devel/department-tree.yml" || return $?
     echo "project..."
     carton exec "bin/librecat project add devel/project.yml" || return $?
+    echo "user..."
+    carton exec "bin/librecat user add devel/user.yml" || return $?
     echo "Done"
 }
 

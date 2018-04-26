@@ -246,8 +246,10 @@ sub _add {
         }
     );
 
+    my $fixer = $helper->create_fixer("index_research_group.fix");
+
     my $index = $helper->research_group;
-    $index->add_many($records);
+    $index->add_many($fixer->fix($records));
     $index->commit;
 
     $ret;
