@@ -49,8 +49,15 @@ get '/export' => sub {
         delete $p->{sort};
     }
 
+    push @{$p->{cql}}, "status=public";
+
     h->log->debug("searching for publications:" . Dancer::to_json($p));
     my $hits = LibreCat->searcher->search('publication', $p);
+
+    unless ($hits->total > 0 ){
+        status '404';
+        return;
+    }
 
     my $package = $spec->{package};
     my $options = $spec->{options} || {};
