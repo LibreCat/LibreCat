@@ -9,8 +9,8 @@ use namespace::clean;
 
 with 'LibreCat::Auth';
 
-has host          => (is => 'ro', required => 1);
-has base          => (is => 'ro');
+has host => (is => 'ro', required => 1);
+has base => (is => 'ro');
 has password      => (is => 'ro');
 has auth_base     => (is => 'ro', required => 1);
 has search_filter => (is => 'ro');
@@ -59,7 +59,8 @@ sub _authenticate {
         $username = $res;
     }
 
-    $self->log->debug("username: $username ; password: " . length($password) . " bytes");
+    $self->log->debug(
+        "username: $username ; password: " . length($password) . " bytes");
 
     my $base = sprintf($self->auth_base, $username);
 

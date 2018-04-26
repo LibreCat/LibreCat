@@ -9,7 +9,7 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Validator::User';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 

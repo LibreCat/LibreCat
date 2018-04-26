@@ -21,7 +21,7 @@ sub update_related_material {
         if $pub->{related_material}->{record};
 
     # get old related material (to be able to remove deleted relations)
-    my $hit = h->main_publication->get($pub->{_id});
+    my $hit                         = h->main_publication->get($pub->{_id});
     my $old_related_material_record = $hit->{related_material}->{record}
         if $hit->{related_material} and $hit->{related_material}->{record};
 

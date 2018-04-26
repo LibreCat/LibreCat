@@ -37,4 +37,5 @@ Template::Plugin::XML::Strict - a really strict xml filter for templates
     [% my_bad_chars | xml_strict %]
 
 =cut
+
 1;

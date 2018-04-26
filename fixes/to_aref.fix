@@ -39,9 +39,9 @@ move_field(publication_identifier.isbn.*, res.dct_isPartOf.$append)
 prepend(res.dct_isPartOf.*, 'http://id.crossref.org/issn/')
 
 move_field(publication_identifier.urn, res.dct_identifier.$append)
-prepend(external_id.isi, 'UT:')
-move_field(external_id.isi, res.dct_identifier.$append)
-move_field(external_id.pmid, res.fabio_hasPubmedId)
+prepend(external_id.isi.0, 'UT:')
+move_field(external_id.isi.0, res.dct_identifier.$append)
+move_field(external_id.pmid.0, res.fabio_hasPubmedId)
 
 retain_field(res)
 #prepend(_id,"http://pub.de")

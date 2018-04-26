@@ -124,7 +124,8 @@ new publication form.
 
     post '/affiliation' => sub {
 
-        my $fix = Catmandu::Fix->new(fixes => ['compact("department")', 'vacuum()']);
+        my $fix = Catmandu::Fix->new(
+            fixes => ['compact("department")', 'vacuum()']);
 
         my $p = params;
         $p = h->nested_params($p);

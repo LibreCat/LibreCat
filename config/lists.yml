@@ -222,6 +222,9 @@ relations_link:
     relation: "original"
     opposite: "translation"
   -
+    relation: "is_cited_by"
+    opposite: "cites"
+  -
     relation: "other"
 
 relations_record:
@@ -267,6 +270,9 @@ relations_record:
   -
     relation: "original"
     opposite: "translation"
+  -
+    relation: "is_cited_by"
+    opposite: "cites"
   -
     relation: "other"
     opposite: "other"

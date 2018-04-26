@@ -1,6 +1,7 @@
 package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
+use LibreCat;
 use LibreCat::App::Helper;
 use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
@@ -70,9 +71,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -80,9 +84,12 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -93,7 +100,7 @@ sub command {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
     if (-r $id_file) {
         my $r = 0;
@@ -223,8 +230,7 @@ sub _add {
             my $is_ok = 1;
 
             $helper->store_record(
-                'user',
-                $rec,
+                'user', $rec,
                 validation_error => sub {
                     my $validator = shift;
                     print STDERR join("\n",
@@ -245,8 +251,10 @@ sub _add {
         }
     );
 
+    my $fixer = $helper->create_fixer("index_user.fix");
+
     my $index = $helper->user;
-    $index->add_many($records);
+    $index->add_many($fixer->fix($records));
     $index->commit;
 
     $ret;
@@ -258,8 +266,7 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('user',
-        $id);
+        = LibreCat::App::Helper::Helpers->new->purge_record('user', $id);
 
     if ($result) {
         print "deleted $id\n";

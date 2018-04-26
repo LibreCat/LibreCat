@@ -743,14 +743,6 @@ search:
                 '=': true
                 '<>': true
               field: former
-            publcount:
-              op:
-                '=': true
-                '<>': true
-                '>': true
-                '<': true
-              field: combined_hits
-              sort: true
             login:
               op:
                 '=': true
@@ -763,6 +755,13 @@ search:
                 'all': true
                 'exact': true
               field: alias
+            publication_count:
+              op:
+                '=': true
+                '>': true
+                '<': true
+                '<>': true
+              field: publication_count
 
       department:
         cql_mapping:
@@ -1086,9 +1085,7 @@ search:
           _id: {type: string, include_in_all: true, index: not_analyzed}
           date_created: {type: date, format: date_time_no_millis}
           date_updated: {type: date, format: date_time_no_millis}
-          publication_hits: {type: integer}
-          research_hits: {type: integer}
-          combined_hits: {type: integer}
+          publication_count: {type: integer}
           full_name:
             type: multi_field
             fields:

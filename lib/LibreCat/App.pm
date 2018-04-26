@@ -149,8 +149,8 @@ sub _api_route {
 }
 
 sub _ip_match {
-    my $ip        = shift;
-    my $access    = h->config->{filestore}->{api}->{access} // {};
+    my $ip       = shift;
+    my $access   = h->config->{filestore}->{api}->{access} // {};
     my $ip_range = $access->{ip_range} // [];
 
     h->within_ip_range($ip, $ip_range);
@@ -233,23 +233,10 @@ post '/login' => sub {
     $return_url =~ s{^[a-zA-Z:]+(\/\/)[^\/]+}{};
 
     if ($user) {
-        my $super_admin = "super_admin" if $user->{super_admin};
-        my $reviewer    = "reviewer"    if $user->{reviewer};
-        my $project_reviewer = "project_reviewer"
-            if $user->{project_reviewer};
-        my $data_manager = "data_manager" if $user->{data_manager};
-        my $delegate     = "delegate"     if $user->{delegate};
-        session role => $super_admin
-            || $reviewer
-            || $project_reviewer
-            || $data_manager
-            || $delegate
-            || "user";
-        session user    => $user->{login};
-        session user_id => $user->{_id};
-        session lang    => $user->{lang} || h->config->{default_lang};
 
+        h->login_user($user);
         redirect uri_for($return_url);
+
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'},
@@ -265,9 +252,7 @@ The logout route. Destroys session.
 
 any '/logout' => sub {
 
-    session role    => undef;
-    session user    => undef;
-    session user_id => undef;
+    h->logout_user();
 
     redirect '/';
 };
