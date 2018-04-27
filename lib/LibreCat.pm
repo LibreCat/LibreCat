@@ -86,7 +86,7 @@ sub AUTOCAN {
 
 # instance methods
 
-with 'LibreCat::Logger';
+with 'LibreCat::Logger', 'LibreCat::Transaction';
 
 has root_path   => (is => 'lazy');
 has layer_paths => (is => 'lazy');
@@ -441,6 +441,20 @@ variable, in which case the C<layers.yml> file will be ignored.
 
 =head2 fixer
 
+=head2 transaction($cb)
+
+Execute C<$cb> within a transaction. If C<$cb> dies, all database changes will be rolled back.
+
+    librecat->transaction(sub {
+        librecat->publication->add($rec);
+        $person->{publication_count}++;
+        librecat->user->add($person);
+    });
+
+=head2 tx($cb)
+
+Alias for transaction.
+
 =head2 timestamp($time)
 
 =head2 root_path
@@ -466,6 +480,12 @@ variable, in which case the C<layers.yml> file will be ignored.
 =head2 scss_paths
 
 =head2 template_paths
+
+=head2 log
+
+Returns the logger.
+
+    librecat->log->debug("added $id");
 
 =head1 LICENSE AND COPYRIGHT
 
