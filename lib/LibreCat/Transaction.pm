@@ -13,6 +13,14 @@ sub tx {
     $_[0]->transaction($_[1]);
 }
 
+sub in_transaction {
+    Catmandu->store('main')->_in_transaction;
+}
+
+sub in_tx {
+    $_[0]->in_transaction;
+}
+
 1;
 
 __END__
@@ -35,6 +43,8 @@ Execute C<$cb> within a transaction. If C<$cb> dies, all database changes will b
         die 'aargh';
         $self->store_bar;
     });
+
+Nested transactions will be subsumed into the parent transaction.
 
 =head2 tx($cb)
 
