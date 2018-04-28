@@ -74,7 +74,7 @@
               <div class="col-xs-2 text-muted">[% h.loc("frontdoor.download") %]</div>
               <div class="col-xs-9">
                   [% PROCESS publication/oa_lock.tt %]
-                  [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]
+                  [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) OR (fi.access_level = "closed" AND p.can_edit( _id, user_id = session.user_id, role = session.role )) %]
                   <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
                     [% fi.title || fi.file_name | html %]
                   </a>
