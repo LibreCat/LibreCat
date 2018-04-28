@@ -164,7 +164,7 @@
       [%- IF fi %]
       <div class="col-xs-2 col-sm-3 col-sm-offset-1 text-sm-right">
 	     <div class="img-thumbnail img-thumbnail-fh">
-	        <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
+	        <a [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) OR (fi.access_level = "closed" AND p.can_edit( _id, user_id = session.user_id, role = session.role )) %]href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]"[% END %] title="[% fi.file_name %]" itemprop="thumbnailUrl" class="fulltext">
 	           <img src="[% uri_base %]/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
 	        </a>
 	     </div>
