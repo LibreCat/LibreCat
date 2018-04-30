@@ -91,7 +91,7 @@ main_page:
     audit: Audit
     clone: "Klonen"
     edit: "Editieren"
-    details: "Details"
+    details: "Vollansicht"
     view_details: "Publikationsseite in LibreCat anzeigen (Frontdoor)"
     files: "Dateien verf&uuml;gbar"
     file: "Datei"
@@ -103,6 +103,14 @@ main_page:
     publish: "Public stellen"
     return: "Zur&uuml;ckstellen"
     search_similar: "Nach &auml;hnlichen Titeln suchen"
+    doi: "DOI"
+    main_file_link: "Download (ext.)"
+    isi: "WoS"
+    pmid: "PubMed"
+    pmid_eu: "Europe PMC"
+    arxiv: "arXiv"
+    inspire: "Inspire"
+    scoap3: "SCOAP-3"
 person_profile:
   id_not_found: "ID nicht gefunden."
   former_researcher: "Ehemaliger LibreCat Forscher"
@@ -211,6 +219,7 @@ frontdoor:
   items: "Eintr&auml;ge"
   volume: "Band"
   issue: "Zeitschriftennummer"
+  article_number: "Artikelnummer"
   page: "Seite"
   tabs:
     details:

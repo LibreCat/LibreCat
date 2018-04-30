@@ -1,5 +1,4 @@
 <!-- BEGIN publication/tab_filedetails.tt -->
-
 <div class="tab-pane" id="fileDetails">
   [%- IF data_reuse_license OR cc_license OR other_data_license %]
   <div class="row">
@@ -24,91 +23,88 @@
       </div>
     </div>
   </div>
-  [%- END %]
+  [%- END -%]
 
-  [% IF mainFile.size %]
+  [%- IF mainFile.size %]
   <div class="row">
     <div class="col-md-12">
       <strong>[% h.loc("forms.relation.main_file.display") %]</strong>
     </div>
   </div>
 
-  [% i = 0 %]
-  [% FOREACH fi IN file %]
-  [% NEXT IF fi.relation != "main_file" %]
+  [%- i = 0 %]
+  [%- FOREACH fi IN file %]
+    [%- NEXT IF fi.relation != "main_file" %]
   <div class="row[% UNLESS i==0 %] margin-top1[% END %]">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      [% IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]
+      [%- IF fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) %]
       <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]">
         [% fi.file_name | html %]
       </a>
-      [% ELSE %]
+      [%- ELSE %]
       <strong>[% fi.file_name | html %]</strong>
-      [% END %]
+      [%- END %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
-      [% IF fi.request_a_copy %]
+      [%- IF fi.request_a_copy %]
         [% PROCESS publication/modal_requestcopy.tt %]
-      [% END %]
+      [%- END %]
     </div>
   </div>
-  [% IF fi.title %]
+  [%- IF fi.title %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.title") %]</div>
     <div class="col-md-9">
       [% fi.title | html %]
     </div>
   </div>
-  [% END %]
-  [% IF fi.description %]
+  [%- END %]
+  [%- IF fi.description %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.description") %]</div>
     <div class="col-md-9">
       [% fi.description | html %]
     </div>
   </div>
-  [% END %]
+  [%- END %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.access_level.label") %]</div>
-
     <div class="col-md-9">
-      [% SWITCH fi.access_level %]
-        [% CASE 'open_access' %]
-        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
-
-        [% CASE 'local' %]
-        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
-
-        [% CASE 'closed' %]
-        [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
-      [% END %]
+      [%- SWITCH fi.access_level %]
+        [%- CASE 'open_access' %]
+          [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
+        [%- CASE 'local' %]
+          [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
+        [%- CASE 'closed' %]
+          [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
+      [%- END %]
     </div>
   </div>
-  [% IF fi.date_updated %]
+  [%- IF fi.date_updated %]
   <div class="row">
     <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.last_uploaded %]</div>
     <div class="col-md-9">
       [% fi.date_updated %]
     </div>
   </div>
-  [% END %]
-  [% IF fi.checksum %]
+  [%- END %]
+  [%- IF fi.checksum %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.md5") %]</div>
     <div class="col-md-9">
       [% fi.checksum %]
     </div>
   </div>
-  [% END %]
-  [% i = i+1 %]
-  [% END %] <!-- FOREACH -->
+  [%- END %]
+  [%- i = i+1 %]
+  [%- END %] <!-- FOREACH -->
   <br />
-  [% END %] <!-- IF mainFile -->
+  [%- END -%] <!-- IF mainFile -->
 
-  [% IF relFile %]
-  [% j = 0 %]
-  [% FOREACH fi IN file %]
-  [% NEXT IF fi.relation == "main_file" OR fi.relation == "hidden" OR fi.relation == "confirmation" %]
+  [%- IF relFile %]
+  [%- j = 0 %]
+  [%- FOREACH fi IN file %]
+    [%- NEXT IF fi.relation == "main_file" OR fi.relation == "hidden" %]
   <div class="row[% UNLESS j == 0 %] margin-top1[% END %]">
     <div class="col-md-12">
       <strong>[% h.loc("forms.relation.${fi.relation}.display") %]</strong>
@@ -122,61 +118,55 @@
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>
   </div>
-  [% IF fi.title %]
+  [%- IF fi.title %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.title") %]</div>
     <div class="col-md-9">
       [% fi.title | html %]
     </div>
   </div>
-  [% END %]
-  [% IF fi.description %]
+  [%- END %]
+  [%- IF fi.description %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.description") %]</div>
     <div class="col-md-9">
       [% fi.description | html %]
     </div>
   </div>
-  [% END %]
+  [%- END %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.access_level.label") %]</div>
     <div class="col-md-9">
-      [% SWITCH fi.access_level %]
-        [% CASE 'open_access' %]
-        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
-
-        [% CASE 'local' %]
-        [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
-
-        [% CASE 'closed' %]
-        [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
-      [% END %]
+      [%- SWITCH fi.access_level %]
+        [%- CASE 'open_access' %]
+          [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
+        [%- CASE 'local' %]
+          [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
+        [%- CASE 'closed' %]
+          [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
+      [%- END %]
     </div>
   </div>
-  [% IF fi.date_updated %]
+  [%- IF fi.date_updated %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.last_uploaded") %]</div>
-    <div class="col-md-9">
-      [% fi.date_updated %]
-    </div>
+    <div class="col-md-9">[% fi.date_updated %]</div>
   </div>
-  [% END %]
-  [% IF fi.checksum %]
+  [%- END %]
+  [%- IF fi.checksum %]
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.md5") %]</div>
-    <div class="col-md-9">
-      [% fi.checksum %]
-    </div>
+    <div class="col-md-9">[% fi.checksum %]</div>
   </div>
-  [% END %]
-  [% j = j+1 %]
-  [% END %] <!-- FOREACH -->
-  [% END %] <!-- IF relFile -->
+  [%- END %]
+  [%- j = j+1 %]
+  [%- END %] <!-- FOREACH -->
+   <br />
+  [%- END -%] <!-- IF relFile -->
 
-  [% IF main_file_link.size %]
-
-  [% j = 0 %]
-  [% FOREACH fi IN main_file_link %]
+  [%- IF main_file_link.size %]
+    [%- j = 0 %]
+    [%- FOREACH fi IN main_file_link %]
   <div class="row[% UNLESS j == 0 %] margin-top1[% END %]">
     <div class="col-md-12">
       <strong>[% h.loc("frontdoor.tabs.file_details.main_file_link") %]</strong>
@@ -185,25 +175,22 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.url") %]</div>
     <div class="col-md-9">
-      <a href="[% fi.url | uri %]">
-        [% fi.url | html %]
-      </a>
+      <a href="[% fi.url | uri %]">[% fi.url | html %]</a>
     </div>
   </div>
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.access_level.label") %]</div>
     <div class="col-md-9">
-      [% IF fi.open_access %]
+      [%- IF fi.open_access %]
         <img src="[% uri_base %]/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA"> [% h.loc("frontdoor.tabs.file_details.access_level.open_access") %]
-      [% ELSE %]
+      [%- ELSE %]
         <img src="[% uri_base %]/images/access_restricted.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access for author/reviewer only." alt="Restricted"> [% h.loc("frontdoor.tabs.file_details.access_level.closed") %]
-      [% END %]
+      [%- END %]
     </div>
   </div>
-  [% j = j+1 %]
-  [% END %] <!-- FOREACH -->
+  [%- j = j+1 %]
+  [%- END -%] <!-- FOREACH -->
 
-  [% END %] <!-- IF main_file_link -->
+  [%- END %] <!-- IF main_file_link -->
 </div><!-- tab-pane fileDetails -->
-
 <!-- END publication/tab_filedetails.tt -->

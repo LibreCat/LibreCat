@@ -90,7 +90,7 @@ main_page:
   links:
     clone: Clone
     edit: "Edit"
-    details: "Details"
+    details: "Full Record"
     view_details: "Show complete bibliographic information and access options."
     files: "Files available"
     file: "File"
@@ -102,6 +102,14 @@ main_page:
     publish: "Make public"
     return: "Return"
     search_similar: "Search similar titles"
+    doi: "DOI"
+    main_file_link: "Download (ext.)"
+    isi: "WoS"
+    pmid: "PubMed"
+    pmid_eu: "Europe PMC"
+    arxiv: "arXiv"
+    inspire: "Inspire"
+    scoap3: "SCOAP-3"
 person_profile:
   id_not_found: "Person ID not found."
   former_researcher: "Former LibreCat University Researcher"
@@ -210,6 +218,7 @@ frontdoor:
   items: "Items"
   volume: "Volume"
   issue: "Issue"
+  article_number: "Article Number"
   page: "Page"
   tabs:
     details:

@@ -1,6 +1,7 @@
 package LibreCat::Cmd::user;
 
 use Catmandu::Sane;
+use LibreCat;
 use LibreCat::App::Helper;
 use LibreCat::Validator::User;
 use App::bmkpasswd qw(passwdcmp mkpasswd);
@@ -250,8 +251,10 @@ sub _add {
         }
     );
 
+    my $fixer = $helper->create_fixer("index_user.fix");
+
     my $index = $helper->user;
-    $index->add_many($records);
+    $index->add_many($fixer->fix($records));
     $index->commit;
 
     $ret;
