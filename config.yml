@@ -100,7 +100,7 @@ plugins:
         schema: http://schema.datacite.org/meta/kernel-4.1/metadata.xsd
         metadataNamespace: http://datacite.org/schema/kernel-4
         template: views/export/datacite_v4.1.tt
-        cql: 'status exact public AND type=research_data'
+        cql: 'status exact public'
         fix: ["fixes/to_datacite.fix"]
       -
         metadataPrefix: rdf

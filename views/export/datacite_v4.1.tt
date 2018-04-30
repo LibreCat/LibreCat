@@ -29,15 +29,30 @@
     <date dateType="Created">[% date_created | xml_strict %]</date>
     <date dateType="Updated">[% date_updated | xml_strict %]</date>
   </dates>
+  [%- IF lang %]
   <language>[% lang.0.iso | xml_strict %]</language>
- !!! <resourceType resourceTypeGeneral="Text">Dataset</resourceType>
+  [%- END %]
+  <resourceType resourceTypeGeneral="[% type == 'research_data' ? 'Dataset' : 'Text'%]">[% type %]</resourceType>
   <alternateIdentifiers>
-    <alternateIdentifier alternateIdentifierType="URL">[% repo_url %]</alternateIdentifier>
+    <alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/[% type == 'research_data' ? 'data' : 'publication' %]/[% _id %]</alternateIdentifier>
   </alternateIdentifiers>
   <relatedIdentifiers>
-    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata" relatedMetadataScheme="citeproc+json" schemeURI="https://github.com/citation-style-language/schema/raw/master/csl-data.json">[% h.uri_base %]...</relatedIdentifier>
-    <relatedIdentifier relatedIdentifierType="arXiv" relationType="IsReviewedBy" resourceTypeGeneral="Text">arXiv:0706.0001</relatedIdentifier>
-    [%- IF urn %]<relatedIdentifier relatedIdentifierType="URN" relationType="IsReviewedBy" resourceTypeGeneral="Text">arXiv:0706.0001</relatedIdentifier>[% END %]
+    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/[% type == 'research_data' ? 'data' : 'publication' %]/[% _id%].json</relatedIdentifier>
+    [%- IF publication_identifier.isbn %]
+    <relatedIdentifier relatedIdentifierType="ISBN" relationType="isVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF publication_identifier.issn %]
+    <relatedIdentifier relatedIdentifierType="ISNN" relationType="isVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF external_id.arxiv %]
+    <relatedIdentifier relatedIdentifierType="arXiv" relationType="isVersionOf">[% external_id.arxiv.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF external_id.pmid %]
+    <relatedIdentifier relatedIdentifierType="PMID" relationType="isVersionOf">[% external_id.pmid.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF urn %]
+    <relatedIdentifier relatedIdentifierType="URN" relationType="IsReviewedBy">[% urn | xml_strict %]</relatedIdentifier>
+    [%- END %]
   </relatedIdentifiers>
   <sizes>
     [%- FOREACH f IN file %]
