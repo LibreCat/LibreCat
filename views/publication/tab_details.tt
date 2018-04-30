@@ -18,7 +18,7 @@
         <div class="col-lg-10 col-md-9">
       [%- ELSE %];[% END %]
       [%- IF person.id %]
-      <a itemprop="author" href="[% uri_base %]/person/[% person.id | html %]">[% person.full_name | html %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+      <a itemprop="author" href="[% uri_base %][% IF item == 'supervisor' %]/publication?cql=supervisor=[% person.id | html %][% ELSE %]/person/[% person.id | html %][% END %]">[% person.full_name | html %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
       [%- ELSE %]
       <span itemprop="author">[% person.full_name | html %]</span>
       [%- END %]
@@ -84,16 +84,16 @@
   [%- IF loop.last -%]</div></div>[% END %]
 [%- END -%]
 
-[% IF abstract %]
+[%- IF abstract %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.abstract.label") %]</div>
     <div class="col-lg-10 col-md-9 cmark abstract" itemprop="about">
-    [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
-[% ab.text | html %]
-    [% END %]
+    [%- FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
+      [% ab.text | html %]
+    [%- END %]
     </div>
   </div>
-[% END %]
+[%- END -%]
 
 [%- IF keyword %]
   <div class="row">
@@ -105,7 +105,7 @@
     [%- END %]
     </div>
   </div>
-[%- END %]
+[%- END -%]
 
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.year.label || h.loc("forms.${type}.field.year_extern.label") %]</div>
@@ -215,23 +215,7 @@
     <a itemprop="url" href="[% request.uri_for(request.path_info) %]" title="[% h.loc("frontdoor.id_title") %]">[% _id %]</a>
     </div>
   </div>
-  [%- IF display_citation %]
-    <div id="citethis" class="anchor">
-      <h3 id="cite">[% h.loc("frontdoor.cite_this") %]</h3>
-      <ul class="nav nav-tabs">
-        [%- FOREACH style IN h.config.citation.csl.styles.keys.sort %]
-          [%- NEXT IF style == 'short' %]
-          <li [% IF loop.first %]class="active"[% END %]><a href="#[% style %]" data-toggle="tab">[% h.loc("citation.${style}") %]</a></li>
-        [%- END %]
-      </ul>
-      <div class="tab-content">
-        [%- FOREACH style IN h.config.citation.csl.styles.keys.sort %]
-          [%- NEXT IF style == 'short' %]
-          <div id="[% style %]" class="tab-pane[% IF loop.first %] active[% END %] cmark">[% citation.$style %]</div>
-        [%- END %]
-      </div>
-    </div>
-  [%- END %]
+  [%- IF display_citation %][% PROCESS publication/citation_box.tt %][%- END %]
 </div>
 
 <!-- END publication/tab_details.tt -->

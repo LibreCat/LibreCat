@@ -1,11 +1,9 @@
-
 <!-- BEGIN publication/tab_relpubl.tt -->
-
 <div class="tab-pane" id="relPubl">
   [% h.loc("frontdoor.tabs.publications.cited_by") %]<br />
-  [% FOREACH resDat IN relPubl %]
-    [% rec = h.get_publication(resDat.id) %]
-    [% NEXT IF rec.status != "public" %]
+  [%- FOREACH resDat IN relPubl %]
+    [%- rec = h.get_publication(resDat.id) %]
+    [%- NEXT UNLESS rec.status == "public" %]
     <div class="row">
       <div class="col-md-2 text-muted">[% resDat.id %]</div>
       <div class="col-md-10">
@@ -13,7 +11,6 @@
 	[% rec.citation.default | html %]<br />
       </div>
     </div>
-  [% END %]
+  [%- END %]
 </div><!-- tab-pane relPubl -->
-
 <!-- END publication/tab_relpubl.tt -->

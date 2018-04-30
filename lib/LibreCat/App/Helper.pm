@@ -62,7 +62,7 @@ sub create_fixer {
         }
     }
 
-    $self->log->error("can't find a fixer for: `$file'");
+    $self->log->debug("can't find a fixer for: `$file' return an empty fixer");
 
     return Catmandu::Fix->new();
 }
@@ -301,24 +301,9 @@ sub new_record {
 sub update_record {
     my ($self, $bag, $rec) = @_;
 
-    $self->log->info("updating $bag");
+    my $saved_record = $self->store_record($bag,$rec);
 
-    if ($self->log->is_debug) {
-        $self->log->debug(Dancer::to_json($rec));
-    }
-
-    $rec = $self->store_record(
-        $bag, $rec,
-        validation_error => sub {
-            my $validator = shift;
-
-            # At least cry foul when the record doesn't validate
-            $self->log->error($rec->{_id} . " not a valid publication!");
-            $self->log->error(Dancer::to_json($validator->last_errors));
-        }
-    );
-
-    $self->index_record($bag, $rec);
+    $self->index_record($bag, $saved_record);
 
     sleep 1;    # bad hack!
 
@@ -410,6 +395,12 @@ sub index_record {
 
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
+
+    # memoize fixes
+    state $fixes = {};
+    my $fix = $fixes->{$bag} //= $self->create_fixer("index_$bag.fix");
+    $fix->fix($rec);
+
     $self->log->debug(Dancer::to_json($rec));
     $self->$bag->add($rec);
     $self->$bag->commit;

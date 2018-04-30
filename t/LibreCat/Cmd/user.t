@@ -99,12 +99,6 @@ Catmandu->store('search')->bag('user')->delete_all;
     ok length($output) == 0, 'got no result';
 }
 
-{
-    my $result = test_app(qq|LibreCat::CLI| => ['user', 'update_stats']);
-
-    ok !$result->error, 'ok no exception';
-}
-
 done_testing;
 
 sub count_user {

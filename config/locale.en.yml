@@ -89,7 +89,7 @@ main_page:
   links:
     clone: Clone
     edit: "Edit"
-    details: "Details"
+    details: "Full Record"
     view_details: "Show complete bibliographic information and access options."
     files: "Files available"
     file: "File"
@@ -217,6 +217,7 @@ frontdoor:
   items: "Items"
   volume: "Volume"
   issue: "Issue"
+  article_number: "Article Number"
   page: "Page"
   tabs:
     details:

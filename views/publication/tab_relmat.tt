@@ -1,5 +1,4 @@
 <!-- BEGIN publication/tab_relmat.tt -->
-
 <div class="tab-pane" id="relMat">
   [% IF relMat.size %]
   <div class="row">
@@ -15,7 +14,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      [% rec = h.get_publication(rm.id) %]
+      [%- rec = h.get_publication(rm.id) %]
       <a href="[% uri_base %]/record/[% rm.id %]">[% rec.title %]</a><br />
       [% rec.citation.default %]<br />
     </div>

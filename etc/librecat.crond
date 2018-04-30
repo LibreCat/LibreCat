@@ -4,5 +4,5 @@
 # Update the departments page every hour
 0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat generate departments' > /dev/null 2>&1
 
-# Update the user publication statistics every hour
-0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat user update_stats' > /dev/null 2>&1
+# Update the user statistics  every hour
+0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat index create user' > /dev/null 2>&1

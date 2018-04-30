@@ -1,5 +1,27 @@
 Revision history for LibreCat
 
+{{NEXT}} {{DATE}}
+    - Deleted publications can be edited anymore in via the web forms
+    - Fixing related materials link
+    - Fixing admin users could delete read-only fields
+
+1.1.3 2018-04-13
+    - Improving the livecitation tests
+    - Improving test coverage
+    - Fixing layout problems
+    - Fixing broken marked records
+    - Fixing javascript embed
+    - Fixing closed files access for data owner
+    - Fixing deleting first author bug
+    - Improving BibText output
+    - Switching external importer from http to https versions
+    - Adding external urls as Download (ext) link in short view
+    - Adding 'index_<...>' fixes to be run at indexation time
+    - Creating faster response times for Authors page (requiring an indexation cron job)
+    - Adding audit (--log) functionality to the file_store commands
+    - Adding SSO functionality
+    - Adding pluggable Helper modules (look at catmandu.local.yml-example and t/layer/lib/MyHelperPlugin.pm for an example)
+
 1.1.2 2018-03-01
     - Fixing managing research groups
     - Fixing date validation rules
