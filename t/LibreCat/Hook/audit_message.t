@@ -10,7 +10,10 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Hook::audit_message';
     use_ok $pkg;
+
+    system "bin/librecat worker audit start --workers 1";
 }
+
 require_ok $pkg;
 
 # empty audit db
@@ -59,6 +62,7 @@ ok $a->{_id}, "_id field present";
 END {
     # cleanup
     Catmandu->store('main')->bag('audit')->delete_all;
+    system "bin/librecat worker audit stop --workers 1";
 }
 
 done_testing;
