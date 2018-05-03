@@ -3,6 +3,7 @@ package LibreCat::App::Catalogue::Controller::Material;
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat::App::Helper;
+use Tie::IxHash;
 use Exporter qw/import/;
 
 our @EXPORT = qw/update_related_material/;
@@ -25,7 +26,25 @@ sub update_related_material {
     }
     #---
 
-    # First delete the relations to this record from previous record (in order to
+    my $current_related_material_record = $pub->{related_material}->{record} // [];
+
+    # Remove repeated relationships to the same record, keeping only the
+    # latest added relationship.
+    my %uniq_rm = ();
+    tie %uniq_rm, 'Tie::IxHash'; # Keep the order of relationships
+    foreach my $rm (@$current_related_material_record) {
+        next unless $rm->{id};
+        $uniq_rm{ $rm->{id} } = $rm;
+    }
+
+    $current_related_material_record = [];
+
+    for my $id (keys %uniq_rm) {
+        my $rm = $uniq_rm{$id};
+        push @$current_related_material_record , $rm;
+    }
+
+    # Delete the relations to this record from previous record (in order to
     # remove deleted relations from targetted records)
     my $hit = h->main_publication->get($pub->{_id});
 
@@ -61,8 +80,6 @@ sub update_related_material {
     }
 
     # (Re)create the relations to other records as reverse links
-    my $current_related_material_record = $pub->{related_material}->{record} // [];
-
     foreach my $rm (@$current_related_material_record) {
         next unless $rm->{id};
 
@@ -77,7 +94,7 @@ sub update_related_material {
             h->log->error("found not inverse relation for `" . $rm->{relation} . "`");
             $inverse_relation = 'other';
         }
-        
+
         my $target_related_material_record = $target->{related_material}->{record} // [];
 
         my @new_relations;
@@ -110,6 +127,11 @@ sub update_related_material {
 
         $rm->{status} = $target->{status};
     }
+
+    # Fix the changes to related related_material of this record
+    $pub->{related_material}->{record} = $current_related_material_record;
+
+    $pub;
 }
 
 1;

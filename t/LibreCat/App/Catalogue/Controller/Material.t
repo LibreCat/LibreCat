@@ -42,6 +42,30 @@ note("creating a new relation");
     save_dummy_publication($pub);
 }
 
+note("try adding double relationships");
+{
+    my $pub = get_dummy_publication('999000');
+
+    $pub->{related_material}->{record} = [
+        { id => '999001' , relation => 'earlier_version' , status => 'private' } ,
+        { id => '999001' , relation => 'later_version' , status => 'private' }
+    ];
+
+    update_related_material($pub);
+
+    is_deeply $pub->{related_material}->{record} , [
+        { id => '999001' , relation => 'later_version' , status => 'private'}
+    ];
+
+    my $pub2 = get_dummy_publication('999001');
+
+    is_deeply $pub2->{related_material}->{record} , [
+        { id => '999000' , relation => 'earlier_version' , status => 'private' }
+    ] , 'found the reverse relation';
+
+    save_dummy_publication($pub);
+}
+
 note("updating existing relation");
 {
     my $pub = get_dummy_publication('999000');
