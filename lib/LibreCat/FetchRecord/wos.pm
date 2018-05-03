@@ -25,3 +25,24 @@ sub fetch {
 }
 
 1;
+
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::FetchRecord::wos - Create a LibreCat publication from a WoS file
+
+=head1 SYNOPSIS
+
+    use LibreCat::FetchRecord::wos;
+
+    my $records = LibreCat::FetchRecord::wos->new->fetch($wos_file);
+
+=head1 SEE ALSO
+
+L<LibreCat::FetchRecord>
+
+=cut
