@@ -24,7 +24,7 @@ sub _fetch_record {
 
         my $data = Catmandu->importer(
             'getJSON',
-            from    => url_decode("http://api.crossref.org/works/$id/agency"),
+            from => url_decode("https://api.crossref.org/works/$id/agency"),
             timeout => 10,
         )->first;
 

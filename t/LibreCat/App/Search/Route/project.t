@@ -9,10 +9,11 @@ use warnings FATAL => 'all';
 my $pkg;
 
 BEGIN {
-    set plugins => from_yaml(path("t/layer/config.yml")->slurp_utf8)->{plugins};
+    set plugins =>
+        from_yaml(path("t/layer/config.yml")->slurp_utf8)->{plugins};
     $pkg = 'LibreCat::App::Search::Route::project';
     use_ok $pkg;
-};
+}
 
 require_ok $pkg;
 

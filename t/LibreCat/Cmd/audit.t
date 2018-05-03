@@ -39,10 +39,4 @@ require_ok $pkg;
     ok $output , 'got an output';
 }
 
-{
-    my $result = test_app(qq|LibreCat::CLI| => ['audit', 'get', '0']);
-
-    ok $result->error, 'ok threw an exception';
-}
-
 done_testing;

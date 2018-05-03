@@ -13,9 +13,6 @@ sub fix {
 
     return $data unless defined($id);
 
-    # Admins are allowed to do anything...
-    return $data if $self->is_admin($data);
-
     my $read_only_fields;
 
     if (   exists(h->config->{hook})
@@ -29,8 +26,22 @@ sub fix {
 
     if (my $rec = Catmandu->store('main')->bag('publication')->get($id)) {
         for my $field (@$read_only_fields) {
-            h->log->debug("updating field $field...");
-            $data->{$field} = $rec->{$field} if $rec->{$field};
+            next unless $rec->{$field};
+
+            if ($data->{$field}) {
+                # Copy back the old version..unless we are an admin
+                if ($self->is_admin($data)) {
+                    h->log->debug("$field is readonly, but we are an admin");
+                }
+                else {
+                    h->log->debug("$field is readonly, switching back to old version");
+                    $data->{$field} = $rec->{$field};
+                }
+            }
+            else {
+                h->log->debug("$field not provided, switching back to old version");
+                $data->{$field} = $rec->{$field};
+            }
         }
     }
     else {

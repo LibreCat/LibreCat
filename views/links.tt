@@ -1,7 +1,6 @@
 <!-- BEGIN links.tt -->
-
 [% bag = entry.type == "research_data" ? "data" : "publication" %]
-<a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% h.loc("main_page.links.view_details") %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.config.appname_short %]</a>
+<a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% h.loc("main_page.links.view_details") %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.details") %]</a>
   [% IF entry.type == "research_data" AND (entry.file || entry.related_material || entry.externalFiles == "1") %]
   | <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
   [% ELSIF entry.type != "research_data" AND entry.file AND entry.file.size > 1 %]
@@ -23,11 +22,13 @@
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="[% uri_base %]/download/[% entry._id  %]/[% supp.file.file_id %]/[% supp.file.file_name | uri %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
 
-  [% IF entry.doi %]| <a href="https://doi.org/[% entry.doi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>DOI</a>[% END %]
-  [% IF entry.external_id.isi %] | <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% entry.external_id.isi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>WoS</a>[% END %]
-  [% IF entry.external_id.pmid %] | <a href="http://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>PubMed</a> | <a href="http://europepmc.org/abstract/MED/[% entry.external_id.pmid %]">Europe PMC</a>[% END %]
-  [% IF entry.external_id.arxiv %] | <a href="http://arxiv.org/abs/[% entry.external_id.arxiv %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>arXiv</a>[% END %]
-  [% IF entry.external_id.inspire %] | <a href="http://inspirebeta.net/record/[% entry.external_id.inspire %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>Inspire</a>[% END %]
+  [% IF entry.doi %]| <a href="https://doi.org/[% entry.doi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.doi") %]</a>[% END %]
+  [% IF entry.main_file_link.0 %] | <a href="[% entry.main_file_link.0.url %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.main_file_link") %]</a>[% END %]
+  [% IF entry.external_id.isi %] | <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% entry.external_id.isi.0 %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.isi") %]</a>[% END %]
+  [% IF entry.external_id.pmid %] | <a href="https://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid.0 %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.pmid") %]</a> | <a href="https://europepmc.org/abstract/MED/[% entry.external_id.pmid.0 %]">[% h.loc("main_page.links.pmid_eu") %]</a>[% END %]
+  [% IF entry.external_id.arxiv %] | <a href="https://arxiv.org/abs/[% entry.external_id.arxiv.0 %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.arxiv") %]</a>[% END %]
+  [% IF entry.external_id.inspire %] | <a href="https://inspirehep.net/record/[% entry.external_id.inspire.0 %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.inspire") %]</a>[% END %]
+  [% IF entry.external_id.scoap3 %] | <a href="https://repo.scoap3.org/record/[% entry.external_id.scoap3.0 %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.scoap3") %]</a>[% END %]
 
 [% IF backend %]
   <br />

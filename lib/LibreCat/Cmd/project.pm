@@ -68,9 +68,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -78,9 +81,12 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -88,7 +94,7 @@ sub command {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
     if (-r $id_file) {
         my $r = 0;
@@ -240,8 +246,10 @@ sub _add {
         }
     );
 
+    my $fixer = $helper->create_fixer("index_publication.fix");
+
     my $index = $helper->project;
-    $index->add_many($records);
+    $index->add_many($fixer->fix($records));
     $index->commit;
 
     $ret;
@@ -253,8 +261,7 @@ sub _delete {
     croak "usage: $0 delete <id>" unless defined($id);
 
     my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('project',
-        $id);
+        = LibreCat::App::Helper::Helpers->new->purge_record('project', $id);
 
     if ($result) {
         print "deleted $id\n";

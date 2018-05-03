@@ -115,9 +115,12 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_get(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
@@ -125,16 +128,22 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_delete(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'purge') {
         my $id = shift @$args;
 
-        return $self->_on_all($id, sub {
-             $self->_purge(shift);
-        });
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_purge(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -165,9 +174,9 @@ sub audit_message {
 }
 
 sub _on_all {
-    my ($self,$id_file,$callback) = @_;
+    my ($self, $id_file, $callback) = @_;
 
-    if (-r $id_file) {
+    if (defined($id_file) && -r $id_file) {
         my $r = 0;
         for (path($id_file)->lines) {
             chomp;
@@ -361,8 +370,10 @@ sub _add {
         }
     );
 
+    my $fixer = $helper->create_fixer("index_publication.fix");
+
     my $index = $helper->publication;
-    $index->add_many($records);
+    $index->add_many($fixer->fix($records));
     $index->commit;
 
     if ($exporter) {
@@ -471,7 +482,7 @@ sub _fetch {
     my @records = $pkg->new->fetch($id);
 
     return 0 unless @records;
-    
+
     my $exporter = Catmandu->exporter('YAML');
     $exporter->add_many(@records);
     $exporter->commit;
@@ -586,8 +597,7 @@ sub _files_list {
         $printer->($data);
     }
     elsif (defined($id)) {
-        $helper->publication->searcher(
-            cql_query => $id)->each($printer);
+        $helper->publication->searcher(cql_query => $id)->each($printer);
     }
     else {
         $helper->publication->each($printer);
@@ -744,8 +754,8 @@ sub _files_reporter {
     my $file_store = Catmandu->config->{filestore}->{default}->{package};
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     my $files = $pkg->new(%$file_opt);
 
     my $exporter = Catmandu->exporter('YAML');

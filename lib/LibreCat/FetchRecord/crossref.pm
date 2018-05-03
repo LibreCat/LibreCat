@@ -6,7 +6,8 @@ use Moo;
 
 with 'LibreCat::FetchRecord';
 
-has 'baseurl' => (is => 'ro' , default => sub { "https://api.crossref.org/works/" });
+has 'baseurl' =>
+    (is => 'ro', default => sub {"https://api.crossref.org/works/"});
 
 sub fetch {
     my ($self, $id) = @_;
@@ -16,13 +17,13 @@ sub fetch {
 
     $self->log->debug("requesting $id from crossref");
 
-    my $url  = sprintf "%s%s" , $self->baseurl , uri_escape_utf8($id);
+    my $url = sprintf "%s%s", $self->baseurl, uri_escape_utf8($id);
 
     my $data = Catmandu->importer('getJSON', from => $url)->to_array;
 
     unless (@$data) {
         $self->log->error(
-            "failed to request http://api.crossref.org/works/$id");
+            "failed to request https://api.crossref.org/works/$id");
         return ();
     }
 
