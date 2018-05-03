@@ -1,5 +1,12 @@
 Revision history for LibreCat
 
+{{NEXT}} {{DATE}}
+    - Deleted publications can be edited anymore in via the web forms
+    - Fixing related materials link
+    - Fixing admin users could delete read-only fields
+    - Fixing link supervisor to supervised theses on frontdoor #463
+    - Fixing extract citation box in separate template
+
 1.1.3 2018-04-13
     - Improving the livecitation tests
     - Improving test coverage

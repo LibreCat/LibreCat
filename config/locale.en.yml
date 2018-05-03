@@ -218,6 +218,7 @@ frontdoor:
   items: "Items"
   volume: "Volume"
   issue: "Issue"
+  article_number: "Article Number"
   page: "Page"
   tabs:
     details:
