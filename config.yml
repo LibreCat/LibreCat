@@ -99,7 +99,7 @@ plugins:
         metadataPrefix: oai_datacite
         schema: http://schema.datacite.org/meta/kernel-4.1/metadata.xsd
         metadataNamespace: http://datacite.org/schema/kernel-4
-        template: views/export/datacite_v4.1.tt
+        template: views/export/datacite.tt
         cql: 'status exact public'
         fix: ["fixes/to_datacite.fix"]
       -
