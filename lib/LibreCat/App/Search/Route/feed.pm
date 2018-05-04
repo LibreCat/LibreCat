@@ -1,5 +1,11 @@
 package LibreCat::App::Search::Route::feed;
 
+=head1 NAME
+
+LibreCat::App::Search::Route::feed - provides routes for RSS feeds
+
+=cut
+
 use Catmandu::Sane;
 use Catmandu::Fix qw(publication_to_dc);
 use Dancer qw(:syntax);
@@ -67,10 +73,28 @@ sub feed {
     return $rss->as_string;
 }
 
+=head2 GET /feed
+
+E.g to retrieve a researcher's publication feed go to
+
+/feed?q=person=1234
+
+=cut
+
 get '/feed' => sub {
     my $param = h->extract_params;
     return feed($param->{q});
 };
+
+=head2 GET /feed/:period
+
+E.g to retrieve a researcher's publication feed fromt last month go to
+
+/feed/monthly?q=person=1234
+
+Other possible values for :period are 'daily' and 'weekly'.
+
+=cut
 
 get '/feed/:period' => sub {
     my $param  = h->extract_params;
