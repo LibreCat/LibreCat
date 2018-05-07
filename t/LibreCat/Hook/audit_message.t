@@ -2,8 +2,9 @@ use Catmandu::Sane;
 use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
+use LibreCat::CLI;
 use LibreCat load => (layer_paths => [qw(t/layer)]);
-use Data::Dumper;
+use App::Cmd::Tester;
 
 my $pkg;
 
@@ -11,7 +12,9 @@ BEGIN {
     $pkg = 'LibreCat::Hook::audit_message';
     use_ok $pkg;
 
-    system "bin/librecat worker audit start --workers 1";
+    my $result = test_app(qq|LibreCat::CLI| => ['worker', 'audit', 'start', '--workers', '1']);
+    ok !$result->error ,"start worker audit";
+    ok $result->stdout, "start worker audit output";
 }
 
 require_ok $pkg;
@@ -59,10 +62,13 @@ like $a->{bag}, qr/publication/, "bag publication";
 like $a->{time}, qr/\d+/, "time field present";
 ok $a->{_id}, "_id field present";
 
+my $result = test_app(qq|LibreCat::CLI| => ['worker', 'audit', 'stop', '--workers', '1']);
+ok !$result->error, "stop worker audit";
+ok $result->stdout, "stop worker audit output";
+
 END {
     # cleanup
     Catmandu->store('main')->bag('audit')->delete_all;
-    system "bin/librecat worker audit stop --workers 1";
 }
 
 done_testing;
