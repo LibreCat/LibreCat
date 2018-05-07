@@ -575,6 +575,23 @@ sub logout_user {
 
 package LibreCat::App::Helper;
 
+=head1 NAME
+
+LibreCat::App::Helper - a helper package with utility functions
+
+=head1 SYNOPSIS
+
+    # usage in perl code
+    use LibreCat::App::Helper;
+    # symbol h is automatically imported
+
+    my $uri_base = h->uri_base; # get hostname
+
+    # usage in templates
+    <a href="[% h.uri_base %]/publication">Publications</a>
+
+=cut
+
 my $h = LibreCat::App::Helper::Helpers->new;
 
 use Catmandu::Sane;
@@ -584,7 +601,6 @@ use Dancer::Plugin;
 register h => sub {$h};
 
 hook before_template => sub {
-
     $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
 
