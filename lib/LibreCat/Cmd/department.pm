@@ -190,6 +190,8 @@ sub _tree_parse {
         }
     );
     department->commit;
+
+    return 0;
 }
 
 sub _tree_parse_parser {

@@ -5,7 +5,7 @@ CMD=$1
 
 function whoops {
     DATE=`date`
-    error "caught an $? at line $1 exiting"
+    echo "caught an $? at line $1 exiting"
     exit 2
 }
 
