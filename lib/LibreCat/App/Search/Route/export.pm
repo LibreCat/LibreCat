@@ -10,7 +10,7 @@ use Catmandu::Sane;
 use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:is);
 use Dancer qw/:syntax/;
-use LibreCat;
+use LibreCat qw(searcher);
 use LibreCat::App::Helper;
 
 =head2 GET /export
@@ -50,7 +50,7 @@ get '/export' => sub {
     }
 
     h->log->debug("searching for publications:" . Dancer::to_json($p));
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     my $package = $spec->{package};
     my $options = $spec->{options} || {};

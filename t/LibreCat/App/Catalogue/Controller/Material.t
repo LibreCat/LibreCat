@@ -1,5 +1,5 @@
 use Catmandu::Sane;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use LibreCat::App::Helper;
 use Test::More;
 use Test::Exception;
