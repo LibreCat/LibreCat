@@ -1,5 +1,11 @@
 package LibreCat::App::Catalogue::Controller::Material;
 
+=head1 NAME LibreCat::App::Catalogue::Controller::Material
+
+Helper methods for handling related material links.
+
+=cut
+
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat::App::Helper;
@@ -8,6 +14,18 @@ use Exporter qw/import/;
 
 our @EXPORT = qw/update_related_material/;
 
+=head1 METHODS
+
+=head2 update_related_material($pub)
+
+Given an updated publication. Update all the related material links in the
+target records.
+
+Each related material link provides a relation of the current record to zero
+or more other records. This methods follows all these links and inserts/deletes
+links to the current record and updates the publication status.
+
+=cut
 sub update_related_material {
     my $pub = shift;
 
