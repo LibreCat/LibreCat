@@ -63,7 +63,7 @@ sub _exporter_expand_sub {
     if (any { $_ eq $name } qw(librecat l)) {
         return $name => sub { state $memo = $class->instance };
     }
-    if (any { $_ eq $name } qw(config fixer hook queue model root_path searcher timestamp)) {
+    if (any { $_ eq $name } qw(log config fixer hook queue model root_path searcher timestamp)) {
         return $name => sub { state $memo = $class->instance; $memo->$name(@_) };
     }
     if ($class->instance->has_model($name)) {
