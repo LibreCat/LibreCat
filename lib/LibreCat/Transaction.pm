@@ -2,15 +2,27 @@ package LibreCat::Transaction;
 
 use Catmandu::Sane;
 use Catmandu;
+use Hash::Util qw(fieldhash);
 use Moo::Role;
 use namespace::clean;
 
+fieldhash my %tx_index_queue;
+
 sub transaction {
+    my ($self, $cb) = @_;
     Catmandu->store('main')->transaction($_[1]);
+
 }
 
 sub tx {
-    $_[0]->transaction($_[1]);
+    my $ret = $_[0]->transaction($_[1]);
+    return $ret if $self->in_transaction;
+    for my $bag (keys %tx_queue) {
+        my $recs = delete $tx_index_queue{$bag};
+        $bag->add($_) for @$recs;
+        $bag->commit;
+    }
+    $ret;
 }
 
 sub in_transaction {
@@ -19,6 +31,13 @@ sub in_transaction {
 
 sub in_tx {
     $_[0]->in_transaction;
+}
+
+sub tx_index_queue_add {
+    my ($self, $bag, $rec) = @_;
+    my $queue = $tx_index_queue{$bag} ||= [];
+    push @$queue, $rec;
+    $rec;
 }
 
 1;
