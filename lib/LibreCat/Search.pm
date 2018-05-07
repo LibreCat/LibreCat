@@ -172,3 +172,55 @@ sub _is_sru_sort {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Search - module that provides search functionality in LibreCat
+
+=head1 SYNOPSIS
+
+    use LibreCat::Search;
+
+    my $s = LibreCat::Search->new(store => Catmandu->store('search'));
+    $s->native_search();
+
+    $s->search();
+
+    # or through LibreCat
+    use LibeCat;
+
+    my xx = LibreCat->searcher->search(...);
+
+
+=head1 METHODS
+
+=over
+
+=item native_search($opts)
+
+$opts = {
+    cql =>
+    q =>
+    sort =>
+    start => 0, #optional
+    limit => 20, #optional
+    facets => { #optional
+     ...
+    }
+}
+
+=item search($opts)
+
+xxx
+
+=back
+
+=head1 SEE ALSO
+
+L<LibreCat>
+
+=cut

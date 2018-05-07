@@ -26,14 +26,13 @@ sub fetch {
 
 1;
 
-
 __END__
 
 =pod
 
 =head1 NAME
 
-LibreCat::FetchRecord::wos - Create a LibreCat publication from a WoS file
+LibreCat::FetchRecord::wos - Create LibreCat publications from a WoS file
 
 =head1 SYNOPSIS
 
