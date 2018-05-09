@@ -157,7 +157,7 @@
   [%- END %]
 
   <li>
-    <a href="[% request.uri_for("/marked", qp) %]" rel="nofollow" class="btn-link"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
+    <a href="[% request.uri_for("/marked") %]" rel="nofollow" class="btn-link"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
   </li>
 </ul>
 
