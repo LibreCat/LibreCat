@@ -67,14 +67,14 @@
       <span class="text-muted"><strong>[% h.loc("main_page.statuses.private") %]</strong></span>
     [% END %]
   </div>
-[% ELSIF request.path_info == "/marked" OR request.path_info.match("/person") %]
+[% ELSIF request.path_info == "/marked" OR request.path_info.match("/person") OR request.path_info.match("/publication") %]
   <div class="col-md-1">
-    [% UNLESS request.path_info == "/marked" %][[% num - n %]] [% n = n +1 %]<br>[% END %]
+    [% UNLESS request.path_info == "/marked" %][% UNLESS request.path_info.match("/publication") %][[% num - n %]][% END %] [% n = n +1 %]<br>[% END %]
     [% IF !backend %]<a [% IF request.path_info == "/marked" %]id="clickme_[% n %]" [% END %]class="mark btn btn-xs padding0" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %]</a>[% END %]
   </div>
 [% ELSE %]
 [% END %]
-[% IF backend OR request.path_info == "/marked" OR request.path_info.match("/person") %]
+[% IF backend OR request.path_info == "/marked" OR request.path_info.match("/person") OR request.path_info.match("/publication") %]
     <div class="col-md-11[% IF backend AND loop.first %] helpme" data-placement="top" title="[% h.loc("help.citation") %][% END %]">
 [% ELSE %]
     <div class="col-md-12">
