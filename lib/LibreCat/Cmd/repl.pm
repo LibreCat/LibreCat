@@ -39,7 +39,7 @@ sub command {
     my $init = <<PERL;
     use Catmandu::Sane;
     use Catmandu;
-    use LibreCat;
+    use LibreCat qw(:self);
 PERL
 
     my $repl = Devel::REPL->new;

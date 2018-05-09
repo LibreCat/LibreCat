@@ -16,7 +16,7 @@ Create a new instance of LibreCat::Index
 
 use Catmandu::Sane;
 use Catmandu::Util;
-use LibreCat::App::Helper;
+use LibreCat qw(fixer);
 use Search::Elasticsearch;
 use Try::Tiny;
 use Moo;
@@ -372,7 +372,6 @@ sub switch {
 sub _do_index {
     my ($self, $new) = @_;
 
-    my $h = LibreCat::App::Helper::Helpers->new;
     my $new_name = $new->{index_name};
     my @bags = keys %{Catmandu->config->{store}->{search}->{options}->{bags}};
 
@@ -384,7 +383,7 @@ sub _do_index {
         # First index all records from the main database...
         for my $b (@bags) {
             print "Indexing $b into $new_name...\n";
-            my $fixer = $h->create_fixer("index_$b.fix");
+            my $fixer = fixer("index_$b.fix");
             my $bag   = $new->bag($b);
             $bag->add_many($fixer->fix($self->main->bag($b)->benchmark));
             $bag->commit;
@@ -399,7 +398,7 @@ sub _do_index {
             for my $b (@bags) {
                 print "Checking $b ...\n";
                 my $bag   = $new->bag($b);
-                my $fixer = $h->create_fixer("index_$b.fix");
+                my $fixer = fixer("index_$b.fix");
                 my $it    = $self->main_index->bag($b)->searcher(
                                 query => {range => {date_updated => {gte => $now}}}
                                 );

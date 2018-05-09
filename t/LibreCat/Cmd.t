@@ -3,6 +3,7 @@ use warnings FATAL => 'all';
 use Test::More;
 use File::Slurp;
 use App::Cmd::Tester;
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use LibreCat::CLI;
 
 my $pkg;
