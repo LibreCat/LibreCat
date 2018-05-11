@@ -7,6 +7,7 @@ use DateTime;
 use XML::RSS;
 use Encode;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
 
 sub feed {
     my $q      = shift // [];
@@ -48,7 +49,7 @@ sub feed {
         }
     );
 
-    my $hits = LibreCat->searcher->search('publication', {q => $query});
+    my $hits = searcher->search('publication', {q => $query});
 
     $hits->each(
         sub {

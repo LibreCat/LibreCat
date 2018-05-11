@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
 

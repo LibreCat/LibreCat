@@ -1,27 +1,23 @@
 package LibreCat::Validator::JSONSchema;
 
 use Catmandu::Sane;
-use Moo::Role;
+use Moo;
 use namespace::clean;
 
-with 'Catmandu::Validator';
+extends 'Catmandu::Validator::JSONSchema';
 
-requires 'schema_validator';
+with 'LibreCat::Validator';
 
-sub validate_data {
-    my ($self, $data) = @_;
-
-    $self->schema_validator->validate($data);
-
-    my $errors = $self->schema_validator->last_errors();
-
-    return unless defined $errors;
-
-    [map {$_->{property} . ": " . $_->{message}} @$errors];
+sub _build_whitelist {
+    my ($self) = @_;
+    my $properties = $self->schema->{properties} // {};
+    [keys %$properties];
 }
 
-sub white_list {
-    return ();
-}
+around last_errors => sub {
+    my $orig = shift;
+    my $errors = $orig->(@_) // return;
+    [map {"$_->{property}: $_->{message}"} @$errors];
+};
 
 1;

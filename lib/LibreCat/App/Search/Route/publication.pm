@@ -9,6 +9,7 @@ LibreCat::App::Search::Route::publication - handling public record routes.
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
 
 =head2 GET /publication
 
@@ -57,13 +58,13 @@ get qr{/record/([A-Fa-f0-9-]+)} => sub {
 
     push @{$p->{cql}}, ("status=public", "id=$id");
 
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     unless ($hits->{total}) {
         $p->{cql} = [];
         push @{$p->{cql}}, ("status=public", "altid=$id");
 
-        $hits = LibreCat->searcher->search('publication', $p);
+        $hits = searcher->search('publication', $p);
         return redirect "/record/" . $hits->first->{_id}, 301
             if $hits->{total};
     }
@@ -86,7 +87,7 @@ get qr{/record/*} => sub {
 
     $p->{sort} = $p->{sort} // h->config->{default_sort};
 
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     template 'publication/list', $hits;
 };
@@ -106,7 +107,7 @@ get '/embed' => sub {
     $p->{start} = params->{start};
     $p->{limit} = h->config->{maximum_page_size};
 
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     $hits->{embed} = 1;
 
