@@ -39,11 +39,6 @@ sub _export {
     h->log->debug("searching for publications:" . Dancer::to_json($params));
     my $hits = searcher->search('publication', $params);
 
-    unless ($hits->total > 0 ){
-        status '404';
-        return;
-    }
-
     my $package = $spec->{package};
     my $options = $spec->{options} || {};
     $options->{style} = $params->{style} if $params->{style};
