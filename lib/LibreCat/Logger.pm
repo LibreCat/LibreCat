@@ -1,16 +1,14 @@
 package LibreCat::Logger;
 
 use Catmandu::Sane;
-use Log::Log4perl ();
+use Log::Any ();
 use Moo::Role;
 use namespace::clean;
 
 has log => (is => 'lazy');
 
 sub _build_log {
-    my ($self) = @_;
-
-    Log::Log4perl::get_logger(ref $self);
+    Log::Any->get_logger;
 }
 
 1;
