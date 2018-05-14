@@ -2,7 +2,10 @@
 [% bag = entry.type == "research_data" ? "data" : "publication" %]
 <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% h.loc("main_page.links.view_details") %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.details") %]</a>
   [% IF entry.type == "research_data" AND (entry.file || entry.related_material || entry.externalFiles == "1") %]
-  | <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
+  | <a
+        href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]"
+        class="label label-primary"
+        [% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.files") %]</a>
   [% ELSIF entry.type != "research_data" AND entry.file %]
     [% display_file = [] %]
     [% counter = 0 %]
@@ -16,9 +19,14 @@
     [% END %]
     [% END %]
     [% IF counter > 1 %]
-      | <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
+      | <a
+            href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]"
+            class="label label-primary"
+            [% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.files") %]</a>
     [% ELSIF counter == 1 %]
-      | <a href="[% uri_base %]/download/[% entry._id %]/[% display_file.0.file_id %]/[% display_file.0.file_name | uri %]">[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
+      | <a
+            href="[% uri_base %]/download/[% entry._id %]/[% display_file.0.file_id %]/[% display_file.0.file_name | uri %]"
+            [% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
     [% END %]
   [% END %]
 
