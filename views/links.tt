@@ -1,5 +1,8 @@
 <!-- BEGIN links.tt -->
 [% bag = entry.type == "research_data" ? "data" : "publication" %]
+[%- ip = request.address %]
+[%- ip_range = h.config.ip_range %]
+[%- local_user = h.within_ip_range(ip, ip_range) %]
 <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" title="[% h.loc("main_page.links.view_details") %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.details") %]</a>
   [% IF entry.type == "research_data" AND (entry.file || entry.related_material || entry.externalFiles == "1") %]
   | <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
@@ -7,7 +10,7 @@
     [% display_file = [] %]
     [% counter = 0 %]
     [% FOREACH fi IN entry.file %]
-    [% IF fi.open_access AND fi.relation != "hidden" %][% counter = counter + 1 %][% display_file.push(fi) %][% END %]
+    [% IF (fi.access_level == "open_access" OR (fi.access_level == "local" AND local_user) OR (fi.access_level = "closed" AND p.can_edit( entry._id, user_id = session.user_id, role = session.role ))) AND fi.relation != "hidden" %][% counter = counter + 1 %][% display_file.push(fi) %][% END %]
     [% END %]
     [% IF counter > 1 %]
       | <a href="[% uri_base %][% IF entry.status == "public" %]/[% bag %]/[% entry._id %][% ELSE %]/librecat/record/preview/[% entry._id %][% END %]" class="label label-primary">[% h.loc("main_page.links.files") %]</a>
@@ -15,7 +18,7 @@
       | <a href="[% uri_base %]/download/[% entry._id %]/[% display_file.0.file_id %]/[% display_file.0.file_name | uri %]">[% display_file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
     [% END %]
   [% ELSIF entry.type != "research_data" AND entry.file AND entry.file.size == 1 %]
-    [% IF entry.file.0.open_access %]
+    [% IF entry.file.0.access_level == "open_access" OR (entry.file.0.access_level == "local" AND local_user) OR (entry.file.0.access_level = "closed" AND p.can_edit( entry._id, user_id = session.user_id, role = session.role )) %]
     | <a href="[% uri_base %]/download/[% entry._id %]/[% entry.file.0.file_id %]/[% entry.file.0.file_name | uri %]">[% entry.file.0.file_name.match("(?i).pdf$") ? "PDF" : lf.main_page.links.file %]</a>
     [% END %]
   [% END %]
