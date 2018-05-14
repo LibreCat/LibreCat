@@ -1,6 +1,6 @@
 use strict;
 use warnings FATAL => 'all';
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use LibreCat::JobQueue;
 use LibreCat::CLI;
 use Test::More;

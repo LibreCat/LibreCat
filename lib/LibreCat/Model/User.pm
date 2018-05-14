@@ -1,26 +1,24 @@
-package LibreCat::User;
+package LibreCat::Model::User;
 
 use Catmandu::Sane;
+use LibreCat qw(:self);
 use Catmandu;
 use Moo;
 use namespace::clean;
 
-has sources => (is => 'ro', default => sub {[]},);
+with 'LibreCat::Model';
 
+has sources       => (is => 'ro', default => sub {[]},);
 has username_attr => (is => 'ro', default => sub {'username'},);
+has _bags         => (is => 'lazy',);
+has _username_attrs => (is => 'lazy');
 
-has _bags => (is => 'lazy', builder => '_build_bags',);
-
-has _username_attrs => (is => 'lazy', builder => '_build_username_attrs',);
-
-with 'Catmandu::Logger';
-
-sub _build_username_attrs {
+sub _build__username_attrs {
     my ($self) = @_;
     [map {$_->{username_attr} // $self->username_attr;} @{$self->sources}];
 }
 
-sub _build_bags {
+sub _build__bags {
     my ($self) = @_;
     [
         map {
@@ -50,6 +48,20 @@ sub get {
     return;
 }
 
+# TODO clean this up
+sub find {
+    my ($self, $id) = @_;
+    if ($id) {
+        my $hits = librecat->searcher->search('user', {cql => ["id=$id"]});
+        $hits = librecat->searcher->search('user', {cql => ["login=$id"]})
+            if !$hits->{total};
+        return $hits->{hits}->[0] if $hits->{total};
+        if (my $user = $self->get($id) || $self->find_by_username($id)) {
+            return $user;
+        }
+    }
+}
+
 sub find_by_username {
     my ($self, $username) = @_;
 
@@ -64,7 +76,7 @@ sub find_by_username {
 
         if ($bag->does('Catmandu::Searchable')) {
 
- # For now we assume the Searchable store are ElasticSearch implementations...
+            # for now we assume the Searchable store is ElasticSearch
             my $query = sprintf "%s:%s", $attrs->[$i], $username;
 
             $self->log->debug("..query $query");
@@ -87,6 +99,7 @@ sub find_by_username {
     return;
 }
 
+# TODO does this belong here?
 sub to_session {
 
     my ($self, $user) = @_;
@@ -112,5 +125,3 @@ sub to_session {
 }
 
 1;
-
-__END__

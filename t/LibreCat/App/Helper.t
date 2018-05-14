@@ -2,7 +2,7 @@ use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat 'model', -load => {layer_paths => [qw(t/layer)]};
 use utf8;
 
 my $pkg;
@@ -28,8 +28,6 @@ is h->config->{store}->{main}->{options}->{data_source},
 isa_ok h->hook('publication-update'), 'LibreCat::Hook', 'h->hook';
 
 isa_ok h->queue, 'LibreCat::JobQueue', 'h->queue';
-
-isa_ok h->layers, 'LibreCat::Layers', 'h->layers';
 
 isa_ok h->create_fixer('blabalbla'), 'Catmandu::Fix',
     'h->create_fixer(blabalbla)';
@@ -174,23 +172,16 @@ like h->now, qr{^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$}, 'h->now';
 is h->pretty_byte_size(1230231), '1.23 MB', 'h->pretty_byte_size';
 
 {
-    my $store = Catmandu->store('search')->bag('publication');
-    my $pub   = Catmandu->importer('YAML',
+    my $rec = Catmandu->importer('YAML',
         file => 't/records/valid-publication.yml')->first;
-    my $id = $pub->{_id};
+    my $id = $rec->{_id};
 
     # Add some sample date
-    $store->add($pub);
-    $store->commit;
-
-    sleep(2);
+    model('publication')->add($rec);
 
     ok h->get_publication($id), 'h->get_publication';
 
-    $store->delete($id);
-    $store->commit;
-
-    sleep(2);
+    model('publication')->purge($id);
 }
 
 ok !h->get_publication('999999999'), 'h->get_publication';
@@ -204,47 +195,31 @@ ok $person , 'h->get_person';
 is $person->{login}, 'einstein', 'person = einstein';
 
 {
-    my $store = Catmandu->store('search')->bag('project');
-    my $pub
+    my $rec
         = Catmandu->importer('YAML', file => 't/records/valid-project.yml')
         ->first;
-    my $id = $pub->{_id};
+    my $id = $rec->{_id};
 
-    # Add some sample date
-    $store->add($pub);
-    $store->commit;
-
-    sleep(2);
+    model('project')->add($rec);
 
     ok h->get_project($id), 'h->get_project';
 
-    $store->delete($id);
-    $store->commit;
-
-    sleep(2);
+    model('project')->purge($id);
 }
 
 ok !h->get_project(0), 'h->get_project';
 
 {
-    my $store = Catmandu->store('search')->bag('department');
-    my $pub
+    my $rec
         = Catmandu->importer('YAML', file => 't/records/valid-department.yml')
         ->first;
-    my $id = $pub->{_id};
+    my $id = $rec->{_id};
 
-    # Add some sample date
-    $store->add($pub);
-    $store->commit;
-
-    sleep(2);
+    model('department')->add($rec);
 
     ok h->get_department($id), 'h->get_department';
 
-    $store->delete($id);
-    $store->commit;
-
-    sleep(2);
+    model('department')->purge($id);
 }
 
 ok !h->get_department(0), 'h->get_department';
@@ -262,82 +237,6 @@ ok exists $statistics->{publications}, '..publications';
 ok exists $statistics->{researchdata}, '..researchdata';
 ok exists $statistics->{oahits},       '..oahits';
 ok exists $statistics->{projects},     '..projects';
-
-like h->new_record, qr{^[A-Z0-9-]+$}, 'h->new_record';
-
-{
-    my $index = Catmandu->store('search')->bag('publication');
-    my $store = Catmandu->store('main')->bag('publication');
-
-    my $pub = Catmandu->importer('YAML',
-        file => 't/records/valid-publication.yml')->first;
-    my $id = $pub->{_id};
-
-    $pub->{title} = '我能吞下玻璃而不伤身体';
-
-    my $pub_stored = h->update_record('publication', $pub);
-
-    ok $pub_stored , 'h->update_record';
-
-    is $pub_stored->{title}, '我能吞下玻璃而不伤身体',
-        '..check title (return value)';
-
-    is $store->get($id)->{title}, '我能吞下玻璃而不伤身体',
-        '..check title (main)';
-
-    is $index->get($id)->{title}, '我能吞下玻璃而不伤身体',
-        '..check title (index)';
-
-    $pub->{title}
-        = 'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती';
-
-    my $saved_record = h->store_record('publication', $pub);
-
-    ok $saved_record , 'h->store_record';
-
-    is $saved_record->{title},
-        'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (return value)';
-
-    is $store->get($id)->{title},
-        'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (main)';
-
-    is $index->get($id)->{title}, '我能吞下玻璃而不伤身体',
-        '..check title (index)';
-
-    my $indexed_record = h->index_record('publication', $pub);
-
-    ok $indexed_record , 'h->index_record';
-
-    is $indexed_record->{title},
-        'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (return value)';
-
-    is $store->get($id)->{title},
-        'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (main)';
-
-    is $index->get($id)->{title},
-        'मैं काँच खा सकता हूँ और मुझे उससे कोई चोट नहीं पहुंचती',
-        '..check title (index)';
-
-    my $deleted_record = h->delete_record('publication', $id);
-
-    ok $deleted_record , 'h->delete_record';
-
-    is $deleted_record->{status}, 'deleted', '..check status (return val)';
-
-    is $store->get($id)->{status}, 'deleted', '..check title (main)';
-
-    is $index->get($id)->{status}, 'deleted', '..check title (index)';
-
-    ok h->purge_record('publication', $id), 'h->purge_record';
-
-    ok !$store->get($id), '...purged (main)';
-
-    ok !$index->get($id), '...purged (index)';
-}
 
 is h->uri_base, 'http://localhost:5001', 'h->uri_base';
 

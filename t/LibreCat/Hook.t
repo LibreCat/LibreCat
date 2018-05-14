@@ -3,7 +3,7 @@ package main;
 use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 package LibreCat::Hook::foo;
 
@@ -34,7 +34,7 @@ package main;
 use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -self => -load => {layer_paths => [qw(t/layer)]};
 
 my $pkg;
 
@@ -52,7 +52,7 @@ Catmandu->config->{hooks}
     'test-123' => {'before_fixes' => [qw(foo)], 'after_fixes' => [qw(bar)],}
     };
 
-my $hook = LibreCat->hook('test-123');
+my $hook = librecat->hook('test-123');
 
 ok $hook , 'got a hook';
 

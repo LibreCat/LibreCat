@@ -2,7 +2,7 @@ package LibreCat::FetchRecord;
 
 use Catmandu::Sane;
 use Catmandu;
-use LibreCat;
+use LibreCat qw(:self);
 use Moo::Role;
 use namespace::clean;
 
@@ -15,7 +15,7 @@ sub create_fixer {
 
     $self->log->debug("searching for fix `$file'");
 
-    for my $p (@{LibreCat->layers->fixes_paths}) {
+    for my $p (@{librecat->fixes_paths}) {
         $self->log->debug("testing `$p/$file'");
         if (-r "$p/$file") {
             $self->log->debug("found `$p/$file'");
