@@ -246,7 +246,7 @@ sub get_statistics {
         {cql => ["status=public", "type<>research_data"]});
     my $reshits = librecat->searcher->search('publication',
         {cql => ["status=public", "type=research_data"]});
-    my $oahits = LibreCat->searcher->search('publication',
+    my $oahits = librecat->searcher->search('publication',
         {cql => ["status=public", "oa=1", "type<>research_data",]});
 
     return {
