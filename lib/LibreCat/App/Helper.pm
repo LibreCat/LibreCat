@@ -249,7 +249,7 @@ sub get_statistics {
         {cql => ["publication_count>0"]});
 
     my $oahits = librecat->searcher->search('publication',
-        {cql => ["status=public", "fulltext=1",]});
+        {cql => ["status=public", "oa=1"]});
 
     return {
         publications => $hits->{total},
@@ -543,6 +543,23 @@ sub logout_user {
 
 package LibreCat::App::Helper;
 
+=head1 NAME
+
+LibreCat::App::Helper - a helper package with utility functions
+
+=head1 SYNOPSIS
+
+    # usage in perl code
+    use LibreCat::App::Helper;
+    # symbol h is automatically imported
+
+    my $uri_base = h->uri_base; # get hostname
+
+    # usage in templates
+    <a href="[% h.uri_base %]/publication">Publications</a>
+
+=cut
+
 my $h = LibreCat::App::Helper::Helpers->new;
 
 use Catmandu::Sane;
@@ -552,7 +569,6 @@ use Dancer::Plugin;
 register h => sub {$h};
 
 hook before_template => sub {
-
     $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
 

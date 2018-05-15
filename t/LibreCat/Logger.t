@@ -22,9 +22,12 @@ require_ok $pkg;
     with $pkg;
 }
 
-my $l = T::Logger->new();
+my $l = T::Logger->new;
 
 ok $l->does('LibreCat::Logger');
-can_ok $l, 'log';
+can_ok($l, 'log');
+isa_ok($l->log, 'Log::Any::Proxy');
+isa_ok($l->log->adapter, 'Log::Any::Adapter::Log4perl');
+ok($l->log->is_debug);
 
 done_testing;

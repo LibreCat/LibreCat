@@ -67,7 +67,9 @@ sub append_before_index {
     push @{$self->before_index}, @$hooks;
 }
 
-sub BUILD {
+sub BUILD {}
+
+before BUILD => sub {
     my ($self, $opts) = @_;
 
     for my $method (qw(prepend_before_add append_before_add prepend_before_index append_before_index)) {
@@ -75,7 +77,7 @@ sub BUILD {
             $self->$method($hooks);
         }
     }
-}
+};
 
 sub generate_id {
     $_[0]->bag->generate_id;

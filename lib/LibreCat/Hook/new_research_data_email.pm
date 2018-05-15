@@ -38,3 +38,24 @@ sub fix {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Hook::new_research_data_email - a LibreCat hook that sends an email in case of RD upload
+
+=head1 SYNOPSIS
+
+    hooks:
+      publication-update:
+        bafter_fixes:
+          - new_research_data_email
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<LibreCat::Hook>, L<LibreCat::Worker::Mailer>
+
+=cut

@@ -67,6 +67,8 @@ routes:
     - [ 'GET'  , '/librecat/person/set_language' , 'login'  ]
     - [ 'POST' , '/librecat/person/affiliation'  , 'login'  ]
 
+    - [ 'GET'  , '/librecat/export' , 'login'  ]
+
     - [ 'ANY'  , '/librecat/api'                 , 'api_access' ]
 
     # catch all for security reasons
