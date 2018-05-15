@@ -208,7 +208,10 @@
           <li><a href="#relLinkRd" data-toggle="tab">[% h.loc("frontdoor.tabs.external_data.label") %]</a></li>
           [% END %]
 
+          [%- IF display_citation %]
           <li class="hidden-md hidden-lg hidden-sm"><a href="#citethis">[% h.loc("frontdoor.tabs.cite_this") %]</a></li>
+          [%- END %]
+          
           <li class="hidden-md hidden-lg hidden-sm"><a href="#export">[% h.loc("frontdoor.tabs.export_search") %]</a></li>
 
           [%- IF status == "public" %]
