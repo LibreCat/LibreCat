@@ -18,6 +18,11 @@ my $instance = LibreCat->instance;
 
 ok($instance == LibreCat->instance, "instance is a singleton");
 
+# logger
+
+isa_ok($instance->log, 'Log::Any::Proxy');
+isa_ok($instance->log->adapter, 'Log::Any::Adapter::Log4perl');
+
 # config
 
 is(ref $instance->config, 'HASH');
