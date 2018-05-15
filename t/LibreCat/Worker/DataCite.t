@@ -1,6 +1,7 @@
 use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
+use Data::Dumper;
 
 my $pkg;
 
@@ -25,8 +26,9 @@ my $user     = $ENV{DATACITE_USER}     || "";
 my $password = $ENV{DATACITE_PASSWORD} || "";
 
 my $datacite_xml = <<EOF;
+<?xml version="1.0" encoding="UTF-8"?>
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
-<identifier identifierType="DOI">10.5072/LibreCatTestDOI871263127836</identifier>
+<identifier identifierType="DOI">10.5072/LibreCatTest1234</identifier>
 <creators>
 <creator>
 <creatorName nameType="Personal">Fosmire, Michael</creatorName>
@@ -45,7 +47,7 @@ my $datacite_xml = <<EOF;
 </creator>
 </creators>
 <titles>
-<title xml:lang="en">Critical Engineering Literacy Test (CELT)</title>
+<title xml:lang="en">Critical Engineering Literacy Test (CELT) Come on</title>
 </titles>
 <publisher>Purdue University Research Repository (PURR)</publisher>
 <publicationYear>2013</publicationYear>
@@ -75,17 +77,19 @@ SKIP: {
         if (!$user || !$password);
 
     my $registry
-        = $pkg->new(user => $user, password => $password, test_mode => 1);
+        = $pkg->new(user => $user, password => $password);
 
     my $res = $registry->work(
         {
-            doi          => "10.5072/LibreCatTestDOI871263127836",
+            doi          => "10.5072/LibreCatTest1234",
             landing_url  => "http://pub.uni-bielefeld.de/mytest/dataset",
             datacite_xml => $datacite_xml,
         }
     );
 
-    ok $res;
+note Dumper $res;
+    # ok $res;
+    # is_deeply $res, { mint => 200, metadata => 200}
 }
 
 done_testing;

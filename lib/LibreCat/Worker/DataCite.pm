@@ -4,10 +4,7 @@ use Catmandu::Sane;
 use Furl;
 use HTTP::Headers;
 use HTTP::Request;
-
-# use Term::ReadKey;
-# use URI;
-# use URI::Escape;
+use URI;
 use Encode qw(encode_utf8);
 use Try::Tiny;
 use Moo;
@@ -45,12 +42,7 @@ sub mint {
 
     my $uri = URI->new($self->base_url);
     $uri->path("doi");
-    $uri->query_form(
-        doi      => $doi,
-        url      => $landing_url,
-        testMode => $self->test_mode ? 'true' : 'false',
-    );
-    $self->_do_request('POST', $uri->as_string, 'text/plain;charset=UTF-8',);
+    $self->_do_request('POST', $uri->as_string, "doi=$doi\nurl=$landing_url", 'text/plain;charset=UTF-8',);
 }
 
 sub metadata {
@@ -61,7 +53,7 @@ sub metadata {
     $self->log->debug("Register metadata for $doi. XML: $datacite_xml.");
 
     my $uri = URI->new($self->base_url);
-    $uri->path("doi");
+    $uri->path("metadata");
     $uri->query_form(testMode => $self->test_mode ? 'true' : 'false',);
     $self->_do_request('POST', $uri->as_string, $datacite_xml,
         'application/xml;charset=UTF-8',
@@ -86,7 +78,7 @@ sub _do_request {
         $req->authorization_basic($self->user, $self->password);
         my $furl = Furl->new();
         $res = $furl->request($req);
-
+return $res;
         my $status = $res->code();
         $self->log->debug("Status code $status.");
         return $status;
