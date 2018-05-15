@@ -1,6 +1,6 @@
 use Catmandu::Sane;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 use Catmandu;
 

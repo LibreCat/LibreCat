@@ -3,7 +3,7 @@ use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
 use Path::Tiny;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 my $pkg;
 
