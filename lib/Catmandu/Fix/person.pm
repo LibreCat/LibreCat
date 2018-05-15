@@ -22,7 +22,7 @@ sub _build_helper {
 sub fix {
     my ($self, $data) = @_;
     my @types
-        = qw(author editor translator supervisor corporate_editor applicant);
+        = qw(author editor translator supervisor applicant);
 
     my $users = $self->helper->main_user;
 

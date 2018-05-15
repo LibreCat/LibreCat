@@ -12,7 +12,7 @@ with 'LibreCat::Model';
 
 sub BUILD {
     my ($self) = @_;
-    $self->append_before_add(
+    $self->prepend_before_add(
         [
 
             # TODO this is very dirty and executes even if validation fails
