@@ -2,36 +2,40 @@
 # import data from http://data.datacite.org
 
 # map mandatory fields
-set_field(type,research_data)
-move_field(identifier.content,doi)
-remove_field(identifier)
+if any_match(resourceType.content, '(?i)article')
+  add_field(r.type, journal_article)
+else
+  add_field(r.type, research_data)
+end
 
-move_field(publicationYear,year)
+move_field(identifier.content, r.doi)
+
+move_field(publicationYear, r.year)
 
 if is_array(titles.title)
   join_field(titles.title, ' - ')
 end
-move_field(titles.title,title)
-remove_field(titles)
+move_field(titles.title, r.title)
 
-add_field(status,new)
+add_field(r.status, new)
 
-move_field(language, language.0.iso)
+move_field(language, r.language.0.iso)
 
-move_field(creators.creator.*.creatorName,author.$appenbd)
-remove_field(creators)
+if exists(creators.creator.creatorName)
+  move_field(creators.creator.creatorName, r.author.$append)
+else
+  move_field(creators.creator.*.creatorName, r.author.$append)
+end
+
+do list(path:descriptions.description, var:loop)
+  if any_match(loop.descriptionType, '(?i)abstract')
+    move_field(loop.content, r.abstract.$append.text)
+    add_field(r.abstract.$append.lang, eng)
+  end
+end
+
+retain_field(r)
+move_field(r, .)
+
 split_author()
-
-# remove fields not used yet
-remove_field(formats)
-remove_field(resourceType)
-remove_field(alternateIdentifiers)
-remove_field(dates)
-remove_field(relatedIdentifiers)
-remove_field(rightsList)
-remove_field(version)
-
-# remove xml stuff
-remove_field(xmlns)
-remove_field('xmlns:xsi')
-remove_field('xsi:schemaLocation')
+vacuum()
