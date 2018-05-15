@@ -1,6 +1,6 @@
 use Catmandu::Sane;
 use Catmandu;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
@@ -149,6 +149,30 @@ note("testing getting publication metadata");
 
     is $record->{_id}, 999999999, 'got really a 999999999 record';
     is $record->{title}, 'Valid Test Publication', 'got a valid title';
+}
+
+note("testing getting publication metadata versions");
+{
+    my $record = get_publication('999999999');
+    $record->{title} = "$record->{title} -- updated";
+    add_publication($record);
+    $record = get_publication('999999999');
+    $record->{title} = "$record->{title} again";
+    add_publication($record);
+
+    my $result
+        = test_app(
+        qq|LibreCat::CLI| => ['publication', 'get', '999999999', '--history']
+        );
+    ok !$result->error, 'get threw no exception';
+
+    my $output = $result->stdout;
+
+    ok $output , 'got an output';
+
+    my $importer = Catmandu->importer('YAML', file => \$output);
+
+    is $importer->count, 3, 'got record history';
 }
 
 note("adding a file to the file store");
@@ -335,6 +359,7 @@ note("testing deleting a publication");
     ok $record , 'got record 999999999';
 
     is $record->{status}, 'deleted', 'status = deleted';
+
     ok $record->{date_deleted}, 'got a date_deleted';
 }
 

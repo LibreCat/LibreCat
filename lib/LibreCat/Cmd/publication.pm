@@ -3,8 +3,7 @@ package LibreCat::Cmd::publication;
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util;
-use LibreCat::App::Helper;
-use LibreCat::Validator::Publication;
+use LibreCat qw(queue publication timestamp);
 use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
@@ -83,7 +82,10 @@ sub command_opt_spec {
 }
 
 sub opts {
-    state $opts = $_[1];
+    if ($_[1]) {
+        $_[0]->{__opts} = $_[1];
+    }
+    $_[0]->{__opts};
 }
 
 sub command {
@@ -161,7 +163,7 @@ sub command {
 
 sub audit_message {
     my ($id, $action, $message) = @_;
-    LibreCat::App::Helper::Helpers->new->queue->add_job(
+    queue->add_job(
         'audit',
         {
             id      => $id,
@@ -198,10 +200,8 @@ sub _list {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->publication->searcher(
+        $it = publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -210,7 +210,7 @@ sub _list {
     }
     else {
         carp "sort not available without a query" if $sort;
-        $it = $helper->main_publication;
+        $it = publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -249,10 +249,8 @@ sub _export {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->publication->searcher(
+        $it = publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -260,7 +258,7 @@ sub _export {
         );
     }
     else {
-        $it = $helper->main_publication;
+        $it = publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -270,8 +268,7 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        print STDERR
-            "warning: sort only active in combination with a query\n";
+        say STDERR "warning: sort only active in combination with a query";
     }
 
     return 0;
@@ -282,26 +279,24 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
-    my $bag = $helper->main_publication;
+    my $pubs = publication;
 
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {
-        $rec = $bag->get($id);
+        $rec = $pubs->get($id);
         if ($rec && $rec->{_version} && $rec->{_version} > $version) {
-            $rec = $bag->get_version($id, $version);
+            $rec = $pubs->get_version($id, $version);
         }
     }
     elsif ($self->opts->{'previous-version'}) {
-        $rec = $bag->get_previous_version($id);
+        $rec = $pubs->get_previous_version($id);
     }
     elsif ($self->opts->{'history'}) {
-        $rec = $bag->get_history($id);
+        $rec = $pubs->get_history($id);
     }
     else {
-        $rec = $bag->get($id);
+        $rec = $pubs->get($id);
     }
 
     if (my $msg = $self->opts->{log}) {
@@ -318,63 +313,40 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret      = 0;
+    my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper   = LibreCat::App::Helper::Helpers->new;
     my $exporter;
 
     if (defined $out_file) {
         $exporter = Catmandu->exporter('YAML', file => $out_file);
     }
 
-    my $skip_citation = $self->opts->{'no_citation'} ? 1 : 0;
+    my $skip_before_add = $self->opts->{no_citation} ? ['citation'] : [];
 
-    my $records = $importer->benchmark->select(
-        sub {
-            my $rec = $_[0];
-
-            $rec->{_id} //= $helper->new_record('publication');
-
-            my $is_ok = 1;
-
-            $helper->store_record(
-                'publication',
-                $rec,
-                skip_citation    => $skip_citation,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid publication",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
-                }
-            );
-
-            return 0 unless $is_ok;
+    publication->add_many(
+        $importer,
+        skip_before_add     => $skip_before_add,
+        on_validation_error => sub {
+            my ($rec, $errors) = @_;
+            say STDERR join("\n",
+                $rec->{_id}, "ERROR: not a valid publication", @$errors);
+            $ret = 2;
+        },
+        on_success => sub {
+            my ($rec) = @_;
 
             if ($exporter) {
                 $exporter->add($rec);
             }
             else {
-                print "added $rec->{_id}\n";
+                say "added $rec->{_id}";
             }
 
             if (my $msg = $self->opts->{log}) {
                 audit_message($rec->{_id}, 'add', $msg);
             }
-
-            return 1;
-        }
+        },
     );
-
-    my $fixer = $helper->create_fixer("index_publication.fix");
-
-    my $index = $helper->publication;
-    $index->add_many($fixer->fix($records));
-    $index->commit;
 
     if ($exporter) {
         $exporter->commit;
@@ -388,9 +360,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->delete_record('publication',
-        $id);
+    my $result = publication->delete($id);
 
     if ($result) {
 
@@ -412,9 +382,7 @@ sub _purge {
 
     croak "usage: $0 purge <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('publication',
-        $id);
+    my $result = publication->purge($id);
 
     if ($result) {
 
@@ -436,7 +404,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Publication->new;
+    my $validator = publication->validator;
 
     my $ret = 0;
 
@@ -495,12 +463,11 @@ sub _embargo {
 
     my $update = $args[0] && $args[0] eq 'update';
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-    my $now    = $helper->now;
+    my $now = timestamp;
     $now =~ s/T.*//;
 
     my $query = "embargo < $now";
-    my $it = $helper->publication->searcher(cql_query => $query);
+    my $it = publication->searcher(cql_query => $query);
 
     my $exporter = Catmandu->exporter('YAML');
 
@@ -568,8 +535,6 @@ sub _files {
 sub _files_list {
     my ($self, $id) = @_;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     my $exporter = Catmandu->exporter('YAML');
 
     my $printer = sub {
@@ -593,14 +558,14 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = $helper->main_publication->get($id);
+        my $data = publication->get($id);
         $printer->($data);
     }
     elsif (defined($id)) {
-        $helper->publication->searcher(cql_query => $id)->each($printer);
+        publication->searcher(cql_query => $id)->each($printer);
     }
     else {
-        $helper->publication->each($printer);
+        publication->each($printer);
     }
     $exporter->commit;
 }
@@ -612,14 +577,13 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
     my $importer = Catmandu->importer('YAML', file => $filename);
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = $helper->main_publication->get($id)) {
+        if (my $data = publication->get($id)) {
             $self->_file_process($data, $files)
-                && $helper->update_record('publication', $data);
+                && publication->add($data);
         }
         else {
             warn "$id - no such publication";
@@ -760,7 +724,7 @@ sub _files_reporter {
 
     my $exporter = Catmandu->exporter('YAML');
 
-    LibreCat::App::Helper::Helpers->new->publication->each(
+    publication->each(
         sub {
             my ($item) = @_;
             return unless $item->{file} && ref($item->{file}) eq 'ARRAY';

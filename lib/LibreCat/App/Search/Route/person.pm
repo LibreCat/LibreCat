@@ -9,6 +9,7 @@ LibreCat::App::Search::Route::person - handles routes for person sites
 use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
 use URI::Escape;
 
 =head2 GET /person
@@ -29,7 +30,7 @@ get qr{/person} => sub {
 
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('user', \%search_params);
+    my $hits = searcher->search('user', \%search_params);
 
     template 'person/list', $hits;
 };
@@ -51,7 +52,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
 
         my %search_params = (cql => ["alias=$id"]);
 
-        my $hits = LibreCat->searcher->search('user', \%search_params);
+        my $hits = searcher->search('user', \%search_params);
 
         if (!$hits->{total}) {
             status '404';
@@ -79,7 +80,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
     $p->{limit} = h->config->{maximum_page_size};
 
     h->log->debug("executing publication->search: " . to_dumper($p));
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     # search for research hits (only to see if present and to display tab)
     my $r;
@@ -87,7 +88,7 @@ get qr{/person/(.*?)/?(data)*} => sub {
     $r->{limit} = 1;
 
     h->log->debug("executing publication->search: " . to_dumper($r));
-    $hits->{researchhits} = LibreCat->searcher->search('publication', $r);
+    $hits->{researchhits} = searcher->search('publication', $r);
 
     $p->{limit}    = h->config->{maximum_page_size};
     $hits->{id}    = $id;
