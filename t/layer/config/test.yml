@@ -1,3 +1,5 @@
+audit: 1
+
 uri_base: "http://localhost:5001"
 
 default_lang: en
@@ -179,18 +181,3 @@ worker:
 
 helper_plugins:
   - MyHelperPlugin
-
-log4perl: |
-  log4perl.category.LibreCat::Auth=WARN,FILE
-  log4perl.category.LibreCat::Worker=WARN,FILE
-  log4perl.category.LibreCat::App=WARN,FILE
-  log4perl.category.LibreCat::Hook=WARN,FILE
-  log4perl.category.LibreCat::FetchRecord=WARN,FILE
-  log4perl.category.LibreCat::Search=WARN,FILE
-  log4perl.category.LibreCat::Queue=WARN,FILE
-  log4perl.category.T::Logger=DEBUG,FILE
-  log4perl.appender.FILE=Log::Log4perl::Appender::File
-  log4perl.appender.FILE.filename=/dev/null
-  log4perl.appender.FILE.utf8=1
-  log4perl.appender.FILE.layout=SimpleLayout
-

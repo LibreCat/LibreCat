@@ -67,15 +67,16 @@ __END__
 
 =head1 NAME
 
-LibreCat::Hook::audit_message - a LibreCat hook to submit audit messages
+LibreCat::Hook::audit_message - a hook to submit audit messages
 
-=head1 CONFIGURATION
+=head1 SYNPOSIS
 
-    # catmandu.yml
+    # in your config
     audit: 1
 
-=head1 SEE ALSO
-
-L<LibreCat>, L<LibreCat::Hook>, L<LibreCat::Worker::Audit>
+    hooks:
+      publication-update:
+        before_fixes:
+         - audit_message
 
 =cut
