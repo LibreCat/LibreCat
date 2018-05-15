@@ -125,7 +125,6 @@ sub to_session {
 }
 
 1;
-<<<<<<< HEAD:lib/LibreCat/User.pm
 
 __END__
 
@@ -150,5 +149,3 @@ LibreCat::User -
 L<LibreCat>
 
 =cut
-=======
->>>>>>> dev:lib/LibreCat/Model/User.pm
