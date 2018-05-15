@@ -51,7 +51,22 @@ my $data = [
 
 ok $x->fix($_), "apply hook" for @$data;
 
-my $audit_data = $audit->to_array;
+# Ugly...we need to wait a bit for the audit hooks take effect
+my $audit_data;
+
+my $tries = 0;
+my $sleep = 2;
+while ($tries < 4) {
+    my $audit   = Catmandu->store('main')->bag('audit');
+    $audit_data = $audit->to_array;
+
+    if (@$audit_data == 5) {
+        last;
+    }
+
+    sleep($sleep * ($tries + 1));
+    $tries++;
+}
 
 is @$audit_data, 5, "5 elements in audit bag";
 
