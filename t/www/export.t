@@ -46,4 +46,28 @@ subtest 'valid formats' => sub {
     $mech->content_like(qr/\<mods version/);
 };
 
+subtest 'private records' => sub {
+    $mech->get('/publication/2737399.json');
+    $mech->content_like(qr/^\{\}$|^\[\]$/);
+
+    note("login");
+    {
+        $mech->get_ok('/login');
+
+        $mech->submit_form_ok(
+            {
+                form_number => 1,
+                fields      => {user => "einstein", pass => "einstein"},
+            },
+            'submitting the login form'
+        );
+
+        $mech->content_contains("(Admin)", "logged in successfully");
+    }
+
+    $mech->get_ok('/librecat/export?cql=id=2737399&fmt=bibtex');
+    $mech->content_like(qr/^\@\w+\{/), "bibtex format looks good";
+
+};
+
 done_testing;
