@@ -1,0 +1,9 @@
+# add OA flag for open access publications
+
+if any_match(file.*.access_level, open_access)
+  add_field(oa, 1)
+end
+
+if any_match(main_file_link.*.open_access, 1)
+  add_field(oa, 1)
+end

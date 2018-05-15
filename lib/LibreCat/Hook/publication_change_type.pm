@@ -22,3 +22,17 @@ sub _build_fixer {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Hook::publication_change_type - a LibreCat hook that executes on publication type changes
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<LibreCat::Hook>
+
+=cut

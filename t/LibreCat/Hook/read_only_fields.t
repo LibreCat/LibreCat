@@ -4,7 +4,7 @@ use Test::More;
 use Test::Exception;
 use Clone qw(clone);
 use LibreCat::App::Helper;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 my $pkg;
 
