@@ -1,7 +1,5 @@
 package LibreCat::Hook::audit_message;
 
-# Code to submit audit messages (if configured)
-
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Dancer qw(:syntax);
@@ -62,3 +60,22 @@ sub fix {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Hook::audit_message - a LibreCat hook to submit audit messages
+
+=head1 CONFIGURATION
+
+    # catmandu.yml
+    audit: 1
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<LibreCat::Hook>, L<LibreCat::Worker::Audit>
+
+=cut
