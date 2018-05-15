@@ -1,3 +1,5 @@
+audit: 1
+
 uri_base: "http://localhost:5001"
 
 default_lang: en
@@ -193,4 +195,3 @@ log4perl: |
   log4perl.appender.FILE.filename=/dev/null
   log4perl.appender.FILE.utf8=1
   log4perl.appender.FILE.layout=SimpleLayout
-

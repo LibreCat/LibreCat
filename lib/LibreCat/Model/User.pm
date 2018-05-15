@@ -125,3 +125,27 @@ sub to_session {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::User -
+
+=head1 SYNOPSIS
+
+    use LibreCat::User;
+
+    my $u = LibreCat::User->new;
+
+    my $user = $u->get(1234);
+
+
+
+=head1 SEE ALSO
+
+L<LibreCat>
+
+=cut
