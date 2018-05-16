@@ -202,13 +202,7 @@ function link_person(element){
         var lastname = trimStr(last_name.toLowerCase());
         lastname = lastname.replace('\.','');
         if(firstname){
-            // if name consists of more than one word, use any and ""
-            if(firstname.indexOf(" ") > -1){
-                narrowurl += 'firstname exact "' + firstname + '"';
-            }
-            else {
-                narrowurl += "firstname=" + firstname + "*";
-            }
+            narrowurl += "firstname=\"" + firstname + "*\"";
         }
         if(firstname && lastname){
             narrowurl += " AND ";
