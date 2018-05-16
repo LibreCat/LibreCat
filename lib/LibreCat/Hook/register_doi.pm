@@ -1,4 +1,4 @@
-package LibreCat::Hook::new_research_data_datacite;
+package LibreCat::Hook::register_doi;
 
 use Catmandu::Sane;
 use LibreCat::App::Helper;
@@ -11,10 +11,9 @@ sub fix {
 
     return $data
         unless $data->{doi}
-        && $data->{type} eq "research_data"
         && $data->{status} eq "public";
 
-    h->log->info("Register the publication at DataCite");
+    h->log->info("Register the publication at DataCite\n" . to_yaml($data));
 
     my $datacite_xml
         = Catmandu->export_to_string({%$data, uri_base => h->uri_base()},
@@ -26,7 +25,7 @@ sub fix {
         user         => h->config->{doi}->{user},
         password     => h->config->{doi}->{passwd},
         doi          => $data->{doi},
-        landing_url  => h->uri_base() . "/data/$data->{_id}",
+        landing_url  => h->uri_base() . "/record/$data->{_id}",
         datacite_xml => $datacite_xml
     };
 
@@ -48,7 +47,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::Hook::new_research_data_datacite - a LibreCat hook that registers a DOI for a dataset
+LibreCat::Hook::register_doi - a LibreCat hook that registers a DOI at DataCite
 
 =head1 SYNOPSIS
 

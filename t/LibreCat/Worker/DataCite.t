@@ -22,74 +22,72 @@ my $datacite = $pkg->new(user => 'me', password => 'secret', test_mode => 1);
 
 can_ok $datacite, $_ for qw(work mint metadata);
 
-my $user     = $ENV{DATACITE_USER}     || "";
-my $password = $ENV{DATACITE_PASSWORD} || "";
+# SKIP: {
+#     skip
+#         "No DataCite environment settings found (DATACITE_USER, DATACITE_PASSWORD).",
+#         5
+#         if (!$user || !$password);
+#
+#     my $registry
+#         = $pkg->new(user => $user, password => $password);
+#
+#     my $res = $registry->work(
+#         {
+#             doi          => "10.5072/LibreCatTest1234",
+#             landing_url  => "http://pub.uni-bielefeld.de/mytest/dataset",
+#             datacite_xml => $datacite_xml,
+#         }
+#     );
+#
+# note Dumper $res;
+#     # ok $res;
+#     # is_deeply $res, { mint => 200, metadata => 200}
+# }
 
-my $datacite_xml = <<EOF;
-<?xml version="1.0" encoding="UTF-8"?>
-<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
-<identifier identifierType="DOI">10.5072/LibreCatTest1234</identifier>
-<creators>
-<creator>
-<creatorName nameType="Personal">Fosmire, Michael</creatorName>
-<givenName>Michael</givenName>
-<familyName>Fosmire</familyName>
-</creator>
-<creator>
-<creatorName nameType="Personal">Wertz, Ruth</creatorName>
-<givenName>Ruth</givenName>
-<familyName>Wertz</familyName>
-</creator>
-<creator>
-<creatorName nameType="Personal">Purzer, Senay</creatorName>
-<givenName>Senay</givenName>
-<familyName>Purzer</familyName>
-</creator>
-</creators>
-<titles>
-<title xml:lang="en">Critical Engineering Literacy Test (CELT) Come on</title>
-</titles>
-<publisher>Purdue University Research Repository (PURR)</publisher>
-<publicationYear>2013</publicationYear>
-<subjects>
-<subject xml:lang="en">Assessment</subject>
-<subject xml:lang="en">Information Literacy</subject>
-<subject xml:lang="en">Engineering</subject>
-<subject xml:lang="en">Undergraduate Students</subject>
-<subject xml:lang="en">CELT</subject>
-<subject xml:lang="en">Purdue University</subject>
-</subjects>
-<language>en</language>
-<resourceType resourceTypeGeneral="Dataset">Dataset</resourceType>
-<version>1.0</version>
-<descriptions>
-<description xml:lang="en" descriptionType="Abstract">
-We developed an instrument, Critical Engineering Literacy Test (CELT), which is a multiple choice instrument designed to measure undergraduate students’ scientific and information literacy skills. It requires students to first read a technical memo and, based on the memo’s arguments, answer eight multiple choice and six open-ended response questions. We collected data from 143 first-year engineering students and conducted an item analysis. The KR-20 reliability of the instrument was .39. Item difficulties ranged between .17 to .83. The results indicate low reliability index but acceptable levels of item difficulties and item discrimination indices. Students were most challenged when answering items measuring scientific and mathematical literacy (i.e., identifying incorrect information).
-</description>
-</descriptions>
-</resource>
-EOF
 
-SKIP: {
-    skip
-        "No DataCite environment settings found (DATACITE_USER, DATACITE_PASSWORD).",
-        5
-        if (!$user || !$password);
+test_tcp(
+    client => sub {
+        my $port = shift;
+        my $x    = $pkg->new(baseurl => "http://127.0.0.1:$port/api/query?");
+        my $pub  = $x->fetch('arXiv:1609.0172');
 
-    my $registry
-        = $pkg->new(user => $user, password => $password);
+        ok $pub , 'got a publication';
 
-    my $res = $registry->work(
-        {
-            doi          => "10.5072/LibreCatTest1234",
-            landing_url  => "http://pub.uni-bielefeld.de/mytest/dataset",
-            datacite_xml => $datacite_xml,
-        }
-    );
+        is $pub->[0]{title},
+            'The Good, the Bad, and the Ugly of Gravity and Information',
+            'got a title';
+        is $pub->[0]{type}, 'preprint', 'type == preprint';
 
-note Dumper $res;
-    # ok $res;
-    # is_deeply $res, { mint => 200, metadata => 200}
-}
+        my $pub2 = $x->fetch('0000-0002-7970-7855');
+        ok $pub2, 'got some publications';
+        is $pub2 > 4, 1, 'more than one publication';
+
+        ok !$x->fetch('6666');
+    },
+    server => sub {
+        my $port = shift;
+        t::HTTPServer->new(port => $port)->run(
+            sub {
+                ;
+                my $env = shift;
+                if ($env->{QUERY_STRING} =~ /1609\.0172/) {
+                    my $body = path("t/records/arxiv-one.xml")->slurp_utf8;
+                    return [200, ['Content-Length' => length($body)],
+                        [$body]];
+                }
+                elsif ($env->{QUERY_STRING} =~ /0000-0002-7970-7855/) {
+                    my $body = path("t/records/arxiv-orcid.xml")->slurp_utf8;
+                    return [200, ['Content-Length' => length($body)],
+                        [$body]];
+                }
+                else {
+                    my $body = 'bad boy';
+                    return [404, ['Content-Length' => length($body)],
+                        [$body]];
+                }
+            }
+        );
+    }
+);
 
 done_testing;
