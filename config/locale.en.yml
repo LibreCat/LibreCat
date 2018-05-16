@@ -89,7 +89,7 @@ main_page:
   links:
     clone: Clone
     edit: "Edit"
-    details: "Full Record"
+    details: "Details"
     view_details: "Show complete bibliographic information and access options."
     files: "Files available"
     file: "File"

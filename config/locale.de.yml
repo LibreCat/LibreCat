@@ -90,7 +90,7 @@ main_page:
     audit: Audit
     clone: "Klonen"
     edit: "Editieren"
-    details: "Vollansicht"
+    details: "Details"
     view_details: "Publikationsseite in LibreCat anzeigen (Frontdoor)"
     files: "Dateien verf&uuml;gbar"
     file: "Datei"

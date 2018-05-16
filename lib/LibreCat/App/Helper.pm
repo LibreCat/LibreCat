@@ -556,7 +556,7 @@ LibreCat::App::Helper - a helper package with utility functions
     my $uri_base = h->uri_base; # get hostname
 
     # usage in templates
-    <a href="[% h.uri_base %]/publication">Publications</a>
+    <a href="[% h.uri_base %]/record">Publications</a>
 
 =cut
 

@@ -27,11 +27,11 @@ response_status_is    [GET => '/'], 200, 'GET / status is ok';
 response_content_like [GET => '/'], qr/Search Publications/,
     "content looks good for /";
 
-route_exists       [GET => '/publication'], "GET /publications is handled";
-response_status_is [GET => '/publication'], 200,
-    'GET /publication status is ok';
-response_content_like [GET => '/publication'], qr/Publications/,
-    "content looks good for /publication";
+route_exists       [GET => '/record'], "GET /record is handled";
+response_status_is [GET => '/record'], 200,
+    'GET /record status is ok';
+response_content_like [GET => '/record'], qr/Publications/,
+    "content looks good for /record";
 
 route_exists          [GET => '/person'], "GET /person is handled";
 response_status_is    [GET => '/person'], 200, 'GET /person status is ok';
