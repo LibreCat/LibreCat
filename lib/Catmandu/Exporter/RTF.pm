@@ -163,10 +163,8 @@ sub _add_citation {
             }
         }
 
-        my $bag = $pub->{type} eq "research_data" ? "data" : "publication";
-
         $citestring
-            .= "{\\field{\\*\\fldinst HYPERLINK $host/$bag/$pub->{_id}}{\\fldrslt "
+            .= "{\\field{\\*\\fldinst HYPERLINK $host/record/$pub->{_id}}{\\fldrslt "
             . $title
             . "}}\\line ";
     }
@@ -193,11 +191,9 @@ sub _add_links {
     my $links = $self->links;
     my $name  = $self->name;
 
-    my $bag = $pub->{type} eq "research_data" ? "data" : "publication";
-
     my $line;
     $line
-        = "\\line $name: {\\field{\\*\\fldinst HYPERLINK $host/$bag/$pub->{_id}}{\\fldrslt $host/$bag/$pub->{_id}}}";
+        = "\\line $name: {\\field{\\*\\fldinst HYPERLINK $host/record/$pub->{_id}}{\\fldrslt $host/record/$pub->{_id}}}";
 
     if ($links && $links == 1) {
         if ($pub->{doi}) {

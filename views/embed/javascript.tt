@@ -1,7 +1,6 @@
 <!-- BEGIN embed/javascript.tt -->
 [% qp = request.params.hash -%]
 [% lang = qp.lang ? qp.lang : h.config.default_lang -%]
-[% lf = h.config.locale.$lang -%]
 document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
 [%- style = qp.style %]
 [%- FOREACH entry IN hits %]
@@ -9,7 +8,7 @@ document.write('<li>');
   [%- IF entry.citation.$style %]
     [%- cite_string = entry.citation.$style %]
     [%- IF style == "short" %]
-document.write('<a href="[% uri_base %]/[% bag %]/[% entry._id %]">[% entry.title | html %]</a><br />');
+document.write('<a href="[% uri_base %]/record/[% entry._id %]">[% entry.title | html %]</a><br />');
     [%- END %]
 document.write('[% cite_string FILTER replace("'", "\\'")  %]<br />[% INCLUDE embed/links_js.tt %]');
   [%- ELSE %]

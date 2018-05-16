@@ -49,11 +49,7 @@ sub command {
             $group->each(
                 sub {
                     my $rec = $_[0];
-                    my $type
-                        = $rec->{type} eq 'research_data'
-                        ? 'data'
-                        : 'publication';
-                    my $loc = "$config->{uri_base}/$type/$rec->{_id}";
+                    my $loc = "$config->{uri_base}/record/$rec->{_id}";
                     my $mod = substr(
                         $rec->{date_updated}
                             || $rec->{date_created}
