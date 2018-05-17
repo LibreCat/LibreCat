@@ -60,7 +60,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.project.label") %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%]<br />[% END %]
-  <a href="[% uri_base %]/project/[% proj._id %]">[% proj.name | html %]</a>
+  <a href="[% uri_base %]/project/[% proj._id %]">[% h.get_project(proj._id).name | html %]</a>
   [%- IF loop.last %]</div></div>[% END -%]
 [%- END -%]
 
