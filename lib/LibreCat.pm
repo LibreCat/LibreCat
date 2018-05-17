@@ -8,7 +8,7 @@ use Config::Onion;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Path::Tiny;
-use Catmandu::Util qw(require_package use_lib read_yaml);
+use Catmandu::Util qw(is_ref require_package use_lib read_yaml);
 use List::MoreUtils qw(any);
 use String::CamelCase qw(camelize);
 use POSIX qw(strftime);
@@ -77,6 +77,12 @@ sub _exporter_expand_sub {
 
 sub AUTOCAN {
     my ($self, $method) = @_;
+    if (!is_ref($self) && $method eq 'user') {
+        $self = $self->instance;
+        $self->log->warn(
+            "DEPRECATION NOTICE: calling 'user' as a class method is deprecated."
+        );
+    }
     $self->has_model($method) || return;
     $self->_model_accessors->{$method} //= do {
         my $model = $self->model($method);
@@ -336,6 +342,53 @@ sub timestamp {
     my $time_format = $self->config->{time_format} // '%Y-%m-%dT%H:%M:%SZ';
     my $now = strftime($time_format, gmtime($time));
     $now;
+}
+
+my $CLASS_OR_INSTANCE_METHODS = [qw(
+    root_path
+    layer_paths
+    config
+    css_paths
+    paths
+    lib_paths
+    config_paths
+    scss_paths
+    template_paths
+    fixes_paths
+    searcher
+    queue
+    models
+    has_model
+    model
+    hook
+    fixer
+    timestamp
+)];
+
+
+# Backwards compatibility (layers functionality has been merged into LibreCat.pm)
+sub layers {
+    my ($self) = @_;
+    $self = $self->instance unless is_ref($self);
+    $self->log->warn(
+        "DEPRECATION NOTICE: layers method is deprecated. All it's methods are available in the LibreCat instance."
+    );
+    $self;
+}
+
+# Backwards compatibility with the old class methods
+for my $method (qw(config hook searcher)) {
+    around $method => sub {
+        my $orig = shift;
+        my $self = shift;
+        unless (is_ref($self)) {
+            $self = $self->instance;
+            $self->log->warn(
+                "DEPRECATION NOTICE: calling '$method' as a class method is deprecated."
+            );
+        }
+        $orig->($self, @_);
+    };
 }
 
 1;
