@@ -77,6 +77,7 @@ sub _exporter_expand_sub {
 
 sub AUTOCAN {
     my ($self, $method) = @_;
+    # Backwards compatibility with the old user class method
     if (!is_ref($self) && $method eq 'user') {
         $self = $self->instance;
         $self->log->warn(
@@ -344,29 +345,8 @@ sub timestamp {
     $now;
 }
 
-my $CLASS_OR_INSTANCE_METHODS = [qw(
-    root_path
-    layer_paths
-    config
-    css_paths
-    paths
-    lib_paths
-    config_paths
-    scss_paths
-    template_paths
-    fixes_paths
-    searcher
-    queue
-    models
-    has_model
-    model
-    hook
-    fixer
-    timestamp
-)];
-
-
-# Backwards compatibility (layers functionality has been merged into LibreCat.pm)
+# Backwards compatibility with the old layers class method
+# (layers functionality has been merged into this package)
 sub layers {
     my ($self) = @_;
     $self = $self->instance unless is_ref($self);
@@ -376,7 +356,7 @@ sub layers {
     $self;
 }
 
-# Backwards compatibility with the old class methods
+# Backwards compatibility with the old config, hook and searcher class methods
 for my $method (qw(config hook searcher)) {
     around $method => sub {
         my $orig = shift;
