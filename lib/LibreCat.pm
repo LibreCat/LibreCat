@@ -81,7 +81,7 @@ sub AUTOCAN {
     if (!is_ref($self) && $method eq 'user') {
         $self = $self->instance;
         $self->log->warn(
-            "DEPRECATION NOTICE: calling 'user' as a class method is deprecated."
+            "DEPRECATION NOTICE: calling user as a class method is deprecated."
         );
     }
     $self->has_model($method) || return;
@@ -364,7 +364,7 @@ for my $method (qw(config hook searcher)) {
         unless (is_ref($self)) {
             $self = $self->instance;
             $self->log->warn(
-                "DEPRECATION NOTICE: calling '$method' as a class method is deprecated."
+                "DEPRECATION NOTICE: calling $method as a class method is deprecated."
             );
         }
         $orig->($self, @_);
