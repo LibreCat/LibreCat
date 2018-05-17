@@ -1,11 +1,7 @@
-# mapping pub data to dublic core (dc)
+# to dc
 librecat_uri_base('uri_base')
 copy_field('uri_base','tmp_id.$append')
-if any_match(type, research_data)
-  add_field(tmp_id.$append, data)
-else
-  add_field(tmp_id.$append, publication)
-end
+add_field(tmp_id.$append, record)
 copy_field(_id, tmp_id.$append)
 join_field(tmp_id, '/')
 move_field(tmp_id, dc.identifier.$append)

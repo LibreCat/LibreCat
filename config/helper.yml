@@ -10,3 +10,4 @@ extract_params:
   style: "exists"
   cql: "string_array"
   sort: "string_array"
+  fmt: exists

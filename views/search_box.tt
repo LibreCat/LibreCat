@@ -15,7 +15,14 @@
 
 [%- UNLESS request.path_info.match('marked') %]
 <h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% h.loc("facets.search") %]</h3>
-<form action="#" method="get" role="form" class="helpme helpme-md" data-placement="left" title="[% h.loc("help.search") | html %]">
+<form
+    id="backend_search_form"
+    action="#"
+    method="get"
+    role="form"
+    class="helpme helpme-md"
+    data-placement="left"
+    title="[% h.loc("help.search") | html %]">
   <span class="input-group">
     <input type="text" class="form-control" name="q" value="[% qp.q | html %]" placeholder="[% h.loc("facets.search") | html %]" />
     <span class="input-group-btn">

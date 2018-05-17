@@ -1,6 +1,7 @@
 use strict;
 use warnings FATAL => 'all';
 use Test::More;
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use App::Cmd::Tester;
 
 my $pkg;

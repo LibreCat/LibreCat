@@ -1,13 +1,14 @@
 use Catmandu::Sane;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use Test::More;
 use Test::Exception;
 use warnings FATAL => 'all';
+use Data::Dumper;
 
 my $pkg;
 
 BEGIN {
-    $pkg = 'LibreCat::Validator::Department';
+    $pkg = 'LibreCat::Model::ResearchGroup';
     use_ok $pkg;
 }
 

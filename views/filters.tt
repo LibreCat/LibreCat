@@ -123,12 +123,12 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_facet" class="collapse">
-      [%- tmp = {}; tmp.import(qp) %]
+      [%- tmp = {}; tmp.import(qp); export_path = backend == 1 ? 'librecat/export' : 'export' %]
       <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
-      <li><a href="[% tmp.fmt='bibtex'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
-      <li><a href="[% tmp.fmt='ris'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
-      <li><a href="[% tmp.fmt='json'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
-      <li><a href="[% tmp.fmt='yaml'; request.uri_for('export', tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
+      <li><a href="[% tmp.fmt='bibtex'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
+      <li><a href="[% tmp.fmt='ris'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
+      <li><a href="[% tmp.fmt='json'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
+      <li><a href="[% tmp.fmt='yaml'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
     </ul>
     </div>
   </li>
@@ -157,7 +157,7 @@
   [%- END %]
 
   <li>
-    <a href="[% request.uri_for("/marked", qp) %]" rel="nofollow" class="btn-link"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
+    <a href="[% request.uri_for("/marked") %]" rel="nofollow" class="btn-link"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
   </li>
 </ul>
 
@@ -171,9 +171,9 @@
       </div>
       <div class="modal-body">
         [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.links = '1' %]
-	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
+	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
          [%-  tmp.delete('links') %]
-	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('export', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
+	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
       </div>
     </div>
   </div>
@@ -194,22 +194,16 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
     var person_id  = embed_link.match(/\/person\/([^\?]+)/);
 
-    if (embed_link.match(/\/publication/)) {
-      searchParams.cql.push("type<>research_data");
-      embed_link = embed_link.replace(/\/publication.*/,"/embed?");
+    if (embed_link.match(/\/record/)) {
+      embed_link = embed_link.replace(/\/record.*/,"/embed?");
     }
 
     if (person_id) {
       embed_link = embed_link.replace(/\/person\/.*/,"/embed?");
     }
 
-    if (embed_link.match(/\/data/)) {
-      searchParams.cql.push("type=research_data");
-      embed_link = embed_link.replace(/\/data.*/,"/embed?");
-    }
-
     embed_link = embed_link + $.param($.extend({}, searchParams), true);
-    
+
     embed_link = embed_link + '&lang=[% lang %]';
 
     var emb_js     = '<div class="publ"><script type="text/javascript" charset="UTF-8" src="'+ embed_link +'&fmt=js"><\/script><noscript><a href="'+ embed_link +'" target="_blank">[% h.loc("facets.embed_linktext") %]</a></noscript></div>';

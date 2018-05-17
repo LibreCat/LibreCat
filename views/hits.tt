@@ -3,7 +3,7 @@
 [%- UNLESS request.path_info.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path_info.match("/person") OR total == 0 %] col-xs-8[% END %]">
-    <h3 class="margin-top0">[% total %] [% IF total == 1 %][% IF bag == 'data' OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("hits.data_publication") %][% ELSE %][% h.loc("hits.publication") %][% END %][% ELSE %][% IF bag == "data" OR tabmodus == "data" OR tabmodus == "data_manager" %][% h.loc("tabs.data") %][% ELSE %][% h.loc("hits.publications") %][% END %][% END %]
+    <h3 class="margin-top0">[% total %] [% IF total == 1 %][% h.loc("hits.publication") %][% ELSE %][% h.loc("hits.publications") %][% END %]
     [% IF backend AND session.role == "delegate" %]
     [% h.loc("main_page.by") %] [% delegate_name %]
     [% END %]
@@ -49,7 +49,6 @@
 [% FOREACH entry IN hits %]
 [% IF request.path_info == "/marked" %]<li class="markedme" id="fade_[% n+1 %]">[% END %]
 <div class="row">
-  [% bag = entry.type == "research_data" ? "data" : "publication" %]
 [% IF backend  %]
   <div class="col-md-1[% IF loop.first %] helpme helpme-md[% END %]" data-placement="top" title="[% h.loc("help.statuses") %]">
     [% SWITCH entry.status %]
@@ -82,7 +81,7 @@
     <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | [% h.loc("hits.id") %]: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
     [%- IF style == 'short' %]
-	  <a href="[% uri_base %]/[% IF backend %]librecat/record/edit[% ELSE %][% bag %][% END %]/[% entry._id %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
+	  <a href="[% uri_base %]/[% IF backend %]librecat/record/edit[% ELSE %]record[% END %]/[% entry._id %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
     [%- END %]
     [%- IF backend AND ((!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin") %]
       <a href="[% uri_base %]/librecat/record/edit/[% entry._id %]" onclick="window.top.location='/librecat/record/edit/[% entry._id %]'" class="citation-block-link"></a>

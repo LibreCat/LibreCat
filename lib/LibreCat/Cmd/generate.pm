@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Path::Tiny;
 use Template;
 use LibreCat::App::Helper;
+use LibreCat qw(:self);
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -58,11 +59,9 @@ sub _helper {
 }
 
 sub _generate_cleanup {
-    my $layers = $_[0]->_helper->layers;
-
     print "Cleaning generated forms...\n";
     {
-        my $template_paths = $layers->template_paths;
+        my $template_paths = librecat->template_paths;
         my $forms_path     = $template_paths->[0] . '/backend/forms';
 
         print "$forms_path\n";
@@ -78,7 +77,7 @@ sub _generate_cleanup {
 
     print "Cleaning departments...\n";
     {
-        my $template_paths = $layers->template_paths;
+        my $template_paths = librecat->template_paths;
 
         my $output_path = $template_paths->[0] . '/department';
 
@@ -97,17 +96,16 @@ sub _generate_cleanup {
 }
 
 sub _generate_package_json {
-    my $layers         = $_[0]->_helper->layers;
-    my $css_path       = $layers->css_paths->[0];
-    my $root_css_path  = $layers->css_paths->[-1];
-    my $scss_path      = $layers->scss_paths->[0];
-    my $root_scss_path = $layers->scss_paths->[-1];
+    my $css_path       = librecat->css_paths->[0];
+    my $root_css_path  = librecat->css_paths->[-1];
+    my $scss_path      = librecat->scss_paths->[0];
+    my $root_scss_path = librecat->scss_paths->[-1];
     my $main_css       = path($css_path)->child('main.css')->stringify;
     my $root_main_css  = path($root_css_path)->child('main.css')->stringify;
     my $main_scss      = path($scss_path)->child('main.scss')->stringify;
     my $root_main_scss = path($root_scss_path)->child('main.scss')->stringify;
     my $package_json
-        = path($layers->root_path)->child('package.json')->stringify;
+        = path(librecat->root_path)->child('package.json')->stringify;
 
     my $json = {
         "name"         => "librecat",
@@ -160,11 +158,10 @@ sub _generate_package_json {
 
 sub _generate_forms {
     my $h              = $_[0]->_helper;
-    my $layers         = $h->layers;
     my $conf           = $h->config;
     my $forms          = $conf->{forms}{publication_types};
     my $other_items    = $conf->{forms}{other_items};
-    my $template_paths = $layers->template_paths;
+    my $template_paths = librecat->template_paths;
     my $output_path    = $template_paths->[0] . '/backend/forms';
 
     #-----------------
@@ -216,8 +213,7 @@ sub _generate_departments {
     my ($self, $file) = @_;
     my $h = $self->_helper;
 
-    my $layers         = $h->layers;
-    my $template_paths = $layers->template_paths;
+    my $template_paths = librecat->template_paths;
     my $output_path    = $template_paths->[0] . '/department';
 
     my $pubs = $h->publication;
@@ -249,7 +245,7 @@ sub _generate_departments {
 
             my $hits
                 = $pubs->search(cql_query =>
-                    "department=$id AND status=public AND type<>research_data"
+                    "department=$id AND status=public"
                 );
             my $total = $hits->{total};
 

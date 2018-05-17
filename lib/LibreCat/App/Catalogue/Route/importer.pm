@@ -8,6 +8,7 @@ LibreCat::App::Catalogue::Route::importer - central handler for import routes
 
 use Catmandu::Sane;
 use Catmandu::Util;
+use LibreCat qw(publication);
 use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
 use LibreCat::App::Helper;
@@ -87,7 +88,7 @@ post '/librecat/record/import' => sub {
             h->hook('import-new-' . $source)->fix_around(
                 $pub,
                 sub {
-                    h->update_record('publication', $pub);
+                    publication->add($pub);
                 }
             );
         }

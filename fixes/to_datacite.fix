@@ -1,2 +1,3 @@
-#to_datacite
+# map fields to DataCite XML
+
 librecat_uri_base('uri_base')

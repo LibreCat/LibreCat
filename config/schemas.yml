@@ -229,9 +229,6 @@ publication:
       type: object
       properties:
         _id: *id
-        name:
-          type: string
-          description: "Project name"
       required: ["_id"]
 
     research_group: &research_group

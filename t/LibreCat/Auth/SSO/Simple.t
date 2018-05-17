@@ -8,7 +8,7 @@ use Plack::Builder;
 use Plack::Session;
 use HTTP::Request::Common;
 use HTTP::Cookies;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 my $pkg;
 
@@ -24,9 +24,6 @@ Catmandu->config->{store}->{builtin_users} = {
 };
 Catmandu->config->{user}
     = {sources => [{store => "builtin_users", username_attr => "login"}]};
-
-isa_ok(LibreCat->user, "LibreCat::User",
-    "LibreCat->user returns a LibreCat::User");
 
 $Plack::Test::Impl = "MockHTTP";
 my $auth;

@@ -53,7 +53,6 @@ tabs:
   home: "Home"
   all_publications: "All Publications"
   publications: "Publications"
-  data_publications: "Data Publications"
   projects: "Projects"
   departments: "Departments"
   authors: "Authors"
@@ -70,7 +69,7 @@ home:
   operators: "Operators"
   stats:
     publications: "Publications"
-    data_publications: "Data Publications"
+    researcher: "Personal Publication lists"
     oa_publications: "Open Access Publications"
     projects: "Projects"
 main_page:
@@ -218,6 +217,7 @@ frontdoor:
   items: "Items"
   volume: "Volume"
   issue: "Issue"
+  article_number: "Article Number"
   page: "Page"
   tabs:
     details:

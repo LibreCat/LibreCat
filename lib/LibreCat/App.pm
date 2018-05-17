@@ -8,7 +8,7 @@ LibreCat::App - a webapp that runs an awesome institutional repository.
 
 use Catmandu::Sane;
 use Catmandu::Util;
-use LibreCat;
+use LibreCat qw(user);
 use Dancer qw(:syntax);
 use LibreCat::App::Search;       # the frontend
 use LibreCat::App::Catalogue;    # the backend
@@ -189,7 +189,7 @@ sub _authenticate {
 
     return unless $auth;
 
-    my $user = LibreCat->user->find_by_username($username) || return;
+    my $user = user->find_by_username($username) || return;
 
     $auth->authenticate({username => $username, password => $password})
         || return;

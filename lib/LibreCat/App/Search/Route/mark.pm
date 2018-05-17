@@ -15,6 +15,7 @@ use Catmandu::Util;
 use List::Util;
 use DateTime;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
 
 =head2 GET /marked.:fmt
 
@@ -51,7 +52,7 @@ get '/marked' => sub {
         while (my @chunks = splice(@$marked, 0, 100)) {
             $p->{cql} = ["(id=" . join(' OR id=', @chunks) . ")"];
             $p->{limit} = 100;
-            $hits = LibreCat->searcher->search('publication', $p);
+            $hits = searcher->search('publication', $p);
             push @tmp_hits, @{$hits->{hits}};
         }
         $hits->{style} = params->{style} || h->config->{default_style};
@@ -111,7 +112,7 @@ post '/marked' => sub {
         return to_json {ok => true, total => 0,};
     }
 
-    my $hits = LibreCat->searcher->search('publication', $p);
+    my $hits = searcher->search('publication', $p);
 
     if ($hits->{total} > $hits->{limit} && @$marked == 500) {
         return to_json {

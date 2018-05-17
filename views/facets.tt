@@ -12,9 +12,8 @@
 
 [%- IF request.path_info != "/marked" -%]
 
-  <h3>[% IF bag == "data" %][% h.loc("facets.filter_data_publications") %]
-      [% ELSIF bag == "person" %][% h.loc("facets.filter_authorlist") %]
-      [% ELSE %][% h.loc("facets.filter_publications") %][% END %]</h3>
+  <h3>[%- IF bag == "person" %][% h.loc("facets.filter_authorlist") %]
+      [%- ELSE %][% h.loc("facets.filter_publications") %][% END %]</h3>
 
   [% FOR facet_group IN h.config.features.views.item(backend ? 'backend' : 'frontend').publication.facets %]
     [% facets_in_group = [] %]

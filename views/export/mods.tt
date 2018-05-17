@@ -9,6 +9,7 @@
       xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd">
 [%- END %]
 [%- USE XML::Strict -%]
+[%- USE LibreCat::App::Helper -%]
 
 <genre
 [%- SWITCH type -%]
@@ -127,7 +128,7 @@
 
 [%- FOREACH pr IN project %]
 <name type="corporate">
-  <namePart>[% pr.name | xml_strict %]</namePart>
+  <namePart>[% h.get_project(pr._id).name | xml_strict %]</namePart>
   <role><roleTerm type="text">project</roleTerm></role>
 </name>
 [%- END %]
@@ -220,7 +221,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 <relatedItem type="Supplementary material">
   <location>
   [%- FOREACH rm IN related_material.record -%]
-     <url>[% uri_base %]/publication/[% rm.id %]</url>
+     <url>[% uri_base %]/record/[% rm.id %]</url>
   [%- END -%]
   </location>
 </relatedItem>
