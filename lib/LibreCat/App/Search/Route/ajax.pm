@@ -63,8 +63,11 @@ ajax '/search_researcher' => sub {
     my $cql;
     push @$cql, params->{'term'};
 
-    my %search_params = (cql => $cql, limit => 100,
-        sort => h->config->{default_person_sort});
+    my %search_params = (
+        cql => $cql,
+        limit => 100,
+        sort => h->config->{default_person_sort}
+    );
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
     my $hits = searcher->search('user', \%search_params)->{hits};

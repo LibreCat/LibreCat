@@ -12,16 +12,16 @@ my $app = eval {require 'bin/app.pl';};
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
-subtest '/publication/:id.:fmt' => sub {
-    $mech->get_ok('/publication/2737384.json');
+subtest '/record/:id.:fmt' => sub {
+    $mech->get_ok('/record/2737384.json');
 
-    $mech->get_ok('/publication/2737384.rtf');
+    $mech->get_ok('/record/2737384.rtf');
 
-    $mech->get_ok('/publication/2737384.yaml');
+    $mech->get_ok('/record/2737384.yaml');
 
-    $mech->get_ok('/publication/2737384.bibtex');
+    $mech->get_ok('/record/2737384.bibtex');
 
-    $mech->get('/publication/2737384.xyz');
+    $mech->get('/record/2737384.xyz');
     is $mech->status, "406", "status not acceptable";
 };
 
@@ -47,7 +47,7 @@ subtest 'valid formats' => sub {
 };
 
 subtest 'private records' => sub {
-    $mech->get('/publication/2737399.json');
+    $mech->get('/record/2737399.json');
     $mech->content_like(qr/^\{\}$|^\[\]$/);
 
     note("login");

@@ -86,7 +86,7 @@ routes:
 
     - [ 'ANY'  , '/department'                   , 'default' ]
     - [ 'ANY'  , '/publication'                  , 'default' ]
-    - [ 'ANY'  , '/data'                         , 'default' ]
+    - [ 'ANY'  , '/record'                       , 'default' ]
     - [ 'ANY'  , '/person'                       , 'default' ]
     - [ 'ANY'  , '/staffdirectory'               , 'default' ]
     - [ 'ANY'  , '/project'                      , 'default' ]

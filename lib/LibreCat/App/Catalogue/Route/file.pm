@@ -201,7 +201,7 @@ any '/rc/:id/:file_id' => sub {
     my $bag = h->main_reqcopy;
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
-        forward '/publication/' . params->{id}, {method => 'GET'};
+        forward '/record/' . params->{id}, {method => 'GET'};
     }
 
     my $date_expires = _calc_date();
@@ -244,7 +244,7 @@ any '/rc/:id/:file_id' => sub {
 
         try {
             h->queue->add_job('mailer', $job);
-            return redirect uri_for("/publication/" . params->{id});
+            return redirect uri_for("/record/" . params->{id});
         }
         catch {
             h->log->error("Could not send email: $_");

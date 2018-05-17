@@ -11,50 +11,44 @@ use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 use LibreCat qw(searcher);
 
-=head2 GET /publication/:id.:fmt
+=head2 GET /publication
 
-Export normal publication in format :fmt
+Redirect legacy routes to /record
 
 =cut
 
-get '/publication/:id.:fmt' => sub {
-    my $id = params->{id};
+get qr{/(publication|data)/*(.*?)} => sub {
+    my ($bag, $path) = splat;
+    my $params = params;
+
+    forward "/record/$path", $params;
+};
+
+=head2 GET /record/:id.:fmt
+
+Export publication with ID :id in format :fmt
+
+=cut
+
+get '/record/:id.:fmt' => sub {
+    my $id  = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
     forward "/export",
         {
-        cql => "(id=$id AND type<>research_data)",
-        bag => 'publication',
+        cql => "id=$id",
         fmt => $fmt
         };
 };
 
-=head2 GET /data/:id.:fmt
-
-Export data publication in format :fmt
-
-=cut
-
-get '/data/:id.:fmt' => sub {
-    my $id = params->{id};
-    my $fmt = params->{fmt} // 'yaml';
-
-    forward "/export",
-        {
-        cql => "(id=$id AND type=research_data)",
-        bag => 'publication',
-        fmt => $fmt
-        };
-};
-
-=head2 GET /{data|publication}/:id
+=head2 GET /record/:id
 
 Splash page for :id.
 
 =cut
 
-get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
-    my ($bag, $id) = splat;
+get qr{/record/([A-Fa-f0-9-]+)} => sub {
+    my ($id) = splat;
 
     my $p = h->extract_params();
 
@@ -63,18 +57,15 @@ get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
     delete $p->{cql};
 
     push @{$p->{cql}}, ("status=public", "id=$id");
-    push @{$p->{cql}},
-        ($bag eq 'data') ? "type=research_data" : "type<>research_data";
 
     my $hits = searcher->search('publication', $p);
 
     unless ($hits->{total}) {
         $p->{cql} = [];
         push @{$p->{cql}}, ("status=public", "altid=$id");
-        push @{$p->{cql}},
-            ($bag eq 'data') ? "type=research_data" : "type<>research_data";
+
         $hits = searcher->search('publication', $p);
-        return redirect "/" . $bag . "/" . $hits->first->{_id}, 301
+        return redirect "/record/" . $hits->first->{_id}, 301
             if $hits->{total};
     }
 
@@ -83,27 +74,22 @@ get qr{/(data|publication)/([A-Fa-f0-9-]+)} => sub {
 
 };
 
-=head2 GET /{data|publication}
+=head2 GET /record
 
 Search API to (data) publications.
 
 =cut
 
-get qr{/(data|publication)/*} => sub {
-    my ($bag) = splat;
-
+get qr{/record/*} => sub {
     my $p = h->extract_params();
 
-    ($bag eq 'data')
-        ? push @{$p->{cql}}, ("status=public", "type=research_data")
-        : push @{$p->{cql}}, ("status=public", "type<>research_data");
+    push @{$p->{cql}}, "status=public";
 
     $p->{sort} = $p->{sort} // h->config->{default_sort};
 
     my $hits = searcher->search('publication', $p);
 
     template 'publication/list', $hits;
-
 };
 
 =head2 GET /embed
@@ -123,7 +109,6 @@ get '/embed' => sub {
 
     my $hits = searcher->search('publication', $p);
 
-    $hits->{bag}   = "publication";
     $hits->{embed} = 1;
 
     my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};

@@ -234,7 +234,6 @@ my $statistics = h->get_statistics;
 ok $statistics , 'h->get_statistics';
 
 ok exists $statistics->{publications}, '..publications';
-ok exists $statistics->{researchdata}, '..researchdata';
 ok exists $statistics->{oahits},       '..oahits';
 ok exists $statistics->{projects},     '..projects';
 

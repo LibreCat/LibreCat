@@ -52,7 +52,7 @@
 
 <script>
 $('#searchPubl').click(function() {
-  var puburl = '/publication?fmt=jsonintern&q=';
+  var puburl = '/record?fmt=jsonintern&q=';
   [% IF session.role == 'super_admin' %]
     var searchphrase = $('#searchPublInput').val();
     if(searchphrase != ""){

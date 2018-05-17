@@ -7,8 +7,8 @@
          xmlns:owl="http://www.w3.org/2002/07/owl#"
          xmlns:event="http://purl.org/NET/c4dm/event.owl#"
          xmlns:ore="http://www.openarchives.org/ore/terms/">
-    <rdf:Description rdf:about="[% uri_base %]/publication/[% _id %]">
-        <ore:isDescribedBy rdf:resource="[% uri_base %]/publication/[% _id %]"/>
+    <rdf:Description rdf:about="[% uri_base %]/record/[% _id %]">
+        <ore:isDescribedBy rdf:resource="[% uri_base %]/record/[% _id %]"/>
         <dc:title>[% title | xml_strict %]</dc:title>
         [%- IF author %]
         <bibo:authorList rdf:parseType="Collection">

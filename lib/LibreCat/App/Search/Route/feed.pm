@@ -63,7 +63,7 @@ sub feed {
             my $title = $hit->{title} // 'no title';
 
             $rss->add_item(
-                link  => $uri_base . "/publication/$hit->{_id}",
+                link  => $uri_base . "/record/$hit->{_id}",
                 title => $title,
                 dc    => $fixer->fix($hit)->{dc},
             );

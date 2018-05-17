@@ -243,15 +243,17 @@ sub get_statistics {
     my ($self) = @_;
 
     my $hits = librecat->searcher->search('publication',
-        {cql => ["status=public", "type<>research_data"]});
-    my $reshits = librecat->searcher->search('publication',
-        {cql => ["status=public", "type=research_data"]});
+        {cql => ["status=public"]});
+
+    my $people = librecat->searcher->search('user',
+        {cql => ["publication_count>0"]});
+
     my $oahits = librecat->searcher->search('publication',
-        {cql => ["status=public", "oa=1", "type<>research_data",]});
+        {cql => ["status=public", "oa=1"]});
 
     return {
         publications => $hits->{total},
-        researchdata => $reshits->{total},
+        researcher   => $people->{total},
         oahits       => $oahits->{total},
         projects     => $self->project->count(),
     };
@@ -554,7 +556,7 @@ LibreCat::App::Helper - a helper package with utility functions
     my $uri_base = h->uri_base; # get hostname
 
     # usage in templates
-    <a href="[% h.uri_base %]/publication">Publications</a>
+    <a href="[% h.uri_base %]/record">Publications</a>
 
 =cut
 

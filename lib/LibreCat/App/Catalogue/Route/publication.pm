@@ -85,10 +85,6 @@ Some fields are pre-filled.
             }
         }
 
-        if ($type eq "research_data" && h->config->{doi}) {
-            $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
-        }
-
         if (params->{lang}) {
             $data->{lang} = params->{lang};
         }
@@ -281,8 +277,6 @@ Prints the frontdoor for every record.
 
         my $hits = publication->get($id);
 
-        $hits->{bag}
-            = $hits->{type} eq "research_data" ? "data" : "publication";
         $hits->{style}  = h->config->{citation}->{csl}->{default_style};
         $hits->{marked} = 0;
 

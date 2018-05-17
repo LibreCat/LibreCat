@@ -34,10 +34,10 @@
   [%- END %]
   <resourceType resourceTypeGeneral="[% type == 'research_data' ? 'Dataset' : 'Text'%]">[% type %]</resourceType>
   <alternateIdentifiers>
-    <alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/[% type == 'research_data' ? 'data' : 'publication' %]/[% _id %]</alternateIdentifier>
+    <alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/record/[% _id %]</alternateIdentifier>
   </alternateIdentifiers>
   <relatedIdentifiers>
-    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/[% type == 'research_data' ? 'data' : 'publication' %]/[% _id%].json</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/record/[% _id%].json</relatedIdentifier>
     [%- IF publication_identifier.isbn %]
     <relatedIdentifier relatedIdentifierType="ISBN" relationType="isVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
