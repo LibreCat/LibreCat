@@ -3,11 +3,9 @@ _prefix:
 
 logdir: logs
 
-DataCite:
-  base_url: 'https://mds.datacite.org'
-  user: ''
-  password: ''
-  test_mode: ''
+Datacite:
+  user: 'DEMO.XXX'
+  password: 'secret'
 
 FileUploader:
   files:

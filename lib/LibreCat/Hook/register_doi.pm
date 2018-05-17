@@ -9,21 +9,22 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
+    my $prefix = h->config->{doi}->{prefix};
+
     return $data
         unless $data->{doi}
+        && $data->{doi} =~ /^$prefix/
         && $data->{status} eq "public";
 
     h->log->info("Register the publication at DataCite\n" . to_yaml($data));
 
     my $datacite_xml
         = Catmandu->export_to_string({%$data, uri_base => h->uri_base()},
-        'Template', template => 'views/export/datacite.tt');
+        'Template', template => 'views/export/datacite.tt', xml => 1);
 
     h->log->debug("datacite_xml: $datacite_xml");
 
     my $job = {
-        user         => h->config->{doi}->{user},
-        password     => h->config->{doi}->{passwd},
         doi          => $data->{doi},
         landing_url  => h->uri_base() . "/record/$data->{_id}",
         datacite_xml => $datacite_xml

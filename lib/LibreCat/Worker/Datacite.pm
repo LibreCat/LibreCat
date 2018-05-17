@@ -1,4 +1,4 @@
-package LibreCat::Worker::DataCite;
+package LibreCat::Worker::Datacite;
 
 use Catmandu::Sane;
 use Furl;
@@ -78,14 +78,14 @@ sub _do_request {
         $req->authorization_basic($self->user, $self->password);
         my $furl = Furl->new();
         $res = $furl->request($req);
-return $res;
+
         my $status = $res->code();
         $self->log->debug("Status code $status.");
         return $status;
     }
     catch {
         $self->log->error(
-            "Error registering at DataCite: $_\ņHTTP-Result: $res")
+            "Error registering at DataCite: $_\ņ")
     }
 }
 
@@ -97,13 +97,13 @@ __END__
 
 =head1 NAME
 
-LibreCat::Worker::DataCite - a worker for registering and minting at DataCite
+LibreCat::Worker::Datacite - a worker for registering and minting DOIs at DataCite
 
 =head2 SYNOPSIS
 
-    use LibreCat::Worker::DataCite;
+    use LibreCat::Worker::Datacite;
 
-    my $registry = LibreCat::Worker::DataCite->new(user => 'me', password => 'secret');
+    my $registry = LibreCat::Worker::Datacite->new(user => 'me', password => 'secret');
 
     $registry->work({
         doi          => '...' ,
