@@ -42,7 +42,7 @@ sub mint {
 
     my $uri = URI->new($self->base_url);
     $uri->path("doi");
-    $self->_do_request('POST', $uri->as_string, "doi=$doi\nurl=$landing_url",
+    $self->_do_request('PUT', $uri->as_string, "doi=$doi\nurl=$landing_url",
         'text/plain;charset=UTF-8',);
 }
 
