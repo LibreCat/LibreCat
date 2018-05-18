@@ -18,9 +18,11 @@ sub fix {
 
     h->log->info("Register the publication at DataCite\n" . to_yaml($data));
 
-    my $datacite_xml
-        = Catmandu->export_to_string({%$data, uri_base => h->uri_base()},
-        'Template', template => 'views/export/datacite.tt', xml => 1);
+    my $datacite_xml = Catmandu->export_to_string(
+        {%$data, uri_base => h->uri_base()}, 'Template',
+        template => 'views/export/datacite.tt',
+        xml      => 1
+    );
 
     h->log->debug("datacite_xml: $datacite_xml");
 

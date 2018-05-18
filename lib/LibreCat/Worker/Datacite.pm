@@ -42,7 +42,8 @@ sub mint {
 
     my $uri = URI->new($self->base_url);
     $uri->path("doi");
-    $self->_do_request('POST', $uri->as_string, "doi=$doi\nurl=$landing_url", 'text/plain;charset=UTF-8',);
+    $self->_do_request('POST', $uri->as_string, "doi=$doi\nurl=$landing_url",
+        'text/plain;charset=UTF-8',);
 }
 
 sub metadata {
@@ -84,8 +85,7 @@ sub _do_request {
         return $status;
     }
     catch {
-        $self->log->error(
-            "Error registering at DataCite: $_\ņ")
+        $self->log->error("Error registering at DataCite: $_\ņ")
     }
 }
 
