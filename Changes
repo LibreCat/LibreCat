@@ -2,7 +2,7 @@ Revision history for LibreCat
 
 {{NEXT}} {{DATE}}
 
-1.1.4 2018-04-22
+1.2.0 2018-04-22
     - Introduce oa (open access) flag which is calculated at indexing time
     - Fixing related material links
     - Adding id-handles to search forms to help jQuery processing in layers
