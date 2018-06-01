@@ -29,16 +29,16 @@ Hash reference containing "user_id" and "role". Both must be a string
 sub can_edit {
     my ($self, $id, $opts) = @_;
 
-    is_string($id)     or return;
-    is_hash_ref($opts) or return;
+    is_string($id)     or return 0;
+    is_hash_ref($opts) or return 0;
 
     h->log->debug("id: $id ; opts:" . to_dumper($opts));
 
     my $user_id = $opts->{user_id};
     my $role    = $opts->{role};
 
-    my $pub  = h->main_publication->get($id) or return;
-    my $user = h->get_person($user_id)       or return;
+    my $pub  = h->main_publication->get($id) or return 0;
+    my $user = h->get_person($user_id)       or return 0;
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';
@@ -235,7 +235,7 @@ sub can_download {
         # if and only if the user can edit the record
         my $can_edit
             = $self->can_edit($id, {user_id => $user_id, role => $role});
-        return ($can_edit, $file_name);
+        return ($can_edit ? 1 : 0, $file_name);
     }
 
     return (0, '');
