@@ -61,3 +61,30 @@ sub _store_related_material {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Model::Publication - a publication model
+
+=head1 SYNOPSIS
+
+    package MyPackage;
+
+    use LibreCat qw(publication);
+
+    publication->get(123);
+
+    my $rec = {...};
+    publication->add($rec);
+
+    publication->delete(123);
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<LibreCat::Model>
+
+=cut
