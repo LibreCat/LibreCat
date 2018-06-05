@@ -132,20 +132,31 @@ __END__
 
 =head1 NAME
 
-LibreCat::User -
+LibreCat::Model::User - a user model
 
 =head1 SYNOPSIS
 
-    use LibreCat::User;
+    package MyPackage;
 
-    my $u = LibreCat::User->new;
+    use LibreCat qw(user);
 
-    my $user = $u->get(1234);
+    user->get(123);
 
+    my $rec = {...};
+    user->add($rec);
 
+    user->delete(123);
+
+=head1 METHODS
+
+=head2 find($id/$login)
+
+=head2 find_by_username($name)
+
+=head2 to_session($user)
 
 =head1 SEE ALSO
 
-L<LibreCat>
+L<LibreCat>, L<LibreCat::Model>
 
 =cut
