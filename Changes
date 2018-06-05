@@ -1,6 +1,22 @@
 Revision history for LibreCat
 
 {{NEXT}} {{DATE}}
+
+1.2.0 2018-04-22
+    - Introduce oa (open access) flag which is calculated at indexing time
+    - Fixing related material links
+    - Adding id-handles to search forms to help jQuery processing in layers
+    - Rewrite of all code handling record storage and indexation
+    - Fix export of private records
+    - Show citethis link in mobile only if csl enabled
+    - Remove query parameters from marked link
+    - Deliver empty record instead of 404 in exports
+    - Fixing: Correct link rendering for closed and local access files #468
+    - Open download links in new tab (in embedded view) #469
+    - Fixing datacite exports
+    - Removed the 'data' route and tab
+    - Fixing publication author with middle name not matching #457
+    - Add backwards compatibility to new LibreCat.pm code
     - Deleted publications can be edited anymore in via the web forms
     - Fixing related materials link
     - Fixing admin users could delete read-only fields
