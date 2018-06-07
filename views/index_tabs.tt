@@ -1,7 +1,7 @@
 <!-- BEGIN index_tabs.tt -->
 <div class="col-md-12">
   <ul class="nav nav-tabs" id="indexTab">
-    <li [% IF request.path == "/" %]class="active"[% END %]><a href="[% uri_base %]/">[% h.loc("tabs.home") %]</a></li>
+    <li [% IF request.path.match(h.config.mount_path) %]class="active"[% END %]><a href="[% uri_base %]">[% h.loc("tabs.home") %] -- [% request.path %]</a></li>
     [%- FOREACH item IN ["record", "person", "project", "department"] %]
       [%-
         tmp.record     = "publications";

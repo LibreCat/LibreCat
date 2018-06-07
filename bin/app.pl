@@ -108,5 +108,5 @@ builder {
 
     }
 
-    mount '/' => $app->to_app;
+    mount $config->{mount_path} => $app->to_app;
 };
