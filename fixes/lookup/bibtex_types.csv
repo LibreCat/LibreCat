@@ -2,7 +2,12 @@ type,bibtex_type
 book,book
 book_chapter,inbook
 book_editor,book
+conference_abstract,inproceedings
+conference_editor,proceedings
 conference,inproceedings
 dissertation,phdthesis
 bi_dissertation,phdthesis
 journal_article,article
+preprint,unpublished
+report,techreport
+working_paper,unpublished
