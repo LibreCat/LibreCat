@@ -2,8 +2,8 @@
 appname: "LibreCat %ndash; Publication List Manager"
 charset: "UTF-8"
 
-# set this variable if you want to mount LibreCat at another path
-mount_path: "/elsa"
+# override this variable if you want to mount LibreCat at another path
+mount_path: "/"
 
 # Template Engine
 template: "template_toolkit"
