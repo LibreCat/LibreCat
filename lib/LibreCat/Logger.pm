@@ -12,3 +12,31 @@ sub _build_log {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Logger - a logger for LibreCat modules
+
+=head1 SYNOPSIS
+
+    package MyPackage;
+
+    use Moo;
+
+    with "LibreCat::Logger";
+
+    sub demo {
+        my ($self, $data) = @_;
+
+        $self->log->debug("Executing sub demo in MyPackage");
+    }
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<Log::Any>, L<config/log4perl.yml>
+
+=cut
