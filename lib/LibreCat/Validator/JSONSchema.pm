@@ -21,3 +21,32 @@ around last_errors => sub {
 };
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Validator::JSONSchema - a JSONSchema validator
+
+=head1 SYNOPSIS
+
+    package MyPackage;
+
+    use LibreCat::Validator::JSONSchema;
+    use LibreCat::App::Helper;
+
+    my $publication_validator =
+        LibreCat::Validator::JSONSchema->new(schema => h->config->{schemas}{publication});
+
+    if ($publication_validator->is_valid($rec)) {
+        # ...
+    }
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<Librecat::Validator>, L<Catmandu::Validator>,
+L<Catmandu::Validator::JSONSchema>, L<config/schemas.yml>
+
+=cut
