@@ -140,10 +140,11 @@ LibreCat::Model::User - a user model
 
     use LibreCat qw(user);
 
-    user->get(123);
+    my $rec = user->get(123);
 
-    my $rec = {...};
-    user->add($rec);
+    if (user->add($rec)) {
+        print "OK!";
+    }
 
     user->delete(123);
 

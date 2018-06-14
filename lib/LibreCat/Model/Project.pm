@@ -22,10 +22,11 @@ LibreCat::Model::Project - a project model
 
     use LibreCat qw(project);
 
-    project->get(123);
+    my $rec = project->get(123);
 
-    my $rec = {...};
-    project->add($rec);
+    if (project->add($rec)) {
+        print "OK!";
+    }
 
     project->delete(123);
 

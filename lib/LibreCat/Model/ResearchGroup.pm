@@ -22,10 +22,11 @@ LibreCat::Model::ResearchGroup - a research group model
 
     use LibreCat qw(research_group);
 
-    research_group->get(123);
+    my $rec = research_group->get(123);
 
-    my $rec = {...};
-    research_group->add($rec);
+    if (research_group->add($rec)) {
+        print "OK!";
+    }
 
     research_group->delete(123);
 

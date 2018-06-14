@@ -22,10 +22,11 @@ LibreCat::Model::Deparment - a department model
 
     use LibreCat qw(department);
 
-    department->get(123);
+    my $rec = department->get(123);
 
-    my $rec = {...};
-    department->add($rec);
+    if (department->add($rec)) {
+        print "OK!"
+    }
 
     department->delete(123);
 

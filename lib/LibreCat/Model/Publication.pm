@@ -76,10 +76,11 @@ LibreCat::Model::Publication - a publication model
 
     use LibreCat qw(publication);
 
-    publication->get(123);
+    my $rec = publication->get(123);
 
-    my $rec = {...};
-    publication->add($rec);
+    if (publication->add($rec)) {
+        print "OK!";
+    }
 
     publication->delete(123);
 
