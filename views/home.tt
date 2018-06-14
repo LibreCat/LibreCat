@@ -46,6 +46,7 @@
                         [%- IF thisPerson.super_admin AND session.role != "super_admin" %]
                         | <a href="[% uri_base %]/librecat/change_role/admin">[% h.loc("header.role.super_admin") %]</a>
                         [%- END %]
+                        )
                     [%- END %]
                     
                     [% INCLUDE person_profile.tt %]
