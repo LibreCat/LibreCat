@@ -16,6 +16,7 @@ login:
 header:
   title: "Publikationen an der Universit&auml;t LibreCat"
   my_author_page: "Meine Publikationsliste"
+  my_dashboard: "Mein Dashboard"
   brand: "Start"
   role_label: "Rolle"
   role_change: "Rolle wechseln:"
@@ -1712,6 +1713,7 @@ help:
   home: "Startseite"
   brand: "Backend<br>Startseite"
   my_author_page: "Ihre &ouml;ffentliche<br>Publikationsliste"
+  my_dashboard: "Ihr Dashboard für die aktuelle Rolle"
   change_language: "Sprache wechseln"
   user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
   author_id: "Alias (zus&auml;tzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
