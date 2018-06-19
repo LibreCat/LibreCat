@@ -388,8 +388,8 @@ note("testing adding publication with-citations, with-files ");
 {
     my $result = test_app(
         qq|LibreCat::CLI| => [
-            'publication', '--with-citations', '--with-files',
-            'add',         't/records/valid-publication-no-citation.yml'
+            'publication', '--with-citations', '--with-files', 'add',
+            't/records/valid-publication-no-citation.yml'
         ]
     );
 

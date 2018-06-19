@@ -78,8 +78,8 @@ sub command_opt_spec {
         ['version=i',        ""],
         ['previous-version', ""],
         ['history',          ""],
-        ['with-citations', ""],
-        ['with-files', ""],
+        ['with-citations',   ""],
+        ['with-files',       ""],
     );
 }
 
@@ -196,7 +196,7 @@ sub _on_all {
 sub _list {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -219,12 +219,12 @@ sub _list {
 
     my $count = $it->each(
         sub {
-            my ($item) = @_;
-            my $id = $item->{_id};
-            my $title   = $item->{title}            // '---';
+            my ($item)  = @_;
+            my $id      = $item->{_id};
+            my $title   = $item->{title} // '---';
             my $creator = $item->{creator}->{login} // '---';
             my $status  = $item->{status};
-            my $type    = $item->{type}             // '---';
+            my $type    = $item->{type} // '---';
 
             printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n",
                 " "    # not use
@@ -245,7 +245,7 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort}  // undef;
+    my $sort  = $self->opts->{sort} // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -325,7 +325,7 @@ sub _add {
 
     my $skip_before_add = [];
     push @$skip_before_add, "citation" unless $self->opts->{"with_citations"};
-    push @$skip_before_add, "files" unless $self->opts->{"with_files"};
+    push @$skip_before_add, "files"    unless $self->opts->{"with_files"};
 
     publication->add_many(
         $importer,
@@ -418,7 +418,7 @@ sub _valid {
 
             unless ($validator->is_valid($item)) {
                 my $errors = $validator->last_errors();
-                my $id = $item->{_id} // '';
+                my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
                         print STDERR "ERROR $id: $err\n";
@@ -502,9 +502,9 @@ sub _embargo {
                     ? $embargo_to
                     : $file->{access_level},
                     request_a_copy => $process ? 0 : $file->{request_a_copy},
-                    embargo => $process ? 'NA' : $embargo // 'NA',
+                    embargo    => $process ? 'NA' : $embargo // 'NA',
                     embargo_to => $process ? 'NA' : $embargo_to // 'NA',
-                    file_name => $file->{file_name},
+                    file_name  => $file->{file_name},
                 }
             );
         }
@@ -586,8 +586,7 @@ sub _files_load {
     my $update_file = sub {
         my ($id, $files) = @_;
         if (my $data = publication->get($id)) {
-            $self->_file_process($data, $files)
-                && publication->add($data);
+            $self->_file_process($data, $files) && publication->add($data);
         }
         else {
             warn "$id - no such publication";
