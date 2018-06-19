@@ -9,7 +9,7 @@ cc_licenses:
 author_id:
   inspire:
     label: INSPIRE ID
-    url: "https://inspirehep.net/record/"
+    url: "https://inspirehep.net/author/profile/"
   arxiv:
     label: ArXiv ID
     url: "https://arxiv.org/a/"
@@ -19,7 +19,7 @@ author_id:
     icon: " <sup><img src='/images/icon_orcid.png' /></sup>"
   googleScholar:
     label: Google Scholar Profile
-    url: "https://scholar.google.de/citations?user="
+    url: "https://scholar.google.com/citations?user="
   github:
     label: GitHub
     url: "https://github.com/"
