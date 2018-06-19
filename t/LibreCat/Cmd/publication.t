@@ -1,6 +1,6 @@
 use Catmandu::Sane;
 use Catmandu;
-use LibreCat -load => {layer_paths => [qw(t/layer)]};
+use LibreCat -self => -load => {layer_paths => [qw(t/layer)]};
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
@@ -405,7 +405,11 @@ note("testing adding publication with-citations, with-files ");
     $output = $result->stdout;
 
     like $output, qr/Valid Test Publication/, "got an ouput";
-    like $output, qr/citation/, "with citation";
+
+    if (librecat->config->{citation}->{enigne} eq 'csl') {
+        like $output, qr/citation/, "with citation";
+    }
+
     $result = test_app(
         qq|LibreCat::CLI| => ['publication', 'purge', '999999999']);
 
