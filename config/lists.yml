@@ -9,29 +9,29 @@ cc_licenses:
 author_id:
   inspire:
     label: INSPIRE ID
-    url: "http://inspirehep.net/record/"
+    url: "https://inspirehep.net/record/"
   arxiv:
     label: ArXiv ID
-    url: "http://arxiv.org/a/"
+    url: "https://arxiv.org/a/"
   orcid:
     label: ORCID
-    url: "http://orcid.org/"
+    url: "https://orcid.org/"
     icon: " <sup><img src='/images/icon_orcid.png' /></sup>"
   googleScholar:
     label: Google Scholar Profile
-    url: "http://scholar.google.de/citations?user="
+    url: "https://scholar.google.de/citations?user="
   github:
     label: GitHub
-    url: "http://github.com/"
+    url: "https://github.com/"
   researcherId:
     label: Researcher ID
-    url: "http://www.researcherid.com/rid/"
+    url: "https://www.researcherid.com/rid/"
   authorClaim:
     label: Author Claim
     url: "http://authorclaim.org/profile/"
   scopusId:
     label: Scopus Author ID
-    url: "http://www.scopus.com/authid/detail.url?authorId="
+    url: "https://www.scopus.com/authid/detail.url?authorId="
   alias:
     label: Alias
     url: "/person/"
