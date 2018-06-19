@@ -8,6 +8,7 @@ use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
+use Data::Dumper;
 
 sub description {
     return <<EOF;
@@ -28,11 +29,12 @@ options:
     --sort=STR         (sorting results [only in combination with cql-query])
     --total=NUM        (total number of items to list/export)
     --start=NUM        (start list/export at this item)
-    --no-citation      (skip calculating citations when adding records)
     --version=NUM      (get a specific record version)
     --previous-version (get previous record version)
     --history          (get all record versions)
     --log=STR          (write an audit message)
+    --with-citations   (process citations while adding records)
+    --with-files       (process files while addings records)
 
 E.g.
 
@@ -70,7 +72,6 @@ EOF
 sub command_opt_spec {
     my ($class) = @_;
     (
-        ['no-citation|nc',   ""],
         ['total=i',          ""],
         ['start=i',          ""],
         ['sort=s',           ""],
@@ -78,6 +79,8 @@ sub command_opt_spec {
         ['version=i',        ""],
         ['previous-version', ""],
         ['history',          ""],
+        ['with-citations', ""],
+        ['with-files', ""],
     );
 }
 
@@ -321,7 +324,9 @@ sub _add {
         $exporter = Catmandu->exporter('YAML', file => $out_file);
     }
 
-    my $skip_before_add = $self->opts->{no_citation} ? ['citation'] : [];
+    my $skip_before_add = [];
+    push @$skip_before_add, "citation" unless $self->opts->{"with_citations"};
+    push @$skip_before_add, "files" unless $self->opts->{"with_files"};
 
     publication->add_many(
         $importer,
@@ -792,9 +797,10 @@ LibreCat::Cmd::publication - manage librecat publications
         --sort=STR         (sorting results [only in combination with cql-query])
         --total=NUM        (total number of items to list/export)
         --start=NUM        (start list/export at this item)
-        --no-citation      (skip calculating citations when adding records)
         --version=NUM      (get a specific record version)
         --previous-version (get previous record version)
         --history          (get all record versions)
         --log=STR          (write an audit message)
+        --with-citations   (process citations while adding records)
+        --with-files       (process files while addings records)
 =cut
