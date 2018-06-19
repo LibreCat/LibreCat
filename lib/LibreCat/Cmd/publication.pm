@@ -8,7 +8,6 @@ use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
-use Data::Dumper;
 
 sub description {
     return <<EOF;
