@@ -10,9 +10,9 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat schemas [options] list
-librecat schemas [options] get SCHEMA
-librecat schemas [options] markdown
+librecat schemas list
+librecat schemas get SCHEMA
+librecat schemas markdown
 
 EOF
 }
@@ -212,8 +212,8 @@ LibreCat::Cmd::schemas - manage librecat schemas
 =head1 SYNOPSIS
 
     librecat schemas list
-    librecat schemas [options] get SCHEMA
-    librecat schemas [options] markdown
+    librecat schemas get SCHEMA
+    librecat schemas markdown
 
 =head1 commands
 

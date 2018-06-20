@@ -50,11 +50,11 @@ sub _send_it {
         callbacks => {
             override => sub {
                 my ($respond, $response) = @_;
-                my $content_type = $file->{content_type};
+                my $content_type     = $file->{content_type};
                 my $http_status_code = 200;
 
-                # Tech.note: This is a hash of HTTP header/values, but the
-                #            function below requires an even-numbered array-ref.
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
                 my @http_headers = (
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
@@ -62,11 +62,11 @@ sub _send_it {
                     'Pragma' => 'no-cache'
                 );
 
-                # Send the HTTP headers
-                # (back to either the user or the upstream HTTP web-server front-end)
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
-                $files->stream($writer,$file);
+                $files->stream($writer, $file);
             },
         },
     );
@@ -103,13 +103,20 @@ get '/rc/approve/:key' => sub {
     $data->{approved} = 1;
     $bag->add($data);
 
-    my $body
-        = export_to_string({key => params->{key}, uri_base => h->uri_base(), appname_short => h->config->{appname_short}},
-        'Template', template => 'views/email/req_copy_approve.tt');
+    my $body = export_to_string(
+        {
+            key           => params->{key},
+            uri_base      => h->uri_base(),
+            appname_short => h->loc("appname_short")
+        },
+        'Template',
+        template => 'views/email/req_copy_approve.tt'
+    );
 
     my $job = {
         to      => $data->{user_email},
         subject => h->config->{request_copy}->{subject},
+        from    => h->config->{request_copy}->{from},
         body    => $body,
     };
 
@@ -138,8 +145,11 @@ get '/rc/deny/:key' => sub {
     my $job = {
         to      => $data->{user_email},
         subject => h->config->{request_copy}->{subject},
+        from    => h->config->{request_copy}->{from},
         body    => export_to_string(
-            {appname_short => h->config->{appname_short}}, 'Template', template => 'views/email/req_copy_deny.tt'
+            {appname_short => h->loc("appname_short")},
+            'Template',
+            template => 'views/email/req_copy_deny.tt'
         ),
     };
 
@@ -165,7 +175,7 @@ get '/rc/:key' => sub {
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
-            _send_it($check->{record_id}, $file->key);
+            _send_it($check->{record_id}, $file->{_id});
         }
         else {
             status 404;
@@ -188,10 +198,10 @@ Request a copy of the publication. Email will be sent to the author.
 =cut
 
 any '/rc/:id/:file_id' => sub {
-    my $bag  = h->main_reqcopy;
+    my $bag = h->main_reqcopy;
     my $file = _get_file_info(params->{id}, params->{file_id});
     unless ($file->{request_a_copy}) {
-        forward '/publication/' . params->{id}, {method => 'GET'};
+        forward '/record/' . params->{id}, {method => 'GET'};
     }
 
     my $date_expires = _calc_date();
@@ -211,27 +221,30 @@ any '/rc/:id/:file_id' => sub {
     if (params->{user_email}) {
         my $pub
             = Catmandu->store('main')->bag('publication')->get(params->{id});
+
         my $mail_body = export_to_string(
             {
-                title      => $pub->{title},
-                user_email => params->{user_email},
-                mesg       => params->{mesg} || '',
-                key        => $stored->{_id},
-                uri_base   => h->uri_base(),
-                appname_short => h->config->{appname_short},
+                title         => $pub->{title},
+                user_email    => params->{user_email},
+                mesg          => params->{mesg} || '',
+                key           => $stored->{_id},
+                uri_base      => h->uri_base(),
+                appname_short => h->loc("appname_short"),
             },
             'Template',
             template => 'views/email/req_copy.tt',
         );
+
         my $job = {
             to      => $file_creator_email,
             subject => h->config->{request_copy}->{subject},
+            from    => h->config->{request_copy}->{from},
             body    => $mail_body,
         };
 
         try {
             h->queue->add_job('mailer', $job);
-            return redirect uri_for("/publication/" . params->{id});
+            return redirect uri_for("/record/" . params->{id});
         }
         catch {
             h->log->error("Could not send email: $_");
@@ -257,10 +270,15 @@ and user rights will be checked before.
 get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     my ($id, $file_id) = splat;
 
-
-    my ($ok, $file_name)
-        = p->can_download($id, $file_id, session->{user}, session->{role},
-        request->address);
+    my ($ok, $file_name) = p->can_download(
+        $id,
+        {
+            file_id => $file_id,
+            user_id => session->{user_id},
+            role    => session->{role},
+            ip      => request->address
+        }
+    );
 
     unless ($ok) {
         status 403;
@@ -288,7 +306,7 @@ get '/thumbnail/:id' => sub {
     my $thumbnail_name = 'thumbnail.png';
 
     if (my $file = _file_exists($key, $thumbnail_name, access => 1)) {
-        _send_it($key, $file->key, access => 1);
+        _send_it($key, $file->{_id}, access => 1);
     }
     else {
         redirect uri_for('/images/thumbnail_dummy.png');

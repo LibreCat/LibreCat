@@ -9,13 +9,20 @@
     [%- CALL removed.import(qp.cql) -%]
     [%- CALL removed.splice(loop.index, 1) -%]
     [%- my_del_link.cql = removed -%]
-    <p class="text-muted"><a href="[% h.uri_for(request.path_info, other) %]" rel="nofollow"><span class="fa fa-times"></span></a> [% val |html %]</p>
+    <p class="text-muted"><a href="[% h.uri_for(request.path_info, my_del_link) %]" rel="nofollow"><span class="fa fa-times"></span></a> [% val |html %]</p>
   [%- END %]
 [%- END -%]
 
 [%- UNLESS request.path_info.match('marked') %]
 <h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% h.loc("facets.search") %]</h3>
-<form action="#" method="get" role="form" class="helpme helpme-md" data-placement="left" title="[% h.loc("help.search") | html %]">
+<form
+    id="backend_search_form"
+    action="#"
+    method="get"
+    role="form"
+    class="helpme helpme-md"
+    data-placement="left"
+    title="[% h.loc("help.search") | html %]">
   <span class="input-group">
     <input type="text" class="form-control" name="q" value="[% qp.q | html %]" placeholder="[% h.loc("facets.search") | html %]" />
     <span class="input-group-btn">

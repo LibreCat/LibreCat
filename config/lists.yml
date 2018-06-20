@@ -105,10 +105,7 @@ external_identifier:
   arxiv: "ArXiv"
   pmid: "PMID"
   inspire: "Inspire"
-  ahf: "AHF"
   scoap3: "SCOAP3"
-  phillister: "PhilLister"
-  opac: "Katalog.plus!"
 
 publication_identifier:
   issn: "ISSN"
@@ -149,11 +146,6 @@ gs_doc_type:
   translation: 'translation'
   working_paper: 'working Paper'
   research_data: 'Research Data'
-
-relations_rd:
-  -
-    relation: "is_cited_by"
-    opposite: "cites"
 
 relations_file:
   -
@@ -225,6 +217,9 @@ relations_link:
     relation: "original"
     opposite: "translation"
   -
+    relation: "is_cited_by"
+    opposite: "cites"
+  -
     relation: "other"
 
 relations_record:
@@ -270,6 +265,9 @@ relations_record:
   -
     relation: "original"
     opposite: "translation"
+  -
+    relation: "is_cited_by"
+    opposite: "cites"
   -
     relation: "other"
     opposite: "other"

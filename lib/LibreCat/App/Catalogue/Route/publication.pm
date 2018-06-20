@@ -8,6 +8,7 @@ Route handler for publications.
 
 use Catmandu::Sane;
 use Catmandu;
+use LibreCat qw(publication);
 use Catmandu::Fix qw(expand);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
@@ -16,8 +17,7 @@ use Encode qw(encode);
 
 sub access_denied_hook {
     h->hook('publication-access-denied')
-        > fix_around(
-        {_id => params->{id}, user_id => session->{user_id},});
+        ->fix_around({_id => params->{id}, user_id => session->{user_id},});
 }
 
 =head1 PREFIX /record
@@ -42,15 +42,14 @@ Some fields are pre-filled.
 
         return template 'backend/add_new' unless $type;
 
-        my $id = h->new_record('publication');
+        my $id = publication->generate_id;
 
         # set some basic values
         my $data = {
             _id        => $id,
             type       => $type,
             department => $user->{department},
-            creator =>
-                {id => session->{user_id}, login => session->{user},},
+            creator => {id => session->{user_id}, login => session->{user},},
             user_id => session->{user_id},
         };
 
@@ -86,10 +85,6 @@ Some fields are pre-filled.
             }
         }
 
-        if ($type eq "research_data" && h->config->{doi}) {
-            $data->{doi} = h->config->{doi}->{prefix} . "/" . $id;
-        }
-
         if ( h->locale_exists( param('lang') ) ) {
             $data->{lang} = param('lang');
         }
@@ -114,21 +109,19 @@ Checks if the user has permission the see/edit this record.
 =cut
 
     get '/edit/:id' => sub {
-        my $id = params->{id};
 
-        unless (p->can_edit($id, session->{user}, session->{role})) {
+        my $rec = publication->get(param("id")) or pass;
+
+        unless (
+            p->can_edit(
+                $rec->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             access_denied_hook();
             status '403';
-            forward '/access_denied', {referer => request->{referer}};
-        }
-
-        forward '/' unless $id;
-
-        my $rec = h->main_publication->get($id);
-
-        unless ($rec) {
-            return template 'error',
-                {message => "No publication found with ID $id."};
+            forward '/access_denied', {referer => request->referer};
         }
 
         # Use config/hooks.yml to register functions
@@ -140,7 +133,7 @@ Checks if the user has permission the see/edit this record.
         my $templatepath = "backend/forms";
         my $template = $rec->{meta}->{template} // $rec->{type};
 
-        $rec->{return_url} = request->{referer} if request->{referer};
+        $rec->{return_url} = request->referer if request->referer;
 
         # --- End setting edit mode
 
@@ -158,12 +151,18 @@ Checks if the user has the rights to update this record.
 =cut
 
     post '/update' => sub {
-        my $p = params;
+        my $p          = params;
+        my $return_url = $p->{return_url};
 
         h->log->debug("Params:" . to_dumper($p));
 
-        unless ($p->{new_record}
-            or p->can_edit($p->{_id}, session->{user}, session->{role}))
+        unless (
+            $p->{new_record}
+            or p->can_edit(
+                $p->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
         {
             access_denied_hook();
             status '403';
@@ -184,18 +183,18 @@ Checks if the user has the rights to update this record.
             $p->{status} = 'returned';
         }
 
-        $p->{user_id} = session->{user_id};
+        $p->{user_id} = session("user_id");
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
         h->hook('publication-update')->fix_around(
             $p,
             sub {
-                h->update_record('publication', $p);
+                publication->add($p);
             }
         );
 
-        redirect uri_for('/librecat');
+        redirect $return_url || uri_for('/librecat');
     };
 
 =head2 GET /return/:id
@@ -207,22 +206,22 @@ Checks if the user has the rights to edit this record.
 =cut
 
     get '/return/:id' => sub {
-        my $id = params->{id};
 
-        unless (p->can_edit($id, session->{user}, session->{role})) {
+        my $rec = publication->get(param("id")) or pass;
+
+        unless (
+            p->can_edit(
+                $rec->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             access_denied_hook();
             status '403';
             forward '/access_denied';
         }
 
-        my $rec = h->main_publication->get($id);
-
-        unless ($rec) {
-            return template 'error',
-                {message => "No publication found with ID $id."};
-        }
-
-        $rec->{user_id} = session->{user_id};
+        $rec->{user_id} = session("user_id");
 
         # Use config/hooks.yml to register functions
         # that should run before/after returning publications
@@ -230,7 +229,7 @@ Checks if the user has the rights to edit this record.
             $rec,
             sub {
                 $rec->{status} = "returned";
-                h->update_record('publication', $rec);
+                publication->add($rec);
             }
         );
 
@@ -246,7 +245,7 @@ Deletes record with id. For admins only.
     get '/delete/:id' => sub {
         my $id = params->{id};
 
-        my $rec = h->main_publication->get($id);
+        my $rec = publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -260,7 +259,7 @@ Deletes record with id. For admins only.
         h->hook('publication-delete')->fix_around(
             $rec,
             sub {
-                h->delete_record('publication', $id);
+                publication->delete($id);
             }
         );
 
@@ -276,10 +275,8 @@ Prints the frontdoor for every record.
     get '/preview/:id' => sub {
         my $id = params->{id};
 
-        my $hits = h->main_publication->get($id);
+        my $hits = publication->get($id);
 
-        $hits->{bag}
-            = $hits->{type} eq "research_data" ? "data" : "publication";
         $hits->{style}  = h->config->{citation}->{csl}->{default_style};
         $hits->{marked} = 0;
 
@@ -297,7 +294,7 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = h->main_publication->get($id);
+        my $rec = publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -319,7 +316,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
     get '/clone/:id' => sub {
         my $id  = params->{id};
-        my $rec = h->main_publication->get($id);
+        my $rec = publication->get($id);
 
         unless ($rec) {
             return template 'error',
@@ -328,7 +325,8 @@ Clones the record with ID :id and returns a form with a different ID.
 
         delete $rec->{file};
         delete $rec->{related_material};
-        $rec->{_id} = h->new_record('publication');
+        $rec->{_id}        = publication->generate_id;
+        $rec->{new_record} = 1;
 
         my $template = $rec->{type} . ".tt";
 
@@ -342,19 +340,19 @@ Publishes private records, returns to the list.
 =cut
 
     get '/publish/:id' => sub {
-        my $id = params->{id};
 
-        unless (p->can_edit($id, session->{user}, session->{role})) {
+        my $rec = publication->get(param("id")) or pass;
+
+        unless (
+            p->can_edit(
+                $rec->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             access_denied_hook();
             status '403';
             forward '/access_denied';
-        }
-
-        my $rec = h->main_publication->get($id);
-
-        unless ($rec) {
-            return template 'error',
-                {message => "No publication found with ID $id."};
         }
 
         my $old_status = $rec->{status};
@@ -377,9 +375,9 @@ Publishes private records, returns to the list.
 
             $hook->fix_before($rec);
 
-            my $res = h->update_record('publication', $rec);
+            publication->add($rec);
 
-            $hook->fix_after($res);
+            $hook->fix_after($rec);
         }
 
         redirect uri_for('/librecat');

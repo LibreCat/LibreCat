@@ -12,6 +12,48 @@ use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
 use HTML::Entities;
 use LibreCat::App::Helper;
+use LibreCat qw(searcher);
+
+=head2 AJA /search_publication
+
+Ajax route for autocomplete feature in forms.
+
+=cut
+
+ajax '/search_publication' => sub {
+    my $limit = length(params->{term}) ? 10 : 1000;
+
+    my @terms = split(' ', params->{term});
+    $terms[-1] .= "*" if @terms;
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (cql_query => $cql_query, limit => $limit,
+        sru_sortkeys => 'title,,1');
+
+    h->log->debug("executing publication->search: " . to_dumper(\%search_params));
+
+    my $hits = h->publication->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
+
+    if ($hits->{total}) {
+        my @map = map {
+            my $author = $_->{author}->[0]->{full_name} // $_->{editor}->[0]->{full_name} // $_->{translator}->[0]->{full_name};
+            {
+                id => $_->{_id},
+                label => "$author ($_->{year}): $_->{title} [$_->{type}]",
+                title => $_->{title},
+            };
+        } @{$hits->{hits}};
+
+        return to_json \@map;
+    }
+    else {
+        return to_json [];
+    }
+};
 
 =head2 AJAX /search_researcher
 
@@ -21,11 +63,14 @@ ajax '/search_researcher' => sub {
     my $cql;
     push @$cql, params->{'term'};
 
-    my %search_params = (cql => $cql, limit => 100,
-        sort => h->config->{default_person_sort});
+    my %search_params = (
+        cql => $cql,
+        limit => 100,
+        sort => h->config->{default_person_sort}
+    );
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('user', \%search_params)->{hits};
+    my $hits = searcher->search('user', \%search_params)->{hits};
 
     return to_json $hits;
 };
@@ -39,18 +84,6 @@ ajax '/authority_user/:id' => sub {
     to_json $person;
 };
 
-ajax '/num_of_publ/:id' => sub {
-    my $id = params->{id};
-
-    my %search_params = (cql => ["person=$id"]);
-    h->log->debug(
-        "executing publication->search: " . to_dumper(\%search_params));
-
-    my $hits = LibreCat->searcher->search('publication', \%search_params);
-
-    return to_json {total => $hits->{total}};
-};
-
 =head2 AJAX /get_alias/:id/:alias
 
 =cut
@@ -62,7 +95,7 @@ ajax '/get_alias/:id/:alias' => sub {
     my %search_params = (cql => ["alias=$term", "id<>$id"]);
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('user', \%search_params);
+    my $hits = searcher->search('user', \%search_params);
 
     return to_json {ok => $hits->{total} ? 0 : 1};
 };
@@ -73,12 +106,21 @@ ajax '/get_alias/:id/:alias' => sub {
 
 ajax '/get_project' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map {$_ . "*"} split(' ', params->{term});
 
-    my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
+    my @terms = split(' ', params->{term});
+    $terms[-1] .= "*" if @terms;
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (cql_query => $cql_query, limit => $limit,
+        sru_sortkeys => 'name,,1');
+
     h->log->debug("executing project->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('project', \%search_params);
+    my $hits = h->project->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
         my $map;
@@ -89,7 +131,6 @@ ajax '/get_project' => sub {
     else {
         return to_json [];
     }
-
 };
 
 =head2 AJAX /get_department
@@ -97,14 +138,27 @@ ajax '/get_project' => sub {
 =cut
 
 ajax '/get_department' => sub {
-    my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map {$_ . "*"} split(' ', params->{term});
+    my $term = params->{term} // '';
+    my $limit = length($term) ? 10 : 1000;
 
-    my %search_params = (q => \@q, limit => $limit, sort => 'display.asc');
+    my @terms = split('\s', $term);
+    $terms[-1] .= "*" if @terms;
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (
+        cql_query    => $cql_query,
+        limit        => $limit,
+        sru_sortkeys => 'display,,1'
+    );
+
     h->log->debug(
         "executing department->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('department', \%search_params);
+    my $hits = h->department->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
         my $map;
@@ -123,13 +177,22 @@ ajax '/get_department' => sub {
 
 ajax '/get_research_group' => sub {
     my $limit = length(params->{term}) ? 10 : 1000;
-    my @q = map {$_ . "*"} split(' ', params->{term});
 
-    my %search_params = (q => \@q, limit => $limit, sort => 'name.asc');
+    my @terms = split(' ', params->{term});
+    $terms[-1] .= "*" if @terms;
+    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+
+    my $cql_query = join(" AND ", @cql_parts);
+
+    my %search_params = (cql_query => $cql_query, limit => $limit,
+        sru_sortkeys => 'name,,1');
+
     h->log->debug(
         "executing research_group->search: " . to_dumper(\%search_params));
 
-    my $hits = LibreCat->searcher->search('research_group', \%search_params);
+    my $hits = h->research_group->search(%search_params);
+
+    h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
         my $map;

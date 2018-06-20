@@ -13,7 +13,7 @@ use Dancer::ModuleLoader;
 use Catmandu::Sane;
 use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-use LibreCat qw(:load);
+use LibreCat qw(:load :self);
 use Catmandu::Util qw(require_package :is);
 use Plack::Builder;
 use Plack::App::File;
@@ -22,7 +22,7 @@ use Dancer;
 use LibreCat::App;
 
 # setup template paths
-config->{engines}{template_toolkit}{INCLUDE_PATH} = LibreCat->layers->template_paths;
+config->{engines}{template_toolkit}{INCLUDE_PATH} = librecat->template_paths;
 config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_debug};
 
 # Overwrite the default Dancer template for finding the
@@ -35,7 +35,7 @@ config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_d
     sub Dancer::Template::Abstract::view {
         my ($self, $view) = @_;
 
-        my $views_dir = LibreCat->layers->template_paths;
+        my $views_dir = librecat->template_paths;
 
         for my $template ($self->_template_name($view)) {
             if (is_array_ref($views_dir)) {
@@ -57,7 +57,7 @@ config->{engines}{template_toolkit}{DEBUG} //= 'provider' if config->{template_d
 
 # setup static file serving
 my $app = Plack::App::Cascade->new;
-$app->add(map {Plack::App::File->new(root => $_)->to_app} @{LibreCat->layers->public_paths});
+$app->add(map {Plack::App::File->new(root => $_)->to_app} @{librecat->public_paths});
 
 # dancer app
 $app->add(sub {
@@ -75,13 +75,40 @@ my $session_state_package = is_string($config->{session_state}->{package}) ?
 my $session_state_options = is_hash_ref($config->{session_state}->{options}) ?
     $config->{session_state}->{options} : {};
 
-my $uri_base = Catmandu->config->{uri_base} // Catmandu->config->{host} // "http://localhost:5001";
+my $uri_base = librecat->config->{uri_base} // Catmandu->config->{host} // "http://localhost:5001";
+
+my $auth_sso = is_array_ref( $config->{auth_sso} ) ? $config->{auth_sso} : [];
+my $session_sso = is_array_ref( $config->{session_sso} ) ? $config->{session_sso} : [];
 
 builder {
     enable '+Dancer::Middleware::Rebase', base => $uri_base, strip => 0 if is_string( $uri_base );
+    enable_if { $_[0]->{REMOTE_ADDR} eq '127.0.0.1' }
+        "Plack::Middleware::ReverseProxy";
     enable 'Deflater';
     enable 'Session',
         store => require_package( $session_store_package )->new( %$session_store_options ),
         state => require_package( $session_state_package )->new( %$session_state_options );
-    $app;
+
+    for my $as ( @$auth_sso ) {
+
+        mount $as->{path} => require_package( $as->{package}, "Plack::Auth::SSO" )->new(
+
+            %{ $as->{options} || {} },
+            uri_base => $uri_base
+
+        )->to_app();
+
+    }
+    for my $as ( @$session_sso ) {
+
+        mount $as->{path} => require_package( $as->{package}, "LibreCat::Auth::SSO" )->new(
+
+            %{ $as->{options} || {} },
+            uri_base => $uri_base
+
+        )->to_app();
+
+    }
+
+    mount '/' => $app->to_app;
 };

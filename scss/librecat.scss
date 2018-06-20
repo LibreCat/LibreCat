@@ -11,7 +11,7 @@
 /* display main content below navbar */
 
 main {
-    padding-top: 30px;
+    padding-top: 52px;
 }
 
 /* page-header */
@@ -155,6 +155,11 @@ a.anchor {
     position: relative;
     top: -140px;
     visibility: hidden;
+}
+
+div.anchor {
+    padding-top: 52px;
+    margin-top: -52px;
 }
 
 /* Some margin for row'ed paragraphs */

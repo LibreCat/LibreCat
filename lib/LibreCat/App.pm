@@ -8,7 +8,7 @@ LibreCat::App - a webapp that runs an awesome institutional repository.
 
 use Catmandu::Sane;
 use Catmandu::Util;
-use LibreCat;
+use LibreCat qw(user);
 use Dancer qw(:syntax);
 use LibreCat::App::Search;       # the frontend
 use LibreCat::App::Catalogue;    # the backend
@@ -149,11 +149,11 @@ sub _api_route {
 }
 
 sub _ip_match {
-    my $ip        = shift;
-    my $access    = h->config->{filestore}->{api}->{access} // {};
-    my $ip_ranges = $access->{ip_ranges} // [];
+    my $ip       = shift;
+    my $access   = h->config->{filestore}->{api}->{access} // {};
+    my $ip_range = $access->{ip_range} // [];
 
-    h->within_ip_range($ip, $ip_ranges);
+    h->within_ip_range($ip, $ip_range);
 }
 
 # custom authenticate routine
@@ -189,7 +189,7 @@ sub _authenticate {
 
     return unless $auth;
 
-    my $user = LibreCat->user->find_by_username($username) || return;
+    my $user = user->find_by_username($username) || return;
 
     $auth->authenticate({username => $username, password => $password})
         || return;
@@ -233,22 +233,7 @@ post '/login' => sub {
     $return_url =~ s{^[a-zA-Z:]+(\/\/)[^\/]+}{};
 
     if ($user) {
-        my $super_admin = "super_admin" if $user->{super_admin};
-        my $reviewer    = "reviewer"    if $user->{reviewer};
-        my $project_reviewer = "project_reviewer"
-            if $user->{project_reviewer};
-        my $data_manager = "data_manager" if $user->{data_manager};
-        my $delegate     = "delegate"     if $user->{delegate};
-        session role => $super_admin
-            || $reviewer
-            || $project_reviewer
-            || $data_manager
-            || $delegate
-            || "user";
-        session user    => $user->{login};
-        session user_id => $user->{_id};
-        h->set_locale( $user->{lang} || h->default_locale );
-
+        h->login_user($user);
         redirect uri_for($return_url);
     }
     else {
@@ -265,9 +250,7 @@ The logout route. Destroys session.
 
 any '/logout' => sub {
 
-    session role    => undef;
-    session user    => undef;
-    session user_id => undef;
+    h->logout_user();
 
     redirect '/';
 };

@@ -8,8 +8,14 @@ copy_field(last_name, full_name.$append)
 copy_field(first_name, full_name.$append)
 join_field(full_name, ', ')
 
-copy_field(old_last_name, old_full_name.$append)
-copy_field(old_first_name, old_full_name.$append)
-join_field(old_full_name, ', ')
+if exists(old_name)
+  do list(path:old_name, var:loop)
+    do identity()
+      copy_field(loop.last_name,loop.full_name.$append)
+      copy_field(loop.first_name,loop.full_name.$append)
+      join_field(loop.full_name, ', ')
+    end
+  end
+end
 
 compact(department)

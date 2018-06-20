@@ -18,7 +18,7 @@
       [%- IF year %]<meta name="citation_date" content="[% year | html %]">[% END %]
       [%- IF file %][% FOREACH fi IN file %][% IF fi.file_name %]
       <meta name="citation_pdf_url" content="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">[% END %][% END %][% END %]
-      [%- IF doi %]<meta name="citation_pdf_url" content="http://doi.org/[% doi | html %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url | html %]">[% END %]
+      [%- IF doi %]<meta name="citation_pdf_url" content="https://doi.org/[% doi | html %]">[% ELSIF link %]<meta name="citation_pdf_url" content="[% link.0.url | html %]">[% END %]
       [%- IF publication %]<meta name="citation_journal_title" content="[% publication | html %]" />[% END %]
       [%- IF volume %]<meta name="citation_volume" content="[% volume | html %]" />[% END %]
       [%- IF issue %]<meta name="citation_issue" content="[% issue | html %]" />[% END %]
@@ -37,7 +37,7 @@
       [%- FOREACH rel_entry IN entry.host %][% IF rel_entry.issn %]<meta name="DC.source.ISSN" content="[% rel_entry.issn.0 | html %]">[% END %][% IF rel_entry.isbn %]<meta name="DC.source.ISBN" content="[% rel_entry.isbn.0 | html %]">[% END %][% END %]
       [%- lowtype = type.lower %]
       <meta name="DC.type" content="[% h.get_list('gs_doc_type').$lowtype %]">
-      [%- IF doi %]<link rel="DC.relation" href="http://doi.org/[% doi | html %]">[% END %]
+      [%- IF doi %]<link rel="DC.relation" href="https://doi.org/[% doi | html %]">[% END %]
       [%- IF urn %]<link rel="DC.relation" href="http://nbn-resolving.de/[% urn | html %]">[% END %]
       [%- IF publication_identifier.issn.0 %]<link rel="DC.relation" href="urn:ISSN:[% publication_identifier.issn.0 | html %]">[% END %]
       [%- IF publication_identifier.isbn.0 %]<link rel="DC.relation" href="urn:ISBN:[% publication_identifier.isbn.0 | html %]">[% END %]

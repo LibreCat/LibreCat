@@ -25,4 +25,28 @@ sub generate {
     "$id";
 }
 
+=head1 NAME
+
+Catmandu::Bag::IdGenerator::Incremental - an incremental ID generator
+
+=head1 CONFIGURATION
+
+    # in config/store.yml
+    main:
+      package: DBI
+      options:
+        data_source: "DBI:mysql:database=librecat_main"
+        username: xxx
+        password: yyy
+        bags:
+          puiblication:
+            plugins: ['Datestamps']
+            id_generator: Incremental
+
+=head1 SEE ALSO
+
+L<Catmandu::Bag::IdGenerator>
+
+=cut
+
 1;

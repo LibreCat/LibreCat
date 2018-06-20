@@ -2,7 +2,8 @@ _prefix:
   locale:
     en:
 
-appname: "LibreCat"
+appname: "LibreCat &ndash; Publication List Manager"
+appname_short: "LibreCat"
 general:
   plural: "s"
   where: "in"
@@ -52,7 +53,6 @@ tabs:
   home: "Home"
   all_publications: "All Publications"
   publications: "Publications"
-  data_publications: "Data Publications"
   projects: "Projects"
   departments: "Departments"
   authors: "Authors"
@@ -69,7 +69,7 @@ home:
   operators: "Operators"
   stats:
     publications: "Publications"
-    data_publications: "Data Publications"
+    researcher: "Personal Publication lists"
     oa_publications: "Open Access Publications"
     projects: "Projects"
 main_page:
@@ -101,6 +101,14 @@ main_page:
     publish: "Make public"
     return: "Return"
     search_similar: "Search similar titles"
+    doi: "DOI"
+    main_file_link: "Download (ext.)"
+    isi: "WoS"
+    pmid: "PubMed"
+    pmid_eu: "Europe PMC"
+    arxiv: "arXiv"
+    inspire: "Inspire"
+    scoap3: "SCOAP-3"
 person_profile:
   id_not_found: "Person ID not found."
   former_researcher: "Former LibreCat University Researcher"
@@ -209,6 +217,7 @@ frontdoor:
   items: "Items"
   volume: "Volume"
   issue: "Issue"
+  article_number: "Article Number"
   page: "Page"
   tabs:
     details:
@@ -229,6 +238,7 @@ frontdoor:
       investigator: "Principal Investigator"
       member: "Member"
       cooperator: "Cooperator"
+      grant_number: "Grant Number"
     file_details:
       label: "Files"
       external_material: "External material:"
@@ -237,6 +247,7 @@ frontdoor:
       title: "File Title"
       description: "Description"
       url: "URL"
+      main_file_link: "Link(s) to Main File(s)"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
@@ -511,6 +522,7 @@ forms:
         label_short: "Locked"
       main_file_link: &main_file_link
         label: "Fulltext URL"
+        label_short: "Fulltext URL"
         placeholder: "Ext. location of your main file"
         open_access: "<img src='/images/access_open.png' /> Open Access"
   book_editor:
@@ -727,7 +739,7 @@ forms:
     label: "Conference (Editor)"
     tab: *tab
     field:
-      editor.label: "Editor"
+      editor: *editor
       document_type: *document_type
       doi: *doi
       title: *booktitle
@@ -1230,7 +1242,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       main_file_link: *main_file_link
-      editor.label: "Editor"
+      editor: "Editor"
   research_data:
     label: "Research Data"
     tab:

@@ -67,6 +67,8 @@ routes:
     - [ 'GET'  , '/librecat/person/set_language' , 'login'  ]
     - [ 'POST' , '/librecat/person/affiliation'  , 'login'  ]
 
+    - [ 'GET'  , '/librecat/export' , 'login'  ]
+
     - [ 'ANY'  , '/librecat/api'                 , 'api_access' ]
 
     # catch all for security reasons
@@ -77,7 +79,6 @@ routes:
     - [ 'ANY'  , '/ris '                         , 'default' ]
     - [ 'ANY'  , '/search_researcher '           , 'default' ]
     - [ 'ANY'  , '/authority_user'               , 'default' ]
-    - [ 'ANY'  , '/num_of_publ'                  , 'default' ]
     - [ 'ANY'  , '/get_alias'                    , 'default' ]
     - [ 'ANY'  , '/get_project'                  , 'default' ]
     - [ 'ANY'  , '/get_department'               , 'default' ]
@@ -85,7 +86,7 @@ routes:
 
     - [ 'ANY'  , '/department'                   , 'default' ]
     - [ 'ANY'  , '/publication'                  , 'default' ]
-    - [ 'ANY'  , '/data'                         , 'default' ]
+    - [ 'ANY'  , '/record'                       , 'default' ]
     - [ 'ANY'  , '/person'                       , 'default' ]
     - [ 'ANY'  , '/staffdirectory'               , 'default' ]
     - [ 'ANY'  , '/project'                      , 'default' ]

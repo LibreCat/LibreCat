@@ -1,64 +1,35 @@
-
 <!-- BEGIN publication/tab_relmat.tt -->
-
 <div class="tab-pane" id="relLinkRd">
-
-  [% IF relLinkRd.size %]
-  <div class="row">
-    <div class="col-md-12">
-      <strong>[% lf.frontdoor.tabs.external_data.research_data %]</strong>
-    </div>
-  </div>
-  [% FOREACH li IN relLinkRd %]
-  <div class="row">
-    <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.url %]</div>
-    <div class="col-md-9">
-      <a href="[% li.url | html %]">[% li.url | html %]</a>
-    </div>
-  </div>
-  [% IF li.description %]
-  <div class="row">
-    <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
-    <div class="col-md-9">
-      [% li.description | html %]
-    </div>
-  </div>
-  [% END %]<!-- IF description -->
-  [% END %]<!-- FOREACH -->
-  [% END %]<!-- IF relLinkRd -->
-
-  [% IF relLinkRd.size && relLinkSw.size %]
+  [%- IF relLinkRd.size && relLinkSw.size %]
   <div class="row">
     <div class="col-md-12">
       <hr />
     </div>
   </div>
-  [% END %]
+  [%- END -%]
 
-  [% IF relLinkSw.size %]
+  [%- IF relLinkSw.size %]
   <div class="row">
     <div class="col-md-12">
       <strong>[% lf.frontdoor.tabs.external_data.software %]</strong>
     </div>
   </div>
-  [% FOREACH fi IN relLinkSw %]
+  [%- FOREACH fi IN relLinkSw %]
   <div class="row">
     <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.url %]</div>
     <div class="col-md-9">
       <a href="[% fi.url | html %]">[% fi.url | html %]</a>
     </div>
   </div>
-  [% IF fi.description %]
+  [%- IF fi.description %]
   <div class="row">
     <div class="col-md-3 text-muted">[% lf.frontdoor.tabs.file_details.description %]</div>
     <div class="col-md-9">
       [% fi.description | html %]
     </div>
   </div>
-  [% END %]
-  [% END %]
-  [% END %]
-
+  [%- END %]
+  [%- END %]
+  [%- END -%]
 </div><!-- tab-pane relMat -->
-
 <!-- END publication/tab_relmat.tt -->

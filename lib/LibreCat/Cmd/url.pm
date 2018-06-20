@@ -11,14 +11,19 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat url check <FILE> [OUTFILE]
+librecat url check [options] <FILE> [OUTFILE]
+
+options:
+
+    --importer=<...>
+    --exporter=<...>
 
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    ();
+    (['importer=s', ""], ['exporter=s', ""],);
 }
 
 sub command {
@@ -38,6 +43,9 @@ sub command {
 
     binmode(STDOUT, ":encoding(utf-8)");
 
+    $self->app->set_global_options(
+        {importer => $opts->importer, exporter => $opts->exporter,});
+
     if ($cmd eq 'check') {
         return $self->_check(@$args);
     }
@@ -48,12 +56,25 @@ sub _check {
 
     croak "usage: $0 check <FILE>" unless defined($file) && -r $file;
 
-    my $importer = Catmandu->importer('YAML', file => $file);
-    my $exporter;
+    my $importer
+        = $self->app->global_options->{importer}
+        ? Catmandu->importer($self->app->global_options->{importer},
+        file => $file)
+        : Catmandu->importer(
+        'TSV',
+        file   => $file,
+        fields => [qw(_id url)],
+        header => 0
+        );
 
-    if (defined $out_file) {
-        $exporter = Catmandu->exporter('YAML', file => $out_file);
-    }
+    my %exporter_opts = (fields => [qw(_id url http_status)], header => 0);
+    $exporter_opts{file} = $out_file if $out_file;
+
+    my $exporter
+        = $self->app->global_options->{exporter}
+        ? Catmandu->exporter($self->app->global_options->{exporter},
+        %exporter_opts)
+        : Catmandu->exporter('TSV', %exporter_opts);
 
     my $cv = AnyEvent->condvar;
 
@@ -61,25 +82,23 @@ sub _check {
         sub {
             my $rec = $_[0];
 
-            $cv->begin;
-            if (defined $rec->{url}) {
-                http_head $rec->{url}, sub {
-                    my ($body, $hdr) = @_;
-                    if ($exporter) {
-                        $exporter->add(
-                            {
-                                _id         => $rec->{_id},
-                                url         => $rec->{url},
-                                http_status => $hdr->{Status}
-                            }
-                        );
-                    }
-                    else {
-                        print "$rec->{_id} | $hdr->{Status} | $rec->{url}\n";
-                    }
-                    $cv->end;
-                    }
+            my $id = $rec->{_id} // '<undef>';
+            my $url = $rec->{url};
+
+            unless ($id && $url) {
+                print STDERR "$id : need a url\n";
+                return;
             }
+
+            $cv->begin;
+
+            http_head $url, sub {
+                my ($body, $hdr) = @_;
+                $exporter->add(
+                    {_id => $id, url => $url, http_status => $hdr->{Status}});
+
+                $cv->end;
+                }
         }
     );
 
@@ -100,12 +119,31 @@ LibreCat::Cmd::url - check urls
 
 =head1 SYNOPSIS
 
-    librecat schemas url check <FILE> <OUTFILE>
+    librecat url check [options] <FILE> [OUTFILE]
+
+    options:
+
+        --importer=<...>
+        --exporter=<...>
+
+    E.g.
+
+    librecat url check test.tsv
+
+    with test.tsv as:
+
+        1  http://www.google.com
+        2  http://www.microsoft.com
 
 =head1 commands
 
-=head2 check
+=head2 check <FILE> [OUTFILE]
 
-check all provided URLs
+Given an input file with a TAB delimited list of ID and URL pairs,
+this comnmand will follow all URLs for their HTTP response. The output
+will have the HTTP status code added.
+
+Optional provide an C<importer> or C<exporter> name for other types
+of input. Required fields for other inputs are C<_id> and C<url>
 
 =cut

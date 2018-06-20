@@ -3,7 +3,7 @@ use warnings;
 
 use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
@@ -12,16 +12,16 @@ my $app = eval {require 'bin/app.pl';};
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
-subtest '/publication/:id.:fmt' => sub {
-    $mech->get_ok('/publication/2737384.json');
+subtest '/record/:id.:fmt' => sub {
+    $mech->get_ok('/record/2737384.json');
 
-    $mech->get_ok('/publication/2737384.rtf');
+    $mech->get_ok('/record/2737384.rtf');
 
-    $mech->get_ok('/publication/2737384.yaml');
+    $mech->get_ok('/record/2737384.yaml');
 
-    $mech->get_ok('/publication/2737384.bibtex');
+    $mech->get_ok('/record/2737384.bibtex');
 
-    $mech->get('/publication/2737384.xyz');
+    $mech->get('/record/2737384.xyz');
     is $mech->status, "406", "status not acceptable";
 };
 
@@ -44,6 +44,30 @@ subtest 'valid formats' => sub {
 
     $mech->get_ok('/export?q=netherlands&fmt=mods');
     $mech->content_like(qr/\<mods version/);
+};
+
+subtest 'private records' => sub {
+    $mech->get('/record/2737399.json');
+    $mech->content_like(qr/^\{\}$|^\[\]$/);
+
+    note("login");
+    {
+        $mech->get_ok('/login');
+
+        $mech->submit_form_ok(
+            {
+                form_number => 1,
+                fields      => {user => "einstein", pass => "einstein"},
+            },
+            'submitting the login form'
+        );
+
+        $mech->content_contains("(Admin)", "logged in successfully");
+    }
+
+    $mech->get_ok('/librecat/export?cql=id=2737399&fmt=bibtex');
+    $mech->content_like(qr/^\@\w+\{/), "bibtex format looks good";
+
 };
 
 done_testing;

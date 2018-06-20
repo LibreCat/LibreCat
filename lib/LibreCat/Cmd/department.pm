@@ -1,8 +1,8 @@
 package LibreCat::Cmd::department;
 
 use Catmandu::Sane;
-use LibreCat::App::Helper;
-use LibreCat::Validator::Department;
+use LibreCat qw(department);
+use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -10,13 +10,13 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat department [options] list [<cql-query>]
-librecat department [options] export [<cql-query>]
-librecat department [options] add <FILE>
-librecat department [options] get <id>
-librecat department [options] delete <id>
-librecat department [options] valid <FILE>
-librecay department [options] tree [<FILE>]
+librecat department list   [options] [<cql-query>]
+librecat department export [options] [<cql-query>]
+librecat department add    [options] <FILE>
+librecat department get    [options] <id> | <IDFILE>
+librecat department delete [options] <id> | <IDFILE>
+librecat department valid  [options] <FILE>
+librecat department tree   [options] [<FILE>]
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -26,7 +26,7 @@ options:
 E.g.
 
 librecat department list 'layer = 1'
-librecat department --sort "name,,1" list ""  # force to use an empty query
+librecat department list --sort "name,,1" ""  # force to use an empty query
 
 EOF
 }
@@ -66,19 +66,49 @@ sub command {
         return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-        return $self->_delete(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
     }
     elsif ($cmd eq 'tree') {
         return $self->_tree(@$args);
+    }
+}
+
+sub _on_all {
+    my ($self, $id_file, $callback) = @_;
+
+    if (-r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
     }
 }
 
@@ -91,10 +121,8 @@ sub _list {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->new->department->searcher(
+        $it = department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -102,7 +130,8 @@ sub _list {
         );
     }
     else {
-        $it = $helper->main_department;
+        carp "sort not available without a query" if $sort;
+        $it = department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -147,22 +176,22 @@ sub _tree_parse {
     croak "usage: $0 tree <file>" unless defined($file) && -r $file;
 
     my $importer = Catmandu->importer('YAML', file => $file);
-    my $HASH     = $importer->first;
-    my $helper   = LibreCat::App::Helper::Helpers->new;
+    my $HASH = $importer->first;
 
     print "deleting previous departments...\n";
-    $helper->department->delete_all;
-    $helper->main_department->delete_all;
+    department->delete_all;
 
     _tree_parse_parser(
         $HASH->{tree},
         sub {
             my $rec = shift;
-            $helper->store_record('department', $rec);
-            $helper->index_record('department', $rec);
+            department->add($rec, skip_commit => 1);
             print "added $rec->{_id}\n";
         }
     );
+    department->commit;
+
+    return 0;
 }
 
 sub _tree_parse_parser {
@@ -193,12 +222,9 @@ sub _tree_parse_parser {
 }
 
 sub _tree_display {
-    my $helper = LibreCat::App::Helper::Helpers->new;
-    my $it = $helper->main_department;
-
     my $HASH = {};
 
-    $it->each(
+    department->each(
         sub {
             my ($item) = @_;
 
@@ -237,10 +263,8 @@ sub _export {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->department->searcher(
+        $it = department->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -248,7 +272,7 @@ sub _export {
         );
     }
     else {
-        $it = $helper->main_department;
+        $it = department;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -270,9 +294,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
-    my $data = $helper->main_department->get($id);
+    my $data = department->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -284,44 +306,22 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret      = 0;
+    my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper   = LibreCat::App::Helper::Helpers->new;
 
-    my $records = $importer->select(
-        sub {
-            my $rec = $_[0];
-
-            $rec->{_id} //= $helper->new_record('department');
-
-            my $is_ok = 1;
-
-            $helper->store_record(
-                'department',
-                $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid department",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
-                }
-            );
-
-            return 0 unless $is_ok;
-
-            print "added $rec->{_id}\n";
-
-            return 1;
-        }
+    department->add_many(
+        $importer,
+        on_validation_error => sub {
+            my ($rec, $errors) = @_;
+            say STDERR join("\n",
+                $rec->{_id}, "ERROR: not a valid department", @$errors);
+            $ret = 2;
+        },
+        on_success => sub {
+            my ($rec) = @_;
+            say "added $rec->{_id}";
+        },
     );
-
-    my $index = $helper->department;
-    $index->add_many($records);
-    $index->commit;
 
     $ret;
 }
@@ -331,16 +331,12 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('department',
-        $id);
-
-    if ($result) {
-        print "deleted $id\n";
+    if (department->delete($id)) {
+        say "deleted $id";
         return 0;
     }
     else {
-        print STDERR "ERROR: delete $id failed";
+        say STDERR "ERROR: delete $id failed";
         return 2;
     }
 }
@@ -350,7 +346,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Department->new;
+    my $validator = department->validator;
 
     my $ret = 0;
 
@@ -359,15 +355,15 @@ sub _valid {
             my $item = $_[0];
 
             unless ($validator->is_valid($item)) {
-                my $errors = $validator->last_errors();
+                my $errors = $validator->last_errors;
                 my $id = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        print STDERR "ERROR $id: $err\n";
+                        say STDERR "ERROR $id: $err";
                     }
                 }
                 else {
-                    print STDERR "ERROR $id: not valid\n";
+                    say STDERR "ERROR $id: not valid";
                 }
 
                 $ret = 2;
@@ -390,13 +386,13 @@ LibreCat::Cmd::department - manage librecat departments
 
 =head1 SYNOPSIS
 
-    librecat department list [<cql-query>]
-    librecat department export [<cql-query>]
-    librecat department add <FILE>
-    librecat department get <id>
-    librecat department delete <id>
-    librecat department valid <FILE>
-    librecat department tree [<FILE>]
+    librecat department list   [options] [<cql-query>]
+    librecat department export [options] [<cql-query>]
+    librecat department add    [options] <FILE>
+    librecat department get    [options] <id> | <IDFILE>
+    librecat department delete [options] <id> | <IDFILE>
+    librecat department valid  [options] <FILE>
+    librecay department tree   [options] [<FILE>]
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

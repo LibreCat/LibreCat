@@ -14,29 +14,31 @@
     <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
         <div class="page-header">
             <div class="row">
-                <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% h.loc("help.pevz_photo") %]">
+                <div class="col-md-2 col-sm-3 hidden-xs margin-bottom1 helpme helpme-md" data-placement="top" title="[% thisPerson.full_name | html %]">
                     [%- IF thisPerson.photo %]
                     [%- photo_url=thisPerson.photo.replace('http:','') -%]
-                    <img id="user_photo" src="[% photo_url %]" class="img-thumbnail" />
+                    <img id="user_photo" src="[% photo_url %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
                     [%- ELSE %]
                     [%- USE Gravatar %]
-                    <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c' ) | html %]" alt="[% thisPerson.full_name | html %]" />
+                    <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c', size => 140 ) | html %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
                     [%- END %]
                 </div>
                 <div class="col-md-6 col-sm-5 col-xs-12">
                     <h3 class="margin-top0">[% UNLESS !thisPerson %][% IF thisPerson.idm_title %]<span itemprop="honorificPrefix">[% thisPerson.idm_title %]</span>[% END %] <span itemprop="name">[% thisPerson.first_name %] [% thisPerson.last_name %]</span>[% IF backend %] ([% h.loc("header.role.${session.role}") %])[% END %][% ELSE %][% h.loc("person_profile.id_not_found") %][% END %]</h3>
-                    <div class="text-muted">[% h.get_department(thisPerson.department.0._id).display | html %]</div>
                     [% INCLUDE person_profile.tt %]
                 </div>
                 [% IF backend %]
                 <div class="col-md-3 col-md-offset-1 col-sm-4 col-xs-12">
-                    <div class="well">
-                        [% INCLUDE backend/add_new_button.tt %]
-                    </div>
+                    [% INCLUDE backend/home_right.tt %]
                 </div>
                 [% END %]
             </div>
         </div>
+
+        [% IF backend %]
+          [% INCLUDE backend/info_box.tt %]
+        [% END %]
+
         [% UNLESS !thisPerson %]
         <div class="row margin-xs-top"> <!-- row span11 publications, projects, departments -->
             <div class="col-md-12">
@@ -46,9 +48,6 @@
                     [% END %]
                     [% IF session.role == 'user' OR !backend %]
                     <li class="helpme[% IF modus == "user" %] active[% END %]" title="[% h.loc("help.publication_user") %]"><a href="[% uri_base %][% IF backend %]/librecat/search[% ELSE %]/person/[% id %][% END %]">[% h.loc("tabs.publications") %]</a></li>
-                    [% IF researchhits AND researchhits.total != 0 %]
-                    <li class="helpme[% IF modus == "data" %] active[% END %]" title="[% h.loc("help.publication_user_rd") %]"><a href="[% uri_base %][% IF backend %]/librecat/search/data[% ELSE %]/person/[% id %]/data[% END %]">[% h.loc("tabs.data_publications") %]</a></li>
-                    [% END %]
                     [% END %]
                     [% IF backend AND session.role == 'reviewer' %]
                     [% FOREACH department IN thisPerson.reviewer %]

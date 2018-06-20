@@ -2,7 +2,8 @@ _prefix:
   locale:
     de:
 
-appname: "LibreCat"
+appname: "LibreCat &ndash; Publikationslisten Manager"
+appname_short: "LibreCat"
 general:
   plural: "en"
   where: "in"
@@ -52,7 +53,6 @@ tabs:
   home: "Startseite"
   all_publications: "Alle Publikationen"
   publications: "Publikationen"
-  data_publications: "Datenpublikationen"
   projects: "Projekte"
   departments: "Einrichtungen"
   authors: "Autoren"
@@ -69,7 +69,7 @@ home:
   operators: "Operatoren"
   stats:
     publications: "Publikationen"
-    data_publications: "Datenpublikationen"
+    researcher: "Persönliche Publikationslisten"
     oa_publications: "Open-Access-Publikationen"
     projects: "Projekte"
 main_page:
@@ -102,6 +102,14 @@ main_page:
     publish: "Public stellen"
     return: "Zur&uuml;ckstellen"
     search_similar: "Nach &auml;hnlichen Titeln suchen"
+    doi: "DOI"
+    main_file_link: "Download (ext.)"
+    isi: "WoS"
+    pmid: "PubMed"
+    pmid_eu: "Europe PMC"
+    arxiv: "arXiv"
+    inspire: "Inspire"
+    scoap3: "SCOAP-3"
 person_profile:
   id_not_found: "ID nicht gefunden."
   former_researcher: "Ehemaliger LibreCat Forscher"
@@ -210,6 +218,7 @@ frontdoor:
   items: "Eintr&auml;ge"
   volume: "Band"
   issue: "Zeitschriftennummer"
+  article_number: "Artikelnummer"
   page: "Seite"
   tabs:
     details:
@@ -230,6 +239,7 @@ frontdoor:
       investigator: "Leiter"
       member: "Mitglieder"
       cooperator: "Mitwirkende"
+      grant_number: "Bewilligungsnummer"
     file_details:
       label: "Dateien"
       external_material: "Externes Material:"
@@ -238,6 +248,7 @@ frontdoor:
       title: "Titel"
       description: "Beschreibung"
       url: "URL"
+      main_file_link: "Link(s) zu Volltext(en)"
       access_level:
         label: "Access Level"
         open_access: "Open Access"
@@ -512,6 +523,7 @@ forms:
         label_short: "Locked"
       main_file_link: &main_file_link
         label: "Volltext URL"
+        label_short: "Volltext URL"
         placeholder: "Ext. Ort Ihres Volltextes"
         open_access: "<img src='/images/access_open.png' /> Open Access"
   book_editor:
@@ -728,7 +740,7 @@ forms:
     label: "Konferenzband"
     tab: *tab
     field:
-      editor.label: "Herausgeber"
+      editor: *editor
       document_type: *document_type
       doi: *doi
       title: *booktitle
@@ -1232,7 +1244,7 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       main_file_link: *main_file_link
-      editor.label: "Editor"
+      editor: "Editor"
   research_data:
     label: "Datenpublikation"
     tab:

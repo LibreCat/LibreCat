@@ -1,7 +1,5 @@
 package LibreCat::Hook::nothing;
 
-# Demo code that does nothing (used for testing hooks)
-
 use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Dancer qw(:syntax);
@@ -24,3 +22,17 @@ sub fix {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Hook::nothing - a LibreCat hook that does nothing
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<LibreCat::Hook>
+
+=cut

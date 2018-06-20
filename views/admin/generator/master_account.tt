@@ -145,7 +145,7 @@ function addDelegate(element){
       alert(data.error);
     }
     else {
-      $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="fa fa-times del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">' + id + '</span><input type="hidden" name="delegate.' + index + '" value="' + id + '" /></div></div></div>');
+      $('#delegate').append('<div class="col-md-10 col-md-offset-2" id="delegate_' + id + '"><div class="row innerrow"><div class="col-md-7 form-group"><span class="fa fa-times del_del" id="delegate_span_' + id + '"></span> ' + data.full_name + ' <span class="text-muted">(ID: ' + data._id + ')</span><input type="hidden" name="delegate.' + index + '" value="' + data._id + '" /></div></div></div>');
       $('#delegate_' + id).find('span.del_del').bind("click", function(){
         $('#delegate_' + id).remove();
       });

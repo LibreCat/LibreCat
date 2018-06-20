@@ -1,16 +1,17 @@
 usage:
-	@echo "usage: make TARGET"
+	@echo "usage: [ NETWORK_TEST=1 ] make TARGET"
 	@echo
 	@echo "targets:"
 	@echo "  generate"
 	@echo "  update"
+	@echo "  tidy"
 	@echo "  test"
-	@echo "  cover"
+	@echo "  cover [ FILE=<path> ]"
 
 generate:
 	carton exec bin/librecat generate forms
 	carton exec bin/librecat generate departments
-	
+
 update:
 	git pull --tags origin master
 	carton install
@@ -19,8 +20,18 @@ update:
 	./index.sh reindex
 	echo "Update complete!"
 
+# Explicit need -j 1 parallel tests will put databases in an
+# inconsistent state
 cover:
-	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 2 -r t; exit $?'
+	cover -delete
+ifeq ($(strip $(FILE)),)
+	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; echo'
+else
+	cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r $(FILE); echo'
+endif
 
 test:
-	prove -l -j 2 -r t
+	prove -l -j 1 -r t
+
+tidy:
+	tidyall -r lib t

@@ -18,11 +18,11 @@
         <div class="col-lg-10 col-md-9">
       [%- ELSE %];[% END %]
       [%- IF person.id %]
-      <a itemprop="author" href="[% uri_base %]/person/[% person.id | html %]">[% person.full_name | html %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+      <a itemprop="author" href="[% uri_base %][% IF item == 'supervisor' %]/record?cql=supervisor=[% person.id | html %][% ELSE %]/person/[% person.id | html %][% END %]">[% person.full_name | html %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
       [%- ELSE %]
       <span itemprop="author">[% person.full_name | html %]</span>
       [%- END %]
-      [%- IF person.orcid %]<a href="http://orcid.org/[% person.orcid %]"><sup><img src="[% uri_base %]/images/icon_orcid.png" /></sup></a>[% END %]
+      [%- IF person.orcid %] <a href="http://orcid.org/[% person.orcid %]"><sup><img src="[% uri_base %]/images/icon_orcid.png" /></sup></a>[% END %]
       [%- IF loop.count > 11 %]
         <span id="showAut">
           <br><a href="#details" onclick="ShowAuthors();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
@@ -50,7 +50,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.department.label") %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%]<br />[% END %]
-  <a href="[% uri_base %]/[% IF type == 'research_data' %]data[% ELSE %]publication[% END %]?cql=department=[% dep._id %]" class="long">[% h.get_department(dep._id).display %]</a>
+  <a href="[% uri_base %]/record?cql=department=[% dep._id %]" class="long">[% h.get_department(dep._id).display %]</a>
   [%- IF loop.last %]</div></div>[% END %]
 [%- END %]
 
@@ -84,41 +84,49 @@
   [%- IF loop.last -%]</div></div>[% END %]
 [%- END -%]
 
-[% IF abstract %]
+[%- IF abstract %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.abstract.label") %]</div>
     <div class="col-lg-10 col-md-9 cmark abstract" itemprop="about">
-    [% FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
-[% ab.text | html %]
-    [% END %]
+    [%- FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
+      [% ab.text | html %]
+    [%- END %]
     </div>
   </div>
-[% END %]
+[%- END -%]
 
 [%- IF keyword %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.keyword.label") %]</div>
     <div class="col-lg-10 col-md-9" itemprop="keywords">
     [%- FOREACH kw IN keyword %]
-        <a href='[% uri_base %]/[% IF type == 'research_data' %]data[% ELSE %]publication[% END %]?cql=keyword="[% kw %]"'>[% kw | html %]</a>
+        <a href='[% uri_base %]/record?cql=keyword="[% kw %]"'>[% kw | html %]</a>
       [%- UNLESS loop.last %]; [% END %]
     [%- END %]
     </div>
   </div>
-[%- END %]
+[%- END -%]
 
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% lf.forms.${type}.field.year.label || h.loc("forms.${type}.field.year_extern.label") %]</div>
-    <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="[% uri_base %]/[% IF type == 'research_data' %]data[% ELSE %]publication[% END %]?cql=year=[% year %]">[% year %]</a></span></div>
+    <div class="col-lg-10 col-md-9"><span itemprop="copyrightYear"><a href="[% uri_base %]/record?cql=year=[% year %]">[% year %]</a></span></div>
   </div>
-  [%- FOREACH item IN ['publication', 'volume', 'issue', 'article_number', 'page'] %]
-    [%- IF $item %]
-      <div class="row">
-        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.${item}") %]</div>
-        <div class="col-lg-10 col-md-9"><span>[% $item %]</span></div>
-      </div>
-    [%- END %]
+
+[%- IF publication %]
+  <div class="row">
+    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.publication.label") %]</div>
+    <div class="col-lg-10 col-md-9"><span>[% publication %]</span></div>
+  </div>
+[%- END %]
+
+[%- FOREACH item IN ['volume', 'issue', 'article_number', 'page'] %]
+  [%- IF $item %]
+    <div class="row">
+      <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.${item}") %]</div>
+      <div class="col-lg-10 col-md-9"><span>[% $item %]</span></div>
+    </div>
   [%- END %]
+[%- END %]
 
 [%- IF data_reuse_license %]
   <div class="row">
@@ -161,7 +169,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.isbn") %]</div>
     <div class="col-lg-10 col-md-9" itemprop="isbn">
     [%- FOREACH ib IN publication_identifier.isbn %]
-      <a href='[% uri_base %]/publication?cql=isbn=[% ib | uri %]'>[% ib | html %]</a>
+      <a href='[% uri_base %]/record?cql=isbn=[% ib | uri %]'>[% ib | html %]</a>
       [%- UNLESS loop.last %], [% END %]
     [%- END %]
     </div>
@@ -170,13 +178,13 @@
 [%- IF publication_identifier.issn %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.issn") %]</div>
-    <div class="col-lg-10 col-md-9">[% FOREACH is IN publication_identifier.issn %]<a href="[% uri_base %]/publication?cql=issn=[% is | uri %]">[% is | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH is IN publication_identifier.issn %]<a href="[% uri_base %]/record?cql=issn=[% is | uri %]">[% is | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [%- END %]
 [%- IF publication_identifier.eissn %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.eissn") %]</div>
-    <div class="col-lg-10 col-md-9">[% FOREACH es IN publication_identifier.eissn %]<a href="[% uri_base %]/publication?cql=eissn=[% es | uri %]">[% es | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
+    <div class="col-lg-10 col-md-9">[% FOREACH es IN publication_identifier.eissn %]<a href="[% uri_base %]/record?cql=eissn=[% es | uri %]">[% es | html %]</a>[% UNLESS loop.last %], [% END %][% END %]</div>
   </div>
 [%- END %]
 [%- IF ipn %]
@@ -191,12 +199,12 @@
     <div class="col-lg-10 col-md-9">[% ipc | html %]</div>
   </div>
 [%- END %]
-[%- IF ubi_funded OR external_id.scoap3 %]
+[%- IF ubi_funded OR external_id.scoap3.0 %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.financial_disclosure") %]</div>
     [%- IF ubi_funded %]
     <div class="col-lg-10 col-md-9">[% h.loc("frontdoor.tabs.details.ubi_funded") %]</div>
-    [%- ELSIF external_id.scoap3 %]
+    [%- ELSIF external_id.scoap3.0 %]
     <div class="col-lg-10 col-md-9">[% h.loc("frontdoor.tabs.details.scoap3") %]</div>
     [%- END %]
   </div>
@@ -207,23 +215,7 @@
     <a itemprop="url" href="[% request.uri_for(request.path_info) %]" title="[% h.loc("frontdoor.id_title") %]">[% _id %]</a>
     </div>
   </div>
-  [%- IF display_citation %]
-    <div id="citethis">
-      <h3 id="cite">[% h.loc("frontdoor.cite_this") %]</h3>
-      <ul class="nav nav-tabs">
-        [%- FOREACH style IN h.config.citation.csl.styles.keys.sort %]
-          [%- NEXT IF style == 'short' %]
-          <li [% IF loop.first %]class="active"[% END %]><a href="#[% style %]" data-toggle="tab">[% h.loc("citation.${style}") %]</a></li>
-        [%- END %]
-      </ul>
-      <div class="tab-content">
-        [%- FOREACH style IN h.config.citation.csl.styles.keys.sort %]
-          [%- NEXT IF style == 'short' %]
-          <div id="[% style %]" class="tab-pane[% IF loop.first %] active[% END %] cmark">[% citation.$style %]</div>
-        [%- END %]
-      </div>
-    </div>
-  [%- END %]
+  [%- IF display_citation %][% PROCESS publication/citation_box.tt %][%- END %]
 </div>
 
 <!-- END publication/tab_details.tt -->

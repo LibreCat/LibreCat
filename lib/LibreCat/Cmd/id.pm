@@ -9,8 +9,8 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat id [options] get
-librecat id [options] set <id>
+librecat id get [options]
+librecat id set [options] <id>
 
 EOF
 }
@@ -76,7 +76,7 @@ LibreCat::Cmd::id - manage librecat generated record ids
 
 =head1 SYNOPSIS
 
-    librecat id get <id>
-    librecat id set <id>
+    librecat id get [options] 
+    librecat id set [options] <id>
 
 =cut

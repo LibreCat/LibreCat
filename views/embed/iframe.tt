@@ -1,28 +1,26 @@
 [% qp = request.params.hash -%]
 [% qp.delete('splat') -%]
-[% lf = h.config.locale.$lang -%]
+[% lang = qp.lang ? qp.lang : h.config.default_lang -%]
+[% style = qp.style ? qp.style : h.config.citation.csl.default_style -%]
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[% h.config.appname %]</title>
+    <title>[% h.loc("appname") %]</title>
     <link rel="icon" href="[% uri_base %]/images/brand_logo.png" type="image/png">
     [% INCLUDE head_meta.tt %]
   </head>
-
   <body class="embed">
-
-  <div class="row mr-0">
-    <div class="col-sm-11">
-      <div class="row">
-	<div class="col-xs-8">
-	  [% INCLUDE hits.tt %]
-	</div>
-	<div class="col-xs-4 col-md-3 col-md-offset-1">
-	  [% INCLUDE filters.tt %]
-	</div>
+    <div class="row mr-0">
+      <div class="col-sm-11">
+        <div class="row">
+    	  <div class="col-xs-8">
+    	    [% INCLUDE hits.tt %]
+    	  </div>
+    	  <div class="col-xs-4 col-md-3 col-md-offset-1">
+    	    [% INCLUDE filters.tt %]
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
   </body>
 </html>

@@ -35,7 +35,7 @@ default_person_sort:
 default_facets:
     open_access:
       terms:
-        field: 'file.open_access'
+        fields: ['oa']
         size: 1
     popular_science:
       terms:
@@ -71,6 +71,7 @@ request_copy:
   # period in days
   period: 7
   subject: 'Request for a copy of your publication'
+  from: 'einstein@librecat.org'
 
 # Default format to display dates
 time_format: "%Y-%m-%dT%H:%M:%SZ"
@@ -101,6 +102,12 @@ ip_range:
 #  prefix: "10.5072/test"
 #  user: user
 #  passwd: secret
+
+## Uncomment when you want to register extra functionality in the LibreCat
+## helper utility. All the methods defined in these plugins will become
+## available as `h->...` subroutines.
+#helper_plugins:
+#  - LibreCat::App::Helper::my_plugin
 
 store:
   builtin_users:

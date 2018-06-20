@@ -9,8 +9,9 @@ Helper methods for handling file uploads.
 use Catmandu::Sane;
 use Catmandu::Util;
 use Catmandu;
+use LibreCat qw(publication timestamp);
 use LibreCat::App::Helper;
-use Dancer::FileUtils qw/path dirname/;
+use Dancer::FileUtils qw(path dirname);
 use Dancer ':syntax';
 use Data::Uniqid;
 use File::Copy;
@@ -66,7 +67,7 @@ sub upload_temp_file {
     }
 
     # Gather all file metadata...
-    my $now          = h->now;
+    my $now          = timestamp;
     my $tempid       = Data::Uniqid::uniqid;
     my $temp_file    = $file->{tempname};
     my $file_name    = $file->{filename};
@@ -153,7 +154,7 @@ sub handle_file {
 
     $pub->{file} = _decode_file($pub->{file});
 
-    my $prev_pub = h->main_publication->get($key);
+    my $prev_pub = publication->get($key);
 
     # Delete files that are not needed
     for my $fi (_find_deleted_files($prev_pub, $pub)) {
@@ -167,7 +168,7 @@ sub handle_file {
     for my $fi (@{$pub->{file}}) {
 
         # Generate a new file_id if not one existed
-        $fi->{file_id} = h->new_record('publication')
+        $fi->{file_id} = publication->generate_id
             unless defined($fi->{file_id}) && length($fi->{file_id});
 
         h->log->debug("processing file-id: " . $fi->{file_id});
@@ -246,8 +247,8 @@ sub update_file {
     my $file_store = h->config->{filestore}->{default}->{package};
     my $file_opt   = h->config->{filestore}->{default}->{options};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
 
     my $store = $pkg->new(%$file_opt);
 
@@ -260,7 +261,7 @@ sub update_file {
 
     my $files = $store->index->files($key);
 
-    my $res   = $files->get($filename);
+    my $res = $files->get($filename);
 
     unless ($res) {
         h->log->error("file $filename not found in container $key");
@@ -269,10 +270,10 @@ sub update_file {
 
     $file->{file_size}    = int($res->{size});
     $file->{content_type} = $res->{content_type};
-    $file->{date_created} = h->now($res->{created});
-    $file->{date_updated} = h->now($res->{modified});
+    $file->{date_created} = timestamp($res->{created});
+    $file->{date_updated} = timestamp($res->{modified});
     $file->{creator} //= 'system';
-    $file->{file_id} //= h->new_record('publication');
+    $file->{file_id} //= publication->generate_id;
 
     $file->{access_level} //= 'open_access';
     $file->{open_access}  //= 1;
@@ -429,9 +430,9 @@ sub _update_file_metadata {
     }
 
     $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
-    $fi->{date_created} = h->now unless $fi->{date_created};
+    $fi->{date_created} = timestamp unless $fi->{date_created};
 
-    $fi->{date_updated} = h->now;
+    $fi->{date_updated} = timestamp;
 }
 
 sub _is_file_metadata_changed {

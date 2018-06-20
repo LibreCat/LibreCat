@@ -26,7 +26,7 @@ sub fix {
         user         => h->config->{doi}->{user},
         password     => h->config->{doi}->{passwd},
         doi          => $data->{doi},
-        landing_url  => h->uri_base() . "/data/$data->{_id}",
+        landing_url  => h->uri_base() . "/record/$data->{_id}",
         datacite_xml => $datacite_xml
     };
 
@@ -41,3 +41,22 @@ sub fix {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Hook::new_research_data_datacite - a LibreCat hook that registers a DOI for a dataset
+
+=head1 SYNOPSIS
+
+    doi:
+      prefix: 10.5192/test
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<LibreCat::Hook>, L<LibreCat::Worker::DataCite>
+
+=cut

@@ -7,7 +7,6 @@
 [% INCLUDE header.tt %]
 
 <!-- BEGIN admin/account.tt -->
-
 <div class="row"><!-- outer row -->
 
   <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
@@ -21,7 +20,7 @@
     <form id="admin-account-search" role="form" action="[% uri_base %]/librecat/admin/account/search" method="GET">
       <div class="row">
 	<div class="col-md-5">
-	  <label for="id_q"><span class="fa fa-search"></span> Search by name or PEVZ-ID</label>
+	  <label for="id_q"><span class="fa fa-search"></span> Search by name or ID</label>
 	  <div class="input-group">
 	    <input type="text" class="form-control" name="q" id="id_q" placeholder="Einstein, A" value="[% qp.q %]">
 	    <span class="input-group-btn">
@@ -33,7 +32,7 @@
     </form>
 
     [%- IF error %]
-    <p class="text-danger">[% error %] <a href="[% uri_base %]/librecat/admin/account/edit/[% qp.id %]"><span class="fa fa-pencil fw"></span>Edit</a></p>
+      <p class="text-danger">[% error %] <a href="[% uri_base %]/librecat/admin/account/edit/[% qp.id %]"><span class="fa fa-pencil fw"></span>Edit</a></p>
     [%- END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">
@@ -53,14 +52,14 @@
 
     <dl class="hitlist">
     [%- FOREACH p IN hits %]
-	<dt>
-	<a href="[% uri_base %]/librecat/admin/account/edit/[% p._id %]"><span class="fa fa-pencil fw"></span>[% p.full_name %]</a>
-	<span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
-	[% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: [% p._id %]</span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: </span><span data-id="[% p._id %]" class="num_publ"></span><br />
-	</dt>
-	<dd>
-	<span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>
-	</dd>
+	  <dt>
+	    <a href="[% uri_base %]/librecat/admin/account/edit/[% p._id %]"><span class="fa fa-pencil fw"></span>[% p.full_name %]</a>
+	    <span [% IF p.account_status == 'active' %]class="label label-success"[% ELSE %]class="label label-danger"[% END %]>
+	      [% p.account_status || 'inactive' %]</span> | <span class="text-muted">ID: [% p._id %]</span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: [% p.publication_count || 0 %]</span></span><br />
+	  </dt>
+	  <dd>
+	    <span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>
+	  </dd>
     [%- END %]
     </dl>
 
@@ -72,19 +71,10 @@
   </div><!-- main content (left) -->
 
 </div><!-- outer row -->
-
-<script>
-$(document).ready(function(){
-  $('.num_publ').each(function(){
-    var element = this;
-    var id = $(this).data('id');
-    $.getJSON( librecat.uri_base + "/num_of_publ/" + id ).done(function( res ) {
-      $(element).html(res.total);
-    });
-  });
-});
-</script>
-
 <!-- END admin/account.tt -->
+<<<<<<< HEAD
 
 [% INCLUDE footer.tt %]
+=======
+[% INCLUDE footer.tt %]
+>>>>>>> dev

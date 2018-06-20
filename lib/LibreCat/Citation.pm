@@ -125,7 +125,7 @@ sub create {
             my $citation = $self->_request(
                 {
                     locale  => $locale,
-                    style   => $self->conf->{csl}->{styles}->{$s},
+                    style   => $self->conf->{csl}->{styles}->{$s} // $s,
                     content => $csl_json,
                 }
             );

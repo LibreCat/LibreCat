@@ -970,6 +970,7 @@ other_items:
         label: "Old First Name"
       old_last_name:
         label: "Old Last Name"
+      multiple: 1
     email:
       label: "Email"
     login:

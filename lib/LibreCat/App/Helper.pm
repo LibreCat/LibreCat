@@ -11,13 +11,21 @@ use Dancer::FileUtils qw(path);
 use File::Basename;
 use POSIX qw(strftime);
 use JSON::MaybeXS qw(encode_json);
-use LibreCat;
+use LibreCat qw(:self);
 use LibreCat::I18N;
 use LibreCat::JobQueue;
 use Log::Log4perl ();
 use NetAddr::IP::Lite;
 use URI::Escape qw(uri_escape_utf8);
+use Role::Tiny ();
 use Moo;
+
+sub BUILD {
+    my ($self) = @_;
+    if (my $plugins = $self->config->{helper_plugins}) {
+        Role::Tiny->apply_roles_to_object($self, @$plugins);
+    }
+}
 
 sub log {
     my ($self) = @_;
@@ -30,33 +38,15 @@ sub config {
 }
 
 sub hook {
-    LibreCat->hook($_[1]);
+    librecat->hook($_[1]);
 }
 
 sub queue {
-    state $config = LibreCat::JobQueue->new;
-}
-
-sub layers {
-    LibreCat->layers;
+    librecat->queue;
 }
 
 sub create_fixer {
-    my ($self, $file) = @_;
-
-    $self->log->debug("searching for fix `$file'");
-
-    for my $p (@{$self->layers->fixes_paths}) {
-        $self->log->debug("testing `$p/$file'");
-        if (-r "$p/$file") {
-            $self->log->debug("found `$p/$file'");
-            return Catmandu::Fix->new(fixes => ["$p/$file"]);
-        }
-    }
-
-    $self->log->error("can't find a fixer for: `$file'");
-
-    return Catmandu::Fix->new();
+    librecat->fixer($_[1]);
 }
 
 sub alphabet {
@@ -68,23 +58,23 @@ sub main_audit {
 }
 
 sub main_publication {
-    state $bag = Catmandu->store('main')->bag('publication');
+    librecat->model('publication')->bag;
 }
 
 sub main_project {
-    state $bag = Catmandu->store('main')->bag('project');
+    librecat->model('project')->bag;
 }
 
 sub main_user {
-    state $bag = Catmandu->store('main')->bag('user');
+    librecat->model('user')->bag;
 }
 
 sub main_department {
-    state $bag = Catmandu->store('main')->bag('department');
+    librecat->model('department')->bag;
 }
 
 sub main_research_group {
-    state $bag = Catmandu->store('main')->bag('research_group');
+    librecat->model('research_group')->bag;
 }
 
 sub main_reqcopy {
@@ -92,23 +82,23 @@ sub main_reqcopy {
 }
 
 sub publication {
-    state $bag = Catmandu->store('search')->bag('publication');
+    librecat->model('publication')->search_bag;
 }
 
 sub project {
-    state $bag = Catmandu->store('search')->bag('project');
+    librecat->model('project')->search_bag;
 }
 
 sub user {
-    state $bag = Catmandu->store('search')->bag('user');
+    librecat->model('user')->search_bag;
 }
 
 sub department {
-    state $bag = Catmandu->store('search')->bag('department');
+    librecat->model('department')->search_bag;
 }
 
 sub research_group {
-    state $bag = Catmandu->store('search')->bag('research_group');
+    librecat->model('research_group')->search_bag;
 }
 
 sub within_ip_range {
@@ -157,27 +147,35 @@ sub extract_params {
     my $p = {};
     return $p if ref $params ne 'HASH';
 
-    $p->{start} = $params->{start} if is_natural $params->{start};
-    $p->{limit} = $params->{limit} if is_natural $params->{limit};
-    $p->{lang}  = $self->locale_exists( $params->{lang} ) ? $params->{lang} : $self->locale();
-    $p->{q}     = $params->{q}     if $params->{q};
-    $p->{cql} = $self->string_array($params->{cql});
+    # parameters configured in helper.yml
+    foreach my $key (keys %{$self->config->{helper}->{extract_params}}) {
+        if ($self->config->{helper}->{extract_params}->{$key} eq "exists") {
+            $p->{$key} = $params->{$key} if $params->{$key};
+        }
+        elsif (
+            $self->config->{helper}->{extract_params}->{$key} eq "is_natural")
+        {
+            $p->{$key} = $params->{$key} if is_natural $params->{$key};
+        }
+        elsif ($self->config->{helper}->{extract_params}->{$key} eq
+            "string_array")
+        {
+            $p->{$key} = $self->string_array($params->{$key})
+                if $params->{$key};
+        }
+    }
 
+    # additional parameters with more complex logic
     ($params->{text} =~ /^".*"$/)
         ? (push @{$p->{q}}, $params->{text})
         : (push @{$p->{q}}, join(" AND ", split(/ |-/, $params->{text})))
         if $params->{text};
 
-    $p->{style} = $params->{style} if $params->{style};
-    $p->{sort} = $self->string_array($params->{'sort'}) if $params->{'sort'};
-
     $p;
 }
 
 sub now {
-    my $time = $_[1] // time;
-    my $now = strftime($_[0]->config->{time_format}, gmtime($time));
-    return $now;
+    librecat->timestamp($_[1]);
 }
 
 sub pretty_byte_size {
@@ -196,7 +194,7 @@ sub all_marked {
     my $p = $self->extract_params();
     push @{$p->{q}}, "status=public";
 
-    my $hits       = LibreCat->searcher->search('publication', $p);
+    my $hits       = librecat->searcher->search('publication', $p);
     my $marked     = Dancer::session 'marked';
     my $all_marked = 1;
 
@@ -212,33 +210,20 @@ sub all_marked {
 }
 
 sub get_publication {
-    $_[0]->publication->get($_[1]);
+    librecat->model('publication')->get($_[1]);
 }
 
-# TODO clean this up
 sub get_person {
-    my ($self, $id) = @_;
-    if ($id) {
-        my $hits = LibreCat->searcher->search('user', {cql => ["id=$id"]});
-        $hits = LibreCat->searcher->search('user', {cql => ["login=$id"]})
-            if !$hits->{total};
-        return $hits->{hits}->[0] if $hits->{total};
-        if (my $user
-            = LibreCat->user->get($id)
-            || LibreCat->user->find_by_username($id))
-        {
-            return $user;
-        }
-    }
+    librecat->model('user')->find($_[1]);
 }
 
 sub get_project {
-    $_[0]->project->get($_[1]);
+    librecat->model('project')->get($_[1]);
 }
 
 sub get_department {
     if ($_[1] && length $_[1]) {
-        $_[0]->department->get($_[1]);
+        librecat->model('department')->get($_[1]);
     }
 }
 
@@ -257,48 +242,40 @@ sub get_relation {
 sub get_statistics {
     my ($self) = @_;
 
-    my $hits = LibreCat->searcher->search('publication',
-        {cql => ["status=public", "type<>research_data"]});
-    my $reshits = LibreCat->searcher->search('publication',
-        {cql => ["status=public", "type=research_data"]});
-    my $oahits = LibreCat->searcher->search('publication',
-        {cql => ["status=public", "fulltext=1", "type<>research_data",]});
+    my $hits = librecat->searcher->search('publication',
+        {cql => ["status=public"]});
+
+    my $people = librecat->searcher->search('user',
+        {cql => ["publication_count>0"]});
+
+    my $oahits = librecat->searcher->search('publication',
+        {cql => ["status=public", "oa=1"]});
 
     return {
         publications => $hits->{total},
-        researchdata => $reshits->{total},
+        researcher   => $people->{total},
         oahits       => $oahits->{total},
         projects     => $self->project->count(),
     };
-
 }
 
 sub new_record {
     my ($self, $bag) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: new_record is deprecated. Use librecat->model($model)->generate_id instead'
+    );
     Catmandu->store('main')->bag($bag)->generate_id;
 }
 
 sub update_record {
     my ($self, $bag, $rec) = @_;
-
-    $self->log->info("updating $bag");
-
-    if ($self->log->is_debug) {
-        $self->log->debug(Dancer::to_json($rec));
-    }
-
-    $rec = $self->store_record(
-        $bag, $rec,
-        validation_error => sub {
-            my $validator = shift;
-
-            # At least cry foul when the record doesn't validate
-            $self->log->error($rec->{_id} . " not a valid publication!");
-            $self->log->error(Dancer::to_json($validator->last_errors));
-        }
+    $self->log->warn(
+        'DEPRECATION NOTICE: update_record is deprecated. Use librecat->model($model)->add instead'
     );
 
-    $self->index_record($bag, $rec);
+    my $saved_record = $self->store_record($bag,$rec);
+
+    $self->index_record($bag, $saved_record);
 
     sleep 1;    # bad hack!
 
@@ -307,6 +284,9 @@ sub update_record {
 
 sub store_record {
     my ($self, $bag, $rec, %opts) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: store_record is deprecated. Use librecat->model($model)->add instead'
+    );
 
     # don't know where to put it, should find better place to handle this
     # especially the async stuff
@@ -341,31 +321,14 @@ sub store_record {
         $cite_fix->fix($rec) unless $opts{skip_citation};
     }
 
-    # clean all the fields that are not part of the JSON schema
-    state $validators = {};
-    my $validator_pkg = $validators->{$bag};
-    $validator_pkg //= Catmandu::Util::require_package(ucfirst($bag),'LibreCat::Validator');
-
     my $can_store = 1;
 
-    if ($validator_pkg) {
-        my $validator = $validator_pkg->new;
+    if (librecat->has_model($bag)) {
+        my $model = librecat->model($bag);
 
-        my @white_list = $validator->white_list;
-
-        $self->log->fatal("no white_list found for $validator_pkg ??!")
-            unless @white_list;
-
-        for my $key (keys %$rec) {
-            unless (grep(/^$key$/, @white_list)) {
-                $self->log->debug("deleting invalid key: $key");
-                delete $rec->{$key};
-            }
-        }
-
-        unless ($validator->is_valid($rec)) {
+        unless ($model->is_valid($rec)) {
             $can_store = 0;
-            $opts{validation_error}->($validator, $rec)
+            $opts{validation_error}->($model->validator, $rec)
                 if $opts{validation_error}
                 && ref($opts{validation_error}) eq 'CODE';
         }
@@ -386,8 +349,18 @@ sub store_record {
 
 sub index_record {
     my ($self, $bag, $rec) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: index_record is deprecated. Use librecat->model($model)->add instead'
+    );
+
     #compare version! through _version or through date_updated
     $self->log->debug("indexing record in $bag...");
+
+    # memoize fixes
+    state $fixes = {};
+    my $fix = $fixes->{$bag} //= $self->create_fixer("index_$bag.fix");
+    $fix->fix($rec);
+
     $self->log->debug(Dancer::to_json($rec));
     $self->$bag->add($rec);
     $self->$bag->commit;
@@ -396,9 +369,14 @@ sub index_record {
 
 sub delete_record {
     my ($self, $bag, $id) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: delete_record is deprecated. Use librecat->model($model)->delete instead'
+    );
 
     if ($bag eq 'publication') {
         my $del_record = $self->publication->get($id);
+
+        return undef unless $del_record;
 
         if ($del_record->{oai_deleted} || $del_record->{status} eq 'public') {
             $del_record->{oai_deleted} = 1;
@@ -408,8 +386,7 @@ sub delete_record {
         $del_record->{date_deleted} = $self->now;
         $del_record->{status}       = 'deleted';
 
-
-        my $saved   = $self->main_publication->add($del_record);
+        my $saved = $self->main_publication->add($del_record);
         $self->main_publication->commit;
         $self->publication->add($saved);
         $self->publication->commit;
@@ -419,13 +396,16 @@ sub delete_record {
         return $saved;
     }
     else {
-        $self->purge_record($bag,$id);
+        $self->purge_record($bag, $id);
         return +{};
     }
 }
 
 sub purge_record {
     my ($self, $bag, $id) = @_;
+    $self->log->warn(
+        'DEPRECATION NOTICE: delete_record is deprecated. Use librecat->model($model)->purge instead'
+    );
 
     # Delete from the index store
     $self->$bag->delete($id);
@@ -439,26 +419,6 @@ sub purge_record {
     return 1;
 }
 
-sub display_doctypes {
-    my ( $self, $type, $lang ) = @_;
-    $type = lc( $type );
-    $lang = $self->locale_exists( $lang ) ? $lang :  $self->default_locale();
-    $self->config->{language}->{$lang}->{forms}->{$type}->{label};
-}
-
-sub display_name_from_value {
-    my ($self, $list, $value) = @_;
-
-    my $map = $self->config->{lists}{$list};
-    my $name;
-    foreach my $m (@$map) {
-        if ($m->{value} eq $value) {
-            $name = $m->{name};
-        }
-    }
-    $name;
-}
-
 sub uri_base {
 
     #config option 'host' is deprecated
@@ -469,38 +429,41 @@ sub uri_base {
 sub uri_for {
     my ($self, $path, $params) = @_;
 
-    my @uri;
+    my $uri = $self->uri_base();
 
-    push @uri, $self->uri_base(), $path;
+    $uri .= $path if $path;
+
+    my @request_param;
 
     if (is_hash_ref($params)) {
-
-        my @keys = keys %$params;
-
-        push @uri, "?" if scalar(@keys);
-
-        for my $key (@keys) {
-
+        for my $key (sort keys %$params) {
             my $value = $params->{$key};
-            $value
-                = is_array_ref($value) ? $value
-                : is_string($value)    ? [$value]
-                :                        [];
 
-            push @uri, join(
-                "&",
-                map {
+            if (!defined($value) || length($value) == 0) {
+                $value = [];
+            }
+            elsif (is_array_ref($value)) { }
+            elsif (is_string($value)) {
+                $value = [$value];
+            }
+            else {
+                $self->log->error(
+                    "expecting an array or string but got a $value");
+                $value = [];
+            }
 
+            for (@$value) {
+                push @request_param,
                     uri_escape_utf8($key) . "=" . uri_escape_utf8($_);
-
-                } @$value
-            );
-
+            }
         }
-
     }
 
-    join('', @uri);
+    if (@request_param) {
+        $uri .= '?' . join("&", @request_param);
+    }
+
+    return $uri;
 }
 
 sub get_file_store {
@@ -511,8 +474,8 @@ sub get_file_store {
 
     return undef unless $file_store;
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     $pkg->new(%$file_opts);
 }
 
@@ -595,7 +558,47 @@ sub uri_for_file {
     $self->uri_base() . "/download/$pub_id/$file_id$ext";
 }
 
+sub login_user {
+
+    my ($self, $user) = @_;
+
+    my %attrs = librecat->model('user')->to_session($user);
+
+    for (keys %attrs) {
+
+        session($_ => $attrs{$_});
+
+    }
+
+}
+
+sub logout_user {
+
+    session role     => undef;
+    session user     => undef;
+    session user_id  => undef;
+    session auth_sso => undef;
+
+}
+
 package LibreCat::App::Helper;
+
+=head1 NAME
+
+LibreCat::App::Helper - a helper package with utility functions
+
+=head1 SYNOPSIS
+
+    # usage in perl code
+    use LibreCat::App::Helper;
+    # symbol h is automatically imported
+
+    my $uri_base = h->uri_base; # get hostname
+
+    # usage in templates
+    <a href="[% h.uri_base %]/record">Publications</a>
+
+=cut
 
 my $h = LibreCat::App::Helper::Helpers->new;
 
@@ -606,7 +609,6 @@ use Dancer::Plugin;
 register h => sub {$h};
 
 hook before_template => sub {
-
     $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
 

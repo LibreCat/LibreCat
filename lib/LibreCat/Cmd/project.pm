@@ -1,8 +1,8 @@
 package LibreCat::Cmd::project;
 
 use Catmandu::Sane;
-use LibreCat::App::Helper;
-use LibreCat::Validator::Project;
+use LibreCat qw(project);
+use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -10,12 +10,12 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat project [options] list [<cql-query>]
-librecat project [options] export [<cql-query>]
-librecat project [options] add <FILE>
-librecat project [options] get <id>
-librecat project [options] delete <id>
-librecat project [options] valid <FILE>
+librecat project list   [options] [<cql-query>]
+librecat project export [options] [<cql-query>]
+librecat project add    [options] <FILE>
+librecat project get    [options] <id> | <IDFILE>
+librecat project delete [options] <id> | <IDFILE>
+librecat project valid  [options] <FILE>
 
 options:
     --sort=STR    (sorting results [only in combination with cql-query])
@@ -25,7 +25,7 @@ options:
 E.g.
 
 librecat project list 'id = P1'
-librecat user --sort "name,,1" list ""  # force to use an empty query
+librecat user list --sort "name,,1"  ""  # force to use an empty query
 
 EOF
 }
@@ -65,16 +65,46 @@ sub command {
         return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-        return $self->_delete(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
+    }
+}
+
+sub _on_all {
+    my ($self, $id_file, $callback) = @_;
+
+    if (-r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
     }
 }
 
@@ -87,10 +117,8 @@ sub _list {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->project->searcher(
+        $it = project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -98,7 +126,8 @@ sub _list {
         );
     }
     else {
-        $it = $helper->main_project;
+        carp "sort not available without a query" if $sort;
+        $it = project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -132,10 +161,8 @@ sub _export {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->project->searcher(
+        $it = project->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -143,7 +170,7 @@ sub _export {
         );
     }
     else {
-        $it = $helper->main_project;
+        $it = project;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -165,9 +192,7 @@ sub _get {
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
-    my $data = $helper->main_project->get($id);
+    my $data = project->get($id);
 
     Catmandu->export($data, 'YAML') if $data;
 
@@ -179,44 +204,22 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret      = 0;
+    my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper   = LibreCat::App::Helper::Helpers->new;
 
-    my $records = $importer->select(
-        sub {
-            my $rec = $_[0];
-
-            $rec->{_id} //= $helper->new_record('project');
-
-            my $is_ok = 1;
-
-            $helper->store_record(
-                'project',
-                $rec,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid project",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
-                }
-            );
-
-            return 0 unless $is_ok;
-
-            print "added $rec->{_id}\n";
-
-            return 1;
-        }
+    project->add_many(
+        $importer,
+        on_validation_error => sub {
+            my ($rec, $errors) = @_;
+            say STDERR join("\n",
+                $rec->{_id}, "ERROR: not a valid project", @$errors);
+            $ret = 2;
+        },
+        on_success => sub {
+            my ($rec) = @_;
+            say "added $rec->{_id}";
+        },
     );
-
-    my $index = $helper->project;
-    $index->add_many($records);
-    $index->commit;
 
     $ret;
 }
@@ -226,11 +229,7 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('project',
-        $id);
-
-    if ($result) {
+    if (project->delete($id)) {
         print "deleted $id\n";
         return 0;
     }
@@ -245,7 +244,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Project->new;
+    my $validator = project->validator;
 
     my $ret = 0;
 
@@ -254,15 +253,15 @@ sub _valid {
             my $item = $_[0];
 
             unless ($validator->is_valid($item)) {
-                my $errors = $validator->last_errors();
+                my $errors = $validator->last_errors;
                 my $id = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        print STDERR "ERROR $id: $err\n";
+                        say STDERR "ERROR $id: $err";
                     }
                 }
                 else {
-                    print STDERR "ERROR $id: not valid\n";
+                    say STDERR "ERROR $id: not valid";
                 }
 
                 $ret = 2;
@@ -285,12 +284,12 @@ LibreCat::Cmd::project - manage librecat projects
 
 =head1 SYNOPSIS
 
-    librecat project list [<cql-query>]
-    librecat project export [<cql-query>]
-    librecat project add <FILE>
-    librecat project get <id>
-    librecat project delete <id>
-    librecat project valid <FILE>
+    librecat project list   [options] [<cql-query>]
+    librecat project export [options] [<cql-query>]
+    librecat project add    [options] <FILE>
+    librecat project get    [options] <id> | <IDFILE>
+    librecat project delete [options] <id> | <IDFILE>
+    librecat project valid  [options] <FILE>
 
     options:
         --sort=STR    (sorting results [only in combination with cql-query])

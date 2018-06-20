@@ -22,13 +22,14 @@ can_ok $uploader, 'work';
 
 my $ret;
 lives_ok {
-    $ret = $uploader->work({key => 1, filename => 'README.md' , path => 'README.md'})
+    $ret = $uploader->work(
+        {key => 1, filename => 'README.md', path => 'README.md'})
 }
 "Calling work is safe.";
 
-is $ret , 1 , 'work returned the correct response code';
+is $ret , 1, 'work returned the correct response code';
 
-ok -r "t/data3/000/000/001/README.md" , "Found the README.md file";
+ok -r "t/data3/000/000/001/README.md", "Found the README.md file";
 
 unlink "t/data3/000/000/001/README.md";
 

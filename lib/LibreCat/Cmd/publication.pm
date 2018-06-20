@@ -3,8 +3,7 @@ package LibreCat::Cmd::publication;
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util;
-use LibreCat::App::Helper;
-use LibreCat::Validator::Publication;
+use LibreCat qw(queue publication timestamp);
 use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
@@ -14,16 +13,16 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat publication [options] list [<cql-query>]
-librecat publication [options] export [<cql-query>]
-librecat publication [options] get <id>
-librecat publication [options] add <FILE> <OUTFILE>
-librecat publication [options] delete <id>
-librecat publication [options] purge <id>
-librecat publication [options] valid <FILE>
-librecat publication [options] files [<id>]|[<cql-query>]|[<FILE>]|REPORT
-librecat publication [options] fetch <source> <id>
-librecat publication [options] embargo ['update']
+librecat publication list    [options] [<cql-query>]
+librecat publication export  [options] [<cql-query>]
+librecat publication get     [options] <id> | <IDFILE>
+librecat publication add     [options] <FILE> <OUTFILE>
+librecat publication delete  [options] <id> | <IDFILE>
+librecat publication purge   [options] <id> | <IDFILE>
+librecat publication valid   [options] <FILE>
+librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
+librecat publication fetch   [options] <source> <id>
+librecat publication embargo [options] ['update']
 
 options:
     --sort=STR         (sorting results [only in combination with cql-query])
@@ -41,7 +40,7 @@ E.g.
 librecat publication list 'status exact private'
 
 # Sort all publications by tite (force a query using empty quotes)
-librecat publication list --sort "title,,1" list
+librecat publication list --sort "title,,1" ""
 
 # Get the metadata for publication '2737383'
 librecat publication get 2737383 > /tmp/data.yml
@@ -51,6 +50,10 @@ librecat publication valid /tmp/data.yml
 
 # Update/add the metadata for a publication from a YAML file
 librecat publication add /tmp/data.yml
+
+# Fetch a record from arxiv
+librecat publication fetch arxiv abs/1401.5761 > /tmp/record.yml
+librecat publication add /tmp/record.yml
 
 # Find all files with an expired embargo date
 librecat publication embargo
@@ -79,7 +82,10 @@ sub command_opt_spec {
 }
 
 sub opts {
-    state $opts = $_[1];
+    if ($_[1]) {
+        $_[0]->{__opts} = $_[1];
+    }
+    $_[0]->{__opts};
 }
 
 sub command {
@@ -109,16 +115,37 @@ sub command {
         return $self->_export(@$args);
     }
     elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_get(shift);
+            }
+        );
     }
     elsif ($cmd eq 'add') {
         return $self->_add(@$args);
     }
     elsif ($cmd eq 'delete') {
-        return $self->_delete(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_delete(shift);
+            }
+        );
     }
     elsif ($cmd eq 'purge') {
-        return $self->_purge(@$args);
+        my $id = shift @$args;
+
+        return $self->_on_all(
+            $id,
+            sub {
+                $self->_purge(shift);
+            }
+        );
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
@@ -136,7 +163,7 @@ sub command {
 
 sub audit_message {
     my ($id, $action, $message) = @_;
-    LibreCat::App::Helper::Helpers->new->queue->add_job(
+    queue->add_job(
         'audit',
         {
             id      => $id,
@@ -148,6 +175,22 @@ sub audit_message {
     );
 }
 
+sub _on_all {
+    my ($self, $id_file, $callback) = @_;
+
+    if (defined($id_file) && -r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
+    }
+}
+
 sub _list {
     my ($self, $query) = @_;
 
@@ -157,10 +200,8 @@ sub _list {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->publication->searcher(
+        $it = publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -168,7 +209,8 @@ sub _list {
         );
     }
     else {
-        $it = $helper->main_publication;
+        carp "sort not available without a query" if $sort;
+        $it = publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -207,10 +249,8 @@ sub _export {
 
     my $it;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     if (defined($query)) {
-        $it = $helper->publication->searcher(
+        $it = publication->searcher(
             cql_query    => $query,
             total        => $total,
             start        => $start,
@@ -218,7 +258,7 @@ sub _export {
         );
     }
     else {
-        $it = $helper->main_publication;
+        $it = publication;
         $it = $it->slice($start // 0, $total)
             if (defined($start) || defined($total));
     }
@@ -228,38 +268,35 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        print STDERR
-            "warning: sort only active in combination with a query\n";
+        say STDERR "warning: sort only active in combination with a query";
     }
 
     return 0;
 }
 
 sub _get {
-    my ($self, $id, @opts) = @_;
+    my ($self, $id) = @_;
 
     croak "usage: $0 get <id>" unless defined($id);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
-    my $bag = $helper->main_publication;
+    my $pubs = publication;
 
     my $rec;
 
     if (defined(my $version = $self->opts->{'version'})) {
-        $rec = $bag->get($id);
+        $rec = $pubs->get($id);
         if ($rec && $rec->{_version} && $rec->{_version} > $version) {
-            $rec = $bag->get_version($id, $version);
+            $rec = $pubs->get_version($id, $version);
         }
     }
     elsif ($self->opts->{'previous-version'}) {
-        $rec = $bag->get_previous_version($id);
+        $rec = $pubs->get_previous_version($id);
     }
     elsif ($self->opts->{'history'}) {
-        $rec = $bag->get_history($id);
+        $rec = $pubs->get_history($id);
     }
     else {
-        $rec = $bag->get($id);
+        $rec = $pubs->get($id);
     }
 
     if (my $msg = $self->opts->{log}) {
@@ -276,61 +313,40 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret      = 0;
+    my $ret = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
-    my $helper   = LibreCat::App::Helper::Helpers->new;
     my $exporter;
 
     if (defined $out_file) {
         $exporter = Catmandu->exporter('YAML', file => $out_file);
     }
 
-    my $skip_citation = $self->opts->{'no_citation'} ? 1 : 0;
+    my $skip_before_add = $self->opts->{no_citation} ? ['citation'] : [];
 
-    my $records = $importer->benchmark->select(
-        sub {
-            my $rec = $_[0];
-
-            $rec->{_id} //= $helper->new_record('publication');
-
-            my $is_ok = 1;
-
-            $helper->store_record(
-                'publication',
-                $rec,
-                skip_citation    => $skip_citation,
-                validation_error => sub {
-                    my $validator = shift;
-                    print STDERR join("\n",
-                        $rec->{_id},
-                        "ERROR: not a valid publication",
-                        @{$validator->last_errors}),
-                        "\n";
-                    $ret   = 2;
-                    $is_ok = 0;
-                }
-            );
-
-            return 0 unless $is_ok;
+    publication->add_many(
+        $importer,
+        skip_before_add     => $skip_before_add,
+        on_validation_error => sub {
+            my ($rec, $errors) = @_;
+            say STDERR join("\n",
+                $rec->{_id}, "ERROR: not a valid publication", @$errors);
+            $ret = 2;
+        },
+        on_success => sub {
+            my ($rec) = @_;
 
             if ($exporter) {
                 $exporter->add($rec);
             }
             else {
-                print "added $rec->{_id}\n";
+                say "added $rec->{_id}";
             }
 
             if (my $msg = $self->opts->{log}) {
                 audit_message($rec->{_id}, 'add', $msg);
             }
-
-            return 1;
-        }
+        },
     );
-
-    my $index = $helper->publication;
-    $index->add_many($records);
-    $index->commit;
 
     if ($exporter) {
         $exporter->commit;
@@ -344,15 +360,14 @@ sub _delete {
 
     croak "usage: $0 delete <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->delete_record('publication',
-        $id);
-
-    if (my $msg = $self->opts->{log}) {
-        audit_message($id, 'delete', $msg);
-    }
+    my $result = publication->delete($id);
 
     if ($result) {
+
+        if (my $msg = $self->opts->{log}) {
+            audit_message($id, 'delete', $msg);
+        }
+
         print "deleted $id\n";
         return 0;
     }
@@ -367,15 +382,14 @@ sub _purge {
 
     croak "usage: $0 purge <id>" unless defined($id);
 
-    my $result
-        = LibreCat::App::Helper::Helpers->new->purge_record('publication',
-        $id);
-
-    if (my $msg = $self->opts->{log}) {
-        audit_message($id, 'purge', $msg);
-    }
+    my $result = publication->purge($id);
 
     if ($result) {
+
+        if (my $msg = $self->opts->{log}) {
+            audit_message($id, 'purge', $msg);
+        }
+
         print "purged $id\n";
         return 0;
     }
@@ -390,7 +404,7 @@ sub _valid {
 
     croak "usage: $0 valid <FILE>" unless defined($file) && -r $file;
 
-    my $validator = LibreCat::Validator::Publication->new;
+    my $validator = publication->validator;
 
     my $ret = 0;
 
@@ -408,10 +422,6 @@ sub _valid {
                 }
                 else {
                     print STDERR "ERROR $id: not valid\n";
-                }
-
-                if (my $msg = $self->opts->{log}) {
-                    audit_message($id, 'valid', $msg);
                 }
 
                 $ret = 2;
@@ -437,10 +447,12 @@ sub _fetch {
 
     $id = path($id)->slurp_utf8 if -r $id;
 
-    my @perl = $pkg->new->fetch($id);
+    my @records = $pkg->new->fetch($id);
+
+    return 0 unless @records;
 
     my $exporter = Catmandu->exporter('YAML');
-    $exporter->add_many($perl[0]);
+    $exporter->add_many(@records);
     $exporter->commit;
 
     return 0;
@@ -451,12 +463,11 @@ sub _embargo {
 
     my $update = $args[0] && $args[0] eq 'update';
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-    my $now    = $helper->now;
+    my $now = timestamp;
     $now =~ s/T.*//;
 
     my $query = "embargo < $now";
-    my $it = $helper->publication->searcher(cql_query => $query);
+    my $it = publication->searcher(cql_query => $query);
 
     my $exporter = Catmandu->exporter('YAML');
 
@@ -524,8 +535,6 @@ sub _files {
 sub _files_list {
     my ($self, $id) = @_;
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
-
     my $exporter = Catmandu->exporter('YAML');
 
     my $printer = sub {
@@ -549,15 +558,14 @@ sub _files_list {
     };
 
     if (defined($id) && $id =~ /^[0-9A-Za-z-]+$/) {
-        my $data = $helper->main_publication->get($id);
+        my $data = publication->get($id);
         $printer->($data);
     }
     elsif (defined($id)) {
-        $helper->publication->searcher(
-            cql_query => $id)->each($printer);
+        publication->searcher(cql_query => $id)->each($printer);
     }
     else {
-        $helper->publication->each($printer);
+        publication->each($printer);
     }
     $exporter->commit;
 }
@@ -569,14 +577,13 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
-    my $helper = LibreCat::App::Helper::Helpers->new;
     my $importer = Catmandu->importer('YAML', file => $filename);
 
     my $update_file = sub {
         my ($id, $files) = @_;
-        if (my $data = $helper->main_publication->get($id)) {
+        if (my $data = publication->get($id)) {
             $self->_file_process($data, $files)
-                && $helper->update_record('publication', $data);
+                && publication->add($data);
         }
         else {
             warn "$id - no such publication";
@@ -711,13 +718,13 @@ sub _files_reporter {
     my $file_store = Catmandu->config->{filestore}->{default}->{package};
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
 
-    my $pkg
-        = Catmandu::Util::require_package($file_store, 'Catmandu::Store::File');
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
     my $files = $pkg->new(%$file_opt);
 
     my $exporter = Catmandu->exporter('YAML');
 
-    LibreCat::App::Helper::Helpers->new->publication->each(
+    publication->each(
         sub {
             my ($item) = @_;
             return unless $item->{file} && ref($item->{file}) eq 'ARRAY';
@@ -770,16 +777,16 @@ LibreCat::Cmd::publication - manage librecat publications
 
 =head1 SYNOPSIS
 
-    librecat publication list [<cql-query>]
-    librecat publication export
-	librecat publication get <id>
-	librecat publication add <FILE>
-	librecat publication delete <id>
-    librecat publication purge <id>
-    librecat publication valid <FILE>
-    librecat publication files [<id>]|[<cql-query>]|[<FILE>]|REPORT
-    librecat publication fetch <source> <id>
-    librecat publication embargo ['update']
+    librecat publication list    [options] [<cql-query>]
+    librecat publication export  [options] [<cql-query>]
+    librecat publication get     [options] <id> | <IDFILE>
+    librecat publication add     [options] <FILE> <OUTFILE>
+    librecat publication delete  [options] <id> | <IDFILE>
+    librecat publication purge   [options] <id> | <IDFILE>
+    librecat publication valid   [options] <FILE>
+    librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
+    librecat publication fetch   [options] <source> <id>
+    librecat publication embargo [options] ['update']
 
     options:
         --sort=STR         (sorting results [only in combination with cql-query])

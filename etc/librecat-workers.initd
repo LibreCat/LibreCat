@@ -11,10 +11,10 @@
 
 SCRIPT="$(basename $0)"
 
-CARTON=/home/biblio/.plenv/shims/carton
-SERVER_USER="librecat"
-SERVER_GROUP="librecat"
-LIBRECAT_DIR="/opt/librecat"
+CARTON=/home/vagrant/.plenv/shims/carton
+SERVER_USER="vagrant"
+SERVER_GROUP="vagrant"
+LIBRECAT_DIR="/home/vagrant/LibreCat"
 # If a config.yml is in a layers directory, use this line:
 # LIBRECAT_LAYERS="/opt/librecat-ugent"
 

@@ -1,78 +1,89 @@
 [%- USE XML::Strict -%]
-<resource xmlns="http://datacite.org/schema/kernel-34 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
-[%- IF doi %]<identifier identifierType="DOI">[% doi | xml_strict %]</identifier>[% END -%]
-<creators>
-[%- FOREACH au IN author -%]
-<creator>
-    <creatorName>
-        <familyName>[% au.last_name | xml_strict %]</familyName>
-        <givenName>[% au.first_name | xml_strict %]</givenName>
-        [% au.full_name | xml_strict %]</creatorName>
-        [%- IF au.orcid -%]
-        <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://orcid.org">[% au.orcid | xml_strict %]</nameIdentifier>
-        [%- END -%]
-</creator>
-[%- END -%]
-</creators>
-<titles>
-	<title>[% title | xml_strict %]</title>
-[%- IF alternative_title.0 %]<title titleType="Subtitle">[% alternative_title.0 | xml_strict %]</title>[% END -%]
-</titles>
-<publisher>[% publisher | xml_strict %]</publisher>
-<publicationYear>[% year %]</publicationYear>
-[%- IF keyword %]
-<subjects>
-[% FOREACH k IN keyword %]<subject>[% k | xml_strict %]</subject>[% END %]
-</subjects>
-[%- END %]
-[%- IF fp7 %]
-<contributors>
-	<contributor contributorType="Funder">
-	<contributorName>European Commission</contributorName>
-	<nameIdentifier nameIdentifierScheme="info">info:eu-repo/grantAgreement/EC/[% fp7 %]</nameIdentifier>
-	</contributor>
-</contributors>
-[%- END %]
-<dates>
-	<date dateType="Updated">[% date_updated.substr(0,10) %]</date>
-	<date dateType="Submitted">[% date_created.substr(0,10) %]</date>
-</dates>
-[%- IF language %]
-	<language>[% language.0.iso %]</language>
-[%- END %]
-<resourceType resourceTypeGeneral="[% IF type == 'reasearch_data' %]Dataset[% ELSE %]Text[% END%]">[% type %]</resourceType>
-<alternateIdentifiers>
-	<alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/data/[% _id %]</alternateIdentifier>
-</alternateIdentifiers>
-[%- IF related_material %]
-<relatedIdentifiers>
-[% FOREACH rm IN related_material.record %]
-<relatedIdentifier relatedIdentifierType="URL" relationType="IsCitedBy">[% uri_base %]/publication/[% rm.id %]</relatedIdentifier>
-[%- END %]
-</relatedIdentifiers>
-[%- END %]
-[%- IF file.0.content_type %]
-<formats>
-[%- FOREACH fi IN file %]
-[%- IF fi.content_type %]<format>[% fi.content_type | xml_strict %]</format>[% END %]
-[%- END %]
-</formats>
-[%- END %]
-[%- IF data_reuse_license %]
-<rightsList>
-	<rights
-	[%- SWITCH data_reuse_license %]
-    [%- CASE 'PDDL' %] rightsURI="http://opendatacommons.org/licenses/pddl/1.0">The Open Data Commons Public Domain Dedication and License (PDDL) v1.0</rights>
-    [%- CASE 'ODC-By' %] rightsURI="http://opendatacommons.org/licenses/by/1.0">The Open Data Commons Attribution License (ODC-By) v1.0</rights>
-    [%- CASE 'ODbL' %] rightsURI="http://opendatacommons.org/licenses/odbl/1.0">The Open Database License (ODbL) v1.0</rights>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
+  <identifier identifierType="DOI">[% doi | xml_strict %]</identifier>
+  <creators>
+    [%- FOREACH a IN author %]
+    <creator>
+      <creatorName nameType="Personal">[% a.full_name | xml_strict %]</creatorName>
+      <givenName>[% a.first_name | xml_strict %]</givenName>
+      <familyName>[% a.last_name | xml_strict %]</familyName>
+      [%- IF a.orcid %]<nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">[% a.orcid | xml_strict %]</nameIdentifier>[% END %]
+    </creator>
     [%- END %]
-</rightsList>
-[%- END %]
-[%- IF abstract %]
-<descriptions>
-[%- FOREACH ab IN abstract %]
-	<description descriptionType="Abstract">[% ab.text | xml_strict %]</description>
-[%- END %]
-</descriptions>
-[%- END %]
+  </creators>
+  <titles>
+    <title>[% title | xml_strict %]</title>
+    [%- FOREACH at IN alternative_title %]
+    <title titleType="AlternativeTitle">[% at | xml_strict %]</title>
+    [%- END %]
+  </titles>
+  <publisher>[% publisher | xml_strict %]</publisher>
+  <publicationYear>[% year | xml_strict %]</publicationYear>
+  [%- IF ddc OR keyword %]
+  <subjects>
+    [%- FOREACH d in ddc %]<subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d %]</subject>[% END%]
+    [%- FOREACH k in keyword%]<subject>[% k | xml_strict %]</subject>[% END %]
+  </subjects>
+  [%- END %]
+  <dates>
+    <date dateType="Created">[% date_created | xml_strict %]</date>
+    <date dateType="Updated">[% date_updated | xml_strict %]</date>
+  </dates>
+  [%- IF lang %]
+  <language>[% lang.0.iso | xml_strict %]</language>
+  [%- END %]
+  <resourceType resourceTypeGeneral="[% type == 'research_data' ? 'Dataset' : 'Text'%]">[% type %]</resourceType>
+  <alternateIdentifiers>
+    <alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/record/[% _id %]</alternateIdentifier>
+  </alternateIdentifiers>
+  <relatedIdentifiers>
+    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/record/[% _id%].json</relatedIdentifier>
+    [%- IF publication_identifier.isbn %]
+    <relatedIdentifier relatedIdentifierType="ISBN" relationType="isVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF publication_identifier.issn %]
+    <relatedIdentifier relatedIdentifierType="ISNN" relationType="isVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF external_id.arxiv %]
+    <relatedIdentifier relatedIdentifierType="arXiv" relationType="isVersionOf">[% external_id.arxiv.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF external_id.pmid %]
+    <relatedIdentifier relatedIdentifierType="PMID" relationType="isVersionOf">[% external_id.pmid.0 | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- IF urn %]
+    <relatedIdentifier relatedIdentifierType="URN" relationType="IsReviewedBy">[% urn | xml_strict %]</relatedIdentifier>
+    [%- END %]
+  </relatedIdentifiers>
+  <sizes>
+    [%- FOREACH f IN file %]
+    <size>[% f.size %] bytes</size>
+    [%- END %]
+  </sizes>
+  <formats>
+    [%- FOREACH f IN file %]
+    <format>[% f.content_type %]</format>
+    [%- END %]
+  </formats>
+  [%- IF license %]
+  <rightsList>
+    <rights rightsURI="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</rights>
+  </rightsList>
+  [%- END %]
+  [%- IF abstract %]
+  <descriptions>
+    [%- FOREACH a IN abstract %]<description xml:lang="[% a.lang %]" descriptionType="Abstract">[% a.text %]</description>[% END -%]
+  </descriptions>
+  [%- END %]
+  [%- IF project %]
+  <fundingReferences>
+  [%- FOREACH p IN project %]
+    <fundingReference>
+      [%- IF p.funder %]<funderName>[% p.funder.0 | xml_strict %]</funderName>[% END %]
+      [%- IF p.funder_id %]<funderIdentifier funderIdentifierType="Crossref Funder ID">[% p.funder_id | xml_strict %]</funderIdentifier>[% END %]
+      [%- IF p.grant_number %]<awardNumber>[% p.grant_number | xml_strict %]</awardNumber>[% END %]
+      <awardTitle>[% p.name | xml_strict %]</awardTitle>
+    </fundingReference>
+  [%- END %]
+  </fundingReferences>
+  [%- END %]
 </resource>

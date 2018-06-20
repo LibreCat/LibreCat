@@ -2,7 +2,6 @@
 !t/tmp/.gitkeep
 *.log
 *.pid
-*.spec
 *.swp
 .DS_Store
 .last_cover_stats
@@ -26,7 +25,6 @@ cpanfile.snapshot
 data/file_uploads/**
 data/temp_uploads/**
 docs/
-environments/*.yml
 inc/
 layers.yml
 local/

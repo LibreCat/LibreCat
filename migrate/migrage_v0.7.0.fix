@@ -1,7 +1,0 @@
-move_field(external_id.isi, external_id.isi.0)
-move_field(external_id.pmid, external_id.inspire.0)
-move_field(external_id.arxiv, external_id.arxiv.0)
-move_field(external_id.ahf, external_id.ahf.0)
-move_field(external_id.opac, external_id.opac.0)
-move_field(external_id.scoap3, external_id.scoap3.0)
-move_field(external_id.unknown, external_id.unknown.0)

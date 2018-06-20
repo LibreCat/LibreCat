@@ -1,43 +1,38 @@
 [% department = thisPerson.department %]
-
 <!-- BEGIN backend/user_settings.tt -->
-
   <div class="row innerrow">
     <div class="col-md-12">
       <h5>[% h.loc("header.logged_in_as") %] <em><strong>[% session.user %]</strong></em></h5>
     </div>
   </div>
-
-  [% IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.project_reviewer OR thisPerson.data_manager OR thisPerson.delegate %]
+  [%- IF thisPerson.super_admin OR thisPerson.reviewer OR thisPerson.project_reviewer OR thisPerson.data_manager OR thisPerson.delegate %]
   <div class="row innerrow">
     <div class="col-md-11">
       <h5>[% h.loc("header.role_label") %]: <em><strong>[% lf.header.role.item(session.role) %]</strong></em></h5>
       ([% h.loc("header.role_change") %]
-      [% IF session.role != "user" %]
+      [%- IF session.role != "user" %]
       <a href="[% uri_base %]/librecat/change_role/user">[% h.loc("header.role.user") %]</a>
-      [% END %]
-      [% IF thisPerson.delegate AND session.role != "delegate" %]
+      [%- END %]
+      [%- IF thisPerson.delegate AND session.role != "delegate" %]
       | <a href="[% uri_base %]/librecat/change_role/delegate">[% h.loc("header.role.delegate") %]</a>
-	  [% END %]
-	  [% IF thisPerson.reviewer AND session.role != "reviewer" %]
+	  [%- END %]
+	  [%- IF thisPerson.reviewer AND session.role != "reviewer" %]
 	  | <a href="[% uri_base %]/librecat/change_role/reviewer">[% h.loc("header.role.reviewer") %]</a>
-	  [% END %]
-      [% IF thisPerson.project_reviewer AND session.role != "project_reviewer" %]
+	  [%- END %]
+      [%- IF thisPerson.project_reviewer AND session.role != "project_reviewer" %]
       | <a href="[% uri_base %]/librecat/change_role/project_reviewer">[% lf.header.role.project_reviewer %]</a>
-      [% END %]
-      [% IF thisPerson.data_manager AND session.role != "data_manager" %]
+      [%- END %]
+      [%- IF thisPerson.data_manager AND session.role != "data_manager" %]
 	  | <a href="[% uri_base %]/librecat/change_role/data_manager">[% h.loc("header.role.data_manager") %]</a>
-	  [% END %]
-	  [% IF thisPerson.super_admin AND session.role != "super_admin" %]
+	  [%- END %]
+	  [%- IF thisPerson.super_admin AND session.role != "super_admin" %]
 	  | <a href="[% uri_base %]/librecat/change_role/admin">[% h.loc("header.role.super_admin") %]</a>
-	  [% END %]
+	  [%- END %]
 	  )
     </div>
   </div>
-  [% END %]
-
+  [%- END %]
   <hr />
-
 <form id="id_save_aff" action="[% uri_base %]/librecat/person/affiliation" method="POST">
   <div class="row innerrow">
     <div class="col-md-12">
@@ -46,7 +41,7 @@
   </div>
   <div class="row innerrow">
     <div class="col-md-12" id="person_affiliation">
-    [% IF !department %]
+    [%- UNLESS department.0 %]
     <div class="row innerrow multirow">
       <input type="hidden" name="department.0._id" id="person_aff_idautocomplete_0" value="" />
 
@@ -58,8 +53,8 @@
         </div>
       </div>
     </div>
-    [% ELSE %]
-      [% FOREACH dept IN department %]
+    [%- ELSE %]
+      [%- FOREACH dept IN department %]
       <div class="row innerrow multirow">
         <input type="hidden" name="department.[% loop.index %]._id" id="person_aff_idautocomplete_[% loop.index %]" value="[% dept._id %]" />
 
@@ -71,8 +66,8 @@
           </div>
         </div>
       </div>
-      [% END %]
-    [% END %]
+      [%- END %]
+    [%- END %]
     </div>
   </div>
 </form>
@@ -96,5 +91,4 @@ function submit_form(form_id){
     $('#' + form_id).submit();
 }
 </script>
-
 <!-- END backend/user_settings.tt -->

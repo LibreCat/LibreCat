@@ -2,9 +2,13 @@ package LibreCat::FetchRecord::arxiv;
 
 use Catmandu::Util qw(:io);
 use Moo;
+use Try::Tiny;
 use Dancer qw(:syntax);
 
 with 'LibreCat::FetchRecord';
+
+has 'baseurl' =>
+    (is => 'ro', default => sub {"https://export.arxiv.org/api/query?"});
 
 sub fetch {
     my ($self, $id) = @_;
@@ -14,7 +18,12 @@ sub fetch {
 
     $self->log->debug("requesting $id from arXiv");
 
-    my $data = Catmandu->importer('ArXiv', query => $id,)->to_array;
+    my $data = [];
+
+    try {
+        $data = Catmandu->importer('ArXiv', query => $id,
+            base => $self->baseurl)->to_array;
+    };
 
     unless (@$data) {
         $self->log->error("failed query ArXiv");

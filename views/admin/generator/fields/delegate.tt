@@ -7,7 +7,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky">
           <div class="input-group-addon hidden-lg hidden-md">{% delegate.label %}</div>
-          <input type="text" id="id_delegate" value="" class="sticky form-control" placeholder="12345 (PEVZ-ID)"/>
+          <input type="text" id="id_delegate" value="" class="sticky form-control" placeholder="12345 (ID)"/>
           <div class="input-group-addon"><span onclick="addDelegate(this);" class="select_button" id="delegate_select"><span class="fa fa-plus"></span> Add</span></div>
         </div>
       </div>

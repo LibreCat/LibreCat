@@ -1,6 +1,6 @@
 use strict;
 use warnings FATAL => 'all';
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
@@ -24,20 +24,32 @@ require_ok $pkg;
     ok $result->error, 'threw an exception: cmd unknown';
 }
 
-{
+SKIP: {
+    skip("No network. Set NETWORK_TEST to run these tests.", 5)
+        unless $ENV{NETWORK_TEST};
+
     my $result = test_app(qq|LibreCat::CLI| => ['url', 'check']);
     ok $result->error, 'threw an exception';
 
-    $result = test_app(
-        qq|LibreCat::CLI| => ['url', 'check', 't/records/urls.yml']);
+    $result = test_app(qq|LibreCat::CLI| =>
+            ['url', 'check', '--importer=YAML', 't/records/urls.yml']);
     ok !$result->error, 'threw no exception';
 
-    like $result->stdout, qr/200.*pub\.uni-bielefeld/, 'result looks good';
-    like $result->stdout, qr/200.*biblio\.ugent/,      'result looks good';
+    like $result->stdout, qr/2\s+https:\/\/biblio.ugent.be\s+200/,
+        'result looks good';
 
-    $result = test_app(qq|LibreCat::CLI| =>
-            ['url', 'check', 't/records/urls.yml', 't/tmp/urls.out']);
+    $result = test_app(
+        qq|LibreCat::CLI| => [
+            'url',                'check',
+            '--importer=YAML',    '--exporter=JSON',
+            't/records/urls.yml', 't/tmp/urls.out'
+        ]
+    );
     ok !$result->error, 'threw no exception with outfile';
+
+    my $importer = Catmandu->importer('JSON', file => 't/tmp/urls.out');
+
+    ok $importer->to_array, 'got JSON results';
 
     unlink('t/tmp/urls.out');
 }
