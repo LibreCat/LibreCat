@@ -72,9 +72,5 @@
 
 </div><!-- outer row -->
 <!-- END admin/account.tt -->
-<<<<<<< HEAD
 
 [% INCLUDE footer.tt %]
-=======
-[% INCLUDE footer.tt %]
->>>>>>> dev
