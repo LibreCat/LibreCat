@@ -25,16 +25,12 @@ hooks:
   # Code that runs when updating a publication
   publication-update:
     before_fixes: []
-    after_fixes:
-      - new_research_data_email
-      - register_doi
+    after_fixes: []
 
   # Code that runs at a 'Make public' action
   publication-publish:
     before_fixes: []
-    after_fixes:
-      - new_research_data_email
-      - register_doi
+    after_fixes: []
 
   # Code that runs when deleting a publication
   publication-delete:
