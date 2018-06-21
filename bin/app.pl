@@ -91,6 +91,8 @@ my $session_sso = is_array_ref( $config->{session_sso} ) ? $config->{session_sso
 
 builder {
     enable '+Dancer::Middleware::Rebase', base => $uri_base, strip => 0 if is_string( $uri_base );
+    enable_if { $_[0]->{REMOTE_ADDR} eq '127.0.0.1' }
+        "Plack::Middleware::ReverseProxy";
     enable 'Deflater';
     enable 'Session',
         store => require_package( $session_store_package )->new( %$session_store_options ),

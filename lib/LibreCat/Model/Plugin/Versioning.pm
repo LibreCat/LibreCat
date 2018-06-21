@@ -11,3 +11,16 @@ sub restore_previous_version {shift->bag->restore_previous_version(@_)}
 
 1;
 
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Model::Plugin::Versioning - a versioning plugin for models
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<Catmandu::Plugin::Versioning>
+
+=cut
