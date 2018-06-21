@@ -147,11 +147,6 @@ gs_doc_type:
   working_paper: 'working Paper'
   research_data: 'Research Data'
 
-relations_rd:
-  -
-    relation: "is_cited_by"
-    opposite: "cites"
-
 relations_file:
   -
     relation: "confirmation"
