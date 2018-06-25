@@ -3,12 +3,24 @@ package LibreCat::Validator;
 use Catmandu::Sane;
 use Moo::Role;
 
-with 'Catmandu::Validator';
+with 'LibreCat::Logger', 'Catmandu::Validator';
 
 has whitelist => (is => 'lazy');
 
 sub _build_whitelist {
     [];
+}
+
+sub apply_whitelist {
+    my ($self, $rec) = @_;
+    my $whitelist = $self->whitelist;
+    for my $key (keys %$rec) {
+        unless (grep {$_ eq $key} @$whitelist) {
+            $self->log->debug("deleting invalid key: $key");
+            delete $rec->{$key};
+        }
+    }
+    $rec;
 }
 
 1;
@@ -19,22 +31,27 @@ __END__
 
 =head1 NAME
 
-LibreCat::Validator - a base class for validators
+LibreCat::Validator - Base role for LibreCat validators
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
 
-    package MyValidator;
+See L<Catmandu::Validator>.
 
-    use Moo;
+=head1 METHODS
 
-    with "LibreCat::Validator";
+In addition to the methods in  L<Catmandu::Validator>, L<LibreCat::Validator> provides:
 
-    sub _build_whitelist {
-        return ["author", "title", "year"];
-    }
+=head2 whitelist
+
+Returns an arrayref of whitelisted property names.
+
+=head2 apply_whitelist($rec)
+
+Applies this validators whitelist to the given record, removing all keys not in
+the whitelist.
 
 =head1 SEE ALSO
 
-L<LibreCat>, L<Catmandu::Validator>
+L<Catmandu::Validator>
 
 =cut

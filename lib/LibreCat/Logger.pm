@@ -19,24 +19,12 @@ __END__
 
 =head1 NAME
 
-LibreCat::Logger - a logger for LibreCat modules
+LibreCat::Logger - Role that provides access to the LibreCat logger.
 
-=head1 SYNOPSIS
+=head1 METHODS
 
-    package MyPackage;
+=head2 log
 
-    use Moo;
-
-    with "LibreCat::Logger";
-
-    sub demo {
-        my ($self, $data) = @_;
-
-        $self->log->debug("Executing sub demo in MyPackage");
-    }
-
-=head1 SEE ALSO
-
-L<LibreCat>, L<Log::Any>, L<config/log4perl.yml>
+    $log->debug("added $id");
 
 =cut

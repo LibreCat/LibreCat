@@ -8,7 +8,7 @@ use LibreCat::Types qw(+Pairs);
 use Moo::Role;
 use namespace::clean;
 
-with 'Catmandu::Pluggable', 'LibreCat::Logger';
+with 'Catmandu::Pluggable', 'LibreCat::Logger', 'LibreCat::Transaction';
 
 has bag => (
     is       => 'ro',
@@ -25,7 +25,7 @@ has search_bag => (
 has validator => (
     is       => 'ro',
     required => 1,
-    handles  => [qw(is_valid whitelist)],
+    handles  => [qw(is_valid whitelist apply_whitelist)],
     isa      => ConsumerOf ['LibreCat::Validator']
 );
 has before_add => (is => 'lazy', init_arg => undef, isa => Pairs);
@@ -216,18 +216,6 @@ sub apply_hooks_to_record {
         }
     }
 
-    $rec;
-}
-
-sub apply_whitelist {
-    my ($self, $rec) = @_;
-    my $whitelist = $self->whitelist;
-    for my $key (keys %$rec) {
-        unless (grep {$_ eq $key} @$whitelist) {
-            $self->log->debug("deleting invalid key: $key");
-            delete $rec->{$key};
-        }
-    }
     $rec;
 }
 
@@ -487,8 +475,23 @@ Add hooks that will be executed before a record is indexed.
 
 Add hooks that will be executed before a record is indexed.
 
+=head2 transaction($cb)
+
+Execute C<$cb> within a transaction. If C<$cb> dies, all database changes will be rolled back.
+
+    # $rec1 will not be added
+    $self->transaction(sub {
+        $self->add($rec1);
+        die 'aargh';
+        $self->add($rec2);
+    });
+
+=head2 tx($cb)
+
+Alias for transaction.
+
 =head1 SEE ALSO
 
-L<Catmandu::Iterable>, L<Catmandu::Searchable>
+L<LibreCat::Logger>, L<LibreCat::Transaction>, L<Catmandu::Iterable>, L<Catmandu::Searchable>
 
 =cut
