@@ -1,6 +1,7 @@
 package LibreCat::Hook::register_doi;
 
 use Catmandu::Sane;
+use LibreCat qw(:self);
 use LibreCat::App::Helper;
 use Dancer qw(:syntax);
 use Catmandu;
@@ -9,14 +10,16 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    my $prefix = h->config->{doi}->{prefix};
+    my $prefix = librecat->config->{doi}->{prefix};
 
     return $data
         unless $data->{doi}
         && $data->{doi} =~ /^$prefix/
         && $data->{status} eq "public";
 
-    h->log->info("Register the publication at DataCite\n" . to_yaml($data));
+    $data->{publisher} = librecat->config->{doi}->{publisher} unless $data->{publisher};
+
+    librecat->log->debug("Register the publication at DataCite\n" . to_yaml($data));
 
     my $datacite_xml = Catmandu->export_to_string(
         {%$data, uri_base => h->uri_base()}, 'Template',
@@ -24,7 +27,7 @@ sub fix {
         xml      => 1
     );
 
-    h->log->debug("datacite_xml: $datacite_xml");
+    librecat->log->debug("datacite_xml: $datacite_xml");
 
     my $job = {
         doi          => $data->{doi},
@@ -33,10 +36,10 @@ sub fix {
     };
 
     try {
-        h->queue->add_job('datacite', $job);
+        librecat->queue->add_job('datacite', $job);
     }
     catch {
-        h->log->error("Could not register DOI: $_ -- $data->{_id}");
+        librecat->log->error("Could not register DOI: $_ -- $data->{_id}");
     };
 
     $data;
@@ -52,13 +55,13 @@ __END__
 
 LibreCat::Hook::register_doi - a LibreCat hook that registers a DOI at DataCite
 
-=head1 SYNOPSIS
+=head1 CONFIGURATION
 
     doi:
       prefix: 10.5192/test
 
 =head1 SEE ALSO
 
-L<LibreCat>, L<LibreCat::Hook>, L<LibreCat::Worker::DataCite>
+L<LibreCat>, L<LibreCat::Hook>, L<LibreCat::Worker::Datacite>
 
 =cut
