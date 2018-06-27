@@ -222,7 +222,7 @@ publications.
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
         push @{$p->{cql}}, "status<>deleted";
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        push @{$p->{cql}}, "(person=$id OR supervisor=$id OR creator=$id)";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = searcher->search('publication', $p);
@@ -243,7 +243,7 @@ Performs search for user.
         my $p  = h->extract_params();
         my $id = session 'user_id';
 
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        push @{$p->{cql}}, "(person=$id OR supervisor=$id OR creator=$id)";
         push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
