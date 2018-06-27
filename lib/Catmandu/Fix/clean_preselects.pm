@@ -18,6 +18,7 @@ sub fix {
         my @new_abstract;
 
         for my $ab (@{$pub->{abstract}}) {
+            $ab->{lang} = "eng" unless $ab->{lang};
             push @new_abstract, $ab if ($ab->{lang} && $ab->{text});
         }
 
