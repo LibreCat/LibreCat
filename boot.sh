@@ -5,7 +5,7 @@
 # export TMPDIR=/data2/tmp
 
 if [ "$1" == "starman" ]; then
-    carton exec 'plackup -R lib -s Starman --port 5001  bin/app.pl'
+    carton exec 'plackup -E development -R lib -s Starman --port 5001  bin/app.pl'
 else
-    carton exec 'plackup -R lib --port 5001  bin/app.pl'
+    carton exec 'plackup -E development -R lib --port 5001  bin/app.pl'
 fi
