@@ -239,12 +239,12 @@ ok exists $statistics->{projects},     '..projects';
 
 is h->uri_base, 'http://localhost:5001', 'h->uri_base';
 
-is h->uri_for, 'http://localhost:5001', 'h->uri_for()';
+is h->uri_for(), 'http://localhost:5001?lang=en', 'h->uri_for()';
 
-is h->uri_for('/foo'), 'http://localhost:5001/foo', 'h->uri_for(/foo)';
+is h->uri_for('/foo'), 'http://localhost:5001/foo?lang=en', 'h->uri_for(/foo)';
 
 is h->uri_for('/foo', {q => 'a', z => [1, 2], '我' => '能'}),
-    'http://localhost:5001/foo?q=a&z=1&z=2&%E6%88%91=%E8%83%BD',
+    'http://localhost:5001/foo?lang=en&q=a&z=1&z=2&%E6%88%91=%E8%83%BD',
     'params with unicode characters encoded corectly by h->uri_for';
 
 isa_ok h->get_file_store, 'Catmandu::Store::File::Simple',

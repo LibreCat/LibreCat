@@ -1,6 +1,6 @@
 [% qp = {} -%]
 [% qp = h.extract_params -%]
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lang = h.locale() -%]
 
 <!-- BEGIN filters.tt -->
 [%- USE JSON.Escape %]
@@ -12,7 +12,7 @@
 [%- IF request.path_info.match("person") AND bag != 'person' %]
 <div class="margin-bottom1">
   [%- qp.person = id %]
-  <a href="[% request.uri_for("/marked", qp) %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
+  <a href="[% h.uri_for("/marked", qp) %]" rel="nofollow"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
 </div>
 [%- END -%]
 
@@ -26,7 +26,7 @@
 [%- IF qp.item('sort') %]
   <div class="text-muted">
     [%- tmp = {}; tmp.import(qp); tmp.delete('sort') %]
-    <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
+    <a href="[% h.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
     <strong>[% h.loc("facets.sorted_by") %]:</strong>
     [% IF bag == "person" %]
       [% sort_options = h.config.sort_options_person %]
@@ -43,7 +43,7 @@
 [%- IF h.config.citation.engine == 'csl' AND qp.style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
     [%- tmp = {}; tmp.import(qp); tmp.delete('style') %]
-    <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
+    <a href="[% h.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
     [% h.loc("styles.${qp.style}") %]
   </div>
@@ -60,7 +60,7 @@
         <li>[% lim %]</li>
         [%- ELSE %]
           [%- tmp = {}; tmp.import(qp); tmp.limit = lim %]
-          <li><a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow">[% lim %]</a></li>
+          <li><a href="[% h.uri_for(request.path_info, tmp) %]" rel="nofollow">[% lim %]</a></li>
         [%- END %]
       [%- END %]
     </ul>
@@ -103,7 +103,7 @@
           <li><span class="text-muted">[% h.loc("styles.${dstyle}") %]</span></li>
         [%- ELSE %]
           [%- tmp = {}; tmp.import(qp); tmp.style = dstyle %]
-          <li><a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow">[% h.loc("styles.${dstyle}") %]</a></li>
+          <li><a href="[% h.uri_for(request.path_info, tmp) %]" rel="nofollow">[% h.loc("styles.${dstyle}") %]</a></li>
         [%- END %]
       [%- END %]
     </ul>
@@ -123,12 +123,12 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_facet" class="collapse">
-      [%- tmp = {}; tmp.import(qp); export_path = backend == 1 ? 'librecat/export' : 'export' %]
+      [%- tmp = {}; tmp.import(qp); export_path = backend == 1 ? '/librecat/export' : '/export' %]
       <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
-      <li><a href="[% tmp.fmt='bibtex'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
-      <li><a href="[% tmp.fmt='ris'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
-      <li><a href="[% tmp.fmt='json'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
-      <li><a href="[% tmp.fmt='yaml'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
+      <li><a href="[% tmp.fmt='bibtex'; h.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
+      <li><a href="[% tmp.fmt='ris'; h.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
+      <li><a href="[% tmp.fmt='json'; h.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
+      <li><a href="[% tmp.fmt='yaml'; h.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.yaml") %]</a></li>
     </ul>
     </div>
   </li>
@@ -157,7 +157,7 @@
   [%- END %]
 
   <li>
-    <a href="[% request.uri_for("/marked") %]" rel="nofollow" class="btn-link"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
+    <a href="[% h.uri_for("/marked") %]" rel="nofollow" class="btn-link"><span class="label label-default total-marked">[% marked %]</span>[% h.loc("mark.marked_publication") %]</a>
   </li>
 </ul>
 
@@ -171,9 +171,9 @@
       </div>
       <div class="modal-body">
         [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.links = '1' %]
-	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
+	     <p><span class="fa fa-chevron-right"></span><a href="[% h.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
          [%-  tmp.delete('links') %]
-	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
+	     <p><span class="fa fa-chevron-right"></span><a href="[% h.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
       </div>
     </div>
   </div>

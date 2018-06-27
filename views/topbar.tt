@@ -1,8 +1,8 @@
 [%- thisPerson = h.get_person(session.user_id) -%]
 [%- qp = request.params.hash %]
 [%- qp.delete('splat') %]
-[%- lang = session.lang ? session.lang : h.config.default_lang %]
-[% lf = h.config.locale.$lang -%]
+[%- current_lang = h.locale %]
+[% lf = h.config.locale.$current_lang -%]
 [%- style = qp.style || h.config.citation.csl.default_style -%]
 
 <!-- BEGIN navbar.tt -->
@@ -15,30 +15,57 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="[% uri_base %]/"><img src="[% uri_base %]/images/brand_logo.png" alt="" /></a>
+            <a class="navbar-brand helpme" data-placement="bottom" title="[% h.loc("help.home") %]" href="[% h.uri_for('/') %]"><img src="[% uri_base %]/images/brand_logo.png" alt="" /></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-                <li class="helpme" data-placement="bottom" title="[% h.loc("help.brand") %]"><a href="[% uri_base %]/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="fa fa-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
+                <li class="helpme" data-placement="bottom" title="[% h.loc("help.brand") %]">
+                  [% IF session.user %]
+                    [% l_params = {} %]
+                    [% IF style %]
+                      [% l_params.style = style %]
+                    [% END %]
+                    [% IF sort AND sort.0 %]
+                      [% l_params.sort = [] %]
+                      [% FOREACH s IN sort %]
+                        [% l_params.sort.push(s) %]
+                      [% END %]
+                    [% END %]
+                    [% SET home_url = h.uri_for('/librecat', l_params) %]
+                  [% ELSE %]
+                    [% SET home_url = h.uri_for('/') %]
+                  [% END %]
+                  <a href="[% home_url | html %]">
+                    <span class="fa fa-home"></span>
+                    [% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]
+                  </a>
+                </li>
                 [%- IF session.user %]
-                <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="[% uri_base %]/person/[% session.user_id %]"><span class="fa fa-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
+                <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="[% h.uri_for('/person/' _ session.user_id) | html %]"><span class="fa fa-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
                 [%- END %]
                 [%- IF session.role && session.role == 'super_admin' %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-wrench"></span>[% h.loc("header.admin_menu.admin") %] <span class="fa fa-chevron-down"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="[% uri_base %]/librecat/admin/account"><span class="fa fa-user"></span>[% h.loc("header.admin_menu.manage_accounts") %]</a></li>
-                        <li><a href="[% uri_base %]/librecat/admin/project"><span class="fa fa-tasks"></span>[% h.loc("header.admin_menu.manage_projects") %]</a></li>
-                        <li><a href="[% uri_base %]/librecat/admin/research_group"><span class="fa fa-group fw"></span>[% h.loc("header.admin_menu.manage_research_groups") %]</a></li>
+                        <li><a href="[% h.uri_for('/librecat/admin/account') %]"><span class="fa fa-user"></span>[% h.loc("header.admin_menu.manage_accounts") %]</a></li>
+                        <li><a href="[% h.uri_for('/librecat/admin/project') %]"><span class="fa fa-tasks"></span>[% h.loc("header.admin_menu.manage_projects") %]</a></li>
+                        <li><a href="[% h.uri_for('/librecat/admin/research_group') %]"><span class="fa fa-group fw"></span>[% h.loc("header.admin_menu.manage_research_groups") %]</a></li>
                     </ul>
                 </li>
                 [%- END %]
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
-                    <a href="[% uri_base %][% IF session.user %]/librecat/person[% END %]/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="fa fa-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
-                </li>
+                [% FOREACH lang IN h.available_locales %]
+                  [% NEXT IF lang == current_lang %]
+                  <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
+                      <a href="[% h.uri_for_locale(lang) %]">
+                        <span class="fa fa-flag"></span>
+                        <span class="hidden-sm">[% h.locale_long(lang) %]</span>
+                        <span class="hidden-md hidden-xs hidden-lg">[% h.locale_long(lang) %]</span>
+                      </a>
+                  </li>
+                [% END %]
                 [%- IF session.user %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="fa fa-user"></span> [% h.loc("header.settings") %] <span class="fa fa-chevron-down"></span></a>
                     <div id="settings" class="dropdown-menu">
@@ -47,19 +74,22 @@
                 </li>
                 [%- END %]
                 [%- IF session.user %]
-                <li><a href="[% uri_base %]/logout"><span class="fa fa-sign-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
+                <li><a href="[% h.uri_for('/logout') %]"><span class="fa fa-sign-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
                 [%- ELSE %]
-                <li><a href="[% uri_base %]/login"><span class="fa fa-sign-out"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
+                <li><a href="[% h.uri_for('/login') %]"><span class="fa fa-sign-out"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
                 [%- END %]
             </ul>
         </div><!-- /.navbar-collapse -->
+        <!--
         <div class="container">
             <div class="row">
                 <div class="col-xs-1 col-sm-2 col-md-offset-1">
-                    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
+                    [% current_lang %]
                 </div>
             </div>
-        </div><!-- /container -->
+        </div>
+        -->
+        <!-- /container -->
     </nav>
     <div class="modal" id="selectAFF">
         <div class="modal-dialog">

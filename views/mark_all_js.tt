@@ -1,6 +1,6 @@
 [%- USE JSON.Escape %]
 <script>
-var path = '[% request.uri_for(request.path_info) %]',
+var path = '[% h.uri_for(request.path_info) %]',
 searchParams = [% h.extract_params.json %];
 [%- IF !backend %]
 if (searchParams.cql) {
@@ -30,7 +30,7 @@ $(function () {
             });
         }
         else {
-            prev = "[% IF qp.person AND qp.person != "" %][% qp.delete('person')%][% request.uri_for("/person/$qp.person", qp) %][% ELSIF qp.department AND qp.department != "" %][% qp.delete('department') %][% request.uri_for("/department/$qp.department", qp) %][% ELSIF qp.publication AND qp.publication != "" %][% qp.delete('publication') %][% request.uri_for("/record/$qp.publication", qp) %][% END %]  ";
+            prev = "[% IF qp.person AND qp.person != "" %][% qp.delete('person')%][% h.uri_for("/person/$qp.person", qp) %][% ELSIF qp.department AND qp.department != "" %][% qp.delete('department') %][% h.uri_for("/department/$qp.department", qp) %][% ELSIF qp.publication AND qp.publication != "" %][% qp.delete('publication') %][% h.uri_for("/record/$qp.publication", qp) %][% END %]  ";
             // TODO post requests shouldn't contain url params
             $.ajax({
                 type: 'POST',

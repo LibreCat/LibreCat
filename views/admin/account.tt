@@ -1,6 +1,7 @@
 [% qp = request.params.hash %]
 [% qp.delete('splat') %]
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lang = h.locale() -%]
+[% lf = h.config.locale.$lang -%]
 [% backend = request.path_info.match('librecat') ? 1 : 0 %]
 
 [% INCLUDE header.tt %]
@@ -71,4 +72,5 @@
 
 </div><!-- outer row -->
 <!-- END admin/account.tt -->
+
 [% INCLUDE footer.tt %]

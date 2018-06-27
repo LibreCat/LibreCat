@@ -80,13 +80,19 @@
 [% END %]
     <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% lf.forms.item(entry.type).label %] | [% h.loc("hits.id") %]: <span class="pubid">[% entry._id %]</span> </em>
     <div class="citation-block-div">
+    [% SET escaped_id = entry._id | uri %]
     [%- IF style == 'short' %]
-	  <a href="[% uri_base %]/[% IF backend %]librecat/record/edit[% ELSE %]record[% END %]/[% entry._id %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
+      [% IF backend %]
+        [% SET record_url = h.uri_for("/librecat/record/edit/" _ escaped_id) %]
+      [% ELSE %]
+        [% SET record_url = h.uri_for("/record/" _ escaped_id) %]
+      [% END %]
+	  <a href="[% record_url | html %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
     [%- END %]
     [%- IF backend AND ((!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin") %]
-      <a href="[% uri_base %]/librecat/record/edit/[% entry._id %]" onclick="window.top.location='/librecat/record/edit/[% entry._id %]'" class="citation-block-link"></a>
+      <a href="[% h.uri_for("/librecat/record/edit/" _ escaped_id) | html %]" class="citation-block-link"></a>
     [%- ELSIF backend AND entry.status != "public" %]
-      <a href="[% uri_base %]/librecat/record/preview/[% entry._id %]" onclick="window.top.location='/librecat/record/preview/[% entry._id %]'" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% h.loc("main_page.links.view_details") %]"></a>
+      <a href="[% h.uri_for("/librecat/record/preview/" _ escaped_id) | html %]" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% h.loc("main_page.links.view_details") %]"></a>
     [%- END %]
     [%- IF h.config.citation.engine == 'csl' AND entry.citation.$style %]
       [% entry.citation.$style %]

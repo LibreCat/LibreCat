@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="[% uri_base %]/css/main.css">
     <script type="text/javascript">
       window.librecat = {
-        uri_base: "[% uri_base %]"
+        uri_base: "[% uri_base %]",
+        locale: "[% h.locale() %]"
       };
     </script>
     <script src="[% uri_base %]/javascripts/jquery.min.js"></script>

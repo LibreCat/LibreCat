@@ -43,7 +43,9 @@
 [%- IF h.config.citation.engine == 'csl' AND citation %][% display_citation = 1 %][% END %]
 [%- style = h.config.citation.csl.default_style %]
 
-<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% uri_base %]/record/[% _id %]"><!-- outer row-->
+[% SET escaped_id = _id | uri %]
+
+<div class="row" itemscope itemtype="http://schema.org/[% schema.type %]" itemid="[% uri_base %]/record/[% escaped_id %]"><!-- outer row-->
   <div class="col-md-11 col-sm-12"><!-- outer col -->
     <div class="page-header" id="banner">
       [%- UNLESS _id %]
@@ -76,7 +78,7 @@
                           role=session.role,
                           file_id=fi.file_id,
                           ip=request.address).0 %]
-                  <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
+                  <a itemprop="url" href="[% uri_base %]/download/[% escaped_id %]/[% fi.file_id | uri %]/[% fi.file_name | uri %]" title="[% fi.file_name | html %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
                     [% fi.title || fi.file_name | html %]
                   </a>
                   [% ELSE %]
@@ -86,7 +88,7 @@
                   [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
             [% IF loop.count > 1 %]
-                  <br>[% PROCESS publication/oa_lock.tt %] <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
+                  <br>[% PROCESS publication/oa_lock.tt %] <a href="[% uri_base %]/download/[% escaped_id %]/[% fi.file_id | uri %]/[% fi.file_name | uri %]" title="[% fi.file_name | html %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>[% fi.title || fi.file_name | html %]</a>
                   <span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
                   [% PROCESS publication/modal_requestcopy.tt %]
             [% END %]
@@ -130,7 +132,7 @@
         [%- IF doi %]
         <div class="row">
           <div class="col-xs-3 text-muted">[% h.loc("forms.${type}.field.doi.label") %]</div>
-          <div class="col-xs-9"><a itemprop="url" href="https://doi.org/[% doi %]" title="[% doi %]">[% doi | html %]</a></div>
+          <div class="col-xs-9"><a itemprop="url" href="https://doi.org/[% doi %]" title="[% doi | html %]">[% doi | html %]</a></div>
         </div>
         [%- END %]
         [%- IF urn %]
@@ -172,12 +174,12 @@
                     role=session.role,
                     file_id=fi.file_id,
                     ip=request.address).0 %]
-            href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]"
+            href="[% uri_base %]/download/[% escaped_id %]/[% fi.file_id | uri %]/[% fi.file_name | uri %]"
             [% END %]
-            title="[% fi.file_name %]"
+            title="[% fi.file_name | html %]"
             itemprop="thumbnailUrl"
             class="fulltext">
-	           <img src="[% uri_base %]/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
+	           <img src="[% uri_base %]/thumbnail/[% escaped_id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc('frontdoor.fulltext.view') | html %]">
 	        </a>
 	     </div>
       </div>
@@ -239,15 +241,15 @@
         <!-- Edit -->
         [% IF p.can_edit( _id, user_id = session.user_id, role = session.role ) %]
         <h3 id="edit">[% h.loc("frontdoor.editing_options") %]</h3>
-        <a href="[% uri_base %]/librecat/record/edit/[% _id %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
+        <a href="[% h.uri_for('/librecat/record/edit/' _ escaped_id) | html %]"><span class="fa fa-edit"></span> &nbsp;Edit this record</a><br />
         [% IF status != "public" AND _id %]
-          <a href="[% uri_base %]/librecat/record/publish/[% _id %]"><span class="fa fa-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
+          <a href="[% h.uri_for('/librecat/record/publish/' _ escaped_id) | html %]"><span class="fa fa-cloud-upload"></span>[% h.loc("frontdoor.make_public") %]</a><br />
         [% END %]
         [% END %]
 
         <!-- Export -->
         <h3 id="export">[% h.loc("frontdoor.export") %]</h3>
-        <a class="label label-default total-marked" href="[% uri_base %]/marked">[% marked %]</a> <a href="[% uri_base %]/marked" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
+        <a class="label label-default total-marked" href="[% h.uri_for('/marked') | html %]">[% marked %]</a> <a href="[% h.uri_for('/marked') | html %]" rel="nofollow">[% h.loc("frontdoor.marked") %]</a>
 
         <!-- trigger modal -->
         <p><a href="#contentnegotiation" data-toggle="modal"><span class="fa fa-share-square-o fw1"></span>[% h.loc("frontdoor.open_data_pub") %]</a></p>

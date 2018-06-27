@@ -5,7 +5,7 @@
 <div class="row margin-top2">
   <div class="col-md-6 col-md-offset-2 well loginframe">
 
-    <form action="[% uri_base %]/login" method="post" class="form-horizontal">
+    <form action="[% h.uri_for('/login') %]" method="post" class="form-horizontal">
       <h2 class="margin-top0">[% h.loc('login.login_heading') %] </h2>
       <input type="hidden" name="return_url" value="[% return_url %]">
 
@@ -41,7 +41,7 @@
     <ul>
     [% FOREACH as IN settings.auth_sso %]
       <li>
-        <a class="[% as.class %] auth-sso-link" href="[% uri_base %][% as.path %]">[% h.loc(as.i18n) %]</a>
+        <a class="[% as.class %] auth-sso-link" href="[% h.uri_for(as.path) %]">[% h.loc(as.i18n) %]</a>
       </li>
     [% END %]
     </ul>

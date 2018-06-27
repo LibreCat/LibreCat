@@ -44,7 +44,7 @@
               role=session.role,
               file_id=fi.file_id,
               ip=request.address).0 %]
-      <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]">
+      <a itemprop="url" href="[% uri_base %]/download/[% _id | uri %]/[% fi.file_id | uri %]/[% fi.file_name | uri %]" title="[% fi.file_name | html %]">
         [% fi.file_name | html %]
       </a>
       [%- ELSE %]
@@ -118,7 +118,7 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.name") %]</div>
     <div class="col-md-9">
-      <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]">
+      <a href="[% uri_base %]/download/[% _id | uri %]/[% fi.file_id | uri %]/[% fi.file_name | uri %]">
         [% fi.file_name | html %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
     </div>

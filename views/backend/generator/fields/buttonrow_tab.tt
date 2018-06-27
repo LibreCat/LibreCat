@@ -8,7 +8,7 @@
 	      [%- IF title %]
           <button type="button" class="btn btn-warning cancel-button"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</span></button>
 	      [%- ELSE %]
-      	  <a href="[% uri_base %]/librecat/record/new" class="btn btn-warning"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</a>
+      	  <a href="[% h.uri_for('/librecat/record/new') %]" class="btn btn-warning"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</a>
 	      [%- END %]
         [%- UNLESS new_record %]
             [%- IF status != "public" %]
@@ -21,7 +21,8 @@
             <button type="submit" name="finalSubmit" value="recReturn" onclick="return confirm('[% h.loc("forms.confirm_return") %]');" class="btn btn-danger change_tab"><span class="fa fa-cloud-download"></span> [% h.loc("forms.button.return") %]</button>
             [%- END %]
             [%- IF session.role == "super_admin" %]
-            <a class="btn btn-danger" href="[% uri_base %]/librecat/record/delete/[% _id %]" onclick="return confirm('[% h.loc("forms.confirm_delete") %]');" name="delete"><span class="fa fa-trash"></span> [% h.loc("forms.button.delete") %]</a>
+              [% SET escaped_id = _id | uri %]
+            <a class="btn btn-danger" href="[% h.uri_for('/librecat/record/delete/' _ escaped_id) %]" onclick="return confirm('[% h.loc("forms.confirm_delete") %]');" name="delete"><span class="fa fa-trash"></span> [% h.loc("forms.button.delete") %]</a>
             [%- END %]
         [%- END %]
       </div>
