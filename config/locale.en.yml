@@ -843,6 +843,7 @@ forms:
           placeholder: "e.g. Appleseed"
         label: "Supervisor"
         idm_extern: "extern"
+        tooltip: "Activate if LibreCat author."
       department: *department
       project: *project
       research_group: *research_group
