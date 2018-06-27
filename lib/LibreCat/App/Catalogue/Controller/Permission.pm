@@ -60,6 +60,8 @@ sub can_edit {
         grep {is_string($_)} map {$_->{id}} @{$pub->{editor} || []};
     push @person_ids,
         grep {is_string($_)} map {$_->{id}} @{$pub->{translator} || []};
+    push @person_ids,
+        grep {is_string($_)} map {$_->{id}} @{$pub->{supervisor} || []};
 
     #match current user on person identifier
     for my $person_id (@person_ids) {
