@@ -19,6 +19,7 @@ use NetAddr::IP::Lite;
 use URI::Escape qw(uri_escape_utf8);
 use Role::Tiny ();
 use Moo;
+use Clone qw(clone);
 
 sub BUILD {
     my ($self) = @_;
@@ -429,6 +430,13 @@ sub uri_base {
 sub uri_for {
     my ($self, $path, $params) = @_;
 
+    if ( $self->show_locale ) {
+
+        $params = clone($params);
+        $params->{lang} = $self->locale();
+
+    }
+
     my $uri = $self->uri_base();
 
     $uri .= $path if $path;
@@ -492,6 +500,11 @@ sub get_access_store {
     $pkg->new(%$access_opts);
 }
 
+sub show_locale {
+    state $show_locale = exists( $_[0]->config->{i18n}->{show_locale} ) ?
+        $_[0]->config->{i18n}->{show_locale} : 1;
+}
+
 sub locale {
     cookie('lang') // $_[0]->default_locale();
 }
@@ -537,12 +550,11 @@ sub localize {
 }
 sub uri_for_locale {
     my ( $self, $locale ) = @_;
-    my @path;
-    if ( defined( Dancer::session("user") ) ) {
-        push @path, "/librecat/person";
-    }
-    push @path, "/set_language";
-    $self->uri_for( join('',@path), { lang => $locale } );
+    my $request = request();
+    my $path_info = $request->path_info();
+    my %params = (params("query"),params("body"));
+    $params{lang} = $locale;
+    $request->uri_for( $path_info, \%params );
 }
 
 *loc = \&localize;

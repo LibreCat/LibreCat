@@ -4,7 +4,7 @@
     <ul class="pagination">
     [% browse = params.browse == "" ? h.alphabet.0 : params.browse %]
     [%- FOREACH c IN h.alphabet %]
-      <li [% IF browse == c %]class="active"[% END %]><a href="[% uri_base %]/person?browse=[% c %]">[% c %]</a></li>
+      <li [% IF browse == c %]class="active"[% END %]><a href="[% h.uri_for('/person', browse = c) | html %]">[% c %]</a></li>
     [%- END %]
     </ul>
   </div>
@@ -23,8 +23,9 @@
   <div class="col-md-12">
       <dl class="hitlist">
       [%- FOREACH p IN hits %]
+        [% SET escaped_id = p._id | uri %]
   	  <dt>
-  	    <a href="[% uri_base %]/person/[% p._id %]">[% p.full_name %]</a>
+  	    <a href="[% h.uri_for('/person/' _ escaped_id) | html %]">[% p.full_name %]</a>
   	    | <span class="text-muted">ID: [% p._id %]</span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="http://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: [% p.publication_count || 0 %]</span></span><br />
   	  </dt>
   	  <dd>

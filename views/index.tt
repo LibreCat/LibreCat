@@ -24,7 +24,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="row">
-                    <form action="[% uri_base %]/record" method="get" id="main_search_form">
+                    <form action="[% h.uri_for('/record') %]" method="get" id="main_search_form">
                       <div class="col-lg-8 col-md-7 col-sm-6">
                         <div class="input-group">
                           <input type="text" name="q" class="form-control" placeholder="[% h.loc("home.search_placeholder") %]">
@@ -39,10 +39,10 @@
               </div>
               <div class="row margin-top2">
                 <div class="col-md-12">
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="[% uri_base %]/record">[% h.loc("home.stats.publications") %]</a></p>
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researcher %]</span> <a href="[% uri_base %]/person">[% h.loc("home.stats.researcher") %]</a></p>
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="[% uri_base %]/record?cql=fulltext=1">[% h.loc("home.stats.oa_publications") %]</a></p>
-                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.projects %]</span> <a href="[% uri_base %]/project">[% h.loc("home.stats.projects") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.publications %]</span> <a href="[% h.uri_for('/record') %]">[% h.loc("home.stats.publications") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.researcher %]</span> <a href="[% h.uri_for('/person') %]">[% h.loc("home.stats.researcher") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.oahits %]</span> <a href="[% h.uri_for('/record', cql = 'fulltext=1') | html %]">[% h.loc("home.stats.oa_publications") %]</a></p>
+                  <p class="h3"><span class="fa fa-check fa-1x"></span> <span class="statalign">[% stats.projects %]</span> <a href="[% h.uri_for('/project') %]">[% h.loc("home.stats.projects") %]</a></p>
                 </div>
               </div>
             </div><!-- end left col -->

@@ -15,12 +15,13 @@
     <div class="col-md-12 row">
       <div class="row">
 	<div class="col-md-1">[% h.loc("person_profile.local_id") %]</div>
-	<div class="col-md-8"><a href="[% uri_base %]/person/[% thisPerson._id %]">[% thisPerson._id %]</a></div>
+  [% escaped_person_id = thisPerson._id | uri %]
+	<div class="col-md-8"><a href="[% h.uri_for('/person/' _ escaped_person_id) | html %]">[% thisPerson._id %]</a></div>
       </div>
     </div>
 
     <div class="col-md-12 row hidden-xs">
-    <form action="[% uri_base %]/librecat/person/author_id" id="author_id_form" method="POST">
+    <form action="[% h.uri_for('/librecat/person/author_id') | html %]" id="author_id_form" method="POST">
     <input type="hidden" name="_id" value="[% session.user_id %]" />
     [%- IF backend AND !(thisPerson.googleScholar OR thisPerson.researcherId OR thisPerson.authorClaim OR thisPerson.scopusId OR thisPerson.orcid OR thisPerson.github OR thisPerson.arxiv OR thisPerson.inspire OR thisPerson.alias) %]
     <div class="row col-md-12">
@@ -44,7 +45,7 @@
     [%- END %]<!-- end if -->
     <div class="row authorIds_input form-group hidden">
       <div class="col-md-4">[% h.config.lists.author_id.$k.label %]</div>
-      <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% thisPerson._id %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
+      <div class="col-md-6"><input type="text" class="form-control input-sm check_[% k %]" data-id="[% thisPerson._id | html %]" name="[% k %]" id="[% k %]" value="[% thisPerson.$k ? thisPerson.$k : "" %]" /></div>
     </div>
     [%- END %]<!-- END foreach -->
 

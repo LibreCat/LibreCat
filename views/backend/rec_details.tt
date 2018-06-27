@@ -9,9 +9,10 @@
     <div class="col-md-10">
     [% FOREACH auth IN entry.author %]
       [% IF auth.id %]
-        <a href="[% uri_base %]/librecat?q=author=[% auth.id %]">[% auth.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+        <a href="[% h.uri_for('/librecat', q = 'author=' _ auth.id) | html %]">[% auth.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
       [% ELSE %]
-        <a href='[% uri_base %]/librecat?q=person="[% auth.full_name %]"'>[% auth.full_name %]</a>
+        [% q = 'person="' _ auth.full_name _ '"' %]
+        <a href="[% h.uri_for('/librecat', q = q) | html %]">[% auth.full_name %]</a>
       [% END %]
       [% IF auth.orcid %]
         <a href="http://orcid.org/[% auth.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
@@ -28,9 +29,10 @@
     <div class="col-md-10">
     [% FOREACH ed IN entry.editor %]
       [% IF ed.id %]
-        <a href="[% uri_base %]/librecat?q=editor=[% ed.id %]">[% ed.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+        <a href="[% h.uri_for('/librecat', q = 'editor=' _ ed.id) | html %]">[% ed.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
       [% ELSE %]
-        <a href='[% uri_base %]/librecat?q=person="[% ed.full_name %]"'>[% ed.full_name %]</a>
+        [% q = 'person="' _ ed.full_name _ '"' %]
+        <a href="[% h.uri_for('/librecat', q = q) | html %]">[% ed.full_name %]</a>
       [% END %]
       [% IF ed.orcid %]
         <a href="http://orcid.org/[% ed.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
@@ -47,9 +49,10 @@
     <div class="col-md-10">
     [% FOREACH tr IN entry.translator %]
       [% IF tr.id %]
-        <a href="[% uri_base %]/librecat?q=translator=[% tr.id %]">[% tr.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+        <a href="[% h.uri_for('/librecat', q = 'translator=' _ tr.id) | html %]">[% tr.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
       [% ELSE %]
-        <a href='[% uri_base %]/librecat?q=person="[% tr.full_name %]"'>[% tr.full_name %]</a>
+        [% SET q = 'person="' _ tr.full_name _ '"' %]
+        <a href="[% h.uri_for('/librecat', q = q) | html %]">[% tr.full_name %]</a>
       [% END %]
       [% IF tr.orcid %]
         <a href="http://orcid.org/[% tr.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
@@ -66,9 +69,10 @@
     <div class="col-md-10">
     [% FOREACH sv IN entry.supervisor %]
       [% IF sv.id %]
-        <a href="[% uri_base %]/librecat?q=supervisor=[% sv.id %]">[% sv.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
+        <a href="[% h.uri_for('/librecat', q = 'supervisor=' _ sv.id) | html %]">[% sv.full_name %]<sup class="text-muted">[% h.loc("frontdoor.local_brand") %]</sup></a>
       [% ELSE %]
-        <a href='[% uri_base %]/librecat?q=person="[% sv.full_name %]"'>[% sv.full_name %]</a>
+        [% SET q = 'person="' _ sv.full_name _ '"' %]
+        <a href="[% h.uri_for('/librecat', q = q) | html %]">[% sv.full_name %]</a>
       [% END %]
       [% IF tr.orcid %]
         <a href="http://orcid.org/[% sv.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
@@ -84,7 +88,7 @@
     <div class="col-md-2 text-muted">Departments</div>
     <div class="col-md-10">
     [% FOREACH dept IN entry.department %]
-      <a href="[% uri_base %]/librecat?cql=department=[% dept._id %]">[% h.get_department(dept._id).display %]</a><br>
+      <a href="[% h.uri_for('/librecat', cql = 'department=' _ dept._id) | html %]">[% h.get_department(dept._id).display %]</a><br>
     [% END %]
     </div>
   </div>
@@ -95,7 +99,7 @@
     <div class="col-md-2 text-muted">Projects</div>
     <div class="col-md-10">
     [% FOREACH proj IN entry.project %]
-      <a href="[% uri_base %]/librecat?cql=project=[% proj._id %]">[% h.get_project(proj._id).name %]</a><br>
+      <a href="[% h.uri_for('/librecat', cql = 'project=' _ proj._id) | html %]">[% h.get_project(proj._id).name %]</a><br>
     [% END %]
     </div>
   </div>

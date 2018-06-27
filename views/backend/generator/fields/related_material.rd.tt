@@ -40,8 +40,9 @@
       </div>
       <div class="col-md-7 col-xs-9">
         <span class="form-group col-xs-9">
-          <span class="fa fa-file"></span> <a href="[% uri_base %]/record/[% rel.id %]" target="_blank">[% record.title %]</a>
-          <input type="hidden" id="related_material_id_[% index %]" name="related_material.record.[% index %].id" value="[% rel.id %]" />
+          [% SET escaped_id = rel.id | uri %]
+          <span class="fa fa-file"></span> <a href="[% h.uri_for('/record/' _ escaped_id) | html %]" target="_blank">[% record.title %]</a>
+          <input type="hidden" id="related_material_id_[% index %]" name="related_material.record.[% index %].id" value="[% rel.id | html %]" />
         </span>
         <span class="col-xs-1">
           <button class="btn btn-default connect">
