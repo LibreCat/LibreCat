@@ -21,9 +21,10 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 [% style = h.extract_params.style; sort = h.extract_params.item('sort') %]
-                <li class="helpme" data-placement="bottom" title="[% h.loc("help.brand") %]"><a href="[% uri_base %]/[% IF session.user %]librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %][% END %]"><span class="fa fa-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
+                <li class="helpme[% IF request.path_info == "/" %] active[% END%]" data-placement="bottom" title="[% h.loc("help.brand") %]"><a href="[% uri_base %]/"><span class="fa fa-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
                 [%- IF session.user %]
-                <li class="helpme" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="[% uri_base %]/person/[% session.user_id %]"><span class="fa fa-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
+                <li class="helpme[% IF request.path_info.match("/person/${session.user_id}") %] active[% END%]" data-placement="bottom" title="[% h.loc("help.my_author_page") %]"><a href="[% uri_base %]/person/[% session.user_id %]"><span class="fa fa-list-alt"></span>[% h.loc("header.my_author_page") %]</a></li>
+                <li class="helpme[% IF request.path_info.match("/librecat") AND NOT  request.path_info.match("/librecat/admin")%] active[% END%]" data-placement="bottom" title="[% h.loc("help.my_dashboard") %]"><a href="[% uri_base %]/librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %]"><span class="fa fa-edit"></span>[% h.loc("header.my_dashboard") %]</a></li>
                 [%- END %]
                 [%- IF session.role && session.role == 'super_admin' %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-wrench"></span>[% h.loc("header.admin_menu.admin") %] <span class="fa fa-chevron-down"></span></a>
