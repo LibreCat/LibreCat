@@ -85,8 +85,8 @@ Some fields are pre-filled.
             }
         }
 
-        if (params->{lang}) {
-            $data->{lang} = params->{lang};
+        if ( h->locale_exists( param('lang') ) ) {
+            $data->{lang} = param('lang');
         }
 
         my $templatepath = "backend/forms";
