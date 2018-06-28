@@ -16,6 +16,7 @@ use Dancer::Plugin::StreamData;
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
+use URI::Escape qw(uri_escape);
 
 sub _file_exists {
     my ($key, $filename, %opts) = @_;
@@ -59,7 +60,8 @@ sub _send_it {
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
-                    'Pragma' => 'no-cache'
+                    'Pragma' => 'no-cache',
+                    'Content-Disposition' => qq(inline; filename="$file->{_id}")
                 );
 
          # Send the HTTP headers
@@ -267,8 +269,23 @@ and user rights will be checked before.
 
 =cut
 
-get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
-    my ($id, $file_id) = splat;
+#deprecated route
+get "/download/:id/:file_id/:file_name" => sub {
+
+    my $params = params();
+    my $id = delete $params->{id};
+    my $file_id = delete $params->{file_id};
+    delete $params->{file_name};
+
+    #Note: "send_file" does not work in a forwarded request
+    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+
+};
+
+#new route
+get "/download/:id/:file_id" => sub {
+    my $id = param("id");
+    my $file_id = param("file_id");
 
     my ($ok, $file_name) = p->can_download(
         $id,
