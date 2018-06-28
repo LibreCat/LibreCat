@@ -16,6 +16,7 @@ use Dancer::Plugin::StreamData;
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
+use Catmandu::Util qw(:is);
 
 sub _file_exists {
     my ($key, $filename, %opts) = @_;
@@ -36,6 +37,7 @@ sub _send_it {
     my ($key, $filename, %opts) = @_;
 
     my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
+    my $name  = is_string($opts{name}) ? $opts{name} : $key."-".$filename;
 
     return undef unless $store->index->exists($key);
 
@@ -59,7 +61,8 @@ sub _send_it {
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
-                    'Pragma' => 'no-cache'
+                    'Pragma' => 'no-cache',
+                    'Content-Disposition' => qq(inline; filename="$name")
                 );
 
          # Send the HTTP headers
@@ -286,7 +289,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     }
 
     if (my $file = _file_exists($id, $file_name)) {
-        _send_it($id, $file->{_id});
+        _send_it($id, $file->{_id}, name => "${id}-${file_id}".h->file_extension($file_name));
     }
     else {
         status 404;
