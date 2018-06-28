@@ -50,7 +50,7 @@ sub mint {
 sub metadata {
     my ($self, $doi, $rec) = @_;
 
-    return unless $doi && $rec;
+    #return unless $doi && $rec;
 
     $self->log->debug("Register metadata for $doi.");
 
@@ -73,6 +73,8 @@ sub _create_metadata {
         template => 'views/export/datacite.tt',
         xml      => 1
     );
+    $self->log->error($datacite_xml);
+    return $datacite_xml;
 }
 
 sub _do_request {
