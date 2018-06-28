@@ -21,18 +21,10 @@ sub fix {
 
     librecat->log->debug("Register the publication at DataCite\n" . to_yaml($data));
 
-    my $datacite_xml = Catmandu->export_to_string(
-        {%$data, uri_base => h->uri_base()}, 'Template',
-        template => 'views/export/datacite.tt',
-        xml      => 1
-    );
-
-    librecat->log->debug("datacite_xml: $datacite_xml");
-
     my $job = {
         doi          => $data->{doi},
         landing_url  => h->uri_base() . "/record/$data->{_id}",
-        datacite_xml => $datacite_xml
+        record => $rec,
     };
 
     try {
@@ -53,12 +45,13 @@ __END__
 
 =head1 NAME
 
-LibreCat::Hook::register_doi - a LibreCat hook that registers a DOI at DataCite
+LibreCat::Hook::register_doi - a LibreCat hook that registers a DOI
 
 =head1 CONFIGURATION
 
     doi:
       prefix: 10.5192/test
+      worker: datacite
 
 =head1 SEE ALSO
 

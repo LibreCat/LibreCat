@@ -1,6 +1,7 @@
 package LibreCat::Worker::Datacite;
 
 use Catmandu::Sane;
+use Catmandu;
 use Furl;
 use HTTP::Headers;
 use HTTP::Request;
@@ -27,7 +28,7 @@ sub _build_base_url {
 sub work {
     my ($self, $opts) = @_;
 
-    my $metadata = $self->metadata($opts->{doi}, $opts->{datacite_xml});
+    my $metadata = $self->metadata($opts->{doi}, $opts->{record});
     my $mint = $self->mint($opts->{doi}, $opts->{landing_url});
 
     return {metadata => $metadata, mint => $mint};
@@ -47,17 +48,30 @@ sub mint {
 }
 
 sub metadata {
-    my ($self, $doi, $datacite_xml) = @_;
+    my ($self, $doi, $rec) = @_;
 
-    return unless $doi && $datacite_xml;
+    return unless $doi && $rec;
 
-    $self->log->debug("Register metadata for $doi. XML: $datacite_xml.");
+    $self->log->debug("Register metadata for $doi.");
+
+    my $datacite_xml = $self->_create_metadata($rec);
 
     my $uri = URI->new($self->base_url);
     $uri->path("metadata");
     $uri->query_form(testMode => $self->test_mode ? 'true' : 'false',);
+
     $self->_do_request('POST', $uri->as_string, $datacite_xml,
         'application/xml;charset=UTF-8',
+    );
+}
+
+sub _create_metadata {
+    my ($self, $rec) = @_;
+
+    my $datacite_xml = Catmandu->export_to_string(
+        {%$rec, uri_base => h->uri_base()}, 'Template',
+        template => 'views/export/datacite.tt',
+        xml      => 1
     );
 }
 
@@ -108,7 +122,7 @@ LibreCat::Worker::Datacite - a worker for registering and minting DOIs at DataCi
     $registry->work({
         doi          => '...' ,
         landing_url  => '...' ,
-        datacite_xml => '...' ,
+        record => '...' ,
     })
 
     # or call them separately
