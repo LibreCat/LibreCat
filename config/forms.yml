@@ -929,7 +929,6 @@ publication_types:
 other_items:
   account:
     account_field_order:
-      - id
       - login
       - password
       - names
@@ -946,10 +945,6 @@ other_items:
       - author_ids
       - photo
       - style
-    id:
-      label: "ID"
-      readonly: 1
-      mandatory: 1
     ext_institution:
       label: "External Institution"
       label_short: "Ext. Institution"
