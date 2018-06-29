@@ -260,4 +260,25 @@ is h->uri_for_file(123, 456, 'test.pdf'),
 
 ok h->can('my_helper'), 'load helpers';
 
+is_deeply h->available_locales(), [qw(de en)], "available locales";
+
+h->config->{i18n}->{locale_long} = {};
+is h->locale_long("en"), "en";
+is h->locale_long("de"), "de";
+
+h->config->{i18n}->{locale_long} = { en => "English", de => "German" };
+is h->locale_long("en"), "English";
+is h->locale_long("de"), "German";
+
+is h->default_locale(), "en";
+
+ok h->locale_exists("en");
+ok !(h->locale_exists("abc"));
+
+h->config->{i18n}->{show_locale} = 1;
+is h->uri_for("/librecat",{ a => "a" }), "http://localhost:5001/librecat?a=a&lang=en";
+
+h->config->{i18n}->{show_locale} = 0;
+is h->uri_for("/librecat",{ a => "a" }), "http://localhost:5001/librecat?a=a";
+
 done_testing;

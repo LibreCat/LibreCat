@@ -501,7 +501,7 @@ sub get_access_store {
 }
 
 sub show_locale {
-    state $show_locale = $_[0]->config->{i18n}->{show_locale};
+    $_[0]->config->{i18n}->{show_locale};
 }
 
 sub locale {
