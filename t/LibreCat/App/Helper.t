@@ -4,6 +4,8 @@ use Test::Exception;
 use Path::Tiny;
 use LibreCat 'model', -load => {layer_paths => [qw(t/layer)]};
 use utf8;
+use Dancer::Request;
+use Dancer::SharedData;
 
 my $pkg;
 my @worker_pkg;
@@ -280,5 +282,22 @@ is h->uri_for("/librecat",{ a => "a" }), "http://localhost:5001/librecat?a=a&lan
 
 h->config->{i18n}->{show_locale} = 0;
 is h->uri_for("/librecat",{ a => "a" }), "http://localhost:5001/librecat?a=a";
+
+{
+
+    my $request = Dancer::Request->new(
+        env => {
+            SERVER_PORT => "5001",
+            SERVER_NAME => "localhost",
+            SCRIPT_NAME => "/",
+            PATH_INFO => "/librecat",
+            REQUEST_METHOD => "GET",
+            'PSGI.URL_SCHEME' => "http"
+        }
+    );
+    Dancer::SharedData->request($request);
+    is h->uri_for_locale("de"), "http://localhost:5001/librecat?lang=de";
+
+}
 
 done_testing;
