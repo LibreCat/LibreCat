@@ -4,14 +4,13 @@ use Catmandu::Sane;
 use Carp;
 use Dancer qw(:syntax);
 use LibreCat qw(:self);
-use LibreCat::App::Helper;
 use Moo;
 
 sub fix {
     my ($self, $data) = @_;
 
     my $conf = librecat->config->{hook}->{register_doi};
-    my $prefix = $conf->{prefix};
+    my $prefix = $conf->{prefix} // croak "Need a prefix";
     my $queue = $conf->{queue} // croak "Need a queue";
 
     return $data
@@ -25,7 +24,7 @@ sub fix {
 
     my $job = {
         doi          => $data->{doi},
-        landing_url  => h->uri_base() . "/record/$data->{_id}",
+        landing_url  => librecat->config->{uri_base} . "/record/$data->{_id}",
         record => $data,
     };
 
@@ -55,6 +54,7 @@ LibreCat::Hook::register_doi - a LibreCat hook that registers a DOI
       register_doi:
         prefix: 10.5192/test
         queue: datacite
+        publishser: LibreCat University
 
 =head1 SEE ALSO
 
