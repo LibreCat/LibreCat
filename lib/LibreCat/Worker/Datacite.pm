@@ -51,7 +51,7 @@ sub mint {
 sub metadata {
     my ($self, $doi, $rec) = @_;
 
-    #return unless $doi && $rec;
+    return unless $doi && $rec;
 
     $self->log->debug("Register metadata for $doi.");
 
@@ -120,17 +120,25 @@ LibreCat::Worker::Datacite - a worker for registering and minting DOIs at DataCi
 
     use LibreCat::Worker::Datacite;
 
-    my $registry = LibreCat::Worker::Datacite->new(user => 'me', password => 'secret');
+    my $registry_worker = LibreCat::Worker::Datacite->new(user => 'me', password => 'secret');
 
-    $registry->work({
+    $registry_worker->work({
         doi          => '...' ,
         landing_url  => '...' ,
-        record => '...' ,
+        record => $record_hash ,
     })
 
-    # or call them separately
-    $registry->metadata()
-    $registry->mint('')
+    # or better queue it via LibreCat
+
+    use LibreCat -self;
+
+    my $job = {
+        doi => '...',
+        landing_url => '...',
+        record => $record_hash,
+    };
+
+    librecat->queue->add('datacite', $job);
 
 =head2 CONFIGURATION
 
