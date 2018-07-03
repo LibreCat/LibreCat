@@ -9,9 +9,9 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    my $conf = librecat->config->{hook}->{register_doi};
+    my $conf   = librecat->config->{hook}->{register_doi};
     my $prefix = $conf->{prefix} // croak "Need a prefix";
-    my $queue = $conf->{queue} // croak "Need a queue";
+    my $queue  = $conf->{queue} // croak "Need a queue";
 
     return $data
         unless $data->{doi}
@@ -20,12 +20,13 @@ sub fix {
 
     $data->{publisher} = $conf->{publisher} unless $data->{publisher};
 
-    librecat->log->debug("Register the publication at DataCite\n" . to_yaml($data));
+    librecat->log->debug(
+        "Register the publication at DataCite\n" . to_yaml($data));
 
     my $job = {
-        doi          => $data->{doi},
-        landing_url  => librecat->config->{uri_base} . "/record/$data->{_id}",
-        record => $data,
+        doi         => $data->{doi},
+        landing_url => librecat->config->{uri_base} . "/record/$data->{_id}",
+        record      => $data,
     };
 
     try {
