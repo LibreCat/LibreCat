@@ -2,6 +2,7 @@ package LibreCat::Worker::Datacite;
 
 use Catmandu::Sane;
 use Catmandu;
+use LibreCat -self;
 use Furl;
 use HTTP::Headers;
 use HTTP::Request;
@@ -69,7 +70,7 @@ sub _create_metadata {
     my ($self, $rec) = @_;
 
     my $datacite_xml = Catmandu->export_to_string(
-        {%$rec, uri_base => h->uri_base()}, 'Template',
+        {%$rec, uri_base => librecat->config->{uri_base}}, 'Template',
         template => 'views/export/datacite.tt',
         xml      => 1
     );
