@@ -113,6 +113,7 @@ field_order:
     - related_material.record
     - related_material.rd
     - main_file_link
+    - external_id
     - related_material.link
 
 # file dropzone fields that may be changed/edited
