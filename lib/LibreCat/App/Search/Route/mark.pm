@@ -114,7 +114,7 @@ post '/marked' => sub {
 
     my $hits = searcher->search('publication', $p);
 
-    if ($hits->{total} > $hits->{limit} && @$marked == 500) {
+    if ($hits->{total} && $hits->{total} > $hits->{limit} && @$marked == 500) {
         return to_json {
             ok => true,
             message =>
