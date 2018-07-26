@@ -518,6 +518,8 @@ publication:
         - type: string
         - type: integer
       description: "Page number"
+    page_range_number:
+      type: object
     email:
       type: string
       description: "Email address (of dissertation student)"
