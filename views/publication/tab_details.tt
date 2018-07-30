@@ -89,7 +89,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.abstract.label") %]</div>
     <div class="col-lg-10 col-md-9 cmark abstract" itemprop="about">
     [%- FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
-      [% ab.text | html %]
+      [%- ab.text | html -%]
     [%- END %]
     </div>
   </div>
