@@ -17,6 +17,7 @@ use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
 use Catmandu::Util qw(:is);
+use URI::Escape qw(uri_escape);
 
 #str_format( "%f.%e", f => "DS.0", e => "txt" )
 sub str_format {
@@ -275,6 +276,22 @@ any '/rc/:id/:file_id' => sub {
     }
 };
 
+=head2 GET /download/:id/:file_id/:file_name
+
+Same as route below, but with file_name included to help search results
+
+=cut
+
+get "/download/:id/:file_id/:file_name" => sub {
+    my $params = params();
+    my $id = delete $params->{id};
+    my $file_id = delete $params->{file_id};
+    delete $params->{file_name};
+
+    #Note: "send_file" does not work in a forwarded request
+    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+};
+
 =head2 GET /download/:id/:file_id
 
 Download a document. Access level of the document
@@ -282,8 +299,9 @@ and user rights will be checked before.
 
 =cut
 
-get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
-    my ($id, $file_id) = splat;
+get "/download/:id/:file_id" => sub {
+    my $id = param("id");
+    my $file_id = param("file_id");
 
     my ($ok, $file_name) = p->can_download(
         $id,
