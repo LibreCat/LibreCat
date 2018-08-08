@@ -44,7 +44,7 @@ $(function () {
                         $('.total-marked').text(res.total);
                         $('.mark').html('<span class="fa fa-square-o fa-lg"></span>');
                         $('.mark').data('marked', 0);
-                        a.html('<span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.unmark_all") %]');
+                        a.html('<span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.mark_all") %]');
                         a.data('marked', 0);
                     }
                 }
