@@ -480,7 +480,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: ['author.full_name.exact', 'author.id.exact', 'editor.full_name.exact', 'editor.id.exact', 'translator.full_name.exact', 'translator.id.exact']}
+                'exact': {field: ['author.full_name.exact', 'author.id', 'editor.full_name.exact', 'editor.id', 'translator.full_name.exact', 'translator.id']}
               field: ['author.full_name', 'author.id', 'editor.full_name', 'editor.id', 'translator.full_name', 'translator.id']
             supervisor:
               op:
