@@ -1,6 +1,6 @@
 [% qp = request.params.hash -%]
 [% qp.delete('splat') -%]
-[%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
+[%- style = qp.style || style || h.config.citation.csl.default_style %]
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = backend ? h.get_person(session.user_id) : h.get_person(id) -%]
 [% menu = "" -%]
