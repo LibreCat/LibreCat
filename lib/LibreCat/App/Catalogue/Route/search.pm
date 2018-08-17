@@ -63,6 +63,9 @@ Performs search for similar titles, admin only
                                 }
                             }
                         },
+                        "must_not" => {
+                            "term" => { "status" => "deleted" }
+                        },
                         "should" => {
                             "match_phrase" => {
                                 "title" =>
