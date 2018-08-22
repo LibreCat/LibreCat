@@ -56,7 +56,7 @@
   </relatedIdentifiers>
   <sizes>
     [%- FOREACH f IN file %]
-    <size>[% f.size %] bytes</size>
+    <size>[% f.file_size %] bytes</size>
     [%- END %]
   </sizes>
   <formats>
