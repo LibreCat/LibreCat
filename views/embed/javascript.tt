@@ -10,7 +10,7 @@ document.write('<li>');
     [%- IF style == "short" %]
 document.write('<a href="[% uri_base %]/record/[% entry._id %]">[% entry.title | html %]</a><br />');
     [%- END %]
-document.write('[% cite_string FILTER replace("'", "\\'")  %]<br />[% INCLUDE embed/links_js.tt %]');
+document.write('[% cite_string FILTER replace("'", "\\'")  %]<br />[%- l = PROCESS links.tt -%][%- USE String; l.replace('\n', ' ') -%]');
   [%- ELSE %]
 document.write('[% PROCESS citation.tt entry=entry FILTER replace("'", "\\'") %]<br />[%- l = PROCESS links.tt -%][%- USE String; l.replace('\n', ' ') -%]');
   [%- END %]
