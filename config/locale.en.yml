@@ -254,6 +254,7 @@ frontdoor:
         open_access: "Open Access"
         local: "LibreCat Only"
         request_a_copy: "Request a Copy"
+        rac_email: "Enter the e-mail address, requests should be sent to (default: record creator)"
         closed: "Closed Access"
       last_uploaded: "Last Uploaded"
       md5: "MD5 Checksum"
