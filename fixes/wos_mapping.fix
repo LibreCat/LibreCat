@@ -144,6 +144,10 @@ if exists(FU)
   move_field(FU, _r.message.$append)
   prepend(_r.message.$last, 'Funder: ')
 end
+if exists(OA)
+  move_field(OA, _r.message.$append)
+  prepend(_r.message.$last, 'OA: ')
+end
 join_field(_r.message, ' / ')
 
 retain_field(_r)
