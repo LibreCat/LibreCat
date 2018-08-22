@@ -6,10 +6,10 @@ function ShowAuthors (){
   var str = "" ;
   [% FOREACH au IN author %]
     [% IF loop.count > 12 %]
-    str +=  " ; [% IF au.id %]<a itemprop='author' href='[% uri_base %]/person/[% au.id %]'>[% au.full_name %]</a><sup class='muted'>Local</sup>[% ELSE %]<span itemprop='author'>[% au.full_name %]</span>[% END %]" ;
+    str +=  " ; [% IF au.id %]<a itemprop='author' href='[% uri_base %]/person/[% au.id %]'>[% au.full_name %]</a><sup class='muted'><strong>[% h.loc('frontdoor.local_brand') %]</strong></sup>[% ELSE %]<span itemprop='author'>[% au.full_name %]</span>[% END %][% IF au.orcid %] <a href='https://orcid.org/[% au.orcid %]'><sup><img src='[% uri_base %]/images/icon_orcid.png' /></sup></a>[% END %]" ;
     [% END %]
   [% END %]
-  str += "<br><a href='#details' onclick='ReduceAuthors();'><span class='fa fa-minus fw'></span>Less</a>" ;
+  str += "<br><a href='#details' onclick='ReduceAuthors();return false;'><span class='fa fa-minus fw'></span>Less</a>" ;
   document.getElementById('showAut').innerHTML= str ;
 }
 
