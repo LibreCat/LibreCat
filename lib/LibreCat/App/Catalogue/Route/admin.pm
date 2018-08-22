@@ -98,7 +98,7 @@ Deletes the account with ID :id.
 
     get '/project' => sub {
         my $hits = searcher->search('project',
-            {q => "", limit => 100, start => params->{start} || 0});
+            {q => "", sort => "name.asc", limit => 100, start => params->{start} || 0});
         template 'admin/project', $hits;
     };
 
@@ -109,6 +109,7 @@ Deletes the account with ID :id.
 
     get '/project/search' => sub {
         my $p = h->extract_params();
+        $p->{sort} = "name.asc";
 
         my $hits = searcher->search('project', $p);
 
