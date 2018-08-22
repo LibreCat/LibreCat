@@ -60,6 +60,7 @@
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> [% h.loc("forms.${type}.field.dropzone.edit_modal.access.request_a_copy") %]
           </label>
+          <input type="email" class="form-control" name="rac_email" id="id_rac_email" placeholder="[% lf.$type.field.dropzone.edit_modal.access.rac_email %]" value="">
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% h.loc("forms.${type}.field.dropzone.edit_modal.access.embargo") %]<br />
           </label>
