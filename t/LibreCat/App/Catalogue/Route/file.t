@@ -44,7 +44,8 @@ my $file_name = "publication.pdf";
 my $source_file = "t/data3/000/000/001/$file_name";
 my $file_size = -s $source_file;
 
-ok $pubs->delete_all, "delete all existing publications at the beginning";
+$pubs->delete_all;
+$file_store->index->delete_all;
 
 #upload file
 {
@@ -97,6 +98,7 @@ ok $pubs->delete_all, "delete all existing publications at the beginning";
     is( $mech->content_type, "application/pdf", "content type set correctly" );
 }
 
-ok $pubs->delete_all, "delete all existing publications at the end";
+$pubs->delete_all;
+$file_store->index->delete_all;
 
 done_testing;
