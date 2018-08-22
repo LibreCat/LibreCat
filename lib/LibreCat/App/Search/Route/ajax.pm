@@ -105,7 +105,7 @@ ajax '/get_alias/:id/:alias' => sub {
 =cut
 
 ajax '/get_project' => sub {
-    my $limit = length(params->{term}) ? 10 : 1000;
+    my $limit = length(params->{term}) ? 100 : 1000;
 
     my @terms = split(' ', params->{term});
     $terms[-1] .= "*" if @terms;
@@ -139,7 +139,7 @@ ajax '/get_project' => sub {
 
 ajax '/get_department' => sub {
     my $term = params->{term} // '';
-    my $limit = length($term) ? 10 : 1000;
+    my $limit = length($term) ? 100 : 1000;
 
     my @terms = split('\s', $term);
     $terms[-1] .= "*" if @terms;
@@ -176,7 +176,7 @@ ajax '/get_department' => sub {
 =cut
 
 ajax '/get_research_group' => sub {
-    my $limit = length(params->{term}) ? 10 : 1000;
+    my $limit = length(params->{term}) ? 100 : 1000;
 
     my @terms = split(' ', params->{term});
     $terms[-1] .= "*" if @terms;
