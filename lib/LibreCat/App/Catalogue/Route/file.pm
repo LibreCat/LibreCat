@@ -217,7 +217,7 @@ any '/rc/:id/:file_id' => sub {
         }
     );
 
-    my $mail = h->get_person($file->{creator})->{email};
+    my $email = h->get_person($file->{creator})->{email};
     if (params->{user_email}) {
         my $pub
             = Catmandu->store('main')->bag('publication')->get(params->{id});
