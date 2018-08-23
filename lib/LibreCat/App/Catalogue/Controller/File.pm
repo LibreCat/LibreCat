@@ -73,6 +73,7 @@ sub upload_temp_file {
     my $file_name    = $file->{filename};
     my $file_size    = int($file->{size});
     my $content_type = $file->{headers}->{"Content-Type"};
+    my $rac_email = $file->{rac_email} // '';
 
     h->log->info(
         "upload: $file_name ($content_type: $file_size bytes) by $creator");
@@ -89,6 +90,8 @@ sub upload_temp_file {
         date_updated => $now,
         date_created => $now,
     };
+
+    $file_data->{rac_email} = $rac_email if $rac_email;
 
     # Creating a new temporary storage for the upload files...
     my $filedir = path(h->config->{filestore}->{tmp_dir}, $tempid);

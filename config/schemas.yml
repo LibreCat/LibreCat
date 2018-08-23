@@ -199,6 +199,9 @@ publication:
                   - type: string
                   - type: integer
                 description: "File size"
+            rac_email:
+                type: string
+                description: "Mail to send request for a copy to"
             # TODO should be added at index time
             #open_access:
                 #oneOf:
