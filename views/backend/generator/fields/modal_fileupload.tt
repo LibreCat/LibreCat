@@ -175,7 +175,7 @@ $('#fileSubmit').click( function() {
   if(data.request_a_copy){
     rac += "<div class=\"col-xs-12\">[% lf.$type.field.dropzone.access.request_a_copy %]";
     if(data.rac_email){
-      rac += " (from " + data.rac_email + ")";
+      rac += " (" + data.rac_email + ")";
     }
     rac += "</div>";
   }
