@@ -71,8 +71,6 @@ field_order:
     - language
     - original_language
     - ddc
-    - jel
-    - keyword
     - conference.divider
     - conference.name
     - conference.location
@@ -80,14 +78,6 @@ field_order:
     - conference.end_date
     - conference.date
     - ipc
-    - external_id
-    - nasc
-    - genbank
-    - popular_science
-    - quality_controlled
-    - popular_science_quality_controlled
-    - ubi_funded
-    - message
     - locked
   file_upload:
     - external_file
@@ -101,7 +91,6 @@ field_order:
     - nasc
     - ddc
     - jel
-    - thematic_area
     - popular_science
     - quality_controlled
     - popular_science_quality_controlled
