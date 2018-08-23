@@ -37,6 +37,7 @@ sub _export {
     my $spec = $export_config->{$fmt};
 
     h->log->debug("searching for publications:" . Dancer::to_json($params));
+    $params->{sort} = h->config->{default_sort} unless $params->{sort};
     my $hits = searcher->search('publication', $params);
 
     my $package = $spec->{package};
