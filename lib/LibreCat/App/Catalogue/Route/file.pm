@@ -49,7 +49,9 @@ sub _send_it {
     my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
     my $format = h->config->{files}->{download_file_name};
     $format = is_string($format) ? $format : "%o";
-    my $name = str_format($format, i => $key, o => $filename, f => $fileid, e => h->file_extension($filename));
+    my $extension = h->file_extension($filename);
+    $extension =~ s/^\.//o;
+    my $name = str_format($format, i => $key, o => $filename, f => $fileid, e => $extension);
 
     return undef unless $store->index->exists($key);
 
