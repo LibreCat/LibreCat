@@ -6,7 +6,7 @@ use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
 
-my $app = eval {require 'bin/app.pl';};
+my $app = eval {do './bin/app.pl';};
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
