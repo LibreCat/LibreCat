@@ -11,14 +11,11 @@ cache:
     - perl_modules
     - es_download
 
-env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1
+env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1 DEVEL_COVER=0
 matrix:
   include:
     - perl: "5.26"
-#      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1
-  allow_failures:
-    - perl: "5.26"
-#      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1  CSL_TEST=1
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1 DEVEL_COVER=1
 
 before_install:
   - docker pull librecat/citeproc-node
@@ -41,14 +38,15 @@ service:
 
 install:
   - cpanm --quiet --installdeps --notest --force .
-  - cpanm --quiet --notest Devel::Cover
+  - if [ "$DEVEL_COVER" = "1" ]; then cpanm --quiet --notest Devel::Cover; fi
 
 script:
-  - cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit $?'
+  - if [ "$DEVEL_COVER" = "1" ]; then cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit $?'; fi
+  - if [ "$DEVEL_COVER" = "0" ]; then prove -lr t/; fi
 
 after_success:
-  - cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls
-  - cover -report coveralls
+  - if [ "$DEVEL_COVER" = "1" ]; then cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls; fi
+  - if [ "$DEVEL_COVER" = "1" ]; then cover -report coveralls; fi
 
 notifications:
   email: false
