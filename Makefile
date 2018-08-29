@@ -1,3 +1,7 @@
+.SUFFIXES:
+	
+.PHONY: generate update cover test tidy
+
 usage:
 	@echo "usage: [ NETWORK_TEST=1 ] make TARGET"
 	@echo

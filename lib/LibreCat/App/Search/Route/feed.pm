@@ -38,7 +38,7 @@ sub feed {
     }
 
     my $query = [
-        @$q,
+        $q,
         "status exact public",
         "date_updated>" . $now->strftime('"%FT%H:%M:00Z"')
     ];
@@ -55,7 +55,7 @@ sub feed {
         }
     );
 
-    my $hits = searcher->search('publication', {q => $query});
+    my $hits = searcher->search('publication', {cql => $query});
 
     $hits->each(
         sub {
