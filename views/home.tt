@@ -6,6 +6,7 @@
 [% menu = "" -%]
 [% lang = session.lang ? session.lang : h.config.default_lang -%]
 [% lf = h.config.locale.$lang -%]
+[% gravatar = h.config.exists("show_gravatar") ? h.config.show_gravatar : 1 %]
 
 [% INCLUDE header.tt %]
 
@@ -18,7 +19,7 @@
                     [%- IF thisPerson.photo %]
                     [%- photo_url=thisPerson.photo.replace('http:','') -%]
                     <img id="user_photo" src="[% photo_url %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
-                    [%- ELSIF !h.config.hide_gravatar %]
+                    [%- ELSIF gravatar %]
                     [%- USE Gravatar %]
                     <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c', size => 140 ) | html %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
                     [%- ELSE %]
