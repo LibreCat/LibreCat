@@ -1,13 +1,13 @@
 package Mojolicious::Plugin::LibreCat::Api;
 
 use Catmandu::Sane;
-use LibreCat;
+use LibreCat -self;
 use Mojo::Base 'Mojolicious::Plugin';
 
 sub register {
     my ($self, $app, $conf) = @_;
 
-    my $models = LibreCat->models;
+    my $models = librecat->models;
     my $r = $app->routes;
 
     $r->add_shortcut(
