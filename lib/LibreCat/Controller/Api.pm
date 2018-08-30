@@ -1,6 +1,7 @@
 package LibreCat::Controller::Api;
 
 use Catmandu::Sane;
+use LibreCat -self;
 use Mojo::Base 'Mojolicious::Controller';
 
 sub default {
@@ -12,7 +13,7 @@ sub show {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
-    my $recs  = LibreCat->$model;
+    my $recs  = librecat->$model;
     my $rec   = $recs->get($id) || return $c->not_found;
     delete $rec->{_id};
     my $data = {
@@ -37,4 +38,3 @@ sub not_found {
 }
 
 1;
-
