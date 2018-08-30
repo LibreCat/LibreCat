@@ -199,13 +199,6 @@ publication:
                   - type: string
                   - type: integer
                 description: "File size"
-            # TODO should be added at index time
-            #open_access:
-                #oneOf:
-                  #- type: string
-                    #pattern: "^[01]$"
-                  #- type: integer
-                #description: "Flag when file is open_access"
             title:
                 type: string
                 description: "File title"

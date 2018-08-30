@@ -33,7 +33,6 @@ document on failure:
     'tempname'     => '/tmp/sK_QXY7vmd.pdf',
     'content_type' => 'application/pdf',
     'access_level' => 'open_access',
-    'open_access'  => 1,
     'relation'     => 'main_file',
     'creator'      => 'einstein',
     'date_created' => '2016-05-30T11:20:34Z',

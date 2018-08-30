@@ -102,7 +102,6 @@ $('#fileSubmit').click( function() {
   data.description    = $('#id_fileDescription').val();
   data.date_updated   = 'now';
   data.request_a_copy = 0;
-  data.open_access    = 1;
 
   // Open access
   if ($('#id_accessLevel_openAccess').is(':checked')) {
@@ -111,18 +110,15 @@ $('#fileSubmit').click( function() {
   // Local access
   else if ($('#id_accessLevel_local').is(':checked') ){
     data.access_level   = 'local';
-    data.open_access    = 0;
   }
   // Closed access
   else if ($('#id_accessLevel_admin').is(':checked')) {
     data.access_level   = 'closed';
-    data.open_access    = 0;
   }
   // Request a copy
   else if ($('#id_accessLevel_request').is(':checked')) {
     data.access_level   = 'closed';
     data.request_a_copy = 1;
-    data.open_access    = 0;
   }
 
   // Add an embargo?
