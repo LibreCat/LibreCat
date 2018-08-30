@@ -16,6 +16,7 @@ login:
 header:
   title: "Publikationen an der Universit&auml;t LibreCat"
   my_author_page: "Meine Publikationsliste"
+  my_dashboard: "Mein Dashboard"
   brand: "Start"
   role_label: "Rolle"
   role_change: "Rolle wechseln:"
@@ -333,7 +334,7 @@ forms:
         placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
         label: "Autor"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
         idm_extern: "extern"
         first_name:
           label: "Vorname"
@@ -545,7 +546,7 @@ forms:
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
         label: "K&ouml;rperschaftlicher Herausgeber"
@@ -621,7 +622,7 @@ forms:
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       corporate_editor: &corporate_editor
         label: "K&ouml;rperschaftlicher Herausgeber"
         label_short: "K&ouml;rp. Hrsg."
@@ -685,7 +686,7 @@ forms:
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       corporate_editor: *corporate_editor
       department: *department
       project: *project
@@ -844,6 +845,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Betreuer"
         idm_extern: "extern"
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       department: *department
       project: *project
       research_group: *research_group
@@ -1087,7 +1089,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Erfinder"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       applicant:
         label: "Antragsteller"
         label_short: "Antr.steller"
@@ -1267,7 +1269,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Creator"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       department: *department
       project: *project
       research_group: *research_group
@@ -1378,7 +1380,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "&Uuml;bersetzer"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1390,7 +1392,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Autor (Original)"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       edition: *edition
       department: *department
       project: *project
@@ -1447,7 +1449,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "&Uuml;bersetzer"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
         first_name:
           label: "Vorname"
@@ -1459,7 +1461,7 @@ forms:
           placeholder: "z.B. M&uuml;ller"
         label: "Autor"
         idm_extern: "extern"
-        tooltip: "Autor arbeitet an der Uni LibreCat."
+        tooltip: "Auswählen für registrierte LibreCat Nutzer."
       alternative_title:
         label: "Titel (Original)"
         label_short: "Titel (Orig)"
@@ -1712,6 +1714,7 @@ help:
   home: "Startseite"
   brand: "Backend<br>Startseite"
   my_author_page: "Ihre &ouml;ffentliche<br>Publikationsliste"
+  my_dashboard: "Ihr Dashboard für die aktuelle Rolle"
   change_language: "Sprache wechseln"
   user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
   author_id: "Alias (zus&auml;tzlicher Name) und Autoren IDs (ORIC etc.) eintragen."

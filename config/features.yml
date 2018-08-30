@@ -9,6 +9,7 @@ views:
       facets:
         - - template: facets/popular_science
             facet: popular_science
+            min: 1
           - template: facets/extern
             facet: extern
             min: 1
@@ -36,8 +37,10 @@ views:
             facet: year
         - - template: facets/popular_science
             facet: popular_science
+            min: 1
           - template: facets/extern
             facet: extern
+            min: 1
           - template: facets/open_access
             facet: open_access
             min: 1
