@@ -16,16 +16,20 @@ sub register {
 
             my $model_api = $r->any("/$model")->to('api#', model => $model);
 
-            $model_api->get('/:id')->to('#show', model => $model)
-                ->name($model);
+            $model_api->get('/:id')->to('#show', model => $model)->name($model);
 
-            $model_api;
+            return $model_api;
         }
     );
 
     my $api = $r->get('/api')->to('api#default');
 
     $api->librecat_api($_) for @$models;
+
+    $r->delete('/api/user/:id')->to('api#remove', model => "user")->name("user");
+    $r->delete('/api/publication/:id')->to('api#remove', model => "publication")->name("publication");
+
+    $r->post('/api/user')->to('api#add', model => "user")->name("user");
 }
 
 1;
