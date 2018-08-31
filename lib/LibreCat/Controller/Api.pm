@@ -33,32 +33,28 @@ sub add {
     my $data = decode_json($c->req->body);
     my $recs = librecat->$model;
 
-    $recs->add($data);
+    librecat->hook("$model-update")->fix_around(
+        $data,
+        sub {
+            $recs->add(
+                $data,
+                on_validation_error => sub {
+                    my ($x, $errors) = @_;
+                    return $c->not_valid($errors);
+                },
+                on_success => sub {
+                    my $d = {
+                        type       => $model,
+                        id         => $data->{_id},
+                        attributes => $data,
+                        links      => {self => $c->url_for->to_abs,},
+                    };
 
-    # librecat->hook("$model-update")->fix_around(
-    #     $data,
-    #     sub {
-    #         $recs->add(
-    #             $data,
-    #             # on_validation_error => sub {
-    #             #     my ($x, $errors) = @_;
-    #             #     return $c->not_valid($errors);
-    #             # },
-    #             # on_success => sub {
-    #             #
-    #             # }
-    #         );
-    #     }
-    # );
-
-    my $d = {
-        type       => $model,
-        id         => $data->{_id},
-        attributes => $data,
-        links      => {self => $c->url_for->to_abs,},
-    };
-
-    $c->render(json => {data => $d});
+                    $c->render(json => {data => $d});
+                }
+            );
+        }
+    );
 }
 
 sub remove {
@@ -67,6 +63,7 @@ sub remove {
     my $id    = $c->param('id');
     my $recs  = librecat->$model;
     my $rec = $recs->delete($id) || return $c->not_found;
+
     my $data = {
         type       => $model,
         id         => $id,
@@ -88,16 +85,16 @@ sub not_found {
     $c->render(json => {errors => [$error]}, status => 404);
 }
 
-# sub not_valid {
-#     my ($c, $validation_errors) = @_;
-#     my $model = $c->param('model');
-#
-#     my $error = {
-#         status => '400',
-#         validation_error => $validation_errors,
-#     };
-# # print Dumper $error;
-#     $c->render(json => {data => $error}, status => '400');
-# }
+sub not_valid {
+    my ($c, $validation_errors) = @_;
+    my $model = $c->param('model');
+
+    my $error = {
+        status => '400',
+        validation_error => $validation_errors,
+    };
+
+    $c->render(json => {errors => [$error]}, status => '400');
+}
 
 1;
