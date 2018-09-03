@@ -73,6 +73,12 @@ request_copy:
   subject: 'Request for a copy of your publication'
   from: 'einstein@librecat.org'
 
+# Show/Hide Gravatar on person page (if no person image is present)
+# if set to 0: hide gravatar, show dummy profile image instead
+# if set to 1 or omitted: use gravatar.
+show_gravatar: 1
+
+
 # Default format to display dates
 time_format: "%Y-%m-%dT%H:%M:%SZ"
 
