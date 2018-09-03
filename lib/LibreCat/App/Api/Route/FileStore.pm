@@ -172,8 +172,8 @@ E.g.
 
                     my $http_status_code = 200;
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
+                    # Tech.note: This is a hash of HTTP header/values, but the
+                    #            function below requires an even-numbered array-ref.
                     my @http_headers = (
                         'Content-Type' => $content_type,
                         'Cache-Control' =>
@@ -181,12 +181,12 @@ E.g.
                         'Pragma' => 'no-cache'
                     );
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
+                    # Send the HTTP headers
+                    # (back to either the user or the upstream HTTP web-server front-end)
                     my $writer
                         = $respond->([$http_status_code, \@http_headers]);
 
-                    $files->stream($writer, $file);
+                    $files->stream(h->io_from_plack_writer($writer), $file);
                 },
             },
         );
@@ -333,8 +333,8 @@ E.g.
 
                     my $http_status_code = 200;
 
-              # Tech.note: This is a hash of HTTP header/values, but the
-              #            function below requires an even-numbered array-ref.
+                    # Tech.note: This is a hash of HTTP header/values, but the
+                    #            function below requires an even-numbered array-ref.
                     my @http_headers = (
                         'Content-Type' => $content_type,
                         'Cache-Control' =>
@@ -342,12 +342,12 @@ E.g.
                         'Pragma' => 'no-cache'
                     );
 
-         # Send the HTTP headers
-         # (back to either the user or the upstream HTTP web-server front-end)
+                    # Send the HTTP headers
+                    # (back to either the user or the upstream HTTP web-server front-end)
                     my $writer
                         = $respond->([$http_status_code, \@http_headers]);
 
-                    $files->stream($writer, $file);
+                    $files->stream(h->io_from_plack_writer($writer), $file);
                 },
             },
         );

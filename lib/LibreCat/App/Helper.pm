@@ -10,6 +10,7 @@ use Dancer qw(:syntax params request session vars);
 use Dancer::FileUtils qw(path);
 use File::Basename;
 use POSIX qw(strftime);
+use IO::Handle::Util;
 use JSON::MaybeXS qw(encode_json);
 use LibreCat qw(:self);
 use LibreCat::I18N;
@@ -495,6 +496,25 @@ sub get_access_store {
 # TODO don't store in session, make it a param
 sub locale {
     session('lang') // $_[0]->config->{default_lang};
+}
+
+# Create an IO::Handle from a Plack writer
+# Add a virtual 'syswrite' method to a Plack writer stream
+sub io_from_plack_writer {
+    my ($self,$writer) = @_;
+    return IO::Handle::Util::io_prototype
+                    write => sub {
+                        my $self = shift;
+                        $writer->write(@_);
+                    },
+                    syswrite => sub {
+                        my $self = shift;
+                        $writer->write(@_);
+                    },
+                    close => sub {
+                        my $self = shift;
+                        $writer->close;
+                    }
 }
 
 sub localize {
