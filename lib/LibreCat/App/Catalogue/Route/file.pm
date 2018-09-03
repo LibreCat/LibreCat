@@ -191,7 +191,7 @@ get '/rc/:key' => sub {
     }
 };
 
-=head2 POST /rc/:id/:file_id
+=head2 ANY /rc/:id/:file_id
 
 Request a copy of the publication. Email will be sent to the author.
 
@@ -217,10 +217,17 @@ any '/rc/:id/:file_id' => sub {
         }
     );
 
-    my $file_creator_email = h->get_person($file->{creator})->{email};
+    my $email = h->get_person($file->{creator})->{email};
+
     if (params->{user_email}) {
         my $pub
             = Catmandu->store('main')->bag('publication')->get(params->{id});
+
+        # override creator email if email field is set for request-a-copy
+        if ($pub->{file}) {
+            my $file_metadata = (grep {$_->{file_id} eq params->{file_id}} @{$pub->{file}})[0];
+            $email = $file_metadata->{rac_email} if $file_metadata->{rac_email};
+        }
 
         my $mail_body = export_to_string(
             {
@@ -236,7 +243,7 @@ any '/rc/:id/:file_id' => sub {
         );
 
         my $job = {
-            to      => $file_creator_email,
+            to      => $email,
             subject => h->config->{request_copy}->{subject},
             from    => h->config->{request_copy}->{from},
             body    => $mail_body,
