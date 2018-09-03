@@ -18,6 +18,10 @@ sub register {
 
             $model_api->get('/:id')->to('#show', model => $model)->name($model);
 
+            $model_api->delete('/:id')->to('#remove', model => $model)->name($model);
+
+            $model_api->post->to('#add', model => $model)->name($model);
+
             return $model_api;
         }
     );
@@ -26,10 +30,11 @@ sub register {
 
     $api->librecat_api($_) for @$models;
 
-    $r->delete('/api/user/:id')->to('api#remove', model => "user")->name("user");
-    $r->delete('/api/publication/:id')->to('api#remove', model => "publication")->name("publication");
-
-    $r->post('/api/user')->to('api#add', model => "user")->name("user");
+    # $r->delete('/api/user/:id')->to('api#remove', model => "user")->name("user");
+    # $r->delete('/api/publication/:id')->to('api#remove', model => "publication")->name("publication");
+    #
+    # $r->post('/api/user')->to('api#add', model => "user")->name("user");
+    # $r->post('/api/publication')->to('api#add', model => "publication")->name("publication");
 }
 
 1;
