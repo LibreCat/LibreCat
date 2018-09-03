@@ -101,6 +101,11 @@ remove_field(member)
 remove_field(container-title)
 remove_field(funder)
 
+# fix language and map to iso
+lookup(language, fixes/lookup/cr_lang_iso.csv, default: eng)
+move_field(language, tmp.lang)
+move_field(tmp.lang,language.0.iso)
+
 # abstracts are sometimes fetched in JATS:XML, remove them until we have
 # a strategy how to get rid of html tags
 remove_field(abstract)

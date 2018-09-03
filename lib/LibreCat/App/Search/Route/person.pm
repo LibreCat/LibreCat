@@ -47,7 +47,8 @@ get qr{/person/(.*?)/?} => sub {
 
     # Redirect to the alias if the ID cannot be found
     h->log->debug("trying to find user $id");
-    unless (my $user = h->main_user->get($id)) {
+    my $user = h->main_user->get($id);
+    unless ($user) {
         h->log->debug("trying to find user alias $id");
 
         my %search_params = (cql => ["alias=$id"]);
@@ -81,6 +82,7 @@ get qr{/person/(.*?)/?} => sub {
 
     my $marked = session 'marked';
     $hits->{marked} = @$marked if $marked;
+    $hits->{style} = $user->{style} if $user->{style};
 
     template 'home', $hits;
 };

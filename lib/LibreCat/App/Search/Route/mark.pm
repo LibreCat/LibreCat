@@ -78,43 +78,33 @@ Mark the record with ID :id.
 =cut
 
 post '/mark/:id' => sub {
-
     my $id  = param 'id';
-    my $del = params->{'x-tunneled-method'};
-    if ($del) {
-        my $marked = session 'marked';
-        if ($marked) {
-            $marked = [grep {$_ ne $id} @$marked];
-            session 'marked' => $marked;
-        }
-        content_type 'application/json';
-        return to_json {ok => true, total => scalar @$marked,};
-    }
-
     forward '/marked', {cql => "id=$id"};
+};
 
+del '/mark/:id' => sub {
+    my $id  = param 'id';
+    my $marked = session 'marked';
+    if ($marked) {
+        $marked = [grep {$_ ne $id} @$marked];
+        session 'marked' => $marked;
+    }
+    content_type 'application/json';
+    return to_json {ok => true, total => scalar @$marked,};
 };
 
 post '/marked' => sub {
 
     my $p      = h->extract_params();
-    my $del    = params->{'x-tunneled-method'};
     my $marked = [];
     $marked     = session 'marked';
     $p->{limit} = h->config->{maximum_page_size};
     $p->{start} = 0;
     push @{$p->{cql}}, "status exact public";
 
-    if ($del) {
-        if (session 'marked') {
-            session 'marked' => [];
-        }
-        return to_json {ok => true, total => 0,};
-    }
-
     my $hits = searcher->search('publication', $p);
 
-    if ($hits->{total} > $hits->{limit} && @$marked == 500) {
+    if ($hits->{total} && $hits->{total} > $hits->{limit} && @$marked == 500) {
         return to_json {
             ok => true,
             message =>
@@ -134,6 +124,13 @@ post '/marked' => sub {
     content_type 'application/json';
     return to_json {ok => true, total => scalar @$marked,};
 
+};
+
+del '/marked' => sub {
+    if (session 'marked') {
+        session 'marked' => [];
+    }
+    return to_json {ok => true, total => 0,};
 };
 
 get '/marked_total' => sub {
