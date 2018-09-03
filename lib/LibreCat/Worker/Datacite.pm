@@ -43,7 +43,7 @@ sub mint {
     $self->log->debug("Minting $doi to $landing_url.");
 
     my $uri = URI->new($self->base_url);
-    $uri->path("doi");
+    $uri->path("/doi/$doi");
     $self->_do_request('PUT', $uri->as_string, "doi=$doi\nurl=$landing_url",
         'text/plain;charset=UTF-8',);
 }
