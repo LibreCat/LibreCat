@@ -73,7 +73,7 @@ sub upload_temp_file {
     my $file_name    = $file->{filename};
     my $file_size    = int($file->{size});
     my $content_type = $file->{headers}->{"Content-Type"};
-    my $rac_email = $file->{rac_email} // '';
+    my $rac_email    = $file->{rac_email} // '';
 
     h->log->info(
         "upload: $file_name ($content_type: $file_size bytes) by $creator");

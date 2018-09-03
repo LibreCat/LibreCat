@@ -218,12 +218,13 @@ any '/rc/:id/:file_id' => sub {
     );
 
     my $email = h->get_person($file->{creator})->{email};
+
     if (params->{user_email}) {
         my $pub
             = Catmandu->store('main')->bag('publication')->get(params->{id});
 
         # override creator email if email field is set for request-a-copy
-        if($pub->{file}){
+        if ($pub->{file}) {
             my $file_metadata = (grep {$_->{file_id} eq params->{file_id}} @{$pub->{file}})[0];
             $email = $file_metadata->{rac_email} if $file_metadata->{rac_email};
         }
