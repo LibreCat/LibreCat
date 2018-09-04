@@ -60,6 +60,7 @@
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> [% h.loc("forms.${type}.field.dropzone.edit_modal.access.request_a_copy") %]
           </label>
+          <input type="email" class="form-control" name="rac_email" id="id_rac_email" placeholder="[% h.loc("forms.${type}.field.dropzone.edit_modal.access.rac_email") %]" value="">
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% h.loc("forms.${type}.field.dropzone.edit_modal.access.embargo") %]<br />
           </label>
@@ -102,6 +103,7 @@ $('#fileSubmit').click( function() {
   data.description    = $('#id_fileDescription').val();
   data.date_updated   = 'now';
   data.request_a_copy = 0;
+  data.rac_email      = $('#id_rac_email').val();
 
   // Open access
   if ($('#id_accessLevel_openAccess').is(':checked')) {
@@ -119,6 +121,13 @@ $('#fileSubmit').click( function() {
   else if ($('#id_accessLevel_request').is(':checked')) {
     data.access_level   = 'closed';
     data.request_a_copy = 1;
+<<<<<<< HEAD
+=======
+    data.open_access    = 0;
+    if ($('#id_rac_email').val()){
+      data.rac_email = $('#id_rac_email').val();
+    }
+>>>>>>> dev
   }
 
   // Add an embargo?
@@ -160,9 +169,15 @@ $('#fileSubmit').click( function() {
                      data.embargo +
                      ")";
     }
-    if (data.request_a_copy) {
-        accessLevel += "<br />([% lf.$type.field.dropzone.access.request_a_copy %])";
+  }
+
+  var rac = "";
+  if(data.request_a_copy){
+    rac += "<div class=\"col-xs-12\">[% lf.$type.field.dropzone.access.request_a_copy %]";
+    if(data.rac_email){
+      rac += " (" + data.rac_email + ")";
     }
+    rac += "</div>";
   }
 
   $('#access_'   + use_file_id).html(accessLevel);
@@ -170,6 +185,13 @@ $('#fileSubmit').click( function() {
   $('#creator_'  + use_file_id).html(data.creator);
   $('#relation_' + use_file_id).html(data.relation);
   $('#file_'     + use_file_id).val(JSON.stringify(data));
+  if(!data.request_a_copy){
+    $('#rac_' + use_file_id).html("");
+  }
+  else{
+    $('#rac_' + use_file_id).html(rac);
+  }
+
 
   $('#upLoad')[0].reset();
   $('#upLoad').find('input[type="hidden"]').val('');

@@ -121,6 +121,7 @@ dropzone_fields:
         - relation
         - access_level
         - request_a_copy
+        - rac_email
         - title
         - description
         - open_access

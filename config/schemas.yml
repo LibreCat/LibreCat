@@ -199,6 +199,9 @@ publication:
                   - type: string
                   - type: integer
                 description: "File size"
+            rac_email:
+                type: string
+                description: "Mail to send request for a copy to"
             title:
                 type: string
                 description: "File title"
