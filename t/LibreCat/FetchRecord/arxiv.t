@@ -25,7 +25,10 @@ can_ok $pkg, $_ for qw(fetch);
 test_tcp(
     client => sub {
         my $port = shift;
-        my $x    = $pkg->new(baseurl => "http://127.0.0.1:$port/api/query?");
+        my $x    = $pkg->new(
+                        base_api      => "http://127.0.0.1:$port/api/query?" ,
+                        base_frontend => "http://127.0.0.1:$port"
+                   );
         my $pub  = $x->fetch('arXiv:1609.0172');
 
         ok $pub , 'got a publication';
@@ -45,14 +48,13 @@ test_tcp(
         my $port = shift;
         t::HTTPServer->new(port => $port)->run(
             sub {
-                ;
                 my $env = shift;
                 if ($env->{QUERY_STRING} =~ /1609\.0172/) {
                     my $body = path("t/records/arxiv-one.xml")->slurp_utf8;
                     return [200, ['Content-Length' => length($body)],
                         [$body]];
                 }
-                elsif ($env->{QUERY_STRING} =~ /0000-0002-7970-7855/) {
+                elsif ($env->{PATH_INFO} =~ /0000-0002-7970-7855/) {
                     my $body = path("t/records/arxiv-orcid.xml")->slurp_utf8;
                     return [200, ['Content-Length' => length($body)],
                         [$body]];
