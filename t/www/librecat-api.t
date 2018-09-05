@@ -7,30 +7,6 @@ use LibreCat -self, -load => {layer_paths => [qw(t/layer)]};
 use Test::Mojo;
 use Test::More;
 
-# preload
-for my $bag (qw(publication department project research_group user)) {
-    note("deleting backup $bag");
-    {
-        my $store = Catmandu->store('main')->bag($bag);
-        $store->delete_all;
-        $store->commit;
-    }
-
-    note("deleting version $bag");
-    {
-        my $store = Catmandu->store('main')->bag("$bag\_version");
-        $store->delete_all;
-        $store->commit;
-    }
-
-    note("deleting search $bag");
-    {
-        my $store = Catmandu->store('search')->bag($bag);
-        $store->delete_all;
-        $store->commit;
-    }
-}
-
 # Start a Mojolicious app
 my $t = Test::Mojo->new('LibreCat::Application');
 
