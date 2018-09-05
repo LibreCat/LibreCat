@@ -53,7 +53,7 @@ require_ok $pkg;
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output , qr/^1234/, 'listing of 1234';
+    like $output , qr/^000001234/, 'listing of 1234';
 }
 
 {

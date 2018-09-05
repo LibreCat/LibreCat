@@ -421,6 +421,7 @@ forms:
             local: "Local Access (LibreCat only)"
             closed: "Closed Access (Author/Reviewer only)"
             request_a_copy: "Request a Copy (Closed Access except upon request)"
+            rac_email: "Enter the e-mail address, requests should be sent to (default: record creator)"
             embargo: "Switch to Open Access on:"
           additional_information:
             heading: "Additional Information"
