@@ -14,7 +14,7 @@ sub register {
         librecat_api => sub {
             my ($r, $model) = @_;
 
-            my $model_api = $r->any("/$model")->to('api#', model => $model);
+            my $model_api = $r->any("/api/$model")->to('api#', model => $model);
 
             $model_api->get('/:id')->to('#show', model => $model)->name($model);
 
@@ -26,15 +26,7 @@ sub register {
         }
     );
 
-    my $api = $r->get('/api')->to('api#default');
-
-    $api->librecat_api($_) for @$models;
-
-    # $r->delete('/api/user/:id')->to('api#remove', model => "user")->name("user");
-    # $r->delete('/api/publication/:id')->to('api#remove', model => "publication")->name("publication");
-    #
-    # $r->post('/api/user')->to('api#add', model => "user")->name("user");
-    # $r->post('/api/publication')->to('api#add', model => "publication")->name("publication");
+    $r->librecat_api($_) for @$models
 }
 
 1;
