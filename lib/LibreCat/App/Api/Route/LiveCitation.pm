@@ -14,9 +14,7 @@ use LibreCat::Citation;
 
 get '/livecitation' => sub {
     my $params = params;
-    unless (($params->{id} and $params->{style})
-        or $params->{info})
-    {
+    unless (($params->{id} and $params->{style}) or $params->{info}) {
         return "Required parameters are 'id' and 'style'.";
     }
 
@@ -26,8 +24,8 @@ get '/livecitation' => sub {
 
     my $pub = Catmandu->store('main')->bag('publication')->get($params->{id});
 
-    my $response = LibreCat::Citation->new(style => $params->{style})
-        ->create($pub);
+    my $response
+        = LibreCat::Citation->new(style => $params->{style})->create($pub);
 
     my $citation = $response ? $response->{$params->{style}} : undef;
 

@@ -23,21 +23,22 @@ note("creating a new relation");
 {
     my $pub = get_dummy_publication('999000');
 
-    $pub->{related_material}->{record} = [
-        { id => '999001' , relation => 'earlier_version' , status => 'private' }
-    ];
+    $pub->{related_material}->{record}
+        = [
+        {id => '999001', relation => 'earlier_version', status => 'private'}
+        ];
 
     update_related_material($pub);
 
-    is_deeply $pub->{related_material}->{record} , [
-        { id => '999001' , relation => 'earlier_version' , status => 'private'}
-    ];
+    is_deeply $pub->{related_material}->{record},
+        [{id => '999001', relation => 'earlier_version', status => 'private'}
+        ];
 
     my $pub2 = get_dummy_publication('999001');
 
-    is_deeply $pub2->{related_material}->{record} , [
-        { id => '999000' , relation => 'later_version' , status => 'private' }
-    ] , 'found the reverse relation';
+    is_deeply $pub2->{related_material}->{record},
+        [{id => '999000', relation => 'later_version', status => 'private'}],
+        'found the reverse relation';
 
     save_dummy_publication($pub);
 }
@@ -47,21 +48,20 @@ note("try adding double relationships");
     my $pub = get_dummy_publication('999000');
 
     $pub->{related_material}->{record} = [
-        { id => '999001' , relation => 'earlier_version' , status => 'private' } ,
-        { id => '999001' , relation => 'later_version' , status => 'private' }
+        {id => '999001', relation => 'earlier_version', status => 'private'},
+        {id => '999001', relation => 'later_version',   status => 'private'}
     ];
 
     update_related_material($pub);
 
-    is_deeply $pub->{related_material}->{record} , [
-        { id => '999001' , relation => 'later_version' , status => 'private'}
-    ];
+    is_deeply $pub->{related_material}->{record},
+        [{id => '999001', relation => 'later_version', status => 'private'}];
 
     my $pub2 = get_dummy_publication('999001');
 
-    is_deeply $pub2->{related_material}->{record} , [
-        { id => '999000' , relation => 'earlier_version' , status => 'private' }
-    ] , 'found the reverse relation';
+    is_deeply $pub2->{related_material}->{record},
+        [{id => '999000', relation => 'earlier_version', status => 'private'}
+        ], 'found the reverse relation';
 
     save_dummy_publication($pub);
 }
@@ -70,21 +70,19 @@ note("updating existing relation");
 {
     my $pub = get_dummy_publication('999000');
 
-    $pub->{related_material}->{record} = [
-        { id => '999001' , relation => 'contains' , status => 'private' }
-    ];
+    $pub->{related_material}->{record}
+        = [{id => '999001', relation => 'contains', status => 'private'}];
 
     update_related_material($pub);
 
-    is_deeply $pub->{related_material}->{record} , [
-        { id => '999001' , relation => 'contains' , status => 'private'}
-    ];
+    is_deeply $pub->{related_material}->{record},
+        [{id => '999001', relation => 'contains', status => 'private'}];
 
     my $pub2 = get_dummy_publication('999001');
 
-    is_deeply $pub2->{related_material}->{record} , [
-        { id => '999000' , relation => 'published_in' , status => 'private' }
-    ] , 'found the reverse relation';
+    is_deeply $pub2->{related_material}->{record},
+        [{id => '999000', relation => 'published_in', status => 'private'}],
+        'found the reverse relation';
 
     save_dummy_publication($pub);
 }
@@ -97,11 +95,12 @@ note("deleting relation");
 
     update_related_material($pub);
 
-    is_deeply $pub->{related_material}->{record} , [];
+    is_deeply $pub->{related_material}->{record}, [];
 
     my $pub2 = get_dummy_publication('999001');
 
-    is_deeply $pub2->{related_material}->{record} , [] , 'deleted the reverse relation';
+    is_deeply $pub2->{related_material}->{record}, [],
+        'deleted the reverse relation';
 }
 
 delete_dummy_publication('999000');
@@ -125,10 +124,7 @@ sub get_dummy_publication {
 sub create_dummy_publication {
     my $id = shift;
 
-    my $dummy_publication = {
-        _id => $id ,
-        status => 'private'
-    };
+    my $dummy_publication = {_id => $id, status => 'private'};
 
     h->main_publication->add($dummy_publication);
     h->main_publication->commit;

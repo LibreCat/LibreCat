@@ -78,12 +78,12 @@ Mark the record with ID :id.
 =cut
 
 post '/mark/:id' => sub {
-    my $id  = param 'id';
+    my $id = param 'id';
     forward '/marked', {cql => "id=$id"};
 };
 
 del '/mark/:id' => sub {
-    my $id  = param 'id';
+    my $id     = param 'id';
     my $marked = session 'marked';
     if ($marked) {
         $marked = [grep {$_ ne $id} @$marked];
@@ -104,7 +104,8 @@ post '/marked' => sub {
 
     my $hits = searcher->search('publication', $p);
 
-    if ($hits->{total} && $hits->{total} > $hits->{limit} && @$marked == 500) {
+    if ($hits->{total} && $hits->{total} > $hits->{limit} && @$marked == 500)
+    {
         return to_json {
             ok => true,
             message =>

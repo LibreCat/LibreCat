@@ -26,10 +26,10 @@ test_tcp(
     client => sub {
         my $port = shift;
         my $x    = $pkg->new(
-                        base_api      => "http://127.0.0.1:$port/api/query?" ,
-                        base_frontend => "http://127.0.0.1:$port"
-                   );
-        my $pub  = $x->fetch('arXiv:1609.0172');
+            base_api      => "http://127.0.0.1:$port/api/query?",
+            base_frontend => "http://127.0.0.1:$port"
+        );
+        my $pub = $x->fetch('arXiv:1609.0172');
 
         ok $pub , 'got a publication';
 
