@@ -30,3 +30,17 @@ sub register {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Mojolicious::Plugin::LibreCat::Api - Routes
+
+=head2
+
+
+
+=cut
