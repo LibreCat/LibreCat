@@ -74,7 +74,9 @@ sub command {
         '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
     for my $i (1 .. $n) {
         my $loc = sprintf("$config->{uri_base}/sitemap-%05d.xml", $i);
-        $file->say("<sitemap><url><loc>$loc</loc><lastmod>$today</lastmod></url></sitemap>");
+        $file->say(
+            "<sitemap><url><loc>$loc</loc><lastmod>$today</lastmod></url></sitemap>"
+        );
     }
     $file->say('</sitemapindex>');
     $file->close;

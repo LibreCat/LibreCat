@@ -53,8 +53,8 @@ sub _send_it {
                 my $content_type     = $file->{content_type};
                 my $http_status_code = 200;
 
-                # Tech.note: This is a hash of HTTP header/values, but the
-                #            function below requires an even-numbered array-ref.
+              # Tech.note: This is a hash of HTTP header/values, but the
+              #            function below requires an even-numbered array-ref.
                 my @http_headers = (
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
@@ -62,8 +62,8 @@ sub _send_it {
                     'Pragma' => 'no-cache'
                 );
 
-                # Send the HTTP headers
-                # (back to either the user or the upstream HTTP web-server front-end)
+         # Send the HTTP headers
+         # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
                 $files->stream(h->io_from_plack_writer($writer), $file);
@@ -225,8 +225,11 @@ any '/rc/:id/:file_id' => sub {
 
         # override creator email if email field is set for request-a-copy
         if ($pub->{file}) {
-            my $file_metadata = (grep {$_->{file_id} eq params->{file_id}} @{$pub->{file}})[0];
-            $email = $file_metadata->{rac_email} if $file_metadata->{rac_email};
+            my $file_metadata
+                = (grep {$_->{file_id} eq params->{file_id}} @{$pub->{file}})
+                [0];
+            $email = $file_metadata->{rac_email}
+                if $file_metadata->{rac_email};
         }
 
         my $mail_body = export_to_string(

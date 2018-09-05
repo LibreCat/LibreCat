@@ -19,9 +19,7 @@ sub _export {
     unless (is_string($params->{fmt})) {
         content_type 'application/json';
         status '406';
-        return to_json {
-            error => "Parameter fmt is missing."
-        };
+        return to_json {error => "Parameter fmt is missing."};
     }
 
     my $fmt = $params->{fmt};
@@ -31,9 +29,7 @@ sub _export {
     unless (is_hash_ref($export_config->{$fmt})) {
         content_type 'application/json';
         status '406';
-        return to_json {
-            error => "Export format '$fmt' not supported."
-        };
+        return to_json {error => "Export format '$fmt' not supported."};
     }
 
     my $spec = $export_config->{$fmt};
@@ -53,9 +49,7 @@ sub _export {
 
     my $f;
 
-    eval {
-        $f = export_to_string($hits, $package, $options);
-    };
+    eval {$f = export_to_string($hits, $package, $options);};
     if ($@) {
         h->log->error("exporting $package: $@");
         content_type 'application/json';
@@ -66,14 +60,14 @@ sub _export {
     }
     else {
         my $content_type = $spec->{content_type} || mime->for_name($fmt);
-        my $send_params = { content_type => $content_type };
+        my $send_params = {content_type => $content_type};
 
         if ($spec->{extension}) {
             $send_params->{filename} = 'publication.' . $spec->{extension};
         }
 
         h->log->debug($f);
-        return Dancer::send_file(\$f,%$send_params);
+        return Dancer::send_file(\$f, %$send_params);
     }
 }
 
@@ -82,6 +76,7 @@ sub _export {
 Exports data, public only!
 
 =cut
+
 get '/export' => sub {
     my $params = h->extract_params;
     push @{$params->{cql}}, "status=public";
@@ -93,6 +88,7 @@ get '/export' => sub {
 Exports data from the logged-in-area.
 
 =cut
+
 get '/librecat/export' => sub {
     my $params = h->extract_params;
     return _export($params);

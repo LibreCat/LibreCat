@@ -38,8 +38,7 @@ Opens an empty form. The ID is automatically generated.
 =cut
 
     get '/account/new' => sub {
-        template 'admin/forms/edit_account',
-            {};
+        template 'admin/forms/edit_account', {};
     };
 
 =head2 GET /account/search
@@ -105,8 +104,8 @@ Redirects to /librecat/admin/account
 
         my $p = params("body");
 
-        $p = h->nested_params($p);
-        $p->{_id} = user->generate_id;
+        $p             = h->nested_params($p);
+        $p->{_id}      = user->generate_id;
         $p->{password} = mkpasswd($p->{password});
 
         user->add($p);
@@ -133,8 +132,7 @@ Deletes the account with ID :id.
     };
 
     get '/project/new' => sub {
-        template 'admin/forms/edit_project',
-            {_id => project->generate_id};
+        template 'admin/forms/edit_project', {_id => project->generate_id};
     };
 
     get '/project/search' => sub {

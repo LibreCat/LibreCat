@@ -274,7 +274,7 @@ sub update_record {
         'DEPRECATION NOTICE: update_record is deprecated. Use librecat->model($model)->add instead'
     );
 
-    my $saved_record = $self->store_record($bag,$rec);
+    my $saved_record = $self->store_record($bag, $rec);
 
     $self->index_record($bag, $saved_record);
 
@@ -501,20 +501,19 @@ sub locale {
 # Create an IO::Handle from a Plack writer
 # Add a virtual 'syswrite' method to a Plack writer stream
 sub io_from_plack_writer {
-    my ($self,$writer) = @_;
-    return IO::Handle::Util::io_prototype
-                    write => sub {
-                        my $self = shift;
-                        $writer->write(@_);
-                    },
-                    syswrite => sub {
-                        my $self = shift;
-                        $writer->write(@_);
-                    },
-                    close => sub {
-                        my $self = shift;
-                        $writer->close;
-                    }
+    my ($self, $writer) = @_;
+    return IO::Handle::Util::io_prototype write => sub {
+        my $self = shift;
+        $writer->write(@_);
+        },
+        syswrite => sub {
+        my $self = shift;
+        $writer->write(@_);
+        },
+        close => sub {
+        my $self = shift;
+        $writer->close;
+        }
 }
 
 sub localize {
