@@ -98,3 +98,17 @@ sub not_valid {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Controller::Api -
+
+=head2 SEE ALSO
+
+L<LibreCat>, L<Mojolicious::Plugin::LibreCat::Api>
+
+=cut

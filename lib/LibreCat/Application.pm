@@ -14,3 +14,12 @@ sub startup {
 
 1;
 
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Application -
+
+=cut
