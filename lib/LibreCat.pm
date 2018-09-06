@@ -60,14 +60,17 @@ sub _exporter_expand_tag {
 sub _exporter_expand_sub {
     my ($class, $name, $args, $globals) = @_;
 
-    if (any { $_ eq $name } qw(librecat l)) {
-        return $name => sub { state $memo = $class->instance };
+    if (any {$_ eq $name} qw(librecat l)) {
+        return $name => sub {state $memo = $class->instance};
     }
-    if (any { $_ eq $name } qw(log config fixer hook queue model root_path searcher timestamp)) {
-        return $name => sub { state $memo = $class->instance; $memo->$name(@_) };
+    if (any {$_ eq $name}
+        qw(log config fixer hook queue model root_path searcher timestamp))
+    {
+        return $name =>
+            sub {state $memo = $class->instance; $memo->$name(@_)};
     }
     if ($class->instance->has_model($name)) {
-        return $name => sub { state $memo = $class->instance->model($name) };
+        return $name => sub {state $memo = $class->instance->model($name)};
     }
 
     $class->SUPER::_exporter_expand_sub($name, $args, $globals);
@@ -77,6 +80,7 @@ sub _exporter_expand_sub {
 
 sub AUTOCAN {
     my ($self, $method) = @_;
+
     # Backwards compatibility with the old user class method
     if (!is_ref($self) && $method eq 'user') {
         $self = $self->instance;
@@ -87,7 +91,7 @@ sub AUTOCAN {
     $self->has_model($method) || return;
     $self->_model_accessors->{$method} //= do {
         my $model = $self->model($method);
-        sub { $model };
+        sub {$model};
     };
 }
 
@@ -95,23 +99,23 @@ sub AUTOCAN {
 
 with 'LibreCat::Logger';
 
-has root_path   => (is => 'lazy');
-has layer_paths => (is => 'lazy');
-has config      => (is => 'lazy');
-has css_paths   => (is => 'lazy', init_arg => undef);
-has paths => (is => 'ro', init_arg => undef, default => sub {[]});
-has lib_paths => (is => 'ro', init_arg => undef, default => sub {[]});
-has config_paths => (is => 'ro', init_arg => undef, default => sub {[]});
-has public_paths => (is => 'ro', init_arg => undef, default => sub {[]});
-has scss_paths => (is => 'ro', init_arg => undef, default => sub {[]});
-has template_paths => (is => 'ro', init_arg => undef, default => sub {[]});
-has fixes_paths => (is => 'ro', init_arg => undef, default => sub {[]});
-has models => (is => 'lazy');
+has root_path        => (is => 'lazy');
+has layer_paths      => (is => 'lazy');
+has config           => (is => 'lazy');
+has css_paths        => (is => 'lazy', init_arg => undef);
+has paths            => (is => 'ro', init_arg => undef, default => sub {[]});
+has lib_paths        => (is => 'ro', init_arg => undef, default => sub {[]});
+has config_paths     => (is => 'ro', init_arg => undef, default => sub {[]});
+has public_paths     => (is => 'ro', init_arg => undef, default => sub {[]});
+has scss_paths       => (is => 'ro', init_arg => undef, default => sub {[]});
+has template_paths   => (is => 'ro', init_arg => undef, default => sub {[]});
+has fixes_paths      => (is => 'ro', init_arg => undef, default => sub {[]});
+has models           => (is => 'lazy');
 has _model_instances => (is => 'ro', init_arg => undef, default => sub {+{}});
 has _model_accessors => (is => 'ro', init_arg => undef, default => sub {+{}});
-has _hook_instances => (is => 'ro', init_arg => undef, default => sub{+{}});
-has searcher => (is => 'lazy');
-has queue => (is => 'lazy');
+has _hook_instances  => (is => 'ro', init_arg => undef, default => sub {+{}});
+has searcher         => (is => 'lazy');
+has queue            => (is => 'lazy');
 
 sub BUILD {
     my ($self) = @_;
@@ -123,7 +127,8 @@ sub BUILD {
 }
 
 sub _build_root_path {
-    $ENV{LIBRECAT_ROOT} || path(__FILE__)->parent->parent->absolute->stringify;
+    $ENV{LIBRECAT_ROOT}
+        || path(__FILE__)->parent->parent->absolute->stringify;
 }
 
 sub _build_layer_paths {
@@ -242,36 +247,36 @@ sub _build_models {
 sub _new_model {
     my ($self, $name) = @_;
 
-    Catmandu::BadArg->throw("Unknown model '$name'") unless $self->has_model($name);
+    Catmandu::BadArg->throw("Unknown model '$name'")
+        unless $self->has_model($name);
 
     my $config     = $self->config->{$name} // {};
     my $bag        = Catmandu->store('main')->bag($name);
     my $search_bag = Catmandu->store('search')->bag($name);
     my $pkg_name   = camelize($name);
-    my $pkg = require_package($pkg_name, 'LibreCat::Model');
+    my $pkg        = require_package($pkg_name, 'LibreCat::Model');
     if ($bag->does('Catmandu::Plugin::Versioning')) {
         $pkg = $pkg->with_plugins('Versioning');
     }
-    my $validator_pkg
-        = require_package('LibreCat::Validator::JSONSchema');
+    my $validator_pkg = require_package('LibreCat::Validator::JSONSchema');
     my $validator
         = $validator_pkg->new(schema => $self->config->{schemas}{$name});
     my $update_fixer = $self->fixer("update_${name}.fix");
-    my $index_fixer = $self->fixer("index_${name}.fix");
+    my $index_fixer  = $self->fixer("index_${name}.fix");
 
     $pkg->new(
         bag                 => $bag,
         search_bag          => $search_bag,
         validator           => $validator,
         prepend_before_add  => [update_fixer => $update_fixer],
-        append_before_index => [index_fixer  => $index_fixer],
+        append_before_index => [index_fixer => $index_fixer],
         %$config,
     );
 }
 
 sub has_model {
     my ($self, $name) = @_;
-    any { $_ eq $name } @{$self->models};
+    any {$_ eq $name} @{$self->models};
 }
 
 sub model {

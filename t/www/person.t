@@ -19,7 +19,6 @@ subtest 'person list alphabetical index' => sub {
     $mech->get_ok('/person?browse=a');
     $mech->get_ok('/person?browse=A');
 
-
     $mech->get_ok('/person?browse=E');
     $mech->content_unlike(qr/Einstein,, Albert/);
 

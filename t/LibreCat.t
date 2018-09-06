@@ -8,7 +8,7 @@ use LibreCat;
 
 ok(LibreCat->loaded == 0);
 
-dies_ok { LibreCat->instance } qr/must be loaded first/i;
+dies_ok {LibreCat->instance} qr/must be loaded first/i;
 
 LibreCat->load({layer_paths => [qw(t/layer)]});
 
@@ -20,23 +20,24 @@ ok($instance == LibreCat->instance, "instance is a singleton");
 
 # logger
 
-isa_ok($instance->log, 'Log::Any::Proxy');
+isa_ok($instance->log,          'Log::Any::Proxy');
 isa_ok($instance->log->adapter, 'Log::Any::Adapter::Log4perl');
 
 # config
 
 is(ref $instance->config, 'HASH');
-ok($instance->config == Catmandu->config, "LibreCat and Catmandu share a config hash");
+ok(
+    $instance->config == Catmandu->config,
+    "LibreCat and Catmandu share a config hash"
+);
 
 # models
 ok($instance->has_model('user') == 1);
 ok($instance->has_model('gremlin') == 0);
 
-isa_ok(
-    $instance->model('user'),
+isa_ok($instance->model('user'),
     "LibreCat::Model::User",
-    "librecat->user returns a LibreCat::Model::User"
-);
+    "librecat->user returns a LibreCat::Model::User");
 
 {
 
@@ -50,8 +51,7 @@ isa_ok(
 
     $model->purge_all;
 
-    like($model->generate_id,
-        qr{^[A-Z0-9-]+$}, 'publication generate id');
+    like($model->generate_id, qr{^[A-Z0-9-]+$}, 'publication generate id');
 
     my $pub = Catmandu->importer('YAML',
         file => 't/records/valid-publication.yml')->first;
@@ -119,38 +119,27 @@ isa_ok(
         '..check title (index)'
     );
 
-    ok(
-        $model->delete($id),
-        'delete existing publication returns id'
-    );
-    ok(
-        !$model->delete(99999999999),
-        'delete non existing publication returns nil'
-    );
+    ok($model->delete($id), 'delete existing publication returns id');
+    ok(!$model->delete(99999999999),
+        'delete non existing publication returns nil');
 
-    is($model->get($id)->{status},
-        'deleted', '..check title (main)');
+    is($model->get($id)->{status}, 'deleted', '..check title (main)');
 
     is($model->search_bag->get($id)->{status},
         'deleted', '..check title (index)');
 
-    ok(
-        $model->purge($id),
-        'purge existing publication returns id'
-    );
-    ok(
-        !$model->purge(99999999999),
-        'purge non existing publication returns nil'
-    );
+    ok($model->purge($id), 'purge existing publication returns id');
+    ok(!$model->purge(99999999999),
+        'purge non existing publication returns nil');
 
-    ok($model->add($pub, skip_commit => 1), 'add publication with skip_commit option');
+    ok(
+        $model->add($pub, skip_commit => 1),
+        'add publication with skip_commit option'
+    );
 
     ok($model->commit, 'commit after add');
 
-    ok(
-        $model->delete_all,
-        'delete all existing publications'
-    );
+    ok($model->delete_all, 'delete all existing publications');
 
     ok(!$model->get($id), '...purged (main)');
 
@@ -161,7 +150,7 @@ isa_ok(
 
 {
     my $time = time;
-    my $str = $instance->timestamp($time);
+    my $str  = $instance->timestamp($time);
     is($str, strftime('%Y-%m-%dT%H:%M:%SZ', gmtime($time)));
 
     $instance->config->{time_format} = '%Y-%m-%d';
@@ -173,18 +162,12 @@ isa_ok(
 
 # searcher
 
-isa_ok(
-    $instance->searcher,
-    "LibreCat::Search",
-    "librecat->search returns a LibreCat::Search"
-);
+isa_ok($instance->searcher, "LibreCat::Search",
+    "librecat->search returns a LibreCat::Search");
 
 # queue
 
-isa_ok(
-    $instance->queue,
-    "LibreCat::JobQueue"
-);
+isa_ok($instance->queue, "LibreCat::JobQueue");
 
 # hooks
 

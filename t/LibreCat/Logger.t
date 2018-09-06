@@ -26,7 +26,7 @@ my $l = T::Logger->new;
 
 ok $l->does('LibreCat::Logger');
 can_ok($l, 'log');
-isa_ok($l->log, 'Log::Any::Proxy');
+isa_ok($l->log,          'Log::Any::Proxy');
 isa_ok($l->log->adapter, 'Log::Any::Adapter::Log4perl');
 ok($l->log->is_debug);
 
