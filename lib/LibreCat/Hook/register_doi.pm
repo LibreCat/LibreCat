@@ -2,9 +2,10 @@ package LibreCat::Hook::register_doi;
 
 use Catmandu::Sane;
 use Carp;
-use Dancer qw(:syntax);
 use LibreCat qw(:self);
 use Moo;
+
+with 'LibreCat::Logger';
 
 sub fix {
     my ($self, $data) = @_;
@@ -20,8 +21,10 @@ sub fix {
 
     $data->{publisher} = $conf->{publisher} unless $data->{publisher};
 
-    librecat->log->debug(
-        "Register the publication at DataCite\n" . to_yaml($data));
+    if ($self->log->is_debug) {
+        $self->log->debugf(
+            "Register the publication at DataCite %s", $data);
+    }
 
     my $job = {
         doi         => $data->{doi},
@@ -33,7 +36,7 @@ sub fix {
         librecat->queue->add_job($queue, $job);
     }
     catch {
-        librecat->log->error("Could not register DOI: $_" . to_yaml($data));
+        $self->log->errorf("Could not register DOI: %s", $data);
     };
 
     $data;
