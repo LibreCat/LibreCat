@@ -11,8 +11,13 @@ sub fix {
     my ($self, $data) = @_;
 
     my $conf   = librecat->config->{doi};
-    my $prefix = $conf->{prefix} // croak "Need a prefix";
-    my $queue  = $conf->{queue} // croak "Need a queue";
+    my $prefix = $conf->{prefix};
+    my $queue  = $conf->{queue};
+
+    unless ($prefix && $queue) {
+        $self->log->fatal("Need a doi.prefix and doi.queue configuration");
+        return $data;
+    }
 
     return $data
         unless $data->{doi}
@@ -54,11 +59,12 @@ LibreCat::Hook::register_doi - a LibreCat hook that registers a DOI
 
 =head1 CONFIGURATION
 
-    hook:
-      register_doi:
-        prefix: 10.5192/test
-        queue: datacite
-        publishser: LibreCat University
+    # See: https://github.com/LibreCat/LibreCat/wiki/DOI-Registration for more information
+    
+    doi:
+       prefix: "10.5072/test"
+       queue: datacite
+       default_publisher: LibreCat Publishing System
 
 =head1 SEE ALSO
 
