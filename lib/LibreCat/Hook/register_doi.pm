@@ -9,7 +9,7 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    my $conf   = librecat->config->{hook}->{register_doi};
+    my $conf   = librecat->config->{doi};
     my $prefix = $conf->{prefix} // croak "Need a prefix";
     my $queue  = $conf->{queue} // croak "Need a queue";
 
