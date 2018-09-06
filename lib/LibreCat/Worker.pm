@@ -5,7 +5,7 @@ use String::CamelCase qw(decamelize);
 use Moo::Role;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 sub worker_functions {
     my ($self) = @_;
