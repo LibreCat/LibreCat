@@ -108,6 +108,7 @@ ip_range:
 #doi:
 #  prefix: "10.5072/test"
 #  queue: datacite
+#  default_publisher: LibreCat Publishing System
 
 ## Uncomment when you want to register extra functionality in the LibreCat
 ## helper utility. All the methods defined in these plugins will become

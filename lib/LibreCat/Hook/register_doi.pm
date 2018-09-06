@@ -18,7 +18,7 @@ sub fix {
         && $data->{doi} =~ /^$prefix/
         && $data->{status} eq "public";
 
-    $data->{publisher} = $conf->{publisher} unless $data->{publisher};
+    $data->{publisher} = $conf->{default_publisher} unless $data->{publisher};
 
     librecat->log->debug(
         "Register the publication at DataCite\n" . to_yaml($data));
