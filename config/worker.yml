@@ -1,6 +1,8 @@
+# LibreCat::Worker specific configuration options
 _prefix:
   worker:
 
+# Log directory for worker and supervisor log files
 logdir: logs
 
 DataCite:
@@ -9,18 +11,8 @@ DataCite:
   password: ''
   test_mode: ''
 
-FileUploader:
-  files:
-    package: 'Simple'
-    options:
-      root: '/data2/librecat/file_uploads'
+# FileUploader options are defined in files.yml
+# ImageResizer options are defined in files.yml
 
-ImageResizer:
-  files:
-    package: 'Simple'
-    options:
-      root: '/data2/librecat/file_uploads'
-  access:
-    package: 'Simple'
-    options:
-      root: '/data2/librecat/access_uploads'
+Mailer:
+  default_from: 'unknown@librecat.org'

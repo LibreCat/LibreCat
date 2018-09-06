@@ -16,8 +16,9 @@ use Moo;
 sub fix {
     my ($self, $data) = @_;
 
-    my $id   = $data->{_id};
-    my $pub  = searcher->search('publication', {cql => ["person=$id", "status=public"], start => 0, limit => 1});
+    my $id  = $data->{_id};
+    my $pub = searcher->search('publication',
+        {cql => ["person=$id", "status=public"], start => 0, limit => 1});
 
     if (is_number($pub->{total}) && $pub->{total} > 0) {
         $data->{publication_count} = $pub->{total};

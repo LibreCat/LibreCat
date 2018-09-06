@@ -68,7 +68,7 @@ sub _daemon {
     croak "no queue.workers configured" unless exists $config->{workers};
 
     for my $worker (keys %{$config->{workers}}) {
-        my $count     = $config->{workers}->{$worker}->{count}     // 0;
+        my $count     = $config->{workers}->{$worker}->{count} // 0;
         my $supervise = $config->{workers}->{$worker}->{supervise} // 0;
 
         next unless $count > 0;

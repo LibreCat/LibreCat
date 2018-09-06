@@ -28,7 +28,7 @@ has validator => (
     handles  => [qw(is_valid whitelist)],
     isa      => ConsumerOf ['LibreCat::Validator']
 );
-has before_add => (is => 'lazy', init_arg => undef, isa => Pairs);
+has before_add   => (is => 'lazy', init_arg => undef, isa => Pairs);
 has before_index => (is => 'lazy', init_arg => undef, isa => Pairs);
 
 sub plugin_namespace {
@@ -67,12 +67,15 @@ sub append_before_index {
     push @{$self->before_index}, @$hooks;
 }
 
-sub BUILD {}
+sub BUILD { }
 
 before BUILD => sub {
     my ($self, $opts) = @_;
 
-    for my $method (qw(prepend_before_add append_before_add prepend_before_index append_before_index)) {
+    for my $method (
+        qw(prepend_before_add append_before_add prepend_before_index append_before_index)
+        )
+    {
         if (my $hooks = $opts->{$method}) {
             $self->$method($hooks);
         }

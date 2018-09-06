@@ -26,8 +26,6 @@ LibreCat::Worker - a base role for workers
 
 =head1 SYNOPSIS
 
-    # the default worker function is the underscored package name mapped to the
-    # 'work' method
     package LibreCat::Worker::Drink;
 
     use Catmandu::Sane;
@@ -35,29 +33,30 @@ LibreCat::Worker - a base role for workers
 
     with 'LibreCat::Worker';
 
+    # Default worker function is called 'work' -> mapped to the global 'drink'
+    # worker
     sub work {
         my ($workload) = @_;
         log "drinking $workload->{beverage} ... ";
         sleep 3;
     }
 
-    # $queue->add_job('drink', {beverage => 'beer'})
-
     # with custom worker_functions
-    package LibreCat::Worker::drunkard;
+    package LibreCat::Worker::Drunkard;
 
     use Catmandu::Sane;
     use Moo;
 
     with 'LibreCat::Worker';
 
+    # Register the 'booze' and 'have_hangover' global workers
     sub worker_functions {
-        ['drink', {'have_hangover' => 'do_have_hangover'}];
+        ['booze', {'have_hangover' => 'do_have_hangover'}];
     }
 
-    sub drink {
+    sub booze {
         my ($workload) = @_;
-        log "drinking $workload->{beverage} ... ";
+        log "booze $workload->{beverage} ... ";
         sleep 3;
     }
 
@@ -66,8 +65,17 @@ LibreCat::Worker - a base role for workers
         sleep 9;
     }
 
-    # $queue->add_job('drink', {beverage => 'wine'})
-    # $queue->add_job('drink', {beverage => 'beer'})
-    # $queue->add_job('have_hangover')
+    package main;
+
+    use LibreCat::JobQueue;
+
+    my $queue = LibreCat::JobQueue->new;
+
+    # Adds a job for the 'LibreCat::Worker::Drink' worker
+    $queue->add_job('drink', {beverage => 'beer'})
+
+    # Adds a job for the 'LibreCat::Worker::Drunkard' worker
+    $queue->add_job('booze', {beverage => 'wine'})
+    $queue->add_job('have_hangover')
 
 =cut
