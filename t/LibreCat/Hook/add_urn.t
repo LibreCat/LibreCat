@@ -7,7 +7,7 @@ use LibreCat -load => {layer_paths => [qw(t/layer)]};
 my $pkg;
 
 BEGIN {
-    $pkg = 'Catmandu::Fix::add_urn';
+    $pkg = 'LibreCat::Hook::add_urn';
     use_ok $pkg;
 }
 require_ok $pkg;

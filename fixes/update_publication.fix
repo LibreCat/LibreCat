@@ -7,7 +7,6 @@ form2schema(publication_identifier)
 form2schema(external_id)
 page_range_number()
 clean_preselects()
-add_urn()
 person()
 volume_sort()
 
