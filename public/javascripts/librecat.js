@@ -168,6 +168,28 @@ $(function () {
     });
 });
 
+$(function () {
+	  $('#id_register_doi').click(function(){
+		    if ($('#id_register_doi').is(":checked")){
+			      $('#id_doi').val($('#id_new_doi').val());
+			      $('#id_doi').attr('readonly','readonly');
+		    }
+		    else{
+			      $('#id_doi').removeAttr('readonly');
+			      $('#id_doi').val("");
+		    }
+	  });
+	  $('#id_doi').keyup(function (){
+		    if($('#id_doi').val()){
+			      $('#id_register_doi').attr('checked', false);
+			      $('#id_register_doi').attr('disabled', true);
+		    }
+		    else {
+			      $('#id_register_doi').attr('disabled', false);
+		    }
+	  });
+});
+
 
 /**
  * Link author name to person account
@@ -455,7 +477,10 @@ function edit_file(fileId, id){
         }
         else if(json.access_level == "closed"){
                 if(json.request_a_copy == "1"){
-                        $('#id_accessLevel_request').prop('checked',true);
+                    $('#id_accessLevel_request').prop('checked',true);
+			        if(json.rac_email){
+				        $('#id_rac_email').val(json.rac_email);
+			        }
                 }
                 else {
                         $('#id_accessLevel_admin').prop('checked',true);

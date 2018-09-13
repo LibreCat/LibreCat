@@ -37,13 +37,13 @@ List all audit messages for an :id in the store :bag
             sub {
                 $_[0]->{time} cmp $_[1]->{time};
             }
-            )->map(
+        )->map(
             sub {
                 $_[0]->{date} = strftime("%Y-%m-%dT%H:%M:%S",
                     localtime($_[0]->{time} // 0));
                 $_[0];
             }
-            );
+        );
 
         my $array = $it->to_array;
 

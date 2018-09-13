@@ -1,13 +1,12 @@
-package LibreCat::Worker::DataCite;
+package LibreCat::Worker::Datacite;
 
 use Catmandu::Sane;
+use Catmandu;
+use LibreCat -self;
 use Furl;
 use HTTP::Headers;
 use HTTP::Request;
-
-# use Term::ReadKey;
-# use URI;
-# use URI::Escape;
+use URI;
 use Encode qw(encode_utf8);
 use Try::Tiny;
 use Moo;
@@ -30,7 +29,7 @@ sub _build_base_url {
 sub work {
     my ($self, $opts) = @_;
 
-    my $metadata = $self->metadata($opts->{doi}, $opts->{datacite_xml});
+    my $metadata = $self->metadata($opts->{doi}, $opts->{record});
     my $mint = $self->mint($opts->{doi}, $opts->{landing_url});
 
     return {metadata => $metadata, mint => $mint};
@@ -44,28 +43,39 @@ sub mint {
     $self->log->debug("Minting $doi to $landing_url.");
 
     my $uri = URI->new($self->base_url);
-    $uri->path("doi");
-    $uri->query_form(
-        doi      => $doi,
-        url      => $landing_url,
-        testMode => $self->test_mode ? 'true' : 'false',
-    );
-    $self->_do_request('POST', $uri->as_string, 'text/plain;charset=UTF-8',);
+    $uri->path("/doi/$doi");
+    $self->_do_request('PUT', $uri->as_string, "doi=$doi\nurl=$landing_url",
+        'text/plain;charset=UTF-8',);
 }
 
 sub metadata {
-    my ($self, $doi, $datacite_xml) = @_;
+    my ($self, $doi, $rec) = @_;
 
-    return unless $doi && $datacite_xml;
+    return unless $doi && $rec;
 
-    $self->log->debug("Register metadata for $doi. XML: $datacite_xml.");
+    $self->log->debug("Register metadata for $doi.");
+
+    my $datacite_xml = $self->_create_metadata($rec);
 
     my $uri = URI->new($self->base_url);
-    $uri->path("doi");
+    $uri->path("metadata");
     $uri->query_form(testMode => $self->test_mode ? 'true' : 'false',);
+
     $self->_do_request('POST', $uri->as_string, $datacite_xml,
         'application/xml;charset=UTF-8',
     );
+}
+
+sub _create_metadata {
+    my ($self, $rec) = @_;
+
+    my $datacite_xml = Catmandu->export_to_string(
+        {%$rec, uri_base => librecat->config->{uri_base}}, 'Template',
+        template => 'views/export/datacite.tt',
+        xml      => 1
+    );
+    $self->log->error($datacite_xml);
+    return $datacite_xml;
 }
 
 sub _do_request {
@@ -92,8 +102,7 @@ sub _do_request {
         return $status;
     }
     catch {
-        $self->log->error(
-            "Error registering at DataCite: $_\ņHTTP-Result: $res")
+        $self->log->error("Error registering at DataCite: $_\ņ")
     }
 }
 
@@ -105,23 +114,31 @@ __END__
 
 =head1 NAME
 
-LibreCat::Worker::DataCite - a worker for registering and minting at DataCite
+LibreCat::Worker::Datacite - a worker for registering and minting DOIs at DataCite
 
 =head2 SYNOPSIS
 
-    use LibreCat::Worker::DataCite;
+    use LibreCat::Worker::Datacite;
 
-    my $registry = LibreCat::Worker::DataCite->new(user => 'me', password => 'secret');
+    my $registry_worker = LibreCat::Worker::Datacite->new(user => 'me', password => 'secret');
 
-    $registry->work({
+    $registry_worker->work({
         doi          => '...' ,
         landing_url  => '...' ,
-        datacite_xml => '...' ,
+        record => $record_hash ,
     })
 
-    # or call them separately
-    $registry->metadata()
-    $registry->mint('')
+    # or better queue it via LibreCat
+
+    use LibreCat -self;
+
+    my $job = {
+        doi => '...',
+        landing_url => '...',
+        record => $record_hash,
+    };
+
+    librecat->queue->add('datacite', $job);
 
 =head2 CONFIGURATION
 

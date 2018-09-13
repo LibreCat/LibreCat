@@ -13,12 +13,13 @@ BEGIN {
 require_ok $pkg;
 
 {
+
     package T::Validator;
     use Moo;
 
     with $pkg;
 
-    sub validate_data {}
+    sub validate_data { }
 }
 
 {

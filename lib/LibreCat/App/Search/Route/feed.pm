@@ -16,7 +16,7 @@ use LibreCat::App::Helper;
 use LibreCat qw(searcher);
 
 sub feed {
-    my $q      = shift // [];
+    my $q = shift // [];
     my $period = shift // 'weekly';
 
     state $fixer = Catmandu::Fix->new(fixes => ['fixes/to_dc.fix']);
@@ -59,7 +59,7 @@ sub feed {
 
     $hits->each(
         sub {
-            my $hit = $_[0];
+            my $hit   = $_[0];
             my $title = $hit->{title} // 'no title';
 
             $rss->add_item(

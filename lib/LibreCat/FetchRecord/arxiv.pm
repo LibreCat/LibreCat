@@ -7,8 +7,9 @@ use Dancer qw(:syntax);
 
 with 'LibreCat::FetchRecord';
 
-has 'baseurl' =>
-    (is => 'ro', default => sub {"https://export.arxiv.org/api/query?"});
+has 'base_api' =>
+    (is => 'ro', default => sub {"https://export.arxiv.org/api/query"});
+has 'base_frontend' => (is => 'ro', default => sub {"https://arxiv.org"});
 
 sub fetch {
     my ($self, $id) = @_;
@@ -21,8 +22,12 @@ sub fetch {
     my $data = [];
 
     try {
-        $data = Catmandu->importer('ArXiv', query => $id,
-            base => $self->baseurl)->to_array;
+        $data = Catmandu->importer(
+            'ArXiv',
+            query         => $id,
+            base_api      => $self->base_api,
+            base_frontend => $self->base_frontend
+        )->to_array;
     };
 
     unless (@$data) {

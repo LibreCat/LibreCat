@@ -121,6 +121,7 @@ dropzone_fields:
         - relation
         - access_level
         - request_a_copy
+        - rac_email
         - title
         - description
         - open_access
@@ -137,6 +138,7 @@ publication_types:
         doi: &doi
           mandatory: 0
           multiple: 0
+          register: 0
         title: &title
           mandatory: 1
           multiple: 0

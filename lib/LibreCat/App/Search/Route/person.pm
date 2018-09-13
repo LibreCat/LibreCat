@@ -57,8 +57,7 @@ get qr{/person/(.*?)/?} => sub {
 
         if (!$hits->{total}) {
             status '404';
-            return template 'error',
-                {message => "No user found with ID $id"};
+            return template 'error', {message => "No user found with ID $id"};
         }
         else {
             my $person = $hits->first;
@@ -81,8 +80,8 @@ get qr{/person/(.*?)/?} => sub {
     $hits->{modus} = "user";
 
     my $marked = session 'marked';
-    $hits->{marked} = @$marked if $marked;
-    $hits->{style} = $user->{style} if $user->{style};
+    $hits->{marked} = @$marked       if $marked;
+    $hits->{style}  = $user->{style} if $user->{style};
 
     template 'home', $hits;
 };

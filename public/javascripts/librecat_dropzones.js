@@ -112,6 +112,9 @@ $(document).ready(function(){
 
                     file.previewElement.appendChild(accessString);
 
+                    var racString = Dropzone.createElement("<div class=\"row\" id=\"rac_" + resp.tempid + "\"></div>");
+                    file.previewElement.appendChild(racString);
+
                     var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.tempid + "\"><a href=\"#\"><span class=\"fa fa-times\"></span></a></div>");
                     removeLink.addEventListener("click", function(e) {
                         window.delete_file(resp.tempid);

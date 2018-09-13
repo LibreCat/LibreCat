@@ -1,8 +1,26 @@
 Revision history for LibreCat
 
-{{NEXT}} {{DATE}}
+{{NEXT}} {{DATE}} # DO THIS MANUALLY
 
-1.2.0 2018-04-22
+1.2.1 2018-09-04
+    - Adding support changing default request-a-copy email
+    - Fixing page/article number input bug
+    - Adding support to make gravatar optional
+    - Making export routes more resilent against backend errors
+    - Fixing Atom feeds
+    - Hide the password when changing passwords in admin menu
+    - Fixing sorting order in exports
+    - Adding consistent formatting of project and department in record details
+    - Adding better language support for WoS imports
+    - Adding better language support for Crossref/DOI imports
+    - Remove deleted records from similar search
+    - Fixing the sitemap index export
+    - Allow for more results in autocomplete fields
+    - Adding a top menu link for the dashboard
+    - Using /record instead of /publication to reference records
+    - Add reverse_proxy support
+
+1.2.0 2018-05-22
     - Introduce oa (open access) flag which is calculated at indexing time
     - Fixing related material links
     - Adding id-handles to search forms to help jQuery processing in layers

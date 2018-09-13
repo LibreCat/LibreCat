@@ -82,7 +82,7 @@ sub _check {
         sub {
             my $rec = $_[0];
 
-            my $id = $rec->{_id} // '<undef>';
+            my $id  = $rec->{_id} // '<undef>';
             my $url = $rec->{url};
 
             unless ($id && $url) {

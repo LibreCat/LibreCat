@@ -38,9 +38,6 @@
             [% IF fi.embargo %]
             <br />([% h.loc("forms.${type}.field.dropzone.access.until") %] [% fi.embargo %])
             [% END %]
-            [% IF fi.request_a_copy %]
-            [% h.loc("forms.${type}.field.dropzone.access.request_a_copy") %]
-            [% END %]
 
             [% CASE "local" %]
             [% h.loc("forms.${type}.field.dropzone.access.local") %]
@@ -63,6 +60,15 @@
             [% fi.relation %]
           </div>
         </div>
+        <div class="row" id="rac_[% fi.file_id %]">
+          [%- IF fi.request_a_copy %]
+          <div class="col-xs-12">
+            [% h.loc("forms.${type}.field.dropzone.access.request_a_copy") %]
+            [%- IF fi.rac_email %] ([% fi.rac_email %])[% END -%]
+          </div>
+          [%- END %]
+        </div>
+        
         <div class="corner_up" id="corup_[% fi.file_id %]" onclick="delete_file('[% fi.file_id %]');return false;"><a href="#"><span class="fa fa-times"></span></a></div>
         <div class="corner_down" id="cordown_[% fi.file_id %]" onclick="javascript:edit_file('[% fi.file_id %]', '[% _id %]');"><a href="#" onclick="return false;"><span class="fa fa-pencil"></span></a></div>
 
