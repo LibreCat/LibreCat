@@ -63,10 +63,8 @@ Performs search for similar titles, admin only
                                 }
                             }
                         },
-                        "must_not" => {
-                            "term" => { "status" => "deleted" }
-                        },
-                        "should" => {
+                        "must_not" => {"term" => {"status" => "deleted"}},
+                        "should"   => {
                             "match_phrase" => {
                                 "title" =>
                                     {"query" => $p->{q}, "slop" => "50"}
@@ -224,8 +222,17 @@ publications.
     get '/delegate/:delegate_id' => sub {
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
+
+        my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
+        my $perm_by_user_identity = $edit_permissions->{by_user_id} // [];
+
+        my @type_query = ();
+        for (@$perm_by_user_identity) {
+            push @type_query , "$_=$id";
+        }
+
+        push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";
         push @{$p->{cql}}, "status<>deleted";
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = searcher->search('publication', $p);
@@ -246,7 +253,15 @@ Performs search for user.
         my $p  = h->extract_params();
         my $id = session 'user_id';
 
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
+        my $perm_by_user_identity = $edit_permissions->{by_user_id} // [];
+
+        my @type_query = ();
+        for (@$perm_by_user_identity) {
+            push @type_query , "$_=$id";
+        }
+
+        push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";
         push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";

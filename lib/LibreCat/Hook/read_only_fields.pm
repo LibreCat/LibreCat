@@ -29,17 +29,20 @@ sub fix {
             next unless $rec->{$field};
 
             if ($data->{$field}) {
+
                 # Copy back the old version..unless we are an admin
                 if ($self->is_admin($data)) {
                     h->log->debug("$field is readonly, but we are an admin");
                 }
                 else {
-                    h->log->debug("$field is readonly, switching back to old version");
+                    h->log->debug(
+                        "$field is readonly, switching back to old version");
                     $data->{$field} = $rec->{$field};
                 }
             }
             else {
-                h->log->debug("$field not provided, switching back to old version");
+                h->log->debug(
+                    "$field not provided, switching back to old version");
                 $data->{$field} = $rec->{$field};
             }
         }

@@ -324,6 +324,7 @@ forms:
         label: "DOI"
         placeholder: "e.g. 10.4119/xyz/2695161"
         title: "The DOI will be generated automatically and cannot be changed."
+        register: "I want to register a new DOI"
       title: &booktitle
         label: "Title"
         placeholder: "e.g. Handbook of eBook Publishing"

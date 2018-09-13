@@ -1,6 +1,6 @@
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = h.get_person(session.user_id) -%]
-[% lang = session.lang -%]
+[% lang = h.locale() -%]
 [% lf = h.config.locale.$lang.forms -%]
 
 [% INCLUDE header.tt %]
@@ -37,7 +37,7 @@
     <input type="hidden" name="creator.login" value="[% creator ? creator.login : thisPerson.login %]" />
     <input type="hidden" name="creator.id" value="[% creator ? creator.id : thisPerson._id %]" />
     <input type="hidden" name="edit_mode" id="edit_mode" value="expert" />
-    <input type="hidden" name="return_url" id="return_url" value="[% return_url %]" />
+    <input type="hidden" name="return_url" id="return_url" value="[% return_url | html %]" />
 
     <div class="tab tab-content edit-form">
       {% INCLUDE fields/buttonrow_tab.tt %}

@@ -34,11 +34,7 @@ get '/record/:id.:fmt' => sub {
     my $id  = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
-    forward "/export",
-        {
-        cql => "id=$id",
-        fmt => $fmt
-        };
+    forward "/export", {cql => "id=$id", fmt => $fmt};
 };
 
 =head2 GET /record/:id
@@ -111,7 +107,7 @@ get '/embed' => sub {
 
     $hits->{embed} = 1;
 
-    my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
+    my $lang = h->locale_exists( $p->{lang} ) ? $p->{lang} : h->locale();
     $hits->{lang} = $lang;
 
     if (params->{fmt} && params->{fmt} eq 'js') {

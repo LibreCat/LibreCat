@@ -44,6 +44,11 @@ sub daemon {
     my $worker_name = camelize($args->[0]);
     my $worker_class = require_package($worker_name, 'LibreCat::Worker');
 
+    if ($worker_class->can('daemon') && ! $worker_class->daemon) {
+        printf "%s is flagged not to be used as daemon. Request ignored\n" , $worker_class;
+        exit(2);
+    }
+
     sub {
         my $gm_worker = Gearman::XS::Worker->new;
         $gm_worker->add_server('127.0.0.1', 4730);

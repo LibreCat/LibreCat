@@ -1,7 +1,7 @@
 [%- thisPerson = h.get_person(session.user_id) -%]
 [%- qp = request.params.hash %]
 [%- qp.delete('splat') %]
-[%- lang = session.lang ? session.lang : h.config.default_lang %]
+[%- lang = h.locale() %]
 [% lf = h.config.locale.$lang -%]
 [%- style = qp.style || h.config.citation.csl.default_style -%]
 
@@ -57,7 +57,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-1 col-sm-2 col-md-offset-1">
-                    [% thisLang = session.lang ? session.lang : h.config.default_lang %]
+                    [% thisLang = h.locale() %]
                 </div>
             </div>
         </div><!-- /container -->

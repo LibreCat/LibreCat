@@ -168,6 +168,28 @@ $(function () {
     });
 });
 
+$(function () {
+	  $('#id_register_doi').click(function(){
+		    if ($('#id_register_doi').is(":checked")){
+			      $('#id_doi').val($('#id_new_doi').val());
+			      $('#id_doi').attr('readonly','readonly');
+		    }
+		    else{
+			      $('#id_doi').removeAttr('readonly');
+			      $('#id_doi').val("");
+		    }
+	  });
+	  $('#id_doi').keyup(function (){
+		    if($('#id_doi').val()){
+			      $('#id_register_doi').attr('checked', false);
+			      $('#id_register_doi').attr('disabled', true);
+		    }
+		    else {
+			      $('#id_register_doi').attr('disabled', false);
+		    }
+	  });
+});
+
 
 /**
  * Link author name to person account

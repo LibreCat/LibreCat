@@ -1,26 +1,18 @@
+# LibreCat::Worker specific configuration options
 _prefix:
   worker:
 
+# Log directory for worker and supervisor log files
 logdir: logs
 
-DataCite:
-  base_url: 'https://mds.datacite.org'
-  user: ''
-  password: ''
-  test_mode: ''
+## Uncomment when you want to register your publications with a DOI at DataCite
+## See https://github.com/LibreCat/LibreCat/wiki/DOI-Registration for more information
+# Datacite:
+#   user: 'DEMO.XXX'
+#   password: 'secret'
 
-FileUploader:
-  files:
-    package: 'Simple'
-    options:
-      root: '/data2/librecat/file_uploads'
+# FileUploader options are defined in files.yml
+# ImageResizer options are defined in files.yml
 
-ImageResizer:
-  files:
-    package: 'Simple'
-    options:
-      root: '/data2/librecat/file_uploads'
-  access:
-    package: 'Simple'
-    options:
-      root: '/data2/librecat/access_uploads'
+Mailer:
+  default_from: 'unknown@librecat.org'

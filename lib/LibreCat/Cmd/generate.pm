@@ -243,10 +243,8 @@ sub _generate_departments {
 
             return unless defined($id) && $id =~ /\S+/;
 
-            my $hits
-                = $pubs->search(cql_query =>
-                    "department=$id AND status=public"
-                );
+            my $hits = $pubs->search(
+                cql_query => "department=$id AND status=public");
             my $total = $hits->{total};
 
             $root->{tree}->{$id}->{name}    = $item->{name};
