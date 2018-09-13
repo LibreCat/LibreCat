@@ -83,6 +83,9 @@ sub can_edit {
         }
 
         for my $a (@{$user->{$role} // []}) {
+
+            $a = { _id => $a } if is_string($a);
+
             for my $b (@{$pub->{$role_map} // []}) {
                 return 1 if $a->{_id} eq $b->{_id};
             }
