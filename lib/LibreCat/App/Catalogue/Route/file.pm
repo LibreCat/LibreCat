@@ -16,6 +16,17 @@ use Dancer::Plugin::StreamData;
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
+use Catmandu::Util qw(:is);
+
+#str_format( "%f.%e", f => "DS.0", e => "txt" )
+sub str_format {
+    my ($str,%args) = @_;
+    for (keys %args) {
+        my $val = $args{$_};
+        $str =~ s/\%$_/$val/g;
+    }
+    $str;
+}
 
 sub _file_exists {
     my ($key, $filename, %opts) = @_;
@@ -33,9 +44,14 @@ sub _file_exists {
 }
 
 sub _send_it {
-    my ($key, $filename, %opts) = @_;
+    my ($key, $filename, $fileid, %opts) = @_;
 
     my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
+    my $format = h->config->{files}->{download_file_name};
+    $format = is_string($format) ? $format : "%o";
+    my $extension = h->file_extension($filename);
+    $extension =~ s/^\.//o;
+    my $name = str_format($format, i => $key, o => $filename, f => $fileid, e => $extension);
 
     return undef unless $store->index->exists($key);
 
@@ -59,7 +75,8 @@ sub _send_it {
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
-                    'Pragma' => 'no-cache'
+                    'Pragma' => 'no-cache',
+                    'Content-Disposition' => qq(inline; filename="$name")
                 );
 
          # Send the HTTP headers
@@ -175,7 +192,7 @@ get '/rc/:key' => sub {
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
-            _send_it($check->{record_id}, $file->{_id});
+            _send_it($check->{record_id}, $file->{_id}, $file->{_id});
         }
         else {
             status 404;
@@ -296,7 +313,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     }
 
     if (my $file = _file_exists($id, $file_name)) {
-        _send_it($id, $file->{_id});
+        _send_it($id, $file->{_id}, $file_id);
     }
     else {
         status 404;
@@ -316,7 +333,7 @@ get '/thumbnail/:id' => sub {
     my $thumbnail_name = 'thumbnail.png';
 
     if (my $file = _file_exists($key, $thumbnail_name, access => 1)) {
-        _send_it($key, $file->{_id}, access => 1);
+        _send_it($key, $file->{_id}, $file->{_id},access => 1);
     }
     else {
         redirect uri_for('/images/thumbnail_dummy.png');
