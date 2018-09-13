@@ -105,3 +105,21 @@ routes:
     - [ 'ANY'  , '/oai'                          , 'default' ]
 
     - [ 'ANY'  , '/$'                            , 'default' ]
+
+access:
+    can_edit:
+      # Specify which user types can edit records
+      # Options: creator, author, editor, translator, supervisor
+      # (or any field in the publication record with an 'id' subfield)
+      by_user_id:
+          - creator
+          - author
+          - editor
+          - translator
+      # Specify which user roles can edit records
+      # Options: reviewer, project_reviewer, data_manager, delegate
+      by_user_role:
+          - reviewer
+          - project_reviewer
+          - data_manager
+          - delegate

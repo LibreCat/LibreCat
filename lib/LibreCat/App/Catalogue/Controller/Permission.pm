@@ -29,6 +29,8 @@ Hash reference containing "user_id" and "role". Both must be a string
 sub can_edit {
     my ($self, $id, $opts) = @_;
 
+    my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
+
     is_string($id)     or return 0;
     is_hash_ref($opts) or return 0;
 
@@ -49,80 +51,42 @@ sub can_edit {
     #only super_admin has access to locked publications
     return 0 if $pub->{locked};
 
-    #collect possible person identifiers
-    my @person_ids;
+    my $perm_by_user_identity = $edit_permissions->{by_user_id} // [];
+    my $perm_by_user_role     = $edit_permissions->{by_user_role} // [];
 
-    push @person_ids, $pub->{creator}->{id}
-        if is_string($pub->{creator}->{id});
-    push @person_ids,
-        grep {is_string($_)} map {$_->{id}} @{$pub->{author} || []};
-    push @person_ids,
-        grep {is_string($_)} map {$_->{id}} @{$pub->{editor} || []};
-    push @person_ids,
-        grep {is_string($_)} map {$_->{id}} @{$pub->{translator} || []};
+    for my $type (@$perm_by_user_identity) {
+        my $identities = $pub->{$type} // [];
+        $identities = [$identities] if is_hash_ref $identities;
 
-    #match current user on person identifier
-    for my $person_id (@person_ids) {
-        return 1 if $person_id eq $user->{_id};
+        for my $person (@$identities) {
+            # Create a virtual delegate file of all users found (we need
+            # later in the subroutine...)
+            push @{$pub->{delegate}} , { _id => $person->{id} };
+
+            return 1 if $user_id eq $person->{id};
+        }
     }
 
-    #access for role reviewer
-    if ($role eq "reviewer") {
+    my %role_permission_map = (
+        reviewer         => 'department' ,
+        project_reviewer => 'project' ,
+        data_manager     => 'deparment' ,
+        delegate         => 'delegate' ,
+    );
 
-        for my $rev (@{$user->{reviewer} || []}) {
+    for my $role (@$perm_by_user_role ) {
+        my $role_map = $role_permission_map{$role};
 
-            for my $dep (@{$pub->{department} || []}) {
-
-                return 1 if $rev->{_id} eq $dep->{_id};
-
-            }
-
+        unless ($role_map) {
+            $self->log->error("no role_permission_map for $role!");
+            return 0;
         }
 
-    }
-
-    #access for project_reviewer
-    elsif ($role eq "project_reviewer") {
-
-        for my $proj_rev (@{$user->{project_reviewer} || []}) {
-
-            for my $proj (@{$pub->{project} || []}) {
-
-                return 1 if $proj_rev->{_id} eq $proj->{_id};
-
+        for my $a (@{$user->{$role} // []}) {
+            for my $b (@{$pub->{$role_map} // []}) {
+                return 1 if $a->{_id} eq $b->{_id};
             }
-
         }
-
-    }
-
-    #access for role data_manager
-    elsif ($role eq "data_manager") {
-
-        for my $dm (@{$user->{data_manager} || []}) {
-
-            for my $dep (@{$pub->{department} || []}) {
-
-                return 1 if $dm->{_id} eq $dep->{_id};
-
-            }
-
-        }
-
-    }
-
-    #access for role delegate
-    elsif ($role eq "delegate") {
-
-        for my $dm (@{$user->{delegate} || []}) {
-
-            for my $person_id (@person_ids) {
-
-                return 1 if $person_id eq $dm;
-            }
-
-        }
-
     }
 
     #cannot edit
@@ -230,7 +194,6 @@ sub can_download {
         return (1, $file_name);
     }
     elsif ($access eq 'closed') {
-
         # closed documents can be downloaded by user
         # if and only if the user can edit the record
         my $can_edit
