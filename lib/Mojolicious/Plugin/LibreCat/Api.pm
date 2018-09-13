@@ -20,6 +20,8 @@ sub register {
 
             $model_api->delete('/:id')->to('#remove', model => $model)->name($model);
 
+            $model_api->put('/:id')->to('#create', model => $model)->name($model);
+
             $model_api->post->to('#add', model => $model)->name($model);
 
             return $model_api;

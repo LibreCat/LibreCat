@@ -33,6 +33,24 @@ sub create {
     my $data  = decode_json($c->req->body);
     my $recs  = librecat->$model;
 
+    $recs->add(
+        $data,
+        on_validation_error => sub {
+            my ($x, $errors) = @_;
+            return $c->not_valid($errors);
+        },
+        on_success => sub {
+            my $d = {
+                type       => $model,
+                id         => $data->{_id},
+                attributes => $data,
+                links      => {self => $c->url_for->to_abs,},
+            };
+
+            # send created status 201
+            $c->render(json => {data => $d});
+        }
+    );
 }
 
 sub add {
@@ -40,6 +58,11 @@ sub add {
     my $model = $c->param('model');
     my $data  = decode_json($c->req->body);
     my $recs  = librecat->$model;
+
+    # does record exist?
+    unless ($recs->get($data->{_id})) {
+        $c->not_found;
+    }
 
     $recs->add(
         $data,
