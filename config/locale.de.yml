@@ -194,7 +194,7 @@ citation:
 frontdoor:
   publication: Zeitschriftentitel
   preview: "Vorschau"
-  no_record: "Dieser Eintrag exisitert nicht oder wurde gel&ouml;scht"
+  no_record: "Dieser Eintrag existiert nicht oder wurde gel&ouml;scht"
   download: "Download"
   download_extern: "Download (ext.)"
   no_download: "<span class='text-danger'><strong>Es wurde kein Volltext hochgeladen. Nur Publikationsnachweis!</strong></span>"
