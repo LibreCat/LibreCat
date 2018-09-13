@@ -58,7 +58,9 @@ sub can_edit {
         my $identities = $pub->{$type} // [];
         $identities = [$identities] if is_hash_ref $identities;
 
-        for my $person (@$identities) {
+        INNER: for my $person (@$identities) {
+            next unless defined $person->{id};
+
             # Create a virtual delegate file of all users found (we need
             # later in the subroutine...)
             push @{$pub->{delegate}} , { _id => $person->{id} };
@@ -67,6 +69,7 @@ sub can_edit {
         }
     }
 
+    # LibreCat roles and fields where to find { _id => <user_id> }
     my %role_permission_map = (
         reviewer         => 'department' ,
         project_reviewer => 'project' ,
@@ -83,7 +86,8 @@ sub can_edit {
         }
 
         for my $a (@{$user->{$role} // []}) {
-
+            # Delegate identifier are stored as an array of strings [ 1,5,6 ]
+            # not as an array of hashes [ { _id => 1 } , { _id => 5 } , { _id => 6 }]
             $a = { _id => $a } if is_string($a);
 
             for my $b (@{$pub->{$role_map} // []}) {
