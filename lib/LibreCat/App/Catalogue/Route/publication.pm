@@ -206,6 +206,7 @@ Checks if the user has the rights to edit this record.
 =cut
 
     get '/return/:id' => sub {
+        my $return_url = params->{return_url};
 
         my $rec = publication->get(param("id")) or pass;
 
@@ -233,7 +234,7 @@ Checks if the user has the rights to edit this record.
             }
         );
 
-        redirect uri_for('/librecat');
+        redirect $return_url || uri_for('/librecat');
     };
 
 =head2 GET /delete/:id
@@ -340,6 +341,7 @@ Publishes private records, returns to the list.
 =cut
 
     get '/publish/:id' => sub {
+        my $return_url = params->{return_url};
 
         my $rec = publication->get(param("id")) or pass;
 
@@ -380,7 +382,7 @@ Publishes private records, returns to the list.
             $hook->fix_after($rec);
         }
 
-        redirect uri_for('/librecat');
+        redirect $return_url || uri_for('/librecat');
     };
 
 =head2 POST /change_mode

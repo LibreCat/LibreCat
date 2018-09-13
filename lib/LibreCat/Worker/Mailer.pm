@@ -7,6 +7,8 @@ use namespace::clean;
 
 with 'LibreCat::Worker';
 
+has default_from  => (is => 'ro', default => sub { 'unknown@librecat.org' });
+
 sub work {
     my ($self, $opts) = @_;
 
@@ -14,7 +16,7 @@ sub work {
     my $mail = Email::Simple->create(
         header => [
             To      => $opts->{to},
-            From    => $opts->{from} // 'unknown@librecat.org',
+            From    => $opts->{from} // $self->default_from,
             Subject => $opts->{subject},
         ],
         body => $opts->{body},

@@ -22,6 +22,7 @@ ok($instance == LibreCat->instance, "instance is a singleton");
 
 isa_ok($instance->log,          'Log::Any::Proxy');
 isa_ok($instance->log->adapter, 'Log::Any::Adapter::Log4perl');
+is($instance->log->{category}, 'LibreCat');
 
 # config
 

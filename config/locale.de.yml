@@ -194,7 +194,7 @@ citation:
 frontdoor:
   publication: Zeitschriftentitel
   preview: "Vorschau"
-  no_record: "Dieser Eintrag exisitert nicht oder wurde gel&ouml;scht"
+  no_record: "Dieser Eintrag existiert nicht oder wurde gel&ouml;scht"
   download: "Download"
   download_extern: "Download (ext.)"
   no_download: "<span class='text-danger'><strong>Es wurde kein Volltext hochgeladen. Nur Publikationsnachweis!</strong></span>"
@@ -325,6 +325,7 @@ forms:
         label: "DOI"
         placeholder: "z.B. 10.4119/xyz/2695161"
         title: "Der DOI wird automatisch generiert und kann nicht ver&auml;ndert werden."
+        register: "Ich m&ouml;chte einen neuen DOI registrieren."
       title: &booktitle
         label: "Titel"
         placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
