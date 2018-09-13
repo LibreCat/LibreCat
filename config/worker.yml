@@ -5,11 +5,11 @@ _prefix:
 # Log directory for worker and supervisor log files
 logdir: logs
 
-DataCite:
-  base_url: 'https://mds.datacite.org'
-  user: ''
-  password: ''
-  test_mode: ''
+## Uncomment when you want to register your publications with a DOI at DataCite
+## See https://github.com/LibreCat/LibreCat/wiki/DOI-Registration for more information
+# Datacite:
+#   user: 'DEMO.XXX'
+#   password: 'secret'
 
 # FileUploader options are defined in files.yml
 # ImageResizer options are defined in files.yml

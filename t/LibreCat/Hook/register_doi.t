@@ -7,7 +7,7 @@ use LibreCat -load => {layer_paths => [qw(t/layer)]};
 my $pkg;
 
 BEGIN {
-    $pkg = 'LibreCat::Hook::new_research_data_datacite';
+    $pkg = 'LibreCat::Hook::register_doi';
     use_ok $pkg;
 }
 require_ok $pkg;

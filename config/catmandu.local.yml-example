@@ -103,11 +103,12 @@ ip_range:
 #  to: 'send@me.org'
 #  subject: '[LibreCat] New research data submitted'
 
-## Uncomment when you want to register your research_data DOI at DataCite
+## Uncomment when you want to register your publications with a DOI at DataCite
+## See https://github.com/LibreCat/LibreCat/wiki/DOI-Registration for more information
 #doi:
 #  prefix: "10.5072/test"
-#  user: user
-#  passwd: secret
+#  queue: datacite
+#  default_publisher: LibreCat Publishing System
 
 ## Uncomment when you want to register extra functionality in the LibreCat
 ## helper utility. All the methods defined in these plugins will become
