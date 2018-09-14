@@ -982,7 +982,7 @@ search:
             properties:
               iso: {type: string, analyzer: tag}
           extern: {type: byte}
-          ubi_funded: {type: byte}
+          funded_apc: {type: byte}
           quality_controlled: {type: byte}
           popular_science: {type: byte}
           ec_funded: {type: byte}

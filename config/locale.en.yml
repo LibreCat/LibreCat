@@ -231,7 +231,7 @@ frontdoor:
       ipn: "Int. Patent Number"
       ipc: "Int. Patent Classification"
       financial_disclosure: "Financial disclosure"
-      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href=''>Open Access Publication Fund</a> of LibreCat University."
+      funded_apc: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href=''>Open Access Publication Fund</a> of LibreCat University."
       scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and LibreCat University."
       alt_name: "Alternative Name"
       acronym: "Acronym"
@@ -965,7 +965,7 @@ forms:
         label: "GenBank ID"
         label_short: "GenBank"
         placeholder: "GenBank IDs (multiple entries separated by semicolon, e.g. AY323492 ; AY333421 ; AY323491)"
-      ubi_funded:
+      funded_apc:
         label: "Funding"
         placeholder: "APC co-financed by DFG"
       related_material.record: *related_material_record

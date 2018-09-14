@@ -418,7 +418,7 @@ publication:
           pattern: "^[01]$"
         - type: integer
       description: "Flag of quality control"
-    ubi_funded:
+    funded_apc:
       oneOf:
         - type: string
           pattern: "^[01]$"

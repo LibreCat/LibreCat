@@ -96,7 +96,7 @@ field_order:
     - popular_science_quality_controlled
     - external_id
     - message
-    - ubi_funded
+    - funded_apc
     - alternative_id
   related_material:
     - related_material.record
@@ -558,7 +558,7 @@ publication_types:
           multiple: 0
         message: *message
         jel: *jel
-        ubi_funded:
+        funded_apc:
           multiple: 0
         thematic_area: *thematic_area
         alternative_id: *alternative_id
