@@ -75,7 +75,7 @@ sub command {
     for my $i (1 .. $n) {
         my $loc = sprintf("$config->{uri_base}/sitemap-%05d.xml", $i);
         $file->say(
-            "<sitemap><url><loc>$loc</loc><lastmod>$today</lastmod></url></sitemap>"
+            "<sitemap><loc>$loc</loc><lastmod>$today</lastmod></sitemap>"
         );
     }
     $file->say('</sitemapindex>');
