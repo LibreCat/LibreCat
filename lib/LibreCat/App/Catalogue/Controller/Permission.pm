@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util qw(:is);
 use LibreCat::App::Helper;
+use LibreCat::Access;
 use Carp;
 use Dancer qw(:syntax);
 use Exporter qw/import/;
@@ -29,8 +30,6 @@ Hash reference containing "user_id" and "role". Both must be a string
 sub can_edit {
     my ($self, $id, $opts) = @_;
 
-    my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
-
     is_string($id)     or return 0;
     is_hash_ref($opts) or return 0;
 
@@ -39,8 +38,8 @@ sub can_edit {
     my $user_id = $opts->{user_id};
     my $role    = $opts->{role};
 
-    my $pub  = h->main_publication->get($id) or return 0;
-    my $user = h->get_person($user_id)       or return 0;
+    my $pub   = h->main_publication->get($id) or return 0;
+    my $user  = h->get_person($user_id);
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';
@@ -48,56 +47,25 @@ sub can_edit {
     #no restrictions for super_admin
     return 1 if $role eq "super_admin";
 
-    #only super_admin has access to locked publications
-    return 0 if $pub->{locked};
+    my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
 
-    my $perm_by_user_identity = $edit_permissions->{by_user_id} // [];
-    my $perm_by_user_role     = $edit_permissions->{by_user_role} // [];
-
-    for my $type (@$perm_by_user_identity) {
-        my $identities = $pub->{$type} // [];
-        $identities = [$identities] if is_hash_ref $identities;
-
-        INNER: for my $person (@$identities) {
-            next unless defined $person->{id};
-
-            # Create a virtual delegate file of all users found (we need
-            # later in the subroutine...)
-            push @{$pub->{delegate}} , { _id => $person->{id} };
-
-            return 1 if $user_id eq $person->{id};
+    my $edit_access = LibreCat::Access->new(
+        allowed_user_id   => $edit_permissions->{by_user_id}   ,
+        allowed_user_role => $edit_permissions->{by_user_role} ,
+        publication_deny  => {
+            locked => 1 ,
         }
-    }
-
-    # LibreCat roles and fields where to find { _id => <user_id> }
-    my %role_permission_map = (
-        reviewer         => 'department' ,
-        project_reviewer => 'project' ,
-        data_manager     => 'deparment' ,
-        delegate         => 'delegate' ,
     );
 
-    for my $role (@$perm_by_user_role ) {
-        my $role_map = $role_permission_map{$role};
-
-        unless ($role_map) {
-            $self->log->error("no role_permission_map for $role!");
-            return 0;
-        }
-
-        for my $a (@{$user->{$role} // []}) {
-            # Delegate identifier are stored as an array of strings [ 1,5,6 ]
-            # not as an array of hashes [ { _id => 1 } , { _id => 5 } , { _id => 6 }]
-            $a = { _id => $a } if is_string($a);
-
-            for my $b (@{$pub->{$role_map} // []}) {
-                return 1 if $a->{_id} eq $b->{_id};
-            }
-        }
+    if ($edit_access->by_user_id($pub,$user)) {
+        return 1;
     }
-
-    #cannot edit
-    return 0;
+    elsif ($edit_access->by_user_role($pub,$user)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 =head2 can_delete( $self, $id, $opts )
