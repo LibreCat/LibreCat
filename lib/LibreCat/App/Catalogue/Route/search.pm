@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat qw(searcher);
 use LibreCat::App::Helper;
+use LibreCat::App::Catalogue::Controller::Permission;
 
 =head2 PREFIX /librecat/search
 
@@ -223,8 +224,7 @@ publications.
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
 
-        my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
-        my $perm_by_user_identity = $edit_permissions->{by_user_id} // [];
+        my $perm_by_user_identity = p->all_author_types;
 
         my @type_query = ();
         for (@$perm_by_user_identity) {
@@ -240,7 +240,6 @@ publications.
         $hits->{delegate_id} = $id;
 
         template "home", $hits;
-
     };
 
 =head2 GET /
@@ -253,8 +252,7 @@ Performs search for user.
         my $p  = h->extract_params();
         my $id = session 'user_id';
 
-        my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
-        my $perm_by_user_identity = $edit_permissions->{by_user_id} // [];
+        my $perm_by_user_identity = p->all_author_types;
 
         my @type_query = ();
         for (@$perm_by_user_identity) {
@@ -272,7 +270,6 @@ Performs search for user.
         $hits->{modus} = "user";
 
         template "home", $hits;
-
     };
 
 };

@@ -229,6 +229,51 @@ sub can_download {
     return (0, '');
 }
 
+=head2 all_author_types
+
+Returns a listing of all the user_id fields for any of the edit,delete,..actions
+
+=cut
+sub all_author_types {
+    my ($self) = @_;
+
+    my $permissions = h->config->{permissions}->{access} // {};
+
+    my $perm_by_user_identity = {};
+
+    for my $action (keys %$permissions) {
+        my $action_perm = $permissions->{$action}->{by_user_id} // [];
+        for (@$action_perm) {
+            $perm_by_user_identity->{$_} = 1;
+        }
+    }
+
+    return [ keys %$perm_by_user_identity ];
+}
+
+
+=head2 all_author_roles
+
+Returns a listing of all the user_role fields for any of the edit,delete,..actions
+
+=cut
+sub all_author_roles {
+    my ($self) = @_;
+
+    my $permissions = h->config->{permissions}->{access} // {};
+
+    my $perm_by_user_role = {};
+
+    for my $action (keys %$permissions) {
+        my $action_perm = $permissions->{$action}->{by_user_role} // [];
+        for (@$action_perm) {
+            $perm_by_user_role->{$_} = 1;
+        }
+    }
+
+    return [ keys %$perm_by_user_role ];
+}
+
 package LibreCat::App::Catalogue::Controller::Permission;
 
 my $p = LibreCat::App::Catalogue::Controller::Permission::Permissions->new;
