@@ -198,7 +198,6 @@ access:
           - editor
           - translator
       by_user_role:
-          - user
           - reviewer
           - project_reviewer
           - data_manager
