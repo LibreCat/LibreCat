@@ -156,14 +156,39 @@ Checks if the user has the rights to update this record.
 
         h->log->debug("Params:" . to_dumper($p));
 
-        unless (
-            $p->{new_record}
-            or p->can_edit(
+        p->{finalSubmit} //= '';
+
+        if ($p->{new_record}) {
+            # ok
+        }
+        elsif (p->{finalSubmit} eq 'recPublish' &&
+            p->can_make_public(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
-            )
-            )
-        {
+            )) {
+            # ok
+        }
+        elsif ($p->{finalSubmit} eq 'recReturn' &&
+            p->can_return(
+                $p->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )) {
+            # ok
+        }
+        elsif ($p->{finalSubmit} eq 'recSubmit' &&
+            p->can_submit(
+                $p->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )) {
+            # ok
+        }
+        elsif (p->can_edit(
+            $p->{_id},
+            {user_id => session("user_id"), role => session("role")}
+            )) {
+            # ok
+        }
+        else {
             access_denied_hook();
             status '403';
             forward '/access_denied';
@@ -211,7 +236,7 @@ Checks if the user has the rights to edit this record.
         my $rec = publication->get(param("id")) or pass;
 
         unless (
-            p->can_edit(
+            p->can_return(
                 $rec->{_id},
                 {user_id => session("user_id"), role => session("role")}
             )
@@ -248,9 +273,16 @@ Deletes record with id. For admins only.
 
         my $rec = publication->get($id);
 
-        unless ($rec) {
-            return template 'error',
-                {message => "No publication found with ID $id."};
+        unless (
+            p->can_delete(
+                $rec->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
+            access_denied_hook();
+            status '403';
+            forward '/access_denied';
         }
 
         $rec->{user_id} = session->{user_id};
@@ -346,7 +378,7 @@ Publishes private records, returns to the list.
         my $rec = publication->get(param("id")) or pass;
 
         unless (
-            p->can_edit(
+            p->can_make_public(
                 $rec->{_id},
                 {user_id => session("user_id"), role => session("role")}
             )

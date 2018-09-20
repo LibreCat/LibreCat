@@ -34,7 +34,7 @@ routes:
     - [ 'GET'  , '/librecat/record/edit'          , 'login' ]
     - [ 'POST' , '/librecat/record/update'        , 'login' ]
     - [ 'GET'  , '/librecat/record/return'        , 'login' ]
-    - [ 'GET'  , '/librecat/record/delete'        , 'role' , 'super_admin' ]
+    - [ 'GET'  , '/librecat/record/delete'        , 'login' ]
     - [ 'GET'  , '/librecat/record/preview'       , 'login' ]
     - [ 'GET'  , '/librecat/record/internal_view' , 'role' , 'super_admin' ]
     - [ 'GET'  , '/librecat/record/clone'         , 'login' ]
@@ -107,7 +107,14 @@ routes:
     - [ 'ANY'  , '/$'                            , 'default' ]
 
 access:
+    # Publication EDIT rights
     can_edit:
+      # Specify which types of publications can be edited.
+      # publication_allow: hash containing one or more properties a publication must match to be allowed.
+      # publication_deny: hash containing one or more properties a publication must not match to be allowed.
+      publication_allow: {}
+      publication_deny:
+          locked: 1   # Locked publications can't be edited
       # Specify which user types can edit records
       # Options: creator, author, editor, translator, supervisor
       by_user_id:
@@ -118,6 +125,80 @@ access:
       # Specify which user roles can edit records
       # Options: reviewer, project_reviewer, data_manager, delegate
       by_user_role:
+          - reviewer
+          - project_reviewer
+          - data_manager
+          - delegate
+
+    # Publication DELETE rights
+    can_delete:
+      publication_allow:
+          status: private # Only private records can be deleted
+      publication_deny:
+          locked: 1   # Locked publications can't be edited
+      by_user_id:
+          - creator
+      by_user_role: []
+
+    # Publication SUBMIT rights (send to reviewer)
+    can_submit:
+      publication_allow: {}
+      publication_deny:
+          status: "public|submitted" # Only records that are not public or submitted
+      by_user_id:
+          - creator
+          - author
+          - editor
+          - translator
+      by_user_role:
+          - reviewer
+          - project_reviewer
+          - data_manager
+          - delegate
+
+    # Publication PUBLISH rights
+    can_make_public:
+      publication_allow: {}
+      publication_deny:
+          status: public # Only records that are not public can be made public
+      by_user_id:
+          - creator
+          - author
+          - editor
+          - translator
+      by_user_role:
+          - reviewer
+          - project_reviewer
+          - data_manager
+          - delegate
+
+    # Publication RETURN rights
+    can_return:
+      publication_allow:
+          status: public # Only records that are not public can be made public
+      publication_deny: {}
+      by_user_id:
+          - creator
+          - author
+          - editor
+          - translator
+      by_user_role:
+          - reviewer
+          - project_reviewer
+          - data_manager
+          - delegate
+
+    # Publication DOWNLOAD rights (for closed access files)
+    can_download:
+      publication_allow: {}
+      publication_deny: {}
+      by_user_id:
+          - creator
+          - author
+          - editor
+          - translator
+      by_user_role:
+          - user
           - reviewer
           - project_reviewer
           - data_manager

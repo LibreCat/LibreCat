@@ -11,7 +11,54 @@ use Exporter qw/import/;
 
 use Moo;
 
-=head2 can_edit( $self, $id, $opts )
+sub _can_do_action {
+    my ($self, $action, $id, $opts) = @_;
+
+    unless (defined($action)) {
+        h->log->fata("whoops! an action role needs to be filled in");
+        return 0;
+    }
+
+    is_string($id)     or return 0;
+    is_hash_ref($opts) or return 0;
+
+    h->log->debug("id: $id ; opts:" . to_dumper($opts));
+
+    my $user_id = $opts->{user_id};
+    my $role    = $opts->{role};
+
+    return 0 unless defined($user_id) && defined($role);
+
+    my $pub   = h->main_publication->get($id) or return 0;
+    my $user  = h->get_person($user_id);
+
+    # do not touch deleted records
+    return 0 if $pub->{status} && $pub->{status} eq 'deleted';
+
+    #no restrictions for super_admin
+    return 1 if $role eq "super_admin";
+
+    my $action_permissions = h->config->{permissions}->{access}->{$action};
+
+    my $action_access = LibreCat::Access->new(
+        allowed_user_id   => $action_permissions->{by_user_id}   ,
+        allowed_user_role => $action_permissions->{by_user_role} ,
+        publication_allow => $action_permissions->{publication_allow} ,
+        publication_deny  => $action_permissions->{publication_deny} ,
+    );
+
+    if ($action_access->by_user_id($pub,$user)) {
+        return 1;
+    }
+    elsif ($action_access->by_user_role($pub,$user)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+=head2 can_edit( $self, $id, $param)
 
 =over 4
 
@@ -28,47 +75,11 @@ Hash reference containing "user_id" and "role". Both must be a string
 =cut
 
 sub can_edit {
-    my ($self, $id, $opts) = @_;
-
-    is_string($id)     or return 0;
-    is_hash_ref($opts) or return 0;
-
-    h->log->debug("id: $id ; opts:" . to_dumper($opts));
-
-    my $user_id = $opts->{user_id};
-    my $role    = $opts->{role};
-
-    my $pub   = h->main_publication->get($id) or return 0;
-    my $user  = h->get_person($user_id);
-
-    # do not touch deleted records
-    return 0 if $pub->{status} && $pub->{status} eq 'deleted';
-
-    #no restrictions for super_admin
-    return 1 if $role eq "super_admin";
-
-    my $edit_permissions = h->config->{permissions}->{access}->{can_edit};
-
-    my $edit_access = LibreCat::Access->new(
-        allowed_user_id   => $edit_permissions->{by_user_id}   ,
-        allowed_user_role => $edit_permissions->{by_user_role} ,
-        publication_deny  => {
-            locked => 1 ,
-        }
-    );
-
-    if ($edit_access->by_user_id($pub,$user)) {
-        return 1;
-    }
-    elsif ($edit_access->by_user_role($pub,$user)) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
+    my ($self, $id, $param) = @_;
+    return $self->_can_do_action('can_edit', $id, $param);
 }
 
-=head2 can_delete( $self, $id, $opts )
+=head2 can_delete( $self, $id, $param )
 
 =over 4
 
@@ -85,14 +96,11 @@ Hash reference containing "user_id" and "role". Both must be a string
 =cut
 
 sub can_delete {
-    my ($self, $id, $opts) = @_;
-    return
-           is_hash_ref($opts)
-        && is_string($opts->{role})
-        && $opts->{role} eq "super_admin" ? 1 : 0;
+    my ($self, $id, $param) = @_;
+    return $self->_can_do_action('can_delete', $id, $param);
 }
 
-=head2 can_delete_file( $self, $id, $opts )
+=head2 can_make_public( $self, $id, $param )
 
 =over 4
 
@@ -108,9 +116,51 @@ Hash reference containing "user_id" and "role". Both must be a string
 
 =cut
 
-sub can_delete_file {
-    my ($self, $id, $opts) = @_;
-    return 0;
+sub can_make_public {
+    my ($self, $id, $param) = @_;
+    return $self->_can_do_action('can_make_public', $id, $param);
+}
+
+=head2 can_return( $self, $id, $param )
+
+=over 4
+
+=item id
+
+Publication identifier
+
+=item opts
+
+Hash reference containing "user_id" and "role". Both must be a string
+
+=back
+
+=cut
+
+sub can_return {
+    my ($self, $id, $param) = @_;
+    return $self->_can_do_action('can_return', $id, $param);
+}
+
+=head2 can_return( $self, $id, $param )
+
+=over 4
+
+=item id
+
+Publication identifier
+
+=item opts
+
+Hash reference containing "user_id" and "role". Both must be a string
+
+=back
+
+=cut
+
+sub can_submit {
+    my ($self, $id, $param) = @_;
+    return $self->_can_do_action('can_submit', $id, $param);
 }
 
 =head2 can_download( $self, $id, $opts )
@@ -171,9 +221,9 @@ sub can_download {
     elsif ($access eq 'closed') {
         # closed documents can be downloaded by user
         # if and only if the user can edit the record
-        my $can_edit
-            = $self->can_edit($id, {user_id => $user_id, role => $role});
-        return ($can_edit ? 1 : 0, $file_name);
+        my $can_download
+            = $self->_can_do_action('can_download',$id, {user_id => $user_id, role => $role});
+        return ($can_download ? 1 : 0, $file_name);
     }
 
     return (0, '');

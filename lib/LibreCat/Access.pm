@@ -1,6 +1,7 @@
 package LibreCat::Access;
 
 use Catmandu::Util qw(:is);
+use Catmandu::Fix::vacuum as => 'vacuum';
 use Moo;
 
 has allowed_user_id         => (is => 'ro' , default => sub { [] });
@@ -61,6 +62,9 @@ sub by_user_role {
             for my $id (@{$user->{reviewer}}) {
                 for my $iid (@{$pub->{department} // []}) {
                     return 1 if $id->{_id} eq $iid->{_id};
+                    for my $tree (@{$iid->{tree} // []}) {
+                        return 1 if $id->{_id} eq $tree->{_id};
+                    }
                 }
             }
         }
@@ -76,6 +80,9 @@ sub by_user_role {
             for my $id (@{$user->{data_manager}}) {
                 for my $iid (@{$pub->{department} // []}) {
                     return 1 if $id->{_id} eq $iid->{_id};
+                    for my $tree (@{$iid->{tree} // []}) {
+                        return 1 if $id->{_id} eq $tree->{_id};
+                    }
                 }
             }
         }
@@ -120,13 +127,16 @@ sub all_user_ids {
 
 sub is_publication_allowed {
     my ($self,$pub) = @_;
-    return $self->publication_match($pub,$self->publication_allow);
+    my $h = $self->clean_hash($self->publication_allow);
+    return 1 unless defined($h);
+    return $self->publication_match($pub,$h);
 }
 
 sub is_publication_denied {
     my ($self,$pub) = @_;
-    return 0 unless $self->publication_deny;
-    return $self->publication_match($pub,$self->publication_deny);
+    my $h = $self->clean_hash($self->publication_deny);
+    return 0 unless defined($h);
+    return $self->publication_match($pub,$h);
 }
 
 sub publication_match {
@@ -139,8 +149,10 @@ sub publication_match {
     for my $key (keys %$conf) {
         my $value = $conf->{$key};
 
+        next unless defined($value);
+
         if ($ret == 1) {}
-        elsif (is_same($pub->{$key},$value)) {
+        elsif (is_value($pub->{$key}) && $pub->{$key} =~ /^$value$/) {
             $ret = 1;
         }
         else {
@@ -150,6 +162,16 @@ sub publication_match {
 
     return $ret;
 }
+
+# Remove undefined values from a hash
+sub clean_hash {
+    my ($self,$hash) = @_;
+    return undef unless $hash;
+    return undef unless int(keys %$hash) > 0;
+    vacuum($hash);
+    return $hash;
+}
+
 
 1;
 
