@@ -104,12 +104,13 @@ User can choose default language for the librecat backend
 
     get '/set_language' => sub {
 
-        my $person = h->get_person(session('user_id'));
-        my $lang   = params->{lang};
-        if ($lang eq "en" or $lang eq "de") {
+        my $h = h();
+        my $person = $h->get_person(session('user_id'));
+        my $lang   = param('lang');
+        if ( $h->locale_exists( $lang ) ) {
             $person->{lang} = $lang;
             user->add($person);
-            session lang => $lang;
+            $h->set_locale( $lang );
         }
 
         redirect uri_for('/librecat');

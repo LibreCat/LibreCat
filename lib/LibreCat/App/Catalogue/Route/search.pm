@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat qw(searcher);
 use LibreCat::App::Helper;
+use LibreCat::App::Catalogue::Controller::Permission;
 
 =head2 PREFIX /librecat/search
 
@@ -222,8 +223,16 @@ publications.
     get '/delegate/:delegate_id' => sub {
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
+
+        my $perm_by_user_identity = p->all_author_types;
+
+        my @type_query = ();
+        for (@$perm_by_user_identity) {
+            push @type_query , "$_=$id";
+        }
+
+        push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";
         push @{$p->{cql}}, "status<>deleted";
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = searcher->search('publication', $p);
@@ -231,7 +240,6 @@ publications.
         $hits->{delegate_id} = $id;
 
         template "home", $hits;
-
     };
 
 =head2 GET /
@@ -244,7 +252,14 @@ Performs search for user.
         my $p  = h->extract_params();
         my $id = session 'user_id';
 
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        my $perm_by_user_identity = p->all_author_types;
+
+        my @type_query = ();
+        for (@$perm_by_user_identity) {
+            push @type_query , "$_=$id";
+        }
+
+        push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";
         push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
@@ -255,7 +270,6 @@ Performs search for user.
         $hits->{modus} = "user";
 
         template "home", $hits;
-
     };
 
 };
