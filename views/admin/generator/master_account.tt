@@ -5,16 +5,21 @@
 [% INCLUDE header.tt %]
 
 <!-- BEGIN admin/generator/master_account.tt -->
+[% IF _id %]
+  [% FORM_ACTION = h.uri_for("/librecat/admin/account/" _ _id, "x-tunneled-method" = "PUT") %]
+[% ELSE %]
+  [% FORM_ACTION = h.uri_for("/librecat/admin/account") %]
+[% END %]
 
 <div class="row">
 
   <div class="col-md-11 col-sm-12"> <!-- main content (left) -->
 
     <div class="page-header" id="banner">
-      <h1>[% IF full_name %]Edit Account for [% full_name %][% ELSE %]Add new account[% END %]</h1>
+      <h1>[% IF _id %]Edit Account for [% full_name %][% ELSE %]Add new account[% END %]</h1>
     </div>
 
-    <form id="id_account_form" action="[% uri_base %]/librecat/admin/account/update" method="POST">
+    <form id="id_account_form" action="[% FORM_ACTION | html %]" method="POST">
       <input type="hidden" name="date_created" value="[% date_created %]" />
       <input type="hidden" name="email_encoded" value="[% email_encoded %]" />
       <input type="hidden" name="title" value="[% title %]" />

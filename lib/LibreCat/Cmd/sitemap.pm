@@ -71,12 +71,14 @@ sub command {
     my $file = io($path, mode => 'w');
     $file->say('<?xml version="1.0" encoding="UTF-8"?>');
     $file->say(
-        '<sitemap xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
     for my $i (1 .. $n) {
         my $loc = sprintf("$config->{uri_base}/sitemap-%05d.xml", $i);
-        $file->say("<url><loc>$loc</loc><lastmod>$today</lastmod></url>");
+        $file->say(
+            "<sitemap><url><loc>$loc</loc><lastmod>$today</lastmod></url></sitemap>"
+        );
     }
-    $file->say('</sitemap>');
+    $file->say('</sitemapindex>');
     $file->close;
     print STDERR "Generating $path\n" if $opts->{v};
 

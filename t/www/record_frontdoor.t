@@ -2,7 +2,6 @@ use strict;
 use warnings;
 
 use Path::Tiny;
-use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat -load => {layer_paths => [qw(t/layer)]};
 
 use Test::More import => ['!pass'];
@@ -12,11 +11,13 @@ my $app = eval {do './bin/app.pl';};
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
-subtest 'department overview page' => sub {
-    $mech->get_ok('/department');
-    $mech->page_links_ok('testing all the links');
+subtest "get frontdoor" => sub {
+    $mech->get_ok("/record/2737383");
 
-    $mech->content_like(qr/(?i)department of mathematics/);
+    $mech->has_tag("h1",
+        "Function of glutathione peroxidases in legume root nodules");
+
+    $mech->content_contains("LjGpx1 and LjGpx3 are nitrosylated in vitro");
 };
 
 done_testing;

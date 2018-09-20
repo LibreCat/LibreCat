@@ -26,6 +26,7 @@ or more other records. This methods follows all these links and inserts/deletes
 links to the current record and updates the publication status.
 
 =cut
+
 sub update_related_material {
     my $pub = shift;
 
@@ -33,40 +34,43 @@ sub update_related_material {
 
     #--- Create a inverse relation name database ---
     my $relations_record = h->config->{lists}->{relations_record} // [];
-    my $rd_relation      = h->config->{lists}->{relations_rd} // [];
+    my $rd_relation      = h->config->{lists}->{relations_rd} //     [];
 
     my $lookup_relation = {};
 
-    for (@$relations_record,@$rd_relation) {
+    for (@$relations_record, @$rd_relation) {
         my $relation = $_->{relation};
         my $opposite = $_->{opposite};
         $lookup_relation->{$relation} = $opposite;
     }
+
     #---
 
-    my $current_related_material_record = $pub->{related_material}->{record} // [];
+    my $current_related_material_record = $pub->{related_material}->{record}
+        // [];
 
     # Remove repeated relationships to the same record, keeping only the
     # latest added relationship.
     my %uniq_rm = ();
-    tie %uniq_rm, 'Tie::IxHash'; # Keep the order of relationships
+    tie %uniq_rm, 'Tie::IxHash';    # Keep the order of relationships
     foreach my $rm (@$current_related_material_record) {
         next unless $rm->{id};
-        $uniq_rm{ $rm->{id} } = $rm;
+        $uniq_rm{$rm->{id}} = $rm;
     }
 
     $current_related_material_record = [];
 
     for my $id (keys %uniq_rm) {
         my $rm = $uniq_rm{$id};
-        push @$current_related_material_record , $rm;
+        push @$current_related_material_record, $rm;
     }
 
     # Delete the relations to this record from previous record (in order to
     # remove deleted relations from targetted records)
     my $hit = h->main_publication->get($pub->{_id});
 
-    my $previous_related_material_record = $hit->{related_material}->{record} // [];
+    my $previous_related_material_record = $hit->{related_material}->{record}
+        // [];
 
     foreach my $rm (@$previous_related_material_record) {
         next unless $rm->{id};
@@ -75,17 +79,19 @@ sub update_related_material {
 
         next unless $target;
 
-        my $target_related_material_record = $target->{related_material}->{record} // [];
+        my $target_related_material_record
+            = $target->{related_material}->{record} // [];
 
         my @new_relations;
 
         for (@$target_related_material_record) {
             if ($_->{id} eq $pub->{_id}) {
+
                 # remove
             }
             else {
                 # keep
-                push @new_relations , $_;
+                push @new_relations, $_;
             }
         }
 
@@ -106,14 +112,16 @@ sub update_related_material {
         next unless $target;
 
         # Find the name of the reverse link
-        my $inverse_relation = $lookup_relation->{ $rm->{relation} };
+        my $inverse_relation = $lookup_relation->{$rm->{relation}};
 
         unless ($inverse_relation) {
-            h->log->error("found not inverse relation for `" . $rm->{relation} . "`");
+            h->log->error(
+                "found not inverse relation for `" . $rm->{relation} . "`");
             $inverse_relation = 'other';
         }
 
-        my $target_related_material_record = $target->{related_material}->{record} // [];
+        my $target_related_material_record
+            = $target->{related_material}->{record} // [];
 
         my @new_relations;
 
@@ -121,19 +129,20 @@ sub update_related_material {
 
         for (@$target_related_material_record) {
             if ($_->{id} eq $pub->{_id}) {
-                $found = 1;
+                $found         = 1;
                 $_->{status}   = $pub->{status};
                 $_->{relation} = $inverse_relation;
             }
-            push @new_relations , $_;
+            push @new_relations, $_;
         }
 
         if (!$found) {
-            push @new_relations, {
-                    id       => $pub->{_id},
-                    status   => $pub->{status},
-                    relation => $inverse_relation
-            };
+            push @new_relations,
+                {
+                id       => $pub->{_id},
+                status   => $pub->{status},
+                relation => $inverse_relation
+                };
         }
 
         $target->{related_material}->{record} = \@new_relations;

@@ -21,7 +21,7 @@
   <publicationYear>[% year | xml_strict %]</publicationYear>
   [%- IF ddc OR keyword %]
   <subjects>
-    [%- FOREACH d in ddc %]<subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d %]</subject>[% END%]
+    [%- FOREACH d in ddc %]<subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d | xml_strict %]</subject>[% END%]
     [%- FOREACH k in keyword%]<subject>[% k | xml_strict %]</subject>[% END %]
   </subjects>
   [%- END %]
@@ -56,12 +56,12 @@
   </relatedIdentifiers>
   <sizes>
     [%- FOREACH f IN file %]
-    <size>[% f.size %] bytes</size>
+    <size>[% f.file_size | xml_strict %] bytes</size>
     [%- END %]
   </sizes>
   <formats>
     [%- FOREACH f IN file %]
-    <format>[% f.content_type %]</format>
+    <format>[% f.content_type | xml_strict %]</format>
     [%- END %]
   </formats>
   [%- IF license %]
@@ -71,19 +71,7 @@
   [%- END %]
   [%- IF abstract %]
   <descriptions>
-    [%- FOREACH a IN abstract %]<description xml:lang="[% a.lang %]" descriptionType="Abstract">[% a.text %]</description>[% END -%]
+    [%- FOREACH a IN abstract %]<description xml:lang="[% a.lang | xml_strict %]" descriptionType="Abstract">[% a.text | xml_strict %]</description>[% END -%]
   </descriptions>
-  [%- END %]
-  [%- IF project %]
-  <fundingReferences>
-  [%- FOREACH p IN project %]
-    <fundingReference>
-      [%- IF p.funder %]<funderName>[% p.funder.0 | xml_strict %]</funderName>[% END %]
-      [%- IF p.funder_id %]<funderIdentifier funderIdentifierType="Crossref Funder ID">[% p.funder_id | xml_strict %]</funderIdentifier>[% END %]
-      [%- IF p.grant_number %]<awardNumber>[% p.grant_number | xml_strict %]</awardNumber>[% END %]
-      <awardTitle>[% p.name | xml_strict %]</awardTitle>
-    </fundingReference>
-  [%- END %]
-  </fundingReferences>
   [%- END %]
 </resource>

@@ -186,7 +186,7 @@ E.g.
                     my $writer
                         = $respond->([$http_status_code, \@http_headers]);
 
-                    $files->stream($writer, $file);
+                    $files->stream(h->io_from_plack_writer($writer), $file);
                 },
             },
         );
@@ -347,7 +347,7 @@ E.g.
                     my $writer
                         = $respond->([$http_status_code, \@http_headers]);
 
-                    $files->stream($writer, $file);
+                    $files->stream(h->io_from_plack_writer($writer), $file);
                 },
             },
         );

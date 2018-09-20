@@ -29,10 +29,14 @@ ajax '/search_publication' => sub {
 
     my $cql_query = join(" AND ", @cql_parts);
 
-    my %search_params = (cql_query => $cql_query, limit => $limit,
-        sru_sortkeys => 'title,,1');
+    my %search_params = (
+        cql_query    => $cql_query,
+        limit        => $limit,
+        sru_sortkeys => 'title,,1'
+    );
 
-    h->log->debug("executing publication->search: " . to_dumper(\%search_params));
+    h->log->debug(
+        "executing publication->search: " . to_dumper(\%search_params));
 
     my $hits = h->publication->search(%search_params);
 
@@ -40,9 +44,11 @@ ajax '/search_publication' => sub {
 
     if ($hits->{total}) {
         my @map = map {
-            my $author = $_->{author}->[0]->{full_name} // $_->{editor}->[0]->{full_name} // $_->{translator}->[0]->{full_name};
+            my $author = $_->{author}->[0]->{full_name}
+                // $_->{editor}->[0]->{full_name}
+                // $_->{translator}->[0]->{full_name};
             {
-                id => $_->{_id},
+                id    => $_->{_id},
                 label => "$author ($_->{year}): $_->{title} [$_->{type}]",
                 title => $_->{title},
             };
@@ -63,11 +69,8 @@ ajax '/search_researcher' => sub {
     my $cql;
     push @$cql, params->{'term'};
 
-    my %search_params = (
-        cql => $cql,
-        limit => 100,
-        sort => h->config->{default_person_sort}
-    );
+    my %search_params = (cql => $cql, limit => 100,
+        sort => h->config->{default_person_sort});
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
 
     my $hits = searcher->search('user', \%search_params)->{hits};
@@ -105,7 +108,7 @@ ajax '/get_alias/:id/:alias' => sub {
 =cut
 
 ajax '/get_project' => sub {
-    my $limit = length(params->{term}) ? 10 : 1000;
+    my $limit = length(params->{term}) ? 100 : 1000;
 
     my @terms = split(' ', params->{term});
     $terms[-1] .= "*" if @terms;
@@ -139,7 +142,7 @@ ajax '/get_project' => sub {
 
 ajax '/get_department' => sub {
     my $term = params->{term} // '';
-    my $limit = length($term) ? 10 : 1000;
+    my $limit = length($term) ? 100 : 1000;
 
     my @terms = split('\s', $term);
     $terms[-1] .= "*" if @terms;
@@ -176,7 +179,7 @@ ajax '/get_department' => sub {
 =cut
 
 ajax '/get_research_group' => sub {
-    my $limit = length(params->{term}) ? 10 : 1000;
+    my $limit = length(params->{term}) ? 100 : 1000;
 
     my @terms = split(' ', params->{term});
     $terms[-1] .= "*" if @terms;

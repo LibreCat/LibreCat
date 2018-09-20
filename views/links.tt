@@ -9,7 +9,7 @@
 
   [% FOREACH supp IN entry.related_material %][% IF supp.link  %] | <a href="[% supp.link.url %]" title="[% supp.link.title %]">Suppl. Material</a>[% ELSIF supp.file %] | <a href="[% uri_base %]/download/[% entry._id  %]/[% supp.file.file_id %]/[% supp.file.file_name | uri %]" title="[% supp.file.file_name %]">Suppl. Material</a> [% END %][% END %]
 
-  [% IF entry.doi %]| <a href="https://doi.org/[% entry.doi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.doi") %]</a>[% END %]
+  [% IF entry.doi %] | <a href="https://doi.org/[% entry.doi %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.doi") %]</a>[% END %]
   [% IF entry.main_file_link.0 %] | <a href="[% entry.main_file_link.0.url %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.main_file_link") %]</a>[% END %]
   [% IF entry.external_id.isi %] | <a href="http://ws.isiknowledge.com/cps/openurl/service?url_ver=Z39.88-2004&amp;rft_id=info:ut/[% entry.external_id.isi.0 %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.isi") %]</a>[% END %]
   [% IF entry.external_id.pmid %] | <a href="https://www.ncbi.nlm.nih.gov/pubmed/[% entry.external_id.pmid.0 %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]>[% h.loc("main_page.links.pmid") %]</a> | <a href="https://europepmc.org/abstract/MED/[% entry.external_id.pmid.0 %]">[% h.loc("main_page.links.pmid_eu") %]</a>[% END %]
@@ -38,9 +38,9 @@
     [% END %]
   [% END %]
   [% IF (entry.status != "public" AND entry.status != "submitted" AND entry.status != "new") OR ((entry.status == "submitted" OR entry.status == "new") AND session.role == "super_admin") %]
-  | <a href="[% uri_base %]/librecat/record/publish/[% entry._id %]">[% h.loc("main_page.links.publish") %]</a>
+  | <a href="[% uri_base %]/librecat/record/publish/[% entry._id %]?return_url=[% request.uri | uri %]">[% h.loc("main_page.links.publish") %]</a>
   [% ELSIF entry.status == "public" %]
-  | <a href="[% uri_base %]/librecat/record/return/[% entry._id %]">[% h.loc("main_page.links.return") %]</a>
+  | <a href="[% uri_base %]/librecat/record/return/[% entry._id %]?return_url=[% request.uri | uri %]">[% h.loc("main_page.links.return") %]</a>
   [% END %]
   [% IF session.role == "super_admin" %]
   | <a href='[% uri_base %]/librecat/search/admin/similar_search?q="[% entry.title.replace("[\'\"\,\;\:\.]+","") %]"'>[% h.loc("main_page.links.search_similar") %]</a>

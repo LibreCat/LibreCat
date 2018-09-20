@@ -8,7 +8,7 @@ LibreCat::App::Catalogue::Route::admin - Route handler for admin actions
 
 use Catmandu::Sane;
 use LibreCat qw(searcher user project research_group);
-use Catmandu::Util qw(trim);
+use Catmandu::Util qw(trim :is);
 use App::bmkpasswd qw(mkpasswd);
 use Dancer ':syntax';
 use LibreCat::App::Helper;
@@ -38,8 +38,7 @@ Opens an empty form. The ID is automatically generated.
 =cut
 
     get '/account/new' => sub {
-        template 'admin/forms/edit_account',
-            {_id => user->generate_id};
+        template 'admin/forms/edit_account', {};
     };
 
 =head2 GET /account/search
@@ -66,23 +65,53 @@ Opens the record with ID id.
         template 'admin/forms/edit_account', $person;
     };
 
-=head2 POST /account/update
+=head2 PUT /account/:id
 
-Saves the data in the authority database.
+Updates (existing) user in the authority database.
+
+Redirects to /librecat/admin/account
 
 =cut
 
-    post '/account/update' => sub {
-        my $p = params;
+    put '/account/:id' => sub {
 
+        my $id = param("id");
+        my $user = user->get($id) or pass;
+
+        my $p = params("body");
         $p = h->nested_params($p);
+        $p->{_id} = $user->{_id};
 
-        # if password and not yet encrypted
+        #update password when given
         $p->{password} = mkpasswd($p->{password})
-            if ($p->{password} and $p->{password} !~ /\$.{15,}/);
+            if is_string($p->{password});
 
         user->add($p);
-        template 'admin/account';
+
+        redirect h->uri_for("/librecat/admin/account");
+
+    };
+
+=head2 POST /account
+
+Creates new user in the authority database.
+
+Redirects to /librecat/admin/account
+
+=cut
+
+    post '/account' => sub {
+
+        my $p = params("body");
+
+        $p             = h->nested_params($p);
+        $p->{_id}      = user->generate_id;
+        $p->{password} = mkpasswd($p->{password});
+
+        user->add($p);
+
+        redirect h->uri_for("/librecat/admin/account");
+
     };
 
 =head2 GET /account/delete/:id
@@ -103,8 +132,7 @@ Deletes the account with ID :id.
     };
 
     get '/project/new' => sub {
-        template 'admin/forms/edit_project',
-            {_id => project->generate_id};
+        template 'admin/forms/edit_project', {_id => project->generate_id};
     };
 
     get '/project/search' => sub {

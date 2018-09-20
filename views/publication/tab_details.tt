@@ -25,7 +25,7 @@
       [%- IF person.orcid %] <a href="http://orcid.org/[% person.orcid %]"><sup><img src="[% uri_base %]/images/icon_orcid.png" /></sup></a>[% END %]
       [%- IF loop.count > 11 %]
         <span id="showAut">
-          <br><a href="#details" onclick="ShowAuthors();"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
+          <br><a href="#details" onclick="ShowAuthors();return false;"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
         </span>
         </div>
       </div>
@@ -60,7 +60,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.project.label") %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%]<br />[% END %]
-  <a href="[% uri_base %]/project/[% proj._id %]">[% proj.name | html %]</a>
+  <a href="[% uri_base %]/project/[% proj._id %]" class="long">[% proj.name | html %]</a>
   [%- IF loop.last %]</div></div>[% END -%]
 [%- END -%]
 
@@ -89,7 +89,7 @@
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.abstract.label") %]</div>
     <div class="col-lg-10 col-md-9 cmark abstract" itemprop="about">
     [%- FOREACH ab IN abstract %][% UNLESS loop.first %]<br /><hr>[% END %]
-      [% ab.text | html %]
+      [%- ab.text | html -%]
     [%- END %]
     </div>
   </div>

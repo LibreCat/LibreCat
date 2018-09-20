@@ -22,8 +22,9 @@ requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.0606';
-requires 'Catmandu::ArXiv', '>=0.100';
-requires 'Catmandu::BagIt' , '>=0.13';
+requires 'Catmandu::FileStore', '1.12';
+requires 'Catmandu::ArXiv', '0.211';
+requires 'Catmandu::BagIt' , '0.231';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::DBI', '>=0.0511';
 requires 'Catmandu::Exporter::Table';
@@ -119,3 +120,4 @@ requires 'XML::RSS';
 requires 'YAML';
 requires 'YAML::XS';
 requires 'Plack::Auth::SSO','0.0132';
+requires 'Plack::Middleware::MethodOverride';

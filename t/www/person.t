@@ -6,7 +6,7 @@ use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use Test::More import => ['!pass'];
 use Test::WWW::Mechanize::PSGI;
 
-my $app = eval {require 'bin/app.pl';};
+my $app = eval {do './bin/app.pl';};
 
 my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 
@@ -18,7 +18,6 @@ subtest 'person overview page' => sub {
 subtest 'person list alphabetical index' => sub {
     $mech->get_ok('/person?browse=a');
     $mech->get_ok('/person?browse=A');
-
 
     $mech->get_ok('/person?browse=E');
     $mech->content_unlike(qr/Einstein,, Albert/);

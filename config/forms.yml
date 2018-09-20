@@ -71,8 +71,6 @@ field_order:
     - language
     - original_language
     - ddc
-    - jel
-    - keyword
     - conference.divider
     - conference.name
     - conference.location
@@ -80,14 +78,6 @@ field_order:
     - conference.end_date
     - conference.date
     - ipc
-    - external_id
-    - nasc
-    - genbank
-    - popular_science
-    - quality_controlled
-    - popular_science_quality_controlled
-    - ubi_funded
-    - message
     - locked
   file_upload:
     - external_file
@@ -101,7 +91,6 @@ field_order:
     - nasc
     - ddc
     - jel
-    - thematic_area
     - popular_science
     - quality_controlled
     - popular_science_quality_controlled
@@ -132,6 +121,7 @@ dropzone_fields:
         - relation
         - access_level
         - request_a_copy
+        - rac_email
         - title
         - description
         - open_access
@@ -148,6 +138,7 @@ publication_types:
         doi: &doi
           mandatory: 0
           multiple: 0
+          register: 0
         title: &title
           mandatory: 1
           multiple: 0
@@ -929,7 +920,6 @@ publication_types:
 other_items:
   account:
     account_field_order:
-      - id
       - login
       - password
       - names
@@ -946,10 +936,6 @@ other_items:
       - author_ids
       - photo
       - style
-    id:
-      label: "ID"
-      readonly: 1
-      mandatory: 1
     ext_institution:
       label: "External Institution"
       label_short: "Ext. Institution"

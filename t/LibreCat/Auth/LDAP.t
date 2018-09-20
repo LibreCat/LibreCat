@@ -64,7 +64,7 @@ ldap_mockify {
             host      => 'localhost',
             auth_base => 'ID=%s,ou=people',
             ldap      => $ldap
-            )->search('felix')
+        )->search('felix')
     }
     'need search_filter';
 
@@ -74,7 +74,7 @@ ldap_mockify {
             auth_base     => 'ID=%s,ou=people',
             search_filter => '(uid=%s)',
             ldap          => $ldap
-            )->search('felix')
+        )->search('felix')
     }
     'need search_base';
 
@@ -85,7 +85,7 @@ ldap_mockify {
             search_filter => '(uid=%s)',
             search_base   => 'dc=example, dc=com',
             ldap          => $ldap
-            )->search('felix')
+        )->search('felix')
     }
     'need search_attr';
 

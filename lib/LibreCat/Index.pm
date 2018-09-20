@@ -399,9 +399,10 @@ sub _do_index {
                 print "Checking $b ...\n";
                 my $bag   = $new->bag($b);
                 my $fixer = fixer("index_$b.fix");
-                my $it    = $self->main_index->bag($b)->searcher(
-                                query => {range => {date_updated => {gte => $now}}}
-                                );
+                my $it
+                    = $self->main_index->bag($b)
+                    ->searcher(
+                    query => {range => {date_updated => {gte => $now}}});
                 $it->each(
                     sub {
                         my $item         = $_[0];

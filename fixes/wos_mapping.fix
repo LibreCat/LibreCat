@@ -130,24 +130,22 @@ timestamp(timestamp)
 datetime_format(timestamp, source_pattern: '%s', destination_pattern:    '%Y-%m-%d',)
 move_field(timestamp, _r.message.$append)
 prepend(_r.message.0, 'WoS Import ')
-#move_field(LA, _r.message.$append)
-if any_match(LA,'German')
-  add_field(tmp.iso,'ger')
-  move_field(tmp,_r.language.$append)
-  remove_field(tmp)
-else
-  add_field(tmp.iso,'eng')
-  move_field(tmp,_r.language.$append)
-  remove_field(tmp)
-end
+
+upcase(LA)
+lookup(LA, fixes/lookup/wos_lang_iso.csv, default: eng)
+move_field(LA, _r.language.$append.iso)
+
 if exists(FU)
   move_field(FU, _r.message.$append)
   prepend(_r.message.$last, 'Funder: ')
+end
+if exists(OA)
+  move_field(OA, _r.message.$append)
+  prepend(_r.message.$last, 'OA: ')
 end
 join_field(_r.message, ' / ')
 
 retain_field(_r)
 move_field(_r, .)
-#add_citation()
 
 vacuum()
