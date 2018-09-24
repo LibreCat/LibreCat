@@ -79,9 +79,10 @@ request_copy:
 show_gravatar: 1
 
 # Configure bulk import of records
-# Allow bulk import, or restrict to only one record from source.
+# Allow bulk import when adding a new publication, or restrict to only
+# one record from source.
 # If set to 0, import will show edit form instead of importing into db.
-bulk_import: 1
+web_bulk_import: 1
 
 # Default format to display dates
 time_format: "%Y-%m-%dT%H:%M:%SZ"

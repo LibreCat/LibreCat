@@ -83,7 +83,7 @@ post '/librecat/record/import' => sub {
             $pub->{user_id}    = session->{user_id};
             $pub->{department} = $user->{department};
 
-            if(h->config->{bulk_import} or !exists h->config->{bulk_import}){
+            if(h->config->{web_bulk_import} or !exists h->config->{web_bulk_import}){
               # Use config/hooks.yml to register functions
               # that should run before/after importing publications
               h->hook('import-new-' . $source)->fix_around(
