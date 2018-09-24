@@ -31,7 +31,6 @@
         <div class="sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <textarea rows="6" name="abstract.0.text" id="id_abstract_0" placeholder="[% h.loc("forms.${type}.field.abstract.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} required{% END %}"{% IF fields.basic_fields.abstract.readonly OR fields.supplementary_fields.abstract.readonly %} readonly="readonly"{% END %}></textarea>
         </div>
-        <span class="text-muted">[% h.loc("forms.${type}.field.abstract.explain") %]</span>
       </div>
     </div>
     [% ELSE %]
