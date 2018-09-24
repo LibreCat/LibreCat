@@ -94,8 +94,10 @@ $file_store->index->delete_all;
 
 #get file
 {
+    $mech->max_redirect(1);
     $mech->get_ok("/download/$record_id/$file_id/$file_name");
     is( $mech->content_type, "application/pdf", "content type set correctly" );
+    $mech->max_redirect(0);
 }
 
 $pubs->delete_all;
