@@ -1,15 +1,15 @@
-package Catmandu::Fix::add_urn;
+package LibreCat::Hook::add_urn;
 
 =pod
 
 =head1 NAME
 
-Catmandu::Fix::add_urn - create a urn field from the input data
+LibreCat::Hook::add_urn - create a urn field from the input data
 
 =cut
 
 use Catmandu::Sane;
-use LibreCat::App::Helper;
+use LibreCat qw(config);
 use Carp;
 use Moo;
 
@@ -32,7 +32,7 @@ sub fix {
 
         if ($oa and $pub->{type} ne 'research_data') {
             $pub->{urn}
-                = $self->_generate_urn(h->config->{urn_prefix}, $pub->{_id});
+                = $self->_generate_urn(config->{urn_prefix}, $pub->{_id});
         }
     }
 

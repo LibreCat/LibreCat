@@ -458,7 +458,7 @@ search:
                 '<>': true
                 'exact': {field: ['editor.full_name.exact', 'editor.id']}
               field: ['editor.full_name', 'editor.id']
-            translatedworkauthor:
+            translator:
               op:
                 'any': true
                 'all': true
