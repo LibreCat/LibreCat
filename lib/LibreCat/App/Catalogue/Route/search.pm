@@ -49,6 +49,7 @@ Performs search for similar titles, admin only
     get '/admin/similar_search' => sub {
 
         my $p = h->extract_params();
+        redirect '/librecat' unless keys %$p;
 
         # TODO filter out deleted recs
         my $hits = searcher->native_search(
