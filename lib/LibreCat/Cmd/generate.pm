@@ -260,7 +260,7 @@ sub _generate_departments {
     open(my $fh, '>:encoding(UTF-8)', "$output_path/nodes.tt")
         || die "failed to write nodes.tt: $!";
 
-    $self->_template_printer($HASH, "publication", $fh);
+    $self->_template_printer($HASH, "record", $fh);
 
     close($fh);
 
