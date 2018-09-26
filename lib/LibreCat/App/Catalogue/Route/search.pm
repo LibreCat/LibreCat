@@ -30,58 +30,49 @@ Performs search for admin.
 
         my $p = h->extract_params();
 
-        push @{$p->{cql}}, "status<>deleted";
-        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
+        my $hits;
 
-        my $hits = searcher->search('publication', $p);
-
-        $hits->{modus} = "admin";
-
-        template "home", $hits;
-    };
-
-=head2 GET /admin/similar_search
-
-Performs search for similar titles, admin only
-
-=cut
-
-    get '/admin/similar_search' => sub {
-
-        my $p = h->extract_params();
-
-        # TODO filter out deleted recs
-        my $hits = searcher->native_search(
-            'publication',
-            {
-                query => {
-                    "bool" => {
-                        "must" => {
-                            "match" => {
-                                "title" => {
-                                    "query"                => $p->{q},
-                                    "minimum_should_match" => "70%"
+        if (params->{similar_search}) {
+            $hits = searcher->native_search(
+                'publication',
+                {
+                    query => {
+                        "bool" => {
+                            "must" => {
+                                "match" => {
+                                    "title" => {
+                                        "query"                => $p->{q},
+                                        "minimum_should_match" => "70%"
+                                    }
+                                }
+                            },
+                            "must_not" => {"term" => {"status" => "deleted"}},
+                            "should"   => {
+                                "match_phrase" => {
+                                    "title" =>
+                                        {"query" => $p->{q}, "slop" => "50"}
                                 }
                             }
-                        },
-                        "must_not" => {"term" => {"status" => "deleted"}},
-                        "should"   => {
-                            "match_phrase" => {
-                                "title" =>
-                                    {"query" => $p->{q}, "slop" => "50"}
-                            }
                         }
-                    }
-                },
-                limit => $p->{limit} ||= h->config->{default_page_size},
-                start => $p->{start} ||= 0,
-            }
-        );
+                    },
+                    limit => $p->{limit} ||= h->config->{default_page_size},
+                    start => $p->{start} ||= 0,
+                }
+            );
 
-        $hits->{modus} = "admin";
+            $hits->{modus} = "admin";
+        }
+        else {
+            push @{$p->{cql}}, "status<>deleted";
+
+            $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
+
+            $hits = searcher->search('publication', $p);
+
+            $hits->{modus} = "admin";
+        }
 
         template "home", $hits;
-
     };
 
 =head2 GET /reviewer

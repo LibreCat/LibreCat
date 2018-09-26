@@ -45,7 +45,7 @@
   | <a href="[% uri_base %]/librecat/record/return/[% entry._id %]?return_url=[% request.uri | uri %]">[% h.loc("main_page.links.return") %]</a>
   [% END %]
   [% IF session.role == "super_admin" %]
-  | <a href='[% uri_base %]/librecat/search/admin/similar_search?q="[% entry.title.replace("[\'\"\,\;\:\.]+","") %]"'>[% h.loc("main_page.links.search_similar") %]</a>
+  | <a href='[% uri_base %]/librecat/search/admin?q="[% entry.title.replace("[\'\"\,\;\:\.]+","") %]"&similar_search=1'>[% h.loc("main_page.links.search_similar") %]</a>
   [% END %]
   <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %] (GMT)</span>
 [% END %]
