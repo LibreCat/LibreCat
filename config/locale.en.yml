@@ -320,6 +320,7 @@ forms:
     field:
       document_type: &document_type
         label: "Publication Type"
+        label_short: "Publ. Type"
       doi: &doi
         label: "DOI"
         placeholder: "e.g. 10.4119/xyz/2695161"
@@ -509,7 +510,7 @@ forms:
       related_material.select: "Select type of related material"
       related_material.link: &related_material_link
         label: "Link and relation<br />to external material"
-        label_short: "External Material"
+        label_short: "Ext. Material"
         url:
           label_short: "URL"
           placeholder: "URL of external source (enter with http://)"
@@ -519,6 +520,10 @@ forms:
         relation:
           label_short: "Material is"
           label: "External material is"
+        description:
+          label_short: "Descr."
+          label: "Description"
+          placeholder: "Description and other details about linked source"
       locked: &locked
         label: "Locked for editing"
         label_short: "Locked"
@@ -550,7 +555,7 @@ forms:
       editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
         label: "Corporate Editor"
-        label_short: "Copr. Ed."
+        label_short: "Corp. Ed."
         placeholder: "e.g. World Health Organization - Regional Office for Europe (WHO-Europe)"
       alternative_title: *alternative_title
       department: *department
@@ -700,6 +705,7 @@ forms:
       year_extern: *year_extern
       series_title: &series_title
         label: "Series or Journal Title"
+        label_short: "Series/Journ.title"
         placeholder: "e.g. Lecture Notes of eBook Publishing"
       volume_issue_page: &volume_issue_page
         label: "Volume / Issue / Page(s)"
@@ -891,6 +897,7 @@ forms:
       research_group: *research_group
       publication:
         label: "Encyclopedia Title"
+        label_short: "Encycl. Title"
         placeholder: "e.g. Encyclopedia on Publishing"
       place: *place
       publisher: *publisher

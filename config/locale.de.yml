@@ -321,6 +321,7 @@ forms:
     field:
       document_type: &document_type
         label: "Publikationstyp"
+        label_short: "Publ.typ"
       doi: &doi
         label: "DOI"
         placeholder: "z.B. 10.4119/xyz/2695161"
@@ -510,7 +511,7 @@ forms:
       related_material.select: "Art des Zusatzmaterials w&auml;hlen &hellip;"
       related_material.link: &related_material_link
         label: "Link und Relation<br />zu externer Quelle"
-        label_short: "Externe Quelle"
+        label_short: "Ext. Quelle"
         url:
           label_short: "URL"
           placeholder: "URL der externen Quelle (Eingabe mit http://)"
@@ -520,6 +521,10 @@ forms:
         relation:
           label_short: "Quelle ist"
           label: "Externe Quelle ist"
+        description:
+          label_short: "Beschr."
+          label: "Beschreibung"
+          placeholder: "Beschreibung und andere Angaben zur verlinkten Quelle"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"
@@ -700,7 +705,7 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       series_title: &series_title
-        label: "Serien- oder Zeitschriftentitel"
+        label: "Serie/Zeitschr.titel"
         placeholder: "z.B. Lecture Notes of eBook Publishing"
       volume_issue_page: &volume_issue_page
         label: "Band / Ausgabe / Seite(n)"
@@ -892,6 +897,7 @@ forms:
       research_group: *research_group
       publication:
         label: "Lexikontitel"
+        label_short: "Lex.titel"
         placeholder: "z.B. Enzyklop&auml;die des Ver&ouml;ffentlichens"
       place: *place
       publisher: *publisher
