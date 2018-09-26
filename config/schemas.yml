@@ -648,9 +648,6 @@ publication:
           open_access:
             type: string
             description: "Is external fulltext open access (1) or not (0)?"
-    link:
-      type: string
-      description: "URL to resource"
     ddc:
       type: array
       items:
@@ -676,27 +673,6 @@ publication:
             - type: string
             - type: integer
       description: "Journal of Economic Literature Classification"
-    pacs_class:
-      type: array
-      items:
-          oneOf:
-            - type: string
-            - type: integer
-      description: "Physics and Astronomy Classification Scheme"
-    msc_class:
-      type: array
-      items:
-          oneOf:
-            - type: string
-            - type: integer
-      description: "Mathematics Subject Classification"
-    ccs_class:
-      type: array
-      items:
-          oneOf:
-            - type: string
-            - type: integer
-      description: "Computing Classification System"
     nasc:
       type: array
       items:
