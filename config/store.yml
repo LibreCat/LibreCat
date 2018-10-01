@@ -789,6 +789,15 @@ search:
                 'exact': {field: 'name.exact'}
               field: name
               sort: {field: 'name.exact'}
+            name_lookup:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'name.exact'}
+              field: ['name','name.exact']
+              sort: {field: 'name.exact'}
             layer:
               op:
                 '=': true
@@ -830,6 +839,15 @@ search:
                 '<>': true
                 'exact': {field: 'name.exact'}
               field: name
+              sort: {field: 'name.exact'}
+            name_lookup:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'name.exact'}
+              field: ['name','name.exact']
               sort: {field: 'name.exact'}
             acronym:
               op:
