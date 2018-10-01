@@ -12,6 +12,7 @@ Revision history for LibreCat
     - Fixing deletion of local added passwords #587
     - Fixing datacite xml
     - Add return_url to Make public/Return on result page #580
+    - Adding register DOI functionality
 
 1.2.1 2018-09-04
     - Adding support changing default request-a-copy email
