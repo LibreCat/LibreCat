@@ -1,6 +1,7 @@
 package LibreCat::Cmd::sitemap;
 
 use Catmandu::Sane;
+use LibreCat;
 use Catmandu::Util qw(io join_path);
 use Catmandu;
 use Carp;
@@ -30,10 +31,10 @@ sub command {
     my $fix    = $opts->{fix};
 
     if ($fix) {
-        $fix = Catmandu->fixer($fix);
+        $fix = LibreCat->fixer($fix);
     }
     else {
-        $fix = Catmandu->fixer();
+        $fix = LibreCat->fixer();
     }
 
     my $config = Catmandu->config;
