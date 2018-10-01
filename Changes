@@ -2,6 +2,17 @@ Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
 
+1.2.2 2018-10-01
+    - Fixing autocomplete bug searching with hyphens #502
+    - Fixing relative fixer path bug #600
+    - Removing the /similar_search page and integrate it into /admin
+    - Make bulk import of records in web forms optional
+    - Removing Markdown support
+    - Supporting confurable roles
+    - Fixing deletion of local added passwords #587
+    - Fixing datacite xml
+    - Add return_url to Make public/Return on result page #580
+
 1.2.1 2018-09-04
     - Adding support changing default request-a-copy email
     - Fixing page/article number input bug
