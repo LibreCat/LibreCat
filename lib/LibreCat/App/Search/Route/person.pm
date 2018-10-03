@@ -42,8 +42,8 @@ research data and author IDs.
 
 =cut
 
-get qr{/person/(.*?)/?} => sub {
-    my ($id) = splat;
+get "/person/:id" => sub {
+    my $id = param("id");
 
     # Redirect to the alias if the ID cannot be found
     h->log->debug("trying to find user $id");

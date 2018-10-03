@@ -17,8 +17,8 @@ Project splash page for :id.
 
 =cut
 
-get qr{/project/([a-zA-Z0-9].*)} => sub {
-    my ($id) = splat;
+get "/project/:id" => sub {
+    my $id = param("id");
     my $proj = h->project->get($id);
 
     my $pub = searcher->search('publication',
@@ -34,10 +34,10 @@ Project page with alphabetical browsing.
 
 =cut
 
-get qr{/project/*} => sub {
-    my $c             = params->{browse} // 'a';
+get "/project" => sub {
+    my $browse             = param("browse") // 'a';
     my %search_params = (
-        query        => {prefix => {'name.exact' => lc($c)}},
+        query        => {prefix => {'name.exact' => lc($browse)}},
         sru_sortkeys => "name,,1",
         limit        => 1000
     );
