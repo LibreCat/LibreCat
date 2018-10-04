@@ -37,7 +37,7 @@ Project page with alphabetical browsing.
 
 =cut
 
-get "/project" => sub {
+my $route_projects = sub {
     my $browse             = param("browse") // 'a';
     my %search_params = (
         query        => {prefix => {'name.exact' => lc($browse)}},
@@ -52,5 +52,8 @@ get "/project" => sub {
 
     template 'project/list', $hits;
 };
+
+get "/project" => $route_projects;
+get "/projects/" => $route_projects;
 
 1;
