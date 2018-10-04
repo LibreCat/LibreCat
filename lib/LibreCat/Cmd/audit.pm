@@ -30,7 +30,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|get/;
+    my $commands = qr/^(list)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -46,9 +46,6 @@ sub command {
 
     if ($cmd eq 'list') {
         return $self->_list(@$args);
-    }
-    elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
     }
 }
 
