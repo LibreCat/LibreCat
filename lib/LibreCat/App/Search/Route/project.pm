@@ -17,7 +17,7 @@ Project splash page for :id.
 
 =cut
 
-get "/project/:id" => sub {
+my $route_project = sub {
     my $id = params("route")->{id};
     my $proj = h->project->get($id);
 
@@ -27,6 +27,9 @@ get "/project/:id" => sub {
 
     template 'project/record', $proj;
 };
+
+get "/project/:id" => $route_project;
+get "/project/:id/" => $route_project;
 
 =head2 GET /project
 
