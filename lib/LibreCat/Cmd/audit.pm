@@ -69,8 +69,8 @@ sub _list {
             my $process = $item->{process} // '';
             my $action  = $item->{action} // '';
             my $message = $item->{message} // '';
-            my $time    = strftime("%Y-%m-%dT%H:%M:%S",
-                localtime($item->{time} // 0));
+            my $time    = strftime("%Y-%m-%dT%H:%M:%SZ",
+                gmtime($item->{time} // 0));
 
             printf "%s %s %s %s %s\n", $time, $id, $process, $action,
                 $message;
