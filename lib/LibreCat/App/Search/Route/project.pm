@@ -18,7 +18,7 @@ Project splash page for :id.
 =cut
 
 get "/project/:id" => sub {
-    my $id = param("id");
+    my $id = params("route")->{id};
     my $proj = h->project->get($id);
 
     my $pub = searcher->search('publication',

@@ -29,8 +29,8 @@ List all audit messages for an :id in the store :bag
 =cut
 
     get '/audit/:bag/:id' => sub {
-        my $bag = param("bag");
-        my $id  = param("id");
+        my $bag = params("route")->{bag};
+        my $id  = params("route")->{id};
 
         my $it
             = h->main_audit()->select(id => $id)->select(bag => $bag)
@@ -52,8 +52,8 @@ List all audit messages for an :id in the store :bag
     };
 
     post '/audit/:bag/:id' => sub {
-        my $bag = param("bag");
-        my $id  = param("id");
+        my $bag = params("route")->{bag};
+        my $id  = params("route")->{id};
 
         my $user_id = session->{user_id};
         my $message = params->{message};

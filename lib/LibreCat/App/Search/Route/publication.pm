@@ -44,7 +44,7 @@ Splash page for :id.
 =cut
 
 get "/record/:id" => sub {
-    my $id = param("id");
+    my $id = params("route")->{id};
 
     my $p = +{
         cql => [ "status=public", "id=$id" ],

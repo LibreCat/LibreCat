@@ -43,7 +43,7 @@ research data and author IDs.
 =cut
 
 get "/person/:id" => sub {
-    my $id = param("id");
+    my $id = params("route")->{id};
 
     # Redirect to the alias if the ID cannot be found
     h->log->debug("trying to find user $id");
@@ -93,7 +93,7 @@ Redirects the user to the local staff directory page
 =cut
 
 get '/staffdirectory/:id' => sub {
-    my $id = param('id');
+    my $id = params("route")->{id};
 
     if (h->config->{person} && h->config->{person}->{staffdirectory}) {
         redirect sprintf "%s%s", h->config->{person}->{staffdirectory},
