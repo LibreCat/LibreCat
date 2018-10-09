@@ -28,6 +28,12 @@ subtest 'initial cmd' => sub {
     ok $result->error, 'missing command: threw an exception';
 };
 
+subtest 'invalid cmd' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['department', 'do_nonsense']);
+    ok $result->error, 'missing command: threw an exception';
+    like $result->error, qr/should be one of/, "error message for invalid command";
+};
+
 subtest 'help' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['help', 'department']);
     ok !$result->error, 'ok threw no exception';
@@ -106,6 +112,24 @@ subtest 'get' => sub {
     is $record->{name}, 'Test faculty', 'got a valid department';
 };
 
+subtest 'get via id_file' => sub {
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['department', 'get', 't/records/department_ids.txt']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+
+    ok $output , 'got an output';
+
+    my $importer = Catmandu->importer('YAML', file => \$output);
+
+    my $record = $importer->first;
+
+    is $record->{_id},  999000999,      'got really a 999000999 record';
+    is $record->{name}, 'Test faculty', 'got a valid department';
+};
+
 subtest 'tree' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department', 'tree']);
 
@@ -138,6 +162,14 @@ subtest 'delete' => sub {
 
     $output = $result->stdout;
     ok length($output) == 0, 'got no result';
+};
+
+subtest 'tree with file' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['department', 'tree', 't/records/department-tree.yml']);
+
+    ok !$result->error, "threw no exception";
+    ok $result->output;
+    like $result->output, qr/added \d+/, "add tree via file";
 };
 
 done_testing;
