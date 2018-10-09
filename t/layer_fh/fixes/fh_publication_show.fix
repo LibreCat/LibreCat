@@ -1,0 +1,6 @@
+if all_match('_ctx.session.user','.+')
+  copy_field('_ctx.session.user','uid')
+end
+if all_match('_ctx.session.lang','.+')
+  copy_field('_ctx.session.lang','lang')
+end

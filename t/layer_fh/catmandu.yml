@@ -1,0 +1,72 @@
+#I18N configuration
+i18n:
+  lexicon:
+    _auto: 1
+    en:
+      - CatmanduConfig
+      - ['en']
+
+#I18N lexicon
+locale:
+  en:
+    first_name:
+      label: "First name"
+      errors:
+        required: "First name is required"
+    name:
+      label: "Last name"
+      errors:
+        required: "Last name is required"
+    lang:
+      label: Language
+      options:
+        en:
+          label: English
+        nl:
+          label: Dutch
+        fr:
+          label: French
+      errors:
+        required: "field language is required"
+        select_not_multiple: "field language does not take multiple values"
+        select_invalid_value: "[_1] is not a valid language"
+
+#Form handlers
+form_handlers:
+  publication:
+    before_fixes:
+      - "t/layer_fh/fixes/fh_publication_show.fix"
+    after_fixes:
+      - "t/layer_fh/fixes/fh_publication_finalize.fix"
+    fields:
+      - name: uid
+        type: Hidden
+        required: 1
+      - name: first_name
+        label: first_name.label
+        type: Text
+        required: 1
+        messages:
+          required: first_name.errors.required
+      - name: name
+        label: name.label
+        type: Text
+        required: 1
+        messages:
+          required: name.errors.required
+      - name: lang
+        label: lang
+        type: Select
+        required: 1
+        default: en
+        options:
+          - label: lang.options.en.label
+            value: en
+          - label: lang.options.nl.label
+            value: nl
+          - label: lang.options.fr.label
+            value: fr
+        messages:
+          required: lang.errors.required
+          select_not_multiple: lang.errors.select_not_multiple
+          select_invalid_value: lang.errors.select_invalid_value

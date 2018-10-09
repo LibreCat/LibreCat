@@ -121,3 +121,4 @@ requires 'YAML';
 requires 'YAML::XS';
 requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
+requires 'HTML::FormHandler','0.40068';
