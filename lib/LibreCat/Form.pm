@@ -229,10 +229,6 @@ sub load {
 
 }
 
-__END__
-
-=pod
-
 =head1 NAME
 
 LibreCat::Form - class to create and validate html form parameters
