@@ -14,6 +14,14 @@ BEGIN {
 }
 require_ok $pkg;
 
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'queue']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
+}
+
 SKIP: {
 
     unless ($ENV{GEARMAN_NETWORK_TEST}) {
@@ -67,4 +75,5 @@ SKIP: {
     }
 
 }
-done_testing
+
+done_testing;

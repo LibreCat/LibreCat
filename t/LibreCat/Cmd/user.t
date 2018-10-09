@@ -31,6 +31,14 @@ Catmandu->store('search')->bag('user')->delete_all;
 }
 
 {
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'user']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
+}
+
+{
     my $result = test_app(qq|LibreCat::CLI| => ['user', 'list']);
 
     ok !$result->error, 'list: ok threw no exception';

@@ -28,6 +28,14 @@ subtest 'initial cmd' => sub {
     ok $result->error, 'missing command: threw an exception';
 };
 
+subtest 'help' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'department']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
+};
+
 subtest 'list' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department', 'list']);
 
