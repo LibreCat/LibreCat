@@ -11,6 +11,13 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Cmd::audit';
     use_ok $pkg;
+
+    # add some test data
+    my $data = [
+        { id => 1, process => 'batch', action => 'update', message => 'test1'},
+        { id => 2, process => 'web', action => 'update', message => 'test2'},
+    ];
+    Catmandu->store('main')->bag('audit')->add_many($data);
 }
 
 require_ok $pkg;
@@ -39,6 +46,13 @@ require_ok $pkg;
     my $output = $result->stdout;
 
     ok $output , 'got an output';
+
+    like $output, qr/count: 2/, 'list count'
+}
+
+END {
+    # cleanup test data
+    Catmandu->store('main')->bag('audit')->delete_all;
 }
 
 done_testing;
