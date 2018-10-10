@@ -60,6 +60,10 @@ has ctx => (
     default => sub { +{}; }
 );
 
+has object => (
+    is => "ro"
+);
+
 has init_object => (
     is => "lazy",
     isa => sub { check_hash_ref($_[0]); },
@@ -73,6 +77,8 @@ has hfh => ( is => "lazy", init_arg => undef );
 sub _build_init_object {
 
     my $self = $_[0];
+
+    return $self->object() if is_hash_ref( $self->object() );
 
     my $o = +{};
 
