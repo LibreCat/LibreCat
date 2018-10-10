@@ -282,9 +282,19 @@ LibreCat::Form - class to create and validate html form parameters
 
     # 'fh_user' is id of the form
 
+    # before_fixes: change the default values to be shown in the form
+
+    # error_fixes:  add form level errors by inspecting field '_fif', adding errors to '_errors'
+    #               these errors are localized
+
+    # after_fixes: finish validated record by adding additional values
+
+    # fields: field configuration, taken from HTML::FormHandler
+
     form_handlers:
       fh_user:
         before_fixes: [ "fh_user_show.fix" ]
+        error_fixes: [ "fh_user_form_errors.fix" ]
         after_fixes: [ "fh_user_finalize.fix" ]
         fields:
           - name: "name"
@@ -520,6 +530,8 @@ of L<HTML::FormHandler>. So for field configuration, and error codes you need to
 documentation.
 
 See L<https://metacpan.org/pod/distribution/HTML-FormHandler/lib/HTML/FormHandler/Manual/Fields.pod>
+
+Additional form level validation can be done using the "error_fixes" (see above)
 
 =head1 OTHER FIELD TYPES
 
