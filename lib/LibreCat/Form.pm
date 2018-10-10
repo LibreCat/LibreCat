@@ -101,7 +101,7 @@ sub validate_data {
 
     my @errors = $self->hfh()->errors();
 
-    $self->{_validation_has_run} = 1;
+    $self->{_validation_has_run} = scalar(@errors) == 0 ? 1 : 0;
 
     #"an array" is interpreted as invalid
     scalar(@errors) ? \@errors : undef;
@@ -162,12 +162,6 @@ sub field {
 
     my( $self, @args ) = @_;
     $self->hfh()->field( @args );
-
-}
-
-sub errors {
-
-    [ $_[0]->hfh()->errors() ];
 
 }
 
@@ -235,6 +229,8 @@ LibreCat::Form - class to create and validate html form parameters
 
 =head1 Configuration I18N
 
+    # this structure is not required
+
     locale:
       en:
         fh_user:
@@ -251,6 +247,11 @@ LibreCat::Form - class to create and validate html form parameters
               email_format: "'[_1]' is not a valid email address"
 
 =head1 Configuration forms
+
+    # structure is required
+    # the naming of the locale keys however, is not
+
+    # 'fh_user' is id of the form
 
     form_handlers:
       fh_user:
@@ -271,7 +272,7 @@ LibreCat::Form - class to create and validate html form parameters
               required: "fh_user.errors.email.required"
               email_format: "fh_user.errors.email.email_format"
 
-=head1 Synopsis
+=head1 SYNOPSIS
 
 #load form
 
@@ -321,6 +322,7 @@ my $record = $form->finalize();
 $form->clear();
 
 #validation ok now
+
 $form->is_valid({
     name => "Nicolas Franck",
     email => "nicolas.franck@ugent.be"
@@ -344,6 +346,8 @@ must be string
 
 required
 
+when no form with this id is found, then method "load" returns undef
+
 * locale
 
 language to use
@@ -352,11 +356,25 @@ must be string
 
 required
 
+a L<Catmandu::Error> is thrown when locale is not found.
+
+This is done by retrieving the language handle from L<Locale::Maketext::Lexicon>.
+
+Due to the internal algorithm of L<Locale::Maketext::Lexicon>, when a locale 'en'
+
+is configured, it will return the language handle for 'en', when it cannot find
+
+the provided locale.
+
 * ctx
 
 context object
 
 should be hash reference
+
+a L<Catmandu::Error> is thrown when ctx is provided, but it is not a hash reference
+
+so do not provide it, when not necessary.
 
 =item is_valid ( $hash_ref ) : boolean
 
@@ -368,7 +386,9 @@ See L<Catmandu::Validator>
 
 =item finalize : hash or undef
 
-Convert valid hash to final record
+Converts current valid object to a final record
+
+This conversion is done using the list of "before_fixes"
 
 Returns hash if valid, undef if unvalid.
 
@@ -386,15 +406,17 @@ Restores form to it initial state
 
 Initial state is created as following:
 
-* an object is created from the defaults in the field configuration
+* an object is created from the defaults in the field configuration (using the attribute 'default')
 
-* if provided, the ctx is added to the defaults as '_ctx'
+* if provided, the ctx is added to this object as '_ctx'
 
 * a list of "before_fixes" can change this object, using for example information from the provided context
 
 * '_ctx' is removed from the object at the end
 
-=item GET /forms/:form_id?lang=:en
+Beware that one should NOT use a field with name "_ctx"
+
+=item Route: GET /forms/:form_id?lang=:en
 
     my $session = session();
     my $params  = params();
@@ -424,7 +446,7 @@ This "finished record" is equal to the submitted parameters, but can be
 
 changed by a list of "after_fixes"
 
-=item POST /forms/:form_id?lang=:en
+=item Route: POST /forms/:form_id?lang=:en
 
     my $session = session();
     my $params  = params();
@@ -459,6 +481,32 @@ changed by a list of "after_fixes"
     template "forms/$form_id", { fif => $form->fif, errors => $errors, record => $record };
 
 =back
+
+=head1 HOW IT WORKS
+
+L<LibreCat::Form> is a L<Catmandu::Validator> that makes use of the form validation methods
+
+of L<HTML::FormHandler>. So for field configuration, and error codes you need to read its
+
+documentation.
+
+See L<https://metacpan.org/pod/distribution/HTML-FormHandler/lib/HTML/FormHandler/Manual/Fields.pod>
+
+=head1 OTHER FIELD TYPES
+
+* Select
+
+* Integer
+
+* Password
+
+..
+
+For a full list see L<https://metacpan.org/release/HTML-FormHandler>, and look for packages in the namespace C<HTML::FormHandler::Field>
+
+=head1 SEE ALSO
+
+L<HTML::FormHandler>
 
 =cut
 
