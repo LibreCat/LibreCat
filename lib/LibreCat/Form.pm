@@ -100,7 +100,8 @@ sub _build_hfh {
         language_handle => $self->language_handle(),
         init_object => $self->init_object(),
         ctx => $self->ctx(),
-        is_html5 => 1
+        is_html5 => 1,
+        field_name_space => "LibreCat::Form::Field"
     );
 }
 
