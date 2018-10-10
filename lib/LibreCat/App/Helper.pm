@@ -614,9 +614,10 @@ sub logout_user {
 
 sub load_form {
 
-    my( $self, $id ) = @_;
+    my( $self, $id, %opts ) = @_;
 
     LibreCat::Form->load(
+        %opts,
         id => $id,
         locale => $self->locale(),
         ctx => {
