@@ -22,6 +22,17 @@ has before_fix => (
     init_arg => "before_fixes"
 );
 
+#add form level errors
+has error_fix => (
+    is => "ro",
+    default => sub { []; },
+    required => 0,
+    coerce => sub {
+        Catmandu::Fix->new( fixes => $_[0] );
+    },
+    init_arg => "error_fixes"
+);
+
 #for fixed fif ( which is not the same as "fif" )
 has after_fix => (
     is => "ro",
@@ -98,9 +109,17 @@ sub validate_data {
 
     $self->clear();
 
-    $self->hfh()->process( params => $data, posted => 1, init_object => $self->init_object() );
+    my $hfh = $self->hfh();
 
-    my @errors = $self->hfh()->errors();
+    $hfh->process( params => $data, posted => 1, init_object => $self->init_object() );
+
+    my $r = { _fif => $hfh->fif(), _errors => [] };
+    my $form_errors = $self->error_fix()->fix($r)->{_errors};
+    $form_errors = is_array_ref( $form_errors ) ? $form_errors : [];
+
+    $hfh->add_form_error( $_ ) for @$form_errors;
+
+    my @errors = $hfh->errors();
 
     $self->{_validation_has_run} = scalar(@errors) == 0 ? 1 : 0;
 
@@ -212,6 +231,15 @@ sub load {
 
     }
 
+    if( exists( $config->{error_fixes} ) ){
+
+        Catmandu::Error->throw( "error_fixes of form_handler $id should be array" )
+            unless is_array_ref( $config->{error_fixes} );
+
+        $args{error_fixes} = $config->{error_fixes};
+
+    }
+
     state $language_handles = {};
     $language_handles->{$locale} ||= LibreCat::I18N::_Handle->get_handle( $locale );
 
@@ -254,9 +282,19 @@ LibreCat::Form - class to create and validate html form parameters
 
     # 'fh_user' is id of the form
 
+    # before_fixes: change the default values to be shown in the form
+
+    # error_fixes:  add form level errors by inspecting field '_fif', adding errors to '_errors'
+    #               these errors are localized
+
+    # after_fixes: finish validated record by adding additional values
+
+    # fields: field configuration, taken from HTML::FormHandler
+
     form_handlers:
       fh_user:
         before_fixes: [ "fh_user_show.fix" ]
+        error_fixes: [ "fh_user_form_errors.fix" ]
         after_fixes: [ "fh_user_finalize.fix" ]
         fields:
           - name: "name"
@@ -492,6 +530,8 @@ of L<HTML::FormHandler>. So for field configuration, and error codes you need to
 documentation.
 
 See L<https://metacpan.org/pod/distribution/HTML-FormHandler/lib/HTML/FormHandler/Manual/Fields.pod>
+
+Additional form level validation can be done using the "error_fixes" (see above)
 
 =head1 OTHER FIELD TYPES
 
