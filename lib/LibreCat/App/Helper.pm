@@ -21,6 +21,7 @@ use URI::Escape qw(uri_escape_utf8);
 use Role::Tiny ();
 use Moo;
 use Clone qw(clone);
+use LibreCat::Form;
 
 sub BUILD {
     my ($self) = @_;
@@ -608,6 +609,25 @@ sub logout_user {
     session user     => undef;
     session user_id  => undef;
     session auth_sso => undef;
+
+}
+
+sub load_form {
+
+    my( $self, $id ) = @_;
+
+    LibreCat::Form->load(
+        id => $id,
+        locale => $self->locale(),
+        ctx => {
+            session => {
+                user => session("user"),
+                user_id => session("user_id"),
+                role => session("role"),
+                auth_sso => session("auth_sso")
+            }
+        }
+    );
 
 }
 

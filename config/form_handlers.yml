@@ -1,0 +1,18 @@
+_prefix:
+  form_handlers:
+
+fh_new_research_group:
+  before_fixes: []
+  after_fixes: []
+  fields:
+    #TODO: refer to actual I18N keys instead of using these literal strings
+    - name: name
+      label: Name
+      type: Text
+      required: 1
+      messages:
+        required: "Name is required"
+    - name: acronym
+      label: Acronym
+      type: Text
+    - name: 
