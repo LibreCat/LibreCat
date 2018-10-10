@@ -15,4 +15,19 @@ fh_new_research_group:
     - name: acronym
       label: Acronym
       type: Text
-    - name: 
+    #TODO: translate error message "Your datetime does not match your pattern." from DateTime::Format::Strptime
+    - name: start_date
+      label: "Start date"
+      type: Date
+      format: "%Y-%m-%d"
+    - name: end_date
+      label: "End date"
+      type: Date
+      format: "%Y-%m-%d"
+    - name: affiliation
+      label: Affiliation
+      type: Repeatable
+      add_extra: 1
+      num_when_empty: 1
+    - name: affiliation.contains
+      type: Text
