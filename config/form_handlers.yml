@@ -1,33 +1,59 @@
 _prefix:
   form_handlers:
 
-fh_new_research_group:
+new_research_group:
   before_fixes: []
-  after_fixes: []
+  error_fixes: [ "fixes/fh_new_research_group_errors.fix" ]
+  after_fixes: [ "fixes/fh_new_research_group_finalize.fix" ]
   fields:
     #TODO: refer to actual I18N keys instead of using these literal strings
-    - name: name
+    - &res_grp_name
+      name: name
       label: Name
       type: Text
       required: 1
       messages:
         required: "Name is required"
-    - name: acronym
+    - &res_grp_acronym
+      name: acronym
       label: Acronym
       type: Text
     #TODO: translate error message "Your datetime does not match your pattern." from DateTime::Format::Strptime
-    - name: start_date
+    - &res_grp_start_date
+      name: start_date
       label: "Start date"
       type: Date
       format: "%Y-%m-%d"
-    - name: end_date
+    - &res_grp_end_date
+      name: end_date
       label: "End date"
       type: Date
       format: "%Y-%m-%d"
-    - name: affiliation
+    - &res_grp_department
+      name: department
       label: Affiliation
       type: Repeatable
       add_extra: 1
       num_when_empty: 1
-    - name: affiliation.contains
-      type: Text
+    - &res_grp_department_id
+      name: department._id
+      type: GetRecord
+      store: main
+      bag: department
+      messages:
+        record_not_found: "Department with id '[_1]' not found"
+
+edit_research_group:
+  before_fixes: []
+  error_fixes: [ "fixes/fh_new_research_group_errors.fix" ]
+  after_fixes: [ "fixes/fh_edit_research_group_finalize.fix" ]
+  fields:
+    - name: _id
+      type: Hidden
+      required: 1
+    - *res_grp_name
+    - *res_grp_acronym
+    - *res_grp_start_date
+    - *res_grp_end_date
+    - *res_grp_department
+    - *res_grp_department_id

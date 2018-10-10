@@ -1,0 +1,19 @@
+fh_finalize( store => 'main', bag => 'research_group' )
+
+unless is_array('department')
+  set_array('department')
+end
+
+set_array('dep_new')
+
+do list( path => 'department' )
+
+  if all_match('_id','.+')
+
+    copy_field('_id','dep_new.$append._id')
+
+  end
+
+end
+
+move_field('dep_new','department')
