@@ -87,7 +87,8 @@ sub _build_hfh {
         field_list => $self->field_list(),
         language_handle => $self->language_handle(),
         init_object => $self->init_object(),
-        ctx => $self->ctx()
+        ctx => $self->ctx(),
+        is_html5 => 1
     );
 }
 
