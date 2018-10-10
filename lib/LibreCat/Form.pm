@@ -22,6 +22,17 @@ has before_fix => (
     init_arg => "before_fixes"
 );
 
+#add form level errors
+has error_fix => (
+    is => "ro",
+    default => sub { []; },
+    required => 0,
+    coerce => sub {
+        Catmandu::Fix->new( fixes => $_[0] );
+    },
+    init_arg => "error_fixes"
+);
+
 #for fixed fif ( which is not the same as "fif" )
 has after_fix => (
     is => "ro",
@@ -98,9 +109,17 @@ sub validate_data {
 
     $self->clear();
 
-    $self->hfh()->process( params => $data, posted => 1, init_object => $self->init_object() );
+    my $hfh = $self->hfh();
 
-    my @errors = $self->hfh()->errors();
+    $hfh->process( params => $data, posted => 1, init_object => $self->init_object() );
+
+    my $r = { _fif => $hfh->fif(), _errors => [] };
+    my $form_errors = $self->error_fix()->fix($r)->{_errors};
+    $form_errors = is_array_ref( $form_errors ) ? $form_errors : [];
+
+    $hfh->add_form_error( $_ ) for @$form_errors;
+
+    my @errors = $hfh->errors();
 
     $self->{_validation_has_run} = scalar(@errors) == 0 ? 1 : 0;
 
@@ -209,6 +228,15 @@ sub load {
             unless is_array_ref( $config->{after_fixes} );
 
         $args{after_fixes} = $config->{after_fixes};
+
+    }
+
+    if( exists( $config->{error_fixes} ) ){
+
+        Catmandu::Error->throw( "error_fixes of form_handler $id should be array" )
+            unless is_array_ref( $config->{error_fixes} );
+
+        $args{error_fixes} = $config->{error_fixes};
 
     }
 
