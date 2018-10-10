@@ -220,6 +220,7 @@ sub load {
     );
 
     $args{ctx} = $opts{ctx} if exists( $opts{ctx} );
+    $args{object} = $opts{object} if exists( $opts{object} );
 
     if( exists( $config->{before_fixes} ) ){
 
