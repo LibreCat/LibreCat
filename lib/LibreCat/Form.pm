@@ -8,6 +8,7 @@ use Clone qw();
 use Moo;
 use HTML::FormHandler;
 use Catmandu::Fix;
+use Catmandu::Expander;
 
 with "Catmandu::Pluggable", "Catmandu::Validator", "LibreCat::Logger";
 
@@ -131,7 +132,7 @@ sub validate_data {
 sub fif {
 
     #Note: hfh always returns copy of hash
-    $_[0]->hfh()->fif();
+    Catmandu::Expander->expand_hash( $_[0]->hfh()->fif() );
 
 }
 
