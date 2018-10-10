@@ -8,6 +8,7 @@ use Clone qw();
 use Moo;
 use HTML::FormHandler;
 use Catmandu::Fix;
+use Catmandu::Expander;
 
 with "Catmandu::Pluggable", "Catmandu::Validator", "LibreCat::Logger";
 
@@ -59,6 +60,10 @@ has ctx => (
     default => sub { +{}; }
 );
 
+has object => (
+    is => "ro"
+);
+
 has init_object => (
     is => "lazy",
     isa => sub { check_hash_ref($_[0]); },
@@ -72,6 +77,8 @@ has hfh => ( is => "lazy", init_arg => undef );
 sub _build_init_object {
 
     my $self = $_[0];
+
+    return $self->object() if is_hash_ref( $self->object() );
 
     my $o = +{};
 
@@ -99,7 +106,8 @@ sub _build_hfh {
         language_handle => $self->language_handle(),
         init_object => $self->init_object(),
         ctx => $self->ctx(),
-        is_html5 => 1
+        is_html5 => 1,
+        field_name_space => "LibreCat::Form::Field"
     );
 }
 
@@ -131,7 +139,7 @@ sub validate_data {
 sub fif {
 
     #Note: hfh always returns copy of hash
-    $_[0]->hfh()->fif();
+    Catmandu::Expander->expand_hash( $_[0]->hfh()->fif() );
 
 }
 
