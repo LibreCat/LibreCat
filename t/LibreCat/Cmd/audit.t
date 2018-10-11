@@ -14,8 +14,27 @@ BEGIN {
 
     # add some test data
     my $data = [
-        { id => 1, process => 'batch', action => 'update', message => 'test1'},
-        { id => 2, process => 'web', action => 'update', message => 'test2'},
+        {
+            id      => 1,
+            process => 'batch',
+            action  => 'update',
+            message => 'test1',
+            time    => '2018-01-01T12:00:00Z'
+        },
+        {
+            id      => 2,
+            process => 'web',
+            action  => 'update',
+            time    => '2018-01-01T12:00:02Z'
+        },
+        {id => 3, time => '2018-01-01T12:00:04Z'},
+        {
+            id      => 1,
+            process => 'batch',
+            action  => 'update',
+            message => 'change ID 1 again',
+            time    => '2018-01-01T12:00:06Z'
+        },
     ];
     Catmandu->store('main')->bag('audit')->add_many($data);
 }
@@ -47,7 +66,13 @@ require_ok $pkg;
 
     ok $output , 'got an output';
 
-    like $output, qr/count: 2/, 'list count'
+    like $output, qr/count: 4/, 'list count';
+
+    $result = test_app(qq|LibreCat::CLI| => ['audit', 'list', '1']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    like $result->output, qr/count: 2/, 'list count';
 }
 
 END {
