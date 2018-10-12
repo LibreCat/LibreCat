@@ -141,17 +141,13 @@ subtest 'export project' => sub {
     like $result->output, qr/_id:/, "export output";
 };
 
-subtest 'export project with options' => sub {
-    my $result = test_app(qq|LibreCat::CLI| => ['project', 'export', '--sort "name,,1"']);
-
-    ok $result->error, "threw no exception";
-    like $result->error, qr/sort only active/, "error message for sort without query";
-
-    # $result = test_app(qq|LibreCat::CLI| => ['project', 'export', '--sort "name,,1"']);
-    #
-    # ok $result->error, "threw no exception";
-    # like $result->error, qr/sort only active/, "error message for sort without query";
-};
+# TODO
+# subtest 'export project with options' => sub {
+#     my $result = test_app(qq|LibreCat::CLI| => ['project', 'export', '--sort "name,,1"']);
+#
+#     ok $result->error, "threw no exception";
+#     like $result->error, qr/sort only active/, "error message for sort without query";
+# };
 
 subtest 'delete project' => sub {
     my $result
