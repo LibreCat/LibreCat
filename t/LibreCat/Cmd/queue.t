@@ -30,7 +30,7 @@ SKIP: {
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue']);
-        ok $result->error, 'ok threw an exception';
+        ok $result->error, 'missing cmd: threw an exception';
 
         my $output = $result->error;
         ok $output, 'got an output';
@@ -40,25 +40,32 @@ SKIP: {
     {
         my $worker = test_app(
             qq|LibreCat::CLI| => [
-                'worker', 'mailer', 'start', '--workers', '2', '--supervise'
+                'worker', 'indexer', 'start', '--workers', '2', '--supervise'
             ]
         );
+        ok $worker, 'can start worker indexer';
 
         my $result = test_app(qq|LibreCat::CLI| => ['queue', 'status']);
-        ok !$result->error, 'ok threw no exception';
+        ok !$result->error, 'status threw no exception';
 
-        my $output = $result->stdout;
+        my $output = $result->output;
         ok $output, 'got an output';
-        like $output, qr/mailer/, 'got expected output';
+        like $output, qr/indexer/, 'got expected output';
+
+        $result = test_app(qq|LibreCat::CLI| => ['queue', '--background', 'add_job','indexer', 't/records/job.yml']);
+            ok !$result->error, 'add_job threw no exception';
+
+            ok $result->output, 'got an output';
+            like $result->output, qr/Adding job/, 'got expected output';
 
         ok test_app(qq|LibreCat::CLI| =>
-                ['worker', 'mailer', 'stop', '--workers', '2', '--supervise']
+                ['worker', 'indexer', 'stop', '--workers', '2', '--supervise']
         ), 'stop workers';
     }
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue', 'start']);
-        ok !$result->error, 'ok threw no exception';
+        ok !$result->error, 'start threw no exception';
 
         my $output = $result->stdout;
         ok $output, 'got an output';
@@ -67,13 +74,12 @@ SKIP: {
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue', 'stop']);
-        ok !$result->error, 'ok threw no exception';
+        ok !$result->error, 'stop threw no exception';
 
         my $output = $result->stdout;
         ok $output, 'got an output';
         like $output, qr/Stopping /, 'got expected output';
     }
-
 }
 
 done_testing;
