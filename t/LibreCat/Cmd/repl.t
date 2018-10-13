@@ -16,12 +16,12 @@ BEGIN {
 
 require_ok $pkg;
 
-{
+subtest 'help' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['help', 'repl']);
     ok !$result->error, 'ok threw no exception';
 
     my $output = $result->stdout;
     like $output, qr/Usage:/, "Help message";
-}
+};
 
 done_testing;
