@@ -40,11 +40,12 @@ SKIP: {
     {
         my $worker = test_app(
             qq|LibreCat::CLI| => [
-                'worker', 'indexer', 'start', '--workers', '2', '--supervise'
+                'worker', 'indexer', 'start', '--workers',
+                '2',      '--supervise'
             ]
         );
         ok $worker, 'can start worker indexer';
-
+        sleep 2;
         my $result = test_app(qq|LibreCat::CLI| => ['queue', 'status']);
         ok !$result->error, 'status threw no exception';
 
@@ -52,15 +53,24 @@ SKIP: {
         ok $output, 'got an output';
         like $output, qr/indexer/, 'got expected output';
 
-        $result = test_app(qq|LibreCat::CLI| => ['queue', '--background', 'add_job','indexer', 't/records/job.yml']);
-            ok !$result->error, 'add_job threw no exception';
+        $result = test_app(
+            qq|LibreCat::CLI| => [
+                'queue',   '--background',
+                'add_job', 'indexer',
+                't/records/job.yml'
+            ]
+        );
+        ok !$result->error, 'add_job threw no exception';
 
-            ok $result->output, 'got an output';
-            like $result->output, qr/Adding job/, 'got expected output';
+        ok $result->output, 'got an output';
+        like $result->output, qr/Adding job/, 'got expected output';
 
-        ok test_app(qq|LibreCat::CLI| =>
-                ['worker', 'indexer', 'stop', '--workers', '2', '--supervise']
-        ), 'stop workers';
+        ok test_app(
+            qq|LibreCat::CLI| => [
+                'worker', 'indexer', 'stop', '--workers', '2', '--supervise'
+            ]
+            ),
+            'stop workers';
     }
 
     {
