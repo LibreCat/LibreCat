@@ -304,6 +304,23 @@ any '/rc/:id/:file_id' => sub {
     }
 };
 
+=head2 GET /download/:id/:file.:extension
+
+Same as route below, but with extension
+
+=cut
+
+get "/download/:id/:file_id.:extension" => sub {
+    my $r_params = params("route");
+    my $id = $r_params->{id};
+    my $file_id = $r_params->{file_id};
+
+    my $params = params("query");
+
+    #Note: "send_file" does not work in a forwarded request
+    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+};
+
 =head2 GET /download/:id/:file_id/:file_name
 
 Same as route below, but with file_name included to help search results
