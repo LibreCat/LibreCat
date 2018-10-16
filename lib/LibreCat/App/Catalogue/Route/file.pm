@@ -84,9 +84,10 @@ sub _send_it {
             override => sub {
                 my ($respond, $response) = @_;
                 my $content_type     = $file->{content_type};
+                my $file_size        = $file->{size};
                 my $http_status_code = 200;
                 my $uri_esc_name     = URI::Escape::uri_escape_utf8($name);
-                
+
               # Tech.note: This is a hash of HTTP header/values, but the
               #            function below requires an even-numbered array-ref.
                 my @http_headers = (
@@ -94,6 +95,7 @@ sub _send_it {
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
                     'Pragma' => 'no-cache',
+                    'Content-Length' => $file_size ,
                     'Content-Disposition' => qq(inline; filename="$uri_esc_name")
                 );
 
