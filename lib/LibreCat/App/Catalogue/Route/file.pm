@@ -126,6 +126,39 @@ sub _get_file_info {
     }
 }
 
+sub _handle_download {
+
+    my( %args ) = @_;
+
+    my $id = delete $args{id};
+    my $file_id = $args{file_id};
+
+    my ($ok, $file_name) = p->can_download(
+        $id,
+        {
+            file_id => $file_id,
+            user_id => session->{user_id},
+            role    => session->{role},
+            ip      => request->address
+        }
+    );
+
+    unless ($ok) {
+        status 403;
+        return template '403';
+    }
+
+    if (my $file = _file_exists($id, $file_name)) {
+        _send_it($id, $file);
+    }
+    else {
+        status 404;
+        template 'error',
+            {message => "The file does not exist anymore. We're sorry."};
+    }
+
+}
+
 =head2 GET /rc/approve/:key
 
 Author approves the request. Email will be sent to user.
@@ -315,13 +348,7 @@ Same as route below, but with extension
 
 get "/download/:id/:file_id.:extension" => sub {
     my $r_params = params("route");
-    my $id = $r_params->{id};
-    my $file_id = $r_params->{file_id};
-
-    my $params = params("query");
-
-    #Note: "send_file" does not work in a forwarded request
-    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+    _handle_download( id => $r_params->{id}, file_id => $r_params->{file_id} );
 };
 
 =head2 GET /download/:id/:file_id/:file_name
@@ -331,13 +358,8 @@ Same as route below, but with file_name included to help search results
 =cut
 
 get "/download/:id/:file_id/:file_name" => sub {
-    my $params = params();
-    my $id = delete $params->{id};
-    my $file_id = delete $params->{file_id};
-    delete $params->{file_name};
-
-    #Note: "send_file" does not work in a forwarded request
-    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+    my $r_params = params("route");
+    _handle_download( id => $r_params->{id}, file_id => $r_params->{file_id} );
 };
 
 =head2 GET /download/:id/:file_id
@@ -348,32 +370,8 @@ and user rights will be checked before.
 =cut
 
 get "/download/:id/:file_id" => sub {
-    my $id = param("id");
-    my $file_id = param("file_id");
-
-    my ($ok, $file_name) = p->can_download(
-        $id,
-        {
-            file_id => $file_id,
-            user_id => session->{user_id},
-            role    => session->{role},
-            ip      => request->address
-        }
-    );
-
-    unless ($ok) {
-        status 403;
-        return template '403';
-    }
-
-    if (my $file = _file_exists($id, $file_name)) {
-        _send_it($id, $file);
-    }
-    else {
-        status 404;
-        template 'error',
-            {message => "The file does not exist anymore. We're sorry."};
-    }
+    my $r_params = params("route");
+    _handle_download( id => $r_params->{id}, file_id => $r_params->{file_id} );
 };
 
 =head2 GET /thumbnail/:id
