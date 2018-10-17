@@ -46,4 +46,8 @@
     {% END %}
   </div>
 </div>
+[% ELSE %]
+  [% FOREACH altid IN alternative_id.list %]
+    <input type="hidden" value="[% altid | html %]" name="alternative_id.[% loop.index %]" id="id_alternative_id_[% loop.index %]">
+  [% END %]
 [% END %]
