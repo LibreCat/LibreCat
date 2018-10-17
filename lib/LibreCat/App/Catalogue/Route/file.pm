@@ -18,7 +18,7 @@ use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
 use Catmandu::Util qw(:is);
-use URI::Escape qw(uri_escape);
+use URI::Escape qw(uri_escape uri_escape_utf8);
 
 #str_format( "%f.%e", f => "DS.0", e => "txt" )
 sub str_format {
@@ -84,7 +84,9 @@ sub _send_it {
             override => sub {
                 my ($respond, $response) = @_;
                 my $content_type     = $file->{content_type};
+                my $file_size        = $file->{size};
                 my $http_status_code = 200;
+                my $uri_esc_name     = URI::Escape::uri_escape_utf8($name);
 
               # Tech.note: This is a hash of HTTP header/values, but the
               #            function below requires an even-numbered array-ref.
@@ -93,7 +95,8 @@ sub _send_it {
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
                     'Pragma' => 'no-cache',
-                    'Content-Disposition' => qq(inline; filename="$name")
+                    'Content-Length' => $file_size ,
+                    'Content-Disposition' => "inline; filename*=UTF-8''".uri_escape_utf8($name)
                 );
 
          # Send the HTTP headers
