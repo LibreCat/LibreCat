@@ -1719,8 +1719,7 @@ forms:
   heading: "I'm a teapot (418)"
 help:
   home: "Startseite"
-  brand: "Backend<br>Startseite"
-  my_author_page: "Ihre &ouml;ffentliche<br>Publikationsliste"
+  my_author_page: "Ihre &ouml;ffentliche Publikationsliste"
   my_dashboard: "Ihr Dashboard für die aktuelle Rolle"
   change_language: "Sprache wechseln"
   user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
