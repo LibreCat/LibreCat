@@ -197,6 +197,14 @@ sub can_download {
     my $role    = $opts->{role};
     my $ip      = $opts->{ip};
 
+    my $pub_can_download = $self->_can_do_action(
+        'can_download'
+        ,$id,
+        { user_id => $user_id, role => $role }
+    );
+
+    return (0, '') unless $pub_can_download;
+
     my $ip_range = h->config->{ip_range};
     my $access;
     my $file_name;
@@ -221,9 +229,8 @@ sub can_download {
     elsif ($access eq 'closed') {
         # closed documents can be downloaded by user
         # if and only if the user can edit the record
-        my $can_download
-            = $self->_can_do_action('can_download',$id, {user_id => $user_id, role => $role});
-        return ($can_download ? 1 : 0, $file_name);
+        # access already determined above by _can_do_action
+        return (1, $file_name);
     }
 
     return (0, '');
