@@ -37,9 +37,7 @@
                 [%- END %]
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="helpme helpme-md" data-placement="left" title="[% h.loc("help.change_language") %]">
-                    <a href="[% uri_base %][% IF session.user %]/librecat/person[% END %]/set_language[% lang == "en" ? "?lang=de" : "?lang=en" %]"><span class="fa fa-flag"></span><span class="hidden-sm">[% h.loc("header.lang") %]</span><span class="hidden-md hidden-xs hidden-lg">[% h.loc("header.lang_short") %]</span></a>
-                </li>
+                [% INCLUDE btn_lang.tt %]
                 [%- IF session.user %]
                 <li class="dropdown"><a href="#" class="dropdown-toggle helpme helpme-md" data-placement="bottom" title="[% h.loc("help.user_settings") %]" data-toggle="dropdown"><span class="fa fa-user"></span> [% h.loc("header.settings") %] <span class="fa fa-chevron-down"></span></a>
                     <div id="settings" class="dropdown-menu">
