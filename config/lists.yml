@@ -716,7 +716,7 @@ jel:
       "E58": "-- E58 Central Banks and Their Policies"
       "E59": "-- E59 Other"
     "E6":
-      opgroup: "- E6 Macroeconomic Policy, Macroeconomic Aspects of Public Finance, and General Outlook"
+      optgroup: "- E6 Macroeconomic Policy, Macroeconomic Aspects of Public Finance, and General Outlook"
       "E60": "-- E60 General"
       "E61": "-- E61 Policy Objectives &bull; Policy Designs and Consistency &bull; Policy Coordination"
       "E62": "-- E62 Fiscal Policy"
