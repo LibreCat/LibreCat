@@ -4,6 +4,8 @@ use Test::Exception;
 use Path::Tiny;
 use LibreCat 'model', -load => {layer_paths => [qw(t/layer)]};
 use utf8;
+use Dancer::Request;
+use Dancer::SharedData;
 
 my $pkg;
 my @worker_pkg;
@@ -259,5 +261,43 @@ is h->uri_for_file(123, 456, 'test.pdf'),
     'http://localhost:5001/download/123/456.pdf', 'h->uri_for_file';
 
 ok h->can('my_helper'), 'load helpers';
+
+is_deeply h->available_locales(), [qw(de en)], "available locales";
+
+h->config->{i18n}->{locale_long} = {};
+is h->locale_long("en"), "en";
+is h->locale_long("de"), "de";
+
+h->config->{i18n}->{locale_long} = { en => "English", de => "German" };
+is h->locale_long("en"), "English";
+is h->locale_long("de"), "German";
+
+is h->default_locale(), "en";
+
+ok h->locale_exists("en");
+ok !(h->locale_exists("abc"));
+
+h->config->{i18n}->{show_locale} = 1;
+is h->uri_for("/librecat",{ a => "a" }), "http://localhost:5001/librecat?a=a&lang=en";
+
+h->config->{i18n}->{show_locale} = 0;
+is h->uri_for("/librecat",{ a => "a" }), "http://localhost:5001/librecat?a=a";
+
+{
+
+    my $request = Dancer::Request->new(
+        env => {
+            SERVER_PORT => "5001",
+            SERVER_NAME => "localhost",
+            SCRIPT_NAME => "/",
+            PATH_INFO => "/librecat",
+            REQUEST_METHOD => "GET",
+            'PSGI.URL_SCHEME' => "http"
+        }
+    );
+    Dancer::SharedData->request($request);
+    is h->uri_for_locale("de"), "http://localhost:5001/librecat?lang=de";
+
+}
 
 done_testing;

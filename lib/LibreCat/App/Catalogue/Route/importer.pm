@@ -83,14 +83,23 @@ post '/librecat/record/import' => sub {
             $pub->{user_id}    = session->{user_id};
             $pub->{department} = $user->{department};
 
-            # Use config/hooks.yml to register functions
-            # that should run before/after importing publications
-            h->hook('import-new-' . $source)->fix_around(
+            if(h->config->{web_bulk_import} or !exists h->config->{web_bulk_import}){
+              # Use config/hooks.yml to register functions
+              # that should run before/after importing publications
+              h->hook('import-new-' . $source)->fix_around(
                 $pub,
                 sub {
                     publication->add($pub);
                 }
-            );
+              );
+            }
+            else {
+              my $type = $pub->{type} || 'journal_article';
+              my $templatepath = "backend/forms";
+              $pub->{new_record} = 1;
+
+              return template $templatepath . "/$type.tt", $pub;
+            }
         }
 
         return template "backend/add_new",

@@ -194,4 +194,22 @@ isa_ok($instance->queue, "LibreCat::JobQueue");
     is_deeply($data, {foo => 'bar'});
 }
 
+# fixer
+{
+    my $fixer = $instance->fixer();
+    is_deeply $fixer->fix({do=>'nothing'}) , {do=>'nothing'} , 'fixer()';
+
+    my $fixer2 = $instance->fixer('add_field(foo,bar)');
+    is_deeply $fixer2->fix({do=>'nothing'})
+        , {do=>'nothing',foo=>'bar'} , 'fixer(add_field(foo,bar))';
+
+    my $fixer3 = $instance->fixer(['add_field(foo,bar)']);
+    is_deeply $fixer3->fix({do=>'nothing'})
+        , {do=>'nothing',foo=>'bar'} , 'fixer([add_field(foo,bar)])';
+
+    my $fixer4 = $instance->fixer('test.fix');
+    is_deeply $fixer4->fix({do=>'nothing'})
+        , {do=>'nothing',magic=>'hello, world!'} , 'fixer(test.fix)';
+}
+
 done_testing;

@@ -1,6 +1,6 @@
 [% qp = {} -%]
 [% qp = h.extract_params -%]
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lang = h.locale() -%]
 
 <!-- BEGIN filters.tt -->
 [%- USE JSON.Escape %]
@@ -194,12 +194,21 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var embed_link = window.location.href;
     var person_id  = embed_link.match(/\/person\/([^\?]+)/);
 
-    if (embed_link.match(/\/record/)) {
-      embed_link = embed_link.replace(/\/record.*/,"/embed?");
+    var no_params = embed_link.match(/\/person\/(\d+)$/);
+    var yes_params = embed_link.match(/\/person\/(\d+)\?.*/);
+    if(no_params){
+      embed_link = embed_link.replace(/\/person\/\d+/, "/embed?q=person=" + no_params[1]);
+    }
+    else if(yes_params){
+      embed_link = embed_link.replace(/\/person.*/, "/embed?");
     }
 
-    if (person_id) {
-      embed_link = embed_link.replace(/\/person\/.*/,"/embed?");
+    if (embed_link.match(/\/publication/)) {
+      embed_link = embed_link.replace(/\/publication.*/,"/embed?");
+    }
+
+    if (embed_link.match(/\/record/)) {
+      embed_link = embed_link.replace(/\/record.*/,"/embed?");
     }
 
     embed_link = embed_link + $.param($.extend({}, searchParams), true);

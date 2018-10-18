@@ -13,9 +13,22 @@ use Catmandu qw(export_to_string);
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
+use LibreCat qw(publication);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
+use Catmandu::Util qw(:is);
+use URI::Escape qw(uri_escape uri_escape_utf8);
+
+#str_format( "%f.%e", f => "DS.0", e => "txt" )
+sub str_format {
+    my ($str,%args) = @_;
+    for (keys %args) {
+        my $val = $args{$_};
+        $str =~ s/\%$_/$val/g;
+    }
+    $str;
+}
 
 sub _file_exists {
     my ($key, $filename, %opts) = @_;
@@ -33,16 +46,36 @@ sub _file_exists {
 }
 
 sub _send_it {
-    my ($key, $filename, %opts) = @_;
+    my ($key, $file, %opts) = @_;
 
-    my $store = $opts{access} ? h->get_access_store() : h->get_file_store();
+    return undef unless $key && $file;
 
-    return undef unless $store->index->exists($key);
+    # Find the file identifier as recorded in the metadata record (the
+    # $file is a record from the FileStore where the _id field contains
+    # the original file name).
+    my $record       = publication->get($key);
+    my $record_files = $record->{file} // [];
+    my $file_id      = 0;
 
-    my $files = $store->index->files($key);
-    my $file  = $files->get($filename);
+    for (@$record_files) {
+        if ($_->{file_name} eq $file->{_id}) {
+            $file_id = $_->{file_id};
+            last;
+        }
+    }
 
-    return undef unless $file;
+    my $format    = h->config->{filestore}->{download_file_name};
+    $format = is_string($format) ? $format : "%o";
+
+    my $extension = h->file_extension($file->{_id});
+    $extension =~ s/^\.//o;
+
+    my $name      = str_format($format,
+                        i => $key,
+                        o => $file->{_id},
+                        f => $file_id,
+                        e => $extension
+                    );
 
     send_file(
         \"dummy",    # anything, as long as it's a scalar-ref
@@ -51,7 +84,9 @@ sub _send_it {
             override => sub {
                 my ($respond, $response) = @_;
                 my $content_type     = $file->{content_type};
+                my $file_size        = $file->{size};
                 my $http_status_code = 200;
+                my $uri_esc_name     = URI::Escape::uri_escape_utf8($name);
 
               # Tech.note: This is a hash of HTTP header/values, but the
               #            function below requires an even-numbered array-ref.
@@ -59,14 +94,16 @@ sub _send_it {
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
-                    'Pragma' => 'no-cache'
+                    'Pragma' => 'no-cache',
+                    'Content-Length' => $file_size ,
+                    'Content-Disposition' => "inline; filename*=UTF-8''".uri_escape_utf8($name)
                 );
 
          # Send the HTTP headers
          # (back to either the user or the upstream HTTP web-server front-end)
                 my $writer = $respond->([$http_status_code, \@http_headers]);
 
-                $files->stream(h->io_from_plack_writer($writer), $file);
+                $file->{_stream}->(h->io_from_plack_writer($writer), $file);
             },
         },
     );
@@ -175,7 +212,7 @@ get '/rc/:key' => sub {
     if ($check and $check->{approved} == 1) {
         if (my $file = _file_exists($check->{record_id}, $check->{file_name}))
         {
-            _send_it($check->{record_id}, $file->{_id});
+            _send_it($check->{record_id}, $file);
         }
         else {
             status 404;
@@ -270,6 +307,22 @@ any '/rc/:id/:file_id' => sub {
     }
 };
 
+=head2 GET /download/:id/:file_id/:file_name
+
+Same as route below, but with file_name included to help search results
+
+=cut
+
+get "/download/:id/:file_id/:file_name" => sub {
+    my $params = params();
+    my $id = delete $params->{id};
+    my $file_id = delete $params->{file_id};
+    delete $params->{file_name};
+
+    #Note: "send_file" does not work in a forwarded request
+    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+};
+
 =head2 GET /download/:id/:file_id
 
 Download a document. Access level of the document
@@ -277,8 +330,9 @@ and user rights will be checked before.
 
 =cut
 
-get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
-    my ($id, $file_id) = splat;
+get "/download/:id/:file_id" => sub {
+    my $id = param("id");
+    my $file_id = param("file_id");
 
     my ($ok, $file_name) = p->can_download(
         $id,
@@ -296,7 +350,7 @@ get qr{/download/([0-9A-F-]+)/([0-9A-F-]+).*} => sub {
     }
 
     if (my $file = _file_exists($id, $file_name)) {
-        _send_it($id, $file->{_id});
+        _send_it($id, $file);
     }
     else {
         status 404;
@@ -316,7 +370,7 @@ get '/thumbnail/:id' => sub {
     my $thumbnail_name = 'thumbnail.png';
 
     if (my $file = _file_exists($key, $thumbnail_name, access => 1)) {
-        _send_it($key, $file->{_id}, access => 1);
+        _send_it($key, $file, access => 1);
     }
     else {
         redirect uri_for('/images/thumbnail_dummy.png');

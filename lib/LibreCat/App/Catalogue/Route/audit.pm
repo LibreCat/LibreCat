@@ -39,8 +39,8 @@ List all audit messages for an :id in the store :bag
             }
         )->map(
             sub {
-                $_[0]->{date} = strftime("%Y-%m-%dT%H:%M:%S",
-                    localtime($_[0]->{time} // 0));
+                $_[0]->{date} = strftime("%Y-%m-%dT%H:%M:%SZ",
+                    gmtime($_[0]->{time} // 0));
                 $_[0];
             }
         );

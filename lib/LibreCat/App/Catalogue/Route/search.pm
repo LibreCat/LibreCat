@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Dancer qw/:syntax/;
 use LibreCat qw(searcher);
 use LibreCat::App::Helper;
+use LibreCat::App::Catalogue::Controller::Permission;
 
 =head2 PREFIX /librecat/search
 
@@ -29,58 +30,49 @@ Performs search for admin.
 
         my $p = h->extract_params();
 
-        push @{$p->{cql}}, "status<>deleted";
-        $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
+        my $hits;
 
-        my $hits = searcher->search('publication', $p);
-
-        $hits->{modus} = "admin";
-
-        template "home", $hits;
-    };
-
-=head2 GET /admin/similar_search
-
-Performs search for similar titles, admin only
-
-=cut
-
-    get '/admin/similar_search' => sub {
-
-        my $p = h->extract_params();
-
-        # TODO filter out deleted recs
-        my $hits = searcher->native_search(
-            'publication',
-            {
-                query => {
-                    "bool" => {
-                        "must" => {
-                            "match" => {
-                                "title" => {
-                                    "query"                => $p->{q},
-                                    "minimum_should_match" => "70%"
+        if (params->{similar_search}) {
+            $hits = searcher->native_search(
+                'publication',
+                {
+                    query => {
+                        "bool" => {
+                            "must" => {
+                                "match" => {
+                                    "title" => {
+                                        "query"                => $p->{q},
+                                        "minimum_should_match" => "70%"
+                                    }
+                                }
+                            },
+                            "must_not" => {"term" => {"status" => "deleted"}},
+                            "should"   => {
+                                "match_phrase" => {
+                                    "title" =>
+                                        {"query" => $p->{q}, "slop" => "50"}
                                 }
                             }
-                        },
-                        "must_not" => {"term" => {"status" => "deleted"}},
-                        "should"   => {
-                            "match_phrase" => {
-                                "title" =>
-                                    {"query" => $p->{q}, "slop" => "50"}
-                            }
                         }
-                    }
-                },
-                limit => $p->{limit} ||= h->config->{default_page_size},
-                start => $p->{start} ||= 0,
-            }
-        );
+                    },
+                    limit => $p->{limit} ||= h->config->{default_page_size},
+                    start => $p->{start} ||= 0,
+                }
+            );
 
-        $hits->{modus} = "admin";
+            $hits->{modus} = "admin";
+        }
+        else {
+            push @{$p->{cql}}, "status<>deleted";
+
+            $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
+
+            $hits = searcher->search('publication', $p);
+
+            $hits->{modus} = "admin";
+        }
 
         template "home", $hits;
-
     };
 
 =head2 GET /reviewer
@@ -222,8 +214,16 @@ publications.
     get '/delegate/:delegate_id' => sub {
         my $p  = h->extract_params();
         my $id = params->{delegate_id};
+
+        my $perm_by_user_identity = p->all_author_types;
+
+        my @type_query = ();
+        for (@$perm_by_user_identity) {
+            push @type_query , "$_=$id";
+        }
+
+        push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";
         push @{$p->{cql}}, "status<>deleted";
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = searcher->search('publication', $p);
@@ -231,7 +231,6 @@ publications.
         $hits->{delegate_id} = $id;
 
         template "home", $hits;
-
     };
 
 =head2 GET /
@@ -244,7 +243,14 @@ Performs search for user.
         my $p  = h->extract_params();
         my $id = session 'user_id';
 
-        push @{$p->{cql}}, "(person=$id OR creator=$id)";
+        my $perm_by_user_identity = p->all_author_types;
+
+        my @type_query = ();
+        for (@$perm_by_user_identity) {
+            push @type_query , "$_=$id";
+        }
+
+        push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";
         push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
@@ -255,7 +261,6 @@ Performs search for user.
         $hits->{modus} = "user";
 
         template "home", $hits;
-
     };
 
 };

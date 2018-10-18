@@ -65,7 +65,7 @@ field_order:
     - popular_science
     - quality_controlled
     - popular_science_quality_controlled
-    - ubi_funded
+    - funded_apc
     - message
     - locked
   supplementary_fields:
@@ -87,7 +87,7 @@ field_order:
     - external_id
     - link
     - message
-    - ubi_funded
+    - funded_apc
     - alternative_id
 
 publication_types:
