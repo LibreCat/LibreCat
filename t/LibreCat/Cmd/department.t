@@ -7,7 +7,6 @@ use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
-use Cpanel::JSON::XS;
 
 my $pkg;
 
@@ -30,8 +29,9 @@ subtest 'initial cmd' => sub {
 
 subtest 'invalid cmd' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department', 'do_nonsense']);
-    ok $result->error, 'missing command: threw an exception';
-    like $result->error, qr/should be one of/, "error message for invalid command";
+    ok $result->error,   'missing command: threw an exception';
+    like $result->error, qr/should be one of/,
+        "error message for invalid command";
 };
 
 subtest 'help' => sub {
@@ -42,7 +42,7 @@ subtest 'help' => sub {
     like $output, qr/Usage:/, "Help message";
 };
 
-subtest 'list' => sub {
+subtest 'list empty' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department', 'list']);
 
     ok !$result->error, 'list: threw no exception';
@@ -113,8 +113,8 @@ subtest 'get' => sub {
 };
 
 subtest 'get via id_file' => sub {
-    my $result
-        = test_app(qq|LibreCat::CLI| => ['department', 'get', 't/records/department_ids.txt']);
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['department', 'get', 't/records/department_ids.txt']);
 
     ok !$result->error, 'ok threw no exception';
 
@@ -130,6 +130,26 @@ subtest 'get via id_file' => sub {
     is $record->{name}, 'Test faculty', 'got a valid department';
 };
 
+subtest 'list with options' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['department', 'list']);
+
+    ok !$result->error, 'list: threw no exception';
+
+    my $output = $result->stdout;
+    ok $output , 'list departments: got an output';
+
+    my $count = count_department($output);
+
+    ok $count > 0, 'got some departments';
+
+    $result = test_app(
+        qq|LibreCat::CLI| => ['department', 'list', 'name=relativity']);
+
+    ok !$result->error, 'list: threw no exception';
+    $output = $result->stdout;
+    count_department($output) == 1, "got one department";
+};
+
 subtest 'tree' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['department', 'tree']);
 
@@ -142,6 +162,13 @@ subtest 'export' => sub {
 
     ok !$result->error, "threw no exception";
     like $result->output, qr/_id:/, "export output";
+
+    $result = test_app(
+        qq|LibreCat::CLI| => ['department', 'export', 'name=relativity']);
+
+    ok !$result->error, "threw no exception";
+
+    count_department($result->output) == 1, "got one department";
 };
 
 subtest 'delete' => sub {
@@ -162,10 +189,17 @@ subtest 'delete' => sub {
 
     $output = $result->stdout;
     ok length($output) == 0, 'got no result';
+
+    $result = test_app(qq|LibreCat::CLI| =>
+            ['department', 'delete', 'does-not-exist-123434']);
+
+    ok $result->error, 'throw exception: delete invalid id';
+    like $result->output, qr/ERROR: delete/, 'error message delete failed';
 };
 
 subtest 'tree with file' => sub {
-    my $result = test_app(qq|LibreCat::CLI| => ['department', 'tree', 't/records/department-tree.yml']);
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['department', 'tree', 't/records/department-tree.yml']);
 
     ok !$result->error, "threw no exception";
     ok $result->output;
