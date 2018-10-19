@@ -45,7 +45,7 @@ subtest 'help' => sub {
     like $output, qr/Usage:/, "Help message";
 };
 
-subtest 'list' => sub {
+subtest 'list empty' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['user', 'list']);
 
     ok !$result->error, 'list: ok threw no exception';
@@ -102,6 +102,38 @@ subtest 'get' => sub {
     is $record->{email}, 'test.user@physics.com', 'got correct email';
 };
 
+subtest 'get via id-file' => sub {
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['user', 'get', 'file-does-not-exists.yml']);
+
+    ok $result->error, 'throws exception: file does not exist';
+
+    $result = test_app(
+        qq|LibreCat::CLI| => ['user', 'get', 't/records/user-ids.txt']);
+
+    ok !$result->error, 'threw no exception';
+
+    ok $result->stdout, 'got an output';
+};
+
+subtest 'list' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['user', 'list']);
+
+    ok !$result->error, 'list: ok threw no exception';
+
+    ok $result->stdout, 'list: got an output';
+
+    ok count_user($result->stdout) == 1, 'list: got no users';
+
+    $result = test_app(qq|LibreCat::CLI| => ['user', 'list', 'id=999111999']);
+
+    ok !$result->error, 'list: ok threw no exception';
+
+    ok $result->stdout, 'list: got an output';
+
+    ok count_user($result->stdout) == 1, 'list: got no users';
+};
+
 subtest 'export' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['user', 'export']);
 
@@ -111,18 +143,29 @@ subtest 'export' => sub {
     ok $output , 'export: got an output';
 
     like $output , qr/full_name/, 'got user export';
+
+    $result
+        = test_app(qq|LibreCat::CLI| => ['user', 'export', 'id=999111999']);
+
+    ok !$result->error, 'export: threw no exception';
+
+    ok $result->stdout, 'export: got an output';
 };
 
 subtest 'delete' => sub {
-    my $result
-        = test_app(qq|LibreCat::CLI| => ['user', 'delete', '999111999']);
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['user', 'delete', 'does-not-exist-1234']);
+
+    ok $result->error, "invalid ID";
+    like $result->output, qr/ERROR: delete/, 'error message';
+
+    $result = test_app(qq|LibreCat::CLI| => ['user', 'delete', '999111999']);
 
     ok !$result->error, 'delete: threw no exception';
 
-    my $output = $result->stdout;
-    ok $output , 'delete: got an output';
+    ok $result->stdout, 'delete: got an output';
 
-    like $output , qr/^deleted 999111999/, 'deleted 999111999';
+    like $result->stdout, qr/^deleted 999111999/, 'deleted 999111999';
 };
 
 subtest 'get non-existent' => sub {
