@@ -14,14 +14,6 @@ BEGIN {
 }
 require_ok $pkg;
 
-{
-    my $result = test_app(qq|LibreCat::CLI| => ['help', 'queue']);
-    ok !$result->error, 'ok threw no exception';
-
-    my $output = $result->stdout;
-    like $output, qr/Usage:/, "Help message";
-}
-
 SKIP: {
 
     unless ($ENV{GEARMAN_NETWORK_TEST}) {
@@ -30,52 +22,35 @@ SKIP: {
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue']);
-        ok $result->error, 'missing cmd: threw an exception';
+        ok $result->error, 'ok threw an exception';
 
         my $output = $result->error;
         ok $output, 'got an output';
         like $output, qr/Error/, 'got expected output';
     }
 
-    # {
-    #     my $worker = test_app(
-    #         qq|LibreCat::CLI| => [
-    #             'worker', 'indexer', 'start', '--workers',
-    #             '2',      '--supervise'
-    #         ]
-    #     );
-    #     ok $worker, 'can start worker indexer';
-    #     sleep 2;
-    #     my $result = test_app(qq|LibreCat::CLI| => ['queue', 'status']);
-    #     ok !$result->error, 'status threw no exception';
-    #
-    #     # my $output = $result->output;
-    #     # ok $output, 'got an output';
-    #     # like $output, qr/indexer/, 'got expected output';
-    #
-    #     $result = test_app(
-    #         qq|LibreCat::CLI| => [
-    #             'queue',   '--background',
-    #             'add_job', 'audit',
-    #             't/records/job.yml'
-    #         ]
-    #     );
-    #     ok !$result->error, 'add_job threw no exception';
-    #
-    #     ok $result->output, 'got an output';
-    #     like $result->output, qr/Adding job/, 'got expected output';
-    #
-    #     ok test_app(
-    #         qq|LibreCat::CLI| => [
-    #             'worker', 'indexer', 'stop', '--workers', '2', '--supervise'
-    #         ]
-    #         ),
-    #         'stop workers';
-    # }
+    {
+        my $worker = test_app(
+            qq|LibreCat::CLI| => [
+                'worker', 'mailer', 'start', '--workers', '2', '--supervise'
+            ]
+        );
+
+        my $result = test_app(qq|LibreCat::CLI| => ['queue', 'status']);
+        ok !$result->error, 'ok threw no exception';
+
+        my $output = $result->stdout;
+        ok $output, 'got an output';
+        like $output, qr/mailer/, 'got expected output';
+
+        ok test_app(qq|LibreCat::CLI| =>
+                ['worker', 'mailer', 'stop', '--workers', '2', '--supervise']
+        ), 'stop workers';
+    }
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue', 'start']);
-        ok !$result->error, 'start threw no exception';
+        ok !$result->error, 'ok threw no exception';
 
         my $output = $result->stdout;
         ok $output, 'got an output';
@@ -84,12 +59,12 @@ SKIP: {
 
     {
         my $result = test_app(qq|LibreCat::CLI| => ['queue', 'stop']);
-        ok !$result->error, 'stop threw no exception';
+        ok !$result->error, 'ok threw no exception';
 
         my $output = $result->stdout;
         ok $output, 'got an output';
         like $output, qr/Stopping /, 'got expected output';
     }
-}
 
-done_testing;
+}
+done_testing
