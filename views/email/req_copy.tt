@@ -1,4 +1,4 @@
-The publication <<[% title %]>> has been requested by [% user_email %].
+The publication <<[% title %]>> ([% uri_base %]/record/[% record_id %]) has been requested by [% user_email %].
 [% IF mesg %]
 Message: [% mesg %]
 [% END %]
