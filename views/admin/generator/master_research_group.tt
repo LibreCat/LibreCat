@@ -5,6 +5,26 @@
 [% INCLUDE header.tt %]
 
 <!-- BEGIN admin/generator/master_research_group.tt -->
+[% IF _id %]
+  [% FORM_ACTION = h.uri_for("/librecat/admin/research_group/" _ _id, "x-tunneled-method" = "PUT") %]
+[% ELSE %]
+  [% FORM_ACTION = h.uri_for("/librecat/admin/research_group") %]
+[% END %]
+
+[% IF flash.errors && flash.errors.size %]
+<div class="row">
+  <div class="alert alert-danger">
+    <a class="close" data-dismiss="alert" href="#">x</a>
+    <ul>
+    [%- FOREACH error IN flash.errors %]
+    <li>
+    <strong>[% error | html %]</strong>
+    </li>
+    [%- END %]
+    </ul>
+  </div>
+</div>
+[% END %]
 
 <div class="row">
 
@@ -12,7 +32,7 @@
 
     <div class="page-header" id="banner">
       <h1>
-      [% IF name %]
+      [% IF _id %]
       Edit Research Group "[% name %]"
       [% ELSE %]
       Add new Research Group
@@ -21,10 +41,10 @@
     </div>
 
 
-    <form id="id_research_group_form" action="[% uri_base %]/librecat/admin/research_group/update" method="POST">
-      <input type="hidden" name="date_created" value="[% date_created %]" />
+    <form id="id_research_group_form" action="[% FORM_ACTION | html %]" method="POST">
 
       {% FOREACH key IN research_group_field_order %}
+        {% NEXT IF key == "id" %}
 {% template = "fields/" _ key _ ".tt" %}
 {% INCLUDE $template %}
       {% END %}

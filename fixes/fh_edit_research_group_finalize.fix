@@ -6,14 +6,21 @@ end
 
 set_array('dep_new')
 
-do list( path => 'department' )
+do list( path => 'department', var => 'd' )
 
-  if all_match('_id','.+')
+  if all_match('d._id','.+')
 
-    copy_field('_id','dep_new.$append._id')
+    copy_field('d._id','dep_new.$append._id')
 
   end
 
 end
 
 move_field('dep_new','department')
+
+unless all_match('start_date','.+')
+  remove_field('start_date')
+end
+unless all_match('end_date','.+')
+  remove_field('end_date')
+end

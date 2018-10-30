@@ -1081,7 +1081,6 @@ other_items:
       label: "SC39"
   research_group:
     research_group_field_order:
-      - id
       - name
       - acronym
       - start_date

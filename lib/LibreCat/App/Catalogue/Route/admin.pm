@@ -12,6 +12,7 @@ use Catmandu::Util qw(trim :is);
 use App::bmkpasswd qw(mkpasswd);
 use Dancer ':syntax';
 use LibreCat::App::Helper;
+use Dancer::Plugin::FlashMessage;
 
 =head1 PREFIX /librecat/admin
 
@@ -166,7 +167,7 @@ Deletes the account with ID :id.
 
     get '/research_group/new' => sub {
         template 'admin/forms/edit_research_group',
-            {_id => research_group->generate_id};
+            {};
     };
 
     get '/research_group/search' => sub {
@@ -178,14 +179,54 @@ Deletes the account with ID :id.
     };
 
     get '/research_group/edit/:id' => sub {
-        my $research_group = research_group->get(params->{id});
+        my $research_group = research_group->get(params->{id}) or pass();
         template 'admin/forms/edit_research_group', $research_group;
     };
 
-    post '/research_group/update' => sub {
-        my $p = h->nested_params();
-        research_group->add($p);
-        redirect uri_for('/librecat/admin/research_group');
+    post '/research_group' => sub {
+
+        my $b_params = params("body");
+        my $form = h->load_form( "new_research_group" );
+
+        if( $form->is_valid( $b_params ) ){
+
+            my $new_record = $form->finalize();
+            research_group->add( $new_record );
+            redirect uri_for('/librecat/admin/research_group');
+
+        }
+        else {
+
+            flash errors => $form->last_errors();
+            template 'admin/forms/edit_research_group', $form->fif;
+
+        }
+
+    };
+
+    put '/research_group/:id' => sub {
+
+        my $r_params = params("route");
+        my $research_group = research_group->get( $r_params->{id} ) or pass();
+
+        my $b_params = params("body");
+        $b_params->{_id} = $r_params->{id};
+        my $form = h->load_form( "edit_research_group" );
+
+        if( $form->is_valid( $b_params ) ){
+
+            my $new_record = $form->finalize();
+            research_group->add( $new_record );
+            redirect uri_for('/librecat/admin/research_group');
+
+        }
+        else {
+
+            flash errors => $form->last_errors();
+            template 'admin/forms/edit_research_group', $form->fif;
+
+        }
+
     };
 
 };

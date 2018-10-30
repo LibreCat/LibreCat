@@ -1743,3 +1743,25 @@ cc_licenses:
   cc_0: CC0 (1.0)
   cc_by: CC BY (4.0)
   cc_by_sa: CC BY-SA (4.0)
+form_handler:
+  fields:
+    _id:
+      label: ID
+    name:
+      label: Name
+    acronym:
+      label: Akronym
+    start_date:
+      label: Anfangsdatum
+    end_date:
+      label: EndTermin
+    department:
+      label: "Fakult&auml;t/ Zugeh&ouml;rigkeit"
+  #TODO: to translate
+  errors:
+    name:
+      required: "Name is required"
+    department:
+      record_not_found: "Department with id '[_1]' not found"
+  form_errors:
+    start_before_end_date: "Start date should come before end date"

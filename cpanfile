@@ -122,3 +122,4 @@ requires 'YAML::XS';
 requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
 requires 'HTML::FormHandler','0.40068';
+requires 'Dancer::Plugin::FlashMessage','0';

@@ -9,7 +9,7 @@ if all_match('_fif.start_date','.+')
 
     unless in('_fif.start_date','_s.$first')
 
-      add_field('_errors.$append','form.errors.start_before_end_date')
+      add_field('_errors.$append','form_handler.form_errors.start_before_end_date')
 
     end
 
