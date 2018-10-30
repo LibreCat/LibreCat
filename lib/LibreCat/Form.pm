@@ -249,13 +249,12 @@ sub load {
 
     }
 
-    state $language_handles = {};
-    $language_handles->{$locale} ||= LibreCat::I18N::_Handle->get_handle( $locale );
+    my $language_handle = LibreCat::I18N::_Handle->get_handle( $locale );
 
     Catmandu::Error->throw( "unable to find locale $locale" )
-        unless $language_handles->{$locale};
+        unless $language_handle;
 
-    $args{language_handle} = $language_handles->{$locale};
+    $args{language_handle} = $language_handle;
 
     $class->new( %args );
 
