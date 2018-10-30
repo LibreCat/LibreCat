@@ -50,7 +50,18 @@ has field_list => (
     isa => sub { check_array_ref($_[0]); },
     default => sub { []; },
     required => 1,
-    init_arg => "fields"
+    init_arg => "fields",
+    coerce => sub {
+        my $fields = $_[0];
+
+        for my $field( @$fields ){
+            $field->{label} = is_string( $field->{label} ) ?
+                $field->{label} :
+                "form_handler.fields.".$field->{name}.".label";
+        }
+
+        $fields;
+    }
 );
 
 has ctx => (
