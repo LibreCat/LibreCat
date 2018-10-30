@@ -107,12 +107,12 @@ $form->is_valid({
 });
 
 is_deeply(
-    $form->errors(),
+    $form->last_errors(),
     [
         "First name is required",
         "test is not a valid language"
     ],
-    "form.errors contains localized errors"
+    "form.last_errors contains localized errors"
 );
 
 $form->is_valid({
