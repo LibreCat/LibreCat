@@ -13,6 +13,7 @@ main:
             id:
                 type: string
                 column: pid
+                index: 1
             bag:
                 type: string
             process:
