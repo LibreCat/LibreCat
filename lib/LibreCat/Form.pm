@@ -293,6 +293,10 @@ LibreCat::Form - class to create and validate html form parameters
 
     # before_fixes: change the default values to be shown in the form
 
+        the input for the fix is a hash with each key having the default value, as configured in your
+        form_handler configuration. A special key is '_ctx', that contains runtime information.
+        The is used to store information like certain session keys.
+
     # error_fixes:  add form level errors by inspecting field '_fif', adding errors to '_errors'
     #               these errors are localized
 
@@ -553,6 +557,10 @@ Additional form level validation can be done using the "error_fixes" (see above)
 ..
 
 For a full list see L<https://metacpan.org/release/HTML-FormHandler>, and look for packages in the namespace C<HTML::FormHandler::Field>
+
+=head1 IMPORTANT
+
+* While this a L<Catmandu::Validator>, the use of its method C<validate> is not encouraged: C<validate> returns the validated records, in a non finalized state. The method C<finalize> only operates on a single record, so cannot be used for that.
 
 =head1 SEE ALSO
 
