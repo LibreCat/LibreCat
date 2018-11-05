@@ -16,8 +16,8 @@
           <input type="text" name="alternative_id.0" id="id_alternative_id_0" value="" placeholder="[% h.loc("forms.${type}.field.alternative_id.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.alternative_id.mandatory OR fields.supplementary_fields.alternative_id.mandatory %} required{% END %}"{% IF fields.basic_fields.alternative_id.readonly OR fields.supplementary_fields.alternative_id.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon" onclick="add_field('alternative_id');"><span class="fa fa-plus"></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
-        </div>
       </div>
+      <em>[% h.loc("forms.${type}.field.alternative_id.desc") %]</em>
     </div>
     [% ELSE %]
     [% FOREACH altid IN alternative_id %]
@@ -30,6 +30,7 @@
           <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>
+      <em>[% h.loc("forms.${type}.field.alternative_id.desc") %]</em>
     </div>
     [% END %]
     [% END %]
@@ -43,7 +44,12 @@
         </div>
       </div>
     </div>
+    <em>[% h.loc("forms.${type}.field.alternative_id.desc") %]</em>
     {% END %}
   </div>
 </div>
+[% ELSE %]
+  [% FOREACH altid IN alternative_id.list %]
+    <input type="hidden" value="[% altid | html %]" name="alternative_id.[% loop.index %]" id="id_alternative_id_[% loop.index %]">
+  [% END %]
 [% END %]
