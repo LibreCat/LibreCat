@@ -22,7 +22,7 @@ use URI::Escape qw(uri_escape uri_escape_utf8);
 
 #str_format( "%f.%e", f => "DS.0", e => "txt" )
 sub str_format {
-    my ($str,%args) = @_;
+    my ($str, %args) = @_;
     for (keys %args) {
         my $val = $args{$_};
         $str =~ s/\%$_/$val/g;
@@ -64,18 +64,19 @@ sub _send_it {
         }
     }
 
-    my $format    = h->config->{filestore}->{download_file_name};
+    my $format = h->config->{filestore}->{download_file_name};
     $format = is_string($format) ? $format : "%o";
 
     my $extension = h->file_extension($file->{_id});
     $extension =~ s/^\.//o;
 
-    my $name      = str_format($format,
-                        i => $key,
-                        o => $file->{_id},
-                        f => $file_id,
-                        e => $extension
-                    );
+    my $name = str_format(
+        $format,
+        i => $key,
+        o => $file->{_id},
+        f => $file_id,
+        e => $extension
+    );
 
     send_file(
         \"dummy",    # anything, as long as it's a scalar-ref
@@ -94,9 +95,10 @@ sub _send_it {
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
-                    'Pragma' => 'no-cache',
-                    'Content-Length' => $file_size ,
-                    'Content-Disposition' => "inline; filename*=UTF-8''".uri_escape_utf8($name)
+                    'Pragma'              => 'no-cache',
+                    'Content-Length'      => $file_size,
+                    'Content-Disposition' => "inline; filename*=UTF-8''"
+                        . uri_escape_utf8($name)
                 );
 
          # Send the HTTP headers
@@ -112,7 +114,9 @@ sub _send_it {
 sub _calc_date {
     my $dt = DateTime->now();
     my $date_expires
-        = $dt->add(days => h->config->{request_copy}->{period})->ymd;
+        = $dt->add(days => h->config->{request_copy}->{period})->ymd
+        || h->log->error(
+        "Could not calculate date. Need config option request_copy.period.");
     return $date_expires;
 }
 
@@ -314,13 +318,14 @@ Same as route below, but with file_name included to help search results
 =cut
 
 get "/download/:id/:file_id/:file_name" => sub {
-    my $params = params();
-    my $id = delete $params->{id};
+    my $params  = params();
+    my $id      = delete $params->{id};
     my $file_id = delete $params->{file_id};
     delete $params->{file_name};
 
     #Note: "send_file" does not work in a forwarded request
-    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+    redirect uri_for(
+        "/download/" . uri_escape($id) . "/" . uri_escape($file_id), $params);
 };
 
 =head2 GET /download/:id/:file_id
@@ -331,7 +336,7 @@ and user rights will be checked before.
 =cut
 
 get "/download/:id/:file_id" => sub {
-    my $id = param("id");
+    my $id      = param("id");
     my $file_id = param("file_id");
 
     my ($ok, $file_name) = p->can_download(
