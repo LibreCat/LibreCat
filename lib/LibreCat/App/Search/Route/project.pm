@@ -17,8 +17,8 @@ Project splash page for :id.
 
 =cut
 
-my $route_project = sub {
-    my $id = params("route")->{id};
+get qr{/project/([a-zA-Z0-9].*)} => sub {
+    my ($id) = splat;
     my $proj = h->project->get($id);
 
     my $pub = searcher->search('publication',
@@ -28,19 +28,16 @@ my $route_project = sub {
     template 'project/record', $proj;
 };
 
-get "/project/:id" => $route_project;
-get "/project/:id/" => $route_project;
-
 =head2 GET /project
 
 Project page with alphabetical browsing.
 
 =cut
 
-my $route_projects = sub {
-    my $browse             = param("browse") // 'a';
+get qr{/project/*} => sub {
+    my $c             = params->{browse} // 'a';
     my %search_params = (
-        query        => {prefix => {'name.exact' => lc($browse)}},
+        query        => {prefix => {'name.exact' => lc($c)}},
         sru_sortkeys => "name,,1",
         limit        => 1000
     );
@@ -52,8 +49,5 @@ my $route_projects = sub {
 
     template 'project/list', $hits;
 };
-
-get "/project" => $route_projects;
-get "/projects/" => $route_projects;
 
 1;
