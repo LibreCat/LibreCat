@@ -13,7 +13,7 @@ use Catmandu qw(export_to_string);
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
-use LibreCat qw(publication);
+use LibreCat qw(:self publication);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
@@ -130,6 +130,10 @@ sub _get_file_info {
     }
 }
 
+sub _get_template_include_path {
+    state $paths = [map {"$_/email"} @{librecat->template_paths}];
+}
+
 =head2 GET /rc/approve/:key
 
 Author approves the request. Email will be sent to user.
@@ -151,7 +155,8 @@ get '/rc/approve/:key' => sub {
             appname_short => h->loc("appname_short")
         },
         'Template',
-        template => 'views/email/req_copy_approve.tt'
+        INCLUDE_PATH => _get_template_include_path,
+        template     => 'views/email/req_copy_approve.tt'
     );
 
     my $job = {
@@ -188,9 +193,9 @@ get '/rc/deny/:key' => sub {
         subject => h->config->{request_copy}->{subject},
         from    => h->config->{request_copy}->{from},
         body    => export_to_string(
-            {appname_short => h->loc("appname_short")},
-            'Template',
-            template => 'views/email/req_copy_deny.tt'
+            {appname_short => h->loc("appname_short")}, 'Template',
+            INCLUDE_PATH => _get_template_include_path,
+            template     => 'views/email/req_copy_deny.tt'
         ),
     };
 
@@ -275,6 +280,7 @@ any '/rc/:id/:file_id' => sub {
 
         my $mail_body = export_to_string(
             {
+                record_id     => $stored->{record_id},
                 title         => $pub->{title},
                 user_email    => params->{user_email},
                 mesg          => params->{mesg} || '',
@@ -283,7 +289,8 @@ any '/rc/:id/:file_id' => sub {
                 appname_short => h->loc("appname_short"),
             },
             'Template',
-            template => 'views/email/req_copy.tt',
+            INCLUDE_PATH => _get_template_include_path,
+            template     => 'views/email/req_copy.tt',
         );
 
         my $job = {
