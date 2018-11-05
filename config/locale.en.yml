@@ -503,6 +503,7 @@ forms:
         label: "Returned Record Ids"
         label_short: "Ret. Rec. Ids"
         placeholder: ""
+        desc: "Add the identifiers of deleted or returned records that should be redirected to this record."
       related_material.record: &related_material_record
         label: "Link to LibreCat record"
         label_short: "LibreCat-Rec."

@@ -1,4 +1,4 @@
-_prefix:
+/_prefix:
   locale:
     de:
 
@@ -504,6 +504,7 @@ forms:
         label: "Returned Record IDs"
         label_short: "Ret. Rec. IDs"
         placeholder: ""
+        desc: "Add the identifiers of deleted or returned records that should be redirected to this record."
       related_material.record: &related_material_record
         label: "Link zu LibreCat-Eintrag"
         label_short: "LibreCat-Eintr."
