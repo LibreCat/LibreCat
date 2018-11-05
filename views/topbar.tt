@@ -50,7 +50,7 @@
                 [%- IF session.user %]
                 <li><a href="[% uri_base %]/logout"><span class="fa fa-sign-out"></span><span class="hidden-sm">[% h.loc("main_page.logout") %]</span></a></li>
                 [%- ELSE %]
-                <li><a href="[% uri_base %]/login"><span class="fa fa-sign-out"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
+                <li><a href="[% uri_base %]/login"><span class="fa fa-sign-in"></span><span class="hidden-sm">[% h.loc("main_page.login") %]</span></a></li>
                 [%- END %]
             </ul>
         </div><!-- /.navbar-collapse -->
