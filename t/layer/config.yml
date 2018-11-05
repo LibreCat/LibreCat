@@ -80,20 +80,6 @@ plugins:
         cql: 'status exact public'
         fix: ["fixes/to_mods.fix"]
       -
-        metadataPrefix: epicur
-        schema: http://www.persistent-identifier.de/xepicur/version1.0/xepicur.xsd
-        metadataNamespace: urn:nbn:de:1111-2004033116
-        template: views/export/oai_epicur.tt
-        cql: 'status exact public AND fulltext exact 1'
-        fix: ["fixes/to_epicur.fix"]
-      -
-        metadataPrefix: xMetaDissPlus
-        schema: http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd
-        metadataNamespace: http://www.d-nb.de/standards/xmetadissplus
-        template: views/export/oai_xmdp.tt
-        cql: 'status exact public AND type=bi*'
-        fix: ["fixes/to_xmdp.fix"]
-      -
         metadataPrefix: oai_datacite
         schema: http://schema.datacite.org/meta/kernel-2.2/metadata.xsd
         metadataNamespace: http://www.datacite.org/schema/namespace

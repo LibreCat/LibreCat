@@ -77,10 +77,12 @@ $(document).ready(function(){
         init: function() {
             $('.dz-default.dz-message').addClass('col-md-11');
             this.on("addedfile", function(file) {
+                $('html').css({ cursor: "wait" });
                 var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
                 file.previewElement.appendChild(fileName);
             });
             this.on("uploadprogress", function(file,progress,bytesSent){
+                $('html').css({ cursor: "wait" });
                 var progressbar = document.getElementById(file.name + "_progress");
                 progressbar.style.width = progress + "%";
             });
@@ -160,6 +162,7 @@ $(document).ready(function(){
             this.on("complete", function(file){
     		    var remove_link = file.previewElement.getElementsByClassName('dz-remove');
     			$(remove_link).remove();
+              $('html').css({ cursor: "auto" });
     		});
         },
     };
