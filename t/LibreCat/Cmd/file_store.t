@@ -22,6 +22,21 @@ require_ok $pkg;
 }
 
 {
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'file_store']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['file_store', 'do_nonsense']);
+    ok $result->error, 'invalid command threw an exception';
+
+    like $result->error, qr/should be one of/, "error message of invalid command";
+}
+
+{
     my $result = test_app(qq|LibreCat::CLI| => ['file_store', 'list']);
 
     ok !$result->error, 'list threw no exception';
@@ -64,7 +79,18 @@ require_ok $pkg;
     my $output = $result->stdout;
     ok $output , 'got an output';
 
-    like $output , qr/^key: 1234/, 'added 1234';
+    like $output , qr/^key: 1234/, 'get 1234';
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['file_store', 'exists', '1234']);
+
+    ok !$result->error, 'exists threw no exception';
+
+    my $output = $result->stdout;
+    ok $output , 'got an output';
+
+    like $output , qr/\d+ EXISTS/, 'exists 1234';
 }
 
 {

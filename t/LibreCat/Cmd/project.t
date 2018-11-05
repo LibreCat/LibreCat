@@ -1,14 +1,11 @@
 use Catmandu::Sane;
 use Path::Tiny;
 use LibreCat -load => {layer_paths => [qw(t/layer)]};
-
 use Catmandu;
-
 use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
-use Cpanel::JSON::XS;
 
 my $pkg;
 
@@ -25,7 +22,24 @@ Catmandu->store('search')->bag('project')->delete_all;
 
 subtest 'missing cmd' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['project']);
-    ok $result->error, 'ok threw an exception';
+    ok $result->error,   'ok threw an exception';
+    like $result->error, qr/should be one of/,
+        'error message for missing command';
+};
+
+subtest 'missing cmd' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['project', 'do_nonsense']);
+    ok $result->error,   'ok threw an exception';
+    like $result->error, qr/should be one of/,
+        'error message for invalid command';
+};
+
+subtest 'help' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'project']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
 };
 
 subtest 'list' => sub {
@@ -53,6 +67,15 @@ subtest 'validate' => sub {
     unlike $result->output, qr/^ERROR/, "output for valid file";
 };
 
+subtest 'add non-existent file' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['project', 'add']);
+    ok $result->error, 'missing file: threw an exception';
+
+    $result = test_app(qq|LibreCat::CLI| =>
+            ['project', 'add', 't/records/does-not-exist.yml']);
+    ok $result->error, 'non-existent file: threw an exception';
+};
+
 subtest 'add invalid project' => sub {
     my $result = test_app(qq|LibreCat::CLI| =>
             ['project', 'add', 't/records/invalid-project.yml']);
@@ -69,6 +92,14 @@ subtest 'add valid project' => sub {
     ok $output , 'got an output';
 
     like $output , qr/^added P9999999/, 'added P9999999';
+};
+
+subtest 'get without ID' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['project', 'get']);
+
+    ok $result->error, 'missing ID: threw no exception';
+
+    like $result->error, qr/usage:/, 'error message for missing ID';
 };
 
 subtest 'get project' => sub {
@@ -90,15 +121,57 @@ subtest 'get project' => sub {
         'got a valid description';
 };
 
+subtest 'list w. query' => sub {
+    my $result
+        = test_app(qq|LibreCat::CLI| => ['project', 'list', 'id=P9999999']);
+
+    ok !$result->error, 'threw no exception';
+
+    my $output = $result->stdout;
+    ok $output , 'got an output for list';
+
+    my $count = count_project($output);
+
+    ok $count == 1, 'got 1 project';
+};
+
+subtest 'get project via id file' => sub {
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['project', 'get', 't/records/project-ids.txt']);
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+
+    ok $output , 'got an output';
+};
+
 subtest 'export project' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['project', 'export']);
 
     ok !$result->error, "threw no exception";
     like $result->output, qr/_id:/, "export output";
+
+    $result
+        = test_app(qq|LibreCat::CLI| => ['project', 'export', 'id=P9999999']);
+
+    ok !$result->error, "threw no exception";
+    like $result->output, qr/P9999999/, "export output";
 };
 
 subtest 'delete project' => sub {
-    my $result
+    my $result = test_app(qq|LibreCat::CLI| => ['project', 'delete']);
+
+    ok $result->error, 'missing ID: threw an exception';
+
+    $result
+        = test_app(qq|LibreCat::CLI| => ['project', 'delete', '123INVALID']);
+
+    ok $result->error, 'invalid ID: threw an exception';
+
+    like $result->output, qr/ERROR: delete/, "error message for invalid ID";
+
+    $result
         = test_app(qq|LibreCat::CLI| => ['project', 'delete', 'P9999999']);
 
     ok !$result->error, 'ok threw no exception';
