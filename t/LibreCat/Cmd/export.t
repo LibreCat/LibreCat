@@ -1,7 +1,9 @@
 use Catmandu::Sane;
 use LibreCat -load => {layer_paths => [qw(t/layer)]};
+use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
+use App::Cmd::Tester;
 use warnings FATAL => 'all';
 
 my $pkg;
@@ -12,5 +14,11 @@ BEGIN {
 }
 
 require_ok $pkg;
+
+my $result = test_app(qq|LibreCat::CLI| => ['help', 'export']);
+ok !$result->error, 'ok threw no exception';
+
+my $output = $result->stdout;
+like $output, qr/WARNING - Low level command/, "Help message";
 
 done_testing;

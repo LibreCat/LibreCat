@@ -22,9 +22,9 @@ requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.0606';
-requires 'Catmandu::FileStore', '1.12';
+requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
-requires 'Catmandu::BagIt' , '0.231';
+requires 'Catmandu::BagIt' , '0.233';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::DBI', '>=0.0511';
 requires 'Catmandu::Exporter::Table';

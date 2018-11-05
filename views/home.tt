@@ -23,7 +23,7 @@
                     [%- USE Gravatar %]
                     <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c', size => 140 ) | html %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
                     [%- ELSE %]
-                    <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
+                    <img src="[% uri_base %]/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
                     [%- END %]
                 </div>
                 <div class="col-md-6 col-sm-5 col-xs-12">

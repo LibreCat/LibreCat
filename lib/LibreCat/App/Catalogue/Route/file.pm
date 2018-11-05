@@ -13,7 +13,7 @@ use Catmandu qw(export_to_string);
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::Tiny;
 use Dancer::Plugin::StreamData;
-use LibreCat qw(publication);
+use LibreCat qw(:self publication);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use DateTime;
@@ -22,7 +22,7 @@ use URI::Escape qw(uri_escape uri_escape_utf8);
 
 #str_format( "%f.%e", f => "DS.0", e => "txt" )
 sub str_format {
-    my ($str,%args) = @_;
+    my ($str, %args) = @_;
     for (keys %args) {
         my $val = $args{$_};
         $str =~ s/\%$_/$val/g;
@@ -64,18 +64,19 @@ sub _send_it {
         }
     }
 
-    my $format    = h->config->{filestore}->{download_file_name};
+    my $format = h->config->{filestore}->{download_file_name};
     $format = is_string($format) ? $format : "%o";
 
     my $extension = h->file_extension($file->{_id});
     $extension =~ s/^\.//o;
 
-    my $name      = str_format($format,
-                        i => $key,
-                        o => $file->{_id},
-                        f => $file_id,
-                        e => $extension
-                    );
+    my $name = str_format(
+        $format,
+        i => $key,
+        o => $file->{_id},
+        f => $file_id,
+        e => $extension
+    );
 
     send_file(
         \"dummy",    # anything, as long as it's a scalar-ref
@@ -94,9 +95,10 @@ sub _send_it {
                     'Content-Type' => $content_type,
                     'Cache-Control' =>
                         'no-store, no-cache, must-revalidate, max-age=0',
-                    'Pragma' => 'no-cache',
-                    'Content-Length' => $file_size ,
-                    'Content-Disposition' => "inline; filename*=UTF-8''".uri_escape_utf8($name)
+                    'Pragma'              => 'no-cache',
+                    'Content-Length'      => $file_size,
+                    'Content-Disposition' => "inline; filename*=UTF-8''"
+                        . uri_escape_utf8($name)
                 );
 
          # Send the HTTP headers
@@ -112,7 +114,9 @@ sub _send_it {
 sub _calc_date {
     my $dt = DateTime->now();
     my $date_expires
-        = $dt->add(days => h->config->{request_copy}->{period})->ymd;
+        = $dt->add(days => h->config->{request_copy}->{period})->ymd
+        || h->log->error(
+        "Could not calculate date. Need config option request_copy.period.");
     return $date_expires;
 }
 
@@ -124,6 +128,10 @@ sub _get_file_info {
             = (grep {$_->{file_id} eq $file_id} @{$rec->{file}})[0];
         return $matching_items;
     }
+}
+
+sub _get_template_include_path {
+    state $paths = [map {"$_/email"} @{librecat->template_paths}];
 }
 
 =head2 GET /rc/approve/:key
@@ -147,7 +155,8 @@ get '/rc/approve/:key' => sub {
             appname_short => h->loc("appname_short")
         },
         'Template',
-        template => 'views/email/req_copy_approve.tt'
+        INCLUDE_PATH => _get_template_include_path,
+        template     => 'views/email/req_copy_approve.tt'
     );
 
     my $job = {
@@ -184,9 +193,9 @@ get '/rc/deny/:key' => sub {
         subject => h->config->{request_copy}->{subject},
         from    => h->config->{request_copy}->{from},
         body    => export_to_string(
-            {appname_short => h->loc("appname_short")},
-            'Template',
-            template => 'views/email/req_copy_deny.tt'
+            {appname_short => h->loc("appname_short")}, 'Template',
+            INCLUDE_PATH => _get_template_include_path,
+            template     => 'views/email/req_copy_deny.tt'
         ),
     };
 
@@ -271,6 +280,7 @@ any '/rc/:id/:file_id' => sub {
 
         my $mail_body = export_to_string(
             {
+                record_id     => $stored->{record_id},
                 title         => $pub->{title},
                 user_email    => params->{user_email},
                 mesg          => params->{mesg} || '',
@@ -279,7 +289,8 @@ any '/rc/:id/:file_id' => sub {
                 appname_short => h->loc("appname_short"),
             },
             'Template',
-            template => 'views/email/req_copy.tt',
+            INCLUDE_PATH => _get_template_include_path,
+            template     => 'views/email/req_copy.tt',
         );
 
         my $job = {
@@ -314,13 +325,14 @@ Same as route below, but with file_name included to help search results
 =cut
 
 get "/download/:id/:file_id/:file_name" => sub {
-    my $params = params();
-    my $id = delete $params->{id};
+    my $params  = params();
+    my $id      = delete $params->{id};
     my $file_id = delete $params->{file_id};
     delete $params->{file_name};
 
     #Note: "send_file" does not work in a forwarded request
-    redirect uri_for("/download/".uri_escape($id)."/".uri_escape($file_id), $params);
+    redirect uri_for(
+        "/download/" . uri_escape($id) . "/" . uri_escape($file_id), $params);
 };
 
 =head2 GET /download/:id/:file_id
@@ -331,7 +343,7 @@ and user rights will be checked before.
 =cut
 
 get "/download/:id/:file_id" => sub {
-    my $id = param("id");
+    my $id      = param("id");
     my $file_id = param("file_id");
 
     my ($ok, $file_name) = p->can_download(

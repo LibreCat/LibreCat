@@ -22,6 +22,14 @@ require_ok $pkg;
 }
 
 {
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'index']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
+}
+
+{
     my $result
         = test_app(qq|LibreCat::CLI| => ['index', '--yes', 'initialize']);
     ok !$result->error, 'ok initialize threw no exception';

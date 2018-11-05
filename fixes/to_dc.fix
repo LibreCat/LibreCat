@@ -90,7 +90,7 @@ do list(path: file,var:loop)
 end
 
 # set to OA if at least one file is OA
-if any_match(file.*.access_level, open_access)
+if any_match(oa, '1')
   add_field(dc.rights.$append, 'info:eu-repo/semantics/openAccess')
 else
   if any_match(file.*.embargo, '^\d{4}')
@@ -99,12 +99,8 @@ else
 end
 
 unless exists(dc.rights)
-  if exists(link)
+  if any_match(file.*.access_level, local)
     add_field(dc.rights.$append, 'info:eu-repo/semantics/restrictedAccess')
-  else
-    if any_match(file.*.access_level, local)
-      add_field(dc.rights.$append, 'info:eu-repo/semantics/restrictedAccess')
-    end
   end
 end
 
