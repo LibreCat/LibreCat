@@ -43,7 +43,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.department.label_short || lf.$type.field.department.label %]</div>
-          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" placeholder="[% h.loc("forms.${type}.field.department.placeholder") %]" id="dp_autocomplete_0" value="[% department.0.display | html %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
+          <input type="text" onfocus="enable_autocomplete('dp',0);" class="sticky form-control" placeholder="[% h.loc("forms.${type}.field.department.placeholder") %]" id="dp_autocomplete_0" value="[% h.get_department(department.0._id).display | html %]"{% IF fields.basic_fields.department.readonly OR fields.supplementary_fields.department.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
       </div>

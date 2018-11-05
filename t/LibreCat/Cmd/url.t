@@ -24,6 +24,14 @@ require_ok $pkg;
     ok $result->error, 'threw an exception: cmd unknown';
 }
 
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'url']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
+}
+
 SKIP: {
     skip("No network. Set NETWORK_TEST to run these tests.", 5)
         unless $ENV{NETWORK_TEST};

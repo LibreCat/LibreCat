@@ -406,7 +406,7 @@ note("testing adding publication with-citations, with-files ");
 
     like $output, qr/Valid Test Publication/, "got an ouput";
 
-    if (librecat->config->{citation}->{enigne} eq 'csl') {
+    if (librecat->config->{citation}->{enigne} && librecat->config->{citation}->{enigne} eq 'csl') {
         like $output, qr/citation/, "with citation";
     }
 
