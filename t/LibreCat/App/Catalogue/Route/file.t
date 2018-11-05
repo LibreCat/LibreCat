@@ -20,6 +20,10 @@ require_ok $pkg;
 is LibreCat::App::Catalogue::Route::file::str_format( "%o", i => 1, f => "DS.0", e => "pdf", o => "test.pdf" ), "test.pdf", "str_format %o";
 is LibreCat::App::Catalogue::Route::file::str_format( "%i-%f.%e", i => 1, f => "DS.0", e => "pdf", o => "test.pdf" ), "1-DS.0.pdf", "str_format %i-%f.%e";
 
+my $date = LibreCat::App::Catalogue::Route::file::_calc_date();
+ok $date, "can calculate date with _calc_date";
+like $date, qr/^\d{4}-\d{2}-\d{2}/, "_calc_date returns a date";
+
 my $app = eval {do './bin/app.pl';};
 my $mech = Test::WWW::Mechanize::PSGI->new( app => $app );
 $mech->max_redirect(0);
