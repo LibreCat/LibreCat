@@ -1,0 +1,32 @@
+<!-- START btn_lang.tt -->
+[% available_locales = h.available_locales() %]
+[% set_lang_uri_base = session.user ? "/librecat/person/set_language" : "/set_language" %]
+[% current_lang = h.locale() %]
+[% other_langs = [] %]
+
+[% FOR lang IN available_locales %]
+  [% IF lang != current_lang %]
+    [% other_langs.push(lang) %]
+  [% END %]
+[% END %]
+
+[% IF available_locales.size > 1 %]
+
+  <li class="helpme helpme-md dropdown" data-placement="left" title="[% h.loc('help.change_language') | html %]">
+
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <span class="fa fa-language"></span>
+      [% h.locale_long(current_lang) %]
+    </a>
+    <ul class="dropdown-menu">
+    [% FOREACH lang IN other_langs %]
+      <li>
+        <a href="[% h.uri_for(set_lang_uri_base, lang = lang) | html %]">[% h.locale_long(lang) %]</a>
+      </li>
+    [% END %]
+    </ul>
+
+  </li>
+
+[% END %]
+<!-- END btn_lang.tt -->

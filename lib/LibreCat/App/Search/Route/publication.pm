@@ -43,16 +43,13 @@ Splash page for :id.
 
 =cut
 
-get qr{/record/([A-Fa-f0-9-]+)} => sub {
-    my ($id) = splat;
+get "/record/:id" => sub {
+    my $id = params("route")->{id};
 
-    my $p = h->extract_params();
-
-    # frontdoor: do not allow search queries for user
-    delete $p->{q};
-    delete $p->{cql};
-
-    push @{$p->{cql}}, ("status=public", "id=$id");
+    my $p = +{
+        cql => [ "status=public", "id=$id" ],
+        limit => 1
+    };
 
     my $hits = searcher->search('publication', $p);
 
@@ -107,7 +104,7 @@ get '/embed' => sub {
 
     $hits->{embed} = 1;
 
-    my $lang = $p->{lang} || session->{lang} || h->config->{default_lang};
+    my $lang = h->locale_exists( $p->{lang} ) ? $p->{lang} : h->locale();
     $hits->{lang} = $lang;
 
     if (params->{fmt} && params->{fmt} eq 'js') {

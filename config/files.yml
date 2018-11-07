@@ -4,6 +4,15 @@ _prefix:
 
 tmp_dir: data/temp_uploads
 
+#  Configurable name of the download file
+#  options:
+#     %i: publication id
+#     %o: original file name
+#     %f: file_id
+#     %e: extension
+#  The download name can be a combination like ""%i-%f.%e"
+download_file_name: "%o"
+
 default: &filestore_settings
     package: Simple
     options:

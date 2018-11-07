@@ -146,7 +146,7 @@ ajax '/get_department' => sub {
 
     my @terms = split('\s', $term);
     $terms[-1] .= "*" if @terms;
-    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+    my @cql_parts = map {"(name_lookup all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
 
@@ -183,7 +183,7 @@ ajax '/get_research_group' => sub {
 
     my @terms = split(' ', params->{term});
     $terms[-1] .= "*" if @terms;
-    my @cql_parts = map {"(basic all \"$_\")"} @terms;
+    my @cql_parts = map {"(name_lookup all \"$_\")"} @terms;
 
     my $cql_query = join(" AND ", @cql_parts);
 

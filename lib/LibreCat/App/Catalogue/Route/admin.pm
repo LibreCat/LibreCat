@@ -82,9 +82,13 @@ Redirects to /librecat/admin/account
         $p = h->nested_params($p);
         $p->{_id} = $user->{_id};
 
-        #update password when given
-        $p->{password} = mkpasswd($p->{password})
-            if is_string($p->{password});
+        if (is_string $p->{password}) {
+            #update password when given
+            $p->{password} = mkpasswd($p->{password});
+        }
+        else {
+            $p->{password} = $user->{password};
+        }
 
         user->add($p);
 

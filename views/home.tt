@@ -4,7 +4,7 @@
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = backend ? h.get_person(session.user_id) : h.get_person(id) -%]
 [% menu = "" -%]
-[% lang = session.lang ? session.lang : h.config.default_lang -%]
+[% lang = h.locale() -%]
 [% lf = h.config.locale.$lang -%]
 [% gravatar = h.config.exists("show_gravatar") ? h.config.show_gravatar : 1 %]
 
@@ -23,7 +23,7 @@
                     [%- USE Gravatar %]
                     <img id="user_photo" src="[% Gravatar( email => thisPerson.email ? thisPerson.email : 'a@b.c', size => 140 ) | html %]" class="img-thumbnail" alt="[% thisPerson.full_name | html %]" />
                     [%- ELSE %]
-                    <img src="/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
+                    <img src="[% uri_base %]/images/dummy.png" style="max-width:140px;" class="img-thumbnail">
                     [%- END %]
                 </div>
                 <div class="col-md-6 col-sm-5 col-xs-12">

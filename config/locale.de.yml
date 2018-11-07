@@ -70,7 +70,7 @@ home:
   operators: "Operatoren"
   stats:
     publications: "Publikationen"
-    researcher: "Persönliche Publikationslisten"
+    researcher: "Autor/Innen"
     oa_publications: "Open-Access-Publikationen"
     projects: "Projekte"
 main_page:
@@ -232,7 +232,7 @@ frontdoor:
       ipn: "Int. Patentnummer"
       ipc: "Internationale Patent<br>Klassifikation"
       financial_disclosure: "Finanzierungs-Informationen"
-      ubi_funded: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href=''>Open Access Publication Fund</a> of LibreCat University."
+      funded_apc: "Article Processing Charge funded by the <a href='http://www.dfg.de/'>Deutsche Forschungsgemeinschaft</a> and the <a href=''>Open Access Publication Fund</a> of LibreCat University."
       scoap3: "Open Access publishing charge funded by <a href='http://scoap3.org/'>SCOAP$^3$ – Sponsoring Consortium for Open Access Publishing in Particle Physics</a> and LibreCat University."
       alt_name: "Alternativer Name"
       acronym: "Akronym"
@@ -321,6 +321,7 @@ forms:
     field:
       document_type: &document_type
         label: "Publikationstyp"
+        label_short: "Publ.typ"
       doi: &doi
         label: "DOI"
         placeholder: "z.B. 10.4119/xyz/2695161"
@@ -472,8 +473,7 @@ forms:
       abstract: &abstract
         label: "Abstract"
         label2: "Sprache"
-        placeholder: "Abstract Text (Sie k&ouml;nnen Markdown f&uuml;r Formatierungen verwenden)"
-        explain: "Verwenden Sie <a href='/docs/howto/markdown' target='_blank'>Markdown</a> f&uuml;r Formatierungen. Klicken Sie nach dem Speichern auf den Link 'LibreCat', um sich eine Vorschau anzuzeigen und die Formatierungen zu pr&uuml;fen."
+        placeholder: "Abstract Text"
       keyword: &keyword
         label: "Stichworte"
         placeholder: "Stichworte (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
@@ -504,6 +504,7 @@ forms:
         label: "Returned Record IDs"
         label_short: "Ret. Rec. IDs"
         placeholder: ""
+        desc: "IDs von gelöschten Datensätzen, die auf diesen Datensatz umgeleitet werden."
       related_material.record: &related_material_record
         label: "Link zu LibreCat-Eintrag"
         label_short: "LibreCat-Eintr."
@@ -511,7 +512,7 @@ forms:
       related_material.select: "Art des Zusatzmaterials w&auml;hlen &hellip;"
       related_material.link: &related_material_link
         label: "Link und Relation<br />zu externer Quelle"
-        label_short: "Externe Quelle"
+        label_short: "Ext. Quelle"
         url:
           label_short: "URL"
           placeholder: "URL der externen Quelle (Eingabe mit http://)"
@@ -521,6 +522,10 @@ forms:
         relation:
           label_short: "Quelle ist"
           label: "Externe Quelle ist"
+        description:
+          label_short: "Beschr."
+          label: "Beschreibung"
+          placeholder: "Beschreibung und andere Angaben zur verlinkten Quelle"
       locked: &locked
         label: "Locked for editing (except for admins)"
         label_short: "Locked"
@@ -701,7 +706,7 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       series_title: &series_title
-        label: "Serien- oder Zeitschriftentitel"
+        label: "Serie/Zeitschr.titel"
         placeholder: "z.B. Lecture Notes of eBook Publishing"
       volume_issue_page: &volume_issue_page
         label: "Band / Ausgabe / Seite(n)"
@@ -893,6 +898,7 @@ forms:
       research_group: *research_group
       publication:
         label: "Lexikontitel"
+        label_short: "Lex.titel"
         placeholder: "z.B. Enzyklop&auml;die des Ver&ouml;ffentlichens"
       place: *place
       publisher: *publisher
@@ -966,7 +972,7 @@ forms:
         label: "GenBank ID"
         label_short: "GenBank"
         placeholder: "GenBank IDs (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
-      ubi_funded:
+      funded_apc:
         label: "Finanzierung"
         placeholder: "Artikelgeb&uuml;hren co-finanziert von der DFG"
       related_material.record: *related_material_record
@@ -1714,8 +1720,7 @@ forms:
   heading: "I'm a teapot (418)"
 help:
   home: "Startseite"
-  brand: "Backend<br>Startseite"
-  my_author_page: "Ihre &ouml;ffentliche<br>Publikationsliste"
+  my_author_page: "Ihre &ouml;ffentliche Publikationsliste"
   my_dashboard: "Ihr Dashboard für die aktuelle Rolle"
   change_language: "Sprache wechseln"
   user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"

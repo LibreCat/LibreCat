@@ -1,6 +1,7 @@
 package LibreCat::Cmd::sitemap;
 
 use Catmandu::Sane;
+use LibreCat;
 use Catmandu::Util qw(io join_path);
 use Catmandu;
 use Carp;
@@ -11,14 +12,14 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat sitemap [-v] <DIRECTORY>
+librecat sitemap [-v] [-fix=...] <DIRECTORY>
 
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['v', ""],);
+    (['v', ""],['fix=s','']);
 }
 
 sub command {
@@ -26,7 +27,15 @@ sub command {
 
     croak "usage: $0 sitemap <DIRECTORY>" unless (@$args);
 
-    my $dir = shift @$args;
+    my $dir    = shift @$args;
+    my $fix    = $opts->{fix};
+
+    if ($fix) {
+        $fix = LibreCat->fixer($fix);
+    }
+    else {
+        $fix = LibreCat->fixer();
+    }
 
     my $config = Catmandu->config;
     my $bag    = Catmandu->store('search')->bag('publication');
@@ -56,9 +65,20 @@ sub command {
                             || $today,
                         0, 10
                     );
-                    $file->say(
-                        "<url><loc>$loc</loc><lastmod>$mod</lastmod><priority>0.9</priority></url>"
-                    );
+
+                    my $params = $fix->fix({
+                        loc      => $loc ,
+                        lastmod  => $mod ,
+                        priority => '0.5'
+                    });
+
+                    $file->say(" <url>");
+
+                    for my $key (sort keys %$params) {
+                        my $val = $params->{$key};
+                        $file->say("  <$key>$val</$key>");
+                    }
+                    $file->say(" </url>");
                 }
             );
             $file->say('</urlset>');
@@ -74,9 +94,12 @@ sub command {
         '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
     for my $i (1 .. $n) {
         my $loc = sprintf("$config->{uri_base}/sitemap-%05d.xml", $i);
-        $file->say(
-            "<sitemap><url><loc>$loc</loc><lastmod>$today</lastmod></url></sitemap>"
-        );
+        $file->say(<<EOF);
+ <sitemap>
+  <loc>$loc</loc>
+  <lastmod>$today</lastmod>
+ </sitemap>
+EOF
     }
     $file->say('</sitemapindex>');
     $file->close;
@@ -97,6 +120,14 @@ LibreCat::Cmd::sitemap - generate siteindex and sitemaps
 
 =head1 SYNOPSIS
 
-    librecat sitemap [-v] <DIRECTORY>
+    librecat sitemap [-v] [-fix=...] <DIRECTORY>
+
+=head1 DESCRIPTION
+
+Export a Sitemap https://www.sitemaps.org/ for your repository
+to an export directory. Optionally supply a Fix to edit the
+fields in the sitemap or add new ones:
+
+    librecat sitemap -fix 'set_field(priority,0.9)' /tmp
 
 =cut
