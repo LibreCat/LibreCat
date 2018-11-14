@@ -21,7 +21,7 @@ sub _build_helper {
 
 sub fix {
     my ($self, $data) = @_;
-    my @types = qw(author editor translator supervisor applicant);
+    my @types = qw(author editor translator supervisor);
 
     my $users = $self->helper->main_user;
 
