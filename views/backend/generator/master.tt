@@ -48,58 +48,18 @@
         <p>[% h.loc("forms.mandatory_error") %]</p>
       </div>
 
-{%- IF fields.basic_fields %}
-  <h3>[% h.loc("forms.${type}.tab.basic_fields") %]</h3>
-  {%- FOREACH key IN field_order.basic_fields %}
-    {%- IF fields.basic_fields.$key %}
-    {%- template = "fields/" _ key _ ".tt" %}
-{% INCLUDE $template %}
+{%- IF fields %}
+  {%- FOREACH key IN field_order %}
+    {% IF key.match("^section_divider") %}
+    <h3>[% h.loc("forms.${type}.tab.{% key %}") %]</h3>
+    {% ELSIF fields.$key %}
+      {%- template = "fields/" _ key _ ".tt" %}
+      {% INCLUDE $template %}
     {%- END %}
   {%- END %}
 {%- END %}
       </div><!-- tab-pane -->
 
-      <!-- STEP 2 -->
-      <div id="file_upload" class="tab_section">
-{% IF fields.file_upload %}
-  <h3>[% h.loc("forms.${type}.tab.file_upload") %]</h3>
-  {% FOREACH key IN field_order.file_upload %}
-    {% IF fields.file_upload.$key %}
-    {% template = "fields/" _ key _ ".tt" %}
-{% INCLUDE $template %}
-    {% END %}
-  {% END %}
-{% END %}
-
-      </div><!-- tab-pane -->
-
-      <!-- STEP 3 -->
-      <div id="supplementary_fields" class="tab_section">
-{%- IF fields.supplementary_fields %}
-  <h3>[% h.loc("forms.${type}.tab.supplementary_fields") %]</h3>
-  {%- FOREACH key IN field_order.supplementary_fields %}
-    {%- IF fields.supplementary_fields.$key %}
-    {%- template = "fields/" _ key _ ".tt" %}
-{% INCLUDE $template %}
-    {%- END %}
-  {%- END %}
-{%- END %}
-
-      </div><!-- tab-pane -->
-
-      <!-- STEP 4 -->
-      <div id="related_material" class="tab_section">
-{%- IF fields.related_material %}
-  <h3>[% h.loc("forms.${type}.tab.related_material") %]</h3>
-  {%- FOREACH key IN field_order.related_material %}
-    {%- IF fields.related_material.$key %}
-    {%- template = "fields/" _ key _ ".tt" %}
-{% INCLUDE $template %}
-    {%- END %}
-  {%- END %}
-{%- END %}
-
-      </div><!-- tab-pane -->
       {% INCLUDE fields/buttonrow_tab.tt %}
 
     </div><!-- tab-content -->

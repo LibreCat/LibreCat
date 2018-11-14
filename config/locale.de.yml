@@ -314,10 +314,10 @@ forms:
   book:
     label: "Monographie"
     tab: &tab
-      basic_fields: "Details"
-      file_upload: "Upload"
-      supplementary_fields: "Weitere Angaben"
-      related_material: "Verkn&uuml;pfungen"
+      section_divider_0: "Details"
+      section_divider_1: "Upload"
+      section_divider_2: "Weitere Angaben"
+      section_divider_3: "Verkn&uuml;pfungen"
     field:
       document_type: &document_type
         label: "Publikationstyp"

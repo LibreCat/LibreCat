@@ -313,10 +313,10 @@ forms:
   book:
     label: "Book"
     tab: &tab
-      basic_fields: "Details"
-      file_upload: "Upload"
-      supplementary_fields: "Additional Information"
-      related_material: "Links"
+      section_divider.0: "Details"
+      section_divider.1: "Upload"
+      section_divider.2: "Additional Information"
+      section_divider.3: "Links"
     field:
       document_type: &document_type
         label: "Publication Type"

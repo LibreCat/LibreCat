@@ -4,16 +4,16 @@
     <label for="select_thematic_area">
       [% h.loc("forms.${type}.field.thematic_area.label") %]
     </label>
-    {% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.thematic_area.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10 col-xs-12" id="thematic_area">
-    {% IF fields.basic_fields.thematic_area.multiple OR fields.supplementary_fields.thematic_area.multiple %}
+    {% IF fields.thematic_area.multiple %}
     [% IF !thematic_area %]
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>
-          <select name="thematic_area.0" id="select_thematic_area" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
+          <select name="thematic_area.0" id="select_thematic_area" class="sticky form-control{% IF fields.thematic_area.mandatory %} required{% END %}">
             <option value="" selected="selected">[% h.loc("forms.${type}.field.thematic_area.select_thematic_area") %]</option>
             [% FOREACH ta IN thematic_area_list %]
               <option value="[% ta %]">[% ta %]</option>
@@ -28,9 +28,9 @@
     [% FOREACH th_ar IN thematic_area %]
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>
-          <select name="thematic_area.[% loop.index %]" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
+          <select name="thematic_area.[% loop.index %]" class="sticky form-control{% IF fields.thematic_area.mandatory %} required{% END %}">
             <option value="">[% h.loc("forms.${type}.field.thematic_area.select_thematic_area") %]</option>
             [% FOREACH ta IN thematic_area_list %]
               <option value="[% ta %]"[% IF th_ar == ta %] selected="selected"[% END %]>[% ta %]</option>
@@ -46,9 +46,9 @@
     {% ELSE %}
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.thematic_area.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.thematic_area.label_short || lf.$type.field.thematic_area.label %]</div>
-          <select name="thematic_area.0" id="select_thematic_area" class="sticky form-control{% IF fields.basic_fields.thematic_area.mandatory OR fields.supplementary_fields.thematic_area.mandatory %} required{% END %}">
+          <select name="thematic_area.0" id="select_thematic_area" class="sticky form-control{% IF fields.thematic_area.mandatory %} required{% END %}">
             <option value=""[% IF !thematic_area %] selected="selected"[% END %]>[% h.loc("forms.${type}.field.thematic_area.select_thematic_area") %]</option>
             [% FOREACH ta IN thematic_area_list%]
               <option value="[% ta %]"[% IF thematic_area.0 == ta %] selected="selected"[% END %]>[% ta %]</option>

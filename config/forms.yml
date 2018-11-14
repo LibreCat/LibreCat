@@ -29,80 +29,78 @@ publication_type_order:
     - research_data
 # sort order of fields for all types
 field_order:
-  basic_fields:
-    - document_type
-    - doi
-    - translator
-    - author
-    - editor_solo
-    - corporate_editor_solo
-    - department
-    - project
-    - research_group
-    - supervisor
-    - applicant
-    - author_secondary
-    - title
-    - alternative_title
-    - publication
-    - editor
-    - corporate_editor
-    - edition
-    - place
-    - publisher
-    - year
-    - year_extern
-    - publication_date
-    - application_date_number
-    - publication_date_number
-    - defense_date
-    - series_title_volume
-    - series_title
-    - issue
-    - page
-    - volume_issue_page
-    - report_number
-    - publication_identifier
-    - urn
-    - publication_status
-    - publication_status_language
-    - email
-    - abstract
-    - language
-    - original_language
-    - ddc
-    - conference.divider
-    - conference.name
-    - conference.location
-    - conference.start_date
-    - conference.end_date
-    - conference.date
-    - ipc
-    - locked
-  file_upload:
-    - external_file
-    - dropzone
-    - license
-  supplementary_fields:
-    - article_type
-    - abstract
-    - keyword
-    - genbank
-    - nasc
-    - ddc
-    - jel
-    - popular_science
-    - quality_controlled
-    - popular_science_quality_controlled
-    - external_id
-    - message
-    - funded_apc
-    - alternative_id
-  related_material:
-    - related_material.record
-    - related_material.rd
-    - main_file_link
-    - related_material.link
+  - section_divider_0 #basic_fields:
+  - document_type
+  - doi
+  - translator
+  - author
+  - editor_solo
+  - corporate_editor_solo
+  - department
+  - project
+  - research_group
+  - supervisor
+  - applicant
+  - author_secondary
+  - title
+  - alternative_title
+  - publication
+  - editor
+  - corporate_editor
+  - edition
+  - place
+  - publisher
+  - year
+  - year_extern
+  - publication_date
+  - application_date_number
+  - publication_date_number
+  - defense_date
+  - series_title_volume
+  - series_title
+  - issue
+  - page
+  - volume_issue_page
+  - report_number
+  - publication_identifier
+  - urn
+  - publication_status
+  - publication_status_language
+  - email
+  - abstract
+  - language
+  - original_language
+  - ddc
+  - conference.divider
+  - conference.name
+  - conference.location
+  - conference.start_date
+  - conference.end_date
+  - conference.date
+  - ipc
+  - locked
+  - section_divider_1 #file_upload:
+  - external_file
+  - dropzone
+  - license
+  - section_divider_2 #supplementary_fields:
+  - article_type
+  - keyword
+  - genbank
+  - nasc
+  - jel
+  - popular_science
+  - quality_controlled
+  - popular_science_quality_controlled
+  - external_id
+  - message
+  - funded_apc
+  - alternative_id
+  - section_divider_3 #related_material:
+  - related_material.record
+  - related_material.rd
+  - main_file_link
+  - related_material.link
 
 # file dropzone fields that may be changed/edited
 dropzone_fields:
@@ -132,790 +130,799 @@ dropzone_fields:
 publication_types:
   book:
     fields:
-      basic_fields:
-        document_type: &document_type
-          multiple: 0
-        doi: &doi
-          mandatory: 0
-          multiple: 0
-          register: 0
-        title: &title
+      document_type: &document_type
+        multiple: 0
+      doi: &doi
+        mandatory: 0
+        multiple: 0
+        register: 0
+      title: &title
+        mandatory: 1
+        multiple: 0
+      alternative_title: &alternative_title
+        mandatory: 0
+        multiple: 1
+      author: &author_translator
+        mandatory: 1
+        multiple: 1
+        idm: 1
+      edition: &edition
+        mandatory: 0
+        multiple: 0
+      department: &department
+        mandatory: 0
+        multiple: 1
+      project: &project
+        mandatory: 0
+        multiple: 1
+      research_group: &research_group
+        mandatory: 0
+        multiple: 1
+      place: &place
+        mandatory: 0
+        multiple: 0
+      publisher: &publisher
+        mandatory: 0
+        multiple: 0
+      year_extern: &year_extern
+        year:
           mandatory: 1
-          multiple: 0
-        alternative_title: &alternative_title
+        extern:
+          mandatory: 0
+      page: &pages
+        mandatory: 0
+        multiple: 0
+      series_title_volume: &series_title_volume
+        mandatory: 0
+        multiple: 0
+      publication_identifier: &publication_identifier
+        mandatory: 0
+        multiple: 1
+      publication_status_language: &publication_status_language
+        language:
           mandatory: 0
           multiple: 1
-        author: &author_translator
+        publication_status:
+          mandatory: 0
+          multiple: 0
+      locked: &locked
+        mandatory: 0
+      dropzone: &dropzone
+        mandatory: 0
+      license: &license
+        pub_license:
           mandatory: 1
+        cc_license:
+          mandatory: 0
+        urn:
+          mandatory: 0
+          readonly: admin
+        ddc:
           multiple: 1
-          idm: 1
-        edition: &edition
-          mandatory: 0
-          multiple: 0
-        department: &department
-          mandatory: 0
-          multiple: 1
-        project: &project
-          mandatory: 0
-          multiple: 1
-        research_group: &research_group
-          mandatory: 0
-          multiple: 1
-        place: &place
-          mandatory: 0
-          multiple: 0
-        publisher: &publisher
-          mandatory: 0
-          multiple: 0
-        year_extern: &year_extern
-          year:
-            mandatory: 1
-          extern:
-            mandatory: 0
-        page: &pages
-          mandatory: 0
-          multiple: 0
-        series_title_volume: &series_title_volume
-          mandatory: 0
-          multiple: 0
-        publication_identifier: &publication_identifier
-          mandatory: 0
-          multiple: 1
-        publication_status_language: &publication_status_language
-          language:
-            mandatory: 0
-            multiple: 1
-          publication_status:
-            mandatory: 0
-            multiple: 0
-        locked: &locked
-          mandatory: 0
-      file_upload: &file_upload
-        dropzone:
-          mandatory: 0
-        license:
-          pub_license:
-            mandatory: 1
-          cc_license:
-            mandatory: 0
-          urn:
-            mandatory: 0
-            readonly: admin
-          ddc:
-            multiple: 1
-            mandatory: oa_file
-      supplementary_fields:
-        abstract: &abstract
-          multiple: 1
-        keyword: &keyword
-          multiple: 0
-        external_id: &external_id
-          mandatory: 0
-          multiple: 1
-        message: &message
-          multiple: 0
-        popular_science_quality_controlled: &popular_science_quality_controlled
-          multiple: 0
-        jel: &jel
-          multiple: 1
-        thematic_area: &thematic_area
-          multiple: 0
-        alternative_id: &alternative_id
-          multiple: 1
-      related_material: &related_material
-        related_material.record:
-          mandatory: 0
-        main_file_link: &main_file_link
-          multiple: 0
-        related_material.link:
-          multiple: 1
-          mandatory: 0
+          mandatory: oa_file
+      abstract: &abstract
+        multiple: 1
+      keyword: &keyword
+        multiple: 0
+      external_id: &external_id
+        mandatory: 0
+        multiple: 1
+      message: &message
+        multiple: 0
+      popular_science_quality_controlled: &popular_science_quality_controlled
+        multiple: 0
+      jel: &jel
+        multiple: 1
+      thematic_area: &thematic_area
+        multiple: 0
+      alternative_id: &alternative_id
+        multiple: 1
+      related_material.record: &related_material_record
+        mandatory: 0
+      main_file_link: &main_file_link
+        multiple: 0
+      related_material.link: &related_material_link
+        multiple: 1
+        mandatory: 0
   book_editor:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        editor_solo: &editor_solo
-          mandatory: 1
-          multiple: 1
-          idm: 1
-        corporate_editor_solo: &corporate_editor_solo
-          mandatory: 0
-          multiple: 1
-        department: *department
-        project: *project
-        research_group: *research_group
-        publisher: *publisher
-        year_extern: *year_extern
-        alternative_title: *alternative_title
-        place: *place
-        series_title_volume: *series_title_volume
-        page: *pages
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        edition: *edition
-        conference.divider: &conference_divider
-          mandatory: 0
-        conference.name: &conference_name
-          mandatory: 0
-          multiple: 0
-        conference.location: &conference_location
-          mandatory: 0
-          multiple: 0
-        conference.date: &conference_date
-          placeholder_start: "YYYY-MM-DD"
-          placeholder_end: "YYYY-MM-DD"
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        abstract: *abstract
-        keyword: *keyword
-        external_id: *external_id
-        message: *message
-        jel: *jel
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      editor_solo: &editor_solo
+        mandatory: 1
+        multiple: 1
+        idm: 1
+      corporate_editor_solo: &corporate_editor_solo
+        mandatory: 0
+        multiple: 1
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      year_extern: *year_extern
+      alternative_title: *alternative_title
+      place: *place
+      series_title_volume: *series_title_volume
+      page: *pages
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      edition: *edition
+      conference.divider: &conference_divider
+        mandatory: 0
+      conference.name: &conference_name
+        mandatory: 0
+        multiple: 0
+      conference.location: &conference_location
+        mandatory: 0
+        multiple: 0
+      conference.date: &conference_date
+        placeholder_start: "YYYY-MM-DD"
+        placeholder_end: "YYYY-MM-DD"
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   book_chapter:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        alternative_title: *alternative_title
-        author: *author_translator
-        editor: &editor_only
-          mandatory: 0
-          multiple: 1
-          idm: 0
-        corporate_editor: &corporate_editor
-          mandatory: 0
-          multiple: 1
-        department: *department
-        project: *project
-        research_group: *research_group
-        edition: *edition
-        place: *place
-        publisher: *publisher
-        page: &page_range
-          mandatory: 0
-          multiple: 0
-        series_title_volume: *series_title_volume
-        publication:
-          mandatory: 1
-        year_extern: *year_extern
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        conference.divider: *conference_divider
-        conference.name: *conference_name
-        conference.location: *conference_location
-        conference.date: *conference_date
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        abstract: *abstract
-        keyword: *keyword
-        jel: *jel
-        external_id: *external_id
-        message: *message
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor: &editor_only
+        mandatory: 0
+        multiple: 1
+        idm: 0
+      corporate_editor: &corporate_editor
+        mandatory: 0
+        multiple: 1
+      department: *department
+      project: *project
+      research_group: *research_group
+      edition: *edition
+      place: *place
+      publisher: *publisher
+      page: &page_range
+        mandatory: 0
+        multiple: 0
+      series_title_volume: *series_title_volume
+      publication:
+        mandatory: 1
+      year_extern: *year_extern
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      abstract: *abstract
+      keyword: *keyword
+      jel: *jel
+      external_id: *external_id
+      message: *message
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   conference_abstract:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        author: *author_translator
-        editor:
-          mandatory: 0
-          multiple: 1
-          idm: 0
-        corporate_editor: *corporate_editor
-        department: *department
-        project: *project
-        research_group: *research_group
-        alternative_title: *alternative_title
-        publication:
-          multiple: 0
-          mandatory: 0
-        year_extern: *year_extern
-        place: *place
-        publisher: *publisher
-        series_title: &series_title
-          mandatory: 0
-          multiple: 0
-        volume_issue_page: &volume_issue_page_number
-          options:
-            - page_range
-            - article_number
-          multiple: 0
-          mandatory: 0
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        conference.divider: *conference_divider
-        conference.name: *conference_name
-        conference.location: *conference_location
-        conference.date: *conference_date
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        keyword: *keyword
-        external_id: *external_id
-        jel: *jel
-        message: *message
-        thematic_area: *thematic_area
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      author: *author_translator
+      editor:
+        mandatory: 0
+        multiple: 1
+        idm: 0
+      corporate_editor: *corporate_editor
+      department: *department
+      project: *project
+      research_group: *research_group
+      alternative_title: *alternative_title
+      publication:
+        multiple: 0
+        mandatory: 0
+      year_extern: *year_extern
+      place: *place
+      publisher: *publisher
+      series_title: &series_title
+        mandatory: 0
+        multiple: 0
+      volume_issue_page: &volume_issue_page_number
+        options:
+          - page_range
+          - article_number
+        multiple: 0
+        mandatory: 0
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      locked: *locked
+      dropzone: *dropzone
+      licenses: *license
+      keyword: *keyword
+      external_id: *external_id
+      jel: *jel
+      message: *message
+      thematic_area: *thematic_area
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   conference_editor:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        editor_solo: *editor_solo
-        corporate_editor_solo: *corporate_editor_solo
-        department: *department
-        project: *project
-        research_group: *research_group
-        year_extern: *year_extern
-        alternative_title: *alternative_title
-        place: *place
-        publisher: *publisher
-        series_title: *series_title
-        volume_issue_page: *volume_issue_page_number
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        conference.divider:
-          mandatory: 0
-        conference.name:
-          mandatory: 0
-        conference.location:
-          mandatory: 0
-        conference.date: *conference_date
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        keyword: *keyword
-        abstract: *abstract
-        external_id: *external_id
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      editor_solo: *editor_solo
+      corporate_editor_solo: *corporate_editor_solo
+      department: *department
+      project: *project
+      research_group: *research_group
+      year_extern: *year_extern
+      alternative_title: *alternative_title
+      place: *place
+      publisher: *publisher
+      series_title: *series_title
+      volume_issue_page: *volume_issue_page_number
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider:
+        mandatory: 0
+      conference.name:
+        mandatory: 0
+      conference.location:
+        mandatory: 0
+      conference.date: *conference_date
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      keyword: *keyword
+      abstract: *abstract
+      external_id: *external_id
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   conference:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        alternative_title: *alternative_title
-        author: *author_translator
-        editor:
-          mandatory: 0
-          multiple: 1
-          idm: 0
-        corporate_editor: *corporate_editor
-        place: *place
-        publisher: *publisher
-        department: *department
-        project: *project
-        research_group: *research_group
-        volume_issue_page: *volume_issue_page_number
-        publication:
-          mandatory: 0
-        series_title: *series_title
-        year_extern: *year_extern
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        conference.divider: *conference_divider
-        conference.name: *conference_name
-        conference.location: *conference_location
-        conference.date: *conference_date
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        keyword: *keyword
-        abstract: *abstract
-        external_id: *external_id
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      alternative_title: *alternative_title
+      author: *author_translator
+      editor:
+        mandatory: 0
+        multiple: 1
+        idm: 0
+      corporate_editor: *corporate_editor
+      place: *place
+      publisher: *publisher
+      department: *department
+      project: *project
+      research_group: *research_group
+      volume_issue_page: *volume_issue_page_number
+      publication:
+        mandatory: 0
+      series_title: *series_title
+      year_extern: *year_extern
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      keyword: *keyword
+      abstract: *abstract
+      external_id: *external_id
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   dissertation:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        author:
-          mandatory: 1
-          multiple: 1
-          idm: 1
-        supervisor:
-          mandatory: 0
-          multiple: 1
-          idm: 1
-        year_extern: *year_extern
-        alternative_title: *alternative_title
-        department: *department
-        project: *project
-        research_group: *research_group
-        place: *place
-        page: *pages
-        series_title_volume: *series_title_volume
-        publisher: *publisher
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        abstract: *abstract
-        keyword: *keyword
-        external_id: *external_id
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      author:
+        mandatory: 1
+        multiple: 1
+        idm: 1
+      supervisor:
+        mandatory: 0
+        multiple: 1
+        idm: 1
+      year_extern: *year_extern
+      alternative_title: *alternative_title
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      page: *pages
+      series_title_volume: *series_title_volume
+      publisher: *publisher
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   encyclopedia_article:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        author: *author_translator
-        editor: *editor_only
-        corporate_editor: *corporate_editor
-        department: *department
-        project: *project
-        research_group: *research_group
-        publication:
-          mandatory: 1
-        publisher: *publisher
-        series_title_volume: *series_title_volume
-        place: *place
-        edition: *edition
-        year_extern: *year_extern
-        alternative_title: *alternative_title
-        page: *page_range
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        keyword: *keyword
-        external_id: *external_id
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      author: *author_translator
+      editor: *editor_only
+      corporate_editor: *corporate_editor
+      department: *department
+      project: *project
+      research_group: *research_group
+      publication:
+        mandatory: 1
+      publisher: *publisher
+      series_title_volume: *series_title_volume
+      place: *place
+      edition: *edition
+      year_extern: *year_extern
+      alternative_title: *alternative_title
+      page: *page_range
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   journal_article:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        alternative_title: *alternative_title
-        author: *author_translator
-        department: *department
-        project: *project
-        research_group: *research_group
-        publisher: *publisher
-        publication: &publication_jtitle
-          mandatory: 1
-        volume_issue_page: *volume_issue_page_number
-        year_extern: *year_extern
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        conference.divider: *conference_divider
-        conference.name: *conference_name
-        conference.location: *conference_location
-        conference.date: *conference_date
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        article_type:
-          mandatory: 0
-        abstract: *abstract
-        keyword: *keyword
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        external_id: *external_id
-        nasc: &nasc
-          multiple: 0
-        genbank: &genbank
-          multiple: 0
-        message: *message
-        jel: *jel
-        funded_apc:
-          multiple: 0
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      alternative_title: *alternative_title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      publication: &publication_jtitle
+        mandatory: 1
+      volume_issue_page: *volume_issue_page_number
+      year_extern: *year_extern
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      article_type:
+        mandatory: 0
+      abstract: *abstract
+      keyword: *keyword
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      external_id: *external_id
+      nasc: &nasc
+        multiple: 0
+      genbank: &genbank
+        multiple: 0
+      message: *message
+      jel: *jel
+      funded_apc:
+        multiple: 0
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   journal_editor:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        editor_solo: *editor_solo
-        corporate_editor_solo: *corporate_editor_solo
-        department: *department
-        project: *project
-        research_group: *research_group
-        publisher: *publisher
-        year_extern: *year_extern
-        alternative_title: *alternative_title
-        publication: *publication_jtitle
-        volume_issue_page: &volume_issue_page
-          multiple: 0
-          mandatory: 0
-        publication_status_language: *publication_status_language
-        publication_identifier: *publication_identifier
-        conference.divider: *conference_divider
-        conference.name: *conference_name
-        conference.location: *conference_location
-        conference.date: *conference_date
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        abstract: *abstract
-        keyword: *keyword
-        external_id: *external_id
-        message: *message
-        jel: *jel
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      editor_solo: *editor_solo
+      corporate_editor_solo: *corporate_editor_solo
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      year_extern: *year_extern
+      alternative_title: *alternative_title
+      publication: *publication_jtitle
+      volume_issue_page: &volume_issue_page
+        multiple: 0
+        mandatory: 0
+      publication_status_language: *publication_status_language
+      publication_identifier: *publication_identifier
+      conference.divider: *conference_divider
+      conference.name: *conference_name
+      conference.location: *conference_location
+      conference.date: *conference_date
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   newspaper_article:
     fields:
-      basic_fields:
-        document_type: *document_type
-        author: *author_translator
-        title: *title
-        department: *department
-        project: *project
-        research_group: *research_group
-        year_extern: *year_extern
-        publication_date: &publication_date
-          mandatory: 1
-        volume_issue_page: *volume_issue_page
-        publication:
-          mandatory: 1
-        alternative_title: *alternative_title
-        publication_status_language: *publication_status_language
-        publication_identifier: *publication_identifier
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        external_id: *external_id
-        keyword: *keyword
-        popular_science: &popular_science
-          multiple: 0
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      author: *author_translator
+      title: *title
+      department: *department
+      project: *project
+      research_group: *research_group
+      year_extern: *year_extern
+      publication_date: &publication_date
+        mandatory: 1
+      volume_issue_page: *volume_issue_page
+      publication:
+        mandatory: 1
+      alternative_title: *alternative_title
+      publication_status_language: *publication_status_language
+      publication_identifier: *publication_identifier
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      external_id: *external_id
+      keyword: *keyword
+      popular_science: &popular_science
+        multiple: 0
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   patent:
     fields:
-      basic_fields:
-        document_type: *document_type
-        title: *title
-        alternative_title: *alternative_title
-        author:
-          mandatory: 1
-          multiple: 1
-          idm: 1
-        applicant:
-          mandatory: 0
-        department: *department
-        project: *project
-        research_group: *research_group
-        year_extern: *year_extern
-        publication_date_number:
-          mandatory: 1
-        application_date_number:
-          mandatory: 0
-        ipc:
-          mandatory: 1
-        page: *pages
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        abstract: *abstract
-        keyword: *keyword
-        external_id: *external_id
-        message: *message
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      title: *title
+      alternative_title: *alternative_title
+      author:
+        mandatory: 1
+        multiple: 1
+        idm: 1
+      applicant:
+        mandatory: 0
+      department: *department
+      project: *project
+      research_group: *research_group
+      year_extern: *year_extern
+      publication_date_number:
+        mandatory: 1
+      application_date_number:
+        mandatory: 0
+      ipc:
+        mandatory: 1
+      page: *pages
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   preprint:
     fields:
-      basic_fields:
-        document_type: *document_type
-        title: *title
-        publication:
-          mandatory: 0
-        author: *author_translator
-        department: *department
-        project: *project
-        research_group: *research_group
-        year_extern: *year_extern
-        publisher: *publisher
-        page: *pages
-        publication_status_language: *publication_status_language
-        publication_identifier: *publication_identifier
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        abstract: *abstract
-        keyword: *keyword
-        external_id: *external_id
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      title: *title
+      publication:
+        mandatory: 0
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      year_extern: *year_extern
+      publisher: *publisher
+      page: *pages
+      publication_status_language: *publication_status_language
+      publication_identifier: *publication_identifier
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      abstract: *abstract
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   report:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        author: *author_translator
-        department: *department
-        project: *project
-        research_group: *research_group
-        publisher: *publisher
-        year_extern: *year_extern
-        alternative_title: *alternative_title
-        place: *place
-        series_title_volume: *series_title_volume
-        publication_identifier: *publication_identifier
-        report_number:
-          mandatory: 0
-        page: *pages
-        publication_status_language: *publication_status_language
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        external_id: *external_id
-        abstract: *abstract
-        keyword: *keyword
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      year_extern: *year_extern
+      alternative_title: *alternative_title
+      place: *place
+      series_title_volume: *series_title_volume
+      publication_identifier: *publication_identifier
+      report_number:
+        mandatory: 0
+      page: *pages
+      publication_status_language: *publication_status_language
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      external_id: *external_id
+      abstract: *abstract
+      keyword: *keyword
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   review:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        author: *author_translator
-        department: *department
-        project: *project
-        research_group: *research_group
-        publisher: *publisher
-        year_extern: *year_extern
-        publication_date:
-          mandatory: 0
-        alternative_title: *alternative_title
-        place: *place
-        publication:
-          mandatory: 0
-        volume_issue_page: *volume_issue_page_number
-        publication_identifier: *publication_identifier
-        publication_status_language: *publication_status_language
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        keyword: *keyword
-        external_id: *external_id
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher: *publisher
+      year_extern: *year_extern
+      publication_date:
+        mandatory: 0
+      alternative_title: *alternative_title
+      place: *place
+      publication:
+        mandatory: 0
+      volume_issue_page: *volume_issue_page_number
+      publication_identifier: *publication_identifier
+      publication_status_language: *publication_status_language
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      keyword: *keyword
+      external_id: *external_id
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   research_data:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi:
-          readonly: 1
-        title: *title
-        author:
+      document_type: *document_type
+      doi:
+        readonly: 1
+      title: *title
+      author:
+        mandatory: 1
+        multiple: 1
+        idm: 1
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher:
+        mandatory: 1
+      year_extern: *year_extern
+      locked: *locked
+      external_file:
+        mandatory: 0
+      dropzone:
+        mandatory: 0
+      license:
+        data_reuse_license:
           mandatory: 1
-          multiple: 1
-          idm: 1
-        department: *department
-        project: *project
-        research_group: *research_group
-        publisher:
+        open_data_release:
           mandatory: 1
-        year_extern: *year_extern
-        locked: *locked
-      file_upload:
-        external_file:
+        other_data_license:
           mandatory: 0
-        dropzone:
-          mandatory: 0
-        license:
-          data_reuse_license:
-            mandatory: 1
-          open_data_release:
-            mandatory: 1
-          other_data_license:
-            mandatory: 0
-      supplementary_fields:
-        abstract: *abstract
-        ddc:
-          mandatory: 0
-        jel: *jel
-        keyword: *keyword
-        alternative_id: *alternative_id
-      related_material: &related_material_rd
-        related_material.rd:
-          mandatory: 0
-        related_material.link:
-          mandatory: 0
+      abstract: *abstract
+      ddc:
+        mandatory: 0
+      jel: *jel
+      keyword: *keyword
+      alternative_id: *alternative_id
+      related_material.rd:
+        mandatory: 0
+      related_material.link:
+        mandatory: 0
   translation:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        alternative_title:
-          mandatory: 0
-          multiple: 0
-        translator:
-          mandatory: 1
-          multiple: 1
-          idm: 1
-        author_secondary:
-          multiple: 1
-          idm: 0
-        department: *department
-        project: *project
-        research_group: *research_group
-        edition: *edition
-        place: *place
-        publisher: *publisher
-        series_title_volume: *series_title_volume
-        page: *pages
-        publication_identifier: *publication_identifier
-        publication_status: &publication_status
-          label: "Publication Status"
-        year_extern: *year_extern
-        language: &language
-          label: "Language"
-        original_language: &original_language
-          label: "Language (Original)"
-          label_short: "Lang. (Orig)"
-          multiple: 0
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        external_id: *external_id
-        abstract: *abstract
-        keyword: *keyword
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      alternative_title:
+        mandatory: 0
+        multiple: 0
+      translator:
+        mandatory: 1
+        multiple: 1
+        idm: 1
+      author_secondary:
+        multiple: 1
+        idm: 0
+      department: *department
+      project: *project
+      research_group: *research_group
+      edition: *edition
+      place: *place
+      publisher: *publisher
+      series_title_volume: *series_title_volume
+      page: *pages
+      publication_identifier: *publication_identifier
+      publication_status: &publication_status
+        label: "Publication Status"
+      year_extern: *year_extern
+      language: &language
+        label: "Language"
+      original_language: &original_language
+        label: "Language (Original)"
+        label_short: "Lang. (Orig)"
+        multiple: 0
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      external_id: *external_id
+      abstract: *abstract
+      keyword: *keyword
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   translation_chapter:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        alternative_title:
-          mandatory: 0
-          multiple: 1
-        translator:
-          mandatory: 1
-          multiple: 1
-          idm: 1
-        author_secondary:
-          multiple: 1
-          idm: 0
-        department: *department
-        project: *project
-        research_group: *research_group
-        edition: *edition
-        editor: *editor_only
-        corporate_editor: *corporate_editor
-        place: *place
-        publisher: *publisher
-        publication:
-          mandatory: 0
-        series_title:
-          mandatory: 0
-        volume_issue_page: *volume_issue_page_number
-        publication_identifier: *publication_identifier
-        publication_status: *publication_status
-        year_extern: *year_extern
-        language: *language
-        original_language: *original_language
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        popular_science_quality_controlled: *popular_science_quality_controlled
-        external_id: *external_id
-        abstract: *abstract
-        keyword: *keyword
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      alternative_title:
+        mandatory: 0
+        multiple: 1
+      translator:
+        mandatory: 1
+        multiple: 1
+        idm: 1
+      author_secondary:
+        multiple: 1
+        idm: 0
+      department: *department
+      project: *project
+      research_group: *research_group
+      edition: *edition
+      editor: *editor_only
+      corporate_editor: *corporate_editor
+      place: *place
+      publisher: *publisher
+      publication:
+        mandatory: 0
+      series_title:
+        mandatory: 0
+      volume_issue_page: *volume_issue_page_number
+      publication_identifier: *publication_identifier
+      publication_status: *publication_status
+      year_extern: *year_extern
+      language: *language
+      original_language: *original_language
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      popular_science_quality_controlled: *popular_science_quality_controlled
+      external_id: *external_id
+      abstract: *abstract
+      keyword: *keyword
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
   working_paper:
     fields:
-      basic_fields:
-        document_type: *document_type
-        doi: *doi
-        title: *title
-        alternative_title: *alternative_title
-        author: *author_translator
-        department: *department
-        project: *project
-        research_group: *research_group
-        place: *place
-        publisher: *publisher
-        series_title_volume: *series_title_volume
-        page: *pages
-        edition: *edition
-        publication_identifier: *publication_identifier
-        year_extern: *year_extern
-        publication_status_language: *publication_status_language
-        locked: *locked
-      file_upload: *file_upload
-      supplementary_fields:
-        external_id: *external_id
-        abstract: *abstract
-        keyword: *keyword
-        message: *message
-        jel: *jel
-        thematic_area: *thematic_area
-        alternative_id: *alternative_id
-      related_material: *related_material
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      alternative_title: *alternative_title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      place: *place
+      publisher: *publisher
+      series_title_volume: *series_title_volume
+      page: *pages
+      edition: *edition
+      publication_identifier: *publication_identifier
+      year_extern: *year_extern
+      publication_status_language: *publication_status_language
+      locked: *locked
+      dropzone: *dropzone
+      license: *license
+      external_id: *external_id
+      abstract: *abstract
+      keyword: *keyword
+      message: *message
+      jel: *jel
+      thematic_area: *thematic_area
+      alternative_id: *alternative_id
+      related_material.record: *related_material_record
+      main_file_link: *main_file_link
+      related_material.link: *related_material_link
 
 other_items:
   account:

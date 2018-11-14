@@ -5,16 +5,16 @@
     <label for="select_language_0">
       [% h.loc("forms.${type}.field.language.label") %]
     </label>
-    {% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.language.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10" id="language">
-    {% IF fields.basic_fields.language.multiple OR fields.supplementary_fields.language.multiple %}
+    {% IF fields.language.multiple %}
     [% IF !language %]
     <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.language.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.language.label_short || lf.$type.field.language.label %]</div>
-          <select name="language.0.iso" class="sticky form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
+          <select name="language.0.iso" class="sticky form-control{% IF fields.language.mandatory %} required{% END %}" id="select_language_0">
             [% FOREACH lang IN language_preselect %]
             <option value="[% lang %]"[% IF lang == "eng" %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]
@@ -32,9 +32,9 @@
       [% FOREACH lan IN language %]
       <div class="row innerrow multirow">
         <div class="form-group col-md-10 col-xs-11">
-          <div class="input-group sticky{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} mandatory{% END %}">
+          <div class="input-group sticky{% IF fields.language.mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.language.label_short || lf.$type.field.language.label %]</div>
-            <select name="language.[% loop.index %].iso" class="sticky form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
+            <select name="language.[% loop.index %].iso" class="sticky form-control{% IF fields.language.mandatory %}[% IF loop.first %] required[% END %]{% END %}" id="select_language_[% loop.index %]">
               [% FOREACH lang IN language_preselect %]
               <option value="[% lang %]"[% IF lang == lan.iso %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
               [% END %]
@@ -53,9 +53,9 @@
     {% ELSE %}
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.language.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.language.label_short || lf.$type.field.language.label %]</div>
-          <select name="language.0.iso" class="sticky form-control{% IF fields.basic_fields.language.mandatory OR fields.supplementary_fields.language.mandatory %} required{% END %}" id="select_language_0">
+          <select name="language.0.iso" class="sticky form-control{% IF fields.language.mandatory %} required{% END %}" id="select_language_0">
             [% FOREACH lang IN language_preselect %]
             <option value="[% lang %]"[% IF !language AND lang == "eng" OR lang == language.0.iso %] selected="selected"[% END %]>[% h.loc("forms.language.${lang}") %]</option>
             [% END %]

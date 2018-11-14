@@ -3,14 +3,14 @@
     <label for="id_publisher">
       [% h.loc("forms.${type}.field.publisher.label") %]
     </label>
-    {% IF fields.basic_fields.publisher.mandatory OR fields.supplementary_fields.publisher.mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.publisher.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.publisher.mandatory OR fields.supplementary_fields.publisher.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.publisher.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.publisher.label") %]</div>
-          <input type="text" name="publisher" id="id_publisher" value="[% publisher || lf.$type.field.publisher.defaultvalue | html %]" placeholder="[% h.loc("forms.${type}.field.publisher.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.publisher.mandatory OR fields.supplementary_fields.publisher.mandatory %} required{% END %}"{% IF fields.basic_fields.publisher.readonly OR fields.supplementary_fields.publisher.readonly %} readonly="readonly"{% END %} />
+          <input type="text" name="publisher" id="id_publisher" value="[% publisher || lf.$type.field.publisher.defaultvalue | html %]" placeholder="[% h.loc("forms.${type}.field.publisher.placeholder") %]" class="sticky form-control{% IF fields.publisher.mandatory %} required{% END %}"{% IF fields.publisher.readonly %} readonly="readonly"{% END %} />
           <div class="input-group-addon"></div>
         </div>
       </div>

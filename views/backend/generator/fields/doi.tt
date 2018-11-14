@@ -3,18 +3,18 @@
     <label for="id_doi">
       [% h.loc("forms.${type}.field.doi.label") %]
     </label>
-    {% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.doi.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   [% prefixlength = h.config.doi.prefix.length %]
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.doi.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.doi.label") %]</div>
-          <input type="text" name="doi" id="id_doi" value="[% doi | html %]" placeholder="[% h.loc("forms.${type}.field.doi.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.doi.mandatory OR fields.supplementary_fields.doi.mandatory %} required{% END %}"{% IF fields.basic_fields.doi.readonly OR fields.supplementary_fields.doi.readonly %} readonly="readonly" title="[% h.loc("forms.${type}.field.doi.title") %]"{% ELSIF fields.basic_fields.doi.register %}[% IF doi AND doi.substr(0,prefixlength) == h.config.doi.prefix %]readonly="readonly"[% END %]{% END %}>
+          <input type="text" name="doi" id="id_doi" value="[% doi | html %]" placeholder="[% h.loc("forms.${type}.field.doi.placeholder") %]" class="sticky form-control{% IF fields.doi.mandatory %} required{% END %}"{% IF fields.doi.readonly %} readonly="readonly" title="[% h.loc("forms.${type}.field.doi.title") %]"{% ELSIF fields.doi.register %}[% IF doi AND doi.substr(0,prefixlength) == h.config.doi.prefix %]readonly="readonly"[% END %]{% END %}>
           <input type="hidden" id="id_new_doi" value="[% h.config.doi.prefix _ "/" _ _id %]" />
           <div class="input-group-addon">
-            {% IF fields.basic_fields.doi.register OR fields.supplementary_fields.doi.register %}
+            {% IF fields.doi.register %}
             [% IF !doi AND session.role == "super_admin" %]
             <label class="checkbox-inline">
               <input type="checkbox" name="register_doi" id="id_register_doi"[% IF doi %] disabled="disabled"[% END %]> [% h.loc("forms.${type}.field.doi.register") %]

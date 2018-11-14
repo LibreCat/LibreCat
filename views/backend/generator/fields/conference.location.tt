@@ -3,14 +3,14 @@
     <label for="id_conference_location">
     [% lf.$type.field.item('conference.location').label %]
     </label>
-    {% IF fields.basic_fields.item('conference.location').mandatory OR fields.supplementary_fields.item('conference.location').mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.item('conference.location').mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.item('conference.location').mandatory OR fields.supplementary_fields.item('conference.location').mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.item('conference.location').mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('conference.location').label_short || lf.$type.field.item('conference.location').label %]</div>
-          <input type="text" name="conference.location" id="id_conference_location" value="[% conference.location | html %]" placeholder="[% lf.$type.field.item('conference.location').placeholder %]" class="location sticky form-control{% IF fields.basic_fields.item('conference.location').mandatory OR fields.supplementary_fields.item('conference.location').mandatory %} required{% END %}">
+          <input type="text" name="conference.location" id="id_conference_location" value="[% conference.location | html %]" placeholder="[% lf.$type.field.item('conference.location').placeholder %]" class="location sticky form-control{% IF fields.item('conference.location').mandatory %} required{% END %}">
           <div class="input-group-addon"></div>
         </div>
       </div>

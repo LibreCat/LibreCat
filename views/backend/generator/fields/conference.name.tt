@@ -3,12 +3,12 @@
     <label for="id_conference_name">
     [% lf.$type.field.item('conference.name').label %]
     </label>
-    {% IF fields.basic_fields.item('conference.name').mandatory || fields.supplementary_fields.item('conference.name').mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.item('conference.name').mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.item('conference.name').mandatory || fields.supplementary_fields.item('conference.name').mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.item('conference.name').mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('conference.name').label_short || lf.$type.field.item('conference.name').label %]</div>
           <input type="text" name="conference.name" id="id_conference_name" value="[% conference.name | html %]" placeholder="[% lf.$type.field.item('conference.name').placeholder %]" class="sticky form-control">
           <div class="input-group-addon"></div>

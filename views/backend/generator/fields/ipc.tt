@@ -3,14 +3,14 @@
     <label for="id_ipc">
       [% h.loc("forms.${type}.field.ipc.label") %]
     </label>
-    {% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %}<span class="starMandatory"></span>{% END %}
+    {% IF fields.ipc.mandatory %}<span class="starMandatory"></span>{% END %}
   </div>
   <div class="col-md-10">
     <div class="row innerrow">
       <div class="form-group col-md-10 col-xs-11">
-        <div class="input-group sticky{% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %} mandatory{% END %}">
+        <div class="input-group sticky{% IF fields.ipc.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.ipc.label_short") %]</div>
-          <input type="text" name="ipc" id="id_ipc" value="[% ipc || lf.$type.field.ipc.defaultvalue %]" placeholder="[% h.loc("forms.${type}.field.ipc.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.ipc.mandatory OR fields.supplementary_fields.ipc.mandatory %} required{% END %}"{% IF fields.basic_fields.ipc.readonly OR fields.supplementary_fields.ipc.readonly %} readonly="readonly"{% END %}/>
+          <input type="text" name="ipc" id="id_ipc" value="[% ipc || lf.$type.field.ipc.defaultvalue %]" placeholder="[% h.loc("forms.${type}.field.ipc.placeholder") %]" class="sticky form-control{% IF fields.ipc.mandatory %} required{% END %}"{% IF fields.ipc.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>
