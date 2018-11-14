@@ -42,7 +42,7 @@
     <div class="tab tab-content edit-form">
       {% INCLUDE fields/buttonrow_tab.tt %}
       <!-- STEP 1 -->
-      <div id="basic_fields" class="tab_section">
+      <div class="tab_section">
 
       <div class="hidden bg-danger" id="mandatory-field-error">
         <p>[% h.loc("forms.mandatory_error") %]</p>
