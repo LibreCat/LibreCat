@@ -30,6 +30,9 @@ subtest "add/get/delete user" => sub {
         ->json_is('/data/id', 999111999)
         ->json_is('/data/attributes/full_name', 'User, Test');
 
+    $t->head_ok('/api/user/999111999')
+        ->status_is(200);
+
     $t->delete_ok('/api/user/999111999')
         ->status_is(200)
         ->json_has('/data/attributes')
@@ -66,6 +69,9 @@ subtest "add/get/delete publication" => sub {
         ->json_has('/data/attributes')
         ->json_is('/data/id', 999999999)
         ->json_is('/data/attributes/doi', '10.1093/jxb/erv066');
+
+    $t->head_ok('/api/publication/999999999')
+        ->status_is(200);
 
     $t->delete_ok('/api/publication/999999999')
         ->status_is(200)
