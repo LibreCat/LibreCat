@@ -332,7 +332,7 @@ forms:
       alternative_title: &alternative_title
         label: "Alternative Title"
         label_short: "Alt. Title"
-        placeholder: "e.g. Handbuch der eBook-Ver&ouml;ffentlichung"
+        placeholder: "e.g. Handbuch der eBook-Veröffentlichung"
       author: &author_translator
         label: "Author"
         tooltip: "Activate if LibreCat author."
