@@ -313,10 +313,11 @@ forms:
   book:
     label: "Book"
     tab: &tab
-      section_divider.0: "Details"
-      section_divider.1: "Upload"
-      section_divider.2: "Additional Information"
-      section_divider.3: "Links"
+      section_divider_0: "Details"
+      section_divider_1: "Conference Details"
+      section_divider_2: "Upload"
+      section_divider_3: "Additional Information"
+      section_divider_4: "Links"
     field:
       document_type: &document_type
         label: "Publication Type"

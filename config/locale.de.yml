@@ -315,9 +315,10 @@ forms:
     label: "Monographie"
     tab: &tab
       section_divider_0: "Details"
-      section_divider_1: "Upload"
-      section_divider_2: "Weitere Angaben"
-      section_divider_3: "Verknüpfungen"
+      section_divider_1: "Konferenzangaben"
+      section_divider_2: "Upload"
+      section_divider_3: "Weitere Angaben"
+      section_divider_4: "Verknüpfungen"
     field:
       document_type: &document_type
         label: "Publikationstyp"

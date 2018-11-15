@@ -71,7 +71,7 @@ field_order:
   - language
   - original_language
   - ddc
-  - conference.divider
+  - section_divider_1 #conference_details
   - conference.name
   - conference.location
   - conference.start_date
@@ -79,11 +79,11 @@ field_order:
   - conference.date
   - ipc
   - locked
-  - section_divider_1 #file_upload:
+  - section_divider_2 #file_upload:
   - external_file
   - dropzone
   - license
-  - section_divider_2 #supplementary_fields:
+  - section_divider_3 #supplementary_fields:
   - article_type
   - keyword
   - genbank
@@ -96,7 +96,7 @@ field_order:
   - message
   - funded_apc
   - alternative_id
-  - section_divider_3 #related_material:
+  - section_divider_4 #related_material:
   - related_material.record
   - related_material.rd
   - main_file_link
