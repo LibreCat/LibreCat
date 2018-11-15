@@ -45,19 +45,7 @@ sub register {
         }
     );
 
-    # my $auth = $r->under('/api' => sub {
-    #     my $c = shift;
-    #
-    #     # Authenticated
-    #     return 1 if $c->req->params("token") eq '1234';
-    #
-    #     # Not authenticated
-    #     $c->render(text => "Invalid API-Token.", status => 401);
-    #     return undef;
-    # });
-
-    # $auth->librecat_api($_) for @$models;
-    $r->librecat_api($_) for @$models;
+    $r->librecat_api($_) for @$models
 }
 
 1;
