@@ -1,8 +1,8 @@
 package LibreCat::Controller::Api;
 
 use Catmandu::Sane;
+use Hash::Merge::Simple qw(merge);
 use LibreCat -self;
-use Data::Dumper;
 use JSON::MaybeXS;
 use Mojo::Base 'Mojolicious::Controller';
 
@@ -56,11 +56,12 @@ sub create {
 sub add {
     my $c     = $_[0];
     my $model = $c->param('model');
+    my $id    = $c->param('id');
     my $data  = decode_json($c->req->body);
     my $recs  = librecat->$model;
 
     # does record exist?
-    unless ($recs->get($data->{_id})) {
+    unless ($recs->get($id)) {
         $c->not_found;
     }
 
@@ -86,13 +87,17 @@ sub add {
 sub update_fields {
     my $c     = $_[0];
     my $model = $c->param('model');
+    my $id    = $c->param('id');
     my $data  = decode_json($c->req->body);
     my $recs  = librecat->$model;
 
     # does record exist?
-    unless ($recs->get($data->{_id})) {
+    my $rec;
+    unless ($rec = $recs->get($id)) {
         $c->not_found;
     }
+
+    $data = merge($rec, $data);
 
     $recs->add(
         $data,
@@ -129,14 +134,14 @@ sub remove {
     $c->render(json => {data => $data});
 }
 
-sub get_versions {
+sub get_history {
     my $c = $_[0];
 
-    my $model = $c->param('model');
-    my $id    = $c->param('id');
-    my $recs  = librecat->$model;
-    my $versions = $recs->get_versions($id) || return $c->not_found;
-    my $data = {
+    my $model    = $c->param('model');
+    my $id       = $c->param('id');
+    my $recs     = librecat->$model;
+    my $versions = $recs->get_history($id) || return $c->not_found;
+    my $data     = {
         type       => $model,
         id         => $id,
         attributes => $versions,
@@ -148,14 +153,15 @@ sub get_versions {
 sub get_version {
     my $c = $_[0];
 
-    my $model = $c->param('model');
-    my $id    = $c->param('id');
-    my $recs  = librecat->$model;
-    my $version = $recs->get_version($id) || return $c->not_found;
-    my $data = {
+    my $model   = $c->param('model');
+    my $id      = $c->param('id');
+    my $version = $c->param('version');
+    my $recs    = librecat->$model;
+    my $rec     = $recs->get_version($id, $version) || return $c->not_found;
+    my $data    = {
         type       => $model,
         id         => $id,
-        attributes => $version,
+        attributes => $rec,
         links      => {self => $c->url_for->to_abs,},
     };
     $c->render(json => {data => $data});
