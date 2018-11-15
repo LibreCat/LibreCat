@@ -65,7 +65,7 @@
     </div><!-- tab-content -->
   </form>
 
-{%- IF fields.file_upload %}
+{%- IF fields.dropzone %}
 {% INCLUDE fields/modal_fileupload.tt %}
 {%- END %}
 
