@@ -14,8 +14,15 @@ sub register {
         librecat_api => sub {
             my ($r, $model) = @_;
 
+
+            $r->under('/' => sub {
+                my $c = shift;
+                return undef;
+            });
+
             my $model_api
                 = $r->any("/api/$model")->to('api#', model => $model);
+
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
@@ -45,7 +52,20 @@ sub register {
         }
     );
 
-    $r->librecat_api($_) for @$models
+    # my $auth = $r->under('/api' => sub {
+    #     my $c = shift;
+    #     return 1;
+    #     # Authenticated
+    #     #die $c->req->headers->header('Authentication');
+    #
+    #     # Not authenticated
+    #     # $c->render(text => "You're not Bender.", status => 401);
+    #     # return undef;
+    # });
+    #
+    # $auth->librecat_api($_) for @$models;
+
+    $r->librecat_api($_) for @$models;
 }
 
 1;

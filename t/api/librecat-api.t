@@ -1,7 +1,7 @@
 use Mojo::Base -strict;
 
 use Path::Tiny;
-use lib path(__FILE__)->parent->parent->child('lib')->stringify;
+# use lib path(__FILE__)->parent->parent->child('lib')->stringify;
 use LibreCat -self, -load => {layer_paths => [qw(t/layer)]};
 
 use Test::Mojo;
@@ -33,6 +33,16 @@ for my $bag (qw(publication department project research_group user)) {
 
 # Start a Mojolicious app
 my $t = Test::Mojo->new('LibreCat::Application');
+
+# subtest "authentication" => sub {
+#     $t->get_ok('/api/user/1')
+#         ->status_is(401);
+#
+#     my $url = $t->ua->server->url->userinfo('user:test')->path('/api/user');
+#     $t->post_ok($url)
+#         ->status_is(200)
+#         ->json_is('/1/content', 'Mojo rocks!');
+# };
 
 subtest "get non-existent user" => sub {
     $t->get_ok('/api/user/91919192882')->status_is(404)->json_has('/errors')
