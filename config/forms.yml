@@ -130,6 +130,11 @@ dropzone_fields:
 publication_types:
   book:
     fields:
+      sections: &sections_no_conf
+        section_divider_0: 1
+        section_divider_2: 1
+        section_divider_3: 1
+        section_divider_4: 1
       document_type: &document_type
         multiple: 0
       doi: &doi
@@ -226,6 +231,12 @@ publication_types:
         mandatory: 0
   book_editor:
     fields:
+      sections: &sections_with_conf
+        section_divider_0: 1
+        section_divider_1: 1
+        section_divider_2: 1
+        section_divider_3: 1
+        section_divider_4: 1
       document_type: *document_type
       doi: *doi
       title: *title
@@ -275,6 +286,7 @@ publication_types:
       related_material.link: *related_material_link
   book_chapter:
     fields:
+      sections: *sections_with_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -322,6 +334,7 @@ publication_types:
       related_material.link: *related_material_link
   conference_abstract:
     fields:
+      sections: *sections_with_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -358,7 +371,7 @@ publication_types:
       conference.date: *conference_date
       locked: *locked
       dropzone: *dropzone
-      licenses: *license
+      license: *license
       keyword: *keyword
       external_id: *external_id
       jel: *jel
@@ -371,6 +384,7 @@ publication_types:
       related_material.link: *related_material_link
   conference_editor:
     fields:
+      sections: *sections_with_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -410,6 +424,7 @@ publication_types:
       related_material.link: *related_material_link
   conference:
     fields:
+      sections: *sections_with_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -452,6 +467,7 @@ publication_types:
       related_material.link: *related_material_link
   dissertation:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -489,6 +505,7 @@ publication_types:
       related_material.link: *related_material_link
   encyclopedia_article:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -524,6 +541,7 @@ publication_types:
       related_material.link: *related_material_link
   journal_article:
     fields:
+      sections: *sections_with_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -567,6 +585,7 @@ publication_types:
       related_material.link: *related_material_link
   journal_editor:
     fields:
+      sections: *sections_with_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -604,6 +623,7 @@ publication_types:
       related_material.link: *related_material_link
   newspaper_article:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       author: *author_translator
       title: *title
@@ -635,6 +655,7 @@ publication_types:
       related_material.link: *related_material_link
   patent:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       title: *title
       alternative_title: *alternative_title
@@ -669,6 +690,7 @@ publication_types:
       related_material.link: *related_material_link
   preprint:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       title: *title
       publication:
@@ -697,6 +719,7 @@ publication_types:
       related_material.link: *related_material_link
   report:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -729,6 +752,7 @@ publication_types:
       related_material.link: *related_material_link
   review:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -762,6 +786,7 @@ publication_types:
       related_material.link: *related_material_link
   research_data:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi:
         readonly: 1
@@ -800,6 +825,7 @@ publication_types:
         mandatory: 0
   translation:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -847,6 +873,7 @@ publication_types:
       related_material.link: *related_material_link
   translation_chapter:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi: *doi
       title: *title
@@ -894,6 +921,7 @@ publication_types:
       related_material.link: *related_material_link
   working_paper:
     fields:
+      sections: *sections_no_conf
       document_type: *document_type
       doi: *doi
       title: *title

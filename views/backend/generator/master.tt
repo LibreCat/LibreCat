@@ -50,7 +50,7 @@
 
 {%- IF fields %}
   {%- FOREACH key IN field_order %}
-    {% IF key.match("^section_divider") %}
+    {% IF key.match("^section_divider") AND fields.sections.$key %}
     <h3>[% h.loc("forms.${type}.tab.{% key %}") %]</h3>
     {% ELSIF fields.$key %}
       {%- template = "fields/" _ key _ ".tt" %}
