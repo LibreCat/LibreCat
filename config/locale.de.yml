@@ -1259,10 +1259,10 @@ forms:
   research_data:
     label: "Datenpublikation"
     tab:
-      basic_fields: "Details"
-      file_upload: "Forschungsdatenupload"
-      supplementary_fields: "Weitere Angaben"
-      related_material: "Verknüpfungen"
+      section_divider_0: "Details"
+      section_divider_2: "Forschungsdatenupload"
+      section_divider_3: "Weitere Angaben"
+      section_divider_4: "Verknüpfungen"
     field:
       document_type: *document_type
       doi: *doi

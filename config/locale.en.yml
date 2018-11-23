@@ -1258,10 +1258,10 @@ forms:
   research_data:
     label: "Research Data"
     tab:
-      basic_fields: "Details"
-      file_upload: "Research data upload"
-      supplementary_fields: "Additional Information"
-      related_material: "Links"
+      section_divider_0: "Details"
+      section_divider_2: "Research data upload"
+      section_divider_3: "Additional Information"
+      section_divider_4: "Links"
     field:
       document_type: *document_type
       doi: *doi
