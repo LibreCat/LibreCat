@@ -1,4 +1,5 @@
 # fix user data at update
+vacuum()
 
 unless exists(account_status)
     add_field(account_status,inactive)
