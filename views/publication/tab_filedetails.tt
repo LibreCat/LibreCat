@@ -180,7 +180,7 @@
   <div class="row">
     <div class="col-md-3 text-muted">[% h.loc("frontdoor.tabs.file_details.url") %]</div>
     <div class="col-md-9">
-      <a href="[% fi.url | uri %]">[% fi.url | html %]</a>
+      <a href="[% fi.url %]">[% fi.url | html %]</a>
     </div>
   </div>
   <div class="row">

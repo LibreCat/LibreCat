@@ -110,7 +110,7 @@ Redirects to /librecat/admin/account
 
         $p             = h->nested_params($p);
         $p->{_id}      = user->generate_id;
-        $p->{password} = mkpasswd($p->{password});
+        $p->{password} = mkpasswd($p->{password}) if is_string($p->{password});
 
         user->add($p);
 
