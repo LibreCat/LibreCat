@@ -1364,13 +1364,13 @@ forms:
       locked: *locked
       main_file_link: *main_file_link
   translation:
-    label: "übersetzung"
+    label: "Übersetzung"
     tab: *tab
     field:
       document_type: *document_type
       doi: *doi
       title:
-        label: "Titel (übersetzung)"
+        label: "Titel (Übersetzung)"
         label_short: "Titel (übers.)"
         placeholder: "z.B. Handbuch des eBook Veröffentlichens"
       alternative_title:
@@ -1386,7 +1386,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "übersetzer"
+        label: "Übersetzer"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1436,14 +1436,14 @@ forms:
       locked: *locked
       main_file_link: *main_file_link
   translation_chapter:
-    label: "übersetzung (Aufsatz)"
+    label: "Übersetzung (Aufsatz)"
     tab: *tab
     field:
       document_type: *document_type
       doi: *doi
       editor: *editor_only
       title:
-        label: "Titel (übersetzung)"
+        label: "Titel (Übersetzung)"
         label_short: "Titel (übers.)"
         placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       translator:
@@ -1455,7 +1455,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "übersetzer"
+        label: "Übersetzer"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1692,8 +1692,8 @@ forms:
       display: "Wissenschaftliche Version"
       select: "Wissenschaftliche Version"
     translation:
-      display: "übersetzter Text"
-      select: "übersetzter Text"
+      display: "Übersetzter Text"
+      select: "Übersetzter Text"
     original:
       display: "Originaltext"
       select: "Originaltext"

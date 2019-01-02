@@ -15,10 +15,10 @@ on 'test' => sub {
     requires 'Test::Pod';
     requires 'Test::TCP';
     requires 'Test::WWW::Mechanize::Dancer';
+    requires 'Module::Install', '1.16';
 };
 
 requires 'Business::ISBN', 0;
-requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.0606';
@@ -107,7 +107,6 @@ requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Log4perl';
 requires 'Log::Log4perl';
 requires 'MIME::Types','==1.38';
-requires 'Module::Install';
 requires 'Moo', '>= 2.003004';
 requires 'Net::LDAP';
 requires 'Net::LDAPS';

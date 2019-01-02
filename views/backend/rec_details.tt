@@ -14,7 +14,7 @@
         <a href='[% uri_base %]/librecat?q=person="[% auth.full_name %]"'>[% auth.full_name %]</a>
       [% END %]
       [% IF auth.orcid %]
-        <a href="http://orcid.org/[% auth.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
+        <a href="https://orcid.org/[% auth.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
       [% END %]
       <br>
     [% END %]
@@ -33,7 +33,7 @@
         <a href='[% uri_base %]/librecat?q=person="[% ed.full_name %]"'>[% ed.full_name %]</a>
       [% END %]
       [% IF ed.orcid %]
-        <a href="http://orcid.org/[% ed.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
+        <a href="https://orcid.org/[% ed.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
       [% END %]
       <br>
     [% END %]
@@ -52,7 +52,7 @@
         <a href='[% uri_base %]/librecat?q=person="[% tr.full_name %]"'>[% tr.full_name %]</a>
       [% END %]
       [% IF tr.orcid %]
-        <a href="http://orcid.org/[% tr.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
+        <a href="https://orcid.org/[% tr.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
       [% END %]
       <br>
     [% END %]
@@ -71,7 +71,7 @@
         <a href='[% uri_base %]/librecat?q=person="[% sv.full_name %]"'>[% sv.full_name %]</a>
       [% END %]
       [% IF tr.orcid %]
-        <a href="http://orcid.org/[% sv.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
+        <a href="https://orcid.org/[% sv.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
       [% END %]
       <br>
     [% END %]

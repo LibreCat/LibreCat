@@ -77,7 +77,7 @@ sub _authenticate {
         }
     }
     else {
-        $self->log->error("no password set for $username");
+        $self->log->info("no password set for $username");
         return undef;
     }
 }

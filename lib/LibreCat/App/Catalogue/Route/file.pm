@@ -163,7 +163,7 @@ sub _handle_download {
 }
 
 sub _get_template_include_path {
-    state $paths = [map {"$_/email"} @{librecat->template_paths}];
+    state $paths = join (':', map {"$_/email"} @{librecat->template_paths});
 }
 
 =head2 GET /rc/approve/:key
@@ -188,7 +188,8 @@ get '/rc/approve/:key' => sub {
         },
         'Template',
         INCLUDE_PATH => _get_template_include_path,
-        template     => 'views/email/req_copy_approve.tt'
+        ABSOLUTE => 1,
+        template     => 'req_copy_approve.tt'
     );
 
     my $job = {
@@ -227,7 +228,8 @@ get '/rc/deny/:key' => sub {
         body    => export_to_string(
             {appname_short => h->loc("appname_short")}, 'Template',
             INCLUDE_PATH => _get_template_include_path,
-            template     => 'views/email/req_copy_deny.tt'
+            ABSOLUTE => 1,
+            template     => 'req_copy_deny.tt'
         ),
     };
 
@@ -322,7 +324,8 @@ any '/rc/:id/:file_id' => sub {
             },
             'Template',
             INCLUDE_PATH => _get_template_include_path,
-            template     => 'views/email/req_copy.tt',
+            ABSOLUTE => 1,
+            template     => 'req_copy.tt',
         );
 
         my $job = {
