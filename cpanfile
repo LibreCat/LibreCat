@@ -120,3 +120,4 @@ requires 'YAML';
 requires 'YAML::XS';
 requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
+requires 'Date::Simple';
