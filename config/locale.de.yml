@@ -1709,6 +1709,12 @@ forms:
     confirmation:
       display: "Best&auml;tigungsschreiben"
       select: "Best&auml;tigungsschreiben"
+    slides:
+      display: "Folien"
+      select: "Folien"
+    poster:
+      display: "Poster"
+      select: "Poster"
     hidden:
       display: ""
       select: "Zusatzmaterial (nur zur Einbettung, keine Anzeige auf Frontdoor)"
