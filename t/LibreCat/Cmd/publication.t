@@ -214,6 +214,23 @@ note("testing file metadata updates (adding files)");
     is $record->{file}->[0]->{file_name}, 'cpanfile', 'got a file_name';
 }
 
+note("testing file metadata listing");
+{
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['publication', 'files', '999999999']);
+    ok !$result->error, 'files threw no exception';
+
+    my $yaml = $result->stdout;
+
+    ok $result->stdout, 'got an output';
+
+    my $record = Catmandu->import_from_string($yaml,'YAML');
+
+    ok $record , 'got a record';
+
+    is $record->[0]->{id}, '999999999' , 'correct record identifier';
+}
+
 note("testing file metadata updates (updates)");
 {
     my $record = get_publication('999999999');
