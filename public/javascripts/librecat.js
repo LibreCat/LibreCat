@@ -419,6 +419,7 @@ function link_person(element){
             $('#' + type + 'Authorized' + lineId).attr('src',librecat.uri_base + '/images/authorized_no.png');
             $('#' + type + 'Authorized' + lineId).attr('alt','Not Authorized');
             $('#' + type + 'id_' + lineId).val("");
+            $('#' + type + 'orcid_' + lineId).val("");
             $('#' + type + 'first_name_' + lineId + ', #' + type + 'last_name_' + lineId).removeAttr("readonly");
             $('#' + type + 'first_name_' + lineId).val(orig_first_name);
             $('#' + type + 'orig_first_name_' + lineId).val("");
