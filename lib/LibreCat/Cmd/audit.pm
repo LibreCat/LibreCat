@@ -102,4 +102,5 @@ LibreCat::Cmd::audit - manage librecat audit messages
     Hint:
 
     bin/librecat worker audit start --workers 1 --supervise
+    
 =cut
