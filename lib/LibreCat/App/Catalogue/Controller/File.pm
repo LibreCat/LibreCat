@@ -183,6 +183,7 @@ sub handle_file {
                 $fi->{tempid}, $filename);
 
             h->log->debug("new upload with temp-id -> $path");
+            # TODO: Need to check the success of this step
             _make_file($key, $filename, $path);
 
             h->log->debug(
