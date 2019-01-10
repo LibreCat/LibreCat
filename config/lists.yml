@@ -269,6 +269,9 @@ relations_record:
     relation: "is_cited_by"
     opposite: "cites"
   -
+    relation: "cites"
+    opposite: "is_cited_by"
+  -
     relation: "other"
     opposite: "other"
 
