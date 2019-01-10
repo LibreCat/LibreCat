@@ -1580,8 +1580,8 @@ forms:
   general:
     field:
       email:
-        label: "E-Mail-Adresse"
-        placeholder: "Ihre E-Mail-Adresse"
+        label: "Your E-Mail"
+        placeholder: "Your E-Mail address"
       message:
         label: "Message"
         placeholder: "Message"
