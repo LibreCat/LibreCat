@@ -14,7 +14,7 @@ tmp_dir: data/temp_uploads
 download_file_name: "%o"
 
 default: &filestore_settings
-    package: Simple
+    package: BagIt
     options:
         root: data/file_uploads
 
@@ -42,20 +42,3 @@ access_thumbnailer:
     options:
         files: *filestore_settings
         access: *accessstore_settings
-
-# Install Catmandu::BagIt for this demo
-bagit_demo:
-    package: BagIt
-    options:
-        root: data/bag_uploads
-
-# Install Catmandu::FedoraCommons for this demo
-fedora_demo:
-    package: FedoraCommons
-    options:
-        baseurl: http://localhost:8080/fedora
-        username: fedoraAdmin
-        password: fedoraAdmin
-        namespace: demo
-        model: DC
-        purge: 1

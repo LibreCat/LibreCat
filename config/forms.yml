@@ -113,6 +113,7 @@ dropzone_fields:
         - file_size
         - content_type
         - creator
+        - checksum
         - date_created
         - date_updated
     # all the descriptive fields below can be edited

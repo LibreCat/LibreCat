@@ -188,6 +188,12 @@ sub handle_file {
             h->log->debug(
                 "retrieving and updating technical metadata from cache");
             _update_tech_metadata($fi, $filename, $path);
+
+            h->log->debug(
+                "retrieve the checksum from the filestore or calculate it " .
+                "on the fly"
+            );
+            _update_checksum($key,$fi,$filename);
         }
 
         # Update the stored metadata fields with the new ones
@@ -262,6 +268,8 @@ sub update_file {
         return undef;
     }
 
+    h->log->info("searching $filename in container $key");
+
     my $files = $store->index->files($key);
 
     my $res = $files->get($filename);
@@ -275,6 +283,7 @@ sub update_file {
     $file->{content_type} = $res->{content_type};
     $file->{date_created} = timestamp($res->{created});
     $file->{date_updated} = timestamp($res->{modified});
+    $file->{checksum}     = $res->{md5} if ($res->{md5});
     $file->{creator} //= 'system';
     $file->{file_id} //= publication->generate_id;
 
@@ -398,6 +407,43 @@ sub _update_tech_metadata {
     return 1;
 }
 
+sub _update_checksum {
+    my ($key, $fi, $filename) = @_;
+
+    my $file_store = h->config->{filestore}->{default}->{package};
+    my $file_opt   = h->config->{filestore}->{default}->{options};
+
+    my $pkg = Catmandu::Util::require_package($file_store,
+        'Catmandu::Store::File');
+
+    my $store = $pkg->new(%$file_opt);
+
+    h->log->info("loading container $key");
+
+    unless ($store->index->exists($key)) {
+        h->log->error("container $key not found");
+        return undef;
+    }
+
+    h->log->info("searching $filename in container $key");
+
+    my $files = $store->index->files($key);
+
+    my $res = $files->get($filename);
+
+    unless ($res) {
+        h->log->error("no $filename in container $key");
+        return undef;
+    }
+
+    # If we have a checksum, copy it from the file store
+    if ($res->{md5}) {
+        $fi->{checksum} = $res->{md5};
+    }
+
+    return 1;
+}
+
 sub _update_file_metadata {
     my ($fi, $prev_fi) = @_;
 
@@ -414,8 +460,7 @@ sub _update_file_metadata {
     # Throw away the unimportant stuff
     for my $name (keys %$fi) {
         if (grep(/^$name$/, @$administrative_fields)) {
-
-            # do nothing
+            # keep these, do nothing
         }
         elsif (!grep(/^$name$/, @$descriptive_fields)) {
             h->log->debug("...deleting $name from file (unknown field)");
@@ -432,9 +477,8 @@ sub _update_file_metadata {
         $fi->{$name} = $prev_fi->{$name};
     }
 
-    $fi->{open_access} = $fi->{access_level} eq 'open_access' ? 1 : 0;
+    $fi->{open_access}  = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = timestamp unless $fi->{date_created};
-
     $fi->{date_updated} = timestamp;
 }
 
