@@ -3,6 +3,7 @@ package LibreCat::Cmd::reqcopy;
 use Catmandu::Sane;
 use Catmandu;
 use Date::Simple qw(date today);
+use Carp;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -12,6 +13,7 @@ Usage:
 librecat reqcopy list
 librecat reqcopy get <id>
 librecat reqcopy expire
+librecat reqcopy delete <id>
 
 EOF
 }
@@ -24,7 +26,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/^(list|get|expire)$/;
+    my $commands = qr/^(list|get|expire|delete)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -46,6 +48,9 @@ sub command {
     }
     elsif ($cmd eq 'expire') {
         return $self->_expire(@$args);
+    }
+    elsif ($cmd eq 'delete') {
+        return $self->_delete(@$args);
     }
 }
 
@@ -76,6 +81,8 @@ sub _list {
 
 sub _get {
     my ($self, $pid) = @_;
+
+    croak "usage: $0 get <id>" unless defined($pid);
 
     my $reqcopy = Catmandu->store('main')->bag('reqcopy');
 
@@ -150,6 +157,22 @@ sub _expire {
     return 0;
 }
 
+sub _delete {
+    my ($self, $pid) = @_;
+
+    croak "usage: $0 delete <id>" unless defined($pid);
+
+    my $reqcopy = Catmandu->store('main')->bag('reqcopy');
+
+    my $record = $reqcopy->get($pid);
+
+    return 1 unless $record;
+
+    $reqcopy->delete($pid);
+
+    return 0;
+}
+
 1;
 
 __END__
@@ -165,5 +188,6 @@ LibreCat::Cmd::reqcopy - update the request-a-copy db
     librecat reqcopy list
     librecat reqcopy get <id>
     librecat reqcopy expire
+    librecat reqcopy delete <id>
 
 =cut

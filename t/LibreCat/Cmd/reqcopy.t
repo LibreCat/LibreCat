@@ -63,4 +63,12 @@ note("expire");
     is $bag->to_array->[0]->{record_id}, "9876", "record_id correct";
 }
 
+note("delete");
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['reqcopy','delete',2]);
+    ok !$result->error, 'ok threw no exception';
+
+    is $bag->count, "0", "deleted";
+}
+
 done_testing;
