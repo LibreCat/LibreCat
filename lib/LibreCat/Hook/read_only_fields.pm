@@ -24,12 +24,14 @@ sub fix {
         $read_only_fields = [];
     }
 
+    # Only admin users are allowed to change a read-only field
+    # All other users get a previous copy
+    # Read-only fields can't be deleted, not even for an admin user
     if (my $rec = Catmandu->store('main')->bag('publication')->get($id)) {
         for my $field (@$read_only_fields) {
             next unless $rec->{$field};
 
             if ($data->{$field}) {
-
                 # Copy back the old version..unless we are an admin
                 if ($self->is_admin($data)) {
                     h->log->debug("$field is readonly, but we are an admin");
@@ -41,6 +43,7 @@ sub fix {
                 }
             }
             else {
+                # The field is not available, copy back for all types of users
                 h->log->debug(
                     "$field not provided, switching back to old version");
                 $data->{$field} = $rec->{$field};
@@ -99,5 +102,11 @@ LibreCat::Hook::read_only_fields - A hook that makes sure some fields can only b
       publication-update:
         before_fixes:
           - read_only_fields
+
+=head1 DESCRIPTION
+
+With this hooks some fields in your data model can be set to read-only.
+These fields are set once and can never be deleted by any user.
+Only admins and reviewers can change the content of these fields.
 
 =cut
