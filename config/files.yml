@@ -14,8 +14,10 @@ tmp_dir: data/temp_uploads
 download_file_name: "%o"
 
 default: &filestore_settings
-    package: BagIt
+    package: Simple
     options:
+        # Optional calculate MD5 checksums on the fly
+        default_plugins: [ 'DynamicChecksum' ]
         root: data/file_uploads
 
 api:

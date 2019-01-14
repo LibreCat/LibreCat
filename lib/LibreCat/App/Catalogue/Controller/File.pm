@@ -438,8 +438,22 @@ sub _update_checksum {
     }
 
     # If we have a checksum, copy it from the file store
-    if ($res->{md5}) {
-        $fi->{checksum} = $res->{md5};
+    my $checksum = $res->{md5};
+
+    # Otherwise, try to calculate a dynamic checksum if the store supports it...
+    if ($checksum) {
+        h->log->info("$filename has checksum $checksum");
+    }
+    elsif (! $checksum && $files->can('checksum')) {
+        $checksum= $files->checksum($filename);
+        h->log->info("$filename has checksum $checksum");
+    }
+    else {
+        h->log->info("no $filename has no checksum mechanism installed");
+    }
+
+    if ($checksum) {
+        $fi->{checksum} = $checksum;
     }
 
     return 1;
@@ -483,6 +497,9 @@ sub _update_file_metadata {
     $fi->{date_updated} = timestamp;
 }
 
+# Return true when a input file is new or has changed descriptive metadata
+# fields.
+# usage: _is_file_metadata_changed($file_item, $previous_file_time)
 sub _is_file_metadata_changed {
     my ($fi, $prev_fi) = @_;
     my $is_updated;
@@ -492,13 +509,11 @@ sub _is_file_metadata_changed {
 
     for my $name (@$descriptive_fields) {
         if (!exists $fi->{$name} && !exists $prev_fi->{$name}) {
-
             # nothing changed...
         }
         elsif (defined($fi->{$name})
             && defined($prev_fi->{$name})
-            && $fi->{$name} eq $prev_fi->{$name})
-        {
+            && $fi->{$name} eq $prev_fi->{$name}) {
             # nothing changed...
         }
         else {
