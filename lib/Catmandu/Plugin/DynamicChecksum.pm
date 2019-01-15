@@ -81,4 +81,4 @@ Catmandu::Plugin::DynamicChecksum - Adds a checksum method to FileStores to (re)
         print STDERR "Error, checksums don't match";
     }
 
-=end
+=cut
