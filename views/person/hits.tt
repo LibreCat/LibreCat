@@ -25,7 +25,7 @@
       [%- FOREACH p IN hits %]
   	  <dt>
   	    <a href="[% uri_base %]/person/[% p._id %]">[% p.full_name %]</a>
-  	    | <span class="text-muted">ID: [% p._id %]</span>[% IF p.orcid %] | <span class="text-muted">Orcid:</span> <a href="https://orcid.org/[% p.orcid %]">[% p.orcid %] <sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>[% END %] | <span class="text-muted">Publications: [% p.publication_count || 0 %]</span></span><br />
+  	    | <span class="text-muted">ID: [% p._id %]</span>[% IF p.orcid %] | <span class="text-muted">ORCID iD:</span> <a href="https://orcid.org/[% p.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup> https://orcid.org/[% p.orcid %]</a>[% END %] | <span class="text-muted">Publications: [% p.publication_count || 0 %]</span></span><br />
   	  </dt>
   	  <dd>
   	    <span class="text-muted">[% FOREACH dep IN p.department %][% IF dep._id %][% h.get_department(dep._id).display %][% END %][% UNLESS loop.last %] | [% END %][% END %]</span>

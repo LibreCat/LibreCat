@@ -10,6 +10,7 @@ use Catmandu::Sane;
 use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:is);
 use Dancer qw/:syntax/;
+use Clone qw(clone);
 use LibreCat;
 use LibreCat::App::Helper;
 
@@ -24,7 +25,7 @@ sub _export {
 
     my $fmt = $params->{fmt};
 
-    state $export_config = h->config->{route}->{exporter}->{publication};
+    my $export_config = h->config->{route}->{exporter}->{publication};
 
     unless (is_hash_ref($export_config->{$fmt})) {
         content_type 'application/json';
@@ -38,8 +39,10 @@ sub _export {
     $params->{sort} = h->config->{default_sort} unless $params->{sort};
     my $hits = LibreCat->searcher->search('publication', $params);
 
+    # We are changing the configurate options inline
+    # A clone is required to work on a local version of these options 
     my $package = $spec->{package};
-    my $options = $spec->{options} || {};
+    my $options = clone($spec->{options}) || {};
 
     # Adding csl specific parameters via URL?
     $options->{style} = $params->{style} if $params->{style};
