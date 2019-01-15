@@ -609,7 +609,7 @@ sub _files_list {
         for my $file (@{$item->{file}}) {
             $exporter->add(
                 {
-                    _id            => $item->{_id},
+                    id             => $item->{_id},
                     file_id        => $file->{file_id},
                     access_level   => $file->{access_level},
                     request_a_copy => $file->{request_a_copy} // 'NA',
