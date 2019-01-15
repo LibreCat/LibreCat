@@ -23,6 +23,7 @@ librecat publication valid   [options] <FILE>
 librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
 librecat publication fetch   [options] <source> <id>
 librecat publication embargo [options] ['update']
+librecat publication checksum [options] <id> | <IDFILE>
 
 options:
     --sort=STR         (sorting results [only in combination with cql-query])
@@ -96,7 +97,7 @@ sub command {
     $self->opts($opts);
 
     my $commands
-        = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo$/;
+        = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo|checksum$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -160,6 +161,9 @@ sub command {
     }
     elsif ($cmd eq 'embargo') {
         return $self->_embargo(@$args);
+    }
+    elsif ($cmd eq 'checksum') {
+        return $self->_checksum(@$args);
     }
 }
 
@@ -270,7 +274,7 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        say STDERR "warning: sort only active in combination with a query";
+        print STDERR "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -376,7 +380,7 @@ sub _delete {
         return 0;
     }
     else {
-        print STDERR "ERROR: delete $id failed";
+        print STDERR "ERROR: delete $id failed\n";
         return 2;
     }
 }
@@ -398,7 +402,7 @@ sub _purge {
         return 0;
     }
     else {
-        print STDERR "ERROR: purge $id failed";
+        print STDERR "ERROR: purge $id failed\n";
         return 2;
     }
 }
@@ -512,6 +516,63 @@ sub _embargo {
 
     $it->each($printer);
     $exporter->commit;
+}
+
+sub _checksum {
+    my ($self, $id, $action) = @_;
+
+    croak "usage: $0 checksum <id>" unless defined($id);
+
+    my $file_store = Catmandu->config->{filestore}->{default}->{package};
+    my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
+
+    my $pkg = Catmandu::Util::require_package($file_store,
+                                        'Catmandu::Store::File');
+
+    my $pubs = publication;
+
+    my $rec = $pubs->get($id);
+
+    unless ($rec) {
+        print STDERR "ERROR: checksum $id failed\n";
+        return 2;
+    }
+
+    my $files = $pkg->new(%$file_opt)->index->files($id);
+
+    my $pub_files = $rec->{file} // [];
+
+    my $error = 0;
+
+    for my $fi (@$pub_files) {
+        my ($msg,$stored_checksum);
+        my $file_name     = $fi->{file_name};
+        my $file_checksum = $fi->{checksum};
+        my $si            = $files->get($file_name);
+
+        if ($si) {
+            $stored_checksum = $si->{md5};
+        }
+        else {
+            $msg = 'NOT_FOUND';
+            $error++;
+        }
+
+        if ($file_checksum eq $stored_checksum) {
+            $msg = 'OK';
+        }
+        else {
+            $msg = 'INVALID';
+        }
+
+        printf "%s %-9s %-32s %s\n"
+                , $id
+                , $msg
+                , $file_checksum // '<null>'
+                , $file_name;
+    }
+
+    return $rec ? 0 : 2;
 }
 
 sub _files {
@@ -790,6 +851,7 @@ LibreCat::Cmd::publication - manage librecat publications
     librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
     librecat publication fetch   [options] <source> <id>
     librecat publication embargo [options] ['update']
+    librecat publication checksum [options] <id> | <IDFILE>
 
     options:
         --sort=STR         (sorting results [only in combination with cql-query])
@@ -801,4 +863,5 @@ LibreCat::Cmd::publication - manage librecat publications
         --log=STR          (write an audit message)
         --with-citations   (process citations while adding records)
         --with-files       (process files while addings records)
+
 =cut
