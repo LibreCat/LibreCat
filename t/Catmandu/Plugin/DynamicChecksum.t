@@ -34,4 +34,12 @@ my $checksum = $files->checksum('publication.pdf');
 
 is $checksum , '3bc23505ac519f3d476d4b2d78802e75' , 'got the right checksum';
 
+my $file = $files->get('publication.pdf');
+
+ok $file;
+
+my $checksum2 = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$file);
+
+is $checksum2 , '3bc23505ac519f3d476d4b2d78802e75' , 'got the right checksum';
+
 done_testing;

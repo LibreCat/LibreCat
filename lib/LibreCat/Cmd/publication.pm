@@ -3,6 +3,7 @@ package LibreCat::Cmd::publication;
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util;
+use Catmandu::Plugin::DynamicChecksum;
 use LibreCat qw(queue publication timestamp);
 use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
@@ -23,7 +24,7 @@ librecat publication valid   [options] <FILE>
 librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
 librecat publication fetch   [options] <source> <id>
 librecat publication embargo [options] ['update']
-librecat publication checksum [options] <id> | <IDFILE>
+librecat publication checksum [options] list|init|test|update <id> | <IDFILE>
 
 options:
     --sort=STR         (sorting results [only in combination with cql-query])
@@ -230,13 +231,12 @@ sub _list {
             my $status  = $item->{status};
             my $type    = $item->{type} // '---';
 
-            printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n",
-                " "    # not use
+            printf "%-40.40s %-10.10s %-60.60s %-10.10s %s\n",
                 , $id, $creator, $title, $status, $type;
         }
     );
 
-    print "count: $count\n";
+    print STDERR "count: $count\n";
 
     if (!defined($query) && defined($sort)) {
         print STDERR
@@ -519,9 +519,21 @@ sub _embargo {
 }
 
 sub _checksum {
-    my ($self, $id, $action) = @_;
+    my ($self, $action, $id) = @_;
 
-    croak "usage: $0 checksum <id>" unless defined($id);
+    croak "usage: $0 checksum initialize|test|update <id>" unless $action =~ /^(list|init|test|update)$/;
+    croak "usage: $0 checksum $action <id>" unless defined($id);
+
+    return $self->_on_all(
+        $id,
+        sub {
+            $self->_checksum_id($action,shift);
+        }
+    );
+}
+
+sub _checksum_id {
+    my ($self, $action, $id) = @_;
 
     my $file_store = Catmandu->config->{filestore}->{default}->{package};
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
@@ -542,37 +554,72 @@ sub _checksum {
 
     my $pub_files = $rec->{file} // [];
 
-    my $error = 0;
+    my $update = 0;
+    my $errors = 0;
 
     for my $fi (@$pub_files) {
         my ($msg,$stored_checksum);
-        my $file_name     = $fi->{file_name};
-        my $file_checksum = $fi->{checksum};
-        my $si            = $files->get($file_name);
+        my $file_name       = $fi->{file_name};
+        my $file_checksum   = $fi->{checksum} // '';
+        my $si              = $files->get($file_name);
 
-        if ($si) {
-            $stored_checksum = $si->{md5};
-        }
-        else {
+        if (!$si) {
             $msg = 'NOT_FOUND';
-            $error++;
+            $errors++;
         }
-
-        if ($file_checksum eq $stored_checksum) {
+        elsif ($action eq 'list') {
+            $msg = '';
+        }
+        elsif ($action eq 'init') {
+            if (Catmandu::Util::is_string($file_checksum)) {
+                $msg = 'OK';
+            }
+            else {
+                $file_checksum = $fi->{checksum} = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+                $update++;
+                $msg = 'OK';
+            }
+        }
+        elsif ($action eq 'test') {
+            if (Catmandu::Util::is_string($file_checksum)) {
+                my $stored_checksum = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+                if ($file_checksum eq $stored_checksum) {
+                    $msg = 'OK';
+                }
+                else {
+                    $msg = 'INVALID';
+                    $errors++;
+                }
+            }
+            else {
+                $msg = 'IGNORED';
+            }
+        }
+        elsif ($action eq 'update') {
+            $file_checksum = $fi->{checksum} = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+            $update++;
             $msg = 'OK';
         }
         else {
-            $msg = 'INVALID';
+            croak "$0 : unknown action $action";
         }
 
         printf "%s %-9s %-32s %s\n"
                 , $id
                 , $msg
-                , $file_checksum // '<null>'
+                , $file_checksum
                 , $file_name;
     }
 
-    return $rec ? 0 : 2;
+    if ($update) {
+        $pubs->add($rec);
+
+        if (my $msg = $self->opts->{log}) {
+            audit_message($rec->{_id}, 'add', $msg);
+        }
+    }
+
+    return $errors = 0 ? 0 : 2;
 }
 
 sub _files {
@@ -851,7 +898,7 @@ LibreCat::Cmd::publication - manage librecat publications
     librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
     librecat publication fetch   [options] <source> <id>
     librecat publication embargo [options] ['update']
-    librecat publication checksum [options] <id> | <IDFILE>
+    librecat publication checksum [options] list|init|test|update <id> | <IDFILE>
 
     options:
         --sort=STR         (sorting results [only in combination with cql-query])

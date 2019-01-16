@@ -17,7 +17,7 @@ default: &filestore_settings
     package: Simple
     options:
         # Optional calculate MD5 checksums on the fly
-        default_plugins: [ 'DynamicChecksum' ]
+        # default_plugins: [ 'DynamicChecksum' ]
         root: data/file_uploads
 
 api:
