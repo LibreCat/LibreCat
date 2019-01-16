@@ -21,34 +21,40 @@ sub BUILD {
 
                 $self->log->debug("calculating checksum for $id");
 
-                my $md5 = Digest::MD5->new;
-
-                my $io  = IO::Handle::Util::io_prototype write => sub {
-                        my $self = shift;
-                        $md5->add(@_);
-                    },
-                    syswrite => sub {
-                        my $self = shift;
-                        $md5->add(@_);
-                    },
-                    close => sub {
-                        my $self = shift;
-                    };
-
                 my $file = $self->get($id);
 
                 unless ($file) {
                     $self->log->error("no file found for $id");
                 }
 
-                $self->stream($io,$file);
-
-                $io->close;
-
-                return $md5->hexdigest;
+                return Catmandu::Plugin::DynamicChecksum::dynamic_checksum($self,$file);
             }
         );
     }
+}
+
+sub dynamic_checksum {
+    my ($files,$file) = @_;
+
+    my $md5 = Digest::MD5->new;
+
+    my $io  = IO::Handle::Util::io_prototype write => sub {
+            my $self = shift;
+            $md5->add(@_);
+        },
+        syswrite => sub {
+            my $self = shift;
+            $md5->add(@_);
+        },
+        close => sub {
+            my $self = shift;
+        };
+
+    $files->stream($io,$file);
+
+    $io->close;
+
+    return $md5->hexdigest;
 }
 
 1;

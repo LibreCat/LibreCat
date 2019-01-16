@@ -5,6 +5,7 @@ use LibreCat::CLI;
 use Test::More;
 use Test::Exception;
 use App::Cmd::Tester;
+use Path::Tiny;
 
 my $pkg;
 
@@ -41,7 +42,7 @@ note("testing publication lists");
 
     ok !$result->error, 'ok threw no exception';
 
-    my $output = $result->stdout;
+    my $output = $result->stderr;
     ok $output , 'got an output';
 
     my $count = count_publication($output);
@@ -252,6 +253,57 @@ note("testing file metadata updates (updates)");
 
     is $record->{file}->[0]->{access_level}, 'open_access',
         'got a access_level';
+}
+
+note("testing checksums list");
+{
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['publication', 'checksum' , 'list', '999999999']);
+
+    my $output = $result->stdout;
+
+    like $output , qr/^999999999\s+cpanfile/ , 'checksum list';
+}
+
+note("testing checksums init");
+{
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['publication', 'checksum' , 'init', '999999999']);
+
+    my $output = $result->stdout;
+
+    like $output , qr/^999999999\s+OK\s+\S+\s+cpanfile/ , 'checksum init';
+}
+
+note("testing checksums test");
+{
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['publication', 'checksum' , 'test', '999999999']);
+
+    my $output = $result->stdout;
+
+    like $output , qr/^999999999\s+OK\s+\S+\s+cpanfile/ , 'checksum test';
+
+    my $file = 't/data/999/999/999/cpanfile';
+
+    path($file)->spew("INVALID");
+
+    my $result2 = test_app(
+        qq|LibreCat::CLI| => ['publication', 'checksum' , 'test', '999999999']);
+
+    my $output2 = $result2->stdout;
+
+    like $output2 , qr/^999999999\s+INVALID\s+\S+\s+cpanfile/ , 'checksum test';
+}
+
+note("testing checksums update");
+{
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['publication', 'checksum' , 'update', '999999999']);
+
+    my $output = $result->stdout;
+
+    like $output , qr/^999999999\s+OK\s+\S+\s+cpanfile/ , 'checksum test';
 }
 
 note("testing file metadata updates (deletes)");
