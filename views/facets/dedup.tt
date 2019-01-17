@@ -4,7 +4,7 @@
   <ul id="doi_[% tabmodus %][% menu %]" class="collapse">
   [%- FOREACH stat IN facets.doi.terms %]
     [% NEXT UNLESS stat.count > 1 %]
-    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="doi" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="doi" data-value='"[% stat.term %]"' href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
   [%- END %]
   </ul>
 </div>
