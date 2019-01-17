@@ -47,7 +47,7 @@ views:
           - template: facets/isi_pmid
             facet: [isi, pmid]
             min: 1
-          - template: facets/dedup
+        - - template: facets/dedup
             facet: [doi, isi_dedup, pmid_dedup]
             min: 1
       edit:
