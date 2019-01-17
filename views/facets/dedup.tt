@@ -1,4 +1,4 @@
-[%- If facets.doi.terms.0 %]
+[%- IF facets.doi.terms.0 %]
 <button data-toggle="collapse" data-target="#doi_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="fa fa-chevron-down"></span> [% h.loc("facets.doi") %]</button>
 <div class="facettecollapse">
   <ul id="doi_[% tabmodus %][% menu %]" class="collapse">
@@ -10,7 +10,7 @@
 </div>
 [%- END %]
 
-[%- If facets.isi_dedup.terms.0 %]
+[%- IF facets.isi_dedup.terms.0 %]
 <button data-toggle="collapse" data-target="#isi_dedup_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="fa fa-chevron-down"></span> [% h.loc("facets.isi_dedup") %]</button>
 <div class="facettecollapse">
   <ul id="isi_dedup_[% tabmodus %][% menu %]" class="collapse">
@@ -22,7 +22,7 @@
 </div>
 [%- END %]
 
-[%- If facets.pmid_dedup.terms.0 %]
+[%- IF facets.pmid_dedup.terms.0 %]
 <button data-toggle="collapse" data-target="#pmid_dedup_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="fa fa-chevron-down"></span> [% h.loc("facets.pmid_dedup") %]</button>
 <div class="facettecollapse">
   <ul id="pmid_dedup_[% tabmodus %][% menu %]" class="collapse">
