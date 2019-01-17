@@ -1,0 +1,35 @@
+[%- If facets.doi.terms.0 %]
+<button data-toggle="collapse" data-target="#doi_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="fa fa-chevron-down"></span> [% h.loc("facets.doi") %]</button>
+<div class="facettecollapse">
+  <ul id="doi_[% tabmodus %][% menu %]" class="collapse">
+  [%- FOREACH stat IN facets.doi.terms %]
+    [% NEXT UNLESS stat.count > 1 %]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="doi" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+  [%- END %]
+  </ul>
+</div>
+[%- END %]
+
+[%- If facets.isi_dedup.terms.0 %]
+<button data-toggle="collapse" data-target="#isi_dedup_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="fa fa-chevron-down"></span> [% h.loc("facets.isi_dedup") %]</button>
+<div class="facettecollapse">
+  <ul id="isi_dedup_[% tabmodus %][% menu %]" class="collapse">
+  [%- FOREACH stat IN facets.isi_dedup.terms %]
+    [% NEXT UNLESS stat.count > 1 %]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="externalidentifier" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+  [%- END %]
+  </ul>
+</div>
+[%- END %]
+
+[%- If facets.pmid_dedup.terms.0 %]
+<button data-toggle="collapse" data-target="#pmid_dedup_[% tabmodus %][% menu %]" class="btn-link helpme" data-placement="left"><span class="fa fa-chevron-down"></span> [% h.loc("facets.pmid_dedup") %]</button>
+<div class="facettecollapse">
+  <ul id="pmid_dedup_[% tabmodus %][% menu %]" class="collapse">
+  [%- FOREACH stat IN facets.pmid_dedup.terms %]
+    [% NEXT UNLESS stat.count > 1 %]
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="externalidentifier" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+  [%- END %]
+  </ul>
+</div>
+[%- END %]

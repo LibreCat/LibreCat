@@ -132,6 +132,10 @@ audit:
   date: Date
   message: Message
 facets:
+  doi: DOI-Dubletten
+  isi_dedup: WoS-Dubletten
+  pmid_dedup: PMID-Dubletten
+  dedup_checkbox: Zeige Facetten zur Deduplizierung
   filters_and_searchterms: "Filter und Suchbegriffe"
   search_filter: "Suche / Filtern"
   search: "Suche"

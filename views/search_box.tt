@@ -29,6 +29,12 @@
       <button type="submit" class="btn btn-default">[% h.loc("facets.go_button") %]</button>
     </span>
   </span>
+  <div class="checkbox">
+    <label class="checkbox-inline">
+      <input type="checkbox" id="search_dedup" name="dedup" value="1" [% IF qp.dedup %]checked="checked"[% END %]>
+      [% h.loc("facets.dedup_checkbox") %]
+    </label>
+  </div>
   [%- IF qp.cql AND qp.cql.size > 0 AND total > 0 %]
     [%- FOREACH val IN qp.cql %]
     <input type="hidden" name="cql" value="[% val | html %]" />

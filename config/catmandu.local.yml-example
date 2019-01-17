@@ -67,6 +67,23 @@ default_facets:
         field: 'pmid'
         size: 1
 
+dedup_facets:
+    doi:
+      terms:
+        field: 'doi'
+        size: 10
+        order: 'reverse_term'
+    isi_dedup:
+      terms:
+        field: 'external_id.isi'
+        size: 10
+        order: 'reverse_term'
+    pmid_dedup:
+      terms:
+        field: 'external_id.pmid'
+        size: 10
+        order: 'reverse_term'
+
 request_copy:
   # period in days
   period: 7

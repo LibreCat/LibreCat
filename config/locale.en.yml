@@ -131,6 +131,10 @@ audit:
   date: Date
   message: Message
 facets:
+  doi: DOI Duplicates
+  isi_dedup: WoS Duplicates
+  pmid_dedup: PMID Duplicates
+  dedup_checkbox: Include deduplication filters
   filters_and_searchterms: "Filters and Search Terms"
   search_filter: "Search / Filter"
   search: "Search"

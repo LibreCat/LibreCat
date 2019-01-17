@@ -67,6 +67,10 @@ Performs search for admin.
 
             $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
+            if ($p->{dedup}) {
+                $p->{facets} = h->config->{dedup_facets};
+            }
+
             $hits = searcher->search('publication', $p);
 
             $hits->{modus} = "admin";
