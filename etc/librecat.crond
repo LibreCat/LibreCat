@@ -1,8 +1,15 @@
 # Enforce embargos switch file access level when needed
 30 0 * * * librecat /opt/librecat/bin/exec.sh 'bin/librecat publication embargo update' | /opt/librecat/bin/exec.sh 'bin/librecat publication files -' > /dev/null 2>&1
 
+# Enforce expiration request a copy when needed
+45 0 * * * librecat /opt/librecat/bin/exec.sh 'bin/librecat reqcopy expire' > /dev/null 2>&1
+
 # Update the departments page every hour
 0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat generate departments' > /dev/null 2>&1
 
 # Update the user statistics  every hour
 0 * * * *  librecat /opt/librecat/bin/exec.sh 'bin/librecat index create user' > /dev/null 2>&1
+
+# Update the MD5 checksums in the publication record
+#  This is optional and not required for BagIt FileStores which have automatic checksums
+#0 1 * * *  librecat /opt/librecat/bin/exec.sh 'bin/update_checksums.sh' > /dev/null 2>&1

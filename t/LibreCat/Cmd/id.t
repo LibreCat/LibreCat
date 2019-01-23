@@ -33,6 +33,14 @@ subtest 'id without cmd' => sub {
     like $result->error, qr/should be one of/, 'error message';
 };
 
+subtest 'help' => sub {
+    my $result = test_app(qq|LibreCat::CLI| => ['help', 'id']);
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    like $output, qr/Usage:/, "Help message";
+};
+
 subtest 'id get' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['id', 'get']);
     ok !$result->error, 'ok threw no exception';
