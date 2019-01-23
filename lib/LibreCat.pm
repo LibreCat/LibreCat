@@ -314,23 +314,53 @@ sub hook {
 }
 
 sub fixer {
-    my ($self, $file) = @_;
+    my ($self, $fixes) = @_;
+    $fixes = [] unless $fixes;
+    $fixes = [$fixes] unless Catmandu::Util::is_array_ref($fixes);
+    my $new_fixes = [];
 
-    $self->log->debug("searching for fix '$file'");
+    for my $fix (@$fixes) {
+        # Do nothing when the fix looks like an inline fix..
+        if ($fix =~ /[\(\)]/) {
+            push @$new_fixes, $fix;
+        }
+        # Do nothing when the fix looks like an absolute path
+        elsif ($fix =~ /^\//) {
+            push @$new_fixes, $fix;
+        }
+        else {
+            my $found = 0;
+            $self->log->debug("searching for fix '$fix'");
 
-    for my $path (@{$self->fixes_paths}) {
-        $self->log->debug("testing '$path/$file'");
-        if (-r "$path/$file") {
-            $self->log->debug("found '$path/$file'");
-            return Catmandu::Fix->new(fixes => ["$path/$file"]);
+            INNER: for my $path (@{$self->fixes_paths}) {
+
+                $self->log->debug("testing '$path/$fix'");
+                # Search in the fixes path by default
+                # E.g. index_publication.fix -> fixes/index_publication.fix
+                if (-r "$path/$fix") {
+                    $self->log->debug("found '$path/$fix'");
+                    push @$new_fixes, "$path/$fix";
+                    $found = 1;
+                    last INNER;
+                }
+                # If nothing found..search a directory higher
+                # E.g. fixes/myfixes.fix -> fixes/myfixes.fix
+                # ! Backwards compatible !
+                elsif (-r "$path/../$fix") {
+                    $self->log->debug("found '$path/../$fix'");
+                    push @$new_fixes, "$path/../$fix";
+                    $found = 1;
+                    last INNER;
+                }
+            }
+
+            $self->log->error("can't find a fixer for '$fix'") unless $found;
         }
     }
 
-    $self->log->error("can't find a fixer for '$file'");
-
     # TODO this should throw an error and not be called at all if there is no
     # fix
-    Catmandu::Fix->new;
+    Catmandu::Fix->new(fixes => $new_fixes);
 }
 
 sub _build_searcher {

@@ -176,7 +176,7 @@ LibreCat::Cmd::queue - show job queue status
     librecat queue status
 
     # Submit a YAML file job to the WORKER
-    librecat [--background] queue add_job WORKER FILE
+    librecat queue [--background] add_job WORKER FILE
 
     # Start all configured workers
     librecat queue start

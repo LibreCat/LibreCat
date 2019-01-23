@@ -14,11 +14,14 @@ sub BUILD {
     my ($self) = @_;
     $self->prepend_before_add(
         [
-
             # TODO this is very dirty and executes even if validation fails
             file             => '_store_file',
             related_material => '_store_related_material',
+        ]
+    );
 
+    $self->append_before_add(
+        [
             # TODO move to config
             citation => Catmandu::Fix::add_citation->new,
         ]

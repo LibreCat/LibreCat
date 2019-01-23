@@ -30,7 +30,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/list|get/;
+    my $commands = qr/^(list)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -46,9 +46,6 @@ sub command {
 
     if ($cmd eq 'list') {
         return $self->_list(@$args);
-    }
-    elsif ($cmd eq 'get') {
-        return $self->_get(@$args);
     }
 }
 
@@ -72,8 +69,8 @@ sub _list {
             my $process = $item->{process} // '';
             my $action  = $item->{action} // '';
             my $message = $item->{message} // '';
-            my $time    = strftime("%Y-%m-%dT%H:%M:%S",
-                localtime($item->{time} // 0));
+            my $time    = strftime("%Y-%m-%dT%H:%M:%SZ",
+                gmtime($item->{time} // 0));
 
             printf "%s %s %s %s %s\n", $time, $id, $process, $action,
                 $message;
@@ -105,4 +102,5 @@ LibreCat::Cmd::audit - manage librecat audit messages
     Hint:
 
     bin/librecat worker audit start --workers 1 --supervise
+    
 =cut

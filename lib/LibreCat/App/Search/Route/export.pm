@@ -10,7 +10,8 @@ use Catmandu::Sane;
 use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:is);
 use Dancer qw/:syntax/;
-use LibreCat qw(searcher);
+use Clone qw(clone);
+use LibreCat;
 use LibreCat::App::Helper;
 
 sub _export {
@@ -24,7 +25,7 @@ sub _export {
 
     my $fmt = $params->{fmt};
 
-    state $export_config = h->config->{route}->{exporter}->{publication};
+    my $export_config = h->config->{route}->{exporter}->{publication};
 
     unless (is_hash_ref($export_config->{$fmt})) {
         content_type 'application/json';
@@ -36,10 +37,12 @@ sub _export {
 
     h->log->debug("searching for publications:" . Dancer::to_json($params));
     $params->{sort} = h->config->{default_sort} unless $params->{sort};
-    my $hits = searcher->search('publication', $params);
+    my $hits = LibreCat->searcher->search('publication', $params);
 
+    # We are changing the configurate options inline
+    # A clone is required to work on a local version of these options 
     my $package = $spec->{package};
-    my $options = $spec->{options} || {};
+    my $options = clone($spec->{options}) || {};
 
     # Adding csl specific parameters via URL?
     $options->{style} = $params->{style} if $params->{style};
@@ -49,13 +52,19 @@ sub _export {
 
     my $f;
 
-    eval {$f = export_to_string($hits, $package, $options);};
+    eval {
+        # Explicitly use the Helper (LibreCat) fixer
+        my $fixes = $options->{fix} // ["nothing()"];
+        delete $options->{fix};
+        my $fixer = h->create_fixer($fixes);
+        $f = export_to_string($fixer->fix($hits), $package, $options);
+    };
     if ($@) {
         h->log->error("exporting $package: $@");
         content_type 'application/json';
         status '404';
         return to_json {
-            error => "Export $fmt is not available for this collection"
+            error => "Export $fmt is not available for this collection: $@"
         };
     }
     else {

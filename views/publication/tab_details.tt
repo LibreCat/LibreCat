@@ -22,7 +22,7 @@
       [%- ELSE %]
       <span itemprop="author">[% person.full_name | html %]</span>
       [%- END %]
-      [%- IF person.orcid %] <a href="http://orcid.org/[% person.orcid %]"><sup><img src="[% uri_base %]/images/icon_orcid.png" /></sup></a>[% END %]
+      [%- IF person.orcid %] <a href="https://orcid.org/[% person.orcid %]"><sup><img src="[% uri_base %]/images/icon_orcid.png" /></sup></a>[% END %]
       [%- IF loop.count > 11 %]
         <span id="showAut">
           <br><a href="#details" onclick="ShowAuthors();return false;"><span class="fa fa-plus fw"></span>[% h.loc("frontdoor.show_all") %]</a>
@@ -199,11 +199,11 @@
     <div class="col-lg-10 col-md-9">[% ipc | html %]</div>
   </div>
 [%- END %]
-[%- IF ubi_funded OR external_id.scoap3.0 %]
+[%- IF funded_apc OR external_id.scoap3.0 %]
   <div class="row">
     <div class="col-lg-2 col-md-3 text-muted">[% h.loc("frontdoor.tabs.details.financial_disclosure") %]</div>
-    [%- IF ubi_funded %]
-    <div class="col-lg-10 col-md-9">[% h.loc("frontdoor.tabs.details.ubi_funded") %]</div>
+    [%- IF funded_apc %]
+    <div class="col-lg-10 col-md-9">[% h.loc("frontdoor.tabs.details.funded_apc") %]</div>
     [%- ELSIF external_id.scoap3.0 %]
     <div class="col-lg-10 col-md-9">[% h.loc("frontdoor.tabs.details.scoap3") %]</div>
     [%- END %]

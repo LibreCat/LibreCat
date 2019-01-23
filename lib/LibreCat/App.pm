@@ -214,7 +214,7 @@ get '/login' => sub {
         error_message => params->{error_message} || '',
         login         => params->{login}         || '',
         return_url    => params->{return_url}    || '',
-        lang          => session->{lang}         || h->config->{default_lang}
+        lang          => h->locale()
         };
 };
 
@@ -233,10 +233,8 @@ post '/login' => sub {
     $return_url =~ s{^[a-zA-Z:]+(\/\/)[^\/]+}{};
 
     if ($user) {
-
         h->login_user($user);
         redirect uri_for($return_url);
-
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'},
@@ -259,13 +257,14 @@ any '/logout' => sub {
 
 =head2 GET /set_language
 
-Route to call when changing language in session
+Route to call when changing language
 
 =cut
 
 get '/set_language' => sub {
-    my $referer = request->{referer} // '/?';
-    session lang => params->{lang};
+    my $referer = request->referer // '/?';
+    my $lang = param('lang');
+    h->set_locale( $lang ) if h->locale_exists( $lang );
     $referer =~ s/lang=\w{2}\&*//g;
     redirect $referer;
 };
@@ -286,20 +285,15 @@ any '/coffee' => sub {
     template '418';
 };
 
-=head1 ANY {other route....}
+=head1 ANY {other route...}
 
 Throws 'page not found'.
 
 =cut
 
 any qr{.*} => sub {
-    if (session->{user}) {
-        return redirect uri_for('/librecat');
-    }
-    else {
-        status 'not_found';
-        return template '404';
-    }
+    status 'not_found';
+    return template '404';
 };
 
 1;

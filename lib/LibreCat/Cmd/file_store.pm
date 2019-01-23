@@ -256,7 +256,7 @@ sub _exists {
 
     printf "$key %s\n", $ans ? "EXISTS" : "NOT_FOUND";
 
-    exit($ans ? 0 : 2);
+    $ans ? return 0 : return 2;
 }
 
 sub _get {
@@ -395,6 +395,8 @@ sub _purge {
     if (my $msg = $self->app->global_options->{log}) {
         audit_message($key, 'purge', $msg);
     }
+
+    print "purged $key\n";
 
     return 0;
 }

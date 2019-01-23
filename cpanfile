@@ -15,16 +15,16 @@ on 'test' => sub {
     requires 'Test::Pod';
     requires 'Test::TCP';
     requires 'Test::WWW::Mechanize::Dancer';
+    requires 'Module::Install', '1.16';
 };
 
 requires 'Business::ISBN', 0;
-requires 'Module::Install', '1.16';
 
 # Catmandu
 requires 'Catmandu', '>=1.0606';
-requires 'Catmandu::FileStore', '1.12';
+requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
-requires 'Catmandu::BagIt' , '0.231';
+requires 'Catmandu::BagIt' , '0.234';
 requires 'Catmandu::BibTeX';
 requires 'Catmandu::DBI', '>=0.0511';
 requires 'Catmandu::Exporter::Table';
@@ -104,7 +104,6 @@ requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Log4perl';
 requires 'Log::Log4perl';
 requires 'MIME::Types','==1.38';
-requires 'Module::Install';
 requires 'Moo', '>= 2.003004';
 requires 'Net::LDAP';
 requires 'Net::LDAPS';
@@ -121,3 +120,4 @@ requires 'YAML';
 requires 'YAML::XS';
 requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
+requires 'Date::Simple';

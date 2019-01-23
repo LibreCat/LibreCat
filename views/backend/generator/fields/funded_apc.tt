@@ -1,0 +1,19 @@
+<div class="row innerrow">
+  <div class="col-md-2 hidden-xs hidden-sm">
+    <label for="id_funded_apc">
+      [% h.loc("forms.${type}.field.funded_apc.label") %]
+    </label>
+  </div>
+  <div class="col-md-10">
+    <div class="row innerrow">
+      <div class="col-md-10 col-xs-11">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" name="funded_apc" id="id_funded_apc" value="1"[% IF session.role != super_admin %] readonly="readonly"[% END %][% IF funded_apc %] checked="checked"[% END %]>
+            [% h.loc("forms.${type}.field.funded_apc.placeholder") %]
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

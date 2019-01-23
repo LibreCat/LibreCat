@@ -3,6 +3,9 @@
 var path = '[% request.uri_for(request.path_info) %]',
 searchParams = [% h.extract_params.json %];
 [%- IF !backend %]
+if (typeof searchParams.cql == 'undefined') {
+    searchParams.cql = [];
+}
 if (searchParams.cql) {
     searchParams.cql.push('person=[% id %]');
 }

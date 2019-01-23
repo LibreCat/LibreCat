@@ -1,11 +1,11 @@
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = h.get_person(session.user_id) -%]
-[% lang = session.lang -%]
+[% lang = h.locale() -%]
 [% lf = h.config.locale.$lang.forms -%]
 
 [% INCLUDE header.tt %]
 
-<!-- BEGIN backend/generator/master_expert.tt -->
+<!-- BEGIN backend/generator/master.tt -->
 <!-- changes here must be generated -->
 <div class="col-md-11 col-md-offset-1">
 
@@ -115,5 +115,5 @@
 {% INCLUDE fields/jquery_tab1.tt %}
 </script>
 
-<!-- END backend/generator/master_expert.tt -->
+<!-- END backend/generator/master.tt -->
 [% INCLUDE footer.tt %]

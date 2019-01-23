@@ -13,6 +13,7 @@ main:
             id:
                 type: string
                 column: pid
+                index: 1
             bag:
                 type: string
             process:
@@ -458,7 +459,7 @@ search:
                 '<>': true
                 'exact': {field: ['editor.full_name.exact', 'editor.id']}
               field: ['editor.full_name', 'editor.id']
-            translatedworkauthor:
+            translator:
               op:
                 'any': true
                 'all': true
@@ -784,6 +785,15 @@ search:
                 'exact': {field: 'name.exact'}
               field: name
               sort: {field: 'name.exact'}
+            name_lookup:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'name.exact'}
+              field: ['name','name.exact']
+              sort: {field: 'name.exact'}
             layer:
               op:
                 '=': true
@@ -825,6 +835,15 @@ search:
                 '<>': true
                 'exact': {field: 'name.exact'}
               field: name
+              sort: {field: 'name.exact'}
+            name_lookup:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+                'exact': {field: 'name.exact'}
+              field: ['name','name.exact']
               sort: {field: 'name.exact'}
             acronym:
               op:
@@ -977,7 +996,7 @@ search:
             properties:
               iso: {type: string, analyzer: tag}
           extern: {type: byte}
-          ubi_funded: {type: byte}
+          funded_apc: {type: byte}
           quality_controlled: {type: byte}
           popular_science: {type: byte}
           ec_funded: {type: byte}

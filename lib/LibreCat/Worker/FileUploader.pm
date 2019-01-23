@@ -50,7 +50,7 @@ sub work {
 sub do_delete {
     my ($self, $key, $filename, $path, %opts) = @_;
 
-    return -1 unless length $key && $key =~ /^\d+$/;
+    return -1 unless length $key;
 
     $self->log->info("loading container $key");
 
@@ -74,7 +74,7 @@ sub do_delete {
 sub do_upload {
     my ($self, $key, $filename, $path, %opts) = @_;
 
-    return -1 unless length $key && $key =~ /^[0-9A-F-]+$/;
+    return -1 unless length $key;
     return -1 unless length $filename;
     return -1 unless length $path && -f $path && -r $path;
 

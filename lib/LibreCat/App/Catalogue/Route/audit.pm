@@ -28,8 +28,9 @@ List all audit messages for an :id in the store :bag
 
 =cut
 
-    get '/audit/*/*' => sub {
-        my ($bag, $id) = splat;
+    get '/audit/:bag/:id' => sub {
+        my $bag = params("route")->{bag};
+        my $id  = params("route")->{id};
 
         my $it
             = h->main_audit()->select(id => $id)->select(bag => $bag)
@@ -39,8 +40,8 @@ List all audit messages for an :id in the store :bag
             }
         )->map(
             sub {
-                $_[0]->{date} = strftime("%Y-%m-%dT%H:%M:%S",
-                    localtime($_[0]->{time} // 0));
+                $_[0]->{date} = strftime("%Y-%m-%dT%H:%M:%SZ",
+                    gmtime($_[0]->{time} // 0));
                 $_[0];
             }
         );
@@ -50,8 +51,9 @@ List all audit messages for an :id in the store :bag
         template_or_serialize 'backend/audit', {audit => $array};
     };
 
-    post '/audit/*/*' => sub {
-        my ($bag, $id) = splat;
+    post '/audit/:bag/:id' => sub {
+        my $bag = params("route")->{bag};
+        my $id  = params("route")->{id};
 
         my $user_id = session->{user_id};
         my $message = params->{message};

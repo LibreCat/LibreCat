@@ -19,7 +19,8 @@
 
 [% IF backend %]
   <br />
-  [% IF (!entry.locked AND !entry.type.match("^bi")) OR session.role == "super_admin" %]<a href="[% uri_base %]/librecat/record/edit/[% entry._id %]">[% h.loc("main_page.links.edit") %]</a>
+  [% IF p.can_edit( entry._id, user_id = session.user_id, role = session.role ) %]
+  <a href="[% uri_base %]/librecat/record/edit/[% entry._id %]">[% h.loc("main_page.links.edit") %]</a>
   [% ELSE %]
   <strong>[% h.loc("main_page.links.edit") %]</strong>
   [% END %]
@@ -37,13 +38,14 @@
     [% LAST %]
     [% END %]
   [% END %]
-  [% IF (entry.status != "public" AND entry.status != "submitted" AND entry.status != "new") OR ((entry.status == "submitted" OR entry.status == "new") AND session.role == "super_admin") %]
+  [% IF p.can_make_public( entry._id, user_id = session.user_id, role = session.role ) %]
   | <a href="[% uri_base %]/librecat/record/publish/[% entry._id %]?return_url=[% request.uri | uri %]">[% h.loc("main_page.links.publish") %]</a>
-  [% ELSIF entry.status == "public" %]
+  [% END %]
+  [% IF p.can_return( entry._id, user_id = session.user_id, role = session.role ) %]
   | <a href="[% uri_base %]/librecat/record/return/[% entry._id %]?return_url=[% request.uri | uri %]">[% h.loc("main_page.links.return") %]</a>
   [% END %]
   [% IF session.role == "super_admin" %]
-  | <a href='[% uri_base %]/librecat/search/admin/similar_search?q="[% entry.title.replace("[\'\"\,\;\:\.]+","") %]"'>[% h.loc("main_page.links.search_similar") %]</a>
+  | <a href='[% uri_base %]/librecat/search/admin?q="[% entry.title.replace("[\'\"\,\;\:\.]+","") %]"&similar_search=1'>[% h.loc("main_page.links.search_similar") %]</a>
   [% END %]
   <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %] (GMT)</span>
 [% END %]

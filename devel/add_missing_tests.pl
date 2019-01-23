@@ -31,7 +31,7 @@ while ( $path = $iter->() ) {
 
     my $test_code =<<EOF;
 use Catmandu::Sane;
-use LibreCat load => (layer_paths => [qw(t/layer)]);
+use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use Test::More;
 use Test::Exception;
 use warnings FATAL => 'all';
