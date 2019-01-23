@@ -133,7 +133,7 @@ sub _switch {
     open my $file, ">", $pidfile || die "Failed to create $pidfile: $!";
     flock($file, LOCK_EX | LOCK_NB) || die "Running more than one indexer?";
 
-    LibreCat::Index->new->switch ? 0 : 1;
+    LibreCat::Index->new->switch_all ? 0 : 1;
 }
 
 sub _purge {

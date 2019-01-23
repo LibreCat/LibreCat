@@ -71,7 +71,6 @@ sub _build_indices {
             my $bag = $_;
             my $index = $bags->{$bag}{index} // $bag;
             +{ bag => $bag,
-               alias => $index,
                index => $index,
                index_1 => "${index}_1",
                index_2 => "${index}_2", };
@@ -215,21 +214,25 @@ Make sure $index exists.
 
 sub touch_index {
     my ($self, $index) = @_;
+
     my ($info) = grep { $_->{index} eq $index } @{$self->indices};
+
     $self->search_store_1->bag($info->{bag})->get('¯\_(ツ)_/¯');
     $self->search_store_2->bag($info->{bag})->get('¯\_(ツ)_/¯');
 }
 
 sub status_for {
-    my ($self, $info) = @_;
+    my ($self, $index) = @_;
+
+    my ($info) = grep { $_->{index} eq $index } @{$self->indices};
 
     my $status = {};
 
     my $index_exists   = $self->has_index($info->{index});
     my $index_1_exists = $self->has_index($info->{index_1});
     my $index_2_exists = $self->has_index($info->{index_2});
-    my $alias_1_exists = $self->has_alias($info->{index_1}, $info->{alias});
-    my $alias_2_exists = $self->has_alias($info->{index_2}, $info->{alias});
+    my $alias_1_exists = $self->has_alias($info->{index_1}, $info->{index});
+    my $alias_2_exists = $self->has_alias($info->{index_2}, $info->{index});
 
     $status->{configured_index_name} = $info->{index};
     $status->{all_indices} = [];
@@ -242,7 +245,7 @@ sub status_for {
     $status->{active_index} = $info->{index_2} if $index_2_exists && $alias_2_exists;
     $status->{active_index} = $info->{index}
         if !$index_1_exists && !$index_2_exists && $index_exists;
-    $status->{alias} = $info->{alias}
+    $status->{alias} = $info->{index}
         if $alias_1_exists || $alias_2_exists;
 
     $status;
@@ -267,7 +270,7 @@ sub status {
 
     $self->is_availabe || return;
 
-    [map { $self->status_for($_) } @{$self->indices}];
+    [map { $self->status_for($_->{index}) } @{$self->indices}];
 }
 
 =head2 initialize()
@@ -280,11 +283,11 @@ sub initialize {
     my ($self) = @_;
 
     for my $info (@{$self->indices}) {
-        my $status = $self->status_for($info) || return 0;
+        my $status = $self->status_for($info->{index}) || return 0;
 
         if ($status->{active_index}) {
-            $self->remove_alias($status->{active_index}, $info->{alias});
-            say "Removed alias $info->{alias} for $info->{index}...";
+            $self->remove_alias($status->{active_index}, $info->{index});
+            say "Removed alias $info->{index} for $status->{active_index}...";
         }
         else {
             say "Alias for $info->{index} not present, but everything is still ok";
@@ -297,8 +300,8 @@ sub initialize {
 
         $self->touch_index($info->{index});
 
-        say "Creating alias $info->{alias} for $info->{index_1}...";
-        $self->create_alias($info->{index_1}, $info->{alias});
+        say "Creating alias $info->{index} for $info->{index_1}...";
+        $self->create_alias($info->{index_1}, $info->{index});
 
         say "Done";
     }
@@ -306,16 +309,22 @@ sub initialize {
     1;
 }
 
-=head2 switch()
+sub switch_all {
+    my ($self) = @_;
+
+    for my $info (@{$self->indices}) {
+        $self->switch($info->{index});
+    }
+}
+
+=head2 switch($index)
 
 Index all records and switch the alias to the new index
 
 =cut
 
 sub switch {
-    my ($self) = @_;
-
-    my $alias_name = $self->alias;
+    my ($self, $index) = @_;
 
     my $ret;
 
