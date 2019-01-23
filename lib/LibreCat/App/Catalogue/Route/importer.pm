@@ -61,7 +61,6 @@ sub _fetch_record {
         return $pkg->new->fetch($id);
     };
     if ($@) {
-        debug "oops";
         h->log->error("Failed to fetch $id from $source");
         return undef;
     }
