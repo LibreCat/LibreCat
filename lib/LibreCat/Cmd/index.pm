@@ -113,14 +113,16 @@ sub _drop {
 
 sub _status {
     my ($self) = @_;
-    my $status = LibreCat::Index->new->get_status;
-    Catmandu->exporter('YAML')->add($status);
-    return 0;
+    my $status = LibreCat::Index->new->status || return 1;
+    my $out = Catmandu->exporter('YAML');
+    $out->add_many($status);
+    $out->commit;
+    0;
 }
 
 sub _initialize {
     my ($self) = @_;
-    defined(LibreCat::Index->new->initialize) ? 0 : 1;
+    LibreCat::Index->new->initialize ? 0 : 1;
 }
 
 sub _switch {
@@ -131,7 +133,7 @@ sub _switch {
     open my $file, ">", $pidfile || die "Failed to create $pidfile: $!";
     flock($file, LOCK_EX | LOCK_NB) || die "Running more than one indexer?";
 
-    defined(LibreCat::Index->new->switch) ? 0 : 1;
+    LibreCat::Index->new->switch ? 0 : 1;
 }
 
 sub _purge {

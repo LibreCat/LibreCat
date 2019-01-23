@@ -1,6 +1,6 @@
 package LibreCat::Index;
 
-use Carp;
+use Catmandu::Sane;
 
 =head1 NAME
 
@@ -14,78 +14,81 @@ Create a new instance of LibreCat::Index
 
 =cut
 
-use Catmandu::Sane;
-use Catmandu::Util;
+use Carp;
+use Catmandu;
+use Catmandu::Util qw(require_package);
 use LibreCat qw(fixer);
-use Search::Elasticsearch;
+use Clone qw(clone);
 use Try::Tiny;
 use Moo;
 use POSIX qw(strftime);
+use namespace::clean;
 
-has main       => (is => 'lazy');
-has alias      => (is => 'lazy');
-has index1     => (is => 'lazy');
-has index2     => (is => 'lazy');
-has main_index => (is => 'lazy');
-has es         => (is => 'lazy');
+has main_store => (is => 'lazy');
+has search_store => (is => 'lazy');
+has search_store_1 => (is => 'lazy');
+has search_store_2 => (is => 'lazy');
+has es => (is => 'lazy');
+has indices => (is => 'lazy');
 
-sub _build_main {
+sub _build_main_store {
     Catmandu->store('main');
 }
 
-sub _build_alias {
-    Catmandu->config->{store}->{search}->{options}->{index_name};
+sub _build_search_store {
+    Catmandu->store('search');
 }
 
-# Use an explicit require_package->new to create instances of index1
-# and index2. The standard Catmandu->store('search',%opts) will cache
-# connections to the EL store, which can't be overwritten by a second
-# call to Catmandu->store('search',%opts) with other options.
-sub _build_index1 {
-    my $conf    = Catmandu->config->{store}->{search};
-    my $package = $conf->{package};
-    my $opts    = $conf->{options};
-    my $ns      = 'Catmandu::Store';
-    Catmandu::Util::require_package($package, $ns)
-        ->new(%$opts, index_name => $opts->{index_name} . 1);
+sub _build_search_store_1 {
+    $_[0]->_build_search_store_n(1);
 }
 
-sub _build_index2 {
-    my $conf    = Catmandu->config->{store}->{search};
-    my $package = $conf->{package};
-    my $opts    = $conf->{options};
-    my $ns      = 'Catmandu::Store';
-    Catmandu::Util::require_package($package, $ns)
-        ->new(%$opts, index_name => $opts->{index_name} . 2);
+sub _build_search_store_2 {
+    $_[0]->_build_search_store_n(2);
 }
 
-sub _build_main_index {
-    my $conf    = Catmandu->config->{store}->{search};
-    my $package = $conf->{package};
-    my $opts    = $conf->{options};
-    my $ns      = 'Catmandu::Store';
-    Catmandu::Util::require_package($package, $ns)->new(%$opts);
+sub _build_search_store_n {
+    my ($self, $n) = @_;
+    my $conf = Catmandu->config->{store}{search};
+    my $pkg  = $conf->{package};
+    my $opts = clone($conf->{options});
+    my $bags = $opts->{bags};
+    for my $bag (keys %$bags) {
+        my $bag_opts = $bags->{$bag};
+        my $index = $bag_opts->{index} // $bag;
+        $bag_opts->{index} = "${index}_${n}";
+    }
+    require_package($pkg, 'Catmandu::Store')->new($opts);
 }
 
 sub _build_es {
-    Search::Elasticsearch->new();
+    $_[0]->search_store->es;
+}
+
+sub _build_indices {
+    my $bags = Catmandu->config->{store}{search}{options}{bags};
+    [map {
+            my $bag = $_;
+            my $index = $bags->{$bag}{index} // $bag;
+            +{ bag => $bag,
+               alias => $index,
+               index => $index,
+               index_1 => "${index}_1",
+               index_2 => "${index}_2", };
+    } keys %$bags];
 }
 
 =head2 is_available()
 
-Return true when the index is up and running.
+Returns true if the server is up and running.
 
 =cut
 
 sub is_availabe {
     my ($self) = @_;
 
-    eval {$self->es->info;};
-    if ($@) {
-        return undef;
-    }
-
-    return 1;
+    eval {$self->es->info; 1} || return 0;
+    1;
 }
 
 =head2 active
@@ -97,9 +100,9 @@ Return the active index
 sub active {
     my ($self) = @_;
 
-    my $i_status = $self->get_status;
+    my $status = $self->status;
 
-    if (my $active = $i_status->{active_index}) {
+    if (my $active = $status->{active_index}) {
         if ($self->index1->{index_name} eq $active) {
             return {active => $self->index1, inactive => $self->index2};
         }
@@ -118,79 +121,71 @@ Return true when an index exists
 =cut
 
 sub has_index {
-    my ($self, $name) = @_;
-    return $self->es->indices->exists(index => $name);
+    my ($self, $index) = @_;
+    $self->es->indices->exists(index => $index);
 }
 
-=head2 has_alias($name)
+=head2 has_alias($index, $alias)
 
 Return true when an alias exists
 
 =cut
 
 sub has_alias {
-    my ($self, $name) = @_;
-    my $alias_name = $self->alias;
-    return $self->es->indices->exists_alias(index => $name,
-        name => $alias_name);
+    my ($self, $index, $alias) = @_;
+    $self->es->indices->exists_alias(index => $index, name => $alias);
 }
 
-=head2 create_alias($name)
+=head2 create_alias($index, $alias)
 
-Create an alias for $name
+Create an alias for $index
 
 =cut
 
 sub create_alias {
-    my ($self, $name) = @_;
-    my $alias_name = $self->alias;
+    my ($self, $index, $alias) = @_;
     $self->es->indices->update_aliases(body =>
-            {actions => [{add => {alias => $alias_name, index => $name}},]});
+            {actions => [{add => {index => $index, alias => $alias}}]});
 }
 
-=head2 remove_alias($name)
+=head2 remove_alias($index, $alias)
 
-Remove the alias for $name
+Remove the alias for $index
 
 =cut
 
 sub remove_alias {
-    my ($self, $name) = @_;
-    my $alias_name = $self->alias;
-    if ($self->es->indices->exists(index => $name)) {
+    my ($self, $index, $alias) = @_;
+    my $ok = 1;
+    if ($self->es->indices->exists(index => $index)) {
         try {
             $self->es->indices->update_aliases(
                 body => {
                     actions =>
-                        [{remove => {alias => $alias_name, index => $name}}]
+                        [{remove => {index => $index, alias => $alias}}]
                 }
             );
-            return 1;
         }
         catch {
-            return 0;
+            $ok = 0;
         };
     }
-    else {
-        return 1;
-    }
+    $ok;
 }
 
-=head2 remove_index($name)
+=head2 remove_index($index)
 
-Remove the alias for $name
+Remove the alias for $index
 
 =cut
 
 sub remove_index {
-    my ($self, $name) = @_;
-    if ($self->es->indices->exists(index => $name)) {
-        $self->es->indices->delete(index => $name);
+    my ($self, $index) = @_;
+    if ($self->es->indices->exists(index => $index)) {
+        $self->es->indices->delete(index => $index);
         return 1;
     }
-    else {
-        return 0;
-    }
+    0;
 }
 
 =head2 remove_index($name)
@@ -212,24 +207,48 @@ sub remove_all {
     $ret > 0;
 }
 
-=head2 touch_index($name)
+=head2 touch_index($index)
 
-Create a sample record for the indexes.
+Make sure $index exists.
 
 =cut
 
 sub touch_index {
-    my ($self, $name) = @_;
-    my $index1 = $self->index1->bag('init');
-    $index1->add({'time' => time, date => scalar(localtime(time))});
-    $index1->commit;
-
-    my $index2 = $self->index2->bag('init');
-    $index2->add({'time' => time, date => scalar(localtime(time))});
-    $index2->commit;
+    my ($self, $index) = @_;
+    my ($info) = grep { $_->{index} eq $index } @{$self->indices};
+    $self->search_store_1->bag($info->{bag})->get('¯\_(ツ)_/¯');
+    $self->search_store_2->bag($info->{bag})->get('¯\_(ツ)_/¯');
 }
 
-=head2 get_status()
+sub status_for {
+    my ($self, $info) = @_;
+
+    my $status = {};
+
+    my $index_exists   = $self->has_index($info->{index});
+    my $index_1_exists = $self->has_index($info->{index_1});
+    my $index_2_exists = $self->has_index($info->{index_2});
+    my $alias_1_exists = $self->has_alias($info->{index_1}, $info->{alias});
+    my $alias_2_exists = $self->has_alias($info->{index_2}, $info->{alias});
+
+    $status->{configured_index_name} = $info->{index};
+    $status->{all_indices} = [];
+    push @{$status->{all_indices}}, $info->{index}
+        if $index_exists && !$alias_1_exists && !$alias_2_exists;
+    push @{$status->{all_indices}}, $info->{index_1} if $index_1_exists;
+    push @{$status->{all_indices}}, $info->{index_2} if $index_2_exists;
+    $status->{number_of_indices} = @{$status->{all_indices}};
+    $status->{active_index} = $info->{index_1} if $index_1_exists && $alias_1_exists;
+    $status->{active_index} = $info->{index_2} if $index_2_exists && $alias_2_exists;
+    $status->{active_index} = $info->{index}
+        if !$index_1_exists && !$index_2_exists && $index_exists;
+    $status->{alias} = $info->{alias}
+        if $alias_1_exists || $alias_2_exists;
+
+    $status;
+}
+
+=head2 status()
 
 Return a HASH containing active indexes and aliases:
 
@@ -243,39 +262,12 @@ Return a HASH containing active indexes and aliases:
 
 =cut
 
-sub get_status {
+sub status {
     my ($self) = @_;
 
-    my $ind_name = $self->alias;
-    my $ind1     = $self->index1->{index_name};
-    my $ind2     = $self->index2->{index_name};
+    $self->is_availabe || return;
 
-    return unless $self->is_availabe();
-
-    my $ind_exists  = $self->has_index($ind_name);
-    my $ind1_exists = $self->has_index($ind1);
-    my $ind2_exists = $self->has_index($ind2);
-
-    my $alias_exists_for_1 = $self->has_alias($ind1);
-    my $alias_exists_for_2 = $self->has_alias($ind2);
-
-    my $result;
-
-    $result->{configured_index_name} = $ind_name;
-    $result->{all_indices}           = [];
-    push @{$result->{all_indices}}, $ind_name
-        if ($ind_exists and !$alias_exists_for_1 and !$alias_exists_for_2);
-    push @{$result->{all_indices}}, $ind1 if $ind1_exists;
-    push @{$result->{all_indices}}, $ind2 if $ind2_exists;
-    $result->{number_of_indices} = @{$result->{all_indices}};
-    $result->{active_index} = $ind1 if ($ind1_exists and $alias_exists_for_1);
-    $result->{active_index} = $ind2 if ($ind2_exists and $alias_exists_for_2);
-    $result->{active_index} = $ind_name
-        if (!$ind1_exists and !$ind2_exists and $ind_exists);
-    $result->{alias} = $ind_name
-        if ($alias_exists_for_1 or $alias_exists_for_2);
-
-    return $result;
+    [map { $self->status_for($_) } @{$self->indices}];
 }
 
 =head2 initialize()
@@ -287,31 +279,29 @@ Set up the search alias and indexes. This need to be executed at installation ti
 sub initialize {
     my ($self) = @_;
 
-    my $status = $self->get_status;
+    for my $info (@{$self->indices}) {
+        my $status = $self->status_for($info) || return 0;
 
-    if ($status->{active_index}) {
-        $self->remove_alias($status->{active_index});
-        print "Removed alias " . $status->{alias} . "...\n";
+        if ($status->{active_index}) {
+            $self->remove_alias($status->{active_index}, $info->{alias});
+            say "Removed alias $info->{alias} for $info->{index}...";
+        }
+        else {
+            say "Alias for $info->{index} not present, but everything is still ok";
+        }
+
+        for my $index (@{$status->{all_indices}}) {
+            say "Removing index $index...";
+            $self->remove_index($index);
+        }
+
+        $self->touch_index($info->{index});
+
+        say "Creating alias $info->{alias} for $info->{index_1}...";
+        $self->create_alias($info->{index_1}, $info->{alias});
+
+        say "Done";
     }
-    else {
-        print "Alias not present, but everything is still ok\n";
-    }
-
-    foreach my $index (@{$status->{all_indices}}) {
-        print "Removing index $index...\n";
-        $self->remove_index($index);
-    }
-
-    # Create at least one record in the index in order to create an alias...
-    $self->touch_index;
-
-    my $alias_name  = $self->alias;
-    my $index1_name = $self->index1->{index_name};
-
-    print "Creating alias $index1_name...\n";
-    $self->create_alias($index1_name);
-
-    print "Done\n";
 
     1;
 }
