@@ -1,115 +1,98 @@
 # mapping data from CrossRef to the local repository
 
-retain_field('message')
-move_field('message','')
+retain(message)
+move(message, '')
 
-add_field('status','new')
+add('r.status','new')
 
 # look up publication type
-lookup(type, fixes/lookup/cr_type_mapping.csv, default: journal_article)
+move(type, r.type)
+lookup(r.type, fixes/lookup/cr_type_mapping.csv, default: journal_article)
 
 #title
-#move_field('subtitle.0','title.1')
-join_field('title',' ')
-remove_field('subtitle')
-trim('title')
+move(title, r.title)
+join(r.title,' ')
+trim(r.title)
 
 #year
-move_field('issued.date-parts.0.0','year')
-move_field('deposited.date-parts.0.0','year')
-move_field('created.date-parts.0.0','year')
-trim('year')
+move(issued.date-parts.0.0, r.year)
+move(deposited.date-parts.0.0, r.year)
+move(created.date-parts.0.0, r.year)
+trim(r.year)
 
 # identifier
-move_field('DOI','doi')
-move_field('ISSN','publication_identifier.issn')
-move_field('ISBN','publication_identifier.isbn')
-replace_all('publication_identifier.isbn.*','^http://id.crossref.org/isbn/(.*)',$1)
+move(DOI, r.doi)
+move(ISSN, r.publication_identifier.issn)
+move(ISBN, r.publication_identifier.isbn)
+replace_all(r.publication_identifier.isbn.*', '^http://id.crossref.org/isbn/(.*)',$1)
 
 # authors
-do list (path => author)
+move(author, r.author)
+do list (path => r.author)
   do identity ()
-    move_field('given', 'first_name')
-    move_field('family','last_name')
-    remove_field(affiliation)
+    move(given, first_name)
+    move(family, last_name)
+    remove(affiliation)
   end
 end
 
 # editors
-do list (path => editor)
+move(editor, r.editor)
+do list (path => r.editor)
   do identity ()
-    move_field('given', 'first_name')
-    move_field('family','last_name')
-    remove_field(affiliation)
+    move(given, first_name)
+    move(family, last_name)
+    remove(affiliation)
   end
 end
 
-
-add_field(publication_status, published)
+add(r.publication_status, published)
 
 # type mapping
-if all_match('type','journal_article')
-    move_field('container-title.0','publication')
+if all_match(r.type, 'journal_article')
+    move(container-title.0, r.publication)
     if any_match(page, '-')
-      nothing()
+      move(page, r.page)
     else
-      move_field('page','article_number')
+      move(page, r.article_number)
     end
 end
 
-## book
-if all_match('type','book')
-    move_field('publisher-location', 'place')
-    if exists('editor')
-      set_field('type','book_editor')
+# book
+if all_match(r.type, 'book')
+    move(publisher-location, r.place)
+    if exists(r.editor)
+      set(r.type, book_editor)
     end
 end
 
-if all_match('type','book_chapter')
-    move_field('container-title.0','publication')
-    move_field('container-title.1','series_title')
+if all_match(r.type, 'book_chapter')
+    move(container-title.0, r.publication)
+    move(container-title.1, r.series_title)
 end
 
-if all_match('type','conference')
-    move_field('container-title.0','publication')
+if all_match(r.type, 'conference')
+    move(container-title.0, r.publication)
 end
 
-if all_match('type','preprint')
+if all_match(r.type, preprint)
 # CHP registers DOIs for bioRxiv via Crossref, eg 10.1101/005538
-  if all_match('member','246')
-    set_field('publication', 'bioRxiv')
+  if all_match(member, '246')
+    set(r.publication, bioRxiv)
   end
 end
 
-if exists(abstract)
-  unless is_array(abstract)
-    move_field(abstract, abstract.0.text)
-    add_field(abstract.0.lang, eng)
+move(abstract, r.abstract)
+if exists(r.abstract)
+  unless is_array(r.abstract)
+    move(r.abstract, r.abstract.0.text)
+    add(r.abstract.0.lang, eng)
   end
 end
-
-# cleaning record
-remove_field(score)
-remove_field(deposited)
-remove_field(indexed)
-remove_field(prefix)
-remove_field(URL)
-remove_field(link)
-remove_field(source)
-remove_field(issued)
-remove_field(member)
-remove_field(container-title)
-remove_field(funder)
 
 # fix language and map to iso
-lookup(language, fixes/lookup/cr_lang_iso.csv, default: eng)
-move_field(language, tmp.lang)
-move_field(tmp.lang,language.0.iso)
+move(language, r.language.0.iso)
+lookup(r.language, fixes/lookup/cr_lang_iso.csv, default: eng)
 
-# abstracts are sometimes fetched in JATS:XML, remove them until we have
-# a strategy how to get rid of html tags
-remove_field(abstract)
-
-# ref list is fetched, would be nice to re-use them in librecat in the
-# near future
-remove_field(citation)
+retain(r)
+move(r, .)
