@@ -118,7 +118,7 @@ sub all_user_ids {
         $values = [ $values ] unless is_array_ref $values;
 
         for my $identify (@$values) {
-            push @ids , $identify->{id} if $identify->{id};
+            push @ids , $identify->{id} if is_string($identify->{id});
         }
     }
 
