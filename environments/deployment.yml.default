@@ -1,9 +1,9 @@
 log: error
 logger: file
-warnings: 0
-show_errors: 0
 route_cache: 1
+show_errors: 0
 template_debug: 0
+warnings: 0
 
 ## Uncomment these lines to activate CAS authentication
 #auth_sso:
