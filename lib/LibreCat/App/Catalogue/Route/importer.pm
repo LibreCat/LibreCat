@@ -8,7 +8,6 @@ LibreCat::App::Catalogue::Route::importer - central handler for import routes
 
 use Catmandu::Sane;
 use Catmandu::Util;
-use Catmandu::Importer::getJSON;
 use LibreCat qw(publication);
 use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
@@ -25,10 +24,7 @@ sub _fetch_record {
         if ($source eq 'crossref') {
             $id =~ s{^\D+[:\/]}{};
 
-            # Need to have an explicit Catmandu::Importer::getJSON
-            # new instance to have access to the 'warn=>0' features
-            # to switch of warning messages
-            my $data = Catmandu::Importer::getJSON->new(
+            my $data = Catmandu->importer(
                 'getJSON',
                 from    => url_decode("https://api.crossref.org/works/$id/agency"),
                 timeout => 10,

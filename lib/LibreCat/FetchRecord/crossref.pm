@@ -19,7 +19,7 @@ sub fetch {
 
     my $url = sprintf "%s%s", $self->baseurl, uri_escape_utf8($id);
 
-    my $data = Catmandu->importer('getJSON', from => $url)->to_array;
+    my $data = Catmandu->importer('getJSON', from => $url, warn => 0)->to_array;
 
     unless (@$data) {
         $self->log->error(
