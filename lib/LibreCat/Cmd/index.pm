@@ -95,7 +95,7 @@ sub _create {
     $bag->add_many($fixer->fix($main_store->bag($name)->benchmark));
     $bag->commit;
 
-    return 0;
+    0;
 }
 
 sub _drop {
@@ -105,10 +105,9 @@ sub _drop {
 
     my $store = Catmandu->store('search');
     my $bag   = $store->bag($name);
-    $bag->delete_all;
-    $bag->commit;
+    $bag->drop;
 
-    return 0;
+    0;
 }
 
 sub _status {
@@ -117,16 +116,15 @@ sub _status {
     my $out = Catmandu->exporter('YAML');
     $out->add_many($status);
     $out->commit;
+
     0;
 }
 
 sub _initialize {
-    my ($self) = @_;
     LibreCat::Index->new->initialize ? 0 : 1;
 }
 
 sub _switch {
-    my ($self) = @_;
     my $pidfile
         = File::Spec->catfile(File::Spec->tmpdir, "librecat.index.lock");
 
@@ -137,8 +135,7 @@ sub _switch {
 }
 
 sub _purge {
-    my ($self) = @_;
-    defined(LibreCat::Index->new->remove_all) ? 0 : 1;
+    LibreCat::Index->new->remove_all ? 0 : 1;
 }
 
 1;

@@ -90,27 +90,29 @@ sub is_availabe {
     1;
 }
 
-=head2 active
+=head2 active($index)
 
 Return the active index
 
 =cut
 
 sub active {
-    my ($self) = @_;
+    my ($self, $index) = @_;
 
-    my $status = $self->status;
+    my $status = $self->status_for($index);
 
     if (my $active = $status->{active_index}) {
-        if ($self->index1->{index_name} eq $active) {
-            return {active => $self->index1, inactive => $self->index2};
+        my ($info) = grep { $_->{index} eq $index } @{$self->indices};
+
+        if ($active eq $info->{index_1}) {
+            return {active => $info->{index_1}, inactive => $info->{index_2}, active_n => 1, inactive_n => 2};
         }
         else {
-            return {active => $self->index2, inactive => $self->index1};
+            return {active => $info->{index_2}, inactive => $info->{index_1}, active_n => 2, inactive_n => 1};
         }
     }
 
-    return undef;
+    return;
 }
 
 =head2 has_index($name)
@@ -187,13 +189,13 @@ sub remove_index {
     0;
 }
 
-=head2 remove_index($name)
+=head2 remove_all_for($alias)
 
 Remove the alias for $name
 
 =cut
 
-sub remove_all {
+sub remove_all_for {
     my ($self, $name) = @_;
     my $index1_name = $self->index1->{index_name};
     my $index2_name = $self->index2->{index_name};
@@ -253,13 +255,20 @@ sub status_for {
 
 =head2 status()
 
-Return a HASH containing active indexes and aliases:
+Returns hashes containing active indexes and aliases:
 
     ---
-    active_index: librecat1
-    alias: librecat
+    active_index: librecat_publication_1
+    alias: librecat_publication
     all_indices:
-    - librecat1
+    - librecat_publication_1
+    number_of_indices: 1
+    ...
+    ---
+    active_index: librecat_user_1
+    alias: librecat_user
+    all_indices:
+    - librecat_user_1
     number_of_indices: 1
     ...
 
@@ -326,152 +335,138 @@ Index all records and switch the alias to the new index
 sub switch {
     my ($self, $index) = @_;
 
+    my ($info) = grep { $_->{index} eq $index } @{$self->indices};
+
     my $ret;
 
-    if (my $active = $self->active) {
-        my $active_name   = $active->{active}->{index_name};
-        my $inactive_name = $active->{inactive}->{index_name};
+    if (my $active = $self->active($index)) {
 
-        print "Active index: $active_name...\n";
+        say "Active index: $active->{active}...";
 
-        print "Deleting: $inactive_name...\n";
+        say "Deleting: $active->{inactive}...";
 
-        $self->remove_index($inactive_name);
+        $self->remove_index($active->{inactive});
 
-        $self->touch_index;
+        $self->touch_index($index);
 
-        $ret = $self->_do_index($active->{inactive})
-            && $self->_do_switch($active->{active}, $active->{inactive});
+        $ret = $self->_do_index($info, $active->{inactive_n})
+            && $self->_do_switch($index, $active->{active}, $active->{inactive});
     }
     else {
-        print "No active index found...\n";
+        say "No active index found...";
+        $self->remove_index($info->{index_1});
+        $self->remove_index($info->{index_2});
 
-        $self->remove_index($self->index1->{index_name});
-        $self->remove_index($self->index2->{index_name});
+        $self->touch_index($index);
 
-        $self->touch_index;
+        say "Switching: No index -> $info->{index_1}...";
 
-        print "Switching: No index -> "
-            . $self->index1->{index_name} . "..\n";
-
-        $ret = $self->_do_index($self->index1)
-            && $self->_do_switch(undef, $self->index1);
+        $ret = $self->_do_index($info, 1)
+            && $self->_do_switch($index, undef, $info->{index_1});
     }
 
     if ($ret) {
-        print "Done\n";
+        say "Done";
         return 1;
     }
-    else {
-        print "Failed\n";
-        return undef;
-    }
+    say "Failed";
+    0;
 }
 
 sub _do_index {
-    my ($self, $new) = @_;
+    my ($self, $info, $n) = @_;
 
-    my $new_name = $new->{index_name};
-    my @bags = keys %{Catmandu->config->{store}->{search}->{options}->{bags}};
+    my $index = $n == 1 ? $info->{index_1} : $info->{index_2};
+    my $store_n = $n == 1 ? $self->search_store_1 : $self->search_store_2;
+    my $bag_n = $store_n->bag($info->{bag});
+    my $bag = $self->search_store->bag($info->{bag});
+    my $main_bag = $self->main_store->bag($info->{bag});
+    my $fixer = fixer("index_$info->{bag}.fix");
+
+    my $ok = 1;
 
     try {
         my $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
 
-        print "Index starts at: $now\n";
+        say "Index starts at: $now";
+        say "Indexing $info->{bag} into $index...";
 
-        # First index all records from the main database...
-        for my $b (@bags) {
-            print "Indexing $b into $new_name...\n";
-            my $fixer = fixer("index_$b.fix");
-            my $bag   = $new->bag($b);
-            $bag->add_many($fixer->fix($self->main->bag($b)->benchmark));
-            $bag->commit;
-        }
+        $bag_n->add_many($fixer->fix($main_bag->benchmark));
+        $bag_n->commit;
 
         # Check for records changed during the previous indexation...
         my $has_changes;
         do {
             $has_changes = 0;
 
-            print "Checking index for updates changed since $now ...\n";
-            for my $b (@bags) {
-                print "Checking $b ...\n";
-                my $bag   = $new->bag($b);
-                my $fixer = fixer("index_$b.fix");
-                my $it
-                    = $self->main_index->bag($b)
-                    ->searcher(
-                    query => {range => {date_updated => {gte => $now}}});
-                $it->each(
-                    sub {
-                        my $item         = $_[0];
-                        my $id           = $item->{_id};
-                        my $date_updated = $item->{date_updated};
-                        my $rec          = $self->main->bag($b)->get($id);
+            say "Checking index for updates changed since $now...";
+            say "Checking $info->{bag}...";
 
-                        if ($rec) {
-                            print "Adding $id changed on $date_updated\n";
-                            $bag->add($fixer->fix($rec));
-                        }
-                        else {
-                            carp "main database lost id `$id'?";
-                        }
+            my $it = $bag->searcher(query => {range => {date_updated => {gte => $now}}});
+            $it->each(
+                sub {
+                    my $item         = $_[0];
+                    my $id           = $item->{_id};
+                    my $date_updated = $item->{date_updated};
+                    my $rec          = $main_bag->get($id);
 
-                        $has_changes = 1;
+                    if ($rec) {
+                        say "Adding $id changed on $date_updated";
+                        $bag_n->add($fixer->fix($rec));
                     }
-                );
+                    else {
+                        carp "main database lost id '$id'?";
+                    }
 
-                $bag->commit;
+                    $has_changes = 1;
+                }
+            );
 
-                $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
-            }
+            $bag_n->commit;
+
+            $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
         } while ($has_changes);
     }
     catch {
-        print STDERR "Failed to create the index $new_name";
+        say STDERR "Failed to create the index $index";
         warn $_;
-        return 0;
+        $ok = 0;
     };
 
     1;
 }
 
 sub _do_switch {
-    my ($self, $old, $new) = @_;
+    my ($self, $alias, $old_index, $new_index) = @_;
 
-    my $alias_name = $self->alias;
-    my $old_name   = $old->{index_name};
-    my $new_name   = $new->{index_name};
+    say "New index is $new_index. Testing...";
+    my $index_ok = $self->has_index($new_index);
+    my $alias_ok = $self->has_alias($new_index, $alias);
 
-    print "New index is $new_name. Testing...\n";
-    my $checkForIndex = $self->has_index($new_name);
-    my $checkForAlias = $self->has_alias($new_name);
+    if ($index_ok) {
+        say
+            "Index $new_index exists. Setting index alias $alias to $new_index and testing again.";
 
-    if ($checkForIndex) {
-        print
-            "Index $new_name exists. Setting index alias $alias_name to $new_name and testing again.\n";
+        $self->remove_alias($old_index, $alias);
+        $self->create_alias($new_index, $alias);
 
-        $self->remove_alias($old_name);
-        $self->create_alias($new_name);
+        $alias_ok = $self->has_alias($new_index, $alias);
 
-        $checkForAlias = $self->has_alias($new_name);
-
-        if ($checkForAlias) {
-
+        if ($alias_ok) {
             # First run, no old index to be deleted
-            print "Alias $alias_name is ok and points to index $new_name.\n";
+            say "Alias $alias is ok and points to index $new_index.";
         }
         else {
-            print "Error: Could not create alias $alias_name.\n";
-            return undef;
+            say "Error: Could not create alias $alias.";
+            return 0;
         }
     }
     else {
-        print "Error: Could not create index $new_name.\n";
-        return undef;
+        say "Error: Could not create index $new_index.";
+        return 0;
     }
 
-    return 1;
+    1;
 }
 
-1;
+1t
