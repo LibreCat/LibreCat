@@ -1,3 +1,5 @@
+remove_field(_version)
+
 # add OA flag for open access publications
 
 if any_match(file.*.access_level, open_access)

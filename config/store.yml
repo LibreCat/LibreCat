@@ -324,7 +324,7 @@ search:
               properties:
                 id: {type: keyword}
                 login: {type: text, analyzer: tag}
-            type: {type: text, analyzer: tag}
+            type: {type: text, analyzer: tag, fielddata: 'true'}
             type_old: {type: text, analyzer: tag}
             research_data: {type: byte}
             year: {type: date, format: year, copy_to: all}
@@ -349,7 +349,7 @@ search:
                 eissn: {type: text, analyzer: tag, copy_to: all}
                 eisbn: {type: text, analyzer: tag, copy_to: all}
                 unknown: {type: text, analyzer: tag, copy_to: all}
-            status: {type: text, analyzer: tag}
+            status: {type: text, analyzer: tag, fielddata: 'true'}
             publication_status: {type: text, analyzer: tag}
             report_number: {type: text, analyzer: tag}
             ipn: {type: text, analyzer: tag}
@@ -417,7 +417,7 @@ search:
               properties:
                 access_level: {type: text, analyzer: tag}
                 date_updated: {type: date, format: date_time_no_millis}
-                open_access: {type: text, analyzer: tag}
+                open_access: {type: text, analyzer: tag, fielddata: 'true'}
                 embargo: {type: text, analyzer: tag}
             main_file_link:
               properties:

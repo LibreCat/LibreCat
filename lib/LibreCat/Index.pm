@@ -176,7 +176,7 @@ sub remove_alias {
 
 =head2 remove_index($index)
 
-Remove the alias for $index
+Remove index $index
 
 =cut
 
@@ -189,32 +189,40 @@ sub remove_index {
     0;
 }
 
-=head2 remove_all_for($alias)
+=head2 purge($alias)
 
-Remove the alias for $name
+Remove the alias and it's associated indexes
 
 =cut
 
-sub remove_all_for {
+sub purge {
     my ($self, $index) = @_;
 
-    my ($info) = grep { $_->{index} eq $index } @{$self->indices};
+    my $status = $self->status_for($index) || return 0;
 
-    my $ret;
+    if ($status->{active_index}) {
+        $self->remove_alias($status->{active_index}, $index);
+    }
+    for (@{$status->{all_indices}}) {
+        $self->remove_index($_);
+    }
 
-    $ret += $self->remove_index($info->{index_1});
-    $ret += $self->remove_index($info->{index_2});
-
-    $ret > 0;
+    1;
 }
 
-sub remove_all {
+=head2 purge_all()
+
+Remove all aliases and indexes
+
+=cut
+
+sub purge_all {
     my ($self) = @_;
 
     my $ok = 1;
 
     for my $info (@{$self->indices}) {
-        $ok = 0 unless $self->remove_all_for($info->{index});
+        $ok = 0 unless $self->purge($info->{index});
     }
 
     $ok;
@@ -296,7 +304,7 @@ sub status {
 
 =head2 initialize()
 
-Set up the search alias and indexes. This need to be executed at installation time.
+Set up the search alias and indexes. This needs to be executed at installation time.
 
 =cut
 
@@ -330,17 +338,9 @@ sub initialize {
     1;
 }
 
-sub switch_all {
-    my ($self) = @_;
-
-    for my $info (@{$self->indices}) {
-        $self->switch($info->{index});
-    }
-}
-
 =head2 switch($index)
 
-Index all records and switch the alias to the new index
+Reindex a store and switch the alias to the new index
 
 =cut
 
@@ -383,6 +383,24 @@ sub switch {
     }
     say "Failed";
     0;
+}
+
+=head2 switch_all()
+
+Reindex all stores and switch the aliases
+
+=cut
+
+sub switch_all {
+    my ($self) = @_;
+
+    my $ok = 1;
+
+    for my $info (@{$self->indices}) {
+        $ok = 0 unless $self->switch($info->{index});
+    }
+
+    $ok;
 }
 
 sub _do_index {
@@ -481,4 +499,4 @@ sub _do_switch {
     1;
 }
 
-1t
+1;
