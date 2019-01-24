@@ -196,16 +196,28 @@ Remove the alias for $name
 =cut
 
 sub remove_all_for {
-    my ($self, $name) = @_;
-    my $index1_name = $self->index1->{index_name};
-    my $index2_name = $self->index2->{index_name};
+    my ($self, $index) = @_;
+
+    my ($info) = grep { $_->{index} eq $index } @{$self->indices};
 
     my $ret;
 
-    $ret += $self->remove_index($index1_name);
-    $ret += $self->remove_index($index2_name);
+    $ret += $self->remove_index($info->{index_1});
+    $ret += $self->remove_index($info->{index_2});
 
     $ret > 0;
+}
+
+sub remove_all {
+    my ($self) = @_;
+
+    my $ok = 1;
+
+    for my $info (@{$self->indices}) {
+        $ok = 0 unless $self->remove_all_for($info->{index});
+    }
+
+    $ok;
 }
 
 =head2 touch_index($index)
