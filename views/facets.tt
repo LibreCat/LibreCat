@@ -1,4 +1,4 @@
-[%- IF !facets -%][% RETURN %][% END %]
+[%- IF !aggregations -%][% RETURN %][% END %]
 
 <div id="facets"></div>
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
@@ -22,8 +22,8 @@
         [% min_terms = f.min.defined ? f.min : 2 %]
         [% num_terms = 0 %]
         [% FOR key IN f.facet.list %]
-          [% n = facets.item(key).terms.size || 0 %]
-          [% NEXT IF n == 1 && facets.item(key).terms.0.count == total %]
+          [% n = aggregations.item(key).buckets.size || 0 %]
+          [% NEXT IF n == 1 && aggregations.item(key).buckets.0.doc_count == total %]
           [% num_terms = num_terms + n %]
         [% END %]
         [% NEXT IF num_terms < min_terms %]
