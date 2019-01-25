@@ -334,7 +334,7 @@ note("deleting the container from the file store");
 
     my $output = $result->stdout;
 
-    is $output , "", 'got no output';
+    is $output , "purged 999999999\n", 'got no output';
 
     ok !-d 't/data/999/999/999', 'container is gone';
 }

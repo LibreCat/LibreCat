@@ -202,13 +202,6 @@ publication:
             rac_email:
                 type: string
                 description: "Mail to send request for a copy to"
-            # TODO should be added at index time
-            #open_access:
-                #oneOf:
-                  #- type: string
-                    #pattern: "^[01]$"
-                  #- type: integer
-                #description: "Flag when file is open_access"
             title:
                 type: string
                 description: "File title"

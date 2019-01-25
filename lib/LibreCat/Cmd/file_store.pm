@@ -396,6 +396,8 @@ sub _purge {
         audit_message($key, 'purge', $msg);
     }
 
+    print "purged $key\n";
+
     return 0;
 }
 

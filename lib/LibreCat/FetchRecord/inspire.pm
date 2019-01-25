@@ -17,7 +17,7 @@ sub fetch {
     $self->log->debug("requesting $id from inspire");
 
     my $url = sprintf "%s%s?of=recjson", $self->baseurl, uri_escape_utf8($id);
-    my $data = Catmandu->importer('getJSON', from => $url)->to_array;
+    my $data = Catmandu->importer('getJSON', from => $url, warn => 0)->to_array;
 
     unless (@$data) {
         $self->log->error("failed to request $url");

@@ -811,12 +811,7 @@ search:
                 '=': true
                 'exact': true
                 '<>': true
-              field: 'file.open_access'
-            linkoa:
-              op:
-                '=': true
-                '<>': true
-              field: 'main_file_link.open_access'
+              field: ['oa']
             oa:
               op:
                 '=': true
