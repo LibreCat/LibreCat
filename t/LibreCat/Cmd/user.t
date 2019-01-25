@@ -126,7 +126,7 @@ subtest 'list' => sub {
     ok $result->stdout, 'list: got an output';
 
     ok count_user($result->stdout) == 1, 'list: got no users';
-diag($result->stdout);
+
     $result = test_app(qq|LibreCat::CLI| => ['user', 'list', 'id=999111999']);
 
     ok !$result->error, 'list: ok threw no exception';
