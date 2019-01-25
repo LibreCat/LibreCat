@@ -12,6 +12,8 @@ BEGIN {
 
 require_ok $pkg;
 
+my $pub_idx = 'librecat_test_publication';
+
 my $index = $pkg->new;
 
 ok $index , 'new';
@@ -20,43 +22,45 @@ ok $index->is_availabe, "is_availabe";
 
 ok $index->initialize, "initialize";
 
-ok $index->active, "active";
+ok $index->active($pub_idx), "active";
 
-ok $index->has_index('librecat_test1'), 'has_index(librecat_test1)';
+ok $index->has_index("${pub_idx}_1"), "has_index(${pub_idx}_1)";
 
-ok $index->has_index('librecat_test2'), 'has_index(librecat_test2)';
+ok $index->has_index("${pub_idx}_2"), "has_index(${pub_idx}_2)";
 
-ok $index->has_alias('librecat_test1', 'librecat'),
-    'has_alias(librecat_test1,librecat)';
+ok $index->has_alias("${pub_idx}_1", $pub_idx),
+    "has_alias(${pub_idx}_1, $pub_idx)";
 
-my $status = $index->get_status;
+my $status = $index->status_for($pub_idx);
 
-ok $status , 'get_status';
+ok $status , 'status_for';
 
-is $status->{configured_index_name}, 'librecat_test', "$pkg is layer aware";
+is $status->{configured_index_name}, $pub_idx, "$pkg is layer aware";
 
-is_deeply $status ,
+is_deeply $status,
     {
-    'configured_index_name' => 'librecat_test',
-    'active_index'          => 'librecat_test1',
+    'configured_index_name' => $pub_idx,
+    'active_index'          => "${pub_idx}_1",
     'number_of_indices'     => 2,
-    'alias'                 => 'librecat_test',
-    'all_indices'           => ['librecat_test1', 'librecat_test2',]
+    'alias'                 => $pub_idx,
+    'all_indices'           => ["${pub_idx}_1", "${pub_idx}_2",]
     },
     'correct status';
 
-ok $index->switch, "switch";
+ok $index->switch($pub_idx), "switch";
 
-$status = $index->get_status;
+$status = $index->status_for($pub_idx);
 
 is_deeply $status ,
     {
-    'configured_index_name' => 'librecat_test',
-    'active_index'          => 'librecat_test2',
+    'configured_index_name' => $pub_idx,
+    'active_index'          => "${pub_idx}_2",
     'number_of_indices'     => 2,
-    'alias'                 => 'librecat_test',
-    'all_indices'           => ['librecat_test1', 'librecat_test2']
+    'alias'                 => $pub_idx,
+    'all_indices'           => ["${pub_idx}_1", "${pub_idx}_2",]
     },
     'correct status';
+
+$index->initialize;
 
 done_testing;
