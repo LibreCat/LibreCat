@@ -48,6 +48,8 @@ search:
     client: '6_0::Direct'
     bags:
       project:
+        fix:
+          - remove_field(_version)
         index: librecat_project
         settings: &index_settings
           number_of_shards: 1
@@ -92,7 +94,7 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag}
+                      exact: {type: text, analyzer: tag, fielddata: 'true'}
             active: {type: byte}
             acronym: {type: text, copy_to: all}
             alternative_name: {type: text, copy_to: all}
@@ -294,6 +296,7 @@ search:
       publication:
         index: librecat_publication
         fix:
+            - remove_field(_version)
             - file_date_updated()
         settings: *index_settings
         mapping:
@@ -306,7 +309,7 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag}
+                exact: {type: text, analyzer: tag, fielddata: 'true'}
             alternative_title: *titleField
             author: &personField
               type: object
@@ -316,7 +319,7 @@ search:
                   type: text
                   copy_to: all
                   fields:
-                    exact: {type: text, analyzer: tag}
+                          exact: {type: text, analyzer: tag}
             editor: *personField
             translator: *personField
             supervisor: *personField
@@ -386,7 +389,7 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag}
+                exact: {type: text, analyzer: tag, fielddata: 'true'}
             publication_date: {type: text, index: 'false'}
             series_title:
               type: text
@@ -899,6 +902,8 @@ search:
                 'exact': true
               field: thematic_area
       user:
+        fix:
+            - remove_field(_version)
         index: librecat_user
         settings: *index_settings
         mapping:
@@ -914,7 +919,7 @@ search:
               analyzer: name
               fields:
                 exact: {type: text, analyzer: tag}
-            last_name: {type: text, analyzer: name}
+            last_name: {type: text, analyzer: name, fielddata: 'true'}
             first_name: {type: text, analyzer: name}
             old_name:
               properties:
@@ -1048,6 +1053,8 @@ search:
                 '<>': true
               field: publication_count
       department:
+        fix:
+            - remove_field(_version)
         index: librecat_department
         settings: *index_settings
         mapping:
@@ -1122,6 +1129,8 @@ search:
               field: display
               sort: {field: 'display.exact'}
       research_group:
+        fix:
+            - remove_field(_version)
         index: librecat_research_group
         settings: *index_settings
         mapping:

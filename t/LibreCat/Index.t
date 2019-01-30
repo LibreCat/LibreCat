@@ -47,7 +47,7 @@ is_deeply $status,
     },
     'correct status';
 
-ok $index->switch($pub_idx), "switch";
+ok $index->switch_all, "switch";
 
 $status = $index->status_for($pub_idx);
 
@@ -60,7 +60,5 @@ is_deeply $status ,
     'all_indices'           => ["${pub_idx}_1", "${pub_idx}_2",]
     },
     'correct status';
-
-$index->initialize;
 
 done_testing;

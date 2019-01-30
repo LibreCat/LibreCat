@@ -239,8 +239,10 @@ sub touch_index {
 
     my ($info) = grep { $_->{index} eq $index } @{$self->indices};
 
-    $self->search_store_1->bag($info->{bag})->get('¯\_(ツ)_/¯');
-    $self->search_store_2->bag($info->{bag})->get('¯\_(ツ)_/¯');
+    $self->search_store_1->bag($info->{bag})->create_index;
+    $self->search_store_2->bag($info->{bag})->create_index;
+
+    1;
 }
 
 sub status_for {
@@ -423,7 +425,6 @@ sub _do_index {
 
         $bag_n->add_many($fixer->fix($main_bag->benchmark));
         $bag_n->commit;
-
         # Check for records changed during the previous indexation...
         my $has_changes;
         do {
@@ -453,7 +454,6 @@ sub _do_index {
             );
 
             $bag_n->commit;
-
             $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
         } while ($has_changes);
     }
@@ -463,7 +463,7 @@ sub _do_index {
         $ok = 0;
     };
 
-    1;
+    $ok;
 }
 
 sub _do_switch {
