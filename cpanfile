@@ -35,7 +35,7 @@ requires 'Catmandu::LDAP';
 requires 'Catmandu::OAI' , '0.16';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::SRU','0.039';
-requires 'Catmandu::Store::ElasticSearch', '>=0.0511';
+requires 'Catmandu::Store::ElasticSearch', '>=1.0';
 requires 'Catmandu::Store::FedoraCommons';
 requires 'Catmandu::Store::MongoDB', '>=0.0403';
 requires 'Catmandu::Validator::JSONSchema','0.11';
