@@ -16,7 +16,7 @@ env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1 DEVEL_COVER=0
 matrix:
   include:
     - perl: "5.28"
-      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1 DEVEL_COVER=1
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1 DEVEL_COVER=0
 
 before_install:
   - docker pull librecat/citeproc-node
@@ -43,7 +43,7 @@ install:
 
 script:
   - if [ "$DEVEL_COVER" = "1" ]; then cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit $?'; fi
-  - if [ "$DEVEL_COVER" = "0" ]; then prove -lr t/; fi
+  - if [ "$DEVEL_COVER" = "0" ]; then prove -lvr t/; fi
 
 after_success:
   - if [ "$DEVEL_COVER" = "1" ]; then cpanm --quiet --notest --skip-satisfied Devel::Cover::Report::Coveralls; fi
