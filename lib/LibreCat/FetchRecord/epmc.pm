@@ -21,7 +21,7 @@ sub fetch {
     my $url = sprintf "%s?query=%s&format=json", $self->baseurl,
         uri_escape_utf8($id);
 
-    my $data = Catmandu->importer('getJSON', from => $url)->to_array;
+    my $data = Catmandu->importer('getJSON', from => $url, warn => 0)->to_array;
 
     unless ($data->[0]{hitCount}) {
         $self->log->error("failed to request $url");

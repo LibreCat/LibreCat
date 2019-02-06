@@ -285,20 +285,15 @@ any '/coffee' => sub {
     template '418';
 };
 
-=head1 ANY {other route....}
+=head1 ANY {other route...}
 
 Throws 'page not found'.
 
 =cut
 
 any qr{.*} => sub {
-    if (session->{user}) {
-        return redirect uri_for('/librecat');
-    }
-    else {
-        status 'not_found';
-        return template '404';
-    }
+    status 'not_found';
+    return template '404';
 };
 
 1;

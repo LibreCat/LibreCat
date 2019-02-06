@@ -38,7 +38,6 @@ file details:
 
         # Metadata fields that can be overwritten by the user
         'access_level' => 'open_access',
-        'open_access'  => 1,
         'relation'     => 'main_file',
 
         # Read-only fields
@@ -84,7 +83,6 @@ sub upload_temp_file {
         tempid       => $tempid,
         content_type => $content_type,
         access_level => h->config->{default_access_level} // "open_access",
-        open_access  => 1,
         relation     => "main_file",
         creator      => $creator,
         date_updated => $now,
@@ -289,7 +287,6 @@ sub update_file {
     $file->{file_id} //= publication->generate_id;
 
     $file->{access_level} //= 'open_access';
-    $file->{open_access}  //= 1;
     $file->{relation}     //= 'main_file';
 
     return $file;
@@ -492,7 +489,6 @@ sub _update_file_metadata {
         $fi->{$name} = $prev_fi->{$name};
     }
 
-    $fi->{open_access}  = $fi->{access_level} eq 'open_access' ? 1 : 0;
     $fi->{date_created} = timestamp unless $fi->{date_created};
     $fi->{date_updated} = timestamp;
 }

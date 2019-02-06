@@ -734,8 +734,7 @@ sub _files_load {
         id
         access_level creator content_type
         date_created date_updated file_id
-        file_name file_size open_access
-        request_a_copy checksum
+        file_name file_size request_a_copy checksum
         relation title description embargo embargo_to
     );
 
