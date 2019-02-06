@@ -50,9 +50,9 @@ default_facets:
         field: status
         size: 8
     year:
-      term:
+      terms:
         field: year
-        size: 100
+        size: 20
         order: {_key: desc}
     type:
       terms:
