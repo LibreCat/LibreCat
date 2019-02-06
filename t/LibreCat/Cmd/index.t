@@ -34,7 +34,8 @@ require_ok $pkg;
         = test_app(qq|LibreCat::CLI| => ['index', '--yes', 'initialize']);
     ok !$result->error, 'ok initialize threw no exception';
 
-    warn $result->stderr;
+use Data::Dumper;
+    warn Dumper($result);
 }
 
 {
