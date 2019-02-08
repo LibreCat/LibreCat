@@ -138,7 +138,7 @@ sub _add_citation {
     while ($cite =~ /\\\'(\d{3,4})/) {
         my $hexv = $1;
         if ($HEXMAP->{$hexv}) {
-            $cite =~ s/\\\'$hexv/$HEXMAP->{$hexv} /g;
+            $cite =~ s/\\\'$hexv/$HEXMAP->{$hexv}/g;
         }
         else {
             $cite =~ s/\\\'$hexv//g;
@@ -156,7 +156,7 @@ sub _add_citation {
         while ($title =~ /\\\'(\d{3,4})/) {    # why while??
             my $hexv = $1;
             if ($HEXMAP->{$hexv}) {
-                $title =~ s/\\\'$hexv/$HEXMAP->{$hexv} /g;
+                $title =~ s/\\\'$hexv/$HEXMAP->{$hexv}/g;
             }
             else {
                 $title =~ s/\\\'$hexv//g;
