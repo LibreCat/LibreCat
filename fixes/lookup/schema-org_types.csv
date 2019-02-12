@@ -1,0 +1,19 @@
+type,schema-org_type
+journal_article,ScholarlyArticle
+preprint,xx
+report,Report
+conference,conference paper
+conference_editor,conference publication
+conference_abstract,conference abstract
+working_paper,Report
+book,Book
+book_editor,Book
+book_chapter,Chapter
+newspaper_article,Newsarticle
+translation,translation
+review,Review
+encyclopedia_article,encyclopaedia entry
+patent,patent
+journal_editor,journal editor
+research_data,Dataset
+software,SoftwareSourceCode

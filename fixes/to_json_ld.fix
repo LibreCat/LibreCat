@@ -1,0 +1,35 @@
+# mapping records to JSON-LD
+
+add("r.@context", "http://schema.org/")
+
+lookup(type, fixes/lookup/schema-org_types.csv)
+move(type, "r.@type")
+
+move(title, r.name)
+
+move(year, r.copyrightYear)
+
+copy(_id, r.url)
+prepend(r.url, '/record/')
+#uri_base()
+prepend(url, uri_base)
+
+move(abstract.0.text, r.description)
+
+if exists(author)
+  move(author.*.full_name, r.author.$append)
+end
+
+if exists(editor)
+  move(editor.*.full_name, r.editor.$append)
+end
+
+if exists(translator)
+  move(translator.*.full_name, r.translator.$append)
+end
+
+move(date_created, r.dateCreated)
+move(date_updated, r.dateModified)
+
+retain(r)
+move(r, .)

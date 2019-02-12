@@ -43,6 +43,8 @@ Splash page for :id.
 
 =cut
 
+state $jsonld_fix = h->create_fixer('fixes/to_json_ld.fix');
+
 get "/record/:id" => sub {
     my $id = params("route")->{id};
 
@@ -63,7 +65,12 @@ get "/record/:id" => sub {
     }
 
     $hits->{total} ? status 200 : status 404;
-    template "publication/record", $hits->first;
+
+    if ($hits->{total}) {
+        my $schema_org = export_to_string($hits->first, 'JSON', {fix => $jsonld_fix});
+    }
+
+    template "publication/record", {$hits->first, schema_org => $schema_org};
 
 };
 
