@@ -27,6 +27,7 @@ publication_type_order:
   column_admin: []
   column_rd:
     - research_data
+    - software
 # sort order of fields for all types
 field_order:
   basic_fields:
@@ -83,6 +84,15 @@ field_order:
     - external_file
     - dropzone
     - license
+  license:
+    - ddc
+    - urn
+    - license_data
+    - open_data_release
+    - pub_license
+    - license_publication
+    - license_software
+    - other_data_license
   supplementary_fields:
     - article_type
     - abstract
@@ -197,7 +207,7 @@ publication_types:
         license:
           pub_license:
             mandatory: 1
-          cc_license:
+          license_publication:
             mandatory: 0
           urn:
             mandatory: 0
@@ -777,7 +787,7 @@ publication_types:
         dropzone:
           mandatory: 0
         license:
-          data_reuse_license:
+          license_data:
             mandatory: 1
           open_data_release:
             mandatory: 1
@@ -791,6 +801,63 @@ publication_types:
         keyword: *keyword
         alternative_id: *alternative_id
       related_material: &related_material_rd
+        related_material.rd:
+          mandatory: 0
+        related_material.link:
+          mandatory: 0
+  software:
+    fields:
+      basic_fields:
+        document_type:
+          multiple: 0
+        doi:
+          readonly: 1
+        title:
+          mandatory: 1
+          multiple: 0
+        author:
+          mandatory: 1
+          multiple: 1
+          idm: 1
+        department:
+          multiple: 1
+        project:
+          multiple: 1
+        research_group:
+          multiple: 1
+        publisher:
+          mandatory: 1
+        year_extern:
+          year:
+            mandatory: 1
+          extern:
+            mandatory: 0
+        locked:
+          mandatory: 0
+      file_upload:
+        external_file:
+          mandatory: 0
+        dropzone:
+          mandatory: 0
+        license:
+          license_software:
+            mandatory: 1
+          open_data_release:
+            mandatory: 1
+          other_data_license:
+            mandatory: 0
+      supplementary_fields:
+        abstract:
+          multiple: 1
+        keyword:
+          multiple: 0
+        ddc:
+          mandatory: 0
+        jel:
+          multiple: 1
+        alternative_id:
+          multiple: 1
+      related_material:
         related_material.rd:
           mandatory: 0
         related_material.link:

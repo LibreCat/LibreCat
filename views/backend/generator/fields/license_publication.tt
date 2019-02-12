@@ -1,0 +1,18 @@
+[% licenses_publication = h.config.lists.licenses.publication %]
+<strong>[% h.loc("forms.${type}.field.license.license_publication.label") %]</strong>
+<div class="row innerrow">
+  <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.license_publication.mandatory %} mandatory{% END %}">
+  {% IF fields.file_upload.license.license_publication %}
+  [% h.loc("forms.${type}.field.license.license_publication.select_text") %]
+  <select name="license" id="id_license_publication" class="form-control">
+    <option value="">[% h.loc("forms.${type}.field.license.license_publication.select_a_license") %]</option>
+    [% FOR lic IN licenses_publication %]
+    <option value="[% lic %]"[% IF license == lic %] selected="selected"[% END %]>[% h.loc("licenses.${lic}.short") %]</option>
+    [% END %]
+  </select><br />
+
+  <a href="https://creativecommons.org/choose/"><span class="fa fa-chevron-right"></span>[% h.loc("forms.${type}.field.license.info_page") %]</a><br />
+
+  {% END %}
+  </div>
+</div>
