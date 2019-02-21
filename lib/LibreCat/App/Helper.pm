@@ -194,7 +194,8 @@ sub is_marked {
 sub all_marked {
     my ($self) = @_;
     my $p = $self->extract_params();
-    push @{$p->{q}}, "status=public";
+    push @{$p->{cql}}, $p->{q} if $p->{q};
+    push @{$p->{cql}}, "status=public";
 
     my $hits       = librecat->searcher->search('publication', $p);
     my $marked     = Dancer::session 'marked';
