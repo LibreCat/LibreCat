@@ -3,6 +3,7 @@ package LibreCat::Cmd::publication;
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util;
+use Catmandu::Plugin::DynamicChecksum;
 use LibreCat qw(queue publication timestamp);
 use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
@@ -23,6 +24,7 @@ librecat publication valid   [options] <FILE>
 librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
 librecat publication fetch   [options] <source> <id>
 librecat publication embargo [options] ['update']
+librecat publication checksum [options] list|init|test|update <id> | <IDFILE>
 
 options:
     --sort=STR         (sorting results [only in combination with cql-query])
@@ -34,6 +36,7 @@ options:
     --log=STR          (write an audit message)
     --with-citations   (process citations while adding records)
     --with-files       (process files while addings records)
+    --csv              (import csv/tsv metadata in `files` command)
 
 E.g.
 
@@ -62,8 +65,26 @@ librecat publication embargo
 # Create a file update script to delete the embargo
 librecat publication embargo update > /tmp/update.txt
 
-# Update the file metadata
-librecat publication files /tmp/update.txt
+# Export the files metadata
+librecat publication files --csv [id|cql] > /tmp/update.txt
+
+# Import the files metadata
+librecat publication files --csv /tmp/update.txt
+
+# Check if all the files in the publicatons are found in the file store
+librecat publication files REPORT
+
+# Test the checksums found in the metadata against the file_store for
+# an ID or file with ID-s
+librecat publication checksum test ID
+
+# Calculate the checksum for files found in the metadata and store it in the
+# metadata record
+librecat publication checksum init ID
+
+# Test and update the checksums for files found in the metadata record with
+# the data found in the file_store
+librecat publication checksum update ID
 
 EOF
 }
@@ -80,6 +101,7 @@ sub command_opt_spec {
         ['history',          ""],
         ['with-citations',   ""],
         ['with-files',       ""],
+        ['csv',              ""],
     );
 }
 
@@ -96,7 +118,7 @@ sub command {
     $self->opts($opts);
 
     my $commands
-        = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo$/;
+        = qr/list|export|get|add|delete|purge|valid|files|fetch|embargo|checksum$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -160,6 +182,9 @@ sub command {
     }
     elsif ($cmd eq 'embargo') {
         return $self->_embargo(@$args);
+    }
+    elsif ($cmd eq 'checksum') {
+        return $self->_checksum(@$args);
     }
 }
 
@@ -226,13 +251,12 @@ sub _list {
             my $status  = $item->{status};
             my $type    = $item->{type} // '---';
 
-            printf "%-2.2s %-40.40s %-10.10s %-60.60s %-10.10s %s\n",
-                " "    # not use
+            printf "%-40.40s %-10.10s %-60.60s %-10.10s %s\n",
                 , $id, $creator, $title, $status, $type;
         }
     );
 
-    print "count: $count\n";
+    print STDERR "count: $count\n";
 
     if (!defined($query) && defined($sort)) {
         print STDERR
@@ -270,7 +294,7 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        say STDERR "warning: sort only active in combination with a query";
+        print STDERR "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -376,7 +400,7 @@ sub _delete {
         return 0;
     }
     else {
-        print STDERR "ERROR: delete $id failed";
+        print STDERR "ERROR: delete $id failed\n";
         return 2;
     }
 }
@@ -398,7 +422,7 @@ sub _purge {
         return 0;
     }
     else {
-        print STDERR "ERROR: purge $id failed";
+        print STDERR "ERROR: purge $id failed\n";
         return 2;
     }
 }
@@ -514,6 +538,110 @@ sub _embargo {
     $exporter->commit;
 }
 
+sub _checksum {
+    my ($self, $action, $id) = @_;
+
+    croak "usage: $0 checksum initialize|test|update <id>" unless defined($action) && $action =~ /^(list|init|test|update)$/;
+    croak "usage: $0 checksum $action <id>" unless defined($id);
+
+    return $self->_on_all(
+        $id,
+        sub {
+            $self->_checksum_id($action,shift);
+        }
+    );
+}
+
+sub _checksum_id {
+    my ($self, $action, $id) = @_;
+
+    my $file_store = Catmandu->config->{filestore}->{default}->{package};
+    my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
+
+    my $pkg = Catmandu::Util::require_package($file_store,
+                                        'Catmandu::Store::File');
+
+    my $pubs = publication;
+
+    my $rec = $pubs->get($id);
+
+    unless ($rec) {
+        print STDERR "ERROR: checksum $id failed\n";
+        return 2;
+    }
+
+    my $files = $pkg->new(%$file_opt)->index->files($id);
+
+    my $pub_files = $rec->{file} // [];
+
+    my $update = 0;
+    my $errors = 0;
+
+    for my $fi (@$pub_files) {
+        my ($msg,$stored_checksum);
+        my $file_name       = $fi->{file_name};
+        my $file_checksum   = $fi->{checksum} // '';
+        my $si              = $files->get($file_name);
+
+        if (!$si) {
+            $msg = 'NOT_FOUND';
+            $errors++;
+        }
+        elsif ($action eq 'list') {
+            $msg = '';
+        }
+        elsif ($action eq 'init') {
+            if (Catmandu::Util::is_string($file_checksum)) {
+                $msg = 'OK';
+            }
+            else {
+                $file_checksum = $fi->{checksum} = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+                $update++;
+                $msg = 'OK';
+            }
+        }
+        elsif ($action eq 'test') {
+            if (Catmandu::Util::is_string($file_checksum)) {
+                my $stored_checksum = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+                if ($file_checksum eq $stored_checksum) {
+                    $msg = 'OK';
+                }
+                else {
+                    $msg = 'INVALID';
+                    $errors++;
+                }
+            }
+            else {
+                $msg = 'IGNORED';
+            }
+        }
+        elsif ($action eq 'update') {
+            $file_checksum = $fi->{checksum} = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+            $update++;
+            $msg = 'OK';
+        }
+        else {
+            croak "$0 : unknown action $action";
+        }
+
+        printf "%s %-9s %-32s %s\n"
+                , $id
+                , $msg
+                , $file_checksum
+                , $file_name;
+    }
+
+    if ($update) {
+        $pubs->add($rec);
+
+        if (my $msg = $self->opts->{log}) {
+            audit_message($rec->{_id}, 'add', $msg);
+        }
+    }
+
+    return $errors = 0 ? 0 : 2;
+}
+
 sub _files {
     my ($self, $file) = @_;
 
@@ -539,7 +667,11 @@ sub _files {
 sub _files_list {
     my ($self, $id) = @_;
 
-    my $exporter = Catmandu->exporter('YAML');
+    my $fields = [qw(id file_id access_level request_a_copy
+                    relation embargo embargo_to file_name)];
+
+    my $exporter = Catmandu->exporter(
+                    $self->opts->{csv} ? 'TSV' : 'YAML', fields => $fields);
 
     my $printer = sub {
         my ($item) = @_;
@@ -548,7 +680,7 @@ sub _files_list {
         for my $file (@{$item->{file}}) {
             $exporter->add(
                 {
-                    _id            => $item->{_id},
+                    id             => $item->{_id},
                     file_id        => $file->{file_id},
                     access_level   => $file->{access_level},
                     request_a_copy => $file->{request_a_copy} // 'NA',
@@ -581,7 +713,8 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
-    my $importer = Catmandu->importer('YAML', file => $filename);
+    my $importer = Catmandu->importer(
+                        $self->opts->{csv} ? 'TSV' : 'YAML' , file => $filename);
 
     my $update_file = sub {
         my ($id, $files) = @_;
@@ -601,8 +734,7 @@ sub _files_load {
         id
         access_level creator content_type
         date_created date_updated file_id
-        file_name file_size open_access
-        request_a_copy checksum
+        file_name file_size request_a_copy checksum
         relation title description embargo embargo_to
     );
 
@@ -621,7 +753,7 @@ sub _files_load {
             }
 
             my $id = delete $file->{id};
-            croak "file - no _id column found" unless defined $id;
+            croak "file - no id column found" unless defined $id;
             $current_id //= $id;
 
             if ($id eq $current_id) {
@@ -673,19 +805,15 @@ sub _file_process {
             delete $file->{$key} if $file->{$key} eq 'NA';
         }
 
-        unless ($file->{file_id}
-            && $file->{date_created}
-            && $file->{date_updated}
-            && $file->{content_type}
-            && $file->{creator})
-        {
+        # If we have have a new file do all metadata processing...
+        unless ($old) {
             $file
                 = LibreCat::App::Catalogue::Controller::File::update_file($id,
                 $file);
         }
 
         unless (defined $file) {
-            croak "FATAL - failed to update `$name' for $id";
+            croak "FATAL - failed to update `$name' for $id (does it exist in the file store?)";
         }
     }
 
@@ -718,6 +846,8 @@ sub _file_process {
 }
 
 sub _files_reporter {
+    my ($self) = @_;
+
     my $file_store = Catmandu->config->{filestore}->{default}->{package};
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
 
@@ -725,7 +855,9 @@ sub _files_reporter {
         'Catmandu::Store::File');
     my $files = $pkg->new(%$file_opt);
 
-    my $exporter = Catmandu->exporter('YAML');
+    my $fields = [qw(container status filename error)];
+
+    my $exporter = Catmandu->exporter($self->opts->{csv} ? 'TSV' : 'YAML', fields => $fields);
 
     publication->each(
         sub {
@@ -790,6 +922,7 @@ LibreCat::Cmd::publication - manage librecat publications
     librecat publication files   [options] [<id>]|[<cql-query>]|[<FILE>]|REPORT
     librecat publication fetch   [options] <source> <id>
     librecat publication embargo [options] ['update']
+    librecat publication checksum [options] list|init|test|update <id> | <IDFILE>
 
     options:
         --sort=STR         (sorting results [only in combination with cql-query])
@@ -801,4 +934,6 @@ LibreCat::Cmd::publication - manage librecat publications
         --log=STR          (write an audit message)
         --with-citations   (process citations while adding records)
         --with-files       (process files while addings records)
+        --csv              (import csv/tsv metadata in `files` command)
+
 =cut

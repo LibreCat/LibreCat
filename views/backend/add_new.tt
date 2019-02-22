@@ -9,8 +9,8 @@
 
   <div class="page-header" id="banner">
     <h1>[% h.loc("add_new.heading") %]</h1>
-    <h2>[% IF error %]<p class="text-danger">[% error %]</p>[% END %]</h2>
-    <h2>[% IF ok %]<p class="text-success">[% ok %]</p>[% END %]</h2>
+    <h3>[% IF error %]<p class="text-danger">[% error %]</p>[% END %]</h3>
+    <h3>[% IF ok %]<p class="text-success">[% ok %]</p>[% END %]</h3>
     <ul>
     [% FOREACH rec IN imported %]
        <li>[% rec.title | html %]<br><a href="[% uri_base %]/librecat/record/edit/[% rec._id %]">Edit</a></li>

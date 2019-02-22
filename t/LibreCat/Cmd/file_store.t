@@ -115,7 +115,7 @@ require_ok $pkg;
 
     my $output = $result->stdout;
 
-    is $output , "", 'got no output';
+    is $output , "purged 1234\n", 'got no output';
 
     ok !-d 't/data/000/001/234', 'container is gone';
 }

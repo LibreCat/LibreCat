@@ -16,6 +16,8 @@ download_file_name: "%o"
 default: &filestore_settings
     package: Simple
     options:
+        # Optional calculate MD5 checksums on the fly
+        # default_plugins: [ 'DynamicChecksum' ]
         root: data/file_uploads
 
 api:
@@ -42,20 +44,3 @@ access_thumbnailer:
     options:
         files: *filestore_settings
         access: *accessstore_settings
-
-# Install Catmandu::BagIt for this demo
-bagit_demo:
-    package: BagIt
-    options:
-        root: data/bag_uploads
-
-# Install Catmandu::FedoraCommons for this demo
-fedora_demo:
-    package: FedoraCommons
-    options:
-        baseurl: http://localhost:8080/fedora
-        username: fedoraAdmin
-        password: fedoraAdmin
-        namespace: demo
-        model: DC
-        purge: 1
