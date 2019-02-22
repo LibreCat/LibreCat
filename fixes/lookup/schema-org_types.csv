@@ -1,6 +1,6 @@
 type,schema-org_type
 journal_article,ScholarlyArticle
-preprint,xx
+preprint,ScholarlyArticle
 report,Report
 conference,conference paper
 conference_editor,conference publication

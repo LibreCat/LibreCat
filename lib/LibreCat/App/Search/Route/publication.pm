@@ -7,6 +7,8 @@ LibreCat::App::Search::Route::publication - handling public record routes.
 =cut
 
 use Catmandu::Sane;
+use Catmandu qw(export_to_string);
+use Clone qw(clone);
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 use LibreCat qw(searcher);
@@ -66,11 +68,12 @@ get "/record/:id" => sub {
 
     $hits->{total} ? status 200 : status 404;
 
+    my $d = clone($hits->first);
     if ($hits->{total}) {
-        my $schema_org = export_to_string($hits->first, 'JSON', {fix => $jsonld_fix});
+        $hits->{hits}->[0]->{schema_org} = export_to_string($d, 'JSON', {fix => $jsonld_fix});
     }
 
-    template "publication/record", {$hits->first, schema_org => $schema_org};
+    template "publication/record", $hits->first;
 
 };
 

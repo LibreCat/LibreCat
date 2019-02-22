@@ -338,7 +338,6 @@
           [% END %]
         [% END %]
 
-
         <!-- Search title in -->
         <h3>[% h.loc("frontdoor.search_this") %]</h3>
         <p>
@@ -357,7 +356,7 @@
 </div><!-- outer row-->
 
 <script type="application/ld+json">
-[% schema_org %]
+[%- schema_org -%]
 </script>
 
 <!-- END publication/record.tt -->
