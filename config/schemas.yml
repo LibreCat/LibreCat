@@ -346,6 +346,9 @@ publication:
       items:
         type: string
       description: "Alternative title"
+    license:
+      type: string
+      description: "Any license"
     data_reuse_license:
        type: string
        description: "Data re-use license"
