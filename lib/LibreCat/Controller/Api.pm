@@ -6,11 +6,6 @@ use LibreCat -self;
 use JSON::MaybeXS;
 use Mojo::Base 'Mojolicious::Controller';
 
-sub default {
-    my $c = shift;
-    $c->render(json => {foo => 'bar'});
-}
-
 sub show {
     my $c     = $_[0];
     my $model = $c->param('model');
@@ -196,7 +191,9 @@ __END__
 
 =head1 NAME
 
-LibreCat::Controller::Api -
+LibreCat::Controller::Api - the api controller used by L<Mojolicious::Plugin::LibreCat::Api>
+
+=head1 SYNOPSIS
 
 =head2 SEE ALSO
 

@@ -88,10 +88,6 @@ __END__
 
 =head1 NAME
 
-Mojolicious::Plugin::LibreCat::Api - Routes
-
-=head2
-
-
+Mojolicious::Plugin::LibreCat::Api - the api route dispatcher
 
 =cut
