@@ -1,5 +1,7 @@
 audit: 1
 
+api_token: my-api-tokenXX
+
 uri_base: "http://localhost:5001"
 
 default_lang: en

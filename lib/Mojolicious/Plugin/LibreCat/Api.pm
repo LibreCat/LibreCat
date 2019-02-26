@@ -10,19 +10,44 @@ sub register {
     my $models = librecat->models;
     my $r      = $app->routes;
 
+    my $api_token = librecat->config->{api_token} // '';
+
     $r->add_shortcut(
         librecat_api => sub {
             my ($r, $model) = @_;
 
+            my $auth = $r->under(
+                '/' => sub {
+                    my $c = shift;
 
-            $r->under('/' => sub {
-                my $c = shift;
-                return undef;
-            });
+                    my $auth_token
+                        = $c->req->headers->header('Authorization') // '';
+                    unless ($auth_token) {
+                        $c->render(
+                            json   => {errors => "Not authorized."},
+                            status => 401
+                        );
+                        return 0;
+                    }
+
+                    if ($auth_token eq $api_token) {
+
+                        # authorized
+                        return 1;
+                    }
+                    else {
+                        # not authorized
+                        $c->render(
+                            json   => {errors => "Not authorized."},
+                            status => 401
+                        );
+                        return 0;
+                    }
+                }
+            );
 
             my $model_api
-                = $r->any("/api/$model")->to('api#', model => $model);
-
+                = $auth->any("/api/$model")->to('api#', model => $model);
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
@@ -51,19 +76,6 @@ sub register {
             return $model_api;
         }
     );
-
-    # my $auth = $r->under('/api' => sub {
-    #     my $c = shift;
-    #     return 1;
-    #     # Authenticated
-    #     #die $c->req->headers->header('Authentication');
-    #
-    #     # Not authenticated
-    #     # $c->render(text => "You're not Bender.", status => 401);
-    #     # return undef;
-    # });
-    #
-    # $auth->librecat_api($_) for @$models;
 
     $r->librecat_api($_) for @$models;
 }
