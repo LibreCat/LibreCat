@@ -119,3 +119,4 @@ requires 'YAML::XS';
 requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
 requires 'Date::Simple';
+requires 'Tie::IxHash', '1.23';
