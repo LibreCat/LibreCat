@@ -16,7 +16,7 @@ env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1 DEVEL_COVER=0 ES_VERSION=6
 matrix:
   include:
     - perl: "5.28"
-      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSLES_VERSION=6.5.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz_TEST=1 DEVEL_COVER=1
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=1 CSL_TEST=1 DEVEL_COVER=1 ES_VERSION=6.5.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 
 before_install:
   - docker pull librecat/citeproc-node
