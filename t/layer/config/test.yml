@@ -53,7 +53,7 @@ default_facets:
       terms:
         field: 'year'
         size: 100
-        order: 'reverse_term'
+        order: {_key: desc}
     type:
       terms:
         field: 'type'
