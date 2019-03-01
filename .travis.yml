@@ -33,7 +33,7 @@ after_install:
 before_script:
   - sleep 3
   # cf. https://stackoverflow.com/questions/42928765/convertnot-authorized-aaaa-error-constitute-c-readimage-453
-  - sed -i -e 's/<\/policymap>/  <policy domain="coder" rights="read|write" pattern="PDF"\/>\n  <policy domain="coder" rights="read|write" pattern="LABEL"\/>\n\/policymap>/g' /etc/ImageMagick-6/policy.xml
+  - sudo sed -i -e 's/<\/policymap>/  <policy domain="coder" rights="read|write" pattern="PDF"\/>\n  <policy domain="coder" rights="read|write" pattern="LABEL"\/>\n\/policymap>/g' /etc/ImageMagick-6/policy.xml
 
 service:
   - sqlite3
