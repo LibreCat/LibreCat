@@ -121,13 +121,10 @@ $('#fileSubmit').click( function() {
   else if ($('#id_accessLevel_request').is(':checked')) {
     data.access_level   = 'closed';
     data.request_a_copy = 1;
-<<<<<<< HEAD
-=======
     data.open_access    = 0;
     if ($('#id_rac_email').val()){
       data.rac_email = $('#id_rac_email').val();
     }
->>>>>>> dev
   }
 
   // Add an embargo?
