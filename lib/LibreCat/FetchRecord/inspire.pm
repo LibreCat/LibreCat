@@ -1,6 +1,7 @@
 package LibreCat::FetchRecord::inspire;
 
 use Catmandu::Util qw(:io);
+use LibreCat -self;
 use URI::Escape;
 use Moo;
 
@@ -24,7 +25,7 @@ sub fetch {
         return ();
     }
 
-    my $fixer = $self->create_fixer('inspire_mapping.fix');
+    my $fixer = librecat->fixer('inspire_mapping.fix');
 
     $data = $fixer->fix($data);
 
