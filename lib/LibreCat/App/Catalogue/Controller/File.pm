@@ -11,10 +11,11 @@ use Catmandu::Util;
 use Catmandu;
 use LibreCat qw(publication timestamp);
 use LibreCat::App::Helper;
-use Dancer::FileUtils qw(path dirname);
+use Dancer::FileUtils;
 use Dancer ':syntax';
 use Data::Uniqid;
 use File::Copy;
+use Path::Tiny;
 use Carp;
 use Encode qw(decode encode);
 use Clone 'clone';
@@ -92,7 +93,7 @@ sub upload_temp_file {
     $file_data->{rac_email} = $rac_email if $rac_email;
 
     # Creating a new temporary storage for the upload files...
-    my $filedir = path(h->config->{filestore}->{tmp_dir}, $tempid);
+    my $filedir = Dancer::FileUtils::path(h->config->{filestore}->{tmp_dir}, $tempid);
 
     h->log->info("creating $filedir");
 
@@ -106,7 +107,10 @@ sub upload_temp_file {
 
     # Copy the upload into the new temporary storage...
     my $filepath
-        = path(h->config->{filestore}->{tmp_dir}, $tempid, $file->{filename});
+        = Dancer::FileUtils::path(
+                h->config->{filestore}->{tmp_dir},
+                $tempid,
+                $file->{filename});
 
     h->log->info("copy $temp_file to $filepath");
 
@@ -166,6 +170,8 @@ sub handle_file {
 
     my $count = 0;
 
+    my $temp_dir = [];
+
     for my $fi (@{$pub->{file}}) {
 
         # Generate a new file_id if not one existed
@@ -175,10 +181,17 @@ sub handle_file {
         h->log->debug("processing file-id: " . $fi->{file_id});
 
         # If we have a tempid, then there is a file upload waiting...
-        if ($fi->{tempid}) {
+        if ($fi->{tempid} && $fi->{tempid} =~ /^\S+/) {
             my $filename = $fi->{file_name};
-            my $path     = path(h->config->{filestore}->{tmp_dir},
-                $fi->{tempid}, $filename);
+            my $path     = Dancer::FileUtils::path(
+                                h->config->{filestore}->{tmp_dir},
+                                $fi->{tempid},
+                                $filename);
+
+            # Record the temporary directory to be deleted
+            push @$temp_dir , Dancer::FileUtils::path(
+                    h->config->{filestore}->{tmp_dir},
+                    $fi->{tempid});
 
             h->log->debug("new upload with temp-id -> $path");
             # TODO: Need to check the success of this step
@@ -227,6 +240,11 @@ sub handle_file {
         }
 
         delete $fi->{tempid} if $fi->{tempid};
+
+        for my $path (@$temp_dir) {
+            h->log->debug("removing the temp-id uploads -> $path");
+            Path::Tiny::path($path)->remove_tree;
+        }
 
         $count++;
     }
