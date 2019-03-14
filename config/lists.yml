@@ -155,6 +155,10 @@ relations_file:
   -
     relation: "erratum"
   -
+    relation: "poster"
+  -
+    relation: "slides"
+  -
     relation: "supplementary_material"
   -
     relation: "other"
@@ -168,6 +172,10 @@ relations_link:
     relation: "table_of_contents"
   -
     relation: "erratum"
+  -
+    relation: "poster"
+  -
+    relation: "slides"
   -
     relation: "supplementary_material"
   -
