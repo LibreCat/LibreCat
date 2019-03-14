@@ -13,11 +13,12 @@ use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
 use LibreCat::App::Helper;
 use URL::Encode qw(url_decode);
+use Try::Tiny;
 
 sub _fetch_record {
     my ($id, $source) = @_;
 
-    eval {
+    try {
         return undef unless ($source =~ /^[a-zA-Z0-9]+$/);
 
         # check agency: crossref or datacite
@@ -55,8 +56,7 @@ sub _fetch_record {
         h->log->debug("Processing LibreCat::FetchRecord::$source $id");
 
         return $pkg->new->fetch($id);
-    };
-    if ($@) {
+    } catch {
         h->log->error("Failed to fetch $id from $source");
         return undef;
     }
