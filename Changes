@@ -16,8 +16,7 @@ Revision history for LibreCat
     - Removing merge comments #704
     - Fixing eval bug when importing records via the GUI #706
     - Fixing automatic deletion of temp_upload directories #712
-    -
-
+    
 1.2.4 2019-02-06
     - Fixing CrossRef importer network issues
     - Moving Dancer environment options to config.yml
