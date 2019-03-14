@@ -24,6 +24,13 @@ session_store:
     store: main
     bag: session
 
+log: error
+logger: console
+show_errors: 1
+template_debug: 0
+traces: 0
+warnings: 0
+
 auth_sso: []
 session_sso: []
 

@@ -14,7 +14,7 @@ login:
   login_button: "Anmelden"
   caps_lock_warning: "Feststelltaste aktiviert!"
 header:
-  title: "Publikationen an der Universit&auml;t LibreCat"
+  title: "Publikationen an der Universität LibreCat"
   my_author_page: "Meine Publikationsliste"
   my_dashboard: "Mein Dashboard"
   brand: "Start"
@@ -39,7 +39,7 @@ header:
   lang_select:
     eng: "Englisch"
     ger: "Deutsch"
-  department_affiliation: "Fakult&auml;t/ Zugeh&ouml;rigkeit"
+  department_affiliation: "Fakultät/ Zugehörigkeit"
   logged_in_as: "Eingeloggt als"
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
@@ -93,16 +93,16 @@ main_page:
     edit: "Editieren"
     details: "Details"
     view_details: "Publikationsseite in LibreCat anzeigen (Frontdoor)"
-    files: "Dateien verf&uuml;gbar"
+    files: "Dateien verfügbar"
     file: "Datei"
     internal_view: "Interne Sicht"
     audit_view: "Audit"
     request_a_copy: "Exemplar anfordern"
     request_a_copy_title: "Generiert teilbare Links zu Dateien mit Status 'Request a copy'"
-    request_a_copy_not_public: "Nur Datens&auml;tze mit Status 'public' k&ouml;nnen geteilt werden! Klicken Sie auf \"Public stellen\" und versuchen Sie es erneut."
+    request_a_copy_not_public: "Nur Datensätze mit Status 'public' können geteilt werden! Klicken Sie auf \"Public stellen\" und versuchen Sie es erneut."
     publish: "Public stellen"
-    return: "Zur&uuml;ckstellen"
-    search_similar: "Nach &auml;hnlichen Titeln suchen"
+    return: "Zurückstellen"
+    search_similar: "Nach ähnlichen Titeln suchen"
     doi: "DOI"
     main_file_link: "Download (ext.)"
     isi: "WoS"
@@ -122,7 +122,7 @@ project:
   period: "Projektzeitraum"
   start_year: "Startjahr"
   end_year: "Endjahr"
-  funder: "F&ouml;rderer"
+  funder: "Förderer"
 audit:
   title: Audit
   id: Id
@@ -150,8 +150,8 @@ facets:
   all_external_publication: "Alle Publikationen sind externe Publikationen"
   fulltext: "OA Volltext(e)"
   all_fulltext: "Alle Publikationen sind OA Volltexte"
-  popular_science: "Popul&auml;rwiss. Publikation(en)"
-  all_popular_science: "Alle Publikationen sind popul&auml;rwissenschaftlich"
+  popular_science: "Populärwiss. Publikation(en)"
+  all_popular_science: "Alle Publikationen sind populärwissenschaftlich"
   indexed_in: "Indexiert in"
   all_isi: "Alle Publikationen haben eine ISI-Id"
   all_arxiv: "Alle Publikationen haben eine arXiv-Id"
@@ -194,7 +194,7 @@ citation:
 frontdoor:
   publication: Zeitschriftentitel
   preview: "Vorschau"
-  no_record: "Dieser Eintrag existiert nicht oder wurde gel&ouml;scht"
+  no_record: "Dieser Eintrag existiert nicht oder wurde gelöscht"
   download: "Download"
   download_extern: "Download (ext.)"
   no_download: "<span class='text-danger'><strong>Es wurde kein Volltext hochgeladen. Nur Publikationsnachweis!</strong></span>"
@@ -216,7 +216,7 @@ frontdoor:
   search_this: "Suchen in"
   isbn_search: "ISBN Suche"
   item: "Eintrag"
-  items: "Eintr&auml;ge"
+  items: "Einträge"
   volume: "Band"
   issue: "Zeitschriftennummer"
   article_number: "Artikelnummer"
@@ -257,7 +257,7 @@ frontdoor:
         request_a_copy: "Request a Copy"
         closed: "Closed Access"
       last_uploaded: "Zuletzt Hochgeladen"
-      md5: "MD5 Pr&uuml;fsumme"
+      md5: "MD5 Prüfsumme"
     publication:
       label: "Publikationen"
       cited_by: "Diese Datenpublikation wird von folgenden Publikationen zitiert:"
@@ -276,8 +276,8 @@ frontdoor:
       label: "Referenzen"
       data_by: "Daten bereitgestellt von <a href='http://europepmc.org/'>Europe PubMed Central</a>."
     confirmation_letter:
-      label: "Best&auml;tigungsschreiben"
-      confirmation: "Best&auml;tigung"
+      label: "Bestätigungsschreiben"
+      confirmation: "Bestätigung"
     related_material: "Links"
     external_data:
       label: "Software/ Ext. Daten"
@@ -286,15 +286,15 @@ frontdoor:
     cite_this: "Zitieren"
     export_search: "Export / Suche"
   fulltext:
-    view: "Volltext &ouml;ffnen"
-  id_title: "Auf diese Seite verlinken, z.B. f&uuml;r Bookmarks"
-  license_heading: "Alle Dateien verf&uuml;gbar unter der/den folgenden Lizenz(en):"
+    view: "Volltext öffnen"
+  id_title: "Auf diese Seite verlinken, z.B. für Bookmarks"
+  license_heading: "Alle Dateien verfügbar unter der/den folgenden Lizenz(en):"
 mark:
   marked_publication: "Markierte Publikation(en)"
-  no_marked_publication: "Sie haben noch keine Publikation 'markiert'. Wenn Sie Publikationen zu dieser Seite hinzuf&uuml;gen m&ouml;chten, klicken Sie auf den Link <em>Markieren</em> neben einer Publikation. Sie finden diesen Link auf Personenseiten, Publikationslisten oder Publikationsseiten. Anschlie&szlig;end k&ouml;nnen Sie markierte Publikationen in verschiedenen Formaten exportieren (z.B. BibTex, RIS oder RTF)."
+  no_marked_publication: "Sie haben noch keine Publikation 'markiert'. Wenn Sie Publikationen zu dieser Seite hinzufügen möchten, klicken Sie auf den Link <em>Markieren</em> neben einer Publikation. Sie finden diesen Link auf Personenseiten, Publikationslisten oder Publikationsseiten. Anschlie&szlig;end können Sie markierte Publikationen in verschiedenen Formaten exportieren (z.B. BibTex, RIS oder RTF)."
   mark_all: "Alle markieren"
-  unmark_all: "Alle Markierungen l&ouml;schen"
-  mark_unmark: "Markieren/ Markierung l&ouml;schen"
+  unmark_all: "Alle Markierungen löschen"
+  mark_unmark: "Markieren/ Markierung löschen"
   display_export: "Darstellung / Sortierung"
 add_new:
   heading: "Neue Publikation anlegen"
@@ -304,10 +304,10 @@ add_new:
     epmc: "PMID"
     arxiv: "ArXiv ID"
     inspire: "Inspire ID"
-  do_it_yourself: "Option 2:<br />W&auml;hlen Sie einen Typ und f&uuml;llen Sie das Formular aus"
+  do_it_yourself: "Option 2:<br />Wählen Sie einen Typ und füllen Sie das Formular aus"
   drop_oa: "Option 3:<br />Ziehen Sie Ihren Open-Access-Volltext hier her"
-  paste_bibtex: "Option 4:<br />F&uuml;gen Sie Ihren BibTex Eintrag hier ein"
-  paste_bibtex_placeholder: "Bitte f&uuml;gen Sie nur jeweils einen Datensatz ein"
+  paste_bibtex: "Option 4:<br />Fügen Sie Ihren BibTex Eintrag hier ein"
+  paste_bibtex_placeholder: "Bitte fügen Sie nur jeweils einen Datensatz ein"
   wos_import: "Web of Science Import"
   qae_title: "New Quick And Easy Publication - Will be edited by LibreCat team"
 forms:
@@ -317,7 +317,7 @@ forms:
       basic_fields: "Details"
       file_upload: "Upload"
       supplementary_fields: "Weitere Angaben"
-      related_material: "Verkn&uuml;pfungen"
+      related_material: "Verknüpfungen"
     field:
       document_type: &document_type
         label: "Publikationstyp"
@@ -325,11 +325,11 @@ forms:
       doi: &doi
         label: "DOI"
         placeholder: "z.B. 10.4119/xyz/2695161"
-        title: "Der DOI wird automatisch generiert und kann nicht ver&auml;ndert werden."
-        register: "Ich m&ouml;chte einen neuen DOI registrieren."
+        title: "Der DOI wird automatisch generiert und kann nicht verändert werden."
+        register: "Ich möchte einen neuen DOI registrieren."
       title: &booktitle
         label: "Titel"
-        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
+        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       alternative_title: &alternative_title
         label: "Alternativer Titel"
         label_short: "Alt. Titel"
@@ -345,21 +345,21 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Autor Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
       edition: &edition
         label: "Auflage"
         placeholder: "z.B. 2"
       department: &department
         label: "Einrichtung"
         label_short: "Einr."
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Einrichtungen auszuw&auml;hlen."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Einrichtungen auszuwählen."
       project: &project
         label: "Projekt"
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um ein Projekt auszuw&auml;hlen."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um ein Projekt auszuwählen."
       research_group: &research_group
         label: "Forschungsgruppe"
         label_short: "Forsch.gr."
-        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Forschungsgruppe auszuw&auml;hlen."
+        placeholder: "Beginnen Sie zu tippen, oder nutzen Sie (Pfeil runter) um eine Forschungsgruppe auszuwählen."
       place: &place
         label: "Verlagsort"
         label_short: "Ort"
@@ -374,7 +374,7 @@ forms:
           placeholder: "z.B. 2015"
         extern:
           label_short: "Extern"
-          placeholder: "Ver&ouml;ffentlicht vor/nach Besch&auml;ftigung an der LibreCat"
+          placeholder: "Veröffentlicht vor/nach Beschäftigung an der LibreCat"
       page: &pages
         label_short: "Seiten"
         label: "Anzahl Seiten"
@@ -390,7 +390,7 @@ forms:
       publication_identifier: &publication_identifier
         label: "ISSN / ISBN"
         label_short: "ISSN/ISBN"
-        placeholder: "z.B. (e)ISBN oder (e)ISSN ausw&auml;hlen und eintragen"
+        placeholder: "z.B. (e)ISBN oder (e)ISSN auswählen und eintragen"
       publication_status_language: &publication_status_language
         label: "Status / Sprache"
         language:
@@ -400,7 +400,7 @@ forms:
           label: "Status"
           label_short: "Status"
       dropzone: &dropzone
-        label: "<strong>Upload f&uuml;r Volltext und Anh&auml;nge/ Zusatzmaterialien</strong> (max. 500MB pro Datei)"
+        label: "<strong>Upload für Volltext und Anhänge/ Zusatzmaterialien</strong> (max. 500MB pro Datei)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
         access_level: "Access Level:"
         upload_date: "Upload Datum:"
@@ -420,23 +420,23 @@ forms:
           current_file: "Aktuelle Datei:"
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
-            open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
+            open_access: "Open Access (Datei ist frei verfügbar, ab sofort)"
             local: "Local Access (Nur LibreCat)"
             closed: "Closed Access (Nur Autor/Reviewer)"
             request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             rac_email: "E-Mail Adresse, an die Anfragen gehen sollen (Standard: Record creator)"
             embargo: "Zu Open Access wechseln am:"
           additional_information:
-            heading: "Zus&auml;tzliche Informationen"
+            heading: "Zusätzliche Informationen"
             title: "Titel"
             description: "Beschreibung"
       license: &license
         heading: "Urheberrecht / Lizenzen"
         pub_license:
           label: "Hinweise zum Urheberrecht"
-          disclaimer_text: "Hiermit stelle ich der Universit&auml;t LibreCat dieses Dokument zur elektronischen Speicherung und zur &ouml;ffentlichen Zug&auml;nglichmachung in Datennetzen gem&auml;&szlig; den Bedingungen zur Dokumentenspeicherung auf LibreCat, wie sie in den Rechtlichen Rahmenbedingungen f&uuml;r LibreCat dargestellt sind, zur Verf&uuml;gung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>LibreCat Deposit Policy / Rechtliche Rahmenbedingungen</a>"
+          disclaimer_text: "Hiermit stelle ich der Universität LibreCat dieses Dokument zur elektronischen Speicherung und zur öffentlichen Zugänglichmachung in Datennetzen gemä&szlig; den Bedingungen zur Dokumentenspeicherung auf LibreCat, wie sie in den Rechtlichen Rahmenbedingungen für LibreCat dargestellt sind, zur Verfügung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>LibreCat Deposit Policy / Rechtliche Rahmenbedingungen</a>"
           accept_text: "Ich stimme zu"
-          alert: "Sie m&uuml;ssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angeh&auml;ngt haben."
+          alert: "Sie müssen den Hinweisen zum Urheberrecht zustimmen, wenn Sie eine Datei angehängt haben."
         info:
           text: "Fragen zur Policy / Lizenz?"
           contact: "Support Publikationsdienste, Tel.: 999/9999999, E-Mail: <a href=''>helpdesk@librecat.org</a>"
@@ -447,8 +447,8 @@ forms:
           alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
         cc_license:
           label: "Creative Commons Lizenzen"
-          select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, k&ouml;nnen Sie diese hier ausw&auml;hlen:<br>"
-          select_a_license: "Lizenz w&auml;hlen"
+          select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br>"
+          select_a_license: "Lizenz wählen"
           license_deed: "Lizenzvertrag"
           cc_0:
             name: "Creative Commons Public Domain Dedication (CC0 1.0)"
@@ -466,40 +466,40 @@ forms:
         label: "URN"
         placeholder: "z.B. urn:nbn:de:0070-pub-12345678"
         explain: "(Wenn Sie eine Datei hochladen, wird automatisch eine URN generiert!)"
-        title: "Die URN wurde automatisch generiert und kann nicht ge&auml;ndert werden."
+        title: "Die URN wurde automatisch generiert und kann nicht geändert werden."
       ddc: &ddc
         label: "DDC"
-        select_ddc: "DDC w&auml;hlen"
+        select_ddc: "DDC wählen"
       abstract: &abstract
         label: "Abstract"
         label2: "Sprache"
         placeholder: "Abstract Text"
       keyword: &keyword
         label: "Stichworte"
-        placeholder: "Stichworte (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
+        placeholder: "Stichworte (mehrere Einträge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
       external_id: &external_id
         label: "Externer Identifier"
         label_short: "Ext. Id."
-        placeholder: "W&auml;hlen Sie einen Identifier und geben Sie ihn hier ein (nur die Nummer, ohne URL)"
-        select: "W&auml;hlen"
+        placeholder: "Wählen Sie einen Identifier und geben Sie ihn hier ein (nur die Nummer, ohne URL)"
+        select: "Wählen"
       message: &message
         label: "Kommentare"
-        placeholder: "Anmerkungen f&uuml;r Reviewer/ Admins eintragen"
+        placeholder: "Anmerkungen für Reviewer/ Admins eintragen"
       popular_science_quality_controlled: &popular_science_quality_controlled
         label: "Peer Review"
         popular_science:
-          label: "Popul&auml;rwissenschaftliche Ver&ouml;ffentlichung"
-          label_short: "Pop.wiss. Ver&ouml;ff."
+          label: "Populärwissenschaftliche Veröffentlichung"
+          label_short: "Pop.wiss. Veröff."
         quality_controlled:
           label: "Peer Review"
       jel: &jel
         label: "JEL Klassifikation"
         label_short: "JEL"
-        select_jel: "--- JEL w&auml;hlen ---"
+        select_jel: "--- JEL wählen ---"
       thematic_area: &thematic_area
         label: "Themengebiet"
         label_short: "Them.geb."
-        select_thematic_area: "--- Themengebiet w&auml;hlen ---"
+        select_thematic_area: "--- Themengebiet wählen ---"
       alternative_id: &alternative_id
         label: "Returned Record IDs"
         label_short: "Ret. Rec. IDs"
@@ -509,7 +509,7 @@ forms:
         label: "Link zu LibreCat-Eintrag"
         label_short: "LibreCat-Eintr."
         placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
-      related_material.select: "Art des Zusatzmaterials w&auml;hlen &hellip;"
+      related_material.select: "Art des Zusatzmaterials wählen &hellip;"
       related_material.link: &related_material_link
         label: "Link und Relation<br />zu externer Quelle"
         label_short: "Ext. Quelle"
@@ -549,15 +549,15 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
-        label: "K&ouml;rperschaftlicher Herausgeber"
-        label_short: "K&ouml;rp. Hrsg."
+        label: "Körperschaftlicher Herausgeber"
+        label_short: "Körp. Hrsg."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       alternative_title: *alternative_title
       department: *department
@@ -575,7 +575,7 @@ forms:
       conference.name: &conference_name
         label: "Konferenz"
         label_short: "Konf."
-        placeholder: "z.B. 3. Konferenz &uuml;ber Nano-Physik"
+        placeholder: "z.B. 3. Konferenz über Nano-Physik"
       conference.location: &conference_location
         label: "Konferenzort"
         label_short: "Ort"
@@ -614,7 +614,7 @@ forms:
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Wie man ein eBook ver&ouml;ffentlicht"
+        placeholder: "z.B. Wie man ein eBook veröffentlicht"
       alternative_title: *alternative_title
       author: *author_translator
       editor: &editor_only
@@ -625,14 +625,14 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       corporate_editor: &corporate_editor
-        label: "K&ouml;rperschaftlicher Herausgeber"
-        label_short: "K&ouml;rp. Hrsg."
+        label: "Körperschaftlicher Herausgeber"
+        label_short: "Körp. Hrsg."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       edition: *edition
       department: *department
@@ -647,7 +647,7 @@ forms:
       series_title_volume: *series_title_volume
       publication:
         label: "Buchtitel"
-        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
+        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       publication_identifier: *publication_identifier
       publication_status_language: *publication_status_language
       conference.divider: *conference_divider
@@ -678,7 +678,7 @@ forms:
       doi: *doi
       title: &title
         label: "Titel"
-        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
+        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       editor: &editor
@@ -689,7 +689,7 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Herausgeber"
         label_short: "Hrsg."
         idm_extern: "extern"
@@ -701,7 +701,7 @@ forms:
       publication:
         label: "Titel des Konferenzbandes"
         label_short: "Konf.band Titel"
-        placeholder: "z.B. Berichtsband der 3. Konferenz &uuml;ber Nanophysik"
+        placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
       place: *place
       publisher: *publisher
       year_extern: *year_extern
@@ -793,7 +793,7 @@ forms:
       doi: *doi
       title:
         label: "Titel"
-        placeholder: "z.B. eBook Ver&ouml;ffentlichung"
+        placeholder: "z.B. eBook Veröffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       editor: *editor
@@ -805,7 +805,7 @@ forms:
       publication:
         label: "Titel des Konferenzbandes"
         label_short: "Konf.band Titel"
-        placeholder: "z.B. Berichtsband der 3. Konferenz &uuml;ber Nanophysik"
+        placeholder: "z.B. Berichtsband der 3. Konferenz über Nanophysik"
       series_title: *series_title
       place: *place
       publisher: *publisher
@@ -849,7 +849,7 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Betr. Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Betreuer"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
@@ -887,7 +887,7 @@ forms:
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Das Online-Ver&ouml;ffentlichen"
+        placeholder: "z.B. Das Online-Veröffentlichen"
       alternative_title: *alternative_title
       author: *author_translator
       editor: *editor_only
@@ -899,7 +899,7 @@ forms:
       publication:
         label: "Lexikontitel"
         label_short: "Lex.titel"
-        placeholder: "z.B. Enzyklop&auml;die des Ver&ouml;ffentlichens"
+        placeholder: "z.B. Enzyklopädie des Veröffentlichens"
       place: *place
       publisher: *publisher
       year_extern: *year_extern
@@ -931,7 +931,7 @@ forms:
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Die Folgen der eBook-Ver&ouml;ffentlichung"
+        placeholder: "z.B. Die Folgen der eBook-Veröffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       department: *department
@@ -967,14 +967,14 @@ forms:
       nasc: &nasc
         label: "NASC Seed Stock ID"
         label_short: "NASC"
-        placeholder: "NASC IDs (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. N406423 ; N412826 ; N420684)"
+        placeholder: "NASC IDs (mehrere Einträge durch Semikolon trennen, z.B. N406423 ; N412826 ; N420684)"
       genbank: &genbank
         label: "GenBank ID"
         label_short: "GenBank"
-        placeholder: "GenBank IDs (mehrere Eintr&auml;ge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
+        placeholder: "GenBank IDs (mehrere Einträge durch Semikolon trennen, z.B. AY323492 ; AY333421 ; AY323491)"
       funded_apc:
         label: "Finanzierung"
-        placeholder: "Artikelgeb&uuml;hren co-finanziert von der DFG"
+        placeholder: "Artikelgebühren co-finanziert von der DFG"
       related_material.record: *related_material_record
       related_material.link: *related_material_link
       locked: *locked
@@ -1043,7 +1043,7 @@ forms:
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Die Folgen des eBook-Ver&ouml;ffentlichens"
+        placeholder: "z.B. Die Folgen des eBook-Veröffentlichens"
       alternative_title: *alternative_title
       author: *author_translator
       department: *department
@@ -1051,8 +1051,8 @@ forms:
       research_group: *research_group
       year_extern: *year_extern
       publication_date: &publication_date
-        label: "Ver&ouml;ffentlichungsdatum"
-        label_short: "Ver&ouml;ff.datum"
+        label: "Veröffentlichungsdatum"
+        label_short: "Veröff.datum"
         placeholder: "JJJJ-MM-TT"
       volume_issue_page: *volume_issue_page
       publication:
@@ -1072,7 +1072,7 @@ forms:
       thematic_area: *thematic_area
       alternative_id: *alternative_id
       popular_science: &popular_science
-        label: "Popul&auml;rwissenschaftliche Publikation"
+        label: "Populärwissenschaftliche Publikation"
         label_short: "Pop.wiss. Publ."
       related_material.record: *related_material_record
       related_material.link: *related_material_link
@@ -1094,21 +1094,21 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Erfinder Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Erfinder"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       applicant:
         label: "Antragsteller"
         label_short: "Antr.steller"
-        placeholder: "z.B. Hans M&uuml;ller"
+        placeholder: "z.B. Hans Müller"
       department: *department
       project: *project
       research_group: *research_group
       year_extern: *year_extern
       publication_date_number:
-        label: "Ver&ouml;ffentlichungsdatum/-nr."
-        label_pd: "V&ouml;.datum"
+        label: "Veröffentlichungsdatum/-nr."
+        label_pd: "Vö.datum"
         placeholder_pd: "JJJJ-MM-TT"
         label_pn: "Pat.nr."
         placeholder_pn: "Internationale Patentnummer"
@@ -1148,7 +1148,7 @@ forms:
       title:
         label: "Titel"
         label_short: "Titel"
-        placeholder: "z.B. Die Folgen der eBook-Ver&ouml;ffentlichung"
+        placeholder: "z.B. Die Folgen der eBook-Veröffentlichung"
       publication: *publication_jtitle
       author: *author_translator
       department: *department
@@ -1230,8 +1230,8 @@ forms:
       publisher: *publisher
       year_extern: *year_extern
       publication_date:
-        label: "Ver&ouml;ffentlichungsdatum"
-        label_short: "Ver&ouml;ff.datum"
+        label: "Veröffentlichungsdatum"
+        label_short: "Veröff.datum"
         placeholder: "JJJJ-MM-TT"
       publication:
         label: "Zeitschriftentitel"
@@ -1261,7 +1261,7 @@ forms:
       basic_fields: "Details"
       file_upload: "Forschungsdatenupload"
       supplementary_fields: "Weitere Angaben"
-      related_material: "Verkn&uuml;pfungen"
+      related_material: "Verknüpfungen"
     field:
       document_type: *document_type
       doi: *doi
@@ -1274,7 +1274,7 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Creator"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
@@ -1288,7 +1288,7 @@ forms:
       year_extern: *year_extern
       external_file:
         label: "Externe Datei(en)"
-        checkbox: "Dateien verf&uuml;gbar unter"
+        checkbox: "Dateien verfügbar unter"
       dropzone:
         label: "<strong>Datei(en) hochladen</strong> (max. 500MB per file)"
         dropzone_text: "Datei hier her ziehen... oder klicken!"
@@ -1310,13 +1310,13 @@ forms:
           current_file: "Aktuelle Datei:"
           relation: "Relation (\"Hochgeladenes Dokument ist...\")"
           access:
-            open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
+            open_access: "Open Access (Datei ist frei verfügbar, ab sofort)"
             local: "Local Access (Nur LibreCat)"
             closed: "Closed Access (Nur Autor/Reviewer)"
             request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
             embargo: "Zu Open Access wechseln am:"
           additional_information:
-            heading: "Zus&auml;tzliche Informationen"
+            heading: "Zusätzliche Informationen"
             title: "Titel"
             description: "Beschreibung"
       license:
@@ -1325,9 +1325,9 @@ forms:
             label: "Copyright Disclaimer"
         data_reuse_license:
           label: "Data Re-Use License"
-          select_license: "W&auml;hlen Sie eine Lizenz aus unter der Ihre Daten verf&uuml;gbar sein sollen:<br>"
-          select_a_license: "Lizenz w&auml;hlen"
-          alert: "Sie m&uuml;ssen eine Data Re-Use License ausw&auml;hlen, wenn Sie Dateien angeh&auml;ngt haben."
+          select_license: "Wählen Sie eine Lizenz aus unter der Ihre Daten verfügbar sein sollen:<br>"
+          select_a_license: "Lizenz wählen"
+          alert: "Sie müssen eine Data Re-Use License auswählen, wenn Sie Dateien angehängt haben."
           pddl:
             select_text: "No restrictions - PDDL"
             name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
@@ -1344,9 +1344,9 @@ forms:
           label: "Open Data Release - Declaration"
           disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
           accept_text: "I have read and agree with the information above about releasing data under the selected license."
-          alert: "Sie m&uuml;ssen dem Open Data Release Statement zustimmen, da Sie Dateien angeh&auml;ngt haben."
+          alert: "Sie müssen dem Open Data Release Statement zustimmen, da Sie Dateien angehängt haben."
         other_data_license:
-          warning: "Sichtbar/Editierbar nur f&uuml;r Admins"
+          warning: "Sichtbar/Editierbar nur für Admins"
           label: "Andere Lizenz"
         info:
           text: "Wenn keine der oben genannten Lizenzen zu Ihren Daten passt oder wenn Sie andere Fragen haben, kontaktieren Sie bitte:<br>"
@@ -1364,15 +1364,15 @@ forms:
       locked: *locked
       main_file_link: *main_file_link
   translation:
-    label: "&Uuml;bersetzung"
+    label: "Übersetzung"
     tab: *tab
     field:
       document_type: *document_type
       doi: *doi
       title:
-        label: "Titel (&Uuml;bersetzung)"
-        label_short: "Titel (&Uuml;bers.)"
-        placeholder: "z.B. Handbuch des eBook Ver&ouml;ffentlichens"
+        label: "Titel (Übersetzung)"
+        label_short: "Titel (übers.)"
+        placeholder: "z.B. Handbuch des eBook Veröffentlichens"
       alternative_title:
         label: "Titel (Original)"
         label_short: "Titel (Orig)"
@@ -1385,8 +1385,8 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Trans. Nachn."
-          placeholder: "z.B. M&uuml;ller"
-        label: "&Uuml;bersetzer"
+          placeholder: "z.B. Müller"
+        label: "Übersetzer"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1397,7 +1397,7 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Autor Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Autor (Original)"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
@@ -1436,16 +1436,16 @@ forms:
       locked: *locked
       main_file_link: *main_file_link
   translation_chapter:
-    label: "&Uuml;bersetzung (Aufsatz)"
+    label: "Übersetzung (Aufsatz)"
     tab: *tab
     field:
       document_type: *document_type
       doi: *doi
       editor: *editor_only
       title:
-        label: "Titel (&Uuml;bersetzung)"
-        label_short: "Titel (&Uuml;bers.)"
-        placeholder: "z.B. Handbuch der eBook-Ver&ouml;ffentlichung"
+        label: "Titel (Übersetzung)"
+        label_short: "Titel (übers.)"
+        placeholder: "z.B. Handbuch der eBook-Veröffentlichung"
       translator:
         first_name:
           label: "Vorname"
@@ -1454,8 +1454,8 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Trans. Nachn."
-          placeholder: "z.B. M&uuml;ller"
-        label: "&Uuml;bersetzer"
+          placeholder: "z.B. Müller"
+        label: "Übersetzer"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1466,7 +1466,7 @@ forms:
         last_name:
           label: "Nachname"
           label_short: "Autor Nachn."
-          placeholder: "z.B. M&uuml;ller"
+          placeholder: "z.B. Müller"
         label: "Autor"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
@@ -1518,7 +1518,7 @@ forms:
       doi: *doi
       title:
         label: "Titel"
-        placeholder: "z.B. Diskussionspapier &uuml;ber die eBook-Ver&ouml;ffentlichung"
+        placeholder: "z.B. Diskussionspapier über die eBook-Veröffentlichung"
       alternative_title: *alternative_title
       author: *author_translator
       edition: *edition
@@ -1551,30 +1551,30 @@ forms:
   sp_form: "Gesamtsicht"
   to_tab_form: "Gegliederte Sicht"
   tab_form: "Gegliederte Sicht"
-  toggle_dropdown: "Men&uuml; aufklappen"
+  toggle_dropdown: "Menü aufklappen"
   mandatory: "Pflichtfeld"
-  mandatory_error: "Sie haben Pflichtfelder &uuml;bersehen oder es sind andere Probleme aufgetreten! Bitte &uuml;berpr&uuml;fen Sie ihre Daten."
-  form_change_form: "Editiermodus &auml;ndern"
-  form_change_type: "Publikationstyp &auml;ndern"
-  form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu &auml;ndern"
-  form_add_field: "Feld hinzuf&uuml;gen (+) or dieses Feld l&ouml;schen (-)"
-  form_relmat_record: "Eigene Publikation aus LibreCat mit dieser verbinden. Nach Auswahl w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
-  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf (+) w&auml;hlen Sie die Art der Verbindung (z.B. fr&uuml;here Version). Der Link erscheint unter Zusatzmaterial."
-  confirm_return: "M&ouml;chten Sie diesen Datensatz wirklich zur&uuml;ckstellen und damit von &ouml;ffentlichen Publikationsliste entfernen?"
-  confirm_delete: "M&ouml;chten Sie diesen Datensatz wirklich l&ouml;schen?"
-  confirm_submit: "Sie senden Ihre Daten jetzt an uns. Nachdem wir die Metadaten &uuml;berpr&uuml;ft haben, werden wir den Datensatz public stellen."
+  mandatory_error: "Sie haben Pflichtfelder übersehen oder es sind andere Probleme aufgetreten! Bitte überprüfen Sie ihre Daten."
+  form_change_form: "Editiermodus ändern"
+  form_change_type: "Publikationstyp ändern"
+  form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu ändern"
+  form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
+  form_relmat_record: "Eigene Publikation aus LibreCat mit dieser verbinden. Nach Auswahl wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
+  form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf (+) wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
+  confirm_return: "Möchten Sie diesen Datensatz wirklich zurückstellen und damit von öffentlichen Publikationsliste entfernen?"
+  confirm_delete: "Möchten Sie diesen Datensatz wirklich löschen?"
+  confirm_submit: "Sie senden Ihre Daten jetzt an uns. Nachdem wir die Metadaten überprüft haben, werden wir den Datensatz public stellen."
   button:
-    back: "Zur&uuml;ck"
+    back: "Zurück"
     cancel: "Abbrechen"
     close: "Schlie&szlig;en"
-    delete: "L&ouml;schen"
+    delete: "Löschen"
     import: "Importieren"
     next: "Weiter"
     publish: "Public stellen"
     submitted: "Absenden"
-    return: "Zur&uuml;ckstellen"
+    return: "Zurückstellen"
     save: "Speichern"
-    select: "W&auml;hlen"
+    select: "Wählen"
     send: "Abschicken"
     submit: "Hochladen"
   general:
@@ -1593,9 +1593,9 @@ forms:
     submitted: "Eingereicht"
     accepted: "Angenommen"
     inpress: "Im Druck"
-    epub_ahead: "Elektronische Ver&ouml;ffentlichung vor dem Druck"
-    published: "Ver&ouml;ffentlicht"
-    unpublished: "Unver&ouml;ffentlicht"
+    epub_ahead: "Elektronische Veröffentlichung vor dem Druck"
+    published: "Veröffentlicht"
+    unpublished: "Unveröffentlicht"
   article_type:
     original: "Forschungsartikel"
     review: "Review"
@@ -1610,16 +1610,16 @@ forms:
     chi: "Chinesisch"
     hrv: "Kroatisch"
     cze: "Tschechisch"
-    dan: "D&auml;nisch"
-    dut: "Niederl&auml;ndisch"
+    dan: "Dänisch"
+    dut: "Niederländisch"
     eng: "Englisch"
     fin: "Finnisch"
-    fre: "Franz&ouml;sisch"
+    fre: "Französisch"
     ger: "Deutsch"
     gre: "Griechisch"
-    heb: "Hebr&auml;isch"
+    heb: "Hebräisch"
     hun: "Ungarisch"
-    ice: "Isl&auml;ndisch"
+    ice: "Isländisch"
     ita: "Italienisch"
     jpn: "Japanisch"
     kor: "Koreanisch"
@@ -1629,12 +1629,12 @@ forms:
     nor: "Norwegisch"
     pol: "Polnisch"
     por: "Portugiesisch"
-    rum: "Rum&auml;nisch"
+    rum: "Rumänisch"
     rus: "Russisch"
     srp: "Serbisch"
     spa: "Spanisch"
     swe: "Schwedisch"
-    tur: "T&uuml;rkisch"
+    tur: "Türkisch"
     other: "Andere"
   relation:
     main_file:
@@ -1656,20 +1656,20 @@ forms:
       display: "Software"
       select: "Software"
     earlier_version:
-      display: "Fr&uuml;here Version"
-      select: "Fr&uuml;here Version"
+      display: "Frühere Version"
+      select: "Frühere Version"
     later_version:
-      display: "Sp&auml;tere Version"
-      select: "Sp&auml;tere Version"
+      display: "Spätere Version"
+      select: "Spätere Version"
     contains:
-      display: "Publikation, die diesen LibreCat Eintrag enth&auml;lt"
-      select: "Publikation, die diesen LibreCat Eintrag enth&auml;lt"
+      display: "Publikation, die diesen LibreCat Eintrag enthält"
+      select: "Publikation, die diesen LibreCat Eintrag enthält"
     published_in:
       display: "Teil von LibreCat Eintrag"
       select: "Teil von LibreCat Eintrag"
     dissertation_contains:
-      display: "Dissertation, die diesen LibreCat Eintrag enth&auml;lt"
-      select: "Dissertation, die diesen LibreCat Eintrag enth&auml;lt"
+      display: "Dissertation, die diesen LibreCat Eintrag enthält"
+      select: "Dissertation, die diesen LibreCat Eintrag enthält"
     part_of_dissertation:
       display: "Teil dieser Dissertation"
       select: "Teil dieser Dissertation"
@@ -1686,14 +1686,14 @@ forms:
       display: "Vorheriger Teil"
       select: "Vorheriger Teil"
     popular_science:
-      display: "Popul&auml;rwissenschaftliche Version"
-      select: "Popul&auml;rwissenschaftliche Version"
+      display: "Populärwissenschaftliche Version"
+      select: "Populärwissenschaftliche Version"
     research_paper:
       display: "Wissenschaftliche Version"
       select: "Wissenschaftliche Version"
     translation:
-      display: "&Uuml;bersetzter Text"
-      select: "&Uuml;bersetzter Text"
+      display: "Übersetzter Text"
+      select: "Übersetzter Text"
     original:
       display: "Originaltext"
       select: "Originaltext"
@@ -1726,25 +1726,25 @@ forms:
   heading: "I'm a teapot (418)"
 help:
   home: "Startseite"
-  my_author_page: "Ihre &ouml;ffentliche Publikationsliste"
+  my_author_page: "Ihre öffentliche Publikationsliste"
   my_dashboard: "Ihr Dashboard für die aktuelle Rolle"
   change_language: "Sprache wechseln"
-  user_settings: "Rolle, Fakult&auml;t,<br>Editiermodus,<br>Standardsprache<br>&auml;ndern"
-  author_id: "Alias (zus&auml;tzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
-  author_id_edit: "ID &auml;ndern / IDs erg&auml;nzen."
-  add_new_button: "Neuen Eintrag in LibreCat anlegen: Bestehende Daten z.B. via DOI importieren oder &uuml;ber Formular selbst eintragen."
-  quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollst&auml;ndigen den Eintrag f&uuml;r Sie und machen ihn &ouml;ffentlich sichtbar."
-  publication_user: "Ihre pers&ouml;nliche Publikationsliste. Wenn alle Ihre Publikationen &ouml;ffentlich sichtbar sind, sieht diese Liste genau so aus, wie Ihre &ouml;ffentliche Publikationsliste."
-  publication_user_rd: "Ihre pers&ouml;nliche Publikationsliste - Forschungsdaten."
-  publication_delegate: "Jeder dieser Tabs zeigt Ihnen die Publikationsliste einer bestimmten Person, zu der Ihnen Zugriff gew&auml;hrt wurde. Die Publikationen wurden nach Personen gruppiert, um Ihnen einen besseren &Uuml;berblick &uuml;ber Ihren Arbeitsbereich in LibreCat zu geben."
-  publication_reviewer: "Diese Liste zeigt Ihnen alle Publikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
+  user_settings: "Rolle, Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
+  author_id: "Alias (zusätzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
+  author_id_edit: "ID ändern / IDs ergänzen."
+  add_new_button: "Neuen Eintrag in LibreCat anlegen: Bestehende Daten z.B. via DOI importieren oder über Formular selbst eintragen."
+  quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollständigen den Eintrag für Sie und machen ihn öffentlich sichtbar."
+  publication_user: "Ihre persönliche Publikationsliste. Wenn alle Ihre Publikationen öffentlich sichtbar sind, sieht diese Liste genau so aus, wie Ihre öffentliche Publikationsliste."
+  publication_user_rd: "Ihre persönliche Publikationsliste - Forschungsdaten."
+  publication_delegate: "Jeder dieser Tabs zeigt Ihnen die Publikationsliste einer bestimmten Person, zu der Ihnen Zugriff gewährt wurde. Die Publikationen wurden nach Personen gruppiert, um Ihnen einen besseren überblick über Ihren Arbeitsbereich in LibreCat zu geben."
+  publication_reviewer: "Diese Liste zeigt Ihnen alle Publikationen der Einrichtung für die Sie die Reviewer-Rechte erhalten haben."
   publication_project_reviewer: "Diese Liste zeigt Ihnen alle Publikationen des Projektes, für das Sie die Reviewer-Rechte erhalten haben."
-  publication_data_manager: "Diese Liste zeigt Ihnen alle Datenpublikationen der Einrichtung f&uuml;r die Sie die Reviewer-Rechte erhalten haben."
+  publication_data_manager: "Diese Liste zeigt Ihnen alle Datenpublikationen der Einrichtung für die Sie die Reviewer-Rechte erhalten haben."
   publication_admin: "Diese Liste zeigt Ihnen alle Publikationen in LibreCat."
-  statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>&Auml;nderung &uuml;ber den Link 'Editieren'."
-  citation: "Publikationsdaten im ausgew&auml;hlten Zitationsstil."
+  statuses: "Sichtbarkeitsstatus<br> der Publikation.<br>änderung über den Link 'Editieren'."
+  citation: "Publikationsdaten im ausgewählten Zitationsstil."
   search: "In dieser Publikationsliste suchen."
-  display_block: "Darstellung der Publikationsliste &auml;ndern (Treffer pro Seite, Sortierung, Zitationsstil)."
+  display_block: "Darstellung der Publikationsliste ändern (Treffer pro Seite, Sortierung, Zitationsstil)."
 cc_licenses:
   cc_0: CC0 (1.0)
   cc_by: CC BY (4.0)

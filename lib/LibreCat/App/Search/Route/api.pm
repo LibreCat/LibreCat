@@ -50,8 +50,7 @@ oai_provider '/oai', deleted => sub {
     if (   $pub->{type}
         && is_array_ref($pub->{file})
         && @{$pub->{file}} > 0
-        && $pub->{file}->[0]->{open_access}
-        && $pub->{file}->[0]->{open_access} eq '1')
+        && $pub->{file}->[0]->{access_level} eq 'open_access')
     {
         push @$specs, "$pub->{type}Ftxt", "driver", "open_access";
     }

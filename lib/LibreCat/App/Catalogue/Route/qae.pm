@@ -50,7 +50,6 @@ post '/librecat/upload/qae/submit' => sub {
 
                     # Extra metadata fields
                     access_level => 'open_access',
-                    open_access  => 1,
                     relation     => 'main_file',
                 }
             ]
