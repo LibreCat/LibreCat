@@ -30,7 +30,7 @@ requires 'Catmandu::DBI', '>=0.0511';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Fix::Date';
 requires 'Catmandu::Identifier', '>=0.05';
-requires 'Catmandu::Importer::getJSON';
+requires 'Catmandu::Importer::getJSON' , '>=0.51';
 requires 'Catmandu::LDAP';
 requires 'Catmandu::OAI' , '0.16';
 requires 'Catmandu::RIS', '>=0.04';
