@@ -40,7 +40,7 @@ sub fetch {
         return ();
     }
 
-    my $fixer = $self->create_fixer('from_datacite.fix');
+    my $fixer = $self->create_fixer('datacite_mapping.fix');
 
     $data = $fixer->fix($data);
 

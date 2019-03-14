@@ -4,6 +4,7 @@ _prefix:
 
 appname: "LibreCat &ndash; Publikationslisten Manager"
 appname_short: "LibreCat"
+language_code: "de"
 general:
   plural: "en"
   where: "in"

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="[% h.loc('language_code') %]">
 [% lang = h.locale() -%]
 [% lf = h.config.locale.$lang -%]
 [% path_info = request.path_info -%]
