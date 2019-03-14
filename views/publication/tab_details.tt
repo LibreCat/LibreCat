@@ -11,10 +11,12 @@
 [%- END %]
 
 [%- FOREACH item IN ['translator', 'author', 'supervisor', 'editor'] %]
-    [% FOREACH person IN $item %]
-      [% IF loop.first %]
+    [%- FOREACH person IN $item %]
+      [%- IF loop.first %]
       <div class="row">
-        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.${item}.label") || h.loc("forms.${type}.field.${item}_secondary.label") || h.loc("forms.${type}.field.${item}_solo.label") %]</div>
+        [%- au_secondary = item _ "_secondary" %]
+        [%- IF h.config.locale.en.forms.$type.field.$item.label %][% loc_item =  "forms." _ type _ ".field." _ item _ ".label" %][% ELSIF h.config.locale.en.forms.$type.field.$au_secondary.label %][% loc_item = "forms." _ type _ ".field." _ item _ "_secondary.label" %][% ELSE %][% loc_item = "forms." _ type _ ".field."_ item _ "_solo.label" %][% END -%]
+        <div class="col-lg-2 col-md-3 text-muted">[% h.loc("${loc_item}") %]</div>
         <div class="col-lg-10 col-md-9">
       [%- ELSE %];[% END %]
       [%- IF person.id %]
@@ -37,7 +39,8 @@
 [%- FOREACH ed IN corporate_editor %]
   [%- IF loop.first %]
   <div class="row">
-    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("forms.${type}.field.corporate_editor.label") || h.loc("forms.${type}.field.corporate_editor_solo.label") %]</div>
+    [%- loc_item = h.config.locale.en.forms.$type.field.corporate_editor.label ? "forms." _ type _ ".field.corporate_editor.label" : "forms." _ type _ ".field.corporate_editor_solo.label" -%]
+    <div class="col-lg-2 col-md-3 text-muted">[% h.loc("${loc_item}") %]</div>
     <div class="col-lg-10 col-md-9">
   [%- ELSE -%];[% END %]
   [% ed | html %]
