@@ -31,6 +31,8 @@ sub fetch {
 
     $data = $fixer->fix($data);
 
+    $self->log->debugf("data: %s", $data);
+
     return $data;
 }
 
