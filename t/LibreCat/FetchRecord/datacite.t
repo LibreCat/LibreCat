@@ -1,6 +1,7 @@
 use strict;
 use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use warnings FATAL => 'all';
+use LibreCat qw(publication);
 use Test::More;
 use Test::Exception;
 use Test::TCP;
@@ -24,11 +25,23 @@ test_tcp(
 
         ok $pub , 'got a publication';
 
+        $pub->[0]{_id} = 'DUMMY';
+
         is $pub->[0]{title},
             'Gravity as Entanglement, and Entanglement as Gravity',
             'got a title';
         is $pub->[0]{type}, 'research_data', 'type == research_data';
 
+        my $is_valid = publication->is_valid($pub->[0]);
+
+        if ($is_valid) {
+            ok 1, 'record is valid';
+        }
+        else {
+            ok 0 , 'record is valid';
+            say STDERR join("\n", @{publication->validator->last_errors});
+        }
+        
         ok !$x->fetch('10.6085');
         ok !$x->fetch('6666');
     },

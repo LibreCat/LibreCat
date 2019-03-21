@@ -92,6 +92,8 @@ post '/librecat/record/import' => sub {
             };
     }
 
+    my @saved_records = ();
+
     for my $pub (@$imported_records) {
         $pub->{_id}    = $bag->generate_id;
         $pub->{status} = 'new'
@@ -109,7 +111,12 @@ post '/librecat/record/import' => sub {
           h->hook('import-new-' . $source)->fix_around(
             $pub,
             sub {
-                publication->add($pub);
+                publication->add($pub ,
+                    on_success => sub {
+                        my ($rec) = @_;
+                        push @saved_records , $rec;
+                    }
+                );
             }
           );
         }
@@ -122,13 +129,22 @@ post '/librecat/record/import' => sub {
         }
     }
 
-    return template "backend/add_new",
+    my $errors = int(@$imported_records) - int(@saved_records);
+
+    if ($errors) {
+        return template "backend/add_new", {
+            error => $errors == 1 ? "1 import failed" : "$errors imports failed"
+        }
+    }
+    else {
+        return template "backend/add_new",
         {
         ok => "Imported "
-            . int(@$imported_records)
+            . int(@saved_records)
             . " record(s) from $source",
-        imported => $imported_records
+        imported => \@saved_records ,
         };
+    }
 };
 
 1;

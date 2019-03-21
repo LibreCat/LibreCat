@@ -92,7 +92,7 @@ end
 
 # fix language and map to iso
 move(language, r.language.0.iso)
-lookup(r.language, fixes/lookup/cr_lang_iso.csv, default: eng)
+lookup(r.language.0.iso, fixes/lookup/cr_lang_iso.csv, default: eng)
 
 retain(r)
 move(r, .)
