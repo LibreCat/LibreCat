@@ -41,7 +41,7 @@ sub fetch {
         return ();
     }
 
-    my $fixer = librecat->fixer('from_datacite.fix');
+    my $fixer = librecat->fixer('datacite_mapping.fix');
 
     $data = $fixer->fix($data);
 
