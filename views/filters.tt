@@ -124,6 +124,7 @@
     <ul id="export_facet" class="collapse">
       [%- tmp = {}; tmp.import(qp); export_path = backend == 1 ? 'librecat/export' : 'export' %]
       [%- IF request.path_info.match("person") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- tmp.cql.push("person=$id") %][%- END %]
+      [%- IF request.path_info.match("reviewer") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- dept = request.path_info.match('\/reviewer\/(\d{1,})'); tmp.cql.push("department=$dept.0") %][%- END %]
       <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
       <li><a href="[% tmp.fmt='bibtex'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
       <li><a href="[% tmp.fmt='ris'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>

@@ -99,7 +99,7 @@ note("deleting relation");
 
     my $pub2 = get_dummy_publication('999001');
 
-    is_deeply $pub2->{related_material}->{record}, [],
+    ok !$pub2->{related_material}->{record},
         'deleted the reverse relation';
 }
 

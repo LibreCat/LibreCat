@@ -9,6 +9,7 @@ Helper methods for handling related material links.
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat::App::Helper;
+use LibreCat qw(:self);
 use Tie::IxHash;
 use Exporter qw/import/;
 
@@ -72,6 +73,9 @@ sub update_related_material {
     my $previous_related_material_record = $hit->{related_material}->{record}
         // [];
 
+    my $update_fixer = librecat->fixer("update_publication.fix");
+    my $index_fixer  = librecat->fixer("index_publication.fix");
+
     foreach my $rm (@$previous_related_material_record) {
         next unless $rm->{id};
 
@@ -97,8 +101,11 @@ sub update_related_material {
 
         $target->{related_material}->{record} = \@new_relations;
 
+        $target = $update_fixer->fix($target);
         my $saved = h->main_publication->add($target);
         h->main_publication->commit;
+
+        $saved = $index_fixer->fix($saved);
         h->publication->add($saved);
         h->publication->commit;
     }
@@ -147,8 +154,11 @@ sub update_related_material {
 
         $target->{related_material}->{record} = \@new_relations;
 
+        $target = $update_fixer->fix($target);
         my $saved = h->main_publication->add($target);
         h->main_publication->commit;
+
+        $saved = $index_fixer->fix($saved);
         h->publication->add($saved);
         h->publication->commit;
 

@@ -45,32 +45,33 @@ EOF
 
 # all those hexadecimal characters longer than 2 (\\' in rtf will treat the following two characters as hex - but only two!)
 my $HEXMAP = {
-    "152" => "\\'4f\\'45",
-
-    # latin capital letter OE - substituted by capital letters O and E
-    "153" => "\\'6f\\'65"
+    "152" => "OE"
+    ,    # latin capital letter OE - substituted by capital letters O and E
+    "153" => "oe"
     ,    # latin small letter oe - substituted by small letters o and e
-    "160" => "\\'53"
+    "160" => "S"
     ,    # latin capital letter S with caron - substituted by capital etter S
-    "161" => "\\'73"
+    "161" => "s"
     ,    # latin small letter s with caron - substituted by small letter s
-    "178" => "\\'59"
+    "178" => "y"
     , # latin capital letter Y with diaeresis - substituted by capital letter Y
-    "192" => "\\'66"
+    "192" => "f"
     ,    # latin small f with hook, function - substituted by small letter f
-    "2013" => "\\endash",
-    "2014" => "\\emdash",
-    "2018" => "\\lquote",
-    "2019" => "\\rquote",
+    "2013" => "\\endash ",
+    "2014" => "\\emdash ",
+    "2018" => "\\lquote ",
+    "2019" => "\\rquote ",
 
     #"201A" => # single low-9 quotation mark
-    "201C" => "\\ldblquote",
-    "201D" => "\\rdblquote",
+    "201C" => "\\ldblquote ",
+    "201D" => "\\rdblquote ",
+    "8220" => "\\ldblquote ",
+    "8221" => "\\rdblquote ",
 
     #"201E" => # double low-9 quotation mark
     #"2020" => # dagger
     #"2021" => # double dagger
-    "2022" => "\\bullet",
+    "2022" => "\\bullet ",
 
     #"2026" => # horizontal ellipsis
     #"2030" => # per thousand sign
@@ -138,7 +139,7 @@ sub _add_citation {
     while ($cite =~ /\\\'(\d{3,4})/) {
         my $hexv = $1;
         if ($HEXMAP->{$hexv}) {
-            $cite =~ s/\\\'$hexv/$HEXMAP->{$hexv} /g;
+            $cite =~ s/\\\'$hexv/$HEXMAP->{$hexv}/g;
         }
         else {
             $cite =~ s/\\\'$hexv//g;
@@ -156,7 +157,7 @@ sub _add_citation {
         while ($title =~ /\\\'(\d{3,4})/) {    # why while??
             my $hexv = $1;
             if ($HEXMAP->{$hexv}) {
-                $title =~ s/\\\'$hexv/$HEXMAP->{$hexv} /g;
+                $title =~ s/\\\'$hexv/$HEXMAP->{$hexv}/g;
             }
             else {
                 $title =~ s/\\\'$hexv//g;
