@@ -13,11 +13,12 @@ use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
 use LibreCat::App::Helper;
 use URL::Encode qw(url_decode);
+use Try::Tiny;
 
 sub _fetch_record {
     my ($id, $source) = @_;
 
-    eval {
+    try {
         return undef unless ($source =~ /^[a-zA-Z0-9]+$/);
 
         # check agency: crossref or datacite
@@ -55,12 +56,21 @@ sub _fetch_record {
         h->log->debug("Processing LibreCat::FetchRecord::$source $id");
 
         return $pkg->new->fetch($id);
-    };
-    if ($@) {
+    } catch {
         h->log->error("Failed to fetch $id from $source");
         return undef;
     }
 }
+
+=head2 GET /librecat/record/import
+
+Returns again to the add record page
+
+=cut
+get '/librecat/record/import' => sub {
+    # Required route for 'return_url' mechanism...
+    redirect h->uri_for('/librecat/record/new');
+};
 
 =head2 POST /librecat/record/import
 
@@ -92,6 +102,8 @@ post '/librecat/record/import' => sub {
             };
     }
 
+    my @saved_records = ();
+
     for my $pub (@$imported_records) {
         $pub->{_id}    = $bag->generate_id;
         $pub->{status} = 'new'
@@ -109,7 +121,12 @@ post '/librecat/record/import' => sub {
           h->hook('import-new-' . $source)->fix_around(
             $pub,
             sub {
-                publication->add($pub);
+                publication->add($pub ,
+                    on_success => sub {
+                        my ($rec) = @_;
+                        push @saved_records , $rec;
+                    }
+                );
             }
           );
         }
@@ -122,13 +139,22 @@ post '/librecat/record/import' => sub {
         }
     }
 
-    return template "backend/add_new",
+    my $errors = int(@$imported_records) - int(@saved_records);
+
+    if ($errors) {
+        return template "backend/add_new", {
+            error => $errors == 1 ? "1 import failed" : "$errors imports failed"
+        }
+    }
+    else {
+        return template "backend/add_new",
         {
         ok => "Imported "
-            . int(@$imported_records)
+            . int(@saved_records)
             . " record(s) from $source",
-        imported => $imported_records
+        imported => \@saved_records ,
         };
+    }
 };
 
 1;
