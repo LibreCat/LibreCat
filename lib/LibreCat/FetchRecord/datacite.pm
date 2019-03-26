@@ -1,6 +1,7 @@
 package LibreCat::FetchRecord::datacite;
 
 use Catmandu::Util qw(:io :hash);
+use LibreCat -self;
 use Furl;
 use Try::Tiny;
 use Moo;
@@ -40,7 +41,7 @@ sub fetch {
         return ();
     }
 
-    my $fixer = $self->create_fixer('datacite_mapping.fix');
+    my $fixer = librecat->fixer('datacite_mapping.fix');
 
     $data = $fixer->fix($data);
 

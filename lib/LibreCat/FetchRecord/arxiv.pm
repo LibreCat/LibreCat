@@ -1,9 +1,10 @@
 package LibreCat::FetchRecord::arxiv;
 
 use Catmandu::Util qw(:io);
-use Moo;
+use LibreCat -self;
 use Try::Tiny;
 use Dancer qw(:syntax);
+use Moo;
 
 with 'LibreCat::FetchRecord';
 
@@ -35,7 +36,7 @@ sub fetch {
         return ();
     }
 
-    my $fixer = $self->create_fixer('arxiv_mapping.fix');
+    my $fixer = librecat->fixer('arxiv_mapping.fix');
 
     $data = $fixer->fix($data);
 

@@ -70,7 +70,7 @@ sub _build_styles {
 }
 
 sub _build_csl_fixer {
-    h->create_fixer('fixes/to_csl.fix');
+    h->create_fixer('to_csl.fix');
 }
 
 sub _request {
