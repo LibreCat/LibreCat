@@ -1,6 +1,7 @@
 package LibreCat::FetchRecord::epmc;
 
 use Catmandu::Util qw(:io);
+use LibreCat -self;
 use URI::Escape;
 use Moo;
 
@@ -28,7 +29,7 @@ sub fetch {
         return ();
     }
 
-    my $fixer = $self->create_fixer('epmc_mapping.fix');
+    my $fixer = librecat->fixer('epmc_mapping.fix');
 
     $data = $fixer->fix($data);
 

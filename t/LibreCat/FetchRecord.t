@@ -20,25 +20,27 @@ require_ok $pkg;
     use Moo;
 
     package T::FetchRecord;
+    use LibreCat -self;
     use Moo;
     with $pkg;
 
     sub fetch {
         my ($self, $id) = @_;
         my $data = {_id => $id};
-        my $fixer = $self->create_fixer('test.fix');
+        my $fixer = librecat->fixer('test.fix');
         $data = $fixer->fix($data);
         return $data;
     }
 
     package T::FetchRecordWithoutFix;
+    use LibreCat -self;
     use Moo;
     with $pkg;
 
     sub fetch {
         my ($self, $id) = @_;
         my $data = {_id => $id};
-        my $fixer = $self->create_fixer('nofixfile.fix');
+        my $fixer = librecat->fixer('nofixfile.fix');
         $data = $fixer->fix($data);
         return $data;
     }

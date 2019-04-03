@@ -10,24 +10,6 @@ with 'Catmandu::Logger';
 
 requires 'fetch';
 
-sub create_fixer {
-    my ($self, $file) = @_;
-
-    $self->log->debug("searching for fix `$file'");
-
-    for my $p (@{librecat->fixes_paths}) {
-        $self->log->debug("testing `$p/$file'");
-        if (-r "$p/$file") {
-            $self->log->debug("found `$p/$file'");
-            return Catmandu::Fix->new(fixes => ["$p/$file"]);
-        }
-    }
-
-    $self->log->error("can't find a fixer for: `$file'");
-
-    return Catmandu::Fix->new();
-}
-
 1;
 
 __END__
