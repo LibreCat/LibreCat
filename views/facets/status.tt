@@ -2,7 +2,7 @@
 <div class="facettecollapse">
   <ul id="status_[% tabmodus %][% menu %]" class="collapse">
   [%- FOREACH stat IN facets.status.terms %]
-    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="status" data-value="[% stat.term %]" href="#" rel="nofollow">[% stat.term %] ([% stat.count %])</a></li>
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="status" data-value="[% stat.term %]" href="#" rel="nofollow">[% h.loc("main_page.statuses.${stat.term}") %] ([% stat.count %])</a></li>
   [%- END %]
   </ul>
 </div>
