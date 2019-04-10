@@ -62,6 +62,16 @@ sub _fetch_record {
     }
 }
 
+=head2 GET /librecat/record/import
+
+Returns again to the add record page
+
+=cut
+get '/librecat/record/import' => sub {
+    # Required route for 'return_url' mechanism...
+    redirect h->uri_for('/librecat/record/new');
+};
+
 =head2 POST /librecat/record/import
 
 Returns a form with imported data.
