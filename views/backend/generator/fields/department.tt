@@ -37,7 +37,7 @@
     [% END %]
     [% END %]
     {% ELSE %}
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <input type="hidden" name="department.0._id" class="{% IF fields.basic_fields.department.mandatory OR fields.supplementary_fields.department.mandatory %} required{% END %}" id="dp_idautocomplete_0" value="[% department.0._id %]" />
 
       <div class="form-group col-md-10 col-xs-11">
