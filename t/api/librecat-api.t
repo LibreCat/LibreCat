@@ -46,6 +46,11 @@ subtest "authentication" => sub {
         ->status_is(404)->json_has('/errors');
 };
 
+subtest "invalid model" => sub {
+    $t->get_ok('/api/ugly/123' => {Authorization => $auth_token})
+        ->status_is(404)->json_has('/errors');
+};
+
 subtest "get non-existent user" => sub {
     $t->get_ok('/api/user/91919192882' => {Authorization => $auth_token})
         ->status_is(404)->json_has('/errors')
