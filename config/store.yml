@@ -1077,7 +1077,7 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag}
+                exact: {type: text, analyzer: tag, fielddata: 'true'}
         cql_mapping:
           default_index: basic
           indexes:
