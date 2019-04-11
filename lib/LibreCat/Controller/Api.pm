@@ -10,8 +10,8 @@ sub show {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
-    my $recs  = librecat->$model;
-    my $rec   = $recs->get($id) || return $c->not_found;
+    my $recs  = librecat->model($model) // return $c->not_found;
+    my $rec   = $recs->get($id) // return $c->not_found;
     delete $rec->{_id};
     my $data = {
         type       => $model,
@@ -25,8 +25,8 @@ sub show {
 sub create {
     my $c     = $_[0];
     my $model = $c->param('model');
+    my $recs  = librecat->model($model) // return $c->not_found;
     my $data  = decode_json($c->req->body);
-    my $recs  = librecat->$model;
 
     $recs->add(
         $data,
@@ -52,8 +52,8 @@ sub add {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
+    my $recs  = librecat->model($model) // return $c->not_found;
     my $data  = decode_json($c->req->body);
-    my $recs  = librecat->$model;
 
     # does record exist?
     unless ($recs->get($id)) {
@@ -83,8 +83,8 @@ sub update_fields {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
+    my $recs  = librecat->model($model) // return $c->not_found;
     my $data  = decode_json($c->req->body);
-    my $recs  = librecat->$model;
 
     # does record exist?
     my $rec;
@@ -117,8 +117,8 @@ sub remove {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
-    my $recs  = librecat->$model;
-    my $rec   = $recs->delete($id) || return $c->not_found;
+    my $recs  = librecat->model($model) // return $c->not_found;
+    my $rec   = $recs->delete($id) // return $c->not_found;
 
     my $data = {
         type       => $model,
@@ -134,8 +134,8 @@ sub get_history {
 
     my $model    = $c->param('model');
     my $id       = $c->param('id');
-    my $recs     = librecat->$model;
-    my $versions = $recs->get_history($id) || return $c->not_found;
+    my $recs     = librecat->model($model) // return $c->not_found;
+    my $versions = $recs->get_history($id) // return $c->not_found;
     my $data     = {
         type       => $model,
         id         => $id,
@@ -151,8 +151,8 @@ sub get_version {
     my $model   = $c->param('model');
     my $id      = $c->param('id');
     my $version = $c->param('version');
-    my $recs    = librecat->$model;
-    my $rec     = $recs->get_version($id, $version) || return $c->not_found;
+    my $recs    = librecat->model($model) // return $c->not_found;
+    my $rec     = $recs->get_version($id, $version) // return $c->not_found;
     my $data    = {
         type       => $model,
         id         => $id,
