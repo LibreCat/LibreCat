@@ -3,7 +3,6 @@ package LibreCat;
 use Catmandu::Sane;
 
 our $VERSION = '0.3.2';
-
 use Config::Onion;
 use Log::Log4perl;
 use Log::Any::Adapter;

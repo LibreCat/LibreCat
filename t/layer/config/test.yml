@@ -53,7 +53,7 @@ default_facets:
       terms:
         field: 'year'
         size: 100
-        order: 'reverse_term'
+        order: {_key: desc}
     type:
       terms:
         field: 'type'
@@ -127,8 +127,18 @@ store:
 
   search:
     options:
-      client: '1_0::Direct'
-      index_name: librecat_test
+      bags:
+        department:
+          index: librecat_test_department
+        project:
+          index: librecat_test_project
+        publication:
+          index: librecat_test_publication
+        research_group:
+          index: librecat_test_research_group
+        user:
+          index: librecat_test_user
+
   builtin_users:
     package: Hash
     options:
