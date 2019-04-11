@@ -35,36 +35,36 @@ default_person_sort:
 default_facets:
     open_access:
       terms:
-        fields: ['oa']
+        field: oa
         size: 1
     popular_science:
       terms:
-        field: 'popular_science'
+        field: popular_science
         size: 1
     extern:
       terms:
-        field: 'extern'
+        field: extern
         size: 2
     status:
       terms:
-        field: 'status'
+        field: status
         size: 8
     year:
       terms:
-        field: 'year'
-        size: 100
-        order: 'reverse_term'
+        field: year
+        size: 20
+        order: {_key: desc}
     type:
       terms:
-        field: 'type'
+        field: type
         size: 25
     isi:
       terms:
-        field: 'isi'
+        field: isi
         size: 1
     pmid:
       terms:
-        field: 'pmid'
+        field: pmid
         size: 1
 
 request_copy:
