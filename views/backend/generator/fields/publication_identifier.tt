@@ -76,7 +76,7 @@
       [% END %]
     [% END %]
     {% ELSE %}
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.publication_identifier.mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.publication_identifier.label_short || lf.$type.field.publication_identifier.label %]</div>

@@ -31,7 +31,6 @@ if all_match(DT,'Editorial Material')
   set_field(_r.article_type,letter_note)
 end
 
-add_field(_r.isi,1)
 add_field(_r.quality_controlled,1)
 add_field(_r.publication_status,published)
 
@@ -87,11 +86,16 @@ join_field(_r.publication,' ')
 
 move_field(SN,'_r.publication_identifier.issn.0')
 move_field(EI,'_r.publication_identifier.eissn.0')
-replace_all(UT,'^WOS:','')
-move_field(UT,_r.external_id.isi.$append)
+if any_match(UT,'^WOS:')
+  replace_all(UT,'^WOS:','')
+  move_field(UT,_r.external_id.isi.$append)
+end
+if any_match(UT,'^MEDLINE:')
+  replace_all(UT,'^MEDLINE:','')
+  move_field(UT,_r.external_id.pmid.$append)
+end
 if exists(PM)
   move_field(PM,_r.external_id.pmid.$append)
-  add_field(_r.pmid,1)
 end
 move_field(VL,_r.volume)
 move_field(IS,_r.issue)

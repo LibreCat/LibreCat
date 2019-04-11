@@ -3,7 +3,7 @@ use warnings FATAL => 'all';
 use Test::More;
 use Test::Exception;
 use LibreCat -load => {layer_paths => [qw(t/layer)]};
-use Data::Dumper;
+use LibreCat qw(publication);
 
 my $pkg;
 
@@ -39,8 +39,20 @@ EOF
 
     ok $pub , 'got a publication';
 
+    $pub->[0]{_id} = 'DUMMY';
+
     is $pub->[0]->{title}, 'The title of the work', 'got a title';
     is $pub->[0]->{type}, 'book', 'type == book';
+
+    my $is_valid = publication->is_valid($pub->[0]);
+
+    if ($is_valid) {
+        ok 1, 'record is valid';
+    }
+    else {
+        ok 0 , 'record is valid';
+        say STDERR join("\n", @{publication->validator->last_errors});
+    }
 };
 
 subtest 'more_recs' => sub {

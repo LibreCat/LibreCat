@@ -1,6 +1,7 @@
 package LibreCat::FetchRecord::crossref;
 
 use Catmandu::Util qw(:io :hash);
+use LibreCat -self;
 use URI::Escape;
 use Moo;
 
@@ -27,9 +28,11 @@ sub fetch {
         return ();
     }
 
-    my $fixer = $self->create_fixer('crossref_mapping.fix');
+    my $fixer = librecat->fixer('crossref_mapping.fix');
 
     $data = $fixer->fix($data);
+
+    $self->log->debugf("data: %s", $data);
 
     return $data;
 }

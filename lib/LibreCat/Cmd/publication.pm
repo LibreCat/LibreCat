@@ -356,6 +356,7 @@ sub _add {
         skip_before_add     => $skip_before_add,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
+            $self->log->errorf("%s not va valid publication %s", $rec->{_id}, $errors);
             say STDERR join("\n",
                 $rec->{_id}, "ERROR: not a valid publication", @$errors);
             $ret = 2;

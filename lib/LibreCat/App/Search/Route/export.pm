@@ -40,7 +40,7 @@ sub _export {
     my $hits = LibreCat->searcher->search('publication', $params);
 
     # We are changing the configurate options inline
-    # A clone is required to work on a local version of these options 
+    # A clone is required to work on a local version of these options
     my $package = $spec->{package};
     my $options = clone($spec->{options}) || {};
 
@@ -100,6 +100,7 @@ Exports data from the logged-in-area.
 
 get '/librecat/export' => sub {
     my $params = h->extract_params;
+    push @{$params->{cql}}, "status<>deleted";
     return _export($params);
 };
 

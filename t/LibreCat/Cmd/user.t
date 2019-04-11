@@ -24,7 +24,9 @@ require_ok $pkg;
 
 # empty db
 Catmandu->store('main')->bag('user')->delete_all;
+Catmandu->store('main')->bag('user')->commit;
 Catmandu->store('search')->bag('user')->delete_all;
+Catmandu->store('search')->bag('user')->commit;
 
 subtest 'missing cmd' => sub {
     my $result = test_app(qq|LibreCat::CLI| => ['user']);

@@ -13,19 +13,6 @@ use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 use LibreCat qw(searcher);
 
-=head2 GET /publication
-
-Redirect legacy routes to /record
-
-=cut
-
-get qr{/(publication|data)/*(.*?)} => sub {
-    my ($bag, $path) = splat;
-    my $params = params;
-
-    forward "/record/$path", $params;
-};
-
 =head2 GET /record/:id.:fmt
 
 Export publication with ID :id in format :fmt

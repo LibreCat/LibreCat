@@ -1,6 +1,7 @@
 package LibreCat::FetchRecord::bibtex;
 
 use Catmandu::Util qw(:io);
+use LibreCat -self;
 use Moo;
 
 with 'LibreCat::FetchRecord';
@@ -10,7 +11,7 @@ sub fetch {
 
     $self->log->debug("parsing bibtex $bibtex");
 
-    my $fixer = $self->create_fixer('bibtex_mapping.fix');
+    my $fixer = librecat->fixer('bibtex_mapping.fix');
 
     my $data = Catmandu->importer('BibTeX', file => \$bibtex)->to_array;
 

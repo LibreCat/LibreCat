@@ -41,19 +41,7 @@ require_ok $pkg;
 }
 
 {
-    my $result
-        = test_app(qq|LibreCat::CLI| => ['index', 'create', 'publication']);
-    ok !$result->error, 'ok create threw no exception';
-}
-
-{
-    my $result
-        = test_app(qq|LibreCat::CLI| => ['index', 'drop', 'publication']);
-    ok !$result->error, 'ok drop threw no exception';
-}
-
-{
-    my $result = test_app(qq|LibreCat::CLI| => ['index', 'purge']);
+    my $result = test_app(qq|LibreCat::CLI| => ['index', '--yes', 'purge']);
     ok !$result->error, 'ok purge threw no exception';
 }
 
