@@ -11,7 +11,7 @@
     <div class="row margin-bottom1">
       <div class="col-md-8 col-xs-10"><!-- begin left col -->
       [%- IF name %]
-      <h1 itemprop="name">[% name %]</h1>
+      <h1>[% name %]</h1>
       [%- END %]
       [%- IF start_date %]
 	<div class="row">
