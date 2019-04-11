@@ -86,7 +86,7 @@ main_page:
     returned: "Returned"
     submitted: "Submitted"
     invalid: "Invalid"
-    qae: "New"
+    new: "New"
     private: "Private"
   links:
     audit: Audit
