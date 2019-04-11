@@ -1143,7 +1143,7 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag}
+                exact: {type: text, analyzer: tag, fielddata: 'true'}
             acronym: {type: text, analyzer: tag}
             start_date:
               type: text
