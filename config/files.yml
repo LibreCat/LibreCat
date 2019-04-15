@@ -13,6 +13,23 @@ tmp_dir: data/temp_uploads
 #  The download name can be a combination like ""%i-%f.%e"
 download_file_name: "%o"
 
+# Override http headers for download
+#
+# Note that there are already builtin defaults
+download_headers:
+  # ..for all content-types
+  for_all:
+    # the '%s' is replaced by the current content-type
+    "Content-Type": "%s"
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"
+    "Pragma": "no-cache"
+    # the '%s' is replaced by the current filename
+    "Content-Disposition": "inline; filename*=UTF-8''%s"
+  # ..for specific content-types (overrides previous)
+  for_content_type:
+    "text/plain":
+      "Content-Type": "%s; charset=utf-8"
+
 default: &filestore_settings
     package: Simple
     options:
