@@ -112,13 +112,8 @@ note("testing exporting publications");
 
 note("testing searching publications");
 {
-    my $result = test_app(
-        qq|LibreCat::CLI| => [
-            'publication', 'export', '--sort',  '"title,,1"',
-            '--start',     1,        '--total', 10,
-            'basic = Valid'
-        ]
-    );
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['publication', 'export', '--start', 1, '--total', 10]);
 
     ok !$result->error, 'ok threw no exception';
 
@@ -132,7 +127,7 @@ note("testing searching publications");
 
     ok $records , 'got records';
 
-    is @$records, 1, 'got 1 record';
+    is @$records, 0, 'got 0 records';
 }
 
 note("testing getting publication metadata");

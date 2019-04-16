@@ -119,10 +119,17 @@ sub add {
         $self->store($rec, %opts);
         $self->index($rec, %opts) unless $opts{skip_index};
         $opts{on_success}->($rec) if $opts{on_success};
+
         return 1;
     }
     elsif ($opts{on_validation_error}) {
         $opts{on_validation_error}->($rec, $self->validator->last_errors);
+    }
+    else {
+        $self->log->errorf(
+            "record %s has errors no `on_validation_error` set: %s"
+                , $rec->{_id}
+                , $self->validator->last_errors);
     }
 
     0;
@@ -300,25 +307,25 @@ successively calling C<add> for each record in the iterator.
 Possible options:
 
 =over
- 
+
 =item *
- 
+
 C<skip_before_add>: You can supply an arrayref of hook names that will not be executed.
 
     $model->add($rec, skip_before_add => ['whitelist']);
 
 =item *
- 
+
 C<skip_index>: The record will be added to the main store but not indexed if
 this option is C<1>.
 
 =item *
- 
+
 C<on_success>: You can supply a callback function that will be called
 with the record if the record was succesfully added.
 
 =item *
- 
+
 C<on_validation_error>: You can supply a callback function that will be called
 with the record and an arrayref of errors if validation fails.
 
@@ -335,9 +342,9 @@ Any C<before_add> hooks will be applied before validation.
 Options are the same as for C<add_many>, plus:
 
 =over
- 
+
 =item *
- 
+
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
@@ -349,9 +356,9 @@ Delete all records.
 Options are:
 
 =over
- 
+
 =item *
- 
+
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
@@ -364,9 +371,9 @@ deleted, C<undef> if no record was found.
 Options are:
 
 =over
- 
+
 =item *
- 
+
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
@@ -380,9 +387,9 @@ You would normally use the higher level C<add> method.
 Options are:
 
 =over
- 
+
 =item *
- 
+
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
@@ -396,9 +403,9 @@ higher level C<add> method.
 Options are:
 
 =over
- 
+
 =item *
- 
+
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =item *
@@ -417,9 +424,9 @@ higher level C<delete_all> method.
 Options are:
 
 =over
- 
+
 =item *
- 
+
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
@@ -432,9 +439,9 @@ removed, C<undef> if no record was found.
 Options are:
 
 =over
- 
+
 =item *
- 
+
 C<skip_commit>: Changes will not be commited if this option is C<1>.
 
 =back
