@@ -1,0 +1,15 @@
+# swagger-before.yml
+swagger: "2.0"
+info:
+  description: "This is a publication management server."
+  version: "2.0.0"
+  title: "LibreCat API"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "librecat-dev@lists.uni-bielefeld.de"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/librecat/api/v2"
+schemes:
+- "https"

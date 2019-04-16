@@ -28,7 +28,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/^(package\.json|forms|departments|cleanup)$/;
+    my $commands = qr/^(package\.json|forms|departments|cleanup|swagger.yml)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -51,6 +51,9 @@ sub command {
     }
     elsif ($cmd eq 'cleanup') {
         return $self->_generate_cleanup;
+    }
+    elsif ($cmd eq 'swagger.yml') {
+        return $self->_generate_swagger_yml;
     }
 }
 
@@ -298,6 +301,36 @@ sub _template_printer {
         print $io "</li>\n";
     }
     print $io "</ul>\n";
+}
+
+sub _generate_swagger_yml {
+    my ($self) = @_;
+
+    my $swagger_yml = path(librecat->root_path)->child('swagger.yml')->stringify;
+    my $yaml = Catmandu->importer('YAML', file => path(librecat->root_path)->child('swagger-before.yml')->stringify)->first;
+
+    $yaml->{paths} = +{};
+    foreach my $m (@{librecat->models}) {
+        push @{$yaml->{tags}}, {name => $m, description => "Operations on $m records."};
+
+        my $tmp_exp;
+        my $path_exporter = Catmandu->exporter('Template', file => \$tmp_exp, template => path(librecat->root_path)->child('swagger-path-yml.tt')->stringify);
+        $path_exporter->add({item => $m});
+        $path_exporter->commit;
+
+        $yaml->{paths} = { %{$yaml->{paths}}, %{Catmandu->importer('YAML', file => \$tmp_exp)->first}};
+    }
+
+    my $exporter = Catmandu->exporter(
+        'YAML',
+        file   => $swagger_yml,
+    );
+    $exporter->add($yaml);
+    $exporter->commit;
+
+    print "created: $swagger_yml\n";
+
+    return 0;
 }
 
 1;

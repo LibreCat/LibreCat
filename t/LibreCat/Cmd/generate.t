@@ -67,8 +67,21 @@ require_ok $pkg;
         "departments backend generated";
 }
 
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'swagger.yml']);
+
+    print $result->stdout;
+
+    print $result->stderr if $result->stderr;
+
+    ok !$result->error, 'ok threw no exception';
+
+    ok -f "swagger.yml", "swagger.yml generated";
+}
+
 done_testing;
 
 END {
     unlink "package.json";
+    unlink "swagger.yml";
 }
