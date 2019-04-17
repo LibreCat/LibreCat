@@ -68,7 +68,7 @@ require_ok $pkg;
 }
 
 {
-    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'swagger.yml']);
+    my $result = test_app(qq|LibreCat::CLI| => ['generate', 'openapi.yml']);
 
     print $result->stdout;
 
@@ -76,12 +76,12 @@ require_ok $pkg;
 
     ok !$result->error, 'ok threw no exception';
 
-    ok -f "swagger.yml", "swagger.yml generated";
+    ok -f "openapi.yml", "openapi.yml generated";
 }
 
 done_testing;
 
 END {
     unlink "package.json";
-    unlink "swagger.yml";
+    unlink "openapi.yml";
 }

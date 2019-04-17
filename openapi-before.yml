@@ -1,0 +1,63 @@
+# swagger-before.yml
+openapi: "3.0.0"
+info:
+  description: "This is a publication management server."
+  version: "2.0.0"
+  title: "LibreCat Metadata Store API"
+  contact:
+    email: "librecat-dev@lists.uni-bielefeld.de"
+  license:
+    name: "Perl"
+    url: "https://github.com/LibreCat/LibreCat/blob/master/LICENSE"
+basePath: "/librecat/api/v2"
+schemes:
+- "https"
+security:
+  - apiKey: []
+components:
+  errors:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            status:
+              type: integer
+            validation_error:
+              type: string
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+  responses:
+    OK:
+      description: Request has been processed successfully.
+    Created:
+      description: Resource has been successfully created.
+    Deleted:
+      description: Resource has been successfully deleted.
+    BadRequest:
+      description: Record is not valid.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/errors"
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        Authorization:
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/errors"
+    NotFound:
+      description: Requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/errors"
