@@ -718,10 +718,11 @@ publication:
       description: "Notes, comments about this record"
     alternative_id:
       type: array
-      items:
-        oneOf:
-          - type: string
-          - type: integer
+      item:
+          properties:
+              oneOf:
+                - type: string
+                - type: integer
       description: "Returned Record Ids"
     citation:
       type: object
