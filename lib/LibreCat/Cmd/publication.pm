@@ -190,12 +190,14 @@ sub command {
 }
 
 sub audit {
-    state $s = LibreCat::Audit->new();
+    my $self = $_[0];
+    $self->{_audit} //= LibreCat::Audit->new();
+    $self->{_audit};
 }
 
 sub audit_message {
-    my ($id, $action, $message) = @_;
-    audit()->add({
+    my ($self,$id, $action, $message) = @_;
+    $self->audit()->add({
         id      => $id,
         bag     => 'publication',
         process => 'librecat publication',
@@ -328,7 +330,7 @@ sub _get {
     }
 
     if (my $msg = $self->opts->{log}) {
-        audit_message($id, 'get', $msg);
+        $self->audit_message($id, 'get', $msg);
     }
 
     Catmandu->export($rec, 'YAML') if $rec;
@@ -374,7 +376,7 @@ sub _add {
             }
 
             if (my $msg = $self->opts->{log}) {
-                audit_message($rec->{_id}, 'add', $msg);
+                $self->audit_message($rec->{_id}, 'add', $msg);
             }
         },
     );
@@ -396,7 +398,7 @@ sub _delete {
     if ($result) {
 
         if (my $msg = $self->opts->{log}) {
-            audit_message($id, 'delete', $msg);
+            $self->audit_message($id, 'delete', $msg);
         }
 
         print "deleted $id\n";
@@ -418,7 +420,7 @@ sub _purge {
     if ($result) {
 
         if (my $msg = $self->opts->{log}) {
-            audit_message($id, 'purge', $msg);
+            $self->audit_message($id, 'purge', $msg);
         }
 
         print "purged $id\n";
@@ -638,7 +640,7 @@ sub _checksum_id {
         $pubs->add($rec);
 
         if (my $msg = $self->opts->{log}) {
-            audit_message($rec->{_id}, 'add', $msg);
+            $self->audit_message($rec->{_id}, 'add', $msg);
         }
     }
 
@@ -729,7 +731,7 @@ sub _files_load {
         }
 
         if (my $msg = $self->opts->{log}) {
-            audit_message($id, 'files', $msg);
+            $self->audit_message($id, 'files', $msg);
         }
     };
 
