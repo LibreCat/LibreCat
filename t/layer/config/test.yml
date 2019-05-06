@@ -165,6 +165,15 @@ filestore:
         package: 'LibreCat::Worker::FileUploader'
         options:
             files: *filestore_settings
+
+    download_headers:
+      for_all:
+        "Content-Disposition": "attachment; filename*=UTF-8''%s"
+      for_content_type:
+        "text/plain":
+          "Content-Disposition": "inline; filename*=UTF-8''%s"
+          "Content-Type": "%s; charset=utf-8"
+
 hooks:
   eat:
    before_fixes: [peckish, hungry]
