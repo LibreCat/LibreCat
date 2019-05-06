@@ -1,8 +1,6 @@
 package LibreCat::Cmd::audit;
 
 use Catmandu::Sane;
-use LibreCat::App::Helper;
-use Carp;
 use POSIX qw(strftime);
 use LibreCat::Audit;
 use parent qw(LibreCat::Cmd);
@@ -43,14 +41,10 @@ sub command {
     }
 }
 
-sub audit {
-    state $s = LibreCat::Audit->new();
-}
-
 sub _list {
     my ($self, $pid) = @_;
 
-    my $it = audit()->bag();
+    my $it = LibreCat::Audit->new();
 
     if ($pid) {
         $it = $it->select(id => $pid)->sorted(
@@ -94,11 +88,4 @@ LibreCat::Cmd::audit - manage librecat audit messages
 
     librecat audit list [options] [<RECORD-ID>]
 
-    An 'audit' worker should be up and running to
-    store messages:
-
-    Hint:
-
-    bin/librecat worker audit start --workers 1 --supervise
-    
 =cut
