@@ -11,6 +11,7 @@ use File::Path;
 use File::Spec;
 use URI::Escape;
 use POSIX qw(strftime);
+use LibreCat::Audit;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -164,18 +165,19 @@ sub command {
     }
 }
 
+sub audit {
+    state $s = LibreCat::Audit->new();
+}
+
 sub audit_message {
     my ($id, $action, $message) = @_;
-    LibreCat::App::Helper::Helpers->new->queue->add_job(
-        'audit',
-        {
-            id      => $id,
-            bag     => 'publication',
-            process => 'librecat file_store',
-            action  => $action,
-            message => $message,
-        }
-    );
+    audit()->add({
+        id      => $id,
+        bag     => 'publication',
+        process => 'librecat file_store',
+        action  => $action,
+        message => $message,
+    });
 }
 
 sub _list {

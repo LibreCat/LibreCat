@@ -1,21 +1,23 @@
 package LibreCat::Worker::Audit;
 
 use Catmandu::Sane;
-use Catmandu;
 use Moo;
+use LibreCat::Audit;
 use namespace::clean;
 
 with 'LibreCat::Worker';
 
+# deprecated: no need to use a worker. Use LibreCat::Audit directly
+
+has audit => (
+    is => "ro",
+    lazy => 1,
+    default => sub { LibreCat::Audit->new(); },
+    init_arg => undef
+);
+
 sub work {
     my ($self, $opts) = @_;
-
-    my $store = Catmandu->store('main')->bag('audit');
-
-    unless ($store) {
-        $self->log->error("failed to find 'main.audit' store");
-        return;
-    }
 
     $self->log->debugf("audit message: %s", $opts);
 
@@ -24,13 +26,19 @@ sub work {
         bag     => $opts->{bag},
         process => $opts->{process},
         action  => $opts->{action},
-        message => $opts->{message},
-        time    => time
+        message => $opts->{message}
     };
 
-    $store->add($rec);
+    unless(
+        $self->audit->add( $rec )
+    ){
 
-    $store->commit();
+        $self->log->error( "validation audit failed: " . join(",",@{ $self->audit()->last_errors() }) );
+        return;
+
+    }
+
+    1;
 }
 
 1;
@@ -43,6 +51,10 @@ __END__
 
 LibreCat::Worker::Audit - a worker for audits (if configured)
 
+=head1 DESCRIPTION
+
+Deprecated in favour of L<LibreCat::Auth>
+
 =head1 SYNOPSIS
 
     use LibreCat::Worker::Audit;
@@ -53,24 +65,8 @@ LibreCat::Worker::Audit - a worker for audits (if configured)
         bag     => $opts->{bag},
         process => $opts->{process},
         action  => $opts->{action},
-        message => $opts->{message},
-        time    => time
+        message => $opts->{message}
     });
-
-    # or better queue it via helper functions
-
-    use LibreCat::App::Helper;
-
-    my $job = {{
-        id      => $opts->{id},
-        bag     => $opts->{bag},
-        process => $opts->{process},
-        action  => $opts->{action},
-        message => $opts->{message},
-        time    => time
-    }
-
-    h->queue->add_job('audit', $job)
 
 =head2 SEE ALSO
 

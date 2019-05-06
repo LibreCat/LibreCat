@@ -8,6 +8,7 @@ use LibreCat qw(queue publication timestamp);
 use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
+use LibreCat::Audit;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -188,18 +189,19 @@ sub command {
     }
 }
 
+sub audit {
+    state $s = LibreCat::Audit->new();
+}
+
 sub audit_message {
     my ($id, $action, $message) = @_;
-    queue->add_job(
-        'audit',
-        {
-            id      => $id,
-            bag     => 'publication',
-            process => 'librecat publication',
-            action  => $action,
-            message => $message,
-        }
-    );
+    audit()->add({
+        id      => $id,
+        bag     => 'publication',
+        process => 'librecat publication',
+        action  => $action,
+        message => $message,
+    });
 }
 
 sub _on_all {

@@ -22,7 +22,8 @@ my $a = $pkg->new();
 can_ok $a, "work";
 
 my $data = {
-    _id     => 1,
+    id     => 1,
+    process => "process",
     action  => "update",
     bag     => "publication",
     message => "activated",
@@ -37,13 +38,8 @@ my $saved_data = $audit_bag->first;
 like $saved_data->{message}, qr/activated/,   "message field present";
 like $saved_data->{bag},     qr/publication/, "bag publication";
 like $saved_data->{time},    qr/\d+/,         "time field present";
-ok $saved_data->{_id},       "_id field present";
-
-# edge case: no store present
-Catmandu->config->{store}->{main} = undef;
-
-my $b = $pkg->new();
-ok !$b->work($data);
+is   $saved_data->{process},"process", "process field present";
+ok $saved_data->{id},       "id field present";
 
 END {
     # cleanup
