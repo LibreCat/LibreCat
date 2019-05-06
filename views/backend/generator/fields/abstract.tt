@@ -62,7 +62,7 @@
       [% END %]
     [% END %]
     {% ELSE %}
-    <div class="row innerrow">
+    <div class="row innerrow multirow">
       <div class="form-group sticky_top col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.basic_fields.abstract.mandatory OR fields.supplementary_fields.abstract.mandatory %} mandatory{% END %}">
           <div class="input-group-addon">[% h.loc("forms.${type}.field.abstract.label2") %]</div>
