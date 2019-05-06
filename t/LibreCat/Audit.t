@@ -65,4 +65,9 @@ is scalar(@{ $audit->last_errors() // [] }), 1;
 is $audit->select( bag => "publication" )->select( id => 2 )->count, 0;
 is $audit->select( bag => "publication" )->select( id => 1 )->count, 1;
 
+END {
+    # cleanup test data
+    Catmandu->store('main')->bag('audit')->delete_all;
+}
+
 done_testing;
