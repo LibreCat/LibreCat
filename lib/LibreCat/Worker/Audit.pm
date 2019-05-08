@@ -53,7 +53,7 @@ LibreCat::Worker::Audit - a worker for audits (if configured)
 
 =head1 DESCRIPTION
 
-Deprecated in favour of L<LibreCat::Auth>
+Deprecated in favour of L<LibreCat::Audit>
 
 =head1 SYNOPSIS
 
