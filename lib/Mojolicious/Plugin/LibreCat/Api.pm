@@ -12,42 +12,44 @@ sub register {
 
     my $api_token = librecat->config->{api_token} // '';
 
+    my $api = $r->any("/api/v1");
+
+    my $api_auth = $api->under(
+        '/' => sub {
+            my $c = shift;
+
+            my $auth_token
+                = $c->req->headers->header('Authorization') // '';
+            unless ($auth_token) {
+                $c->render(
+                    json   => {errors => "Not authorized."},
+                    status => 401
+                );
+                return 0;
+            }
+
+            if ($auth_token eq $api_token) {
+
+                # authorized
+                return 1;
+            }
+            else {
+                # not authorized
+                $c->render(
+                    json   => {errors => "Not authorized."},
+                    status => 401
+                );
+                return 0;
+            }
+        }
+    );
+
     $r->add_shortcut(
-        librecat_api => sub {
+        librecat_model_api => sub {
             my ($r, $model) = @_;
 
-            my $auth = $r->under(
-                '/' => sub {
-                    my $c = shift;
-
-                    my $auth_token
-                        = $c->req->headers->header('Authorization') // '';
-                    unless ($auth_token) {
-                        $c->render(
-                            json   => {errors => "Not authorized."},
-                            status => 401
-                        );
-                        return 0;
-                    }
-
-                    if ($auth_token eq $api_token) {
-
-                        # authorized
-                        return 1;
-                    }
-                    else {
-                        # not authorized
-                        $c->render(
-                            json   => {errors => "Not authorized."},
-                            status => 401
-                        );
-                        return 0;
-                    }
-                }
-            );
-
             my $model_api
-                = $auth->any("/api/$model")->to('api#', model => $model);
+                = $api_auth->any("/$model")->to('api#', model => $model);
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
@@ -77,7 +79,7 @@ sub register {
         }
     );
 
-    $r->librecat_api($_) for @$models;
+    $r->librecat_model_api($_) for @$models;
 }
 
 1;
