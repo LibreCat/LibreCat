@@ -1,4 +1,4 @@
-package LibreCat::Controller::Api;
+package LibreCat::Controller::ModelApi;
 
 use Catmandu::Sane;
 use Hash::Merge::Simple qw(merge);
