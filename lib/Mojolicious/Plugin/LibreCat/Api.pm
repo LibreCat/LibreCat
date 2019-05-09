@@ -52,7 +52,7 @@ sub register {
             my ($r, $model) = @_;
 
             my $model_api
-                = $api_auth->any("/$model")->to('api#', model => $model);
+                = $api_auth->any("/$model")->to('model_api#', model => $model);
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
