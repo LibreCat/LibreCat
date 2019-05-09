@@ -35,6 +35,11 @@ my $auth_token = librecat->config->{api_token};
 # Start a Mojolicious app
 my $t = Test::Mojo->new('LibreCat::Application');
 
+subtest "get documentation" => sub {
+    $t->get_ok('/api/v1/openapi.json')->status_is(200)->json_has('/basePath');
+    $t->get_ok('/api/v1/openapi.json')->status_is(200);
+};
+
 subtest "authentication" => sub {
     $t->get_ok('/api/v1/user/1')->status_is(401);
 
