@@ -21,14 +21,14 @@ sub do_error {
     send_error({code =>, $code, error => $msg}, $http_code);
 }
 
-prefix '/librecat/api' => sub {
+prefix '/api/v1/file' => sub {
 
-=head2 GET /librecat/api/filestore
+=head2 GET /api/v1/file
 
 Return a text stream of all container identifier in the repository.
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET  "http://localhost:5001/librecat/api/filestore"
+    $ curl -H "Content-Type: application/json" -X GET  "http://localhost:5001/api/v1/file"
     000000122
     000000006
     000000010
@@ -38,7 +38,7 @@ E.g.
 
 =cut
 
-    get '/filestore' => sub {
+    get '/' => sub {
         my $index = h->get_file_store()->index;
 
         send_file(
@@ -76,13 +76,13 @@ E.g.
         );
     };
 
-=head2 GET /librecat/api/filestore/:key
+=head2 GET /api/v1/file/:key
 
 Return the content of a container in JSON format
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/filestore/000000008"
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/api/v1/file/000000008"
     {
        "files" : [
           {
@@ -137,13 +137,13 @@ E.g.
         }
     };
 
-=head2 GET /librecat/api/filestore/:key/:filename
+=head2 GET /api/v1/file/:key/:filename
 
 Return the binary content of a file in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/api/v1/file/000000008/rprogramming.pdf"
     <... binary data ...>
 
 =cut
@@ -192,13 +192,13 @@ E.g.
         );
     };
 
-=head2 DEL /librecat/api/filestore/:key
+=head2 DEL /api/v1/file/:key
 
 Delete a container from the repository
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/filestore/000000008"
+    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/api/v1/file/000000008"
     { "ok": "1"}
 
 =cut
@@ -219,13 +219,13 @@ E.g.
         }
     };
 
-=head2 DEL /librecat/api/filestore/:key/:filename
+=head2 DEL /api/v1/file/:key/:filename
 
 Delete a file in a container from the repository
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/filestore/000000008/rprogramming.pdf"
+    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/api/v1/file/000000008/rprogramming.pdf"
     { "ok": "1"}
 
 =cut
@@ -256,13 +256,13 @@ E.g.
         }
     };
 
-=head2 POST /librecat/api/filestore/:key
+=head2 POST /api/v1/file/:key
 
 Add a file to a container in the repository
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -F file=@rpogramming.pdf -X POST  "http://localhost:5001/librecat/api/filestore/000000008"
+    $ curl -H "Content-Type: application/json" -F file=@rpogramming.pdf -X POST  "http://localhost:5001/api/v1/file/000000008"
     { "ok": "1"}
 
 =cut
@@ -291,13 +291,13 @@ E.g.
         return {ok => 1};
     };
 
-=head2 GET /librecat/api/access/:key/:filename/thumbnail
+=head2 GET /librecat/api/v1/access/:key/:filename/thumbnail
 
 Return the binary thumbail content of a file in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbnail"
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/v1/access/000000008/rprogramming.pdf/thumbnail"
     <... binary data ...>
 
 =cut
@@ -353,13 +353,13 @@ E.g.
         );
     };
 
-=head2 POST /librecat/api/access/:key/:filename/thumbnail
+=head2 POST /librecat/api/v1/access/:key/:filename/thumbnail
 
 Create a thumbail for a file in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X POST "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbnail"
+    $ curl -H "Content-Type: application/json" -X POST "http://localhost:5001/librecat/api/v1/access/000000008/rprogramming.pdf/thumbnail"
 
 =cut
 
@@ -381,13 +381,13 @@ E.g.
         $response;
     };
 
-=head2 DEL /librecat/api/access/:key/:filename/thumbnail
+=head2 DEL /librecat/api/v1/access/:key/:filename/thumbnail
 
 Delete a thumbnail in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/access/000000008/rprogramming.pdf/thumbnail"
+    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/v1/access/000000008/rprogramming.pdf/thumbnail"
     { "ok": "1"}
 
 =cut
