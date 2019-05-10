@@ -46,7 +46,7 @@ sub create {
                     };
 
                     # send created status 201
-                    $c->render(json => {data => $d});
+                    $c->render(json => {data => $d}, status => 201);
                 }
             );
         }

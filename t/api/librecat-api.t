@@ -66,7 +66,7 @@ subtest "add/get/delete user" => sub {
 
     $t->post_ok(
         '/api/v1/user' => {Authorization => $token} => json => $user)
-        ->status_is(200)->json_is('/data/id', 999111999);
+        ->status_is(201)->json_is('/data/id', 999111999);
 
     $t->get_ok('/api/v1/user/999111999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
@@ -112,7 +112,7 @@ subtest "add/get/delete publication" => sub {
 
     $t->post_ok(
         '/api/v1/publication' => {Authorization => $token} => json => $pub)
-        ->status_is(200)->json_is('/data/id', 999999999);
+        ->status_is(201)->json_is('/data/id', 999999999);
 
     $t->get_ok('/api/v1/publication/999999999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
