@@ -3,7 +3,6 @@ package Mojolicious::Plugin::LibreCat::Api;
 use Catmandu::Sane;
 use Catmandu;
 use LibreCat -self;
-use Crypt::JWT qw(decode_jwt);
 use List::Util qw(any);
 use Mojo::Base 'Mojolicious::Plugin';
 use namespace::clean;
@@ -23,28 +22,19 @@ sub register {
     my $api_auth = $api->under(
         '/' => sub {
             my $c = shift;
-
             my $token = $c->req->headers->header('Authorization');
-            unless ($token) {
-                $c->render(
-                    json   => {errors => ["Not authorized"]},
-                    status => 401
-                );
-                return 0;
+
+            # authorized
+            if (librecat->token->decode($token)) {
+                return 1;
             }
 
-            try {
-                # authorized
-                decode_jwt(token => $token, key => $token_secret, accepted_alg => 'HS512');
-                1;
-            } catch {
-                # not authorized
-                $c->render(
-                    json   => {errors => ["Not authorized"]},
-                    status => 401
-                );
-                0;
-            };
+            # not authorized
+            $c->render(
+                json   => {errors => ["Not authorized"]},
+                status => 401
+            );
+            0;
         }
     );
 

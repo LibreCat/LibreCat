@@ -1,7 +1,6 @@
 use Mojo::Base -strict;
 use Path::Tiny;
 use LibreCat -self, -load => {layer_paths => [qw(t/layer)]};
-use Crypt::JWT qw(encode_jwt);
 use Test::Mojo;
 use Test::More;
 
@@ -29,8 +28,7 @@ for my $bag (qw(publication department project research_group user)) {
     }
 }
 
-my $token_secret = librecat->config->{api}{v1}{token_secret};
-my $token = encode_jwt(payload => {foo => 'bar'}, key => $token_secret, alg => 'HS512');
+my $token = librecat->token->encode({foo => 'bar'});
 
 # Start a Mojolicious app
 my $t = Test::Mojo->new('LibreCat::Application');
