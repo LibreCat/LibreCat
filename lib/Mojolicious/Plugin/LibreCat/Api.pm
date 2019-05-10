@@ -53,7 +53,7 @@ sub register {
             $model_api->delete('/:id')->to('#remove', model => $model)
                 ->name($model);
 
-            $model_api->put('/:id')->to('#add', model => $model)
+            $model_api->put('/:id')->to('#update', model => $model)
                 ->name($model);
 
             $model_api->patch('/:id')->to('#update_fields', model => $model)
@@ -64,9 +64,9 @@ sub register {
             if (librecat->$model->does("LibreCat::Model::Plugin::Versioning"))
             {
                 $model_api->get('/:id/versions')
-                    ->to('#get_history', model => $model)->name($model);
+                    ->to('#show_history', model => $model)->name($model);
                 $model_api->get('/:id/version/:version')
-                    ->to('#get_version', model => $model)->name($model);
+                    ->to('#show_version', model => $model)->name($model);
             }
 
             return $model_api;

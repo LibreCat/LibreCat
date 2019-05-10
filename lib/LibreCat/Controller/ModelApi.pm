@@ -54,7 +54,7 @@ sub create {
 
 }
 
-sub add {
+sub update {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
@@ -152,7 +152,7 @@ sub remove {
     $c->render(json => {data => $data});
 }
 
-sub get_history {
+sub show_history {
     my $c = $_[0];
 
     my $model    = $c->param('model');
@@ -168,7 +168,7 @@ sub get_history {
     $c->render(json => {data => $data});
 }
 
-sub get_version {
+sub show_version {
     my $c = $_[0];
 
     my $model   = $c->param('model');
