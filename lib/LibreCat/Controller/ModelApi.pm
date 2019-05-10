@@ -28,24 +28,30 @@ sub create {
     my $recs  = librecat->model($model) // return $c->not_found;
     my $data  = decode_json($c->req->body);
 
-    $recs->add(
+    librecat->hook("api-$model-update")->fix_around(
         $data,
-        on_validation_error => sub {
-            my ($x, $errors) = @_;
-            return $c->not_valid($errors);
-        },
-        on_success => sub {
-            my $d = {
-                type       => $model,
-                id         => $data->{_id},
-                attributes => $data,
-                links      => {self => $c->url_for->to_abs,},
-            };
+        sub {
+            $recs->add(
+                $data,
+                on_validation_error => sub {
+                    my ($x, $errors) = @_;
+                    return $c->not_valid($errors);
+                },
+                on_success => sub {
+                    my $d = {
+                        type       => $model,
+                        id         => $data->{_id},
+                        attributes => $data,
+                        links      => {self => $c->url_for->to_abs,},
+                    };
 
-            # send created status 201
-            $c->render(json => {data => $d});
+                    # send created status 201
+                    $c->render(json => {data => $d});
+                }
+            );
         }
     );
+
 }
 
 sub add {
@@ -60,21 +66,26 @@ sub add {
         $c->not_found;
     }
 
-    $recs->add(
+    librecat->hook("api-$model-update")->fix_around(
         $data,
-        on_validation_error => sub {
-            my ($x, $errors) = @_;
-            return $c->not_valid($errors);
-        },
-        on_success => sub {
-            my $d = {
-                type       => $model,
-                id         => $data->{_id},
-                attributes => $data,
-                links      => {self => $c->url_for->to_abs,},
-            };
+        sub {
+            $recs->add(
+                $data,
+                on_validation_error => sub {
+                    my ($x, $errors) = @_;
+                    return $c->not_valid($errors);
+                },
+                on_success => sub {
+                    my $d = {
+                        type       => $model,
+                        id         => $data->{_id},
+                        attributes => $data,
+                        links      => {self => $c->url_for->to_abs,},
+                    };
 
-            $c->render(json => {data => $d});
+                    $c->render(json => {data => $d});
+                }
+            );
         }
     );
 }
@@ -94,21 +105,26 @@ sub update_fields {
 
     $data = merge($rec, $data);
 
-    $recs->add(
+    librecat->hook("api-$model-update")->fix_around(
         $data,
-        on_validation_error => sub {
-            my ($x, $errors) = @_;
-            return $c->not_valid($errors);
-        },
-        on_success => sub {
-            my $d = {
-                type       => $model,
-                id         => $data->{_id},
-                attributes => $data,
-                links      => {self => $c->url_for->to_abs,},
-            };
+        sub {
+            $recs->add(
+                $data,
+                on_validation_error => sub {
+                    my ($x, $errors) = @_;
+                    return $c->not_valid($errors);
+                },
+                on_success => sub {
+                    my $d = {
+                        type       => $model,
+                        id         => $data->{_id},
+                        attributes => $data,
+                        links      => {self => $c->url_for->to_abs,},
+                    };
 
-            $c->render(json => {data => $d});
+                    $c->render(json => {data => $d});
+                }
+            );
         }
     );
 }
@@ -118,7 +134,14 @@ sub remove {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
-    my $rec   = $recs->delete($id) // return $c->not_found;
+    my $rec   = $recs->get($id) // return $c->not_found;
+
+    librecat->hook("api-$model-delete")->fix_around(
+        $rec,
+        sub {
+            $recs->delete($id);
+        }
+    );
 
     my $data = {
         type       => $model,
