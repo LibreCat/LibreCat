@@ -1,8 +1,7 @@
 use Mojo::Base -strict;
-
 use Path::Tiny;
 use LibreCat -self, -load => {layer_paths => [qw(t/layer)]};
-
+use Crypt::JWT qw(encode_jwt);
 use Test::Mojo;
 use Test::More;
 
@@ -30,7 +29,8 @@ for my $bag (qw(publication department project research_group user)) {
     }
 }
 
-my $auth_token = librecat->config->{api_token};
+my $token_secret = librecat->config->{api}{v1}{token_secret};
+my $token = encode_jwt(payload => {foo => 'bar'}, key => $token_secret, alg => 'HS512');
 
 # Start a Mojolicious app
 my $t = Test::Mojo->new('LibreCat::Application');
@@ -42,17 +42,17 @@ subtest "authentication" => sub {
         ->status_is(401)->json_has('/errors');
 
     # authorization ok, but not user in DB
-    $t->get_ok('/api/v1/user/1' => {Authorization => $auth_token})
+    $t->get_ok('/api/v1/user/1' => {Authorization => $token})
         ->status_is(404)->json_has('/errors');
 };
 
 subtest "invalid model" => sub {
-    $t->get_ok('/api/v1/ugly/123' => {Authorization => $auth_token})
+    $t->get_ok('/api/v1/ugly/123' => {Authorization => $token})
         ->status_is(404);
 };
 
 subtest "get non-existent user" => sub {
-    $t->get_ok('/api/v1/user/91919192882' => {Authorization => $auth_token})
+    $t->get_ok('/api/v1/user/91919192882' => {Authorization => $token})
         ->status_is(404)->json_has('/errors')
         ->json_is('/errors/0/title', 'user 91919192882 not found');
 };
@@ -62,23 +62,23 @@ subtest "add/get/delete user" => sub {
         ->first;
 
     $t->post_ok(
-        '/api/v1/user' => {Authorization => $auth_token} => json => $user)
+        '/api/v1/user' => {Authorization => $token} => json => $user)
         ->status_is(200)->json_is('/data/id', 999111999);
 
-    $t->get_ok('/api/v1/user/999111999' => {Authorization => $auth_token})
+    $t->get_ok('/api/v1/user/999111999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id',                   999111999)
         ->json_is('/data/attributes/full_name', 'User, Test');
 
     $t->get_ok(
-        '/api/v1/user/999111999/versions' => {Authorization => $auth_token})
+        '/api/v1/user/999111999/versions' => {Authorization => $token})
         ->status_is(404);
 
     $t->get_ok(
-        '/api/v1/user/999111999/version/2' => {Authorization => $auth_token})
+        '/api/v1/user/999111999/version/2' => {Authorization => $token})
         ->status_is(404);
 
-    $t->delete_ok('/api/v1/user/999111999' => {Authorization => $auth_token})
+    $t->delete_ok('/api/v1/user/999111999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id'                => 999111999)
         ->json_is('/data/attributes/status' => 'deleted');
@@ -92,13 +92,13 @@ subtest "add invalid user" => sub {
         ->first;
 
     $t->post_ok(
-        '/api/v1/user' => {Authorization => $auth_token} => json => $user)
+        '/api/v1/user' => {Authorization => $token} => json => $user)
         ->status_is(400)->json_has('/errors');
 };
 
 subtest "get non-existent publication" => sub {
 
-    $t->get_ok('/api/v1/publication/101010101' => {Authorization => $auth_token})
+    $t->get_ok('/api/v1/publication/101010101' => {Authorization => $token})
         ->status_is(404)->json_has('/errors')
         ->json_is('/errors/0/title', 'publication 101010101 not found');
 };
@@ -108,32 +108,32 @@ subtest "add/get/delete publication" => sub {
         file => "t/records/valid-publication.yml")->first;
 
     $t->post_ok(
-        '/api/v1/publication' => {Authorization => $auth_token} => json => $pub)
+        '/api/v1/publication' => {Authorization => $token} => json => $pub)
         ->status_is(200)->json_is('/data/id', 999999999);
 
-    $t->get_ok('/api/v1/publication/999999999' => {Authorization => $auth_token})
+    $t->get_ok('/api/v1/publication/999999999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id',             999999999)
         ->json_is('/data/attributes/doi', '10.1093/jxb/erv066');
 
     $t->patch_ok(
-        '/api/v1/publication/999999999' => {Authorization => $auth_token} =>
+        '/api/v1/publication/999999999' => {Authorization => $token} =>
             json => {title => 'Test patch request'})->status_is(200)
         ->json_is('/data/id',               999999999)
         ->json_is('/data/attributes/title', 'Test patch request');
 
     $t->get_ok('/api/v1/publication/999999999/versions' =>
-            {Authorization => $auth_token})->status_is(200)
+            {Authorization => $token})->status_is(200)
         ->json_is('/data/id',                    999999999)
         ->json_is('/data/attributes/0/_version', '2');
 
     $t->get_ok('/api/v1/publication/999999999/version/1' =>
-            {Authorization => $auth_token})->status_is(200)
+            {Authorization => $token})->status_is(200)
         ->json_is('/data/id',                  999999999)
         ->json_is('/data/attributes/_version', '1');
 
     $t->delete_ok(
-        '/api/v1/publication/999999999' => {Authorization => $auth_token})
+        '/api/v1/publication/999999999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id'                => 999999999)
         ->json_is('/data/attributes/status' => 'deleted');

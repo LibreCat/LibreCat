@@ -86,6 +86,7 @@ requires 'Clone';
 requires 'Code::TidyAll', 0;
 requires 'Config::Onion', '>= 1.007';
 requires 'Crypt::Digest::MD5';
+requires 'Crypt::JWT';
 requires 'Crypt::SSLeay';
 requires 'Data::Uniqid';
 requires 'DateTime';

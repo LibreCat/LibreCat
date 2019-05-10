@@ -1,7 +1,5 @@
 audit: 1
 
-api_token: my-api-tokenXX
-
 uri_base: "http://localhost:5001"
 
 default_lang: en
@@ -117,6 +115,10 @@ user:
     - store: search
       bag: user
       username_attr: login
+
+api:
+  v1:
+    token_secret: 'ANCCgnD6XUGGLvE0CBKu8pbcHDqXVMRKTD1Q8Iu7JyS1TefYZ7dQovhL9iERYcw'
 
 citation:
   engine: none
