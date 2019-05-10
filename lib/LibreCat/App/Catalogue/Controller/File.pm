@@ -7,7 +7,7 @@ Helper methods for handling file uploads.
 =cut
 
 use Catmandu::Sane;
-use Catmandu::Util;
+use Catmandu::Util qw(as_utf8);
 use Catmandu;
 use LibreCat qw(publication timestamp);
 use LibreCat::App::Helper;
@@ -75,6 +75,10 @@ sub upload_temp_file {
     my $content_type = $file->{headers}->{"Content-Type"};
     my $rac_email    = $file->{rac_email} // '';
 
+    # sanitize file name
+    $file_name = as_utf8($file_name);
+    $file_name =~ s/[^\w_\-\.]+/_/g;
+
     h->log->info(
         "upload: $file_name ($content_type: $file_size bytes) by $creator");
 
@@ -110,7 +114,7 @@ sub upload_temp_file {
         = Dancer::FileUtils::path(
                 h->config->{filestore}->{tmp_dir},
                 $tempid,
-                $file->{filename});
+                $file_name);
 
     h->log->info("copy $temp_file to $filepath");
 
