@@ -6,6 +6,9 @@ use Mojo::Base 'Mojolicious';
 sub startup {
     my ($self) = @_;
 
+    # add content types
+    $self->types->type(yml => 'text/x-yaml');
+
     $self->plugin('LibreCat::Api');
 
     my $r = $self->routes;

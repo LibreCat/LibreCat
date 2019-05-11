@@ -16,8 +16,8 @@ sub register {
 
     my $api = $r->any("/api/v1");
 
-    $api->get('/openapi.yml')->to('api#show_openapi_yml');
-    $api->get('/openapi.json')->to('api#show_openapi_json');
+    $api->get('/openapi.yml')->to('api#openapi_yml');
+    $api->get('/openapi.json')->to('api#openapi_json');
 
     my $api_auth = $api->under(
         '/' => sub {
