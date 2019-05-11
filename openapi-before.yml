@@ -9,7 +9,7 @@ info:
   license:
     name: "Perl"
     url: "https://github.com/LibreCat/LibreCat/blob/master/LICENSE"
-basePath: "/librecat/api/v2"
+basePath: "api/v1"
 schemes:
 - "https"
 security:

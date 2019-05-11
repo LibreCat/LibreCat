@@ -1,202 +1,58 @@
 package LibreCat::Controller::Api;
 
 use Catmandu::Sane;
-use Hash::Merge::Simple qw(merge);
+use Catmandu -all;
 use LibreCat -self;
-use JSON::MaybeXS;
+use Path::Tiny;
 use Mojo::Base 'Mojolicious::Controller';
+use namespace::clean;
 
-sub show {
-    my $c     = $_[0];
-    my $model = $c->param('model');
-    my $id    = $c->param('id');
-    my $recs  = librecat->model($model) // return $c->not_found;
-    my $rec   = $recs->get($id) // return $c->not_found;
-    delete $rec->{_id};
-    my $data = {
-        type       => $model,
-        id         => $id,
-        attributes => $rec,
-        links      => {self => $c->url_for->to_abs,},
-    };
-    $c->render(json => {data => $data});
-}
-
-sub create {
-    my $c     = $_[0];
-    my $model = $c->param('model');
-    my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = decode_json($c->req->body);
-
-    $recs->add(
-        $data,
-        on_validation_error => sub {
-            my ($x, $errors) = @_;
-            return $c->not_valid($errors);
-        },
-        on_success => sub {
-            my $d = {
-                type       => $model,
-                id         => $data->{_id},
-                attributes => $data,
-                links      => {self => $c->url_for->to_abs,},
-            };
-
-            # send created status 201
-            $c->render(json => {data => $d});
-        }
-    );
-}
-
-sub add {
-    my $c     = $_[0];
-    my $model = $c->param('model');
-    my $id    = $c->param('id');
-    my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = decode_json($c->req->body);
-
-    # does record exist?
-    unless ($recs->get($id)) {
-        $c->not_found;
-    }
-
-    $recs->add(
-        $data,
-        on_validation_error => sub {
-            my ($x, $errors) = @_;
-            return $c->not_valid($errors);
-        },
-        on_success => sub {
-            my $d = {
-                type       => $model,
-                id         => $data->{_id},
-                attributes => $data,
-                links      => {self => $c->url_for->to_abs,},
-            };
-
-            $c->render(json => {data => $d});
-        }
-    );
-}
-
-sub update_fields {
-    my $c     = $_[0];
-    my $model = $c->param('model');
-    my $id    = $c->param('id');
-    my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = decode_json($c->req->body);
-
-    # does record exist?
-    my $rec;
-    unless ($rec = $recs->get($id)) {
-        $c->not_found;
-    }
-
-    $data = merge($rec, $data);
-
-    $recs->add(
-        $data,
-        on_validation_error => sub {
-            my ($x, $errors) = @_;
-            return $c->not_valid($errors);
-        },
-        on_success => sub {
-            my $d = {
-                type       => $model,
-                id         => $data->{_id},
-                attributes => $data,
-                links      => {self => $c->url_for->to_abs,},
-            };
-
-            $c->render(json => {data => $d});
-        }
-    );
-}
-
-sub remove {
-    my $c     = $_[0];
-    my $model = $c->param('model');
-    my $id    = $c->param('id');
-    my $recs  = librecat->model($model) // return $c->not_found;
-    my $rec   = $recs->delete($id) // return $c->not_found;
-
-    my $data = {
-        type       => $model,
-        id         => $id,
-        attributes => {status => 'deleted'},
-        links      => {self => $c->url_for->to_abs,},
-    };
-    $c->render(json => {data => $data});
-}
-
-sub get_history {
+sub show_openapi_json {
     my $c = $_[0];
 
-    my $model    = $c->param('model');
-    my $id       = $c->param('id');
-    my $recs     = librecat->model($model) // return $c->not_found;
-    my $versions = $recs->get_history($id) // return $c->not_found;
-    my $data     = {
-        type       => $model,
-        id         => $id,
-        attributes => $versions,
-        links      => {self => $c->url_for->to_abs,},
-    };
-    $c->render(json => {data => $data});
+    $c->render(json => $c->get_openapi_doc);
 }
 
-sub get_version {
-    my $c = $_[0];
-
-    my $model   = $c->param('model');
-    my $id      = $c->param('id');
-    my $version = $c->param('version');
-    my $recs    = librecat->model($model) // return $c->not_found;
-    my $rec     = $recs->get_version($id, $version) // return $c->not_found;
-    my $data    = {
-        type       => $model,
-        id         => $id,
-        attributes => $rec,
-        links      => {self => $c->url_for->to_abs,},
-    };
-    $c->render(json => {data => $data});
-}
-
-sub not_found {
+sub show_openapi_yml {
     my $c     = $_[0];
-    my $model = $c->param('model');
-    my $id    = $c->param('id');
-    my $error = {
-        status => '404',
-        title  => "$model $id not found",
-        source => {parameter => 'id'},
-    };
-    $c->render(json => {errors => [$error]}, status => 404);
+
+    $c->render(text => export_to_string($c->get_openapi_doc, 'YAML'), format => 'yml', status => 200);
 }
 
-sub not_valid {
-    my ($c, $validation_errors) = @_;
-    my $model = $c->param('model');
+sub get_openapi_doc {
+    my $yaml =
+    Catmandu->importer('YAML',
+        file =>
+            path(librecat->root_path)->child('openapi-before.yml')->stringify,
+        )->first;
 
-    my $error = {status => '400', validation_error => $validation_errors,};
+    $yaml->{paths} = +{};
+    foreach my $m (@{librecat->models}) {
+        push @{$yaml->{tags}},
+            {name => $m, description => "Operations on $m records."};
 
-    $c->render(json => {errors => [$error]}, status => '400');
+        my $tmp_exp;
+        my $path_exporter = Catmandu->exporter(
+            'Template',
+            file => \$tmp_exp,
+            template => path(librecat->root_path)->child('openapi-path-yml.tt')->stringify,
+        );
+        $path_exporter->add({item => $m});
+        $path_exporter->commit;
+
+        $yaml->{paths} = {
+            %{$yaml->{paths}},
+            %{Catmandu->importer('YAML', file => \$tmp_exp)->first}
+        };
+    }
+
+    $yaml->{components}->{schemas} = librecat->config->{schemas};
+
+    foreach my $k (keys %{$yaml->{components}->{schemas}}) {
+        delete $yaml->{components}->{schemas}->{$k}->{'$schema'};
+    }
+
+    $yaml;
 }
 
 1;
-
-__END__
-
-=pod
-
-=head1 NAME
-
-LibreCat::Controller::Api - the api controller used by L<Mojolicious::Plugin::LibreCat::Api>
-
-=head1 SYNOPSIS
-
-=head2 SEE ALSO
-
-L<LibreCat>, L<Mojolicious::Plugin::LibreCat::Api>
-
-=cut

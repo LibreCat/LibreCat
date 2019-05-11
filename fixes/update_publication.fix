@@ -29,8 +29,18 @@ if exists(project)
       move_field(loop.tmp.call_identifier,loop.call_identifier)
       move_field(loop.tmp.grant_number,loop.grant_number)
       remove_field(loop.tmp)
+      if all_match(loop.call_identifier,'FP7|H2020')
+        add_field(ec_funded,1)
+      end
     end
   end
+end
+
+if all_match(external_id.isi.0, '^\w+$')
+  add_field(isi, 1)
+end
+if all_match(external_id.pmid.0, '^.+$')
+  add_field(pmid, 1)
 end
 
 split_field(nasc, ';|,')
@@ -39,6 +49,12 @@ split_field(genbank, ';|,')
 trim(genbank.*)
 split_field(keyword, ';|,')
 trim(keyword.*)
+
+if all_match(status,"returned|deleted")
+  add_field(oai_deleted, 1)
+else
+  remove_field(oai_deleted)
+end
 
 # Force the year field to be a string (see #267)
 string(year)
