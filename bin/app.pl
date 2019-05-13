@@ -68,7 +68,7 @@ $app->add(sub {
 # mojo app
 { 
     my $server = Mojo::Server::PSGI->new;
-    my $script = Path::Tiny->new(__FILE__)->parent->parent->child('script/app.pl')->stringify;
+    my $script = Path::Tiny->new(__FILE__)->sibling('mojo_app.pl')->stringify;
     $server->load_app($script);
     $app->add($server->to_psgi_app);
 }

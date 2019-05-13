@@ -11,11 +11,14 @@ sub startup {
     # add content types
     $self->types->type(yml => 'text/x-yaml');
 
-    $self->plugin('LibreCat::Api');
-
+    # controller namespace
     my $r = $self->routes;
     $r->namespaces(['LibreCat::Controller']);
 
+    # hardcoded for now
+    $self->plugin('LibreCat::Api');
+
+    # helpers
     $self->helper(maybe_decode_json => sub {
         my ($self, $json) = @_;
         try {
