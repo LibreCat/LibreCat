@@ -7,23 +7,21 @@ use Path::Tiny;
 use Mojo::Base 'Mojolicious::Controller';
 use namespace::clean;
 
-sub show_openapi_json {
+sub openapi_json {
     my $c = $_[0];
-
-    $c->render(json => $c->get_openapi_doc);
+    $c->render(json => $c->openapi_doc);
 }
 
-sub show_openapi_yml {
-    my $c     = $_[0];
-
-    $c->render(text => export_to_string($c->get_openapi_doc, 'YAML'), format => 'yml', status => 200);
+sub openapi_yml {
+    my $c = $_[0];
+    $c->render(text => export_to_string($c->openapi_doc, 'YAML'), format => 'yml');
 }
 
-sub get_openapi_doc {
+sub openapi_doc {
     my $yaml =
     Catmandu->importer('YAML',
         file =>
-            path(librecat->root_path)->child('openapi-before.yml')->stringify,
+            path(librecat->root_path)->child('views/api/openapi_before.yml')->stringify,
         )->first;
 
     $yaml->{paths} = +{};
@@ -35,7 +33,7 @@ sub get_openapi_doc {
         my $path_exporter = Catmandu->exporter(
             'Template',
             file => \$tmp_exp,
-            template => path(librecat->root_path)->child('openapi-path-yml.tt')->stringify,
+            template => path(librecat->root_path)->child('views/api/openapi_path.yml.tt')->stringify,
         );
         $path_exporter->add({item => $m});
         $path_exporter->commit;
