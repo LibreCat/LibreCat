@@ -214,7 +214,7 @@ __END__
 
 =head1 NAME
 
-LibreCat::Controller::Api - the api controller used by L<Mojolicious::Plugin::LibreCat::Api>
+LibreCat::Controller::ModelApi - a model api controller used by L<Mojolicious::Plugin::LibreCat::Api>
 
 =head1 SYNOPSIS
 
