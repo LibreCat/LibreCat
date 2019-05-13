@@ -3,8 +3,8 @@ package LibreCat::Controller::ModelApi;
 use Catmandu::Sane;
 use Hash::Merge::Simple qw(merge);
 use LibreCat -self;
-use JSON::MaybeXS;
 use Mojo::Base 'Mojolicious::Controller';
+use namespace::clean;
 
 sub show {
     my $c     = $_[0];
@@ -26,7 +26,7 @@ sub create {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = decode_json($c->req->body);
+    my $data  = $c->maybe_decode_json($c->req->body) // return $c->json_not_valid;
 
     librecat->hook("api-$model-update")->fix_around(
         $data,
@@ -59,7 +59,7 @@ sub update {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = decode_json($c->req->body);
+    my $data  = $c->maybe_decode_json($c->req->body) // return $c->json_not_valid;
 
     # does record exist?
     unless ($recs->get($id)) {
@@ -95,7 +95,7 @@ sub update_fields {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = decode_json($c->req->body);
+    my $data  = $c->maybe_decode_json($c->req->body) // return $c->json_not_valid;
 
     # does record exist?
     my $rec;
@@ -199,11 +199,18 @@ sub not_found {
 
 sub not_valid {
     my ($c, $validation_errors) = @_;
-    my $model = $c->param('model');
 
     my $error = {status => '400', validation_error => $validation_errors,};
 
-    $c->render(json => {errors => [$error]}, status => '400');
+    $c->render(json => {errors => [$error]}, status => 400);
+}
+
+sub json_not_valid {
+    my ($c) = @_;
+
+    my $error = {status => '400', title => ['malformed json string'],};
+
+    $c->render(json => {errors => [$error]}, status => 400);
 }
 
 1;
