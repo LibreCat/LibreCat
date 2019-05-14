@@ -208,7 +208,7 @@ sub not_valid {
 sub json_not_valid {
     my ($c) = @_;
 
-    my $error = {status => '400', title => ['malformed json string'],};
+    my $error = {status => '400', title => ['malformed JSON string'],};
 
     $c->render(json => {errors => [$error]}, status => 400);
 }
