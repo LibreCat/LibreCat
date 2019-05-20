@@ -29,7 +29,7 @@ sub command {
     my ($self, $opts, $args) = @_;
 
     my $commands
-        = qr/^(package\.json|forms|departments|cleanup|openapi.yml)$/;
+        = qr/^(package\.json|forms|departments|cleanup)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
