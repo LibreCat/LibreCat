@@ -2,10 +2,11 @@
 uri_base: "http://localhost:5001"
 
 # API configuration
-# change at least the token secret!
+# change at least the token secret! This should be a long random string
+# E.g. see https://onlinerandomtools.com/generate-random-string
 api:
   v1:
-    token_secret: CHANGEME 
+    token_secret: CHANGEME
 
 # Default interface options
 default_lang: en
