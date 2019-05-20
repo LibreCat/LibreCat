@@ -2,6 +2,10 @@ audit: 1
 
 uri_base: "http://localhost:5001"
 
+api:
+  v1:
+    token_secret: testsecret
+
 default_lang: en
 default_page_size: 20
 default_searchpage_size: 10
@@ -115,6 +119,10 @@ user:
     - store: search
       bag: user
       username_attr: login
+
+api:
+  v1:
+    token_secret: 'ANCCgnD6XUGGLvE0CBKu8pbcHDqXVMRKTD1Q8Iu7JyS1TefYZ7dQovhL9iERYcw'
 
 citation:
   engine: none

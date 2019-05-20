@@ -338,7 +338,7 @@ sub _make_thumbnail {
 sub _make_file {
     my ($key, $filename, $path) = @_;
 
-    h->log->info("moving $path/$filename to filestore for record $key");
+    h->log->info("moving $path to filestore for record $key");
 
     my $uploader_package = h->config->{filestore}->{uploader}->{package};
     my $uploader_options = h->config->{filestore}->{uploader}->{options};

@@ -41,6 +41,9 @@ requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
 
+# Mojolicious
+requires 'Mojolicious', '>=7.70';
+
 #Dancer
 requires 'Dancer';
 requires 'Dancer::Plugin';
@@ -83,6 +86,7 @@ requires 'Clone';
 requires 'Code::TidyAll', 0;
 requires 'Config::Onion', '>= 1.007';
 requires 'Crypt::Digest::MD5';
+requires 'Crypt::JWT';
 requires 'Crypt::SSLeay';
 requires 'Data::Uniqid';
 requires 'DateTime';
