@@ -3,6 +3,7 @@
 use Catmandu::Sane;
 use Path::Tiny;
 use lib path(__FILE__)->parent->parent->child('lib')->stringify;
+use LibreCat qw(:load);
 use Mojolicious::Commands;
 
 Mojolicious::Commands->start_app('LibreCat::Application');

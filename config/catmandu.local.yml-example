@@ -1,6 +1,12 @@
 # Public location of the application
 uri_base: "http://localhost:5001"
 
+# API configuration
+# change at least the token secret!
+api:
+  v1:
+    token_secret: CHANGEME 
+
 # Default interface options
 default_lang: en
 default_page_size: 20

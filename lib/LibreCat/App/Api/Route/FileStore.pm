@@ -291,18 +291,18 @@ E.g.
         return {ok => 1};
     };
 
-=head2 GET /librecat/api/v1/access/:key/:filename/thumbnail
+=head2 GET /api/v1/thumbnail/:key/:filename
 
 Return the binary thumbail content of a file in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/librecat/api/v1/access/000000008/rprogramming.pdf/thumbnail"
+    $ curl -H "Content-Type: application/json" -X GET "http://localhost:5001/api/v1/thumbnail/000000008/rprogramming.pdf"
     <... binary data ...>
 
 =cut
 
-    get '/access/:key/:filename/thumbnail' => sub {
+    get '/thumbnail/:key/:filename' => sub {
         my $key = param('key');
 
    # For now stay backwards compatible and keep one thumbnail per container...
@@ -318,7 +318,7 @@ E.g.
         my $file = $files->get($filename);
 
         return Dancer::send_file(
-            'public/images/thumbnail_dummy.png',
+            'public/images_dummy.png',
             system_path => 1,
             filename    => 'thumbnail_dummy.png'
         ) unless $file;
@@ -353,17 +353,17 @@ E.g.
         );
     };
 
-=head2 POST /librecat/api/v1/access/:key/:filename/thumbnail
+=head2 POST /api/v1/thumbnail/:key/:filename
 
 Create a thumbail for a file in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X POST "http://localhost:5001/librecat/api/v1/access/000000008/rprogramming.pdf/thumbnail"
+    $ curl -H "Content-Type: application/json" -X POST "http://localhost:5001/api/v1/thumbnail/000000008/rprogramming.pdf"
 
 =cut
 
-    post '/access/:key/:filename/thumbnail' => sub {
+    post '/thumbnail/:key/:filename' => sub {
         my $key      = param('key');
         my $filename = param('filename');
 
@@ -381,18 +381,18 @@ E.g.
         $response;
     };
 
-=head2 DEL /librecat/api/v1/access/:key/:filename/thumbnail
+=head2 DEL /api/v1/thumbnail/:key/:filename
 
 Delete a thumbnail in a container
 
 E.g.
 
-    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/librecat/api/v1/access/000000008/rprogramming.pdf/thumbnail"
+    $ curl -H "Content-Type: application/json" -X DELETE "http://localhost:5001/api/v1/thumbnail/000000008/rprogramming.pdf"
     { "ok": "1"}
 
 =cut
 
-    del '/access/:key/:filename/thumbnail' => sub {
+    del '/thumbnail/:key/:filename' => sub {
         my $key = param('key');
 
         my $thumbnailer_package
