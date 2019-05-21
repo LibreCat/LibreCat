@@ -78,32 +78,45 @@ sub _send_it {
         e => $extension
     );
 
+    #builtin download headers
+    my %http_headers = (
+        'Content-Type'          => '%s',
+        'Cache-Control'         => 'no-store, no-cache, must-revalidate, max-age=0',
+        'Pragma'                => 'no-cache',
+        'Content-Disposition'   => "inline; filename*=UTF-8''%s"
+    );
+
+    # Override builtin download headers ..
+    my $o_download_headers      = h->config->{filestore}->{download_headers};
+    $o_download_headers         = is_hash_ref( $o_download_headers ) ? $o_download_headers : +{};
+
+    # .. for all
+    my $o_download_headers_all  = is_hash_ref( $o_download_headers->{for_all} ) ? $o_download_headers->{for_all} : +{};
+
+    # .. by content type
+    my $o_download_headers_ct   = is_hash_ref( $o_download_headers->{for_content_type} ) && is_hash_ref( $o_download_headers->{for_content_type}->{ $file->{content_type} }  ) ?
+        $o_download_headers->{for_content_type}->{ $file->{content_type} } : +{};
+
+    %http_headers = ( %http_headers, %$o_download_headers_all, %$o_download_headers_ct );
+
+    $http_headers{'Content-Type'} = sprintf( $http_headers{'Content-Type'}, $file->{content_type} );
+    $http_headers{'Content-Disposition'} = sprintf( $http_headers{'Content-Disposition'}, URI::Escape::uri_escape_utf8($name) );
+    $http_headers{'Content-Length'} = $file->{size};
+
     send_file(
         \"dummy",    # anything, as long as it's a scalar-ref
         streaming => 1,    # enable streaming
         callbacks => {
             override => sub {
                 my ($respond, $response) = @_;
-                my $content_type     = $file->{content_type};
-                my $file_size        = $file->{size};
                 my $http_status_code = 200;
-                my $uri_esc_name     = URI::Escape::uri_escape_utf8($name);
 
               # Tech.note: This is a hash of HTTP header/values, but the
               #            function below requires an even-numbered array-ref.
-                my @http_headers = (
-                    'Content-Type' => $content_type,
-                    'Cache-Control' =>
-                        'no-store, no-cache, must-revalidate, max-age=0',
-                    'Pragma'              => 'no-cache',
-                    'Content-Length'      => $file_size,
-                    'Content-Disposition' => "inline; filename*=UTF-8''"
-                        . uri_escape_utf8($name)
-                );
 
          # Send the HTTP headers
          # (back to either the user or the upstream HTTP web-server front-end)
-                my $writer = $respond->([$http_status_code, \@http_headers]);
+                my $writer = $respond->([$http_status_code, [ %http_headers ]]);
 
                 $file->{_stream}->(h->io_from_plack_writer($writer), $file);
             },

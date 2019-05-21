@@ -44,7 +44,7 @@
               role=session.role,
               file_id=fi.file_id,
               ip=request.address).0 %]
-      <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]">
+      <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]">
         [% fi.file_name | html %]
       </a>
       [%- ELSE %]

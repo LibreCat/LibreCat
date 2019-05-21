@@ -4,6 +4,7 @@ _prefix:
 
 appname: "LibreCat &ndash; Publikationslisten Manager"
 appname_short: "LibreCat"
+language_code: "de"
 general:
   plural: "en"
   where: "in"
@@ -85,7 +86,7 @@ main_page:
     returned: "Returned"
     submitted: "Submitted"
     invalid: "Invalid"
-    qae: "New"
+    new: "New"
     private: "Private"
   links:
     audit: Audit
@@ -1707,8 +1708,14 @@ forms:
       display: "Wird zitiert von"
       select: "Wird zitiert von"
     confirmation:
-      display: "Bestätigungsschreiben"
-      select: "Bestätigungsschreiben"
+      display: "Best&auml;tigungsschreiben"
+      select: "Best&auml;tigungsschreiben"
+    slides:
+      display: "Folien"
+      select: "Folien"
+    poster:
+      display: "Poster"
+      select: "Poster"
     hidden:
       display: ""
       select: "Zusatzmaterial (nur zur Einbettung, keine Anzeige auf Frontdoor)"

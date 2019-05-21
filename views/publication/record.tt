@@ -54,7 +54,7 @@
     [% IF _id %]
     <div class="row margin-bottom1">
       <div class="col-xs-10 col-sm-8"><!-- begin left col -->
-        <h1 class="cmark" itemprop="name">[% title  | html %]</h1>
+        <h1 class="cmark">[% title  | html %]</h1>
         [%- IF display_citation %]
         <div class="row">
           <div class="col-md-12">
@@ -76,7 +76,7 @@
                           role=session.role,
                           file_id=fi.file_id,
                           ip=request.address).0 %]
-                  <a itemprop="url" href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
+                  <a href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]" title="[% fi.file_name %]"[% IF fi.access_level != "open_access" %] target="_blank"[% END %]>
                     [% fi.title || fi.file_name | html %]
                   </a>
                   [% ELSE %]
@@ -122,7 +122,7 @@
             [% ELSE %]
               <img src="[% uri_base %]/images/access_restricted.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access." alt="Restricted" />
             [% END %]
-            <a itemprop="url" href="[% main_file_link.0.url %]">[% main_file_link.0.url.substr(0,80) %][% IF main_file_link.0.url.length > 80%][...][% END %]</a>
+            <a href="[% main_file_link.0.url %]">[% main_file_link.0.url.substr(0,80) %][% IF main_file_link.0.url.length > 80%][...][% END %]</a>
           </div>
         </div>
         [% END %]
@@ -130,7 +130,7 @@
         [%- IF doi %]
         <div class="row">
           <div class="col-xs-3 text-muted">[% h.loc("forms.${type}.field.doi.label") %]</div>
-          <div class="col-xs-9"><a itemprop="url" href="https://doi.org/[% doi %]" title="[% doi %]">[% doi | html %]</a></div>
+          <div class="col-xs-9"><a href="https://doi.org/[% doi %]" title="[% doi %]">[% doi | html %]</a></div>
         </div>
         [%- END %]
         [%- IF urn %]
@@ -154,7 +154,7 @@
             [% FOREACH lang IN language %]
               [% IF lang.iso AND bag != "data" %]
               [%- IF loop.first %]|[% ELSE %],[% END -%]
-              <meta itemprop="inLanguage" content="[% lang.iso %]"><em>[% h.loc("forms.language.${lang.iso}") %]</em>
+              <em>[% h.loc("forms.language.${lang.iso}") %]</em>
               [% END %]
             [% END %]
           </div>
@@ -175,9 +175,8 @@
             href="[% uri_base %]/download/[% _id %]/[% fi.file_id %]/[% fi.file_name | uri %]"
             [% END %]
             title="[% fi.file_name %]"
-            itemprop="thumbnailUrl"
             class="fulltext">
-	           <img src="[% uri_base %]/thumbnail/[% _id %]" itemprop="image" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
+	           <img src="[% uri_base %]/thumbnail/[% _id %]" alt="[% h.loc("frontdoor.fulltext.view") %]" title="[% h.loc("frontdoor.fulltext.view") %]">
 	        </a>
 	     </div>
       </div>
@@ -339,7 +338,6 @@
           [% END %]
         [% END %]
 
-
         <!-- Search title in -->
         <h3>[% h.loc("frontdoor.search_this") %]</h3>
         <p>
@@ -356,6 +354,10 @@
   </div><!-- outer col -->
 
 </div><!-- outer row-->
+
+<script type="application/ld+json">
+[%- schema_org -%]
+</script>
 
 <!-- END publication/record.tt -->
 

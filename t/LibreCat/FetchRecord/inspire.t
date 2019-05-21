@@ -1,6 +1,7 @@
 use strict;
 use LibreCat -load => {layer_paths => [qw(t/layer)]};
 use warnings FATAL => 'all';
+use LibreCat qw(publication);
 use Test::More;
 use Test::Exception;
 use Test::TCP;
@@ -30,6 +31,8 @@ test_tcp(
 
         ok $pub , 'got a publication';
 
+        $pub->[0]{_id} = 'DUMMY';
+
         is $pub->[0]{title}, 'Properties of expanding universes',
             'got a title';
         is $pub->[0]{type}, 'journal_article', 'type == journal_article';
@@ -38,6 +41,16 @@ test_tcp(
             'got an author';
         is $pub->[0]{external_id}->{inspire}->[0], 1632116,
             'got the inspire id';
+
+        my $is_valid = publication->is_valid($pub->[0]);
+
+        if ($is_valid) {
+            ok 1, 'record is valid';
+        }
+        else {
+            ok 0 , 'record is valid';
+            say STDERR join("\n", @{publication->validator->last_errors});
+        }
 
         ok !$x->fetch('6666');
     },

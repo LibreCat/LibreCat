@@ -1,0 +1,76 @@
+/[% item %]:
+  post: &post
+    tags:
+    - "[% item %]"
+    summary: "Add a new [% item %]"
+    requestBody: &requestBody
+      description: "[% item %] that should be added to the data store."
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/[% item %]"
+    responses:
+      '201':
+        $ref: "#/components/responses/Created"
+      '400':
+        $ref: "#/components/responses/BadRequest"
+      '401':
+        $ref: "#/components/responses/UnauthorizedError"
+/[% item %]/{ID}:
+  get:
+    tags:
+      - "[% item %]"
+    summary: "Get [% item %] with ID {ID}."
+    parameters: &param
+      - in: "path"
+        name: "ID"
+        required: true
+        schema:
+          type: integer
+        description: "The unique identifier of the [% item %]."
+    responses:
+      '200':
+        $ref: "#/components/responses/OK"
+      '401':
+        $ref: "#/components/responses/UnauthorizedError"
+      '404':
+        $ref: "#/components/responses/NotFound"
+  put:
+    tags:
+    - "[% item %]"
+    summary: "Update an existing [% item %] with ID {ID}"
+    parameters: *param
+    requestBody: *requestBody
+    responses:
+      '200':
+        $ref: "#/components/responses/OK"
+      '401':
+        $ref: "#/components/responses/UnauthorizedError"
+      '404':
+        $ref: "#/components/responses/NotFound"
+  patch:
+    tags:
+      - "[% item %]"
+    summary: "Update an existing  [% item %] partially."
+    parameters: *param
+    requestBody: *requestBody
+    responses:
+      '200':
+        $ref: "#/components/responses/OK"
+      '401':
+        $ref: "#/components/responses/UnauthorizedError"
+      '404':
+        $ref: "#/components/responses/NotFound"
+  delete:
+    tags:
+    - "[% item %]"
+    summary: "Delete [% item %] with ID {ID}"
+    parameters: *param
+    responses:
+      '204':
+        $ref: "#/components/responses/Deleted"
+      '401':
+        $ref: "#/components/responses/UnauthorizedError"
+      '404':
+        $ref: "#/components/responses/NotFound"

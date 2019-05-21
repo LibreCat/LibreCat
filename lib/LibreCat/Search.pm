@@ -57,7 +57,7 @@ sub search {
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit        => $self->_set_limit($p->{limit}),
         start        => $p->{start} // 0,
-        facets => merge($p->{facets}, Catmandu->config->{default_facets}),
+        aggs => merge($p->{facets}, Catmandu->config->{default_facets}),
     );
 
     $self->log->debug(

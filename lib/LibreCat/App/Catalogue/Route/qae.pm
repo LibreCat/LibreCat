@@ -11,6 +11,21 @@ use LibreCat qw(publication department timestamp);
 use LibreCat::App::Helper;
 use Dancer ':syntax';
 
+=head2 GET /librecat/upload/qae/submit
+
+Returns again to the add record page
+
+=cut
+get '/librecat/upload/qae/submit' => sub {
+    # Required route for 'return_url' mechanism...
+    redirect h->uri_for('/librecat/record/new');
+};
+
+=head2 POST /librecat/upload/qae/submit
+
+Returns a form with imported data.
+
+=cut
 post '/librecat/upload/qae/submit' => sub {
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
 
@@ -71,7 +86,7 @@ post '/librecat/upload/qae/submit' => sub {
             };
     }
 
-    return template "backend/add_new";
+    redirect h->uri_for('/librecat/add/new');
 };
 
 1;

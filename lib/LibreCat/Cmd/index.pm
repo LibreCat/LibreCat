@@ -13,8 +13,6 @@ sub description {
     return <<EOF;
 Usage:
 librecat index initialize
-librecat index create BAG
-librecat index drop BAG
 librecat index purge
 librecat index status
 librecat index switch
@@ -35,7 +33,7 @@ sub command {
 
     $self->opts($opts);
 
-    my $commands = qr/initialize|status|create|drop|purge|switch/;
+    my $commands = qr/initialize|status|purge|switch/;
 
     my $cmd = shift @$args;
 
@@ -43,14 +41,24 @@ sub command {
         $self->usage_error("should be one of $commands");
     }
 
-    if ($cmd eq 'create') {
-        return $self->_create(@$args);
-    }
-    elsif ($cmd eq 'drop') {
-        return $self->_drop(@$args);
-    }
-    elsif ($cmd eq 'purge') {
-        return $self->_purge(@$args);
+    if ($cmd eq 'purge') {
+        my $start;
+        print
+            "This command will delete all existing indices!\nAre you sure you want to run it [y/N]:";
+
+        if ($opts->{yes}) {
+            $start = 'y';
+        }
+        else {
+            $start = <STDIN>;
+            chomp($start);
+        }
+        if (lc $start eq 'y') {
+            return $self->_purge(@$args);
+        }
+        else {
+            print STDERR "Command purge has been cancelled\n";
+        }
     }
     elsif ($cmd eq 'status') {
         return $self->_status(@$args);
@@ -79,64 +87,32 @@ sub command {
     }
 }
 
-sub _create {
-    my ($self, $name) = @_;
-
-    croak "need a bag" unless $name;
-
-    my $h = LibreCat::App::Helper::Helpers->new;
-
-    my $main_store = Catmandu->store('main');
-    my $store      = Catmandu->store('search');
-
-    my $fixer = $h->create_fixer("index_$name.fix");
-
-    my $bag = $store->bag($name);
-    $bag->add_many($fixer->fix($main_store->bag($name)->benchmark));
-    $bag->commit;
-
-    return 0;
-}
-
-sub _drop {
-    my ($self, $name) = @_;
-
-    croak "need a bag" unless $name;
-
-    my $store = Catmandu->store('search');
-    my $bag   = $store->bag($name);
-    $bag->delete_all;
-    $bag->commit;
-
-    return 0;
-}
-
 sub _status {
     my ($self) = @_;
-    my $status = LibreCat::Index->new->get_status;
-    Catmandu->exporter('YAML')->add($status);
-    return 0;
+    my $status = LibreCat::Index->new->status || return 1;
+    my $out = Catmandu->exporter('YAML');
+    $out->add_many($status);
+    $out->commit;
+
+    0;
 }
 
 sub _initialize {
-    my ($self) = @_;
-    defined(LibreCat::Index->new->initialize) ? 0 : 1;
+    LibreCat::Index->new->initialize ? 0 : 1;
 }
 
 sub _switch {
-    my ($self) = @_;
     my $pidfile
         = File::Spec->catfile(File::Spec->tmpdir, "librecat.index.lock");
 
     open my $file, ">", $pidfile || die "Failed to create $pidfile: $!";
     flock($file, LOCK_EX | LOCK_NB) || die "Running more than one indexer?";
 
-    defined(LibreCat::Index->new->switch) ? 0 : 1;
+    LibreCat::Index->new->switch_all ? 0 : 1;
 }
 
 sub _purge {
-    my ($self) = @_;
-    defined(LibreCat::Index->new->remove_all) ? 0 : 1;
+    LibreCat::Index->new->purge_all ? 0 : 1;
 }
 
 1;

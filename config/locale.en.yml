@@ -4,6 +4,7 @@ _prefix:
 
 appname: "LibreCat &ndash; Publication List Manager"
 appname_short: "LibreCat"
+language_code: "en"
 general:
   plural: "s"
   where: "in"
@@ -85,7 +86,7 @@ main_page:
     returned: "Returned"
     submitted: "Submitted"
     invalid: "Invalid"
-    qae: "New"
+    new: "New"
     private: "Private"
   links:
     clone: Clone
@@ -1709,6 +1710,12 @@ forms:
     confirmation:
       display: "Confirmation Letter"
       select: "Confirmation Letter"
+    slides:
+      display: "Slides"
+      select: "Slides"
+    poster:
+      display: "Poster"
+      select: "Poster"
     hidden:
       display: ""
       select: "Supplementary Material (for embedding only, hidden on frontdoor)"

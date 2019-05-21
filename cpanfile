@@ -30,16 +30,19 @@ requires 'Catmandu::DBI', '>=0.0511';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Fix::Date';
 requires 'Catmandu::Identifier', '>=0.05';
-requires 'Catmandu::Importer::getJSON';
+requires 'Catmandu::Importer::getJSON' , '>=0.51';
 requires 'Catmandu::LDAP';
 requires 'Catmandu::OAI' , '0.16';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::SRU','0.039';
-requires 'Catmandu::Store::ElasticSearch', '==0.0509';
+requires 'Catmandu::Store::ElasticSearch', '>=1.0';
 requires 'Catmandu::Validator::JSONSchema','0.11';
 requires 'Catmandu::XML';
-requires 'Search::Elasticsearch', '>=5.02';
-requires 'Search::Elasticsearch::Client::1_0','>=5.02';
+requires 'Search::Elasticsearch', '>=6.00';
+requires 'Search::Elasticsearch::Client::6_0';
+
+# Mojolicious
+requires 'Mojolicious', '>=7.70';
 
 #Dancer
 requires 'Dancer';
@@ -83,6 +86,7 @@ requires 'Clone';
 requires 'Code::TidyAll', 0;
 requires 'Config::Onion', '>= 1.007';
 requires 'Crypt::Digest::MD5';
+requires 'Crypt::JWT';
 requires 'Crypt::SSLeay';
 requires 'Data::Uniqid';
 requires 'DateTime';
@@ -119,3 +123,4 @@ requires 'YAML::XS';
 requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
 requires 'Date::Simple';
+requires 'Tie::IxHash', '1.23';

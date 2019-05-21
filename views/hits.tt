@@ -61,7 +61,7 @@
     [% CASE "invalid" %]
       <span class="text-danger"><strong>[% h.loc("main_page.statuses.invalid") %]</strong></span>
     [% CASE "new" %]
-      <span class="text-info"><strong>[% h.loc("main_page.statuses.qae") %]</strong></span>
+      <span class="text-info"><strong>[% h.loc("main_page.statuses.new") %]</strong></span>
     [% CASE %]
       <span class="text-muted"><strong>[% h.loc("main_page.statuses.private") %]</strong></span>
     [% END %]
