@@ -13,7 +13,8 @@ use LibreCat::App::Helper;
 use Dancer::FileUtils;
 use Dancer ':syntax';
 use Data::Uniqid;
-use File::Copy;
+use IO::File;
+use IO::String;
 use Path::Tiny;
 use Carp;
 use Encode qw(decode encode);
@@ -69,7 +70,7 @@ sub upload_temp_file {
     my $now          = timestamp;
     my $tempid       = Data::Uniqid::uniqid;
     my $temp_file    = $file->{tempname};
-    my $file_name    = h->cleanup_filename($file->{filename});
+    my $file_name    = $file->{filename};
     my $file_size    = int($file->{size});
     my $content_type = $file->{headers}->{"Content-Type"};
     my $rac_email    = $file->{rac_email} // '';
@@ -92,34 +93,26 @@ sub upload_temp_file {
     $file_data->{rac_email} = $rac_email if $rac_email;
 
     # Creating a new temporary storage for the upload files...
-    my $filedir = Dancer::FileUtils::path(h->config->{filestore}->{tmp_dir}, $tempid);
+    h->log->info("creating temp container $tempid");
 
-    h->log->info("creating $filedir");
+    my $store = h->get_temp_store();
 
-    unless (mkdir $filedir) {
-        h->log->error("creating $filedir failed : $!");
+    $store->index->add({ _id => $tempid });
+
+    my $index = $store->index->files($tempid);
+
+    unless ($index) {
+        h->log->error("creating temp container $tempid failed");
         return {
             success       => 0,
             error_message => 'Sorry! The file upload failed.'
         };
     }
 
-    # Copy the upload into the new temporary storage...
-    my $filepath
-        = Dancer::FileUtils::path(
-                h->config->{filestore}->{tmp_dir},
-                $tempid,
-                $file_name);
+    h->log->info("copy $temp_file to temp container $tempid");
+    $index->upload(IO::File->new("<$temp_file"),$file_name);
 
-    h->log->info("copy $temp_file to $filepath");
-
-    if (copy($temp_file, $filepath)) {
-
-        # Required for showing a success upload in the web interface
-        $file_data->{success} = 1;
-    }
-    else {
-        h->log->error("failed to copy $temp_file to $filepath");
+    unless ($index->get($file_name)) {
         return {
             success       => 0,
             error_message => 'Sorry! The file upload failed.'
@@ -127,16 +120,28 @@ sub upload_temp_file {
     }
 
     # Store a copy of the file metadata next to the upload file...
-    my $config_file = "$filepath.json";
+    my $config_file = "$file_name.json";
 
     h->log->info("storing file metadata to $config_file");
 
-    my $exporter = Catmandu->exporter('JSON', file => $config_file);
-    $exporter->add($file_data);
-    $exporter->commit;
+    my $json = Catmandu->export_to_string($file_data, 'JSON',line_delimited=>1);
+
+    h->log->debug("storing: $json");
+
+    # Use the low level `add` method to be able to upload text as files...
+    $index->add({_id => $config_file, _stream => $json});
+
+    unless ($index->get($config_file)) {
+        return {
+            success       => 0,
+            error_message => 'Sorry! The file upload failed.'
+        };
+    }
 
     h->log->debug("deleting $temp_file");
     unlink $temp_file;
+
+    $file_data->{success} = 1;
 
     return $file_data;
 }
@@ -181,24 +186,19 @@ sub handle_file {
 
         # If we have a tempid, then there is a file upload waiting...
         if ($fi->{tempid} && $fi->{tempid} =~ /^\S+/) {
-            my $filename = $fi->{file_name} = h->cleanup_filename($fi->{file_name});
-            my $path     = Dancer::FileUtils::path(
-                                h->config->{filestore}->{tmp_dir},
-                                $fi->{tempid},
-                                $filename);
+            my $tempid   = $fi->{tempid};
+            my $filename = $fi->{file_name};
 
             # Record the temporary directory to be deleted
-            push @$temp_dir , Dancer::FileUtils::path(
-                    h->config->{filestore}->{tmp_dir},
-                    $fi->{tempid});
+            push @$temp_dir , $fi->{tempid};
 
-            h->log->debug("new upload with temp-id -> $path");
+            h->log->debug("new upload with $tempid $filename -> $key");
             # TODO: Need to check the success of this step
-            _make_file($key, $filename, $path);
+            _make_file($key, $filename, $tempid);
 
             h->log->debug(
                 "retrieving and updating technical metadata from cache");
-            _update_tech_metadata($fi, $filename, $path);
+            _update_tech_metadata($fi, $filename, $tempid);
 
             h->log->debug(
                 "retrieve the checksum from the filestore or calculate it " .
@@ -240,9 +240,11 @@ sub handle_file {
 
         delete $fi->{tempid} if $fi->{tempid};
 
-        for my $path (@$temp_dir) {
-            h->log->debug("removing the temp-id uploads -> $path");
-            Path::Tiny::path($path)->remove_tree;
+        if (h->config->{filestore}->{temp}->{autocleanup}) {
+            for my $tempid (@$temp_dir) {
+                h->log->debug("removing the temp-id uploads -> $tempid");
+                h->get_temp_store->index->delete($tempid);
+            }
         }
 
         $count++;
@@ -331,9 +333,9 @@ sub _make_thumbnail {
 }
 
 sub _make_file {
-    my ($key, $filename, $path) = @_;
+    my ($key, $filename, $tempid) = @_;
 
-    h->log->info("moving $path to filestore for record $key");
+    h->log->info("moving $tempid `$filename` to filestore for record $key");
 
     my $uploader_package = h->config->{filestore}->{uploader}->{package};
     my $uploader_options = h->config->{filestore}->{uploader}->{options};
@@ -341,7 +343,7 @@ sub _make_file {
     my $pkg    = Catmandu::Util::require_package($uploader_package);
     my $worker = $pkg->new(%$uploader_options);
 
-    $worker->work({key => $key, filename => $filename, path => $path,});
+    $worker->work({key => $key, filename => $filename, tempid => $tempid});
 }
 
 sub _remove_thumbnail {
@@ -394,19 +396,32 @@ sub _decode_file {
 }
 
 sub _update_tech_metadata {
-    my ($fi, $filename, $path) = @_;
+    my ($fi, $filename, $tempid) = @_;
 
-    h->log->debug("updating the technical metadata");
+    h->log->info("updating the technical metadata for $filename in temp container $tempid");
 
-    my $config_file = "$path.json";
+    my $files = h->get_temp_store->index->files($tempid);
 
-    unless (-r $config_file) {
-        h->log->error("no cached config file $config_file found!");
+    unless ($files) {
+        h->log->error("no temp config file for temp if $tempid");
         return undef;
     }
 
-    my $importer = Catmandu->importer('JSON', file => $config_file);
-    my $data = $importer->first;
+    my $json = $files->as_string($files->get("$filename.json"));
+
+    unless ($json) {
+        h->log->error("no cached config file $filename.json found!");
+        return undef;
+    }
+
+    my $data = Catmandu->import_from_string($json,'JSON');
+
+    $data = $data->[0] if $data && ref($data) eq 'ARRAY';
+
+    unless ($data) {
+        h->log->error("failed to parse $filename.json from temp container $tempid to data!");
+        return undef;
+    }
 
     my $administrative_fields
         = h->config->{forms}->{dropzone_fields}->{administrative} // [];
@@ -463,7 +478,7 @@ sub _update_checksum {
         h->log->info("$filename has checksum $checksum");
     }
     else {
-        h->log->info("no $filename has no checksum mechanism installed");
+        h->log->info("$file_store has no checksum mechanism installed");
     }
 
     if ($checksum) {

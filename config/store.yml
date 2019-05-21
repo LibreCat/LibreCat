@@ -41,6 +41,8 @@ main:
         # id_generator: Incremental
       reqcopy:
         plugins: []
+      temp_files:
+        plugins: []
 
 search:
   package: ElasticSearch
@@ -1219,4 +1221,3 @@ search:
                 '<=': true
               field: start_date
             end_date: *start_date
-
