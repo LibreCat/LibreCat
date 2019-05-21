@@ -429,6 +429,18 @@ sub uri_for_file {
     $self->uri_base() . "/download/$pub_id/$file_id$ext";
 }
 
+sub cleanup_filename {
+    my ($self,$filename) = @_;
+    my $cleaned_filename = Catmandu::Util::as_utf8($filename);
+    $cleaned_filename =~ s/[^\w_\-\.]+/_/g;
+    $cleaned_filename;
+}
+
+sub is_valid_filename {
+    my ($self,$filename) = @_;
+    $filename eq $self->cleanup_filename;
+}
+
 sub login_user {
 
     my ($self, $user) = @_;
