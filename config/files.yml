@@ -74,6 +74,7 @@ access_thumbnailer:
     options:
         files: *filestore_settings
         access: *accessstore_settings
+        tmpdir: data/tmp
 
 # Which ip-ranges can access the file api (not for end-users)
 api:

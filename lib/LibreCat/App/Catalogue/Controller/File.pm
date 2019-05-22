@@ -286,6 +286,19 @@ sub handle_file {
             {
                 $has_first_changed = 1;
             }
+            # Check if there wasn't any file and this is the first one
+            elsif (
+                   $count == 0
+                   && $pub->{file}->[0]
+                   && ! $prev_pub->{file}->[0]
+            )
+            {
+                $has_first_changed = 1;
+            }
+            else {
+                # this file didn't go to first positio or isn't a new
+                # file in first postition
+            }
         }
         else {
             # A new publication with files..
@@ -294,7 +307,11 @@ sub handle_file {
 
         # Regenerate the first thumbnail...
         if ($has_first_changed) {
+            h->log->info("regenerating thumbmail for $key " .  $fi->{file_name});
             _make_thumbnail($key, $fi->{file_name});
+        }
+        else {
+            h->log->info("no thumbmail needed for $key " .  $fi->{file_name});
         }
 
         delete $fi->{tempid} if $fi->{tempid};

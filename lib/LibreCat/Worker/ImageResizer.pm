@@ -165,6 +165,7 @@ sub extract_to_tmpdir {
     $self->log->debug("creating $tmpdir");
 
     unless (mkdir $tmpdir) {
+        $self->log->error("failed to create $tmpdir : $!");
         return (undef, undef);
     }
 
