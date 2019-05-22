@@ -7,6 +7,36 @@ use Moo;
 
 with "LibreCat::Auth::SSO";
 
+sub logged_in {
+
+    my $self = $_[0];
+
+    [
+        302,
+        [
+            "Content-Type" => "text/html",
+            Location       => $self->uri_for($self->success_path)
+        ],
+        []
+    ];
+
+}
+
+sub access_denied {
+
+    my $self = $_[0];
+
+    [
+         302,
+         [
+             "Content-Type" => "text/html",
+             Location       => $self->uri_for($self->denied_path)
+         ],
+         []
+     ];
+
+}
+
 sub to_app {
 
     my $self = $_[0];
@@ -17,16 +47,32 @@ sub to_app {
 
         my $request = Plack::Request->new($env);
         my $session = Plack::Session->new($env);
+        my $model   = user();
 
-        my $auth_sso = $self->get_auth_sso($session);
+        #user is already logged in. Please logout first
+        if( $model->is_session( $session ) ){
+
+            return $self->logged_in();
+
+        }
+
+        #got response from external authentication server
+        my $auth_sso = $self->get_auth_sso( $session );
 
         if (is_hash_ref($auth_sso)) {
 
-            my $user = user->find_by_username($auth_sso->{uid});
+            #remove auth_sso.
+            # -> Use case:
+            #       external authentication server returns record, but cannot be found in the whitelist
+            #       keeping this would make it impossible to return to the authentication server
+            # -> No need to keep it anyway
+            $self->remove_auth_sso($session);
+
+            my $user = $model->find_by_username($auth_sso->{uid});
 
             if ($user) {
 
-                my %attrs = user->to_session($user);
+                my %attrs = $model->to_session($user);
 
                 for (keys %attrs) {
 
@@ -34,40 +80,19 @@ sub to_app {
 
                 }
 
-                return [
-                    302,
-                    [
-                        "Content-Type" => "text/html",
-                        Location       => $self->uri_for($self->success_path)
-                    ],
-                    []
-                ];
+                return $self->logged_in();
 
             }
             else {
 
-                return [
-                    302,
-                    [
-                        "Content-Type" => "text/html",
-                        Location       => $self->uri_for($self->denied_path)
-                    ],
-                    []
-                ];
+                return $self->access_denied();
 
             }
 
         }
         else {
 
-            return [
-                302,
-                [
-                    "Content-Type" => "text/html",
-                    Location       => $self->uri_for($self->denied_path)
-                ],
-                []
-            ];
+            return $self->access_denied();
 
         }
 

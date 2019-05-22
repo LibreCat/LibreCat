@@ -3,6 +3,7 @@ package LibreCat::Model::User;
 use Catmandu::Sane;
 use LibreCat qw(:self);
 use Catmandu;
+use Catmandu::Util qw(:is);
 use Moo;
 use namespace::clean;
 
@@ -124,6 +125,20 @@ sub to_session {
 
 }
 
+sub is_session {
+
+    my( $self, $session ) = @_;
+
+    is_hash_ref( $session ) or return;
+
+    for(qw(role user user_id lang)){
+        is_string( $session->{$_} ) or return;
+    }
+
+    1;
+
+}
+
 1;
 
 __END__
@@ -155,6 +170,8 @@ LibreCat::Model::User - a user model
 =head2 find_by_username($name)
 
 =head2 to_session($user)
+
+=head1 is_session($hash)
 
 =head1 SEE ALSO
 

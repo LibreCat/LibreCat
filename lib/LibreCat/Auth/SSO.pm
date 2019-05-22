@@ -59,6 +59,14 @@ sub get_auth_sso {
 
 }
 
+sub remove_auth_sso {
+
+    my ($self, $session) = @_;
+    _check_plack_session($session);
+    $session->remove($self->session_key);
+
+}
+
 =pod
 
 =head1 NAME
