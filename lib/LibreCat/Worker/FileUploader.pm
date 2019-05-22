@@ -126,7 +126,7 @@ sub do_upload {
 
     unless (ref($self->temp_store) =~ /Catmandu::Store::File::Simple/) {
         $self->log->fatal("sorry I need a File::Simple store to upload data");
-        die;
+        Catmandu::Error->throw("failed to find a File::Simple implementation of the temp store");
     }
 
     my $temp_bag       = $self->temp_store->index->files($temp_key);
@@ -139,12 +139,14 @@ sub do_upload {
 
     $self->log->info("uploaded $bytes bytes");
 
-    if ($bytes) {
+    my $permanent_file = $self->file_store->index->files($key)->get($filename);
+
+    if ($temp_file->{size} == $permanent_file->{size}) {
         return 1;
     }
     else {
-        $self->log->error("failed to store $filename in container $key");
-        return -1;
+        $self->log->fatal("failed to store $filename in container $key sizes don't match");
+        Catmandu::Error->throw("failed to store $filename in container $key sizes don't match");
     }
 }
 

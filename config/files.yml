@@ -53,7 +53,7 @@ temp: &tempstore_settings
     options:
         root: data/temp_uploads
         # Automatic clean up of temporary uploads when they are archived
-        autocleanup: 0
+        autocleanup: 1
         # Create a date based mapping of temporary data on disk
         directory_index_package: Map
         # Database to store the path mappings
