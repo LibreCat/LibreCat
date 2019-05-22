@@ -60,8 +60,8 @@ tabs:
   authors: "Personen"
 hits:
   id: "LibreCat-ID"
-  author: "Autorin/Autor"
-  authors: "Autorinnen/Autoren"
+  author: "Autor*in"
+  authors: "Autor*innen"
   publication: "Publikation"
   publications: "Publikationen"
   data_publication: "Datenpublikation"
@@ -116,7 +116,7 @@ person_profile:
   id_not_found: "ID nicht gefunden."
   former_researcher: "Ehemaliger LibreCat Forscher"
   local_id: "ID"
-  no_author_ids: "Keine Autoren-IDs gesetzt."
+  no_author_ids: "Keine Personen-IDs gesetzt."
   person_id_title: "Diese IDs werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:
   funded_ext: "Drittmittelprojekt"
@@ -141,9 +141,9 @@ facets:
   filter_authorlist: "Autorenliste filtern"
   filter_publications: "Publikationen filtern"
   visibility_status: "Status"
-  current_authors: "LibreCat AutorInnen"
-  current_editors: "LibreCat HerausgeberInnen"
-  former_authors: "Ehemalige LibreCat AutorInnen"
+  current_authors: "LibreCat Autor*innen"
+  current_editors: "LibreCat Herausgeber*innen"
+  former_authors: "Ehemalige LibreCat Autor*innen"
   department: "Einrichtung"
   publication_type: "Publikationstyp"
   publishing_year: "Publikationsjahr"
@@ -336,7 +336,7 @@ forms:
         label_short: "Alt. Titel"
         placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
-        label: "Autor/in"
+        label: "Autor*in"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
         idm_extern: "extern"
         first_name:
@@ -551,14 +551,14 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "heraugebende Körperschaft"
+        label_short: "hrsg. Körp."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       alternative_title: *alternative_title
       department: *department
@@ -627,13 +627,13 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       corporate_editor: &corporate_editor
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "herausgebende Körperschaft"
+        label_short: "hrsg. Körp."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       edition: *edition
       department: *department
@@ -691,7 +691,7 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
@@ -1387,7 +1387,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "Übersetzer"
+        label: "Übersetzer*in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1456,7 +1456,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "Übersetzer"
+        label: "Übersetzer*in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
