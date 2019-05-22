@@ -2,6 +2,10 @@ audit: 1
 
 uri_base: "http://localhost:5001"
 
+api:
+  v1:
+    token_secret: testsecret
+
 default_lang: en
 default_page_size: 20
 default_searchpage_size: 10
@@ -53,7 +57,7 @@ default_facets:
       terms:
         field: 'year'
         size: 100
-        order: 'reverse_term'
+        order: {_key: desc}
     type:
       terms:
         field: 'type'
@@ -116,6 +120,10 @@ user:
       bag: user
       username_attr: login
 
+api:
+  v1:
+    token_secret: 'ANCCgnD6XUGGLvE0CBKu8pbcHDqXVMRKTD1Q8Iu7JyS1TefYZ7dQovhL9iERYcw'
+
 citation:
   engine: none
 
@@ -127,8 +135,18 @@ store:
 
   search:
     options:
-      client: '1_0::Direct'
-      index_name: librecat_test
+      bags:
+        department:
+          index: librecat_test_department
+        project:
+          index: librecat_test_project
+        publication:
+          index: librecat_test_publication
+        research_group:
+          index: librecat_test_research_group
+        user:
+          index: librecat_test_user
+
   builtin_users:
     package: Hash
     options:
@@ -155,6 +173,15 @@ filestore:
         package: 'LibreCat::Worker::FileUploader'
         options:
             files: *filestore_settings
+
+    download_headers:
+      for_all:
+        "Content-Disposition": "attachment; filename*=UTF-8''%s"
+      for_content_type:
+        "text/plain":
+          "Content-Disposition": "inline; filename*=UTF-8''%s"
+          "Content-Type": "%s; charset=utf-8"
+
 hooks:
   eat:
    before_fixes: [peckish, hungry]

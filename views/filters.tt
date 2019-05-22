@@ -125,6 +125,8 @@
       [%- tmp = {}; tmp.import(qp); export_path = backend == 1 ? 'librecat/export' : 'export' %]
       [%- IF request.path_info.match("person") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- tmp.cql.push("person=$id") %][%- END %]
       [%- IF request.path_info.match("reviewer") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- dept = request.path_info.match('\/reviewer\/(\d{1,})'); tmp.cql.push("department=$dept.0") %][%- END %]
+      [%- IF request.path_info.match("delegate") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = request.path_info.match('\/delegate\/(\d{1,})'); tmp.cql.push("person=$pers.0") %][%- END %]
+      [%- IF request.path_info.match("librecat$") AND session.role == "user" %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = session.user_id; tmp.cql.push("person=$pers") %][% END %]
       <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
       <li><a href="[% tmp.fmt='bibtex'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
       <li><a href="[% tmp.fmt='ris'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
@@ -173,6 +175,9 @@
       <div class="modal-body">
         [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.links = '1' %]
         [%- IF request.path_info.match("person") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- tmp.cql.push("person=$id") %][%- END %]
+        [%- IF request.path_info.match("reviewer") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- dept = request.path_info.match('\/reviewer\/(\d{1,})'); tmp.cql.push("department=$dept.0") %][%- END %]
+        [%- IF request.path_info.match("delegate") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = request.path_info.match('\/delegate\/(\d{1,})'); tmp.cql.push("person=$pers.0") %][%- END %]
+        [%- IF request.path_info.match("librecat$") AND session.role == "user" %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = session.user_id; tmp.cql.push("person=$pers") %][% END %]
 	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
          [%-  tmp.delete('links') %]
 	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
@@ -199,7 +204,7 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var no_params = embed_link.match(/\/person\/(\d+)$/);
     var yes_params = embed_link.match(/\/person\/(\d+)\?.*/);
     if(no_params){
-      embed_link = embed_link.replace(/\/person\/\d+/, "/embed?q=person=" + no_params[1]);
+      embed_link = embed_link.replace(/\/person\/\d+/, "/embed?q=person%3" + no_params[1]);
     }
     else if(yes_params){
       embed_link = embed_link.replace(/\/person.*/, "/embed?");
@@ -226,7 +231,8 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     $('#id_linktext').val(emb_link);
 });
 
-$('a.facet_[% tabmodus %]').click(function() {
+$('a.facet_[% tabmodus %]').click(function(evt) {
+  evt.preventDefault();
   var par_key = $(this).data('key');
   if(!searchParams[par_key]){
     searchParams[par_key] = [];
@@ -235,7 +241,7 @@ $('a.facet_[% tabmodus %]').click(function() {
     searchParams[par_key].push($(this).data('value'));
   }
   else if(par_key == "cql"){
-    searchParams[par_key].push($(this).data('param') + "=" + $(this).data('value'));
+    searchParams[par_key].push($(this).data('param') + "=\"" + $(this).data('value') + "\"");
     delete searchParams.start;
     delete searchParams.fmt;
   }

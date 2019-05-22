@@ -28,7 +28,8 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/^(package\.json|forms|departments|cleanup)$/;
+    my $commands
+        = qr/^(package\.json|forms|departments|cleanup)$/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");

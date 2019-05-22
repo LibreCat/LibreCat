@@ -56,7 +56,7 @@ sub search {
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit        => $self->_set_limit($p->{limit}),
         start        => $p->{start} // 0,
-        facets => librecat->config->{default_facets},
+        aggs => librecat->config->{default_facets},
     );
 
     $self->log->debug(
@@ -202,9 +202,8 @@ LibreCat::Search - module that provides search functionality in LibreCat
 =item native_search($opts)
 
     $opts = {
-        query =>
-        q =>
-        sort =>
+        query => ,
+        sort => ,
         start => 0, #optional
         limit => 20, #optional
     };
@@ -212,8 +211,7 @@ LibreCat::Search - module that provides search functionality in LibreCat
 =item search($opts)
 
     $opts = {
-        cql =>
-        q =>
+        q => ["title=test", "year=2019"],
         sort =>
         start => 0, #optional
         limit => 20, #optional
