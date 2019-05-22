@@ -24,16 +24,6 @@ sub to_app {
 
             my $user = user->find_by_username($auth_sso->{uid});
 
-            if(
-                $user &&
-                is_string( $user->{account_status} ) &&
-                $user->{account_status} eq "inactive"
-            ){
-
-                $user = undef;
-
-            }
-
             if ($user) {
 
                 my %attrs = user->to_session($user);
