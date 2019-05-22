@@ -212,14 +212,33 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-        h->hook('publication-update')->fix_around(
-            $p,
-            sub {
-                publication->add($p);
-            }
-        );
 
-        redirect $return_url || uri_for('/librecat');
+        eval {
+            h->hook('publication-update')->fix_around(
+                $p,
+                sub {
+                    publication->add($p);
+                }
+            );
+        };
+
+        if ($@) {
+            my $id = $p->{_id} // '<new>';
+            h->log->fatal("failed to update record $id");
+            h->log->fatal($@);
+            my $admin_email = h->config->{admin_email};
+            my $message = <<EOF;
+Oops. Failed to update record $id. The admins have been notified.
+Please return to <a href="$return_url">$return_url</a> and try again
+later.
+EOF
+            $message .= "Or, contact $admin_email when this problem persists.";
+
+            template "error" , { message => $message }
+        }
+        else {
+            redirect $return_url || uri_for('/librecat');
+        }
     };
 
 =head2 GET /return/:id

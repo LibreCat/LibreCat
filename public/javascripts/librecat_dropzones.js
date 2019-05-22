@@ -126,7 +126,7 @@ $(document).ready(function(){
 
                     var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.tempid + "\"><a href=\"#\" onclick=\"return false;\"><span class=\"fa fa-pencil\"></span></a></div>");
                     editLink.addEventListener("click", function(e) {
-                        window.edit_file(resp.tempid, "[% _id %]");
+                        window.edit_file(resp.tempid);
                     });
                     file.previewElement.appendChild(editLink);
 
@@ -156,13 +156,13 @@ $(document).ready(function(){
                 }
             });
             this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
+                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + htmlEscape(errorMessage.error_message) + " This file will be ignored</div>");
                 file.previewElement.appendChild(modal);
             });
             this.on("complete", function(file){
     		    var remove_link = file.previewElement.getElementsByClassName('dz-remove');
     			$(remove_link).remove();
-              $('html').css({ cursor: "auto" });
+                $('html').css({ cursor: "auto" });
     		});
         },
     };

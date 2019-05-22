@@ -22,14 +22,14 @@ use Clone 'clone';
 use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
 
-our @EXPORT = qw/handle_file upload_temp_file/;
+our @EXPORT = qw/handle_file upload_temp_file remove_temp_file/;
 
 =head1 METHODS
 
-=head2 upload_temp_file(params->{file},$creator)
+=head2 upload_temp_file(params->{file},$creator,$opts)
 
 Given an upload file handle and a creator string this function will create a
-temporary storage file for the upload. Returns a JSON document containing the
+temporary storage file for the upload. Returns a HASH document containing the
 file details:
 
     {
@@ -52,10 +52,17 @@ file details:
         'success'      => 1,
     }
 
+Or on error a HASH document with the error message:
+
+    {
+        success       => 0,
+        error_message => "Oops! Uploading $file_name failed."
+    }
+
 =cut
 
 sub upload_temp_file {
-    my ($file, $creator) = @_;
+    my ($file, $creator, $opts) = @_;
 
     h->log->debug("new upload by: $creator");
 
@@ -88,62 +95,114 @@ sub upload_temp_file {
         creator      => $creator,
         date_updated => $now,
         date_created => $now,
+        request      => $opts
     };
 
     $file_data->{rac_email} = $rac_email if $rac_email;
 
     # Creating a new temporary storage for the upload files...
-    h->log->info("creating temp container $tempid");
+    h->log->info("creating temp container $tempid for $file_name");
 
-    my $store = h->get_temp_store();
+    eval {
+        my $store = h->get_temp_store();
 
-    $store->index->add({ _id => $tempid });
+        $store->index->add({ _id => $tempid });
 
-    my $index = $store->index->files($tempid);
+        my $index = $store->index->files($tempid);
 
-    unless ($index) {
-        h->log->error("creating temp container $tempid failed");
+        unless ($index) {
+            h->log->fatal("failed to create temp container $tempid!");
+            return {
+                success       => 0,
+                error_message => "Oops! Uploading $file_name failed."
+            };
+        }
+
+        h->log->info("copy $temp_file to temp container $tempid");
+
+        $index->upload(IO::File->new("<$temp_file"),$file_name);
+
+        unless ($index->get($file_name)) {
+            h->log->fatal("failed to file $file_name in temp container $tempid!");
+            return {
+                success       => 0,
+                error_message => "Oops! Uploading $file_name failed."
+            };
+        }
+
+        # Store a copy of the file metadata next to the upload file...
+        my $config_file = "$file_name.json";
+
+        h->log->info("storing file metadata to $config_file");
+
+        my $json = Catmandu->export_to_string($file_data, 'JSON',line_delimited=>1);
+
+        h->log->debug("storing: $json");
+
+        # Use the low level `add` method to be able to upload text as files...
+        $index->add({_id => $config_file, _stream => $json});
+
+        unless ($index->get($config_file)) {
+            return {
+                success       => 0,
+                error_message => "Oops! Uploading $file_name failed."
+            };
+        }
+
+        h->log->debug("deleting $temp_file");
+        unlink $temp_file;
+
+        $file_data->{success} = 1;
+    };
+
+    if ($@) {
+        h->log->fatal("failed uploading $file_name in temp container $tempid!");
+        h->log->fatal($@);
         return {
             success       => 0,
-            error_message => 'Sorry! The file upload failed.'
+            error_message => "Oops! Uploading $file_name failed."
         };
     }
-
-    h->log->info("copy $temp_file to temp container $tempid");
-    $index->upload(IO::File->new("<$temp_file"),$file_name);
-
-    unless ($index->get($file_name)) {
-        return {
-            success       => 0,
-            error_message => 'Sorry! The file upload failed.'
-        };
-    }
-
-    # Store a copy of the file metadata next to the upload file...
-    my $config_file = "$file_name.json";
-
-    h->log->info("storing file metadata to $config_file");
-
-    my $json = Catmandu->export_to_string($file_data, 'JSON',line_delimited=>1);
-
-    h->log->debug("storing: $json");
-
-    # Use the low level `add` method to be able to upload text as files...
-    $index->add({_id => $config_file, _stream => $json});
-
-    unless ($index->get($config_file)) {
-        return {
-            success       => 0,
-            error_message => 'Sorry! The file upload failed.'
-        };
-    }
-
-    h->log->debug("deleting $temp_file");
-    unlink $temp_file;
-
-    $file_data->{success} = 1;
 
     return $file_data;
+}
+
+=head2 remove_temp_file($tempid, $creator, $opts)
+
+Removes a temporary file upload when available on the file system. Returns
+a HASH on success and error:
+
+    { success => 1 }
+
+=cut
+sub remove_temp_file {
+    my ($tempid, $creator, $opts) = @_;
+
+    h->log->debug("request removing temp container $tempid by $creator");
+
+    eval {
+        my $store = h->get_temp_store();
+
+        my $index = $store->index->files($tempid);
+
+        if ($index) {
+            h->log->info("removing temp container $tempid as requested by $creator");
+            $store->index->delete($tempid);
+            return { success => 1 };
+        }
+        else {
+            h->log->debug("no such temp container $tempid");
+            return { success => 0 };
+        }
+    };
+
+    if ($@) {
+        h->log->fatal("removing temp container $tempid by $creator failed!");
+        h->log->fatal($@);
+        return { success => 0 };
+    }
+
+    return { success => 1 };
 }
 
 =head2 handle_file($pub)

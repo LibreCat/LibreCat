@@ -440,7 +440,7 @@ function link_person(element){
  * @param fileId = file ID
  * @param id = record ID
  */
-function edit_file(fileId, id){
+function edit_file(fileId){
         var json = jQuery.parseJSON($('#file_' + fileId).val());
         if(json.file_id){
                 $('#id_file_id').val(json.file_id);
@@ -448,7 +448,6 @@ function edit_file(fileId, id){
         if(json.tempid){
                 $('#id_temp_id').val(json.tempid);
         }
-        $('#id_record_id').val(id);
         $('#id_fileName').val(json.file_name);
         $('#id_creator').val(json.creator);
         $('#id_fileSize').val(json.file_size);
@@ -510,16 +509,23 @@ function edit_file(fileId, id){
  * Delete uploaded files
  *
  * @param fileId = file ID
- * @param id = record ID
- * @param fileName = file name
  */
 function delete_file(fileId){
         if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken!\nIf you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file.\n\nDelete this file?")) {
-                $('#' + fileId).remove();
+            $('#' + fileId).remove();
             if($('#uploadFiles').children('.dz-file-preview').length == 0){
                 $('#ddc').find('div.mandatory').removeClass('mandatory');
                 $('#ddc').find('select.required').removeClass('required');
             }
+
+            /* Request removing the fileId also on the server */
+            $.ajax({
+                url:  librecat.uri_base + '/librecat/upload/' + fileId,
+                type: 'DELETE',
+                success: function(result) {
+                    // all's well that ends well
+                },
+            });
         }
         return false;
 }
@@ -529,7 +535,7 @@ function delete_file(fileId){
  */
 $(function () {
         $(".dropzone").sortable({
-                containerSelector: 'div.dz-preview',
+            containerSelector: 'div.dz-preview',
             itemSelector: 'div.dz-preview',
             update: function (event, ui) {
                 var id = ui.item.attr('id');
@@ -540,19 +546,19 @@ $(function () {
 
         $(".creator").sortable({
             update: function (event, ui) {
-                        ui.item.closest('.creator').find('div.row.multirow').each(function(index){
-                                var myitem = $(this);
-                            myitem.find('input, textarea, img, button, select, span').each(function(){
-                                        if($(this).attr('id')){
-                                                var newid = $(this).attr('id').replace(/\d+/g,index);
-                                                $(this).attr('id', newid);
-                                        }
-                                        if($(this).attr('name')){
-                                                var newname = $(this).attr('name').replace(/\d+/g,index);
-                                                $(this).attr('name', newname);
-                                        }
-                                });
+                ui.item.closest('.creator').find('div.row.multirow').each(function(index){
+                    var myitem = $(this);
+                    myitem.find('input, textarea, img, button, select, span').each(function(){
+                        if($(this).attr('id')){
+                                var newid = $(this).attr('id').replace(/\d+/g,index);
+                                $(this).attr('id', newid);
+                        }
+                        if($(this).attr('name')){
+                                var newname = $(this).attr('name').replace(/\d+/g,index);
+                                $(this).attr('name', newname);
+                        }
                     });
+                });
                 ui.item.removeClass("dragged").removeAttr("style");
                 $("body").removeClass("dragging");
             }

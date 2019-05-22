@@ -67,7 +67,7 @@ uploader:
     options:
         files: *filestore_settings
         temp_files: *tempstore_settings
-        
+
 # Worker that generates thumbnail files
 access_thumbnailer:
     package: 'LibreCat::Worker::ImageResizer'
