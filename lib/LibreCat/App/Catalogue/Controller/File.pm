@@ -7,7 +7,6 @@ Helper methods for handling file uploads.
 =cut
 
 use Catmandu::Sane;
-use Catmandu::Util qw(as_utf8);
 use Catmandu;
 use LibreCat qw(publication timestamp);
 use LibreCat::App::Helper;
@@ -70,7 +69,7 @@ sub upload_temp_file {
     my $now          = timestamp;
     my $tempid       = Data::Uniqid::uniqid;
     my $temp_file    = $file->{tempname};
-    my $file_name    = _cleanup_filename($file->{filename});
+    my $file_name    = h->cleanup_filename($file->{filename});
     my $file_size    = int($file->{size});
     my $content_type = $file->{headers}->{"Content-Type"};
     my $rac_email    = $file->{rac_email} // '';
@@ -182,7 +181,7 @@ sub handle_file {
 
         # If we have a tempid, then there is a file upload waiting...
         if ($fi->{tempid} && $fi->{tempid} =~ /^\S+/) {
-            my $filename = $fi->{file_name} = _cleanup_filename($fi->{file_name});
+            my $filename = $fi->{file_name} = h->cleanup_filename($fi->{file_name});
             my $path     = Dancer::FileUtils::path(
                                 h->config->{filestore}->{tmp_dir},
                                 $fi->{tempid},
@@ -571,13 +570,6 @@ sub _find_deleted_files {
     }
 
     return @filtered_files;
-}
-
-sub _cleanup_filename {
-    my ($filename) = @_;
-    $filename = as_utf8($filename);
-    $filename =~ s/[^\w_\-\.]+/_/g;
-    $filename;
 }
 
 1;
