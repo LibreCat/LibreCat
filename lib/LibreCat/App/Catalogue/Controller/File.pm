@@ -316,7 +316,7 @@ sub handle_file {
 
         delete $fi->{tempid} if $fi->{tempid};
 
-        if (h->config->{filestore}->{temp}->{autocleanup}) {
+        if (h->config->{filestore}->{temp}->{options}->{autocleanup}) {
             for my $tempid (@$temp_dir) {
                 h->log->debug("removing the temp-id uploads -> $tempid");
                 h->get_temp_store->index->delete($tempid);
