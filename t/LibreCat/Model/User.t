@@ -35,4 +35,31 @@ is $u->{login}, 'einstein';
 
 ok !$user->get('unknown_ID');
 
+is_deeply(
+    +{ $user->to_session( $u ) },
+    +{
+        role => "super_admin",
+        user_id => "1234",
+        user => "einstein",
+        lang => "en"
+    }
+);
+
+ok(
+    $user->is_session({
+        role => "super_admin",
+        user_id => "1234",
+        user => "einstein",
+        lang => "en"
+    })
+);
+
+ok(
+    !($user->is_session({
+        role => "super_admin",
+        user_id => "1234",
+        lang => "en"
+    }))
+);
+
 done_testing;
