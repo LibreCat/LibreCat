@@ -114,6 +114,18 @@ subtest "add/get/delete publication" => sub {
         '/api/v1/publication' => {Authorization => $token} => json => $pub)
         ->status_is(201)->json_is('/data/id', 999999999);
 
+    $t->put_ok(
+        '/api/v1/publication/999999999' => {Authorization => $token} => json => $pub)
+        ->status_is(200)->json_is('/data/id', 999999999);
+
+    # Change the pub record id and check for errors
+    $pub->{_id} = '1234567890';
+
+    $t->put_ok(
+        '/api/v1/publication/999999999' => {Authorization => $token} => json => $pub)
+        ->status_is(400)
+        ->json_is('/errors/0/validation_error/0', "id in request and data don't match");
+
     $t->get_ok('/api/v1/publication/999999999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id',             999999999)
@@ -125,10 +137,16 @@ subtest "add/get/delete publication" => sub {
         ->json_is('/data/id',               999999999)
         ->json_is('/data/attributes/title', 'Test patch request');
 
+    # Patch with a wrong id
+    $t->patch_ok(
+        '/api/v1/publication/999999999' => {Authorization => $token} =>
+            json => {_id => '1234567890'})->status_is(400)
+        ->json_is('/errors/0/validation_error/0', "id in request and data don't match");
+
     $t->get_ok('/api/v1/publication/999999999/versions' =>
             {Authorization => $token})->status_is(200)
         ->json_is('/data/id',                    999999999)
-        ->json_is('/data/attributes/0/_version', '2');
+        ->json_is('/data/attributes/0/_version', '3');
 
     $t->get_ok('/api/v1/publication/999999999/version/1' =>
             {Authorization => $token})->status_is(200)
