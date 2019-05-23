@@ -35,4 +35,10 @@ is $u->{login}, 'einstein';
 
 ok !$user->get('unknown_ID');
 
+is(
+    $user->find_by_username("njfranck"),
+    undef,
+    "find_by_username may not return inactive users"
+);
+
 done_testing;
