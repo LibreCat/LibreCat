@@ -171,7 +171,13 @@ LibreCat::Model::User - a user model
 
 =head2 to_session($user)
 
+convert a user record to session record
+
 =head1 is_session($hash)
+
+does the session record contain the necessary user attributes?
+
+false means that a session may exists, but that the user is logged in.
 
 =head1 SEE ALSO
 
