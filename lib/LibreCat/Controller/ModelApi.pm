@@ -28,7 +28,7 @@ sub create {
     my $recs  = librecat->model($model) // return $c->not_found;
     my $data  = $c->maybe_decode_json($c->req->body) // return $c->json_not_valid;
 
-    librecat->hook("api-$model-update")->fix_around(
+    librecat->hook("api-$model-create")->fix_around(
         $data,
         sub {
             $recs->add(
@@ -63,7 +63,20 @@ sub update {
 
     # does record exist?
     unless ($recs->get($id)) {
-        $c->not_found;
+        return $c->not_found;
+    }
+
+    # does the record contain an id and does it match the given id
+    if ($data->{_id}) {
+        if ($data->{_id} eq $id) {
+            # ok
+        }
+        else {
+            return $c->not_valid([qq(id in request and data don't match)]);
+        }
+    }
+    else {
+        $data->{_id} = $id;
     }
 
     librecat->hook("api-$model-update")->fix_around(
@@ -100,12 +113,25 @@ sub update_fields {
     # does record exist?
     my $rec;
     unless ($rec = $recs->get($id)) {
-        $c->not_found;
+        return $c->not_found;
+    }
+
+    # does the record contain an id and does it match the given id
+    if ($data->{_id}) {
+        if ($data->{_id} eq $id) {
+            # ok
+        }
+        else {
+            return $c->not_valid([qq(id in request and data don't match)]);
+        }
+    }
+    else {
+        # ok we are not updating the id
     }
 
     $data = merge($rec, $data);
 
-    librecat->hook("api-$model-update")->fix_around(
+    librecat->hook("api-$model-update_fields")->fix_around(
         $data,
         sub {
             $recs->add(
