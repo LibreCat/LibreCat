@@ -10,9 +10,11 @@ use Catmandu::Sane;
 use Catmandu;
 use LibreCat qw(publication);
 use Catmandu::Fix qw(expand);
+use Catmandu::Util qw(is_instance);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use Dancer qw(:syntax);
+use Dancer::Plugin::FlashMessage;
 use Encode qw(encode);
 
 sub access_denied_hook {
@@ -212,12 +214,21 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-        h->hook('publication-update')->fix_around(
-            $p,
-            sub {
-                publication->add($p);
+        try {
+            h->hook('publication-update')->fix_around(
+                $p,
+                sub {
+                    publication->add($p);
+                }
+            );
+        } catch {
+          if (is_instance($_, 'LibreCat::Error::VersionConflict')) {
+                flash warning =>
+                    "Could not save your changes. This publication was updated by someone else since you started editing.";
+            } else {
+                die $_;
             }
-        );
+        };
 
         redirect $return_url || uri_for('/librecat');
     };

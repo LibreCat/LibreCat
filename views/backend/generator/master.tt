@@ -31,6 +31,7 @@
   <form action="[% uri_base %]/librecat/record/update" method="POST" id="edit_form">
     <input type="hidden" name="type" value="[% type %]" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
+    <input type="hidden" name="_version" value="[% _version %]"/>
     <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>
     <input type="hidden" name="new_record" value="[% new_record %]"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />

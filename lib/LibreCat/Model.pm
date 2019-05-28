@@ -3,13 +3,17 @@ package LibreCat::Model;
 use Catmandu::Sane;
 use Catmandu::Util qw(is_string is_code_ref is_able);
 use List::Util qw(pairs);
-use Types::Standard qw(ConsumerOf);
+use Types::Standard qw(Str ConsumerOf);
 use LibreCat::Types qw(+Pairs);
 use Moo::Role;
 use namespace::clean;
 
 with 'Catmandu::Pluggable', 'LibreCat::Logger';
 
+has name => (
+    is       => 'lazy',
+    isa      => Str
+);
 has bag => (
     is       => 'ro',
     required => 1,
@@ -33,6 +37,14 @@ has before_index => (is => 'lazy', init_arg => undef, isa => Pairs);
 
 sub plugin_namespace {
     'LibreCat::Model::Plugin';
+}
+
+sub _build_name {
+    my ($self) = @_;
+    my $pkg = ref $self;
+    $pkg =~ s/__WITH__.+//;
+    my ($name) = $pkg =~ /([^:]+)$/;
+    $name;
 }
 
 sub _build_before_add {
@@ -107,6 +119,17 @@ sub add_many {
 }
 
 sub add {
+    my ($self, $rec, %opts) = @_;
+    if ($opts{skip_transaction}) {
+        $self->_add($rec, %opts);
+    } else {
+        $self->bag->store->transaction(sub {
+            $self->_add($rec, %opts);
+        });
+    }
+}
+
+sub _add {
     my ($self, $rec, %opts) = @_;
 
     # TODO do we really need an id even before validation?
