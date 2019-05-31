@@ -202,22 +202,6 @@ sub audit_message {
     );
 }
 
-# sub id_or_file {
-#     my ($self, $id_file, $callback) = @_;
-#
-#     if (defined($id_file) && -r $id_file) {
-#         my $r = 0;
-#         for (path($id_file)->lines) {
-#             chomp;
-#             $r += $callback->($_);
-#         }
-#         return $r;
-#     }
-#     else {
-#         return $callback->($id_file);
-#     }
-# }
-
 sub _list {
     my ($self, $query) = @_;
 
