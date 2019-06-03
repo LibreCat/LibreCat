@@ -21,11 +21,7 @@ on 'test' => sub {
 requires 'Business::ISBN', 0;
 
 # Catmandu
-<<<<<<< HEAD
-requires 'Catmandu', '>=1.0606, !=1.20';
-=======
 requires 'Catmandu', '>=1.2002';
->>>>>>> dev
 requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
