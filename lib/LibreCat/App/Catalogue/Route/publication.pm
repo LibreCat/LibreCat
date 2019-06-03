@@ -10,9 +10,11 @@ use Catmandu::Sane;
 use Catmandu;
 use LibreCat qw(publication);
 use Catmandu::Fix qw(expand);
+use Catmandu::Util qw(is_instance);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use Dancer qw(:syntax);
+use Dancer::Plugin::FlashMessage;
 use Encode qw(encode);
 
 sub access_denied_hook {
@@ -212,33 +214,33 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-
-        eval {
+        try {
             h->hook('publication-update')->fix_around(
                 $p,
                 sub {
                     publication->add($p);
                 }
             );
+        } catch {
+            if (is_instance($_, 'LibreCat::Error::VersionConflict')) {
+                flash warning =>
+                    "Could not save your changes. This publication was updated by someone else since you started editing.";
+            }
+            else {
+                my $id = $p->{_id} // '<new>';
+                h->log->fatal("failed to update record $id");
+                h->log->fatal($@);
+                my $admin_email = h->config->{admin_email};
+                my $message =
+    "Failed to update record $id. The admins have been notified. " .
+    "Or, contact $admin_email when this problem persists.";
+
+                flash warning => $message;
+            }
         };
 
-        if ($@) {
-            my $id = $p->{_id} // '<new>';
-            h->log->fatal("failed to update record $id");
-            h->log->fatal($@);
-            my $admin_email = h->config->{admin_email};
-            my $message = <<EOF;
-Oops. Failed to update record $id. The admins have been notified.
-Please return to <a href="$return_url">$return_url</a> and try again
-later.
-EOF
-            $message .= "Or, contact $admin_email when this problem persists.";
 
-            template "error" , { message => $message }
-        }
-        else {
-            redirect $return_url || uri_for('/librecat');
-        }
+        redirect $return_url || uri_for('/librecat');
     };
 
 =head2 GET /return/:id
