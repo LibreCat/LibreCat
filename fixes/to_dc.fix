@@ -7,7 +7,7 @@ join_field(tmp_id, '/')
 move_field(tmp_id, dc.identifier.$append)
 
 copy_field(type, driver_type)
-lookup(driver_type, fixes/lookup/driver_types.csv, default: other)
+lookup(driver_type, fixes/lookup/driver_types.csv)
 prepend(driver_type,'info:eu-repo/semantics/')
 move_field(driver_type, 'dc.type.$append')
 

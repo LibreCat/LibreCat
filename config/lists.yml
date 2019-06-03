@@ -1,45 +1,10 @@
 _prefix:
   lists:
 
-licenses:
-  publication:
-    - cc_0_1_0
-    - cc_by_4_0
-    - cc_by_sa_4_0
-    - cc_by_nd_4_0
-    - cc_by_nc_4_0
-    - cc_by_nc_sa_4_0
-    - cc_by_nc_nd_4_0
-    - cc_by_3_0
-    - cc_by_sa_3_0
-    - cc_by_nd_3_0
-    - cc_by_nc_3_0
-    - cc_by_nc_sa_3_0
-    - cc_by_nc_nd_3_0
-  theses:
-    - cc_0_1_0
-    - cc_by_4_0
-    - cc_by_sa_4_0
-    - cc_by_nc_nd_4_0
-  data:
-    - cc_0_1_0
-    - cc_by_4_0
-    - cc_by_sa_4_0
-    - cc_by_nd_4_0
-    - cc_by_nc_4_0
-    - cc_by_nc_sa_4_0
-    - cc_by_nc_nd_4_0
-    - pddl_1_0
-    - odc-by_1_0
-    - odbl_1_0
-  software:
-    - apache_2_0
-    - bsd-3-clause
-    - bsd-2-clause
-    - gpl_3_0
-    - lgpl_3_0
-    - mit
-    - mpl_2_0
+cc_licenses:
+  - cc_0
+  - cc_by
+  - cc_by_sa
 
 author_id:
   inspire:

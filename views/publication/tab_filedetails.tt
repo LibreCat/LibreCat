@@ -1,51 +1,25 @@
 <!-- BEGIN publication/tab_filedetails.tt -->
 <div class="tab-pane" id="fileDetails">
-  [%- IF license OR other_data_license OR oa %]
+  [%- IF data_reuse_license OR cc_license OR other_data_license %]
   <div class="row">
     <div class="col-md-12">
       <strong>[% h.loc("frontdoor.license_heading") %]</strong><br />
       <div class="alert alert-green">
-      [%- IF license %]
-      [% license_config = h.config.locale.en.licenses %]
-        <div class="row">
-          <div class="col-md-12">
-            <strong>[% h.loc("licenses.${license}.name") %]:</strong>
-          </div>
-        </div>
-        <div class="row">
-          [% IF license_config.${license}.image %]
-          <div class="col-md-3">
-            <a href='[% h.loc("licenses.${license}.deed_url") %]'><img src="[% uri_base %][% license_config.${license}.image %]" alt="[% license %]" height="30px;" class="pull-left" /></a>
-          </div>
-          [% END %]
-          <div class="[% IF license_config.${license}.image %]col-md-9[% ELSE %]col-md-12[% END %]">
-            <a href='[% h.loc("licenses.${license}.deed_url") %]'>[% h.loc("licenses.${license}.deed_url") %]</a><br />
-            <a href='[% h.loc("licenses.${license}.legal_code_url") %]'>[% h.loc("licenses.${license}.legal_code_url") %]</a>
-          </div>
-        </div>
+      [%- IF data_reuse_license %]
+        [% h.loc("forms.${type}.field.license.data_reuse_license.label") %]:
+        [%- SWITCH data_reuse_license %]
+          [%- CASE 'PDDL' %] <a href="http://opendatacommons.org/licenses/pddl/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.pddl.name") %]</a>
+	      [%- CASE 'ODC-By' %] <a href="http://opendatacommons.org/licenses/by/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.odcby.name") %]</a>
+	      [%- CASE 'ODbL' %] <a href="http://opendatacommons.org/licenses/odbl/" target="_blank">[% h.loc("forms.${type}.field.license.data_reuse_license.odbl.name") %]</a>
+        [%- END %]
+      [%- END %]
+      [%- IF cc_license %]
+        <strong>[% h.loc("forms.${type}.field.license.cc_license.label") %]:</strong><br />
+	    <a href="http://creativecommons.org/[% SWITCH cc_license %][% CASE 'cc_by' %]licenses/by/4.0/"><img src="[% uri_base %]/images/cc_by.png" alt="CC-BY"[% CASE 'cc_by_sa' %]licenses/by-sa/4.0/"><img src="[% uri_base %]/images/cc_by_sa.png" alt="CC-BY-SA"[% CASE 'cc_0' %]publicdomain/zero/1.0/"><img src="[% uri_base %]/images/cc0.png" alt="CC0"[% END %] class="img-thumbnail pull-left" /></a>[% h.loc("forms.${type}.field.license.cc_license.${cc_license}.name") %]
       [%- END %]
       [%- IF other_data_license %]
-        <div class="row">
-          <div class="col-md-12">
-          [%- other_data_license %]
-          </div>
-        </div>
+        [%- other_data_license %]
       [%- END %]
-      [% IF oa AND !license AND !other_data_license %]
-        <div class="row">
-          <div class="col-md-12">
-            <strong>[% h.loc("forms.${type}.field.license.oa_license.label") %]:</strong>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3">
-            <a href="[% h.loc("forms.${type}.field.license.oa_license.deed_url") %]"><img src="/images/in_copyright.png" style="height:20px"/></a>
-          </div>
-          <div class="col-md-9">
-            <strong>[% h.loc("forms.${type}.field.license.oa_license.text") %]</strong> <a href="[% h.loc("forms.${type}.field.license.oa_license.deed_url") %]">[...]</a>
-          </div>
-        </div>
-      [% END %]
       </div>
     </div>
   </div>
