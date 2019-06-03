@@ -235,7 +235,7 @@ Checks if the user has the rights to update this record.
     "Failed to update record $id. The admins have been notified. " .
     "Or, contact $admin_email when this problem persists.";
 
-                flash warning => $message;
+                flash danger => $message;
             }
         };
 

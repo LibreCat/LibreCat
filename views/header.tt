@@ -66,11 +66,11 @@
 
   <div class="row">
     <div class="col-xs-12" id="messages">
-      [%- FOREACH type IN ['error', 'warning', 'success', 'info'] %]
-      [%- IF flash.$type %]
-      <div class="alert alert-[% type %] alert-dismissible mbottom-default" role="alert">
+      [%- FOREACH flash_type IN ['danger', 'warning', 'success', 'info'] %]
+      [%- IF flash.$flash_type %]
+      <div class="alert alert-[% flash_type %] alert-dismissible mbottom-default" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        [% flash.$type %]
+        [% flash.$flash_type %]
       </div>
       [%- END %]
       [%- END %]
