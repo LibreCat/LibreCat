@@ -941,6 +941,7 @@ LibreCat::Cmd::publication - manage librecat publications
         --log=STR          (write an audit message)
         --with-citations   (process citations while adding records)
         --with-files       (process files while addings records)
+        --no-check-version (add records without checking versions)
         --csv              (import csv/tsv metadata in `files` command)
 
 =cut
