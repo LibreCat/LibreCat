@@ -52,7 +52,7 @@ temp: &tempstore_settings
     package: Simple
     options:
         root: data/temp_uploads
-        # Automatic clean up of temporary uploads when they are archived
+        # Automatic clean up of temporary uploads when they are successfully archived
         autocleanup: 1
         # Create a date based mapping of temporary data on disk
         directory_index_package: Map
