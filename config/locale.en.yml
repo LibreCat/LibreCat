@@ -432,36 +432,23 @@ forms:
             description: "Description"
       license: &license
         heading: "Copyright and Licenses"
+        info_page: "Info page about licenses (choose a license)"
         pub_license:
           label: "Copyright Disclaimer"
-          disclaimer_text: "I herewith place this document at LibreCat University's disposal for the purpose of storing in electronic form and making it available to the public according to the LibreCat Deposit Policy.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>LibreCat Deposit Policy</a>"
+          disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy. If I chose the &quot;Request a Copy (Closed Access except upon request)&quot; access level for this work, Bielefeld University is authorised to electronically store the work. Yet, I reserve the right to make the work available to users.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
           accept_text: "I accept"
           alert: "You need to accept the Copyright Disclaimer because you have attached files to this record."
         info:
           text: "Questions about policy / license?"
           contact: "Contact our support: Phone 999/9999, E-Mail: <a href=''>helpdesk@librecat.org</a>"
-        open_data_release:
-          label: "Open Data Release - Declaration"
-          disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
-          accept_text: "I have read and agree with the information above about releasing data under the selected license."
-          alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
-        cc_license:
-          label: "Creative Commons License"
-          select_text: "If your uploaded document is available under a Creative Commons license, you can select it here:<br>"
+        oa_license:
+          label: "Copyright Statement"
+          deed_url: "http://rightsstatements.org/vocab/InC/1.0/"
+          text: "This Item is protected by copyright and/or related rights."
+        license_publication:
+          label: "Publication License"
+          select_text: "If your uploaded document is available under a license (e.g. Creative Commons), you can select it here:<br>"
           select_a_license: "Select a license"
-          license_deed: "License Deed"
-          cc_0:
-            name: "Creative Commons Public Domain Dedication (CC0 1.0)"
-            deed_url: "http://creativecommons.org/publicdomain/zero/1.0/"
-            legal_code_url: "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
-          cc_by:
-            name: "Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)"
-            deed_url: "http://creativecommons.org/licenses/by/4.0/"
-            legal_code_url: "http://creativecommons.org/licenses/by/4.0/legalcode"
-          cc_by_sa:
-            name: "Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)"
-            deed_url: "http://creativecommons.org/licenses/by-sa/4.0/"
-            legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
       urn: &urn
         label: "URN"
         placeholder: "e.g. urn:nbn:de:0070-pub-12345678"
@@ -1321,25 +1308,13 @@ forms:
             description: "Description"
       license:
         heading: "Copyright and Licenses"
-        pub_license:
-          label: "Copyright Disclaimer"
-        data_reuse_license:
+        info_page: "Info page about licenses (choose a license)"
+        license_data:
           label: "Data Re-Use License"
-          select_license: "Select a license under which your uploaded data will be available:<br>"
+          select_text: "Select a license under which your uploaded data will be available:<br>"
           select_a_license: "Select a license"
           alert: "You need to select a Data Re-Use License because you have attached files to this record."
-          pddl:
-            select_text: "No restrictions - PDDL"
-            name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
-            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
-          odcby:
-            select_text: "Attribution required - ODC-By"
-            name: "The Open Data Commons Attribution License (ODC-By) v1.0"
-            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
-          odbl:
-            select_text: "Share alike - ODbL"
-            name: "The Open Database License (ODbL) v1.0"
-            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
+          license_deed: "License Deed"
         open_data_release:
           label: "Open Data Release - Declaration"
           disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
@@ -1355,6 +1330,95 @@ forms:
       keyword: *keyword
       jel: *jel
       alternative_id: *alternative_id
+      ddc: *ddc
+      related_material.rd:
+        label: "Link to LibreCat record"
+        label_short: "LibreCat-Rec."
+        placeholder: "Start typing to search your publications."
+      related_material.link: *related_material_link
+      locked: *locked
+      main_file_link: *main_file_link
+  software:
+    label: "Scientific Software"
+    tab:
+      basic_fields: "Details"
+      file_upload: "Upload"
+      supplementary_fields: "Additional Information"
+      related_material: "Links"
+    field:
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher:
+        label: "Publisher"
+        placeholder: "Publisher"
+        defaultvalue: "LibreCat University"
+      year_extern: *year_extern
+      external_file:
+        label: "External File(s)"
+        checkbox: "Files available at"
+      dropzone:
+        label: "<strong>Upload File(s)</strong> (max. 500MB per file)"
+        dropzone_text: "Drop files here to upload ... or click!"
+        access_level: "Access Level:"
+        upload_date: "Upload Date:"
+        user: "User:"
+        relation: "Relation:"
+        copy_link: "Copy file URL"
+        copy_link_popup: "Copy file URL to clipboard: Ctrl+C, Enter"
+        access:
+          closed: "Author/Reviewer"
+          until: "until"
+          request_a_copy: "Request a Copy"
+          local: "LibreCat Only"
+          open_access: "Open Access"
+        edit_modal:
+          heading: "Edit Uploaded File"
+          heading_file: "File"
+          current_file: "Current file:"
+          relation: "Relation (\"Uploaded document is...\")"
+          access:
+            open_access: "Open Access (File is freely available, effective immediately)"
+            local: "Local Access (LibreCat only)"
+            closed: "Closed Access (Author/Reviewer only)"
+            request_a_copy: "Request a Copy (Closed Access except upon request)"
+            embargo: "Switch to Open Access on:"
+          additional_information:
+            heading: "Additional Information"
+            title: "Title"
+            description: "Description"
+      license:
+        heading: "Copyright and Licenses"
+        info_page: "Info page about licenses"
+        license_software:
+          label: "Software Re-Use License"
+          select_text: "Select a license under which your uploaded data will be available:<br>"
+          select_a_license: "Select a license"
+          alert: "You need to select a Software Re-Use License because you have attached files to this record."
+          license_deed: "License Deed"
+        open_data_release:
+          label: "Open Data Release - Declaration"
+          disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
+          accept_text: "I have read and agree with the information above about releasing data under the selected license."
+          alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
+        other_data_license:
+          warning: "Visible/Editable for Library Admins only"
+          label: "Other license"
+        info:
+          text: "If your data does not fit any of the licenses above or if you have any other questions, please contact:<br>"
+          contact: "<strong><a href='' target='_blank'>LibreCat</a><br>999/99999<br><a href=''>helpdesk@librecat.org</a><br></strong>"
+      abstract: *abstract
+      keyword: *keyword
+      jel: *jel
+      alternative_id:
+        label: "Returned Record Ids"
+        label_short: "Ret. Rec. Ids"
+        placeholder: ""
+        desc: "Add the identifiers of deleted or returned records that should be redirected to this record."
       ddc: *ddc
       related_material.rd:
         label: "Link to LibreCat record"
@@ -1746,7 +1810,132 @@ help:
   citation: "Data of publication in selected citation style."
   search: "Search this publication list."
   display_block: "Change display settings of publication list (hits per page, sorting, citation style)."
-cc_licenses:
-  cc_0: CC0 (1.0)
-  cc_by: CC BY (4.0)
-  cc_by_sa: CC BY-SA (4.0)
+licenses:
+  cc_0_1_0:
+    name: "Creative Commons Public Domain Dedication (CC0 1.0)"
+    short: "CC0 (1.0)"
+    deed_url: "https://creativecommons.org/publicdomain/zero/1.0/"
+    legal_code_url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+    image: "/images/cc_0.png"
+  cc_by_4_0:
+    name: "Creative Commons Attribution 4.0 International Public License (CC-BY 4.0)"
+    short: "CC BY (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by/4.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by/4.0/legalcode"
+    image: "/images/cc_by.png"
+  cc_by_sa_4_0:
+    name: "Creative Commons Attribution-ShareAlike 4.0 International Public License (CC BY-SA 4.0)"
+    short: "CC BY-SA (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-sa/4.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode"
+    image: "/images/cc_by_sa.png"
+  cc_by_nd_4_0:
+    name: "Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)"
+    short: "CC BY-ND (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nd/4.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode"
+    image: "/image/cc_by_nd.png"
+  cc_by_nc_4_0:
+    name: "Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)"
+    short: "CC BY-NC (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc/4.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    image: "/images/cc_by_nc.png"
+  cc_by_nc_sa_4_0:
+    name: "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)"
+    short: "CC BY-NC-SA (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
+    image: "/images/cc_by_nc_sa.png"
+  cc_by_nc_nd_4_0:
+    name: "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)"
+    short: "CC BY-NC-ND (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"
+    image: "/images/cc_by_nc_nd.png"
+  pddl_1_0:
+    name: "ODC Public Domain Dedication and Licence (PDDL) v1.0"
+    short: "PDDL (1.0)"
+    deed_url: "https://opendatacommons.org/licenses/pddl/summary/index.html"
+    legal_code_url: "https://opendatacommons.org/licenses/pddl/1.0/index.html"
+  odc-by_1_0:
+    name: "Open Data Commons Attribution License (ODC-By) v1.0"
+    short: "ODC-By (1.0)"
+    deed_url: "https://opendatacommons.org/licenses/by/summary/index.html"
+    legal_code_url: "https://opendatacommons.org/licenses/by/1.0/index.html"
+  odbl_1_0:
+    name: "Open Database License (ODbL) v1.0"
+    short: "ODbL (1.0)"
+    deed_url: "https://opendatacommons.org/licenses/odbl/summary/index.html"
+    legal_code_url: "https://opendatacommons.org/licenses/odbl/1.0/index.html"
+  cc_by_3_0:
+    name: "Creative Commons Attribution 3.0 Unported (CC BY 3.0)"
+    short: "CC BY (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by/3.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by/3.0/legalcode"
+    image: "/images/cc_by.png"
+  cc_by_sa_3_0:
+    name: "Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)"
+    short: "CC BY-SA (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-sa/3.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-sa/3.0/legalcode"
+    image: "/images/cc_by_sa.png"
+  cc_by_nd_3_0:
+    name: "Creative Commons Attribution-NoDerivs 3.0 Unported (CC BY-ND 3.0)"
+    short: "CC BY-ND (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nd/3.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nd/3.0/legalcode"
+    image: "/images/cc_by_nd.png"
+  cc_by_nc_3_0:
+    name: "Creative Commons Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0)"
+    short: "CC BY-NC (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc/3.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc/3.0/legalcode"
+    image: "/images/cc_by_nc.png"
+  cc_by_nc_sa_3_0:
+    name: "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)"
+    short: "CC BY-NC-SA (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"
+    image: "/images/cc_by_nc_sa.png"
+  cc_by_nc_nd_3_0:
+    name: "Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0)"
+    short: "CC BY-NC-ND (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-nd/3.0/"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"
+    image: "/images/cc_by_nc_nd.png"
+  apache_2_0:
+    name: "Apache License, Version 2.0"
+    short: "Apache 2.0"
+    deed_url: "https://opensource.org/licenses/Apache-2.0"
+    legal_code_url: "https://www.apache.org/licenses/LICENSE-2.0"
+  bsd-3-clause:
+    name: "The 3-Clause BSD License"
+    short: "3-Clause BSD"
+    deed_url: "https://opensource.org/licenses/BSD-3-Clause"
+    legal_code_url: "https://opensource.org/licenses/BSD-3-Clause"
+  bsd-2-clause:
+    name: "The 2-Clause BSD License"
+    short: "2-Clause BSD"
+    deed_url: "https://opensource.org/licenses/BSD-2-Clause"
+    legal_code_url: "https://opensource.org/licenses/BSD-2-Clause"
+  gpl_3_0:
+    name: "GNU General Public License 3.0"
+    short: "GPL 3.0"
+    deed_url: "https://opensource.org/licenses/GPL-3.0"
+    legal_code_url: "https://www.gnu.org/licenses/gpl-3.0.en.html"
+  lgpl_3_0:
+    name: "GNU Lesser General Public License 3.0"
+    short: "LGPL 3.0"
+    deed_url: "https://opensource.org/licenses/LGPL-3.0"
+    legal_code_url: "https://www.gnu.org/licenses/lgpl-3.0.en.html"
+  mit:
+    name: "The MIT License"
+    short: "MIT"
+    deed_url: "https://opensource.org/licenses/MIT"
+    legal_code_url: "https://opensource.org/licenses/MIT"
+  mpl_2_0:
+    name: "Mozilla Public License (2.0)"
+    short: "MPL 2.0"
+    deed_url: "https://opensource.org/licenses/MPL-2.0"
+    legal_code_url: "https://www.mozilla.org/en-US/MPL/2.0/"
