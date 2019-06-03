@@ -308,14 +308,12 @@ function link_person(element){
                         }
                         if(key == "first_name"){
                             first_name = value;
-                            first_nameLc = value.toLowerCase();
                         }
                         if(key == "old_name"){
                             old_name = value;
                         }
                         if(key == "last_name"){
                             last_name = value;
-                            last_nameLc = value.toLowerCase();
                         }
                     });
 
@@ -323,23 +321,35 @@ function link_person(element){
                         rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                         if(old_name[0]){
                             for(var j=0;j<old_name.length;j++){
-                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_name[j].first_name + '" data-lastname="' + old_name[j].last_name + '"><a href="#" class="person_link">' + old_name[j].first_name + " " + old_name[j].last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                                var old_firstname = first_name;
+                                var old_lastname = last_name;
+                                if (old_name[j].first_name) {old_firstname = old_name[j].first_name;}
+                                if (old_name[j].last_name) {old_lastname = old_name[j].last_name;}
+                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                             }
                         }
                     }
-                    else if( (old_name.find(o => o.first_name.toLowerCase() === firstname) && lastname == "") || (old_name.find(o => o.last_name.toLowerCase() === lastname) && firstname == "") || (old_name.find(o => o.last_name.toLowerCase() === lastname) && old_name.find(o => o.first_name.toLowerCase() === firstname)) ){
+                    else if( (old_name.find(o => o.first_name && o.first_name.toLowerCase() === firstname) && lastname == "") || (old_name.find(o => o.last_name && o.last_name.toLowerCase() === lastname) && firstname == "") || (old_name.find(o => o.last_name && o.last_name.toLowerCase() === lastname) && old_name.find(o => o.first_name && o.first_name.toLowerCase() === firstname)) ){
                         rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                         if(old_name[0]){
                             for(var j=0;j<old_name.length;j++){
-                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_name[j].first_name + '" data-lastname="' + old_name[j].last_name + '"><a href="#" class="person_link">' + old_name[j].first_name + " " + old_name[j].last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                                var old_firstname = first_name;
+                                var old_lastname = last_name;
+                                if (old_name[j].first_name) {old_firstname = old_name[j].first_name;}
+                                if (old_name[j].last_name) {old_lastname = old_name[j].last_name;}
+                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                             }
                         }
                     }
                     else {
                         rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                         if(old_name[0]){
-                            $.each(old_name, function(index){
-                                rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + $(this).first_name + '" data-lastname="' + $(this).last_name + '"><a href="#" class="person_link">' + $(this).first_name + " " + $(this).last_name + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                            $.each(old_name, function(j){
+                                var old_firstname = first_name;
+                                var old_lastname = last_name;
+                                if ($(this)[0].first_name) {old_firstname = $(this)[0].first_name;}
+                                if ($(this)[0].last_name) {old_lastname = $(this)[0].last_name;}
+                                rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                             });
                         }
                     }
@@ -440,7 +450,7 @@ function link_person(element){
  * @param fileId = file ID
  * @param id = record ID
  */
-function edit_file(fileId, id){
+function edit_file(fileId){
         var json = jQuery.parseJSON($('#file_' + fileId).val());
         if(json.file_id){
                 $('#id_file_id').val(json.file_id);
@@ -448,7 +458,6 @@ function edit_file(fileId, id){
         if(json.tempid){
                 $('#id_temp_id').val(json.tempid);
         }
-        $('#id_record_id').val(id);
         $('#id_fileName').val(json.file_name);
         $('#id_creator').val(json.creator);
         $('#id_fileSize').val(json.file_size);
@@ -510,16 +519,23 @@ function edit_file(fileId, id){
  * Delete uploaded files
  *
  * @param fileId = file ID
- * @param id = record ID
- * @param fileName = file name
  */
 function delete_file(fileId){
         if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken!\nIf you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file.\n\nDelete this file?")) {
-                $('#' + fileId).remove();
+            $('#' + fileId).remove();
             if($('#uploadFiles').children('.dz-file-preview').length == 0){
                 $('#ddc').find('div.mandatory').removeClass('mandatory');
                 $('#ddc').find('select.required').removeClass('required');
             }
+
+            /* Request removing the fileId also on the server */
+            $.ajax({
+                url:  librecat.uri_base + '/librecat/upload/' + fileId,
+                type: 'DELETE',
+                success: function(result) {
+                    // all's well that ends well
+                },
+            });
         }
         return false;
 }
@@ -529,7 +545,7 @@ function delete_file(fileId){
  */
 $(function () {
         $(".dropzone").sortable({
-                containerSelector: 'div.dz-preview',
+            containerSelector: 'div.dz-preview',
             itemSelector: 'div.dz-preview',
             update: function (event, ui) {
                 var id = ui.item.attr('id');
@@ -540,19 +556,19 @@ $(function () {
 
         $(".creator").sortable({
             update: function (event, ui) {
-                        ui.item.closest('.creator').find('div.row.multirow').each(function(index){
-                                var myitem = $(this);
-                            myitem.find('input, textarea, img, button, select, span').each(function(){
-                                        if($(this).attr('id')){
-                                                var newid = $(this).attr('id').replace(/\d+/g,index);
-                                                $(this).attr('id', newid);
-                                        }
-                                        if($(this).attr('name')){
-                                                var newname = $(this).attr('name').replace(/\d+/g,index);
-                                                $(this).attr('name', newname);
-                                        }
-                                });
+                ui.item.closest('.creator').find('div.row.multirow').each(function(index){
+                    var myitem = $(this);
+                    myitem.find('input, textarea, img, button, select, span').each(function(){
+                        if($(this).attr('id')){
+                                var newid = $(this).attr('id').replace(/\d+/g,index);
+                                $(this).attr('id', newid);
+                        }
+                        if($(this).attr('name')){
+                                var newname = $(this).attr('name').replace(/\d+/g,index);
+                                $(this).attr('name', newname);
+                        }
                     });
+                });
                 ui.item.removeClass("dragged").removeAttr("style");
                 $("body").removeClass("dragging");
             }

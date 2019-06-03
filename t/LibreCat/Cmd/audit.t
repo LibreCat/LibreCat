@@ -19,21 +19,21 @@ BEGIN {
             process => 'batch',
             action  => 'update',
             message => 'test1',
-            time    => '2018-01-01T12:00:00Z'
+            time    => time
         },
         {
             id      => 2,
             process => 'web',
             action  => 'update',
-            time    => '2018-01-01T12:00:02Z'
+            time    => time
         },
-        {id => 3, time => '2018-01-01T12:00:04Z'},
+        {id => 3, time => time},
         {
             id      => 1,
             process => 'batch',
             action  => 'update',
             message => 'change ID 1 again',
-            time    => '2018-01-01T12:00:06Z'
+            time    => time
         },
     ];
     Catmandu->store('main')->bag('audit')->add_many($data);

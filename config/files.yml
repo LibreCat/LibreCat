@@ -2,8 +2,6 @@
 _prefix:
   filestore:
 
-tmp_dir: data/temp_uploads
-
 #  Configurable name of the download file
 #  options:
 #     %i: publication id
@@ -30,34 +28,58 @@ download_file_name: "%o"
 #    "text/plain":
 #      "Content-Type": "%s; charset=utf-8"
 
+# Main location of all the uploaded files
 default: &filestore_settings
+    # Options for the default store:
+    #   - Simple
+    #   - BagIt (requires Catmandu::BagIt)
+    #   - Multi (requires in store.yml definitions of multiple file stores)
     package: Simple
     options:
         # Optional calculate MD5 checksums on the fly
         # default_plugins: [ 'DynamicChecksum' ]
         root: data/file_uploads
 
-api:
-    buffer_size: 8192
-    access:
-        # Which ip-ranges can access the file api (not for end-users)
-        ip_range:
-            - 127.0.0.1
-            - 10.0.0.0/8
-
-uploader:
-    package: 'LibreCat::Worker::FileUploader'
-    options:
-        files: *filestore_settings
-
-# Thumbnails
+# Main locaton of all thumbnail images
 access: &accessstore_settings
     package: Simple
     options:
         root: data/file_uploads
 
+# Main location of all temporary uploads
+temp: &tempstore_settings
+    # Mandatory: temp store need to be a Simple store
+    package: Simple
+    options:
+        root: data/temp_uploads
+        # Automatic clean up of temporary uploads when they are successfully archived
+        autocleanup: 1
+        # Create a date based mapping of temporary data on disk
+        directory_index_package: Map
+        # Database to store the path mappings
+        directory_index_options:
+            store_name: main
+            bag_name: temp_files
+
+# Worker that imports/deletes files from the filestore
+uploader:
+    package: 'LibreCat::Worker::FileUploader'
+    options:
+        files: *filestore_settings
+        temp_files: *tempstore_settings
+
+# Worker that generates thumbnail files
 access_thumbnailer:
     package: 'LibreCat::Worker::ImageResizer'
     options:
         files: *filestore_settings
         access: *accessstore_settings
+        tmpdir: data/tmp
+
+# Which ip-ranges can access the file api (not for end-users)
+api:
+    buffer_size: 8192
+    access:
+        ip_range:
+            - 127.0.0.1
+            - 10.0.0.0/8

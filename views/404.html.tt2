@@ -1,0 +1,19 @@
+[% PROCESS header.tt %]
+
+<!-- BEGIN 404.tt -->
+
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+
+    <div id="banner">
+	<h1>Page not found (404)</h1>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- END 404.tt -->
+
+[% INCLUDE footer.tt %]

@@ -45,8 +45,8 @@ subtest "authentication" => sub {
         ->status_is(401)->json_has('/errors');
 
     # authorization ok, but not user in DB
-    $t->get_ok('/api/v1/user/1' => {Authorization => $token})
-        ->status_is(404)->json_has('/errors');
+    $t->get_ok('/api/v1/user/1' => {Authorization => $token})->status_is(404)
+        ->json_has('/errors');
 };
 
 subtest "invalid model" => sub {
@@ -64,8 +64,7 @@ subtest "add/get/delete user" => sub {
     my $user = Catmandu->importer('YAML', file => "t/records/valid-user.yml")
         ->first;
 
-    $t->post_ok(
-        '/api/v1/user' => {Authorization => $token} => json => $user)
+    $t->post_ok('/api/v1/user' => {Authorization => $token} => json => $user)
         ->status_is(201)->json_is('/data/id', 999111999);
 
     $t->get_ok('/api/v1/user/999111999' => {Authorization => $token})
@@ -73,8 +72,7 @@ subtest "add/get/delete user" => sub {
         ->json_is('/data/id',                   999111999)
         ->json_is('/data/attributes/full_name', 'User, Test');
 
-    $t->get_ok(
-        '/api/v1/user/999111999/versions' => {Authorization => $token})
+    $t->get_ok('/api/v1/user/999111999/versions' => {Authorization => $token})
         ->status_is(404);
 
     $t->get_ok(
@@ -94,8 +92,7 @@ subtest "add invalid user" => sub {
         = Catmandu->importer('YAML', file => "t/records/invalid-user.yml")
         ->first;
 
-    $t->post_ok(
-        '/api/v1/user' => {Authorization => $token} => json => $user)
+    $t->post_ok('/api/v1/user' => {Authorization => $token} => json => $user)
         ->status_is(400)->json_has('/errors');
 };
 
@@ -114,17 +111,17 @@ subtest "add/get/delete publication" => sub {
         '/api/v1/publication' => {Authorization => $token} => json => $pub)
         ->status_is(201)->json_is('/data/id', 999999999);
 
-    $t->put_ok(
-        '/api/v1/publication/999999999' => {Authorization => $token} => json => $pub)
-        ->status_is(200)->json_is('/data/id', 999999999);
+    $t->put_ok('/api/v1/publication/999999999' => {Authorization => $token} =>
+            json => $pub)->status_is(200)->json_is('/data/id', 999999999);
 
     # Change the pub record id and check for errors
     $pub->{_id} = '1234567890';
 
-    $t->put_ok(
-        '/api/v1/publication/999999999' => {Authorization => $token} => json => $pub)
-        ->status_is(400)
-        ->json_is('/errors/0/validation_error/0', "id in request and data don't match");
+    $t->put_ok('/api/v1/publication/999999999' => {Authorization => $token} =>
+            json => $pub)->status_is(400)->json_is(
+        '/errors/0/validation_error/0',
+        "id in request and data don't match"
+            );
 
     $t->get_ok('/api/v1/publication/999999999' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
@@ -140,12 +137,14 @@ subtest "add/get/delete publication" => sub {
     # Patch with a wrong id
     $t->patch_ok(
         '/api/v1/publication/999999999' => {Authorization => $token} =>
-            json => {_id => '1234567890'})->status_is(400)
-        ->json_is('/errors/0/validation_error/0', "id in request and data don't match");
+            json => {_id => '1234567890'})->status_is(400)->json_is(
+        '/errors/0/validation_error/0',
+        "id in request and data don't match"
+            );
 
-    $t->get_ok('/api/v1/publication/999999999/versions' =>
-            {Authorization => $token})->status_is(200)
-        ->json_is('/data/id',                    999999999)
+    $t->get_ok(
+        '/api/v1/publication/999999999/versions' => {Authorization => $token})
+        ->status_is(200)->json_is('/data/id', 999999999)
         ->json_is('/data/attributes/0/_version', '3');
 
     $t->get_ok('/api/v1/publication/999999999/version/1' =>
@@ -160,6 +159,11 @@ subtest "add/get/delete publication" => sub {
         ->json_is('/data/attributes/status' => 'deleted');
 
     ok !librecat->publication->get(999111999), "publication  not in DB";
+};
+
+subtest "not_found" => sub {
+    $t->get_ok('/api/v1/projication' => {Authorization => $token})
+        ->status_is(404)->content_like(qr/Page not found \(404\)/);
 };
 
 done_testing;

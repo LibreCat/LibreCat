@@ -3,12 +3,17 @@
  */
 $(document).ready(function(){
     var htmlEscape = function(str) {
-        return str
-            .replace(/&/g, '&amp;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+        if (typeof str == 'undefined') {
+            return str;
+        }
+        else {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
     };
 
     Dropzone.options.qaeUpload = {
@@ -23,7 +28,7 @@ $(document).ready(function(){
         init: function(){
             $('.dz-default.dz-message').addClass('qae');
             this.on("addedfile", function(file) {
-                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
+                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + htmlEscape(file.name) + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
                 file.previewElement.appendChild(fileName);
             });
             this.on("uploadprogress", function(file,progress,bytesSent){
@@ -36,21 +41,21 @@ $(document).ready(function(){
                 $(progresselement).remove();
                 var resp = response;//JSON.parse(response);
                 var modal = Dropzone.createElement(
-"<div class='well' id='" + resp.tempname + "'>" +
-"<form id='form_" + resp.tempname + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
-"<strong>" + file.name + "</strong>" +
+"<div class='well' id='" + htmlEscape(resp.tempname) + "'>" +
+"<form id='form_" + htmlEscape(resp.tempname) + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
+"<strong>" + htmlEscape(file.name) + "</strong>" +
 "<textarea class='form-control' placeholder='Type details about your publication here' name='description'>" +
 "</textarea>" +
 "<input type='hidden' name='reviewer' value='" + $('#qaeUpload').data('reviewer') + "' />" +
 "<input type='hidden' name='project_reviewer' value='" + $('#qaeUpload').data('project_reviewer') + "' />" +
 "<input type='hidden' name='delegate' value='" + $('#qaeUpload').data('delegate') + "'/>" +
-"<input type='hidden' name='file_name' value='" + resp.file_name + "' />" +
+"<input type='hidden' name='file_name' value='" + htmlEscape(resp.file_name) + "' />" +
 "<div class='checkbox'>" +
 "<label>" +
 "<input type='checkbox' required> I have read and accept the <a href='" + librecat.uri_base + "/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
 "</label>" +
 "</div>" +
-"<input type='hidden' name='tempid' value='" + resp.tempid + "' />" +
+"<input type='hidden' name='tempid' value='" + htmlEscape(resp.tempid) + "' />" +
 "<input type='submit' class='btn btn-success' name='submit_or_cancel' value='Submit'/>" +
 "<input type='reset' class='btn btn-warning' onclick='location.reload()' name='submit_or_cancel' value='Cancel' />" +
 "</form></div>"
@@ -58,7 +63,7 @@ $(document).ready(function(){
                 file.previewElement.appendChild(modal);
             });
             this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
+                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + htmlEscape(errorMessage.error_message) + "</div>");
                 file.previewElement.appendChild(modal);
             });
             this.on("complete", function(file){
@@ -78,7 +83,7 @@ $(document).ready(function(){
             $('.dz-default.dz-message').addClass('col-md-11');
             this.on("addedfile", function(file) {
                 $('html').css({ cursor: "wait" });
-                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + file.name + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + file.name + "</span></div></div></div>");
+                var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + htmlEscape(file.name) + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + htmlEscape(file.name) + "</span></div></div></div>");
                 file.previewElement.appendChild(fileName);
             });
             this.on("uploadprogress", function(file,progress,bytesSent){
@@ -94,39 +99,39 @@ $(document).ready(function(){
                 if(resp.success){
                     $(file.previewElement).addClass("alert alert-success");
 
-                    var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-12 padded text-muted\" id=\"filename_" + resp.tempid + "\"><span class=\"fa fa-file text-muted\"></span> <strong>" + file.name + "</strong></div></div>");
+                    var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-12 padded text-muted\" id=\"filename_" + htmlEscape(resp.tempid) + "\"><span class=\"fa fa-file text-muted\"></span> <strong>" + htmlEscape(file.name) + "</strong></div></div>");
                     file.previewElement.appendChild(fileName);
 
                     var tagsRow = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2 text-muted\">Access Level:</div><div class=\"col-md-3 text-muted\">Upload Date:</div><div class=\"col-md-3 text-muted\">User:</div><div class=\"col-md-4 text-muted\">Relation:</div></div>");
                     file.previewElement.appendChild(tagsRow);
 
-                    var accessString = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2\" id=\"access_" + resp.tempid + "\"><span>" + resp.access_level + "</span></div></div>");
+                    var accessString = Dropzone.createElement("<div class=\"row\"><div class=\"col-md-2\" id=\"access_" + htmlEscape(resp.tempid) + "\"><span>" + htmlEscape(resp.access_level) + "</span></div></div>");
                     fileName.appendChild(accessString);
 
-                    var dateString = Dropzone.createElement("<div class=\"col-md-3\" id=\"updated_" + resp.tempid + "\"><span>" + resp.date_updated + "</span></div>");
+                    var dateString = Dropzone.createElement("<div class=\"col-md-3\" id=\"updated_" + htmlEscape(resp.tempid) + "\"><span>" + htmlEscape(resp.date_updated) + "</span></div>");
                     accessString.appendChild(dateString);
 
-                    var userString = Dropzone.createElement("<div class=\"col-md-3\" id=\"creator_" + resp.tempid + "\"><span>" + resp.creator + "</span></div>");
+                    var userString = Dropzone.createElement("<div class=\"col-md-3\" id=\"creator_" + htmlEscape(resp.tempid) + "\"><span>" + htmlEscape(resp.creator) + "</span></div>");
                     accessString.appendChild(userString);
 
-                    var relationString = Dropzone.createElement("<div class=\"col-md-4\" id=\"relation_" + resp.tempid + "\"><span>" + resp.relation + "</span></div>");
+                    var relationString = Dropzone.createElement("<div class=\"col-md-4\" id=\"relation_" + htmlEscape(resp.tempid) + "\"><span>" + htmlEscape(resp.relation) + "</span></div>");
                     accessString.appendChild(relationString);
 
                     file.previewElement.appendChild(accessString);
 
-                    var racString = Dropzone.createElement("<div class=\"row\" id=\"rac_" + resp.tempid + "\"></div>");
+                    var racString = Dropzone.createElement("<div class=\"row\" id=\"rac_" + htmlEscape(resp.tempid) + "\"></div>");
                     file.previewElement.appendChild(racString);
 
-                    var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + resp.tempid + "\"><a href=\"#\"><span class=\"fa fa-times\"></span></a></div>");
+                    var removeLink = Dropzone.createElement("<div class=\"corner_up\" id=\"corup_" + htmlEscape(resp.tempid) + "\"><a href=\"#\"><span class=\"fa fa-times\"></span></a></div>");
                     removeLink.addEventListener("click", function(e) {
                         window.delete_file(resp.tempid);
                         e.preventDefault();
                     });
                     file.previewElement.appendChild(removeLink);
 
-                    var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + resp.tempid + "\"><a href=\"#\" onclick=\"return false;\"><span class=\"fa fa-pencil\"></span></a></div>");
+                    var editLink = Dropzone.createElement("<div class=\"corner_down\" id=\"cordown_" + htmlEscape(resp.tempid) + "\"><a href=\"#\" onclick=\"return false;\"><span class=\"fa fa-pencil\"></span></a></div>");
                     editLink.addEventListener("click", function(e) {
-                        window.edit_file(resp.tempid, "[% _id %]");
+                        window.edit_file(resp.tempid);
                     });
                     file.previewElement.appendChild(editLink);
 
@@ -156,13 +161,13 @@ $(document).ready(function(){
                 }
             });
             this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + errorMessage + "</div>");
+                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + htmlEscape(errorMessage.error_message) + " This file will be ignored</div>");
                 file.previewElement.appendChild(modal);
             });
             this.on("complete", function(file){
     		    var remove_link = file.previewElement.getElementsByClassName('dz-remove');
     			$(remove_link).remove();
-              $('html').css({ cursor: "auto" });
+                $('html').css({ cursor: "auto" });
     		});
         },
     };
