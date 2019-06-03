@@ -24,6 +24,8 @@ sub _check_version {
     $rec->{_version} // return $rec;
     my $prev_rec = $self->get($rec->{_id} // return $rec) // return $rec;
 
+    $rec->{_version} += 0; # Coerce version to integer
+
     if ($rec->{_version} ne $prev_rec->{_version}) {
         LibreCat::Error::VersionConflict->throw(
             model            => $self,
