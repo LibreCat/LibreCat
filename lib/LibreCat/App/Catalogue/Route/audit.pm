@@ -30,6 +30,13 @@ List all audit messages for an :id in the store :bag
 =cut
 
     get '/audit/:bag/:id' => sub {
+
+        unless (h->config->{audit}) {
+            status 403;
+            return template 'error',
+                {message => "Not allowed: audit is not activated."};
+        }
+
         my $bag = params("route")->{bag};
         my $id  = params("route")->{id};
 
@@ -53,6 +60,13 @@ List all audit messages for an :id in the store :bag
     };
 
     post '/audit/:bag/:id' => sub {
+
+        unless (h->config->{audit}) {
+            status 403;
+            return template 'error',
+                {message => "Not allowed: audit is not activated."};
+        }
+        
         my $bag = params("route")->{bag};
         my $id  = params("route")->{id};
 
