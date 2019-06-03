@@ -191,8 +191,6 @@ sub index {
     $rec = $self->search_bag->add($rec);
     $self->search_bag->commit unless $opts{skip_commit};
 
-    sleep 1 unless $opts{skip_commit};    # TODO move to controller
-
     $rec;
 }
 
@@ -204,8 +202,6 @@ sub purge_all {
 
     $self->search_bag->delete_all;
     $self->search_bag->commit unless $opts{skip_commit};
-
-    sleep 1 unless $opts{skip_commit};    # TODO move to controller
 
     1;
 }
@@ -220,8 +216,6 @@ sub purge {
 
     $self->search_bag->delete($id);
     $self->search_bag->commit unless $opts{skip_commit};
-
-    sleep 1 unless $opts{skip_commit};    # TODO move to controller
 
     $id;
 }
