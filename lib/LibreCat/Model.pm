@@ -336,6 +336,7 @@ Possible options:
 C<skip_before_add>: You can supply an arrayref of hook names that will not be executed.
 
     $model->add($rec, skip_before_add => ['whitelist']);
+    $model->add($rec, skip_before_add => ['check_version']);
 
 =item *
 
@@ -361,6 +362,11 @@ new one will be generated for you. Returns C<1> if the record was valid and
 succesfully stored and indexed, C<0> otherwise.
 
 Any C<before_add> hooks will be applied before validation.
+
+If the model uses versioning, C<add> will throw
+L<LibreCat::Error::VersionConflict> if the C<_version> key doesn't match the
+already stored version. This is to prevent simultaneous editing. You can
+disable this behavior with C<< skip_before_add => ['check_version'] >>.
 
 Options are the same as for C<add_many>, plus:
 
