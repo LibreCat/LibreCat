@@ -21,7 +21,7 @@ on 'test' => sub {
 requires 'Business::ISBN', 0;
 
 # Catmandu
-requires 'Catmandu', '>=1.2001';
+requires 'Catmandu', '>=1.2002';
 requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
@@ -54,6 +54,7 @@ requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::StreamData';
 requires 'Dancer::Logger::Log4perl';
+requires 'Dancer::Plugin::FlashMessage';
 requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';

@@ -37,6 +37,7 @@ options:
     --log=STR          (write an audit message)
     --with-citations   (process citations while adding records)
     --with-files       (process files while addings records)
+    --no-check-version (add records without checking versions)
     --csv              (import csv/tsv metadata in `files` command)
 
 E.g.
@@ -102,6 +103,7 @@ sub command_opt_spec {
         ['history',          ""],
         ['with-citations',   ""],
         ['with-files',       ""],
+        ['no-check-version', ""],
         ['csv',              ""],
     );
 }
@@ -354,6 +356,7 @@ sub _add {
     my $skip_before_add = [];
     push @$skip_before_add, "citation" unless $self->opts->{"with_citations"};
     push @$skip_before_add, "files"    unless $self->opts->{"with_files"};
+    push @$skip_before_add, "check_version" if $self->opts->{"no_check_version"};
 
     publication->add_many(
         $importer,
@@ -939,6 +942,7 @@ LibreCat::Cmd::publication - manage librecat publications
         --log=STR          (write an audit message)
         --with-citations   (process citations while adding records)
         --with-files       (process files while addings records)
+        --no-check-version (add records without checking versions)
         --csv              (import csv/tsv metadata in `files` command)
 
 =cut

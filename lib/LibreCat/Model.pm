@@ -3,13 +3,17 @@ package LibreCat::Model;
 use Catmandu::Sane;
 use Catmandu::Util qw(is_string is_code_ref is_able);
 use List::Util qw(pairs);
-use Types::Standard qw(ConsumerOf);
+use Types::Standard qw(Str ConsumerOf);
 use LibreCat::Types qw(+Pairs);
 use Moo::Role;
 use namespace::clean;
 
 with 'Catmandu::Pluggable', 'LibreCat::Logger';
 
+has name => (
+    is       => 'lazy',
+    isa      => Str
+);
 has bag => (
     is       => 'ro',
     required => 1,
@@ -33,6 +37,14 @@ has before_index => (is => 'lazy', init_arg => undef, isa => Pairs);
 
 sub plugin_namespace {
     'LibreCat::Model::Plugin';
+}
+
+sub _build_name {
+    my ($self) = @_;
+    my $pkg = ref $self;
+    $pkg =~ s/__WITH__.+//;
+    my ($name) = $pkg =~ /([^:]+)$/;
+    $name;
 }
 
 sub _build_before_add {
@@ -107,6 +119,17 @@ sub add_many {
 }
 
 sub add {
+    my ($self, $rec, %opts) = @_;
+    if ($opts{skip_transaction}) {
+        $self->_add($rec, %opts);
+    } else {
+        $self->bag->store->transaction(sub {
+            $self->_add($rec, %opts);
+        });
+    }
+}
+
+sub _add {
     my ($self, $rec, %opts) = @_;
 
     # TODO do we really need an id even before validation?
@@ -313,6 +336,7 @@ Possible options:
 C<skip_before_add>: You can supply an arrayref of hook names that will not be executed.
 
     $model->add($rec, skip_before_add => ['whitelist']);
+    $model->add($rec, skip_before_add => ['check_version']);
 
 =item *
 
@@ -338,6 +362,11 @@ new one will be generated for you. Returns C<1> if the record was valid and
 succesfully stored and indexed, C<0> otherwise.
 
 Any C<before_add> hooks will be applied before validation.
+
+If the model uses versioning, C<add> will throw
+L<LibreCat::Error::VersionConflict> if the C<_version> key doesn't match the
+already stored version. This is to prevent simultaneous editing. You can
+disable this behavior with C<< skip_before_add => ['check_version'] >>.
 
 Options are the same as for C<add_many>, plus:
 
