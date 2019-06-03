@@ -3,7 +3,6 @@ package LibreCat::Cmd::user;
 use Catmandu::Sane;
 use LibreCat qw(user);
 use App::bmkpasswd qw(passwdcmp mkpasswd);
-use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -69,7 +68,7 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all(
+        return $self->id_or_file(
             $id,
             sub {
                 $self->_get(shift);
@@ -82,7 +81,7 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all(
+        return $self->id_or_file(
             $id,
             sub {
                 $self->_delete(shift);
@@ -94,22 +93,6 @@ sub command {
     }
     elsif ($cmd eq 'passwd') {
         return $self->_passwd(@$args);
-    }
-}
-
-sub _on_all {
-    my ($self, $id_file, $callback) = @_;
-
-    if (-r $id_file) {
-        my $r = 0;
-        for (path($id_file)->lines) {
-            chomp;
-            $r += $callback->($_);
-        }
-        return $r;
-    }
-    else {
-        return $callback->($id_file);
     }
 }
 
