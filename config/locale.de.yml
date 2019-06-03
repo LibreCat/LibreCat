@@ -57,11 +57,11 @@ tabs:
   publications: "Publikationen"
   projects: "Projekte"
   departments: "Einrichtungen"
-  authors: "Autoren"
+  authors: "Personen"
 hits:
   id: "LibreCat-ID"
-  author: "Autorin / Autor"
-  authors: "Autorinnen / Autoren"
+  author: "Autor*in"
+  authors: "Autor*innen"
   publication: "Publikation"
   publications: "Publikationen"
   data_publication: "Datenpublikation"
@@ -71,7 +71,7 @@ home:
   operators: "Operatoren"
   stats:
     publications: "Publikationen"
-    researcher: "Autor/Innen"
+    researcher: "Personen"
     oa_publications: "Open-Access-Publikationen"
     projects: "Projekte"
 main_page:
@@ -116,7 +116,7 @@ person_profile:
   id_not_found: "ID nicht gefunden."
   former_researcher: "Ehemaliger LibreCat Forscher"
   local_id: "ID"
-  no_author_ids: "Keine Autoren-IDs gesetzt."
+  no_author_ids: "Keine Personen-IDs gesetzt."
   person_id_title: "Diese IDs werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:
   funded_ext: "Drittmittelprojekt"
@@ -141,9 +141,9 @@ facets:
   filter_authorlist: "Autorenliste filtern"
   filter_publications: "Publikationen filtern"
   visibility_status: "Status"
-  current_authors: "LibreCat Autoren"
-  current_editors: "LibreCat Herausgeber"
-  former_authors: "Ehemalige LibreCat Autoren"
+  current_authors: "LibreCat Autor*innen"
+  current_editors: "LibreCat Herausgeber*innen"
+  former_authors: "Ehemalige LibreCat Autor*innen"
   department: "Einrichtung"
   publication_type: "Publikationstyp"
   publishing_year: "Publikationsjahr"
@@ -182,7 +182,7 @@ facets:
     year: Jahr
     date_updated: Änderungsdatum
     title: Titel
-    author: Erstautor
+    author: Erstautor/in
     type: Publikationstyp
     publication: "Publ./ Serie/ Journal"
     fullname: "Alphabetisch"
@@ -336,7 +336,7 @@ forms:
         label_short: "Alt. Titel"
         placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
-        label: "Autor"
+        label: "Autor*in"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
         idm_extern: "extern"
         first_name:
@@ -551,14 +551,14 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "heraugebende Körperschaft"
+        label_short: "hrsg. Körp."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       alternative_title: *alternative_title
       department: *department
@@ -627,13 +627,13 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       corporate_editor: &corporate_editor
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "herausgebende Körperschaft"
+        label_short: "hrsg. Körp."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       edition: *edition
       department: *department
@@ -691,7 +691,7 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
@@ -1387,7 +1387,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "Übersetzer"
+        label: "Übersetzer*in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1399,7 +1399,7 @@ forms:
           label: "Nachname"
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
-        label: "Autor (Original)"
+        label: "Autor/in (Original)"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       edition: *edition
@@ -1456,7 +1456,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "Übersetzer"
+        label: "Übersetzer*in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1468,7 +1468,7 @@ forms:
           label: "Nachname"
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
-        label: "Autor"
+        label: "Autor/in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       alternative_title:
@@ -1557,7 +1557,7 @@ forms:
   mandatory_error: "Sie haben Pflichtfelder übersehen oder es sind andere Probleme aufgetreten! Bitte überprüfen Sie ihre Daten."
   form_change_form: "Editiermodus ändern"
   form_change_type: "Publikationstyp ändern"
-  form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu ändern"
+  form_sort_item: "Drag & drop, um die Position der Person in der Liste zu ändern"
   form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
   form_relmat_record: "Eigene Publikation aus LibreCat mit dieser verbinden. Nach Auswahl wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
   form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf (+) wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
@@ -1588,7 +1588,7 @@ forms:
         placeholder: "Nachricht"
       message_author:
         label: "Nachricht"
-        placeholder: "Nachricht an den Autor"
+        placeholder: "Nachricht an die Autorin/den Autor"
   publication_status:
     draft: "Entwurf"
     submitted: "Eingereicht"
@@ -1731,7 +1731,7 @@ help:
   my_dashboard: "Ihr Dashboard für die aktuelle Rolle"
   change_language: "Sprache wechseln"
   user_settings: "Rolle, Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
-  author_id: "Alias (zusätzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
+  author_id: "Alias (zusätzlicher Name) und Autoren-IDs (ORIC etc.) eintragen."
   author_id_edit: "ID ändern / IDs ergänzen."
   add_new_button: "Neuen Eintrag in LibreCat anlegen: Bestehende Daten z.B. via DOI importieren oder über Formular selbst eintragen."
   quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollständigen den Eintrag für Sie und machen ihn öffentlich sichtbar."
