@@ -7,7 +7,6 @@ Helper methods for handling file uploads.
 =cut
 
 use Catmandu::Sane;
-use Catmandu::Util;
 use Catmandu;
 use LibreCat qw(publication timestamp);
 use LibreCat::App::Helper;
@@ -70,7 +69,7 @@ sub upload_temp_file {
     my $now          = timestamp;
     my $tempid       = Data::Uniqid::uniqid;
     my $temp_file    = $file->{tempname};
-    my $file_name    = $file->{filename};
+    my $file_name    = h->cleanup_filename($file->{filename});
     my $file_size    = int($file->{size});
     my $content_type = $file->{headers}->{"Content-Type"};
     my $rac_email    = $file->{rac_email} // '';
@@ -110,7 +109,7 @@ sub upload_temp_file {
         = Dancer::FileUtils::path(
                 h->config->{filestore}->{tmp_dir},
                 $tempid,
-                $file->{filename});
+                $file_name);
 
     h->log->info("copy $temp_file to $filepath");
 
@@ -182,7 +181,7 @@ sub handle_file {
 
         # If we have a tempid, then there is a file upload waiting...
         if ($fi->{tempid} && $fi->{tempid} =~ /^\S+/) {
-            my $filename = $fi->{file_name};
+            my $filename = $fi->{file_name} = h->cleanup_filename($fi->{file_name});
             my $path     = Dancer::FileUtils::path(
                                 h->config->{filestore}->{tmp_dir},
                                 $fi->{tempid},
@@ -334,7 +333,7 @@ sub _make_thumbnail {
 sub _make_file {
     my ($key, $filename, $path) = @_;
 
-    h->log->info("moving $path/$filename to filestore for record $key");
+    h->log->info("moving $path to filestore for record $key");
 
     my $uploader_package = h->config->{filestore}->{uploader}->{package};
     my $uploader_options = h->config->{filestore}->{uploader}->{options};

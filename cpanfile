@@ -21,7 +21,7 @@ on 'test' => sub {
 requires 'Business::ISBN', 0;
 
 # Catmandu
-requires 'Catmandu', '>=1.0606';
+requires 'Catmandu', '>=1.2001';
 requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
@@ -40,6 +40,9 @@ requires 'Catmandu::Validator::JSONSchema','0.11';
 requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
+
+# Mojolicious
+requires 'Mojolicious', '>=7.70';
 
 #Dancer
 requires 'Dancer';
@@ -83,6 +86,7 @@ requires 'Clone';
 requires 'Code::TidyAll', 0;
 requires 'Config::Onion', '>= 1.007';
 requires 'Crypt::Digest::MD5';
+requires 'Crypt::JWT';
 requires 'Crypt::SSLeay';
 requires 'Data::Uniqid';
 requires 'DateTime';

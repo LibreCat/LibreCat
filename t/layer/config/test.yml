@@ -2,6 +2,10 @@ audit: 1
 
 uri_base: "http://localhost:5001"
 
+api:
+  v1:
+    token_secret: testsecret
+
 default_lang: en
 default_page_size: 20
 default_searchpage_size: 10
@@ -116,6 +120,10 @@ user:
       bag: user
       username_attr: login
 
+api:
+  v1:
+    token_secret: 'ANCCgnD6XUGGLvE0CBKu8pbcHDqXVMRKTD1Q8Iu7JyS1TefYZ7dQovhL9iERYcw'
+
 citation:
   engine: none
 
@@ -165,6 +173,15 @@ filestore:
         package: 'LibreCat::Worker::FileUploader'
         options:
             files: *filestore_settings
+
+    download_headers:
+      for_all:
+        "Content-Disposition": "attachment; filename*=UTF-8''%s"
+      for_content_type:
+        "text/plain":
+          "Content-Disposition": "inline; filename*=UTF-8''%s"
+          "Content-Type": "%s; charset=utf-8"
+
 hooks:
   eat:
    before_fixes: [peckish, hungry]
