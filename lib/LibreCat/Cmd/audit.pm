@@ -1,9 +1,8 @@
 package LibreCat::Cmd::audit;
 
 use Catmandu::Sane;
-use LibreCat::App::Helper;
-use Carp;
 use POSIX qw(strftime);
+use LibreCat::Audit;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -11,13 +10,6 @@ sub description {
 Usage:
 
 librecat audit list [options] [<RECORD-ID>]
-
-An 'audit' worker should be up and running to
-store messages:
-
-Hint:
-
-bin/librecat worker audit start --workers 1 --supervise
 
 EOF
 }
@@ -52,12 +44,12 @@ sub command {
 sub _list {
     my ($self, $pid) = @_;
 
-    my $it = Catmandu->store('main')->bag('audit');
+    my $it = LibreCat::Audit->new();
 
     if ($pid) {
         $it = $it->select(id => $pid)->sorted(
             sub {
-                $_[0]->{time} cmp $_[1]->{time};
+                $_[0]->{time} <=> $_[1]->{time};
             }
         );
     }
@@ -96,11 +88,4 @@ LibreCat::Cmd::audit - manage librecat audit messages
 
     librecat audit list [options] [<RECORD-ID>]
 
-    An 'audit' worker should be up and running to
-    store messages:
-
-    Hint:
-
-    bin/librecat worker audit start --workers 1 --supervise
-    
 =cut
