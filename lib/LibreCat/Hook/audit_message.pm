@@ -4,10 +4,17 @@ use Catmandu::Sane;
 use LibreCat::App::Helper;
 use Dancer qw(:syntax);
 use Catmandu;
+use LibreCat::Audit;
 use Moo;
 
 has name => (is => 'ro', default => sub {''});
 has type => (is => 'ro', default => sub {''});
+has audit => (
+    is => 'ro',
+    lazy => 1,
+    default => sub { LibreCat::Audit->new(); },
+    init_arg => undef
+);
 
 sub fix {
     my ($self, $data) = @_;
@@ -40,7 +47,7 @@ sub fix {
         $action = 'batch';
     }
 
-    my $job = {
+    my $r = {
         id      => $id,
         bag     => 'publication',
         process => "hook($name)",
@@ -48,13 +55,15 @@ sub fix {
         message => "activated by $login ($user_id)",
     };
 
-    h->log->debug("adding job: " . to_yaml($job));
-    try {
-        h->queue->add_job('audit', $job);
+    h->log->debug("adding audit: " . to_yaml($r));
+
+    unless(
+        $self->audit->add( $r )
+    ){
+
+        h->log->error( "validation audit failed: ".join(",",@{ $self->audit()->last_errors() }). ". Record: " . to_yaml($r) );
+
     }
-    catch {
-        h->log->trace("caught a : $_");
-    };
 
     $data;
 }

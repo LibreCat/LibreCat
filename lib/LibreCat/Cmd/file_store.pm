@@ -11,6 +11,7 @@ use File::Path;
 use File::Spec;
 use URI::Escape;
 use POSIX qw(strftime);
+use LibreCat::Audit;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -164,18 +165,21 @@ sub command {
     }
 }
 
+sub audit {
+    my $self = $_[0];
+    $self->{_audit} //= LibreCat::Audit->new();
+    $self->{_audit};
+}
+
 sub audit_message {
-    my ($id, $action, $message) = @_;
-    LibreCat::App::Helper::Helpers->new->queue->add_job(
-        'audit',
-        {
-            id      => $id,
-            bag     => 'publication',
-            process => 'librecat file_store',
-            action  => $action,
-            message => $message,
-        }
-    );
+    my ($self, $id, $action, $message) = @_;
+    $self->audit()->add({
+        id      => $id,
+        bag     => 'publication',
+        process => 'librecat file_store',
+        action  => $action,
+        message => $message,
+    });
 }
 
 sub _list {
@@ -297,7 +301,7 @@ sub _get {
     }
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, 'get', $msg);
+        $self->audit_message($key, 'get', $msg);
     }
 
     return 0;
@@ -323,7 +327,7 @@ sub _fetch {
     my $bytes = $files->stream(IO::File->new('>&STDOUT'), $file);
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, "fetch $filename", $msg);
+        $self->audit_message($key, "fetch $filename", $msg);
     }
 
     $bytes > 0;
@@ -354,7 +358,7 @@ sub _add {
     $files->upload(IO::File->new("<$path/$name"), $name);
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, "add $file", $msg);
+        $self->audit_message($key, "add $file", $msg);
     }
 
     return $self->_get($key);
@@ -375,7 +379,7 @@ sub _delete {
     $files->delete($name);
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, "delete $name", $msg);
+        $self->audit_message($key, "delete $name", $msg);
     }
 
     return $self->_get($key);
@@ -393,7 +397,7 @@ sub _purge {
     $store->index->delete($key);
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, 'purge', $msg);
+        $self->audit_message($key, 'purge', $msg);
     }
 
     print "purged $key\n";
@@ -444,7 +448,7 @@ sub _move {
     }
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, "move $name", $msg);
+        $self->audit_message($key, "move $name", $msg);
     }
 
     0;
@@ -577,7 +581,7 @@ sub _export {
     }
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, "export $zip_file", $msg);
+        $self->audit_message($key, "export $zip_file", $msg);
     }
 
     0;
@@ -630,7 +634,7 @@ sub _import {
     }
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, "import $zip_file", $msg);
+        $self->audit_message($key, "import $zip_file", $msg);
     }
 
     0;
@@ -656,7 +660,7 @@ sub _thumbnail {
     my $response = $worker->work({key => $key, filename => $filename,});
 
     if (my $msg = $self->app->global_options->{log}) {
-        audit_message($key, "thumbnail $filename", $msg);
+        $self->audit_message($key, "thumbnail $filename", $msg);
     }
 
     $response && $response->{ok};

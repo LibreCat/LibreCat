@@ -12,6 +12,7 @@ use Dancer ':syntax';
 use Dancer::Serializer::Mutable qw(template_or_serialize);
 use LibreCat::App::Helper;
 use POSIX qw(strftime);
+use LibreCat::Audit;
 use URL::Encode qw(url_decode);
 
 =head2 PREFIX /librecat/audit
@@ -29,14 +30,21 @@ List all audit messages for an :id in the store :bag
 =cut
 
     get '/audit/:bag/:id' => sub {
+
+        unless (h->config->{audit}) {
+            status 403;
+            return template 'error',
+                {message => "Not allowed: audit is not activated."};
+        }
+
         my $bag = params("route")->{bag};
         my $id  = params("route")->{id};
 
-        my $it
-            = h->main_audit()->select(id => $id)->select(bag => $bag)
+        my $it =
+            audit()->select( bag => $bag )->select( id => $id )
             ->sorted(
             sub {
-                $_[0]->{time} cmp $_[1]->{time};
+                $_[0]->{time} <=> $_[1]->{time};
             }
         )->map(
             sub {
@@ -52,6 +60,13 @@ List all audit messages for an :id in the store :bag
     };
 
     post '/audit/:bag/:id' => sub {
+
+        unless (h->config->{audit}) {
+            status 403;
+            return template 'error',
+                {message => "Not allowed: audit is not activated."};
+        }
+        
         my $bag = params("route")->{bag};
         my $id  = params("route")->{id};
 
@@ -64,19 +79,31 @@ List all audit messages for an :id in the store :bag
             return to_json {error => "Parameter message is missing."};
         }
 
-        my $job_id = h->queue->add_job(
-            'audit',
-            {
-                id      => $id,
-                bag     => $bag,
-                process => 'LibreCat::App::Catalogue::Route::audit',
-                action  => "post /librecat/audit/$bag/$id",
-                message => "$user_id says '$message'",
-            }
-        );
+        my $ar = audit()->add({
+            id      => $id,
+            bag     => $bag,
+            process => 'LibreCat::App::Catalogue::Route::audit',
+            action  => "post /librecat/audit/$bag/$id",
+            message => "$user_id says '$message'",
+        });
 
-        return to_json({job => $job_id});
+        unless($ar){
+
+            #is not supposed to fail as all attributes are given
+            content_type 'json';
+            status 500;
+            return to_json({ error => "unexpected error" });
+
+        }
+
+        return to_json({ _id => $ar->{_id} });
     };
 };
+
+sub audit {
+
+    state $s = LibreCat::Audit->new();
+
+}
 
 1;
