@@ -72,40 +72,6 @@
   </div>
 </form>
 
-<hr />
-
-<form id="id_save_style" action="[% uri_base %]/librecat/person/preference" method="get">
-  [% IF request.path.match('/delegate/\d{1,}$') %]
-  [% delegate_id = request.path.match('/delegate/(\d{1,})$') %]
-  <input type="hidden" name="delegate_id" value="[% delegate_id.0 %]" />
-  [% delegated_user = h.get_person(delegate_id.0) %]
-  [% thisStyle = delegated_user.style %]
-  [% thisUser = delegated_user.full_name %]
-  [% ELSE %]
-  [% thisStyle = thisPerson.style %]
-  [% thisUser = thisPerson.full_name %]
-  [% END %]
-  <div class="row innerrow">
-    <div class="col-md-12">
-      <h4>Public Citation Style ([% thisUser %])</h4>
-    </div>
-    <div class="col-md-12">
-      <div class="row innerrow">
-        <div class="form-group col-md-11">
-          <div class="input-group sticky">
-            <select id="style_select" name="style" class="form-control">
-            [% FOREACH sty IN h.config.citation.csl.styles.keys %]
-            <option value="[% sty %]"[% IF (thisStyle AND thisStyle == sty) OR (!thisStyle AND sty == "default") %] selected="selected"[% END %]>[% sty %]</option>
-            [% END %]
-            </select>
-            <div class="input-group-addon"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
-
 <script>
 
 $(function(){
@@ -114,8 +80,11 @@ $(function(){
   });
 });
 
-$('#style_select').on("change", function(){
-    submit_form('id_save_style');
+$('#edit_mode_select').on("change", function(){
+    submit_form('id_save_mode');
+});
+$('#lang_select').on("change", function(){
+    submit_form('id_save_lang');
 });
 
 function submit_form(form_id){

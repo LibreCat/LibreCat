@@ -41,7 +41,6 @@ header:
     eng: "Englisch"
     ger: "Deutsch"
   department_affiliation: "Fakultät/ Zugehörigkeit"
-  public_citation_style: "Zitationsstil &quot;Meine Publikationsliste&quot;"
   logged_in_as: "Eingeloggt als"
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"

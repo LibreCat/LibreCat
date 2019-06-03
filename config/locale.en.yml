@@ -41,7 +41,6 @@ header:
     eng: "English"
     ger: "German"
   department_affiliation: "Department Affiliation"
-  public_citation_style: "Public Citation Style"
   logged_in_as: "Logged in as"
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"

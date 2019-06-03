@@ -59,8 +59,11 @@ for his own publication list.
             $person->{'sort'} = undef;
         }
 
-        if (params->{style} and defined h->config->{citation}->{csl}->{styles}->{params->{style}}) {
-            $person->{style} = h->config->{citation}->{csl}->{styles}->{params->{style}};
+        if (params->{style}) {
+            $person->{style} = params->{style}
+                if array_includes(
+                keys %{h->config->{citation}->{csl}->{styles}},
+                params->{style});
         }
         else {
             $person->{style} = undef;
