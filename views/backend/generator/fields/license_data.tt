@@ -1,0 +1,32 @@
+[% licenses_data = h.config.lists.licenses.data %]
+<strong>[% h.loc("forms.${type}.field.license.license_data.label") %]</strong>[% IF file %]<span class="starMandatory"></span>[% END %]
+<div class="row innerrow">
+  <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.license_data.mandatory %} mandatory{% END %}">
+  {% IF fields.file_upload.license.license_data %}
+  [% h.loc("forms.${type}.field.license.license_data.select_text") %]
+  <select name="license" id="id_license" class="form-control">
+    <option value="">[% h.loc("forms.${type}.field.license.license_data.select_a_license") %]</option>
+    [% FOR lic IN licenses_data %]
+    <option value="[% lic %]"[% IF license == lic %] selected="selected"[% END %]>[% h.loc("licenses.${lic}.short") %]</option>
+    [% END %]
+  </select><br />
+
+  <a href="https://creativecommons.org/choose/"><span class="fa fa-chevron-right"></span>[% h.loc("forms.${type}.field.license.info_page") %]</a><br />
+  {% END %}
+  </div>
+</div>
+
+<script>
+$('#id_license').change(function(){
+  if($('#id_license').val() == ''){
+    if ($('.dropzone').first().children().length > 1){
+      $('#id_license').parent().removeClass('alert-info');
+      $('#id_license').parent().addClass('alert-danger');
+    }
+  }
+  else {
+    $('#id_license').parent().removeClass('alert-danger');
+    $('#id_license').parent().addClass('alert-info');
+  }
+});
+</script>
