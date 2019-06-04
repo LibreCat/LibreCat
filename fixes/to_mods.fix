@@ -4,7 +4,7 @@ librecat_uri_base('uri_base')
 move_field(type,genre)
 lookup(genre, fixes/lookup/mods_types.csv, default: thesis)
 
-lookup(cc_license, fixes/lookup/licenses.csv)
+lookup(license, fixes/lookup/licenses.csv)
 
 do list(path => file)
   do identity()

@@ -70,9 +70,9 @@ if exists(project)
   end
 end
 
-if exists(cc_license)
-  lookup(cc_license, fixes/lookup/licenses.csv)
-  move_field(cc_license, dc.rights.$append)
+if exists(license)
+  lookup(license, fixes/lookup/licenses.csv)
+  move_field(license, dc.rights.$append)
 end
 
 

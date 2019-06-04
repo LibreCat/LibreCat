@@ -348,18 +348,11 @@ publication:
       description: "Alternative title"
     license:
       type: string
-      description: "Any license"
-    data_reuse_license:
+      description: "Any license from a controlled list defined in config lists.licenses"
+    other_data_license:
        type: string
-       description: "Data re-use license"
-    open_data_release:
-      oneOf:
-        - type: string
-          minLength: 1
-        - type: integer
-          minimum: 0
-      description: "Flag agree with the copyright and license"
-    #required when type = 'journalArticle'
+       description: "Data re-use license if standard licenses are not enough."
+    #required when type = 'journal_article'
     publication:
       type: string
       description: "Title of host publication"
@@ -689,16 +682,13 @@ publication:
         - type: string
         - type: integer
       description: "Universal Resource Name"
-    accept:
+    has_accepted_license:
       oneOf:
           - type: string
             minLength: 1
           - type: integer
             minimum: 0
       description: "Flag agree with the copyright and license"
-    cc_license:
-      type: string
-      description: "Files copyright"
     conference:
       type: object
       properties:
