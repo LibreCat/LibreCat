@@ -2,10 +2,9 @@ package LibreCat::Search;
 
 use Catmandu::Sane;
 use Catmandu::Util qw(trim :is);
-use Catmandu;
 use Dancer qw(:syntax);
+use LibreCat -self;
 use Moo;
-use Hash::Merge::Simple qw(merge);
 use Try::Tiny;
 use namespace::clean;
 
@@ -57,7 +56,7 @@ sub search {
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit        => $self->_set_limit($p->{limit}),
         start        => $p->{start} // 0,
-        aggs => merge($p->{facets}, Catmandu->config->{default_facets}),
+        aggs => librecat->config->{default_facets},
     );
 
     $self->log->debug(
@@ -191,9 +190,9 @@ LibreCat::Search - module that provides search functionality in LibreCat
     $s->search();
 
     # or through LibreCat
-    use LibeCat;
+    use LibeCat -self;
 
-    my xx = LibreCat->searcher->search(...);
+    my $hits = librecat->searcher->search(...);
 
 
 =head1 METHODS
@@ -202,20 +201,21 @@ LibreCat::Search - module that provides search functionality in LibreCat
 
 =item native_search($opts)
 
-$opts = {
-    cql =>
-    q =>
-    sort =>
-    start => 0, #optional
-    limit => 20, #optional
-    facets => { #optional
-     ...
-    }
-}
+    $opts = {
+        query => ,
+        sort => ,
+        start => 0, #optional
+        limit => 20, #optional
+    };
 
 =item search($opts)
 
-xxx
+    $opts = {
+        q => ["title=test", "year=2019"],
+        sort =>
+        start => 0, #optional
+        limit => 20, #optional
+    };
 
 =back
 
