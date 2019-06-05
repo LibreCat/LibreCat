@@ -14,9 +14,9 @@
         <bibo:authorList rdf:parseType="Collection">
             [%- FOREACH person IN author %]
             <foaf:Person[% IF person.user_id %] rdf:about="[% uri_base %]/person/[% person.user_id %]"[% END %]>
-                <foaf:name>[% person.full_name | xml_strict %]</foaf:name>
-                <foaf:surname>[% person.first_name | xml_strict %]</foaf:surname>
-                <foaf:givenname>[% person.last_name | xml_strict %]</foaf:givenname>
+                <foaf:name>[% person.fullName | xml_strict %]</foaf:name>
+                <foaf:surname>[% person.surname | xml_strict %]</foaf:surname>
+                <foaf:givenname>[% person.givenName | xml_strict %]</foaf:givenname>
                 [%- IF person.work_info_homepage %]
                 <foaf:workInfoHomepage rdf:resource="[% person.work_info_homepage | xml_strict %]"/>
                 [%- END %]
@@ -42,14 +42,14 @@
         [%- IF page.defined('last') %]
         <bibo:endPage>[% page.item('last') | xml_strict %]</bibo:endPage>
         [%- END %]
-        [%- IF language.0.iso %]
-        <dc:language>[% language.0.iso | xml_strict %]</dc:language>
+        [%- IF language.iso %]
+        <dc:language>[% language.iso | xml_strict %]</dc:language>
         [%- END %]
         [%- IF publisher %]
         <dc:publisher>[% publisher | xml_strict %]</dc:publisher>
         [%- END %]
-        [%- IF year %]
-        <fabio:hasPublishingYear>[% year | xml_strict %]</fabio:hasPublishingYear>
+        [%- IF publishingYear %]
+        <fabio:hasPublishingYear>[% publishingYear | xml_strict %]</fabio:hasPublishingYear>
         [%- END %]
         [%- IF copyright_statement %]
         <dc:rights>[% copyright_statement | xml_strict %]</dc:rights>
@@ -60,10 +60,10 @@
         <ore:aggregates rdf:resource="[% uri_base %]/download/[% _id | xml_strict %]/[% f.file_id | xml_strict %]/[% f.file_name | uri %]"/>
         [%- END %]
         [%- END %]
-        [%- FOREACH val IN publication_identifier.issn %]
+        [%- FOREACH val IN issn %]
         <dc:isPartOf rdf:resource="urn:issn:[% val | xml_strict %]"/>
         [%- END %]
-        [%- FOREACH val IN publication_identifier.isbn %]
+        [%- FOREACH val IN isbn %]
         <dc:isPartOf rdf:resource="urn:isbn:[% val | xml_strict %]"/>
         [%- END %]
         [%- IF urn %]
@@ -74,7 +74,7 @@
         <ore:similarTo rdf:resource="info:doi/[% doi || doiInfo.doi | xml_strict %]"/>
         [%- END %]
         [%- IF pmid %]
-        <fabio:hasPubMedId>[% external_id.pmid.0 %]</fabio:hasPubMedId>
+        <fabio:hasPubMedId>[% pmid %]</fabio:hasPubMedId>
         [% END %]
     </rdf:Description>
 </rdf:RDF>
