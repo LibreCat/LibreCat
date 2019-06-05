@@ -1,8 +1,4 @@
-if exists(license)
-  move(license, tmp)
-  lookup_in_config(tmp, locale.en.licenses)
-  move(tmp.deed_url, license)
-end
+include(fixes/licenses.fix)
 
 remove_field('author.*.login')
 remove_field('author.*.email')

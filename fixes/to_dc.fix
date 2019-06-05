@@ -70,12 +70,8 @@ if exists(project)
   end
 end
 
-if exists(license)
-  copy(license, tmp)
-  lookup_in_config(tmp, locale.en.licenses)
-  move(tmp.deed_url, dc.rights.$append)
-end
-
+include(fixes/licenses.fix)
+move(license, dc.rights.$append)
 
 do list(path: file,var:loop)
   do identity()

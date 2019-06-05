@@ -54,6 +54,7 @@
     <relatedIdentifier relatedIdentifierType="URN" relationType="IsReviewedBy">[% urn | xml_strict %]</relatedIdentifier>
     [%- END %]
   </relatedIdentifiers>
+  [%- IF file %]
   <sizes>
     [%- FOREACH f IN file %]
     <size>[% f.file_size | xml_strict %] bytes</size>
@@ -64,9 +65,10 @@
     <format>[% f.content_type | xml_strict %]</format>
     [%- END %]
   </formats>
-  [%- IF license %]
+  [%- END %]
+  [%- IF license.uri %]
   <rightsList>
-    <rights rightsURI="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</rights>
+    <rights rightsURI="[% license.uri | xml_strict %]">[% license.name | xml_strict %]</rights>
   </rightsList>
   [%- END %]
   [%- IF abstract %]
