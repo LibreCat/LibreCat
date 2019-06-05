@@ -1,4 +1,9 @@
-lookup(license, fixes/lookup/licenses.csv)
+if exists(license)
+  move(license, tmp)
+  lookup_in_config(tmp, locale.en.licenses)
+  move(tmp.deed_url, license)
+end
+
 remove_field('author.*.login')
 remove_field('author.*.email')
 remove_field('editor.*.login')

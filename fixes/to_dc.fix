@@ -71,8 +71,9 @@ if exists(project)
 end
 
 if exists(license)
-  lookup(license, fixes/lookup/licenses.csv)
-  move_field(license, dc.rights.$append)
+  copy(license, tmp)
+  lookup_in_config(tmp, locale.en.licenses)
+  move(tmp.deed_url, dc.rights.$append)
 end
 
 
