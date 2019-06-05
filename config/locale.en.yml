@@ -433,7 +433,7 @@ forms:
       license: &license
         heading: "Copyright and Licenses"
         info_page: "Info page about licenses (choose a license)"
-        pub_license:
+        has_accepted_license:
           label: "Copyright Disclaimer"
           disclaimer_text: "I herewith place this document at Bielefeld University's disposal for the purpose of storing in electronic form and making it available to the public according to the PUB Deposit Policy. If I chose the &quot;Request a Copy (Closed Access except upon request)&quot; access level for this work, Bielefeld University is authorised to electronically store the work. Yet, I reserve the right to make the work available to users.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>"
           accept_text: "I accept"
