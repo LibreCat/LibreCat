@@ -166,4 +166,6 @@ subtest "not_found" => sub {
         ->status_is(404)->content_like(qr/Page not found \(404\)/);
 };
 
+subtest "file" =>
+
 done_testing;

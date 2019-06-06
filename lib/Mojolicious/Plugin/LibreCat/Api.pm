@@ -73,7 +73,16 @@ sub register {
         }
     );
 
+    $r->add_shortcut(
+        librecat_file_api => sub {
+            my ($r) = @_;
+
+            my $file_api = $api_auth->any("/file")->to('file_api#');
+        }
+    );
+
     $r->librecat_model_api($_) for @$models;
+    $r->librecat_file_api;
 }
 
 1;
