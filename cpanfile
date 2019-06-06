@@ -26,7 +26,7 @@ requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
 requires 'Catmandu::BibTeX';
-requires 'Catmandu::DBI', '>=0.0511';
+requires 'Catmandu::DBI', '>=0.09';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Fix::Date';
 requires 'Catmandu::Identifier', '>=0.05';
