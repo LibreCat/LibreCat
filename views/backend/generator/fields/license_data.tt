@@ -11,7 +11,7 @@
     [% END %]
   </select><br />
 
-  <a href="https://creativecommons.org/choose/"><span class="fa fa-chevron-right"></span>[% h.loc("forms.${type}.field.license.info_page") %]</a><br />
+  <a href="https://creativecommons.org/choose/" target="new"><span class="fa fa-chevron-right"></span>[% h.loc("forms.${type}.field.license.info_page") %]</a><br />
   {% END %}
   </div>
 </div>
