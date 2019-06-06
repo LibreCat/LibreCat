@@ -204,7 +204,7 @@ $('#id_button_embed_[% tabmodus %][% menu %]').click(function() {
     var no_params = embed_link.match(/\/person\/(\d+)$/);
     var yes_params = embed_link.match(/\/person\/(\d+)\?.*/);
     if(no_params){
-      embed_link = embed_link.replace(/\/person\/\d+/, "/embed?q=person%3" + no_params[1]);
+      embed_link = embed_link.replace(/\/person\/\d+/, "/embed?q=person%3D" + no_params[1]);
     }
     else if(yes_params){
       embed_link = embed_link.replace(/\/person.*/, "/embed?");
