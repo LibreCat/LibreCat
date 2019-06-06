@@ -459,9 +459,8 @@ publication:
       type: string
       description: "Publisher"
     year:
-      oneOf:
-        - type: string
-        - type: integer
+      type: string
+      pattern: "^\\d{4}$"
       description: "Publication year"
     extern:
       oneOf:

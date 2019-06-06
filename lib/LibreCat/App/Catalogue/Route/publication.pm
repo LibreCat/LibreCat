@@ -8,7 +8,7 @@ Route handler for publications.
 
 use Catmandu::Sane;
 use Catmandu;
-use LibreCat qw(publication);
+use LibreCat qw(:self publication);
 use Catmandu::Fix qw(expand);
 use Catmandu::Util qw(is_instance);
 use LibreCat::App::Helper;
@@ -214,11 +214,21 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
+        my $is_valid_record   = 1;
+        my $validation_errors = '';
         try {
             h->hook('publication-update')->fix_around(
                 $p,
                 sub {
-                    publication->add($p);
+                    publication->add(
+                        $p ,
+                        on_validation_error => sub {
+                            my ($rec, $errors) = @_;
+                            librecat->log->errorf("%s not a valid publication %s", $rec->{_id} // 'NEW', $errors);
+                            $is_valid_record   = 0;
+                            $validation_errors = $errors;
+                        }
+                    );
                 }
             );
         } catch {
@@ -229,7 +239,7 @@ Checks if the user has the rights to update this record.
             else {
                 my $id = $p->{_id} // '<new>';
                 h->log->fatal("failed to update record $id");
-                h->log->fatal($@);
+                h->log->fatal($_);
                 my $admin_email = h->config->{admin_email};
                 my $message =
     "Failed to update record $id. The admins have been notified. " .
@@ -239,8 +249,17 @@ Checks if the user has the rights to update this record.
             }
         };
 
+        if ($is_valid_record) {
+            redirect $return_url || uri_for('/librecat');
+        }
+        else {
+            my $templatepath = "backend/forms";
+            my $template     = $p->{meta}->{template} // $p->{type};
 
-        redirect $return_url || uri_for('/librecat');
+            flash danger => join("<br>",@{$validation_errors // []});
+
+            template "$templatepath/$template", $p;
+        }
     };
 
 =head2 GET /return/:id
