@@ -198,15 +198,6 @@ Checks if the user has the rights to update this record.
             forward '/access_denied';
         }
 
-        # Remember we are dealing with a new record in case
-        # of validation errors...
-        my $is_new_record = 0;
-
-        if ($p->{new_record}) {
-            delete $p->{new_record};
-            $is_new_record = 1;
-        }
-
         $p = h->nested_params($p);
 
         if ($p->{finalSubmit} eq 'recSubmit') {
@@ -225,6 +216,7 @@ Checks if the user has the rights to update this record.
         # that should run before/after updating publications
         my $is_error_record   = 0;
         my $error_messages    = '';
+        my $is_new_record     = $p->{new_record};
         try {
             h->hook('publication-update')->fix_around(
                 $p,
@@ -263,6 +255,9 @@ Checks if the user has the rights to update this record.
         # When we have an error record we return to the edit form and show
         # all errors...
         if ($is_error_record) {
+            # The new_record is a field not available in the schema
+            # which will be removed after validation. We need to se
+            # it again
             $p->{new_record} = 1 if $is_new_record;
 
             my $templatepath = "backend/forms";
