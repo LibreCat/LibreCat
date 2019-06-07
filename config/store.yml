@@ -57,6 +57,15 @@ search:
           number_of_shards: 1
           number_of_replicas: 0
           analysis:
+            normalizer:
+              sort_text:
+                type: custom
+                char_filter: []
+                filter: [lowercase, my_asciifolding]
+              sort_keyword:
+                type: custom
+                char_filter: []
+                filter: [lowercase]
             analyzer:
               default:
                 type: custom
@@ -96,10 +105,22 @@ search:
               type: text
               copy_to: all
               fields:
-                      exact: {type: text, analyzer: tag, fielddata: 'true'}
+                exact: {type: text, analyzer: tag}
+                sort: &sort_text
+                  type: keyword
+                  store: 'false'
+                  normalizer: sort_text
             active: {type: byte}
-            acronym: {type: text, copy_to: all}
-            alternative_name: {type: text, copy_to: all}
+            acronym:
+              type: text
+              copy_to: all
+              fields:
+                sort: *sort_text
+            alternative_name:
+              type: text
+              copy_to: all
+              fields:
+                sort: *sort_text
             grant_number: {type: text, analyzer: tag, copy_to: all}
             psp_element: {type: text, analyzer: tag, copy_to: all}
             call_identifier: {type: text, analyzer: tag}
@@ -112,15 +133,9 @@ search:
             funded: {type: text, analyzer: tag}
             sc39: {type: text, analyzer: tag}
             start_date:
-              type: text
-              analyzer: datestring
-              fields:
-                exact: {type: text, analyzer: tag}
+              type: keyword
             end_date:
-              type: text
-              analyzer: datestring
-              fields:
-                exact: {type: text, analyzer: tag}
+              type: keyword
             cooperator: {type: text, analyzer: name, copy_to: all}
             department:
               properties:
@@ -169,7 +184,7 @@ search:
                 '=': true
                 'exact': true
               field: 'name'
-              sort: {field: 'name.exact'}
+              sort: {field: 'name.sort'}
             active: &active
               op:
                 '=': true
@@ -188,7 +203,7 @@ search:
                 '=': true
                 'exact': true
               field: 'acronym'
-              sort: 'true'
+              sort: {field: 'acronym.sort'}
             altname:
               op:
                 'any': true
@@ -196,7 +211,7 @@ search:
                 '=': true
                 'exact': true
               field: 'alternative_name'
-              sort: 'true'
+              sort: {field: 'alternative_name.sort'}
             grantno:
               op:
                 '=': true
@@ -311,7 +326,8 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag, fielddata: 'true'}
+                exact: {type: text, analyzer: tag}
+                sort: *sort_text
             alternative_title: *titleField
             author: &personField
               type: object
@@ -342,18 +358,30 @@ search:
             popular_science: {type: byte}
             ec_funded: {type: byte}
             volume: {type: text, analyzer: tag}
-            intvolume: {type: text, analyzer: tag}
+            intvolume:
+              type: text
+              analyzer: tag
+              fields:
+                sort: *sort_text
             issue: {type: text}
             article_type: {type: text}
             article_number: {type: text, analyzer: tag}
             thematic_area: {type: text, analyzer: tag}
             publication_identifier:
               properties:
-                isbn: {type: text, analyzer: tag, copy_to: all}
-                issn: {type: text, analyzer: tag, copy_to: all}
-                eissn: {type: text, analyzer: tag, copy_to: all}
-                eisbn: {type: text, analyzer: tag, copy_to: all}
-                unknown: {type: text, analyzer: tag, copy_to: all}
+                isbn: &pub_id_field
+                  type: text
+                  analyzer: tag
+                  copy_to: all
+                  fields: &sort_keyword
+                    sort:
+                      type: keyword
+                      store: 'false'
+                      normalizer: sort_keyword
+                issn: *pub_id_field
+                eissn: *pub_id_field
+                eisbn: *pub_id_field
+                unknown: *pub_id_field
             status: {type: text, analyzer: tag, fielddata: 'true'}
             publication_status: {type: text, analyzer: tag}
             report_number: {type: text, analyzer: tag}
@@ -366,6 +394,7 @@ search:
                   copy_to: all
                   fields:
                     exact: {type: text, analyzer: tag}
+                    sort: *sort_text
                 start_date: {type: keyword}
                 end_date: {type: keyword}
             publishing_date: {type: keyword}
@@ -391,18 +420,21 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag, fielddata: 'true'}
+                exact: {type: text, analyzer: tag}
+                sort: *sort_text
             publication_date: {type: text, index: 'false'}
             series_title:
               type: text
               copy_to: all
               fields:
                 exact: {type: text, analyzer: tag}
+                sort: *sort_text
             publisher:
               type: text
               copy_to: all
               fields:
                 exact: {type: text, analyzer: tag}
+                sort: *sort_text
             doi: {type: keyword, copy_to: all}
             ddc: {type: text}
             external_id:
@@ -423,7 +455,7 @@ search:
                 access_level: {type: text, analyzer: tag}
                 date_updated: {type: date, format: date_time_no_millis}
                 open_access: {type: text, analyzer: tag, fielddata: 'true'}
-                embargo: {type: text, analyzer: tag}
+                embargo: {type: keyword}
             main_file_link:
               properties:
                 url: {type: text, analyzer: tag}
@@ -446,7 +478,7 @@ search:
                 '>': {field: 'title.exact'}
                 'exact': {field: ['title.exact', 'alternative_title.exact']}
               field: ['title', 'alternative_title', 'title.exact', 'alternative_title.exact']
-              sort: {field: 'title.exact'}
+              sort: {field: 'title.sort'}
               description: "the title of the publication"
             basic:
               op:
@@ -480,7 +512,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.issn'
-              sort: true
+              sort: {field: 'publication_identifier.issn.sort'}
               description: "journal/series identifier"
             eissn:
               op:
@@ -489,7 +521,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.eissn'
-              sort: true
+              sort: {field: 'publication_identifier.eissn.sort'}
               description: "ejournal/series identifier"
             isbn:
               op:
@@ -498,7 +530,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.isbn'
-              sort: true
+              sort: {field: 'publication_identifier.isbn.sort'}
               description: "unique publication identifier"
             eisbn:
               op:
@@ -507,7 +539,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.eisbn'
-              sort: true
+              sort: {field: 'publication_identifier.eisbn.sort'}
             project:
               op:
                 'any': true
@@ -524,7 +556,7 @@ search:
                 '<>': true
                 'exact': {field: 'conference.name.exact'}
               field: 'conferenceName'
-              sort: {field: 'conference.name.exact'}
+              sort: {field: 'conference.name.sort'}
             extern: &extern
               op:
                 '=': true
@@ -841,7 +873,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication'
-              sort: {field: 'publication.exact'}
+              sort: {field: 'publication.sort'}
             seriestitle:
               op:
                 'any': true
@@ -850,7 +882,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'series_title'
-              sort: {field: 'series_title.exact'}
+              sort: {field: 'series_title.sort'}
             publisher:
               op:
                 'any': true
@@ -859,7 +891,7 @@ search:
                 '<>': true
                 'exact': true
               field: 'publisher'
-              sort: {field: 'publisher.exact'}
+              sort: {field: 'publisher.sort'}
             ddc:
               op:
                 '=': true
@@ -873,14 +905,14 @@ search:
                 'exact': true
                 '<>': true
               field: volume
-              sort: {field: 'intvolume'}
+              sort: {field: 'intvolume.sort'}
             intvolume:
               op:
                 '=': true
                 'exact': true
                 '<>': true
               field: intvolume
-              sort: true
+              sort: {field: 'intvolume.sort'}
             hide:
               op:
                 '=': true
@@ -921,8 +953,17 @@ search:
               analyzer: name
               fields:
                 exact: {type: text, analyzer: tag}
-            last_name: {type: text, analyzer: name, fielddata: 'true'}
-            first_name: {type: text, analyzer: name}
+                sort: *sort_text
+            last_name:
+              type: text
+              analyzer: name
+              fields:
+                sort: *sort_text
+            first_name:
+              type: text
+              analyzer: name
+              fields:
+                sort: *sort_text
             old_name:
               properties:
                 full_name:
@@ -931,6 +972,7 @@ search:
                   analyzer: name
                   fields:
                     exact: {type: text, analyzer: tag}
+                    sort: *sort_text
                 first_name: {type: text, analyzer: name}
                 last_name: {type: text, analyzer: name}
             idm_title: {type: text}
@@ -959,7 +1001,11 @@ search:
                 name: {type: text}
             account_status: {type: text, analyzer: tag}
             super_admin: {type: byte}
-            login: {type: text, analyzer: tag}
+            login:
+              type: text
+              analyzer: tag
+              fields:
+                sort: *sort_keyword
             ext_institution: {type: text}
             password: {type: text}
             orcid: {type: text, analyzer: tag}
@@ -990,7 +1036,7 @@ search:
                 '<>': true
                 'exact': {field: 'full_name.exact'}
               field: full_name
-              sort: {field: 'full_name.exact'}
+              sort: {field: 'full_name.sort'}
             oldfullname:
               op:
                 'any': true
@@ -999,7 +1045,7 @@ search:
                 '<>': true
                 'exact': {field: 'old_name.full_name.exact'}
               field: old_name.full_name
-              sort: {field: 'old_name.full_name.exact'}
+              sort: {field: 'old_name.full_name.sort'}
             lastname:
               op:
                 'any': true
@@ -1008,7 +1054,7 @@ search:
                 '<>': true
                 'exact': true
               field: ["last_name","old_name.last_name"]
-              sort: {field: 'last_name'}
+              sort: {field: 'last_name.sort'}
             firstname:
               op:
                 'any': true
@@ -1017,7 +1063,7 @@ search:
                 '<>': true
                 'exact': true
               field: ["first_name","old_name.first_name"]
-              sort: {field: 'first_name'}
+              sort: {field: 'first_name.sort'}
             id:
               op:
                 '=': true
@@ -1039,7 +1085,7 @@ search:
               op:
                 '=': true
               field: login
-              sort: 'true'
+              sort: {field: 'login.sort'}
             alias:
               op:
                 '=': true
@@ -1070,6 +1116,7 @@ search:
               copy_to: all
               fields:
                 exact: {type: text, analyzer: tag}
+                sort: *sort_text
             tree:
               properties:
                 _id: {type: keyword}
@@ -1079,7 +1126,8 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag, fielddata: 'true'}
+                exact: {type: text, analyzer: tag}
+                sort: *sort_text
         cql_mapping:
           default_index: basic
           indexes:
@@ -1104,7 +1152,7 @@ search:
                 '<>': true
                 'exact': {field: 'name.exact'}
               field: name
-              sort: {field: 'name.exact'}
+              sort: {field: 'name.sort'}
             name_lookup:
               op:
                 'any': true
@@ -1113,7 +1161,7 @@ search:
                 '<>': true
                 'exact': {field: 'name.exact'}
               field: ['name','name.exact']
-              sort: {field: 'name.exact'}
+              sort: {field: 'name.sort'}
             layer:
               op:
                 '=': true
@@ -1129,7 +1177,7 @@ search:
                 '=': true
                 'all': true
               field: display
-              sort: {field: 'display.exact'}
+              sort: {field: 'display.sort'}
       research_group:
         fix:
             - remove_field(_version)
@@ -1145,21 +1193,16 @@ search:
               type: text
               copy_to: all
               fields:
-                exact: {type: text, analyzer: tag, fielddata: 'true'}
+                exact: {type: text, analyzer: tag}
+                sort: *sort_text
             acronym: {type: text, analyzer: tag}
             start_date:
-              type: text
-              analyzer: datestring
-              fields:
-                exact: {type: text, analyzer: tag}
+              type: keyword
             end_date:
-              type: text
-              analyzer: datestring
-              fields:
-                exact: {type: text, analyzer: tag}
+              type: keyword
             department:
               properties:
-                id: {type: keyword}
+                _id: {type: keyword}
                 name:
                   type: text
                   copy_to: all
@@ -1188,7 +1231,7 @@ search:
                 '<>': true
                 'exact': {field: 'name.exact'}
               field: name
-              sort: {field: 'name.exact'}
+              sort: {field: 'name.sort'}
             name_lookup:
               op:
                 'any': true
@@ -1197,7 +1240,7 @@ search:
                 '<>': true
                 'exact': {field: 'name.exact'}
               field: ['name','name.exact']
-              sort: {field: 'name.exact'}
+              sort: {field: 'name.sort'}
             acronym:
               op:
                 'any': true
