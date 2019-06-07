@@ -373,8 +373,8 @@ search:
                   type: text
                   analyzer: tag
                   copy_to: all
-                  fields: &sort_keyword
-                    sort:
+                  fields:
+                    sort: &sort_keyword
                       type: keyword
                       store: 'false'
                       normalizer: sort_keyword
@@ -416,6 +416,7 @@ search:
             project:
               properties:
                 _id: {type: keyword, copy_to: all}
+                name: {type: text}
             publication:
               type: text
               copy_to: all
@@ -452,10 +453,19 @@ search:
             file_date_updated: {type: date, format: date_time_no_millis}
             file:
               properties:
-                access_level: {type: text, analyzer: tag}
+                access_level: {type: keyword}
                 date_updated: {type: date, format: date_time_no_millis}
-                open_access: {type: text, analyzer: tag, fielddata: 'true'}
+                date_created: {type: date, format: date_time_no_millis}
+                open_access: {type: keyword}
                 embargo: {type: keyword}
+                content_type: {type: keyword}
+                file_id: {type: keyword}
+                file_name: {type: keyword}
+                relation: {type: keyword}
+                title: {type: text}
+                description: {type: text}
+                creator: {type: text, analyzer: tag}
+                request_a_copy: {type: byte}
             main_file_link:
               properties:
                 url: {type: text, analyzer: tag}
@@ -466,6 +476,7 @@ search:
             locked: {type: byte}
             user_id: {type: text, index: 'false'}
             citation: {type: object, enabled: 'false'}
+            cc_license: {type: keyword}
         cql_mapping:
           default_index: basic
           indexes:
@@ -1017,6 +1028,8 @@ search:
             authorClaim: {type: text, analyzer: tag}
             scopusId: {type: text, analyzer: tag}
             alias: {type: text, analyzer: tag}
+            email: {type: text, analyzer: tag}
+            style: {type: keyword}
         cql_mapping:
           default_index: basic
           indexes:
