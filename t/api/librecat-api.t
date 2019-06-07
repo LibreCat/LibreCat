@@ -166,6 +166,19 @@ subtest "not_found" => sub {
         ->status_is(404)->content_like(qr/Page not found \(404\)/);
 };
 
-subtest "file" =>
+subtest "xx" => sub {
+    $t->get_ok('/api/v1/file' => {Authorization => $token})->status_is(200)
+        ->json_is('/data/0/key','123');
+
+    $t->get_ok('/api/vi/file/918273645' => {Authorization => $token})->status_is(404)
+        ->json_has('/errors');
+        # , 'container 918273645 not found');
+};
+
+subtest "xx" => sub {ok 1;};
+
+subtest "xx" => sub {ok 1;};
+
+subtest "xx" => sub {ok 1;};
 
 done_testing;
