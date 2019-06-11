@@ -78,6 +78,21 @@ sub show_file {
 
     $c->not_found("file $filename not found in container $key") unless $file;
 
+    # Start writing directly with a drain callback
+    # https://mojolicious.org/perldoc/Mojolicious/Guides/Rendering#Streaming
+    $c->res->headers->content_length(length $body);
+
+    my $drain;
+
+    $drain = sub {
+        my $c = shift;
+        my $chunk = substr $body, 0, 1, '';
+        $drain = undef unless length $body;
+        $c->write($chunk, $drain);
+    };
+
+    $c->$drain;
+
   # send_file(
   #     \"dummy",    # anything, as long as it's a scalar-ref
   #     streaming => 1,    # enable streaming
@@ -137,7 +152,7 @@ sub remove_file {
 
         if (defined $file) {
             $files->delete($filename);
-            return {ok => 1};
+            $c->render(json => {ok => 1});
         }
         else {
             $c->not_found("container $key not found");
@@ -163,100 +178,12 @@ sub upload_file {
     my $file = request->upload('file');
 
     unless ($file) {
-        return do_error('ILLEGAL_INPUT', 'need a file', 400);
+        $c->render(json => {errors => ["need a file"]}, status => 400)
     }
 
     $files->add(IO::File->new($file->{tempname}), $file->{filename});
 
-    $c->render(json => {})
-    # return {ok => 1};
-}
-
-sub show_thumbnail {
-    my $c   = $_[0];
-    my $key = $c->param('key');
-
-   # For now stay backwards compatible and keep one thumbnail per container...
-    my $filename = 'thumbnail.png';
-
-    my $store = $c->get_access_store();
-
-    $c->container_not_found unless $store->index->exists($key);
-
-    my $files = $store->index->files($key);
-
-    my $file = $files->get($filename);
-
-    return Dancer::send_file(
-        'public/images/thumbnail_dummy.png',
-        system_path => 1,
-        filename    => 'thumbnail_dummy.png'
-    ) unless $file;
-
-  # send_file(
-  #     \"dummy",    # anything, as long as it's a scalar-ref
-  #     streaming => 1,    # enable streaming
-  #     callbacks => {
-  #         override => sub {
-  #             my ($respond, $response) = @_;
-  #             my $content_type = $file->{content_type};
-  #
-  #             my $http_status_code = 200;
-  #
-  #           # Tech.note: This is a hash of HTTP header/values, but the
-  #           #            function below requires an even-numbered array-ref.
-  #             my @http_headers = (
-  #                 'Content-Type' => $content_type,
-  #                 'Cache-Control' =>
-  #                     'no-store, no-cache, must-revalidate, max-age=0',
-  #                 'Pragma' => 'no-cache'
-  #             );
-  #
-  #      # Send the HTTP headers
-  #      # (back to either the user or the upstream HTTP web-server front-end)
-  #             my $writer = $respond->([$http_status_code, \@http_headers]);
-  #
-  #             $files->stream($c->io_from_plack_writer($writer), $file);
-  #         },
-  #     },
-  # );
-}
-
-sub add_thumbnail {
-    my $c        = $_[0];
-    my $key      = $c->param('key');
-    my $filename = $c->param('filename');    #TODO: Check this
-
-    my $thumbnailer_package
-        = librecat->config->{filestore}->{access_thumbnailer}->{package};
-    my $thumbnailer_options
-        = librecat->config->{filestore}->{access_thumbnailer}->{options};
-
-    my $pkg = Catmandu::Util::require_package($thumbnailer_package,
-        'LibreCat::Worker');
-    my $worker = $pkg->new(%$thumbnailer_options);
-
-    my $response = $worker->work({key => $key, filename => $filename,});
-
-    $response;
-}
-
-sub remove_thumbnail {
-    my $c   = $_[0];
-    my $key = $c->param('key');
-
-    my $thumbnailer_package
-        = librecat->config->{filestore}->{access_thumbnailer}->{package};
-    my $thumbnailer_options
-        = librecat->config->{filestore}->{access_thumbnailer}->{options};
-
-    my $pkg = Catmandu::Util::require_package($thumbnailer_package,
-        'LibreCat::Worker');
-    my $worker = $pkg->new(%$thumbnailer_options);
-
-    my $response = $worker->work({key => $key, delete => 1});
-
-    $response;
+    $c->render(json => {ok => 1})
 }
 
 sub not_found {
@@ -276,18 +203,6 @@ sub _get_file_store {
     my $pkg = Catmandu::Util::require_package($file_store,
         'Catmandu::Store::File');
     $pkg->new(%$file_opts);
-}
-
-sub _get_access_store {
-    my $access_store = librecat->config->{filestore}->{access}->{package};
-    my $access_opts  = librecat->config->{filestore}->{access}->{options}
-        // {};
-
-    return undef unless $access_store;
-
-    my $pkg = Catmandu::Util::require_package($access_store,
-        'Catmandu::Store::File');
-    $pkg->new(%$access_opts);
 }
 
 1;
