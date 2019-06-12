@@ -74,6 +74,28 @@ sub register {
     );
 
     $r->librecat_model_api($_) for @$models;
+
+    # GET /api/v1/file
+    $api_auth->get('/file')->to('file_api#show_filestore');
+
+    # GET /api/v1/file/:container_id
+    $api_auth->get('/file/:container_id')->to('file_api#show_container');
+
+    # GET /api/v1/file/:container_id/:file_name
+    $api_auth->get('/file/:container_id/#file_name')->to('file_api#show_file');
+
+    # DELETE /api/v1/file/:container_id
+    $api_auth->delete('/file/:container_id')->to('file_api#remove_container');
+
+    # DELETE /api/v1/file/:container_id/:file_name
+    $api_auth->delete('/file/:container_id/#file_name')->to('file_api#remove_file');
+
+    # POST /api/v1/file/:container_id
+    $api_auth->post('/file/:container_id')->to('file_api#upload_file');
+
+    # POST /api/v1/file
+    $api_auth->post('/file')->to('file_api#create_container');
+
 }
 
 1;

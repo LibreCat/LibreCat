@@ -1,333 +1,579 @@
 package LibreCat::Controller::FileApi;
 
 use Catmandu::Sane;
-use Catmandu::Util;
-# use Hash::Merge::Simple qw(merge);
+use Catmandu::Util qw(:is);
 use LibreCat -self;
-use LibreCat::App::Helper;
-use JSON::MaybeXS;
-use Mojo::Base 'Mojolicious::Controller';
-# use IO::File;
+use Mojo::Base "Mojolicious::Controller";
+use IO::Handle::Util;
+use IO::File;
+use URI::Escape qw(uri_escape_utf8);
 
+=head2 GET /api/v1/file
+
+    Response:
+        Content-Type: text/plain
+
+    Body: list of identifiers, separated by newline
+
+    Question: can we really implement such a long response in JSON API?
+
+=cut
 sub show_filestore {
+
     my $c = $_[0];
 
-    my $index = $c->get_file_store->index;
+    my $h = $c->res->headers;
+    $h->header( "Content-Type"  =>  "text/plain" );
+    $h->header( "Cache-Control" => "no-store, no-cache, must-revalidate, max-age=0" );
+    $h->header( "Pragma"        => "no-cache" );
 
-    # send_file(
-    #     \"dummy",    # anything, as long as it's a scalar-ref
-    #     streaming => 1,    # enable streaming
-    #     callbacks => {
-    #         override => sub {
-    #             my ($respond, $response) = @_;
-    #             my $http_status_code = 200;
-    #
-    #           # Tech.note: This is a hash of HTTP header/values, but the
-    #           #            function below requires an even-numbered array-ref.
-    #             my @http_headers = (
-    #                 'Content-Type' => 'text/plain',
-    #                 'Cache-Control' =>
-    #                     'no-store, no-cache, must-revalidate, max-age=0',
-    #                 'Pragma' => 'no-cache'
-    #             );
-    #
-    #      # Send the HTTP headers
-    #      # (back to either the user or the upstream HTTP web-server front-end)
-    #             my $writer = $respond->([$http_status_code, \@http_headers]);
-    #
-    #             $index->each(
-    #                 sub {
-    #                     my $key = shift->{_id};
-    #                     $writer->write("$key\n");
-    #                 }
-    #             );
-    #
-    #             $writer->close;
-    #         },
-    #     },
-    # );
+    $c->get_file_store()->index->each(sub{
+
+        $c->write( $_[0]->{_id} . "\n" );
+
+    });
+
+    $c->finish();
+
 }
 
-sub show_container {
-    my $c     = $_[0];
-    my $key   = $c->param('key');
-    my $store = $c->get_file_store;
+=head2 /api/v1/file/:container_id
 
-    if ($store->index->exists($key)) {
-        my $files = $store->index->files($key);
-
-        my $doc = {key => $key};
-
-        $files->each(
-            sub {
-                my $file     = shift;
-                my $key      = $file->{_id};
-                my $size     = $file->{size};
-                my $md5      = $file->{md5};
-                my $modified = $file->{modified};
-                my $created  = $file->{created};
-
-                push @{$doc->{files}},
+    {
+        "data" : {
+            "type": "container",
+            "id": "mycontainer",
+            "links" : {
+                "self": "http://localhost:5000/api/v1/file/mycontainer"
+            },
+            "attributes": {
+                "file": [
                     {
-                    key      => $key,
-                    size     => $size,
-                    md5      => $md5,
-                    modified => $modified,
-                    created  => $created
-                    };
+                        "id" : "myfile.jpg",
+                        "type" : "file",
+                        "attributes" : {
+                            "size": 100,
+                            "md5" : "md5",
+                            "modified": 1234000,
+                            "created" : 1234000
+                        },
+                        "links": {
+                            "self": "http://localhost:5000/api/v1/file/mycontainer/myfile.jpg"
+                        }
+                    }
+                ]
             }
-        );
-
-        $doc->{number_of_files} = length $doc->{files} // 0;
-
-        $c->render(json => $doc);
+        }
     }
-    else {
-        $c->container_not_found;
-    }
+
+=cut
+sub show_container {
+
+    my $c = $_[0];
+
+    my $container_id = $c->param("container_id");
+
+    my $store = $c->get_file_store();
+    my $files = $store->index->files( $container_id );
+
+    return $c->container_not_found()
+        unless defined( $files );
+
+    my $container_url = $c->url_for()->to_abs();
+
+    my $doc = {
+        data => {
+            type => "container",
+            id   => $container_id,
+            links => {
+                self => $container_url
+            },
+            attributes => {
+                file => []
+            }
+        }
+    };
+
+
+    $files->each(
+        sub {
+            my $file = $_[0];
+            push @{ $doc->{data}->{attributes}->{file} }, +{
+                id      => $file->{_id},
+                type    => "file",
+                attributes => {
+                    size     => $file->{size},
+                    md5      => $file->{md5},
+                    modified => $file->{modified},
+                    created  => $file->{created}
+                },
+                links => {
+                    self => $container_url . "/" . uri_escape_utf8( $file->{_id} )
+                }
+            };
+        }
+    );
+
+    $c->render(json => $doc);
+
 }
 
+=head2 POST /api/v1/file
+
+    request body:
+
+        { "data" : { "id" : "myid", type => "container" } }
+
+    If data.id is not set, it will be generated
+
+    response body:
+
+        {
+            "data": {
+                "type"  : "container",
+                "id"    : "myid",
+                "links" : {
+                    "self" : "http://localhost:5000/api/v1/file/myid"
+                }
+            }
+        }
+
+=cut
+sub create_container {
+
+    my $c = $_[0];
+
+    my $json_api = $c->req->json();
+
+    my( $valid, $error ) = $c->validate_create_container( $json_api );
+
+    return $c->do_error( $error->{status}, $error )
+        unless $valid;
+
+    my $container_id = $json_api->{data}->{id} // publications()->generate_id();
+    my $store = $c->get_file_store();
+
+    return $c->do_error(400, +{
+        status => "400",
+        title  => "container already exists"
+    }) if $store->index->exists( $container_id );
+
+    $store->index->add({ _id => $container_id });
+
+    $c->render(
+        json   => {
+            data => {
+                type => "container",
+                id   => $container_id,
+                links => {
+                    self => $c->url_for( "/api/v1/file" )->to_abs() . "/" . uri_escape_utf8( $container_id )
+                }
+            }
+        },
+        status => 201
+    );
+
+}
+
+=head2 GET /api/v1/file/:container_id/:file_name
+
+    Response: file binary data
+
+    Question: part of JSON API?
+
+=cut
 sub show_file {
+
     my $c = $_[0];
-    my $key      = $c->param('key');
-    my $filename = $c->param('filename');
 
-    my $store = $c->get_file_store;
+    my $container_id    = $c->param("container_id");
+    my $file_name       = $c->param("file_name");
 
-    $c->container_not_found
-        unless $store->index->exists($key);
+    my $store = $c->get_file_store();
+    my $files = $store->index->files( $container_id );
 
-    my $files = $store->index->files($key);
-    my $file  = $files->get($filename);
+    return $c->container_not_found()
+        unless defined $files;
 
-    $c->file_not_found unless $file;
+    my $file  = $files->get( $file_name );
 
-    # send_file(
-    #     \"dummy",    # anything, as long as it's a scalar-ref
-    #     streaming => 1,    # enable streaming
-    #     callbacks => {
-    #         override => sub {
-    #             my ($respond, $response) = @_;
-    #             my $content_type = $file->{content_type};
-    #
-    #             my $http_status_code = 200;
-    #
-    #           # Tech.note: This is a hash of HTTP header/values, but the
-    #           #            function below requires an even-numbered array-ref.
-    #             my @http_headers = (
-    #                 'Content-Type' => $content_type,
-    #                 'Cache-Control' =>
-    #                     'no-store, no-cache, must-revalidate, max-age=0',
-    #                 'Pragma' => 'no-cache'
-    #             );
-    #
-    #      # Send the HTTP headers
-    #      # (back to either the user or the upstream HTTP web-server front-end)
-    #             my $writer = $respond->([$http_status_code, \@http_headers]);
-    #
-    #             $files->stream($c->io_from_plack_writer($writer), $file);
-    #         },
-    #     },
-    # );
+    return $c->file_not_found unless $file;
+
+    my $h = $c->res->headers;
+    $h->header( "Content-Type"      => $file->{content_type} );
+    $h->header( "Content-Length"    => $file->{size} );
+
+    $files->stream( $c->get_io_writer(), $file );
+
 }
 
+=head2 DELETE /api/v1/file/:container_id
+
+    Response:
+        code: 204
+        body: empty
+
+=cut
 sub remove_container {
+
     my $c = $_[0];
-    my $key = $c->param('key');
 
-    my $store = $c->get_file_store;
+    my $container_id = $c->param("container_id");
+    my $store = $c->get_file_store();
 
-    if ($store->index->exits($key)) {
-        $store->index->delete($key);
-        $c->render(json => {ok => 1});
-    }
-    else {
-        $c->container_not_found;;
-    }
+    return $c->container_not_found()
+        unless $store->index->exists( $container_id );
+
+    $store->index->delete( $container_id );
+
+    $c->res->code(204);
+    $c->finish();
+
 }
 
+=head2 DELETE /api/v1/file/:container_id/:file_name
+
+    Response:
+        code: 204
+        body: empty
+
+=cut
 sub remove_file {
+
     my $c = $_[0];
-    my $key      = $c->param('key');
-    my $filename = $c->param('filename');
+    my $container_id    = $c->param("container_id");
+    my $file_name       = $c->param("file_name");
 
-    my $store = $c->get_file_store;
+    my $store = $c->get_file_store();
 
-    if ($store->index->exists($key)) {
-        my $files = $store->index->files($key);
+    my $files = $store->index->files( $container_id );
 
-        my $file = $files->get($filename);
+    return $c->container_not_found()
+        unless defined $files;
 
-        if (defined $file) {
-            $files->delete($filename);
-            return {ok => 1};
-        }
-        else {
-            $c->container_not_found;
-        }
-    }
-    else {
-        $c->container_not_found;;
-    }
+    my $file = $files->get( $file_name );
+
+    return $c->file_not_found()
+        unless defined $file;
+
+    $files->delete( $file_name );
+
+    $c->res->code(204);
+    $c->finish();
+
 }
 
+=head2 POST /api/v1/file/:container_id
+
+    Request:
+
+        Content-Type: multipart/form-data
+        upload parameter must be 'file'
+
+    Response code: 201
+    Response body:
+
+        {
+            "data" : {
+                "id" : "myfile.jpg",
+                "type" : "file",
+                "attributes" : {
+                    "size"     : 100,
+                    "md5"      : "md5",
+                    "modified" : 1234500,
+                    "created"  : 1234500
+                },
+                "links" : {
+                    "self" : "http://localhost/api/v1/file/mycontainer/myfile.jpg"
+                },
+                "relationships" : {
+                    "container" : {
+                        "data" : {
+                            "type" : "container",
+                            "id"   : "mycontainer",
+                            "links" : {
+                                "self" : "http://localhost/api/v1/file/mycontainer"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+=cut
 sub upload_file {
+
     my $c = $_[0];
-    my $key = $c->param('key');
+
+    my $container_id = $c->param("container_id");
 
     my $store = $c->get_file_store;
 
-    unless ($store->index->exists($key)) {
-        $store->index->add($key);
+    return $c->container_not_found()
+        unless $store->index->exists( $container_id );
+
+    my $files = $store->index->files( $container_id );
+
+    my $upload = $c->req->upload("file");
+
+    unless( $upload ) {
+
+        return $c->do_error( 400, {
+            status => "400",
+            id     => "no_upload_file",
+            title  => "no upload file with name 'file' given",
+            source => { parameter => "file" }
+        });
+
     }
 
-    my $files = $store->index->files($key);
+    $files->upload(
+        IO::File->new( $upload->asset->path ),
+        $upload->filename
+    );
 
-    my $file = request->upload('file');
+    my $file = $files->get( $upload->filename );
 
-    unless ($file) {
-        return do_error('ILLEGAL_INPUT', 'need a file', 400);
-    }
+    my $container_url = $c->url_for( "/api/v1/file" )->to_abs() . "/" . uri_escape_utf8( $container_id );
 
-    $files->add(IO::File->new($file->{tempname}), $file->{filename});
+    $c->render(
+        json => {
+            data => {
+                id => $file->{_id},
+                type => "file",
+                attributes => {
+                    size     => $file->{size},
+                    md5      => $file->{md5},
+                    modified => $file->{modified},
+                    created  => $file->{created}
+                },
+                links => {
+                    self => $container_url . "/" . uri_escape_utf8( $file->{_id} )
+                },
+                relationships => {
+                    container => {
+                        data => {
+                            type => "container",
+                            id   => $container_id,
+                            links => {
+                                self => $container_url
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        status => 201
+    );
 
-    return {ok => 1};
 }
 
-sub show_thumbnail {
-    my $c = $_[0];
-    my $key = $c->param('key');
+#sub show_thumbnail {
+#    my $c = $_[0];
+#    my $key = $c->param('key');
+#
+#   # For now stay backwards compatible and keep one thumbnail per container...
+#    my $filename = 'thumbnail.png';
+#
+#    my $store = $c->get_access_store();
+#
+#    $c->container_not_found unless $store->index->exists($key);
+#
+#    my $files = $store->index->files($key);
+#
+#    my $file = $files->get($filename);
+#
+#    return Dancer::send_file(
+#        'public/images/thumbnail_dummy.png',
+#        system_path => 1,
+#        filename    => 'thumbnail_dummy.png'
+#    ) unless $file;
+#
+#    # send_file(
+#    #     \"dummy",    # anything, as long as it's a scalar-ref
+#    #     streaming => 1,    # enable streaming
+#    #     callbacks => {
+#    #         override => sub {
+#    #             my ($respond, $response) = @_;
+#    #             my $content_type = $file->{content_type};
+#    #
+#    #             my $http_status_code = 200;
+#    #
+#    #           # Tech.note: This is a hash of HTTP header/values, but the
+#    #           #            function below requires an even-numbered array-ref.
+#    #             my @http_headers = (
+#    #                 'Content-Type' => $content_type,
+#    #                 'Cache-Control' =>
+#    #                     'no-store, no-cache, must-revalidate, max-age=0',
+#    #                 'Pragma' => 'no-cache'
+#    #             );
+#    #
+#    #      # Send the HTTP headers
+#    #      # (back to either the user or the upstream HTTP web-server front-end)
+#    #             my $writer = $respond->([$http_status_code, \@http_headers]);
+#    #
+#    #             $files->stream($c->io_from_plack_writer($writer), $file);
+#    #         },
+#    #     },
+#    # );
+#}
+#
+#sub add_thumbnail {
+#    my $c     = $_[0];
+#    my $key      = $c->param('key');
+#    my $filename = $c->param('filename'); #TODO: Check this
+#
+#    my $thumbnailer_package
+#        = librecat->config->{filestore}->{access_thumbnailer}->{package};
+#    my $thumbnailer_options
+#        = librecat->config->{filestore}->{access_thumbnailer}->{options};
+#
+#    my $pkg = Catmandu::Util::require_package($thumbnailer_package,
+#        'LibreCat::Worker');
+#    my $worker = $pkg->new(%$thumbnailer_options);
+#
+#    my $response = $worker->work({key => $key, filename => $filename,});
+#
+#    $response;
+#}
+#
+#sub remove_thumbnail {
+#    my $c     = $_[0];
+#    my $key    = $c->param('key');
+#
+#    my $thumbnailer_package
+#        = librecat->config->{filestore}->{access_thumbnailer}->{package};
+#    my $thumbnailer_options
+#        = librecat->config->{filestore}->{access_thumbnailer}->{options};
+#
+#    my $pkg = Catmandu::Util::require_package($thumbnailer_package,
+#        'LibreCat::Worker');
+#    my $worker = $pkg->new(%$thumbnailer_options);
+#
+#    my $response = $worker->work({key => $key, delete => 1});
+#
+#    $response;
+#}
 
-   # For now stay backwards compatible and keep one thumbnail per container...
-    my $filename = 'thumbnail.png';
+sub do_error {
 
-    my $store = $c->get_access_store();
+    my($c,$status,$error) = @_;
+    $c->render(
+        json => { errors => [ $error ] },
+        status => $status
+    );
 
-    $c->container_not_found unless $store->index->exists($key);
-
-    my $files = $store->index->files($key);
-
-    my $file = $files->get($filename);
-
-    return Dancer::send_file(
-        'public/images/thumbnail_dummy.png',
-        system_path => 1,
-        filename    => 'thumbnail_dummy.png'
-    ) unless $file;
-
-    # send_file(
-    #     \"dummy",    # anything, as long as it's a scalar-ref
-    #     streaming => 1,    # enable streaming
-    #     callbacks => {
-    #         override => sub {
-    #             my ($respond, $response) = @_;
-    #             my $content_type = $file->{content_type};
-    #
-    #             my $http_status_code = 200;
-    #
-    #           # Tech.note: This is a hash of HTTP header/values, but the
-    #           #            function below requires an even-numbered array-ref.
-    #             my @http_headers = (
-    #                 'Content-Type' => $content_type,
-    #                 'Cache-Control' =>
-    #                     'no-store, no-cache, must-revalidate, max-age=0',
-    #                 'Pragma' => 'no-cache'
-    #             );
-    #
-    #      # Send the HTTP headers
-    #      # (back to either the user or the upstream HTTP web-server front-end)
-    #             my $writer = $respond->([$http_status_code, \@http_headers]);
-    #
-    #             $files->stream($c->io_from_plack_writer($writer), $file);
-    #         },
-    #     },
-    # );
-}
-
-sub add_thumbnail {
-    my $c     = $_[0];
-    my $key      = $c->param('key');
-    my $filename = $c->param('filename'); #TODO: Check this
-
-    my $thumbnailer_package
-        = librecat->config->{filestore}->{access_thumbnailer}->{package};
-    my $thumbnailer_options
-        = librecat->config->{filestore}->{access_thumbnailer}->{options};
-
-    my $pkg = Catmandu::Util::require_package($thumbnailer_package,
-        'LibreCat::Worker');
-    my $worker = $pkg->new(%$thumbnailer_options);
-
-    my $response = $worker->work({key => $key, filename => $filename,});
-
-    $response;
-}
-
-sub remove_thumbnail {
-    my $c     = $_[0];
-    my $key    = $c->param('key');
-
-    my $thumbnailer_package
-        = librecat->config->{filestore}->{access_thumbnailer}->{package};
-    my $thumbnailer_options
-        = librecat->config->{filestore}->{access_thumbnailer}->{options};
-
-    my $pkg = Catmandu::Util::require_package($thumbnailer_package,
-        'LibreCat::Worker');
-    my $worker = $pkg->new(%$thumbnailer_options);
-
-    my $response = $worker->work({key => $key, delete => 1});
-
-    $response;
 }
 
 sub container_not_found {
-    my $c     = $_[0];
-    my $key    = $c->param('key');
-    my $error = {
-        status => '404',
-        title  => "container $key not found",
-        source => {parameter => 'key'},
-    };
-    $c->render(json => {errors => [$error]}, status => 404);
+
+    my $c = $_[0];
+    my $container_id = $c->param("container_id");
+    $c->do_error( 404, {
+        status => "404",
+        id     => "container_not_found",
+        title  => "container $container_id not found",
+        source => { parameter => "container_id" },
+    });
+
 }
 
 sub file_not_found {
+
     my $c     = $_[0];
-    my $key    = $c->param('key');
-    my $file = $c->param('file');
-    my $error = {
-        status => '404',
-        title  => "file '$file' not found in container '$key'",
-        source => {parameter => 'key'},
-    };
-    $c->render(json => {errors => [$error]}, status => 404);
+    my $container_id    = $c->param("container_id");
+    my $file_name       = $c->param("file_name");
+    $c->do_error( 404, {
+        status => "404",
+        id     => "file_not_found",
+        title  => "file '$file_name' not found in container '$container_id'",
+        source => { parameter => "file_name" }
+    });
+
 }
 
 sub get_file_store {
-    # my $c = $_[0];
+    my $c = $_[0];
 
-    my $file_store = librecat->config->{filestore}->{default}->{package};
-    my $file_opts = librecat->config->{filestore}->{default}->{options} // {};
+    state $fs = do {
 
-    return undef unless $file_store;
+        my $config = librecat->config->{filestore}->{"default"};
+        my $file_store = $config->{package};
+        my $file_opts = $config->{options} // {};
 
-    my $pkg = Catmandu::Util::require_package($file_store,
-        'Catmandu::Store::File');
-    $pkg->new(%$file_opts);
+        my $pkg = Catmandu::Util::require_package($file_store,
+            "Catmandu::Store::File");
+        $pkg->new(%$file_opts);
+
+    };
 }
 
 sub get_access_store {
-    # my $c = $_[0];
+    my $c = $_[0];
 
-    my $access_store = librecat->config->{filestore}->{access}->{package};
-    my $access_opts = librecat->config->{filestore}->{access}->{options} // {};
+    state $as = do {
 
-    return undef unless $access_store;
+        my $config = librecat->config->{filestore}->{access};
+        my $access_store = $config->{package};
+        my $access_opts = $config->{options} // {};
 
-    my $pkg = Catmandu::Util::require_package($access_store,
-        'Catmandu::Store::File');
-    $pkg->new(%$access_opts);
+        my $pkg = Catmandu::Util::require_package($access_store,
+            "Catmandu::Store::File");
+        $pkg->new(%$access_opts);
+
+    };
+
 }
+
+sub get_io_writer {
+    my $c = $_[0];
+
+    IO::Handle::Util::io_prototype(
+        write => sub {
+            my $self = shift;
+            $c->write(@_);
+        },
+        syswrite => sub {
+            my $self = shift;
+            $c->write(@_);
+        },
+        close => sub {
+            $c->finish;
+        }
+    );
+}
+
+sub publications {
+    state $p = librecat->model("publication");
+}
+
+sub validate_create_container {
+
+    my( $c, $json_api ) = @_;
+
+    return 0, +{
+        status => "400",
+        title  => "top level document should be object"
+    } unless is_hash_ref( $json_api );
+
+    return 0, +{
+        status => "400",
+        title  => "data should be object"
+    } unless is_hash_ref( $json_api->{data} );
+
+    return 0, +{
+        status => "400",
+        title  => "data.type should be 'container'"
+    } unless is_string( $json_api->{data}->{type} ) && $json_api->{data}->{type} eq "container";
+
+    return 0, +{
+        status => "400",
+        title  => "data.id should be string"
+    } if defined( $json_api->{data}->{id} ) && !is_string( $json_api->{data}->{id} );
+
+    1;
+
+}
+
 
 1;
