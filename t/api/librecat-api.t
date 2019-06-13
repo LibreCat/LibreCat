@@ -166,4 +166,33 @@ subtest "not_found" => sub {
         ->status_is(404)->content_like(qr/Page not found \(404\)/);
 };
 
+subtest "filestore api protected" => sub {
+    $t->get_ok('/api/v1/file')->status_is(401);
+};
+
+subtest "list all containers" => sub {
+    $t->get_ok('/api/v1/file' => {Authorization => $token})
+        ->status_is(200)->content_like(qr/^[\d+\n]+/);
+};
+
+subtest "create new container" => sub {
+    $t->post_ok('/api/v1/file' => {Authorization => $token}
+        => json => {data => { id => "123456", type => "container" }})
+        ->status_is(201)->json_is('/data', 'test');
+};
+
+# subtest "add file" => sub {
+#     $t->get_ok('/api/v1/file/' => {Authorization => $token})
+#         ->status_is(200);
+# };
+
+subtest "delete file" => sub {
+    ok 1;
+};
+
+subtest "delete container" => sub {
+    $t->delete_ok('/api/v1/file/' => {Authorization => $token})
+        ->status_is(204)
+};
+
 done_testing;
