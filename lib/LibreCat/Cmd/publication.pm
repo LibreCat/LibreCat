@@ -37,6 +37,7 @@ options:
     --log=STR          (write an audit message)
     --with-citations   (process citations while adding records)
     --with-files       (process files while addings records)
+    --no-check-version (add records without checking versions)
     --csv              (import csv/tsv metadata in `files` command)
 
 E.g.
@@ -102,6 +103,7 @@ sub command_opt_spec {
         ['history',          ""],
         ['with-citations',   ""],
         ['with-files',       ""],
+        ['no-check-version', ""],
         ['csv',              ""],
     );
 }
@@ -142,7 +144,7 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all(
+        return $self->id_or_file(
             $id,
             sub {
                 $self->_get(shift);
@@ -155,7 +157,7 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all(
+        return $self->id_or_file(
             $id,
             sub {
                 $self->_delete(shift);
@@ -165,7 +167,7 @@ sub command {
     elsif ($cmd eq 'purge') {
         my $id = shift @$args;
 
-        return $self->_on_all(
+        return $self->id_or_file(
             $id,
             sub {
                 $self->_purge(shift);
@@ -204,22 +206,6 @@ sub audit_message {
         action  => $action,
         message => $message,
     });
-}
-
-sub _on_all {
-    my ($self, $id_file, $callback) = @_;
-
-    if (defined($id_file) && -r $id_file) {
-        my $r = 0;
-        for (path($id_file)->lines) {
-            chomp;
-            $r += $callback->($_);
-        }
-        return $r;
-    }
-    else {
-        return $callback->($id_file);
-    }
 }
 
 sub _list {
@@ -354,6 +340,7 @@ sub _add {
     my $skip_before_add = [];
     push @$skip_before_add, "citation" unless $self->opts->{"with_citations"};
     push @$skip_before_add, "files"    unless $self->opts->{"with_files"};
+    push @$skip_before_add, "check_version" if $self->opts->{"no_check_version"};
 
     publication->add_many(
         $importer,
@@ -549,7 +536,7 @@ sub _checksum {
     croak "usage: $0 checksum initialize|test|update <id>" unless defined($action) && $action =~ /^(list|init|test|update)$/;
     croak "usage: $0 checksum $action <id>" unless defined($id);
 
-    return $self->_on_all(
+    return $self->id_or_file(
         $id,
         sub {
             $self->_checksum_id($action,shift);
@@ -939,6 +926,7 @@ LibreCat::Cmd::publication - manage librecat publications
         --log=STR          (write an audit message)
         --with-citations   (process citations while adding records)
         --with-files       (process files while addings records)
+        --no-check-version (add records without checking versions)
         --csv              (import csv/tsv metadata in `files` command)
 
 =cut

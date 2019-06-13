@@ -11,7 +11,7 @@ hooks:
     before_fixes: []
     after_fixes: []
 
-  # Code that runs when editing a new publication
+  # Code that runs when viewing a publication edit form
   publication-edit:
     before_fixes: []
     after_fixes: []

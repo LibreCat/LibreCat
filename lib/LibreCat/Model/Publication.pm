@@ -87,8 +87,15 @@ LibreCat::Model::Publication - a publication model
 
     publication->delete(123);
 
+=head1 VERSIONING
+
+Publication records are versioned. Calling C<add> will throw
+L<LibreCat::Error::VersionConflict> if the C<_version> key doesn't match the
+already stored version. This is to prevent simultaneous editing. You can
+disable this behavior with C<< skip_before_add => ['check_version'] >>.
+
 =head1 SEE ALSO
 
-L<LibreCat>, L<LibreCat::Model>
+L<LibreCat>, L<LibreCat::Model>, L<LibreCat::Model::Plugin::Versioning>
 
 =cut
