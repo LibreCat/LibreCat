@@ -47,18 +47,23 @@ sub register {
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
+            # GET /api/v1/:model/:id
             $model_api->get('/:id')->to('#show', model => $model)
                 ->name($model);
 
+            # DELETE /api/v1/:model/:id
             $model_api->delete('/:id')->to('#remove', model => $model)
                 ->name($model);
 
+            # PUT /api/v1/:model/:id
             $model_api->put('/:id')->to('#update', model => $model)
                 ->name($model);
 
+            # PUT /api/v1/:model/:id
             $model_api->patch('/:id')->to('#update_fields', model => $model)
                 ->name($model);
 
+            # POST /api/v1/:model
             $model_api->post->to('#create', model => $model)->name($model);
 
             if (librecat->$model->does("LibreCat::Model::Plugin::Versioning"))
