@@ -22,7 +22,7 @@ update:
 ifeq ($(strip $(VERSION)),)
 	echo "No VERSION specified; checking out HEAD of master branch"
 else
-	git chekcout $(VERSION)
+	git checkout $(VERSION)
 endif
 	carton install
 	carton exec -- bin/librecat generate forms
