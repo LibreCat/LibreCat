@@ -2,7 +2,7 @@
 <div class="facettecollapse">
 <ul id="year_[% tabmodus %][% menu %]" class="collapse">
   [%- FOREACH y IN aggregations.year.buckets %]
-    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="year" data-value="[% yf %]" href="#" rel="nofollow">[% y.key_as_string %] ([% y.doc_count %])</a></li>
+    <li><a class="facet_[% tabmodus %][% menu %]" data-key="cql" data-param="year" data-value="[% y.key_as_string %]" href="#" rel="nofollow">[% y.key_as_string %] ([% y.doc_count %])</a></li>
   [%- END %]
 </ul>
 </div>
