@@ -968,7 +968,6 @@ search:
             googleScholar: {type: text, analyzer: tag}
             github: {type: text, analyzer: tag}
             researcherId: {type: text, analyzer: tag}
-            authorClaim: {type: text, analyzer: tag}
             scopusId: {type: text, analyzer: tag}
             alias: {type: text, analyzer: tag}
         cql_mapping:
