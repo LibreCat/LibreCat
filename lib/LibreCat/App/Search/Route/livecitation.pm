@@ -1,18 +1,23 @@
-package LibreCat::App::Api::Route::LiveCitation;
+package LibreCat::App::Search::Route::livecitation;
 
 =head1 NAME
 
-LibreCat::App::Catalogue::Route::LiveCitation - Test the CSL engine
+LibreCat::App::Search::Route::livecitation - test the CSL engine
 
 =cut
 
 use Catmandu::Sane;
 use Dancer ':syntax';
-use Dancer::Plugin::Auth::Tiny;
-use LibreCat::App::Helper;
+use LibreCat -self;
 use LibreCat::Citation;
 
 get '/livecitation' => sub {
+
+    if (Dancer::config->{environment} eq 'deployment') {
+        status 'not_found';
+        return template '404';
+    }
+
     my $params = params;
     unless (($params->{id} and $params->{style}) or $params->{info}) {
         return "Required parameters are 'id' and 'style'.";
@@ -38,3 +43,5 @@ get '/livecitation' => sub {
             {citation => $response->{$params->{style}}};
     }
 };
+
+1;
