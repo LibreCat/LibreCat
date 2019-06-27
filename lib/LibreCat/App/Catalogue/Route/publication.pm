@@ -89,7 +89,7 @@ Some fields are pre-filled.
             }
         }
 
-        if ( h->locale_exists( param('lang') ) ) {
+        if (h->locale_exists(param('lang'))) {
             $data->{lang} = param('lang');
         }
 
@@ -163,33 +163,46 @@ Checks if the user has the rights to update this record.
         p->{finalSubmit} //= '';
 
         if ($p->{new_record}) {
+
             # ok
         }
-        elsif (p->{finalSubmit} eq 'recPublish' &&
-            p->can_make_public(
+        elsif (
+            p->{finalSubmit} eq 'recPublish'
+            && p->can_make_public(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
-            )) {
+            )
+            )
+        {
             # ok
         }
-        elsif ($p->{finalSubmit} eq 'recReturn' &&
-            p->can_return(
+        elsif (
+            $p->{finalSubmit} eq 'recReturn'
+            && p->can_return(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
-            )) {
+            )
+            )
+        {
             # ok
         }
-        elsif ($p->{finalSubmit} eq 'recSubmit' &&
-            p->can_submit(
+        elsif (
+            $p->{finalSubmit} eq 'recSubmit'
+            && p->can_submit(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
-            )) {
+            )
+            )
+        {
             # ok
         }
-        elsif (p->can_edit(
-            $p->{_id},
-            {user_id => session("user_id"), role => session("role")}
-            )) {
+        elsif (
+            p->can_edit(
+                $p->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             # ok
         }
         else {
@@ -214,28 +227,30 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
-        my $is_error_record   = 0;
-        my $error_messages    = '';
-        my $is_new_record     = $p->{new_record};
+        my $is_error_record = 0;
+        my $error_messages  = '';
+        my $is_new_record   = $p->{new_record};
         try {
             h->hook('publication-update')->fix_around(
                 $p,
                 sub {
                     publication->add(
-                        $p ,
+                        $p,
                         on_validation_error => sub {
                             my ($rec, $errors) = @_;
-                            librecat->log->errorf("%s not a valid publication %s", $rec->{_id} // 'NEW', $errors);
+                            librecat->log->errorf(
+                                "%s not a valid publication %s",
+                                $rec->{_id} // 'NEW', $errors);
                             $is_error_record = 1;
                             $error_messages  = $errors;
                         }
                     );
                 }
             );
-        } catch {
+        }
+        catch {
             if (is_instance($_, 'LibreCat::Error::VersionConflict')) {
-                flash warning =>
-                    "Could not save your changes. This publication was updated by someone else since you started editing.";
+                flash warning => h->localize("error.version_conflict");
             }
             else {
                 my $id = $p->{_id};
@@ -245,9 +260,12 @@ Checks if the user has the rights to update this record.
                 my $admin_email = h->config->{admin_email};
 
                 $is_error_record = 1;
-                $error_messages = [
-                    "Failed to update record $id. The admins have been notified. " .
-                    "Or, contact $admin_email when this problem persists."
+                $error_messages  = [
+                    sprintf(h->localize("error.update_failed"), $id) . " "
+                        . sprintf(
+                        h->localize("error.contact_amdin"),
+                        $admin_email
+                        )
                 ];
             }
         };
@@ -255,6 +273,7 @@ Checks if the user has the rights to update this record.
         # When we have an error record we return to the edit form and show
         # all errors...
         if ($is_error_record) {
+
             # The new_record is a field not available in the schema
             # which will be removed after validation. We need to se
             # it again
@@ -263,10 +282,11 @@ Checks if the user has the rights to update this record.
             my $templatepath = "backend/forms";
             my $template     = $p->{meta}->{template} // $p->{type};
 
-            flash danger => join("<br>",@{$error_messages // []});
+            flash danger => join("<br>", @{$error_messages // []});
 
             template "$templatepath/$template", $p;
         }
+
         # Else we return to the return url
         else {
             redirect $return_url || uri_for('/librecat');
