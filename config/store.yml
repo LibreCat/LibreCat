@@ -79,9 +79,6 @@ search:
                 type: custom
                 tokenizer: keyword
                 filter: [lowercase]
-              datestring:
-                type: custom
-                tokenizer: keyword
             filter:
                 my_asciifolding:
                     type: asciifolding
@@ -96,6 +93,7 @@ search:
                 #    language: de
                 #    country: DE
         mapping:
+          dynamic: 'false'
           properties:
             all:
                 type: text
@@ -112,18 +110,17 @@ search:
                   normalizer: sort_text
             active: {type: byte}
             acronym:
-              type: text
+              type: keyword
               copy_to: all
-              fields:
-                sort: *sort_text
             alternative_name:
               type: text
               copy_to: all
               fields:
+                exact: {type: text, analyzer: tag}
                 sort: *sort_text
-            grant_number: {type: text, analyzer: tag, copy_to: all}
-            psp_element: {type: text, analyzer: tag, copy_to: all}
-            call_identifier: {type: text, analyzer: tag}
+            grant_number: {type: keyword, copy_to: all}
+            psp_element: {type: keyword, copy_to: all}
+            call_identifier: {type: keyword, copy_to: all}
             description: {type: text, copy_to: all}
             funder:
               type: text
@@ -182,7 +179,7 @@ search:
                 'any': true
                 'all': true
                 '=': true
-                'exact': true
+                'exact': { field: "name.exact" }
               field: 'name'
               sort: {field: 'name.sort'}
             active: &active
@@ -202,15 +199,13 @@ search:
                 'all': true
                 '=': true
                 'exact': true
-              field: 'acronym'
-              sort: {field: 'acronym.sort'}
             altname:
               op:
                 'any': true
                 'all': true
                 '=': true
                 'exact': true
-              field: 'alternative_name'
+              field: { field: 'alternative_name.exact' }
               sort: {field: 'alternative_name.sort'}
             grantno:
               op:
@@ -234,7 +229,7 @@ search:
                 'any': true
                 'all': true
                 '=': true
-                'exact': true
+                'exact': { field: 'funder.exact' }
               field: 'funder'
             funded:
               op:
@@ -317,6 +312,7 @@ search:
             - file_date_updated()
         settings: *index_settings
         mapping:
+          dynamic: 'false'
           properties:
             all:
               type: text
@@ -337,21 +333,21 @@ search:
                   type: text
                   copy_to: all
                   fields:
-                          exact: {type: text, analyzer: tag}
+                    exact: {type: text, analyzer: tag}
             editor: *personField
             translator: *personField
             supervisor: *personField
             creator:
               properties:
                 id: {type: keyword}
-                login: {type: text, analyzer: tag}
-            type: {type: text, analyzer: tag, fielddata: 'true'}
-            type_old: {type: text, analyzer: tag}
+                login: {type: keyword}
+            type: {type: keyword}
+            type_old: {type: keyword}
             research_data: {type: byte}
             year: {type: date, format: year, copy_to: all}
             language:
               properties:
-                iso: {type: text, analyzer: tag}
+                iso: {type: keyword}
             extern: {type: byte}
             funded_apc: {type: byte}
             quality_controlled: {type: byte}
@@ -359,33 +355,24 @@ search:
             ec_funded: {type: byte}
             volume: {type: text, analyzer: tag}
             intvolume:
-              type: text
-              analyzer: tag
-              fields:
-                sort: *sort_text
+              type: integer
             issue: {type: text}
-            article_type: {type: text}
+            article_type: {type: keyword}
             article_number: {type: text, analyzer: tag}
             thematic_area: {type: text, analyzer: tag}
             publication_identifier:
               properties:
                 isbn: &pub_id_field
-                  type: text
-                  analyzer: tag
+                  type: keyword
                   copy_to: all
-                  fields:
-                    sort: &sort_keyword
-                      type: keyword
-                      store: 'false'
-                      normalizer: sort_keyword
                 issn: *pub_id_field
                 eissn: *pub_id_field
                 eisbn: *pub_id_field
                 unknown: *pub_id_field
-            status: {type: text, analyzer: tag, fielddata: 'true'}
-            publication_status: {type: text, analyzer: tag}
-            report_number: {type: text, analyzer: tag}
-            ipn: {type: text, analyzer: tag}
+            status: {type: keyword}
+            publication_status: {type: keyword}
+            report_number: {type: keyword}
+            ipn: {type: keyword}
             application_number: {type: text, index: 'false'}
             conference:
               properties:
@@ -437,14 +424,14 @@ search:
                 exact: {type: text, analyzer: tag}
                 sort: *sort_text
             doi: {type: keyword, copy_to: all}
-            ddc: {type: text}
+            ddc: {type: keyword, copy_to: all}
             external_id:
               properties:
-                isi: {type: text}
-                arxiv: {type: text}
-                pubmed: {type: text}
-                inspire: {type: text}
-                scoap3: {type: text}
+                isi: {type: keyword, copy_to: all}
+                arxiv: {type: keyword, copy_to: all}
+                pubmed: {type: keyword, copy_to: all}
+                inspire: {type: keyword, copy_to: all}
+                scoap3: {type: keyword, copy_to: all}
             isi: {type: byte}
             arxiv: {type: byte}
             pubmed: {type: byte}
@@ -464,14 +451,14 @@ search:
                 relation: {type: keyword}
                 title: {type: text}
                 description: {type: text}
-                creator: {type: text, analyzer: tag}
+                creator: {type: keyword}
                 request_a_copy: {type: byte}
             main_file_link:
               properties:
                 url: {type: text, analyzer: tag}
                 open_access: {type: byte}
             oa: {type: byte}
-            alternative_id: {type: text, analyzer: tag, copy_to: all}
+            alternative_id: {type: keyword, copy_to: all}
             defense_date: {type: date, index: 'false'}
             locked: {type: byte}
             user_id: {type: text, index: 'false'}
@@ -523,7 +510,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.issn'
-              sort: {field: 'publication_identifier.issn.sort'}
+              sort: {field: 'publication_identifier.issn'}
               description: "journal/series identifier"
             eissn:
               op:
@@ -532,7 +519,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.eissn'
-              sort: {field: 'publication_identifier.eissn.sort'}
+              sort: {field: 'publication_identifier.eissn'}
               description: "ejournal/series identifier"
             isbn:
               op:
@@ -541,7 +528,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.isbn'
-              sort: {field: 'publication_identifier.isbn.sort'}
+              sort: {field: 'publication_identifier.isbn'}
               description: "unique publication identifier"
             eisbn:
               op:
@@ -550,7 +537,7 @@ search:
                 'exact': true
                 '<>': true
               field: 'publication_identifier.eisbn'
-              sort: {field: 'publication_identifier.eisbn.sort'}
+              sort: {field: 'publication_identifier.eisbn'}
             project:
               op:
                 'any': true
@@ -746,7 +733,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': {field: 'creator.id.exact'}
+                'exact': true
               field: 'creator.id'
             person:
               op:
@@ -789,7 +776,7 @@ search:
                 'exact': true
                 '<>': true
                 'any' : true
-              field: ['type']
+              field: 'type'
               sort: true
               values: "see the list of publication types"
             documenttype: *type
@@ -859,12 +846,12 @@ search:
                 '=': true
                 'exact': true
                 '<>': true
-              field: ['oa']
+              field: 'oa'
             oa:
               op:
                 '=': true
                 '<>': true
-              field: ['oa']
+              field: 'oa'
             embargo:
               op:
                 '=': true
@@ -890,7 +877,7 @@ search:
                 'any': true
                 'all': true
                 '=': true
-                'exact': true
+                'exact': { field': 'series_title.exact' }
                 '<>': true
               field: 'series_title'
               sort: {field: 'series_title.sort'}
@@ -900,7 +887,7 @@ search:
                 'all': true
                 '=': true
                 '<>': true
-                'exact': true
+                'exact': { field: 'publisher.exact' }
               field: 'publisher'
               sort: {field: 'publisher.sort'}
             ddc:
@@ -916,14 +903,14 @@ search:
                 'exact': true
                 '<>': true
               field: volume
-              sort: {field: 'intvolume.sort'}
+              sort: {field: 'intvolume'}
             intvolume:
               op:
                 '=': true
                 'exact': true
                 '<>': true
               field: intvolume
-              sort: {field: 'intvolume.sort'}
+              sort: true
             hide:
               op:
                 '=': true
@@ -952,6 +939,7 @@ search:
         index: librecat_user
         settings: *index_settings
         mapping:
+          dynamic: 'false'
           properties:
             all:
               type: text
@@ -990,7 +978,7 @@ search:
             former: {type: byte}
             nonexist: {type: byte}
             researcher: {type: byte}
-            email_encoded: {type: keyword}
+            email_encoded: {type: text, analyzer: tag}
             photo: {type: keyword}
             department:
               properties:
@@ -1013,19 +1001,16 @@ search:
             account_status: {type: text, analyzer: tag}
             super_admin: {type: byte}
             login:
-              type: text
-              analyzer: tag
-              fields:
-                sort: *sort_keyword
+              type: keyword
             ext_institution: {type: text}
-            password: {type: text}
-            orcid: {type: text, analyzer: tag}
-            inspire: {type: text, analyzer: tag}
-            arxiv: {type: text, analyzer: tag}
-            googleScholar: {type: text, analyzer: tag}
-            github: {type: text, analyzer: tag}
-            researcherId: {type: text, analyzer: tag}
-            scopusId: {type: text, analyzer: tag}
+            password: {type: keyword, index: 'false'}
+            orcid: {type: keyword}
+            inspire: {type: keyword}
+            arxiv: {type: keyword}
+            googleScholar: {type: keyword}
+            github: {type: text, index: 'false'}
+            researcherId: {type: keyword}
+            scopusId: {type: keyword}
             alias: {type: text, analyzer: tag}
             email: {type: text, analyzer: tag}
             style: {type: keyword}
@@ -1097,7 +1082,6 @@ search:
               op:
                 '=': true
               field: login
-              sort: {field: 'login.sort'}
             alias:
               op:
                 '=': true
@@ -1118,6 +1102,7 @@ search:
         index: librecat_department
         settings: *index_settings
         mapping:
+          dynamic: 'false'
           properties:
             all:
               type: text
@@ -1132,7 +1117,7 @@ search:
             tree:
               properties:
                 _id: {type: keyword}
-            layer: {type: text, analyzer: tag}
+            layer: {type: integer}
             inactive: {type: byte}
             display:
               type: text
@@ -1196,6 +1181,7 @@ search:
         index: librecat_research_group
         settings: *index_settings
         mapping:
+          dynamic: 'false'
           properties:
             all:
               type: text
@@ -1207,7 +1193,7 @@ search:
               fields:
                 exact: {type: text, analyzer: tag}
                 sort: *sort_text
-            acronym: {type: text, analyzer: tag}
+            acronym: {type: keyword, copy_to: all}
             start_date:
               type: keyword
             end_date:
