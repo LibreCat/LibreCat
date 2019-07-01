@@ -1,3 +1,10 @@
 # map fields to DataCite XML
 
 librecat_uri_base('uri_base')
+
+if exists(license)
+  move(license, tmp)
+  lookup_in_config(tmp, locale.en.licenses)
+  copy(tmp.deed_url, license.uri)
+  copy(tmp.name, license.name)
+end

@@ -1,0 +1,29 @@
+<strong>[% h.loc("forms.${type}.field.license.has_accepted_license.label") %]</strong>[% IF file %]<span class="starMandatory"></span>[% END %]<br />
+
+<div class="row innerrow">
+  <div class="col-md-12 alert alert-info{% IF fields.file_upload.license.has_accepted_license.mandatory %} mandatory{% END %}" id="has_accepted_license_alert">
+    [% h.loc("forms.${type}.field.license.has_accepted_license.disclaimer_text") %]
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="1" id="id_has_accepted_license" name="has_accepted_license"[% IF has_accepted_license == "1" %] checked="checked"[% END %] /> <strong>[% h.loc("forms.${type}.field.license.has_accepted_license.accept_text") %]</strong>
+    </label>
+  </div>
+  <p class="text-body">[% h.loc("forms.${type}.field.license.info.text") %] [% h.loc("forms.${type}.field.license.info.contact") %]</p>
+  </div>
+</div>
+
+<script>
+$('#id_has_accepted_license').click(function(){
+  if(!$('#id_has_accepted_license').is(':checked')){
+    if ($('.dropzone').first().children().length > 1){
+      $('#liStepThree, #liStepFour').css('visibility','hidden');
+      $('#has_accepted_license_alert').removeClass('alert-info');
+      $('#has_accepted_license_alert').addClass('alert-danger');
+    }
+  }
+  else {
+    $('#has_accepted_license_alert').removeClass('alert-danger');
+    $('#has_accepted_license_alert').addClass('alert-info');
+  }
+});
+</script>

@@ -1,7 +1,12 @@
 Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
-
+2.0.0_02 2019-06-17
+    - Adding specific facets
+    - Fixing locale issues
+    - Fixing licenses in exports
+    - Updating Catmandu::DBI to allow for lazy loading of database handles
+    
 2.0.0_01 2019-06-03
     - Elasticsearch 6.5 support
     - Adding an LibreCat API for record and file management

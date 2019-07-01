@@ -1,0 +1,7 @@
+#fixes/licenses.fix
+
+if exists(license)
+  move(license, tmp)
+  lookup_in_config(tmp, locale.en.licenses)
+  move(tmp.deed_url, license)
+end
