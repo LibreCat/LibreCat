@@ -60,7 +60,7 @@ LibreCat::Hook::register_doi - a LibreCat hook that registers a DOI
 =head1 CONFIGURATION
 
     # See: https://github.com/LibreCat/LibreCat/wiki/DOI-Registration for more information
-    
+
     doi:
        prefix: "10.5072/test"
        queue: datacite
