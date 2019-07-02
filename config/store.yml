@@ -463,7 +463,7 @@ search:
             locked: {type: byte}
             user_id: {type: text, index: 'false'}
             citation: {type: object, enabled: 'false'}
-            cc_license: {type: keyword}
+            license: {type: keyword}
         cql_mapping:
           default_index: basic
           indexes:
