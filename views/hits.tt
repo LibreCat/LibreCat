@@ -78,7 +78,7 @@
 [% ELSE %]
     <div class="col-md-12">
 [% END %]
-    <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% t = entry.type; %] [% h.loc("forms.${t}.label") %] | [% h.loc("hits.id") %]: <span class="pubid">[% entry._id %]</span> </em>
+    <em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% t = entry.type; %] [% h.loc("forms.${t}.label") %] | [% h.loc("hits.id") %]: <span class="pubid">[% entry._id %]</span> [% IF entry.oa %]| <img src="[% uri_base %]/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA">[% END %]</em>
     <div class="citation-block-div">
     [%- IF style == 'short' %]
 	  <a href="[% uri_base %]/[% IF backend %]librecat/record/edit[% ELSE %]record[% END %]/[% entry._id %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
