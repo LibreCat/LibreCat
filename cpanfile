@@ -21,12 +21,12 @@ on 'test' => sub {
 requires 'Business::ISBN', 0;
 
 # Catmandu
-requires 'Catmandu', '>=1.0606';
+requires 'Catmandu', '>=1.2002';
 requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
 requires 'Catmandu::BibTeX';
-requires 'Catmandu::DBI', '>=0.0511';
+requires 'Catmandu::DBI', '>=0.09';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Fix::Date';
 requires 'Catmandu::Identifier', '>=0.05';
@@ -43,6 +43,7 @@ requires 'Search::Elasticsearch::Client::6_0';
 
 # Mojolicious
 requires 'Mojolicious', '>=7.70';
+requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
 
 #Dancer
 requires 'Dancer';
@@ -53,6 +54,7 @@ requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::StreamData';
 requires 'Dancer::Logger::Log4perl';
+requires 'Dancer::Plugin::FlashMessage';
 requires 'Dancer::Session::PSGI';
 requires 'Template';
 requires 'Template::Plugin::Date';

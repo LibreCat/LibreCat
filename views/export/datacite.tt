@@ -32,28 +32,29 @@
   [%- IF lang %]
   <language>[% lang.0.iso | xml_strict %]</language>
   [%- END %]
-  <resourceType resourceTypeGeneral="[% type == 'research_data' ? 'Dataset' : 'Text'%]">[% type %]</resourceType>
+  <resourceType resourceTypeGeneral="[% resourceTypeGeneral %]">[% type %]</resourceType>
   <alternateIdentifiers>
     <alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/record/[% _id %]</alternateIdentifier>
   </alternateIdentifiers>
   <relatedIdentifiers>
     <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/record/[% _id%].json</relatedIdentifier>
     [%- IF publication_identifier.isbn %]
-    <relatedIdentifier relatedIdentifierType="ISBN" relationType="isVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="ISBN" relationType="IsVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF publication_identifier.issn %]
-    <relatedIdentifier relatedIdentifierType="ISNN" relationType="isVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="ISNN" relationType="IsVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF external_id.arxiv %]
-    <relatedIdentifier relatedIdentifierType="arXiv" relationType="isVersionOf">[% external_id.arxiv.0 | xml_strict %]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="arXiv" relationType="IsVersionOf">[% external_id.arxiv.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF external_id.pmid %]
-    <relatedIdentifier relatedIdentifierType="PMID" relationType="isVersionOf">[% external_id.pmid.0 | xml_strict %]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="PMID" relationType="IsVersionOf">[% external_id.pmid.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF urn %]
     <relatedIdentifier relatedIdentifierType="URN" relationType="IsReviewedBy">[% urn | xml_strict %]</relatedIdentifier>
     [%- END %]
   </relatedIdentifiers>
+  [%- IF file %]
   <sizes>
     [%- FOREACH f IN file %]
     <size>[% f.file_size | xml_strict %] bytes</size>
@@ -64,9 +65,10 @@
     <format>[% f.content_type | xml_strict %]</format>
     [%- END %]
   </formats>
-  [%- IF license %]
+  [%- END %]
+  [%- IF license.uri %]
   <rightsList>
-    <rights rightsURI="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</rights>
+    <rights rightsURI="[% license.uri | xml_strict %]">[% license.name | xml_strict %]</rights>
   </rightsList>
   [%- END %]
   [%- IF abstract %]

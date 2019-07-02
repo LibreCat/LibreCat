@@ -1,28 +1,40 @@
 package LibreCat::Hook::add_urn;
 
-=pod
-
-=head1 NAME
-
-LibreCat::Hook::add_urn - create a urn field from the input data
-
-=cut
-
 use Catmandu::Sane;
 use LibreCat qw(config);
-use Carp;
+use Catmandu::Util qw(:is);
 use Moo;
+use JSON::MaybeXS qw();
+
+has json => (
+    is      => "ro",
+    lazy    => 1,
+    default => sub {
+        JSON::MaybeXS->new(utf8 => 0);
+    },
+    init_arg => undef
+);
 
 sub fix {
-    my ($self, $pub) = @_;
+    my ($self, $data) = @_;
 
-    return $pub if $pub->{urn};
+    return $data if $data->{urn};
 
-    return $pub unless ($pub->{type} and $pub->{_id});
+    return $data unless ($data->{type} and $data->{_id});
 
-    if ($pub->{file}) {
+    my @files;
+    for (@{$data->{file}}) {
+        if (is_string($_)) {
+            push @files, $self->json()->decode($_);
+        }
+        else {
+            push @files, $_;
+        }
+    }
+
+    if (@files) {
         my $oa = 0;
-        foreach my $f (@{$pub->{file}}) {
+        foreach my $f (@files) {
             if (    $f->{access_level} eq 'open_access'
                 and $f->{relation} eq "main_file")
             {
@@ -30,13 +42,13 @@ sub fix {
             }
         }
 
-        if ($oa and $pub->{type} ne 'research_data') {
-            $pub->{urn}
-                = $self->_generate_urn(config->{urn_prefix}, $pub->{_id});
+        if ($oa and $data->{type} ne 'research_data') {
+            $data->{urn}
+                = $self->_generate_urn(config->{urn_prefix}, $data->{_id});
         }
     }
 
-    $pub;
+    $data;
 }
 
 sub _generate_urn {
@@ -61,3 +73,22 @@ sub _generate_urn {
 }
 
 1;
+
+__END__
+
+
+=pod
+
+=head1 NAME
+
+LibreCat::Hook::add_urn - creates a urn field from the input data
+
+=head1 SYNOPSIS
+
+    # in your config
+    hooks:
+      publication-update:
+        before_fixes:
+         - add_urn
+
+=cut

@@ -2,7 +2,6 @@ package LibreCat::Cmd::research_group;
 
 use Catmandu::Sane;
 use LibreCat qw(research_group);
-use Path::Tiny;
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -67,7 +66,7 @@ sub command {
     elsif ($cmd eq 'get') {
         my $id = shift @$args;
 
-        return $self->_on_all(
+        return $self->id_or_file(
             $id,
             sub {
                 $self->_get(shift);
@@ -80,7 +79,7 @@ sub command {
     elsif ($cmd eq 'delete') {
         my $id = shift @$args;
 
-        return $self->_on_all(
+        return $self->id_or_file(
             $id,
             sub {
                 $self->_delete(shift);
@@ -89,22 +88,6 @@ sub command {
     }
     elsif ($cmd eq 'valid') {
         return $self->_valid(@$args);
-    }
-}
-
-sub _on_all {
-    my ($self, $id_file, $callback) = @_;
-
-    if (-r $id_file) {
-        my $r = 0;
-        for (path($id_file)->lines) {
-            chomp;
-            $r += $callback->($_);
-        }
-        return $r;
-    }
-    else {
-        return $callback->($id_file);
     }
 }
 

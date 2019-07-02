@@ -342,6 +342,19 @@ sub get_access_store {
     $pkg->new(%$access_opts);
 }
 
+sub get_temp_store {
+    my ($self) = @_;
+
+    my $temp_store = $self->config->{filestore}->{temp}->{package};
+    my $temp_opts  = $self->config->{filestore}->{temp}->{options} // {};
+
+    return undef unless $temp_store;
+
+    my $pkg = Catmandu::Util::require_package($temp_store,
+        'Catmandu::Store::File');
+    $pkg->new(%$temp_opts);
+}
+
 sub show_locale {
     $_[0]->config->{i18n}->{show_locale};
 }
