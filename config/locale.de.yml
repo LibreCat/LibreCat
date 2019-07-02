@@ -42,6 +42,10 @@ header:
     ger: "Deutsch"
   department_affiliation: "Fakultät/ Zugehörigkeit"
   logged_in_as: "Eingeloggt als"
+error:
+  version_conflict: "Ihre Änderungen konnten nicht gespeichert werden. Diese Publikation wurde in der Zwischenzeit von jemand anderem bearbeitet."
+  update_failed: "Publikation %s konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
+  contact_admin: "Bitte kontaktieren Sie %s, falls das Problem bestehen bleibt."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 styles:

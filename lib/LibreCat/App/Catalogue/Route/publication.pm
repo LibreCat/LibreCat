@@ -8,7 +8,7 @@ Route handler for publications.
 
 use Catmandu::Sane;
 use Catmandu;
-use LibreCat qw(publication);
+use LibreCat qw(:self publication);
 use Catmandu::Fix qw(expand);
 use Catmandu::Util qw(is_instance);
 use LibreCat::App::Helper;
@@ -44,6 +44,8 @@ Some fields are pre-filled.
 
         return template 'backend/add_new' unless $type;
 
+        # Need to generate a new publication identifier to be
+        # able to load files associated with this new record...
         my $id = publication->generate_id;
 
         # set some basic values
@@ -87,7 +89,7 @@ Some fields are pre-filled.
             }
         }
 
-        if ( h->locale_exists( param('lang') ) ) {
+        if (h->locale_exists(param('lang'))) {
             $data->{lang} = param('lang');
         }
 
@@ -161,33 +163,46 @@ Checks if the user has the rights to update this record.
         p->{finalSubmit} //= '';
 
         if ($p->{new_record}) {
+
             # ok
         }
-        elsif (p->{finalSubmit} eq 'recPublish' &&
-            p->can_make_public(
+        elsif (
+            p->{finalSubmit} eq 'recPublish'
+            && p->can_make_public(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
-            )) {
+            )
+            )
+        {
             # ok
         }
-        elsif ($p->{finalSubmit} eq 'recReturn' &&
-            p->can_return(
+        elsif (
+            $p->{finalSubmit} eq 'recReturn'
+            && p->can_return(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
-            )) {
+            )
+            )
+        {
             # ok
         }
-        elsif ($p->{finalSubmit} eq 'recSubmit' &&
-            p->can_submit(
+        elsif (
+            $p->{finalSubmit} eq 'recSubmit'
+            && p->can_submit(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
-            )) {
+            )
+            )
+        {
             # ok
         }
-        elsif (p->can_edit(
-            $p->{_id},
-            {user_id => session("user_id"), role => session("role")}
-            )) {
+        elsif (
+            p->can_edit(
+                $p->{_id},
+                {user_id => session("user_id"), role => session("role")}
+            )
+            )
+        {
             # ok
         }
         else {
@@ -195,8 +210,6 @@ Checks if the user has the rights to update this record.
             status '403';
             forward '/access_denied';
         }
-
-        delete $p->{new_record};
 
         $p = h->nested_params($p);
 
@@ -214,33 +227,70 @@ Checks if the user has the rights to update this record.
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
+        my $is_error_record = 0;
+        my $error_messages  = '';
+        my $is_new_record   = $p->{new_record};
         try {
             h->hook('publication-update')->fix_around(
                 $p,
                 sub {
-                    publication->add($p);
+                    publication->add(
+                        $p,
+                        on_validation_error => sub {
+                            my ($rec, $errors) = @_;
+                            librecat->log->errorf(
+                                "%s not a valid publication %s",
+                                $rec->{_id} // 'NEW', $errors);
+                            $is_error_record = 1;
+                            $error_messages  = $errors;
+                        }
+                    );
                 }
             );
-        } catch {
+        }
+        catch {
             if (is_instance($_, 'LibreCat::Error::VersionConflict')) {
-                flash warning =>
-                    "Could not save your changes. This publication was updated by someone else since you started editing.";
+                flash warning => h->localize("error.version_conflict");
             }
             else {
-                my $id = $p->{_id} // '<new>';
+                my $id = $p->{_id};
                 h->log->fatal("failed to update record $id");
-                h->log->fatal($@);
-                my $admin_email = h->config->{admin_email};
-                my $message =
-    "Failed to update record $id. The admins have been notified. " .
-    "Or, contact $admin_email when this problem persists.";
+                h->log->fatal($_);
 
-                flash danger => $message;
+                my $admin_email = h->config->{admin_email};
+
+                $is_error_record = 1;
+                $error_messages  = [
+                    sprintf(h->localize("error.update_failed"), $id) . " "
+                        . sprintf(
+                        h->localize("error.contact_amdin"),
+                        $admin_email
+                        )
+                ];
             }
         };
 
+        # When we have an error record we return to the edit form and show
+        # all errors...
+        if ($is_error_record) {
 
-        redirect $return_url || uri_for('/librecat');
+            # The new_record is a field not available in the schema
+            # which will be removed after validation. We need to se
+            # it again
+            $p->{new_record} = 1 if $is_new_record;
+
+            my $templatepath = "backend/forms";
+            my $template     = $p->{meta}->{template} // $p->{type};
+
+            flash danger => join("<br>", @{$error_messages // []});
+
+            template "$templatepath/$template", $p;
+        }
+
+        # Else we return to the return url
+        else {
+            redirect $return_url || uri_for('/librecat');
+        }
     };
 
 =head2 GET /return/:id
