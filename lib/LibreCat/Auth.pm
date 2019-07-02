@@ -116,7 +116,7 @@ Returns a hash on success, undef on failure.
 This hash contains information about the user, and the module
 that authenticated:
 
-    { uid => "njfranck", package => "LibreCat::Auth::Bag", package_id => "LibreCat::Auth::Bag" }
+    { uid => "mozart", package => "LibreCat::Auth::Bag", package_id => "LibreCat::Auth::Bag" }
 
 This "package_id" is used to distinguish between instances of the same package.
 

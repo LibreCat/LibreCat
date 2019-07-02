@@ -160,7 +160,7 @@ store:
           _id: 1234
           super_admin: 1
           account_status: active
-        - login: njfranck
+        - login: mozart
           password: '$2a$08$bfC3ySsDzgy/mEV/GrxL6uRCRn4Fnb25l5z16XVedP2i7aJE8MEDG'
           _id: 5678
           account_status: inactive

@@ -36,7 +36,7 @@ is $u->{login}, 'einstein';
 ok !$user->get('unknown_ID');
 
 is(
-    $user->find_by_username("njfranck"),
+    $user->find_by_username("mozart"),
     undef,
     "find_by_username may not return inactive users"
 );
