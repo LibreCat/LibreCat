@@ -147,6 +147,20 @@ sub to_session {
 
 }
 
+sub is_session {
+
+    my( $self, $session ) = @_;
+
+    is_hash_ref( $session ) or return;
+
+    for(qw(role user user_id lang)){
+        is_string( $session->{$_} ) or return;
+    }
+
+    1;
+
+}
+
 1;
 
 __END__
@@ -178,6 +192,14 @@ LibreCat::Model::User - a user model
 =head2 find_by_username($name)
 
 =head2 to_session($user)
+
+convert a user record to session record
+
+=head1 is_session($hash)
+
+does the session record contain the necessary user attributes?
+
+false means that a session may exists, but that the user is logged in.
 
 =head1 SEE ALSO
 

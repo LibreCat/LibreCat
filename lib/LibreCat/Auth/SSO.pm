@@ -59,6 +59,14 @@ sub get_auth_sso {
 
 }
 
+sub remove_auth_sso {
+
+    my ($self, $session) = @_;
+    _check_plack_session($session);
+    $session->remove($self->session_key);
+
+}
+
 =pod
 
 =head1 NAME
@@ -117,6 +125,20 @@ Default: "/access_denied"
 base url of the Plack application
 
 Default: "http://localhost:5001"
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item get_auth_sso( $self, $plack_session ) : $hash
+
+return hash that represents auth_sso in the current plack session
+
+=item remove_auth_sso( $self, $plack_session )
+
+Is same as $plack_session->remove( "auth_sso" )
 
 =back
 

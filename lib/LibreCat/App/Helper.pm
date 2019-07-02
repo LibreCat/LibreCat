@@ -461,7 +461,6 @@ sub logout_user {
     session role     => undef;
     session user     => undef;
     session user_id  => undef;
-    session auth_sso => undef;
 
 }
 
