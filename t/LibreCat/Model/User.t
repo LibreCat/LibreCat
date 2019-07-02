@@ -59,9 +59,9 @@ ok(
         role => "super_admin",
         user_id => "1234",
         lang => "en"
-    })
+    }))
 );
-    
+
 is(
     $user->find_by_username("mozart"),
     undef,
