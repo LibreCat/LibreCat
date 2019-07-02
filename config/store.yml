@@ -429,12 +429,12 @@ search:
               properties:
                 isi: {type: keyword, copy_to: all}
                 arxiv: {type: keyword, copy_to: all}
-                pubmed: {type: keyword, copy_to: all}
+                pmid: {type: keyword, copy_to: all}
                 inspire: {type: keyword, copy_to: all}
                 scoap3: {type: keyword, copy_to: all}
             isi: {type: byte}
             arxiv: {type: byte}
-            pubmed: {type: byte}
+            pmid: {type: byte}
             inspire: {type: byte}
             scoap3: {type: byte}
             file_date_updated: {type: date, format: date_time_no_millis}
