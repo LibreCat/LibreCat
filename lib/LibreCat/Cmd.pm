@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use I18N::Langinfo qw(langinfo CODESET);
 use Encode qw(decode);
 use Log::Any ();
+use Path::Tiny;
 use namespace::clean;
 
 our $VERSION = '0.01';
@@ -49,6 +50,22 @@ sub command          { }
 sub log {
     my ($package, $filename, $line) = caller;
     Log::Any->get_logger(category => $package);
+}
+
+sub id_or_file {
+    my ($self, $id_file, $callback) = @_;
+
+    if (defined($id_file) && -r $id_file) {
+        my $r = 0;
+        for (path($id_file)->lines) {
+            chomp;
+            $r += $callback->($_);
+        }
+        return $r;
+    }
+    else {
+        return $callback->($id_file);
+    }
 }
 
 1;

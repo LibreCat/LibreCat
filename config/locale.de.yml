@@ -42,6 +42,10 @@ header:
     ger: "Deutsch"
   department_affiliation: "Fakultät/ Zugehörigkeit"
   logged_in_as: "Eingeloggt als"
+error:
+  version_conflict: "Ihre Änderungen konnten nicht gespeichert werden. Diese Publikation wurde in der Zwischenzeit von jemand anderem bearbeitet."
+  update_failed: "Publikation %s konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
+  contact_admin: "Bitte kontaktieren Sie %s, falls das Problem bestehen bleibt."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 styles:
@@ -57,11 +61,11 @@ tabs:
   publications: "Publikationen"
   projects: "Projekte"
   departments: "Einrichtungen"
-  authors: "Autoren"
+  authors: "Personen"
 hits:
   id: "LibreCat-ID"
-  author: "Autorin / Autor"
-  authors: "Autorinnen / Autoren"
+  author: "Autor*in"
+  authors: "Autor*innen"
   publication: "Publikation"
   publications: "Publikationen"
   data_publication: "Datenpublikation"
@@ -71,7 +75,7 @@ home:
   operators: "Operatoren"
   stats:
     publications: "Publikationen"
-    researcher: "Autor/Innen"
+    researcher: "Personen"
     oa_publications: "Open-Access-Publikationen"
     projects: "Projekte"
 main_page:
@@ -116,7 +120,7 @@ person_profile:
   id_not_found: "ID nicht gefunden."
   former_researcher: "Ehemaliger LibreCat Forscher"
   local_id: "ID"
-  no_author_ids: "Keine Autoren-IDs gesetzt."
+  no_author_ids: "Keine Personen-IDs gesetzt."
   person_id_title: "Diese IDs werden direkt nach dem Speichern auf Ihrer Personenseite sichtbar sein."
 project:
   funded_ext: "Drittmittelprojekt"
@@ -141,9 +145,9 @@ facets:
   filter_authorlist: "Autorenliste filtern"
   filter_publications: "Publikationen filtern"
   visibility_status: "Status"
-  current_authors: "LibreCat Autoren"
-  current_editors: "LibreCat Herausgeber"
-  former_authors: "Ehemalige LibreCat Autoren"
+  current_authors: "LibreCat Autor*innen"
+  current_editors: "LibreCat Herausgeber*innen"
+  former_authors: "Ehemalige LibreCat Autor*innen"
   department: "Einrichtung"
   publication_type: "Publikationstyp"
   publishing_year: "Publikationsjahr"
@@ -182,7 +186,7 @@ facets:
     year: Jahr
     date_updated: Änderungsdatum
     title: Titel
-    author: Erstautor
+    author: Erstautor/in
     type: Publikationstyp
     publication: "Publ./ Serie/ Journal"
     fullname: "Alphabetisch"
@@ -336,7 +340,7 @@ forms:
         label_short: "Alt. Titel"
         placeholder: "z.B. Handbook of eBook Publishing"
       author: &author_translator
-        label: "Autor"
+        label: "Autor*in"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
         idm_extern: "extern"
         first_name:
@@ -433,7 +437,8 @@ forms:
             description: "Beschreibung"
       license: &license
         heading: "Urheberrecht / Lizenzen"
-        pub_license:
+        info_page: "Infoseite über Lizenzen (Lizenz wählen)"
+        has_accepted_license:
           label: "Hinweise zum Urheberrecht"
           disclaimer_text: "Hiermit stelle ich der Universität LibreCat dieses Dokument zur elektronischen Speicherung und zur öffentlichen Zugänglichmachung in Datennetzen gemä&szlig; den Bedingungen zur Dokumentenspeicherung auf LibreCat, wie sie in den Rechtlichen Rahmenbedingungen für LibreCat dargestellt sind, zur Verfügung.<br><a href='/docs/howto/policy#depositpolicy' target='_blank'>LibreCat Deposit Policy / Rechtliche Rahmenbedingungen</a>"
           accept_text: "Ich stimme zu"
@@ -441,28 +446,11 @@ forms:
         info:
           text: "Fragen zur Policy / Lizenz?"
           contact: "Support Publikationsdienste, Tel.: 999/9999999, E-Mail: <a href=''>helpdesk@librecat.org</a>"
-        open_data_release:
-          label: "Open Data Release - Declaration"
-          disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
-          accept_text: "I have read and agree with the information above about releasing data under the selected license."
-          alert: "You need to accept the Open Data Release Statement because you have attached files to this record."
-        cc_license:
+        license_publication:
           label: "Creative Commons Lizenzen"
           select_text: "Falls Ihr hochgeladenes Dokument unter einer Creative Commons Lizenz steht, können Sie diese hier auswählen:<br>"
           select_a_license: "Lizenz wählen"
           license_deed: "Lizenzvertrag"
-          cc_0:
-            name: "Creative Commons Public Domain Dedication (CC0 1.0)"
-            deed_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.de"
-            legal_code_url: "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
-          cc_by:
-            name: "Creative Commons Namensnennung 4.0 International Public License (CC-BY 4.0)"
-            deed_url: "http://creativecommons.org/licenses/by/4.0/deed.de"
-            legal_code_url: "http://creativecommons.org/licenses/by/4.0/legalcode"
-          cc_by_sa:
-            name: "Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Public License (CC BY-SA 4.0)"
-            deed_url: "http://creativecommons.org/licenses/by-sa/4.0/deed.de"
-            legal_code_url: "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
       urn: &urn
         label: "URN"
         placeholder: "z.B. urn:nbn:de:0070-pub-12345678"
@@ -551,14 +539,14 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       editor: *editor_solo
       corporate_editor_solo: &corporate_editor_solo
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "heraugebende Körperschaft"
+        label_short: "hrsg. Körp."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       alternative_title: *alternative_title
       department: *department
@@ -627,13 +615,13 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       corporate_editor: &corporate_editor
-        label: "Körperschaftlicher Herausgeber"
-        label_short: "Körp. Hrsg."
+        label: "herausgebende Körperschaft"
+        label_short: "hrsg. Körp."
         placeholder: "z.B. World Health Organization - Regional Office for Europe (WHO-Europe)"
       edition: *edition
       department: *department
@@ -691,7 +679,7 @@ forms:
           label: "Nachname"
           label_short: "Hrsg. Nachn."
           placeholder: "z.B. Müller"
-        label: "Herausgeber"
+        label: "Herausgeber*in"
         label_short: "Hrsg."
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
@@ -1255,7 +1243,6 @@ forms:
       related_material.link: *related_material_link
       locked: *locked
       main_file_link: *main_file_link
-      editor: "Editor"
   research_data:
     label: "Datenpublikation"
     tab:
@@ -1322,26 +1309,14 @@ forms:
             description: "Beschreibung"
       license:
         heading: "Copyright und Lizenzen"
-        pub_license:
-            label: "Copyright Disclaimer"
-        data_reuse_license:
+        info_page: "Infoseite zu den Lizenzen (Lizenz wählen)"
+        license_data:
           label: "Data Re-Use License"
-          select_license: "Wählen Sie eine Lizenz aus unter der Ihre Daten verfügbar sein sollen:<br>"
+          select_text: "Wählen Sie eine Lizenz aus unter der Ihre Daten verfügbar sein sollen:<br>"
           select_a_license: "Lizenz wählen"
           alert: "Sie müssen eine Data Re-Use License auswählen, wenn Sie Dateien angehängt haben."
-          pddl:
-            select_text: "No restrictions - PDDL"
-            name: "The Open Data Commons Public Domain Dedication and License (PDDL) v1.0"
-            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data<br><a href='http://opendatacommons.org/licenses/pddl/' target='_blank'>http://opendatacommons.org/licenses/pddl/</a>"
-          odcby:
-            select_text: "Attribution required - ODC-By"
-            name: "The Open Data Commons Attribution License (ODC-By) v1.0"
-            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data<br><a href='http://opendatacommons.org/licenses/by/' target='_blank'>http://opendatacommons.org/licenses/by/</a>"
-          odbl:
-            select_text: "Share alike - ODbL"
-            name: "The Open Database License (ODbL) v1.0"
-            license_text: "Allows to copy, distribute and use the data, to produce works from the data, and to modify, transform and build upon the data. It requires the attribution of any public use of the data, or works produced from the data. Adapted version of this data, or works produced from an adapted data must also offer the data under the ODbL.<br><a href='http://opendatacommons.org/licenses/odbl/' target='_blank'>http://opendatacommons.org/licenses/odbl/</a>"
-        open_data_release:
+          license_deed: "Lizenzvertrag"
+        has_accepted_license:
           label: "Open Data Release - Declaration"
           disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
           accept_text: "I have read and agree with the information above about releasing data under the selected license."
@@ -1356,6 +1331,95 @@ forms:
       keyword: *keyword
       jel: *jel
       alternative_id: *alternative_id
+      ddc: *ddc
+      related_material.rd:
+        label: "Link zu LibreCat Eintrag"
+        label_short: "LibreCat-Rec."
+        placeholder: "Beginnen Sie zu tippen, um Ihre Publikationen zu durchsuchen."
+      related_material.link: *related_material_link
+      locked: *locked
+      main_file_link: *main_file_link
+  software:
+    label: "Wissenschaftliche Software"
+    tab:
+      basic_fields: "Details"
+      file_upload: "Software-Upload"
+      supplementary_fields: "Weitere Angaben"
+      related_material: "Verknüpfungen"
+    field:
+      document_type: *document_type
+      doi: *doi
+      title: *title
+      author: *author_translator
+      department: *department
+      project: *project
+      research_group: *research_group
+      publisher:
+        label: "Verlag"
+        placeholder: "Verlag"
+        defaultvalue: "LibreCat University"
+      year_extern: *year_extern
+      external_file:
+        label: "Externe Datei(en)"
+        checkbox: "Dateien verfügbar unter"
+      dropzone:
+        label: "<strong>Datei(en) hochladen</strong> (max. 500MB per file)"
+        dropzone_text: "Datei hier her ziehen... oder klicken!"
+        access_level: "Access Level:"
+        upload_date: "Upload Datum:"
+        user: "Nutzer:"
+        relation: "Relation:"
+        copy_link: "URL der Datei kopieren"
+        copy_link_popup: "Datei-URL in Zwischenablage kopieren: Strg+C, Eingabe"
+        access:
+          closed: "Autor/Reviewer"
+          until: "bis"
+          request_a_copy: "Kopie anfordern"
+          local: "Nur LibreCat"
+          open_access: "Open Access"
+        edit_modal:
+          heading: "Hochgeladene Datei bearbeiten"
+          heading_file: "Datei"
+          current_file: "Aktuelle Datei:"
+          relation: "Relation (\"Hochgeladenes Dokument ist...\")"
+          access:
+            open_access: "Open Access (Datei ist frei verf&uuml;gbar, ab sofort)"
+            local: "Local Access (Nur LibreCat)"
+            closed: "Closed Access (Nur Autor/Reviewer)"
+            request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
+            embargo: "Zu Open Access wechseln am:"
+          additional_information:
+            heading: "Zus&auml;tzliche Informationen"
+            title: "Titel"
+            description: "Beschreibung"
+      license:
+        heading: "Copyright und Lizenzen"
+        info_page: "Infoseite zu den Lizenzen"
+        license_software:
+          label: "Software Re-Use License"
+          select_text: "Wählen Sie eine Lizenz aus unter der Ihre Software verfügbar sein soll:<br>"
+          select_a_license: "Lizenz wählen"
+          alert: "Sie müssen eine Software Re-Use License auswählen, wenn Sie Dateien angehängt haben."
+          license_deed: "Lizenzvertrag"
+        has_accepted_license:
+          label: "Open Data Release - Declaration"
+          disclaimer_text: "I declare, that I am <strong>allowed to publish</strong> and to release the data under an <strong>Open Data License</strong>.<br><br>Rights of third parties are not violated. Any joint author has given his consent to publish and to release the data under an Open Data License.<br><br>I am aware that I am only allowed to publish <strong>anonymous data</strong> or other <strong>data without personal reference</strong>. For publishing person-related data I have to <strong>seek the agreement of the affected persons</strong>.<br>I declare that I do not violate these rules.<br>I am aware that this release might <strong>limit exploitation potential in terms of vending the data or achieving patents</strong>.<br>"
+          accept_text: "I have read and agree with the information above about releasing data under the selected license."
+          alert: "Sie müssen dem Open Data Release Statement zustimmen, da Sie Dateien angehängt haben."
+        other_data_license:
+          warning: "Sichtbar/Editierbar nur für Admins"
+          label: "Andere Lizenz"
+        info:
+          text: "Wenn keine der oben genannten Lizenzen zu Ihren Daten passt oder wenn Sie andere Fragen haben, kontaktieren Sie bitte:<br>"
+          contact: "<strong><a href='' target='_blank'>LibreCat</a><br>999/999999<br><a href=''>helpdesk@librecat.org</a><br></strong>"
+      abstract: *abstract
+      keyword: *keyword
+      jel: *jel
+      alternative_id:
+        label: "Returned Record IDs"
+        label_short: "Ret. Rec. IDs"
+        placeholder: ""
+        desc: "IDs von gelöschten Datensätzen, die auf diesen Datensatz umgeleitet werden."
       ddc: *ddc
       related_material.rd:
         label: "Link zu LibreCat Eintrag"
@@ -1387,7 +1451,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "Übersetzer"
+        label: "Übersetzer*in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1399,7 +1463,7 @@ forms:
           label: "Nachname"
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
-        label: "Autor (Original)"
+        label: "Autor/in (Original)"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       edition: *edition
@@ -1456,7 +1520,7 @@ forms:
           label: "Nachname"
           label_short: "Trans. Nachn."
           placeholder: "z.B. Müller"
-        label: "Übersetzer"
+        label: "Übersetzer*in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       author_secondary:
@@ -1468,7 +1532,7 @@ forms:
           label: "Nachname"
           label_short: "Autor Nachn."
           placeholder: "z.B. Müller"
-        label: "Autor"
+        label: "Autor/in"
         idm_extern: "extern"
         tooltip: "Auswählen für registrierte LibreCat Nutzer."
       alternative_title:
@@ -1557,7 +1621,7 @@ forms:
   mandatory_error: "Sie haben Pflichtfelder übersehen oder es sind andere Probleme aufgetreten! Bitte überprüfen Sie ihre Daten."
   form_change_form: "Editiermodus ändern"
   form_change_type: "Publikationstyp ändern"
-  form_sort_item: "Drag & drop, um die Position des Autors in der Autorenliste zu ändern"
+  form_sort_item: "Drag & drop, um die Position der Person in der Liste zu ändern"
   form_add_field: "Feld hinzufügen (+) or dieses Feld löschen (-)"
   form_relmat_record: "Eigene Publikation aus LibreCat mit dieser verbinden. Nach Auswahl wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
   form_relmat_link: "Externe Webseite mit dieser Publikation verbinden. Nach Klick auf (+) wählen Sie die Art der Verbindung (z.B. frühere Version). Der Link erscheint unter Zusatzmaterial."
@@ -1588,7 +1652,7 @@ forms:
         placeholder: "Nachricht"
       message_author:
         label: "Nachricht"
-        placeholder: "Nachricht an den Autor"
+        placeholder: "Nachricht an die Autorin/den Autor"
   publication_status:
     draft: "Entwurf"
     submitted: "Eingereicht"
@@ -1731,7 +1795,7 @@ help:
   my_dashboard: "Ihr Dashboard für die aktuelle Rolle"
   change_language: "Sprache wechseln"
   user_settings: "Rolle, Fakultät,<br>Editiermodus,<br>Standardsprache<br>ändern"
-  author_id: "Alias (zusätzlicher Name) und Autoren IDs (ORIC etc.) eintragen."
+  author_id: "Alias (zusätzlicher Name) und Autoren-IDs (ORIC etc.) eintragen."
   author_id_edit: "ID ändern / IDs ergänzen."
   add_new_button: "Neuen Eintrag in LibreCat anlegen: Bestehende Daten z.B. via DOI importieren oder über Formular selbst eintragen."
   quick_and_easy: "Sie haben einen Open-Access-Volltext (PDF-Datei)? Ziehen Sie in hier her und senden Sie das Formular ab. Wir vervollständigen den Eintrag für Sie und machen ihn öffentlich sichtbar."
@@ -1746,7 +1810,119 @@ help:
   citation: "Publikationsdaten im ausgewählten Zitationsstil."
   search: "In dieser Publikationsliste suchen."
   display_block: "Darstellung der Publikationsliste ändern (Treffer pro Seite, Sortierung, Zitationsstil)."
-cc_licenses:
-  cc_0: CC0 (1.0)
-  cc_by: CC BY (4.0)
-  cc_by_sa: CC BY-SA (4.0)
+licenses:
+  cc_0_1_0:
+    name: "Creative Commons Public Domain Dedication (CC0 1.0)"
+    short: "CC0 (1.0)"
+    deed_url: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    legal_code_url: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+  cc_by_4_0:
+    name: "Creative Commons Namensnennung 4.0 International Public License (CC-BY 4.0)"
+    short: "CC BY (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by/4.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by/4.0/legalcode.de"
+  cc_by_sa_4_0:
+    name: "Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International Public License (CC BY-SA 4.0)"
+    short: "CC BY-SA (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-sa/4.0/legalcode.de"
+  cc_by_nd_4_0:
+    name: "Creative Commons Namensnennung - Keine Bearbeitungen 4.0 International (CC BY-ND 4.0)"
+    short: "CC BY-ND (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nd/4.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nd/4.0/legalcode.de"
+  cc_by_nc_4_0:
+    name: "Creative Commons Namensnennung-Nicht kommerziell 4.0 International (CC BY-NC 4.0)"
+    short: "CC BY-NC (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc/4.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc/4.0/legalcode.de"
+  cc_by_nc_sa_4_0:
+    name: "Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 4.0 International (CC BY-NC-SA 4.0)"
+    short: "CC BY-NC-SA (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.de"
+  cc_by_nc_nd_4_0:
+    name: "Creative Commons Namensnennung - Nicht kommerziell - Keine Bearbeitungen 4.0 International (CC BY-NC-ND 4.0)"
+    short: "CC BY-NC-ND (4.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.de"
+  pddl_1_0:
+    name: "ODC Public Domain Dedication and Licence (PDDL 1.0)"
+    short: "PDDL (1.0)"
+    deed_url: "https://opendatacommons.org/licenses/pddl/summary/index.html"
+    legal_code_url: "https://opendatacommons.org/licenses/pddl/1.0/index.html"
+  odc-by_1_0:
+    name: "ODC Attribution Summary (ODC-By 1.0)"
+    short: "ODC-By (1.0)"
+    deed_url: "https://opendatacommons.org/licenses/by/summary/index.html"
+    legal_code_url: "https://opendatacommons.org/licenses/by/1.0/index.html"
+  odbl_1_0:
+    name: "Open Database License (ODbL) v1.0"
+    short: "ODbL (1.0)"
+    deed_url: "https://opendatacommons.org/licenses/odbl/summary/index.html"
+    legal_code_url: "https://opendatacommons.org/licenses/odbl/1.0/index.html"
+  cc_by_3_0:
+    name: "Creative Commons Namensnennung 3.0 Unported (CC BY 3.0)"
+    short: "CC BY (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by/3.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by/3.0/legalcode.de"
+  cc_by_sa_3_0:
+    name: "Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 3.0 Unported (CC BY-SA 3.0)"
+    short: "CC BY-SA (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-sa/3.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-sa/3.0/legalcode.de"
+  cc_by_nd_3_0:
+    name: "Creative Commons Namensnennung - Keine Bearbeitung 3.0 Unported (CC BY-ND 3.0)"
+    short: "CC BY-ND (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nd/3.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nd/3.0/legalcode.de"
+  cc_by_nc_3_0:
+    name: "Creative Commons Namensnennung-Nicht kommerziell 3.0 Unported (CC BY-NC 3.0)"
+    short: "CC BY-NC (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc/3.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc/3.0/legalcode.de"
+  cc_by_nc_sa_3_0:
+    name: "Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 3.0 Unported (CC BY-NC-SA 3.0)"
+    short: "CC BY-NC-SA (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-sa/3.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode.de"
+  cc_by_nc_nd_3_0:
+    name: "Creative Commons Namensnennung - Nicht-kommerziell - Keine Bearbeitung 3.0 Unported (CC BY-NC-ND 3.0)"
+    short: "CC BY-NC-ND (3.0)"
+    deed_url: "https://creativecommons.org/licenses/by-nc-nd/3.0/deed.de"
+    legal_code_url: "https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode.de"
+  apache_2_0:
+    name: "Apache License, Version 2.0"
+    short: "Apache 2.0"
+    deed_url: "https://opensource.org/licenses/Apache-2.0"
+    legal_code_url: "https://www.apache.org/licenses/LICENSE-2.0"
+  bsd-3-clause:
+    name: "The 3-Clause BSD License"
+    short: "3-Clause BSD"
+    deed_url: "https://opensource.org/licenses/BSD-3-Clause"
+    legal_code_url: "https://opensource.org/licenses/BSD-3-Clause"
+  bsd-2-clause:
+    name: "The 2-Clause BSD License"
+    short: "2-Clause BSD"
+    deed_url: "https://opensource.org/licenses/BSD-2-Clause"
+    legal_code_url: "https://opensource.org/licenses/BSD-2-Clause"
+  gpl_3_0:
+    name: "GNU General Public License 3.0"
+    short: "GPL 3.0"
+    deed_url: "https://opensource.org/licenses/GPL-3.0"
+    legal_code_url: "https://www.gnu.org/licenses/gpl-3.0.de.html"
+  lgpl_3_0:
+    name: "GNU Lesser General Public License 3.0"
+    short: "LGPL 3.0"
+    deed_url: "https://opensource.org/licenses/LGPL-3.0"
+    legal_code_url: "https://www.gnu.org/licenses/lgpl-3.0.de.html"
+  mit:
+    name: "The MIT License"
+    short: "MIT"
+    deed_url: "https://opensource.org/licenses/MIT"
+    legal_code_url: "https://opensource.org/licenses/MIT"
+  mpl_2_0:
+    name: "Mozilla Public License 2.0"
+    short: "MPL 2.0"
+    deed_url: "https://opensource.org/licenses/MPL-2.0"
+    legal_code_url: "https://www.mozilla.org/en-US/MPL/2.0/"

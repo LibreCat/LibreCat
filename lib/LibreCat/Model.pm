@@ -3,13 +3,17 @@ package LibreCat::Model;
 use Catmandu::Sane;
 use Catmandu::Util qw(is_string is_code_ref is_able);
 use List::Util qw(pairs);
-use Types::Standard qw(ConsumerOf);
+use Types::Standard qw(Str ConsumerOf);
 use LibreCat::Types qw(+Pairs);
 use Moo::Role;
 use namespace::clean;
 
 with 'Catmandu::Pluggable', 'LibreCat::Logger';
 
+has name => (
+    is       => 'lazy',
+    isa      => Str
+);
 has bag => (
     is       => 'ro',
     required => 1,
@@ -33,6 +37,14 @@ has before_index => (is => 'lazy', init_arg => undef, isa => Pairs);
 
 sub plugin_namespace {
     'LibreCat::Model::Plugin';
+}
+
+sub _build_name {
+    my ($self) = @_;
+    my $pkg = ref $self;
+    $pkg =~ s/__WITH__.+//;
+    my ($name) = $pkg =~ /([^:]+)$/;
+    $name;
 }
 
 sub _build_before_add {
@@ -108,14 +120,27 @@ sub add_many {
 
 sub add {
     my ($self, $rec, %opts) = @_;
+    if ($opts{skip_transaction}) {
+        $self->_add($rec, %opts);
+    } else {
+        $self->bag->store->transaction(sub {
+            $self->_add($rec, %opts);
+        });
+    }
+}
 
-    # TODO do we really need an id even before validation?
-    $rec->{_id} //= $self->generate_id;
+sub _add {
+    my ($self, $rec, %opts) = @_;
+
+    # Set the record id (for validation reasons)
+    $rec->{_id} //= 'NEW';
 
     $rec = $self->apply_hooks_to_record($self->before_add, $rec,
         skip => $opts{skip_before_add});
 
     if ($self->is_valid($rec)) {
+        # Replace all 0-identifers with real new identifiers
+        $rec->{_id} = $self->generate_id if $rec->{_id} eq 'NEW';
         $self->store($rec, %opts);
         $self->index($rec, %opts) unless $opts{skip_index};
         $opts{on_success}->($rec) if $opts{on_success};
@@ -123,6 +148,8 @@ sub add {
         return 1;
     }
     elsif ($opts{on_validation_error}) {
+        # Remove all 0-identifiers
+        delete $rec->{_id} if $rec->{_id} eq 'NEW';
         $opts{on_validation_error}->($rec, $self->validator->last_errors);
     }
     else {
@@ -130,6 +157,7 @@ sub add {
             "record %s has errors no `on_validation_error` set: %s"
                 , $rec->{_id}
                 , $self->validator->last_errors);
+        delete $rec->{_id} if $rec->{_id} eq 'NEW';
     }
 
     0;
@@ -168,8 +196,6 @@ sub index {
     $rec = $self->search_bag->add($rec);
     $self->search_bag->commit unless $opts{skip_commit};
 
-    sleep 1 unless $opts{skip_commit};    # TODO move to controller
-
     $rec;
 }
 
@@ -181,8 +207,6 @@ sub purge_all {
 
     $self->search_bag->delete_all;
     $self->search_bag->commit unless $opts{skip_commit};
-
-    sleep 1 unless $opts{skip_commit};    # TODO move to controller
 
     1;
 }
@@ -197,8 +221,6 @@ sub purge {
 
     $self->search_bag->delete($id);
     $self->search_bag->commit unless $opts{skip_commit};
-
-    sleep 1 unless $opts{skip_commit};    # TODO move to controller
 
     $id;
 }
@@ -313,6 +335,7 @@ Possible options:
 C<skip_before_add>: You can supply an arrayref of hook names that will not be executed.
 
     $model->add($rec, skip_before_add => ['whitelist']);
+    $model->add($rec, skip_before_add => ['check_version']);
 
 =item *
 
@@ -338,6 +361,11 @@ new one will be generated for you. Returns C<1> if the record was valid and
 succesfully stored and indexed, C<0> otherwise.
 
 Any C<before_add> hooks will be applied before validation.
+
+If the model uses versioning, C<add> will throw
+L<LibreCat::Error::VersionConflict> if the C<_version> key doesn't match the
+already stored version. This is to prevent simultaneous editing. You can
+disable this behavior with C<< skip_before_add => ['check_version'] >>.
 
 Options are the same as for C<add_many>, plus:
 

@@ -159,7 +159,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
 </relatedItem>
 [%- END %]
 [%- END %]
-[%- IF cc_license %]<accessCondition type="use and reproduction">[% cc_license %]</accessCondition>[%- END %]
+[%- IF license %]<accessCondition type="use and reproduction">[% license %]</accessCondition>[%- END %]
 [%- IF publisher or year or conference.date or conference.location %]
 <originInfo>
   [%- IF publisher %]<publisher>[% publisher | xml_strict %]</publisher>[% END %]

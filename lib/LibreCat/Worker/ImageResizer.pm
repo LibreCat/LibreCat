@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use Catmandu::Util;
 use Data::Uniqid;
 use File::Spec;
+use Path::Tiny;
 use Moo;
 use namespace::clean;
 
@@ -14,7 +15,7 @@ sub daemon { 0 }
 
 has files          => (is => 'ro', required => 1);
 has access         => (is => 'ro', required => 1);
-has tmpdir         => (is => 'ro', default  => sub {'/tmp'});
+has tmpdir         => (is => 'ro', default  => sub {$ENV{'TMPDIR'} // '/tmp'});
 has buffer_size    => (is => 'ro', default  => sub {8192});
 has thumbnail_size => (is => 'ro', default  => sub {200});
 has file_store   => (is => 'lazy');
@@ -106,7 +107,7 @@ sub do_upload {
     my ($tmpdir, $tmpfile) = $self->extract_to_tmpdir($file);
 
     unless (defined $tmpfile && -r $tmpfile) {
-        $self->log->error(
+        $self->log->fatal(
             "failed to extract $filename from container $key to a temporary directory"
         );
         return {error => 'internal error'};
@@ -119,10 +120,10 @@ sub do_upload {
     my $exit_code = system($cmd);
 
     unless ($exit_code == 0 && -r "$tmpdir/thumb.png") {
-        $self->log->error(
+        $self->log->fatal(
             "failed to generate a thumbnail for $filename from container $key"
         );
-        return {error => 'failed to create thumbail'};
+        return {error => 'failed to create thumbnail'};
     }
 
     # store the results
@@ -145,14 +146,13 @@ sub do_upload {
     $self->log->info("uploaded $bytes bytes");
 
     unless ($bytes) {
-        $self->log->error(
+        $self->log->fatal(
             "failed to create a thumbail for $filename in container $key");
         return {error => 'failed to create thumbnail'};
     }
 
     $self->log->info("cleaning tmpdir $tmpdir");
-    system("rm $tmpdir/*");
-    system("rmdir $tmpdir");
+    path($tmpdir)->remove_tree;
 
     return $bytes ? {ok => 1} : {error => 'failed to create thumbnail'};
 }
@@ -160,15 +160,16 @@ sub do_upload {
 sub extract_to_tmpdir {
     my ($self, $file) = @_;
 
-    my $tmpdir = $self->tmpdir . '/' . Data::Uniqid::suniqid;
+    my $tmpdir = File::Spec->catfile($self->tmpdir,Data::Uniqid::suniqid);
 
     $self->log->debug("creating $tmpdir");
 
     unless (mkdir $tmpdir) {
+        $self->log->error("failed to create $tmpdir : $!");
         return (undef, undef);
     }
 
-    my $tmpfile = "$tmpdir/" . Data::Uniqid::suniqid;
+    my $tmpfile = File::Spec->catfile($tmpdir,Data::Uniqid::suniqid);
 
     $self->log->debug("streaming to $tmpfile");
 

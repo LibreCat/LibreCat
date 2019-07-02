@@ -513,6 +513,40 @@ note("testing fetch");
     is $record->{status}, 'new', 'got a new record';
 }
 
+note("testing audit");
+{
+    use_ok "LibreCat::Audit";
+    my $audit = LibreCat::Audit->new();
+
+    $audit->delete_all();
+
+    my $result = test_app(
+        qq|LibreCat::CLI| => [
+            'publication', '--log', 'added_file', 'add',
+            't/records/valid-publication-no-citation.yml'
+        ]
+    );
+
+    ok !$result->error, 'ok threw no exception';
+
+    my $output = $result->stdout;
+    ok $output , 'got an output';
+
+    like $output , qr/^added 999999999/, 'added 999999999';
+
+    $result = test_app(qq|LibreCat::CLI| => ['publication', 'get','--log','get_record','999999999']);
+    $output = $result->stdout;
+
+    like $output, qr/Valid Test Publication/, "got an ouput";
+
+    $result = test_app(
+        qq|LibreCat::CLI| => ['publication', 'purge','--log','purged_record','999999999']);
+
+    ok !$result->error, 'publication purged';
+
+    is $audit->count(), 3, "found 3 audit messages";
+}
+
 done_testing;
 
 sub count_publication {

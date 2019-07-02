@@ -36,7 +36,8 @@ default_sort_backend:
   - year.desc
 default_person_sort:
   - lastname.asc
-default_facets:
+facets:
+  publication:
     open_access:
       terms:
         field: 'oa'

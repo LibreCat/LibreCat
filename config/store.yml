@@ -41,6 +41,8 @@ main:
         # id_generator: Incremental
       reqcopy:
         plugins: []
+      temp_files:
+        plugins: []
 
 search:
   package: ElasticSearch
@@ -966,7 +968,6 @@ search:
             googleScholar: {type: text, analyzer: tag}
             github: {type: text, analyzer: tag}
             researcherId: {type: text, analyzer: tag}
-            authorClaim: {type: text, analyzer: tag}
             scopusId: {type: text, analyzer: tag}
             alias: {type: text, analyzer: tag}
         cql_mapping:
@@ -1219,4 +1220,3 @@ search:
                 '<=': true
               field: start_date
             end_date: *start_date
-

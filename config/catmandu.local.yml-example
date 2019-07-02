@@ -1,6 +1,9 @@
 # Public location of the application
 uri_base: "http://localhost:5001"
 
+# Contact address of an administrator
+admin_email: librecat@somewhere.org
+
 # API configuration
 # change at least the token secret! This should be a long random string
 # E.g. see https://onlinerandomtools.com/generate-random-string
@@ -39,7 +42,8 @@ default_sort_backend:
   - year.desc
 default_person_sort:
   - lastname.asc
-default_facets:
+facets:
+  publication:
     open_access:
       terms:
         field: oa

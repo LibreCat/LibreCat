@@ -2,6 +2,7 @@ package LibreCat::Application;
 
 use Catmandu::Sane;
 use JSON::MaybeXS qw(decode_json);
+use LibreCat -self;
 use Mojo::Base 'Mojolicious';
 use namespace::clean;
 
@@ -18,14 +19,29 @@ sub startup {
     # hardcoded for now
     $self->plugin('LibreCat::Api');
 
+    $self->plugin('TemplateToolkit');
+
+    push @{$self->renderer->paths}, @{librecat->template_paths};
+
+    $r->any(
+        '/*whatever' => {whatever => ''} => sub {
+            my $c        = shift;
+            my $whatever = $c->param('whatever');
+            $c->render(template => '404', handler => 'tt2', status => 404);
+        }
+    );
+
     # helpers
-    $self->helper(maybe_decode_json => sub {
-        my ($self, $json) = @_;
-        try {
-            decode_json($json);
-        } catch {
-        };
-    });
+    $self->helper(
+        maybe_decode_json => sub {
+            my ($self, $json) = @_;
+            try {
+                decode_json($json);
+            }
+            catch {
+            };
+        }
+    );
 }
 
 1;

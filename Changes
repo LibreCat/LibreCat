@@ -1,6 +1,23 @@
 Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
+2.0.0_02 2019-06-17
+    - Adding specific facets
+    - Fixing locale issues
+    - Fixing licenses in exports
+    - Updating Catmandu::DBI to allow for lazy loading of database handles
+    
+2.0.0_01 2019-06-03
+    - Elasticsearch 6.5 support
+    - Adding an LibreCat API for record and file management
+    - Better support for json-ld and schema.org in the frontend
+    - Fixing drop zones supporting weird file names
+    - Hook to sort publication files by file_name
+    - Removing audit as worker can be executed now in the main thread
+    - Improving uploads of files
+    - Adding version locking for publication records
+    - Fix regex to match any count of whitespaces in split_author.
+    - Fix handling of page_range_number field for csl processing.
 
 1.2.5 2019-03-14
     - Fixing missing editor label in the frontend  #697
@@ -16,7 +33,7 @@ Revision history for LibreCat
     - Removing merge comments #704
     - Fixing eval bug when importing records via the GUI #706
     - Fixing automatic deletion of temp_upload directories #712
-    
+
 1.2.4 2019-02-06
     - Fixing CrossRef importer network issues
     - Moving Dancer environment options to config.yml
