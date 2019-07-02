@@ -60,7 +60,7 @@
     [% INCLUDE head_meta.tt %]
   </head>
 
-  <body itemscope itemtype="http://schema.org/WebPage">
+  <body>
   [% INCLUDE topbar.tt %]
 
   <div class="row">

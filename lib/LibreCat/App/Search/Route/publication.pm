@@ -57,7 +57,7 @@ get "/record/:id" => sub {
 
     my $d = clone($hits->first);
     if ($hits->{total}) {
-        $hits->{hits}->[0]->{schema_org} = export_to_string($d, 'JSON', {fix => $jsonld_fix});
+        $hits->{hits}->[0]->{schema_org} = export_to_string($d, 'JSON', {line_delimited => 1, fix => $jsonld_fix});
     }
 
     template "publication/record", $hits->first;
