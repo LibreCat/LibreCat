@@ -261,6 +261,7 @@ publication:
         - patent
         - preprint
         - report
+        - software
         - translation
         - translation_chapter
         - working_paper
@@ -345,17 +346,13 @@ publication:
       items:
         type: string
       description: "Alternative title"
-    data_reuse_license:
+    license:
+      type: string
+      description: "Any license from a controlled list defined in config lists.licenses"
+    other_data_license:
        type: string
-       description: "Data re-use license"
-    open_data_release:
-      oneOf:
-        - type: string
-          minLength: 1
-        - type: integer
-          minimum: 0
-      description: "Flag agree with the copyright and license"
-    #required when type = 'journalArticle'
+       description: "Data re-use license if standard licenses are not enough."
+    #required when type = 'journal_article'
     publication:
       type: string
       description: "Title of host publication"
@@ -464,7 +461,9 @@ publication:
     year:
       oneOf:
         - type: string
+          pattern: "^\\d{4}$"
         - type: integer
+          pattern: "^\\d{4}$"
       description: "Publication year"
     extern:
       oneOf:
@@ -685,16 +684,13 @@ publication:
         - type: string
         - type: integer
       description: "Universal Resource Name"
-    accept:
+    has_accepted_license:
       oneOf:
           - type: string
             minLength: 1
           - type: integer
             minimum: 0
       description: "Flag agree with the copyright and license"
-    cc_license:
-      type: string
-      description: "Files copyright"
     conference:
       type: object
       properties:
@@ -842,11 +838,6 @@ user:
        - type: string
        - type: integer
       description: "Researcher arXiv identifier"
-    authorClaim:
-      oneOf:
-       - type: string
-       - type: integer
-      description: "Researcher authorClaim identifier"
     github:
       oneOf:
        - type: string

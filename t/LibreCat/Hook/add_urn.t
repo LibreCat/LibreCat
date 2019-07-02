@@ -25,7 +25,22 @@ is_deeply $pkg->new()->fix(
     file => [{access_level => 'open_access', relation => 'main_file'}],
     urn  => 'urn:whatever-11',
     },
-    "add urn";
+    "add urn if file is hashref";
+
+is_deeply $pkg->new()->fix(
+    {
+        _id  => 1,
+        type => 'journal_article',
+        file => ['{"access_level":"open_access", "relation":"main_file"}']
+    }
+    ),
+    {
+    _id  => 1,
+    type => 'journal_article',
+    file => ['{"access_level":"open_access", "relation":"main_file"}'],
+    urn  => 'urn:whatever-11',
+    },
+    "add urn if file is json string";
 
 is_deeply $pkg->new()->fix(
     {

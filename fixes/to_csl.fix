@@ -39,6 +39,16 @@ move_field(publisher, res.publisher)
 move_field(volume, res.volume)
 move_field(issue, res.issue)
 
+if exists(page_range_number)
+  if exists(page_range_number.type)
+    if any_match(page_range_number.type,"article_number")
+      copy_field(page_range_number.value, article_number)
+    else
+      copy_field(page_range_number.value, page)
+    end
+  end
+end
+
 if any_match(page, '-')
   split_field(page, '-')
   trim(page.0)

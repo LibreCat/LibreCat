@@ -86,11 +86,33 @@ sub find_by_username {
 
             if (my $user = $hits->first) {
                 $self->log->debug("..found $user");
+
+                if(
+                    is_string( $user->{account_status} ) &&
+                    $user->{account_status} eq "inactive"
+                ){
+
+                    $self->log->debug("..user $user->{_id} has account_status 'inactive'");
+                    return;
+
+                }
+
                 return $user;
             }
         }
         elsif (my $user = $bags->[$i]->detect($attrs->[$i] => $username)) {
             $self->log->debug("..found $user");
+
+            if(
+                is_string( $user->{account_status} ) &&
+                $user->{account_status} eq "inactive"
+            ){
+
+                $self->log->debug("..user $user->{_id} has account_status 'inactive'");
+                return;
+
+            }
+
             return $user;
         }
     }

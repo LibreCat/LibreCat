@@ -17,6 +17,11 @@ BEGIN {
 require_ok $pkg;
 
 {
+    use_ok "LibreCat::Audit";
+    LibreCat::Audit->new()->delete_all();
+}
+
+{
     my $result = test_app(qq|LibreCat::CLI| => ['file_store']);
     ok $result->error, 'ok threw an exception';
 }
@@ -118,6 +123,54 @@ require_ok $pkg;
     is $output , "purged 1234\n", 'got no output';
 
     ok !-d 't/data/000/001/234', 'container is gone';
+}
+
+{
+    is(
+        LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
+        0,
+        "audit is empty"
+    );
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['file_store','add','--log','add_file','1234','cpanfile']);
+
+    is(
+        LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
+        2,
+        "file_store add: adds message for add and get"
+    );
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['file_store','get','--log','get_container_info','1234']);
+
+    is(
+        LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
+        3,
+        "file_store get: add message for get"
+    );
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['file_store','delete','--log','delete_file','1234','cpanfile']);
+
+    is(
+        LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
+        5,
+        "file_store delete file: add message for delete and get"
+    );
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['file_store','purge','--log','remove_container','1234']);
+
+    is(
+        LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
+        6,
+        "file_store purge: add message for purge"
+    );
 }
 
 done_testing;

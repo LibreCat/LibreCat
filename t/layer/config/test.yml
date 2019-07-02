@@ -36,7 +36,8 @@ default_sort_backend:
   - year.desc
 default_person_sort:
   - lastname.asc
-default_facets:
+facets:
+  publication:
     open_access:
       terms:
         field: 'oa'
@@ -159,6 +160,10 @@ store:
           _id: 1234
           super_admin: 1
           account_status: active
+        - login: mozart
+          password: '$2a$08$bfC3ySsDzgy/mEV/GrxL6uRCRn4Fnb25l5z16XVedP2i7aJE8MEDG'
+          _id: 5678
+          account_status: inactive
 
 filestore:
     default: &filestore_settings

@@ -342,6 +342,19 @@ sub get_access_store {
     $pkg->new(%$access_opts);
 }
 
+sub get_temp_store {
+    my ($self) = @_;
+
+    my $temp_store = $self->config->{filestore}->{temp}->{package};
+    my $temp_opts  = $self->config->{filestore}->{temp}->{options} // {};
+
+    return undef unless $temp_store;
+
+    my $pkg = Catmandu::Util::require_package($temp_store,
+        'Catmandu::Store::File');
+    $pkg->new(%$temp_opts);
+}
+
 sub show_locale {
     $_[0]->config->{i18n}->{show_locale};
 }
@@ -427,18 +440,6 @@ sub uri_for_file {
     my ($self, $pub_id, $file_id, $file_name) = @_;
     my $ext = $self->file_extension($file_name);
     $self->uri_base() . "/download/$pub_id/$file_id$ext";
-}
-
-sub cleanup_filename {
-    my ($self,$filename) = @_;
-    my $cleaned_filename = Catmandu::Util::as_utf8($filename);
-    $cleaned_filename =~ s/[^\w_\-\.]+/_/g;
-    $cleaned_filename;
-}
-
-sub is_valid_filename {
-    my ($self,$filename) = @_;
-    $filename eq $self->cleanup_filename;
 }
 
 sub login_user {

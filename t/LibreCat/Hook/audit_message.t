@@ -11,11 +11,6 @@ my $pkg;
 BEGIN {
     $pkg = 'LibreCat::Hook::audit_message';
     use_ok $pkg;
-
-    my $result = test_app(
-        qq|LibreCat::CLI| => ['worker', 'audit', 'start', '--workers', '1']);
-    ok !$result->error, "start worker audit";
-    ok $result->stdout, "start worker audit output";
 }
 
 require_ok $pkg;
@@ -42,22 +37,7 @@ my $data = [
 
 ok $x->fix($_), "apply hook" for @$data;
 
-# Ugly...we need to wait a bit for the audit hooks take effect
-my $audit_data;
-
-my $tries = 0;
-my $sleep = 2;
-while ($tries < 4) {
-    my $audit = Catmandu->store('main')->bag('audit');
-    $audit_data = $audit->to_array;
-
-    if (@$audit_data == 5) {
-        last;
-    }
-
-    sleep($sleep * ($tries + 1));
-    $tries++;
-}
+my $audit_data = $audit->to_array();
 
 is @$audit_data, 5, "5 elements in audit bag";
 
@@ -67,11 +47,6 @@ like $a->{message}, qr/activated/,   "message field present";
 like $a->{bag},     qr/publication/, "bag publication";
 like $a->{time},    qr/\d+/,         "time field present";
 ok $a->{_id},       "_id field present";
-
-my $result = test_app(
-    qq|LibreCat::CLI| => ['worker', 'audit', 'stop', '--workers', '1']);
-ok !$result->error, "stop worker audit";
-ok $result->stdout, "stop worker audit output";
 
 END {
     # cleanup
