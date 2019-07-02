@@ -1,5 +1,5 @@
 .SUFFIXES:
-	
+
 .PHONY: generate update cover test tidy
 
 usage:
@@ -7,21 +7,27 @@ usage:
 	@echo
 	@echo "targets:"
 	@echo "  generate"
-	@echo "  update"
+	@echo "  update [ VERSION=<version> ]"
 	@echo "  tidy"
 	@echo "  test"
 	@echo "  cover [ FILE=<path> ]"
 
 generate:
-	carton exec bin/librecat generate forms
-	carton exec bin/librecat generate departments
+	carton exec -- bin/librecat generate forms
+	carton exec -- bin/librecat generate departments
 
 update:
+	git checkout master
 	git pull --tags origin master
+ifeq ($(strip $(VERSION)),)
+	echo "No VERSION specified; checking out HEAD of master branch"
+else
+	git checkout $(VERSION)
+endif
 	carton install
-	carton exec bin/librecat generate forms
-	carton exec bin/librecat generate departments
-	./index.sh reindex
+	carton exec -- bin/librecat generate forms
+	carton exec -- bin/librecat generate departments
+	carton exec -- bin/librecat index switch
 	echo "Update complete!"
 
 # Explicit need -j 1 parallel tests will put databases in an
@@ -35,7 +41,7 @@ else
 endif
 
 test:
-	prove -l -j 1 -r t
+	carton exec -- prove -l -j 1 -r t
 
 tidy:
 	tidyall -r lib t
