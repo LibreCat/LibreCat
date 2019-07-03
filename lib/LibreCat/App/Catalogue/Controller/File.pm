@@ -95,7 +95,6 @@ sub upload_temp_file {
         creator      => $creator,
         date_updated => $now,
         date_created => $now,
-        request      => $opts
     };
 
     $file_data->{rac_email} = $rac_email if $rac_email;
@@ -135,7 +134,14 @@ sub upload_temp_file {
 
         h->log->info("storing file metadata to $config_file");
 
-        my $json = Catmandu->export_to_string($file_data, 'JSON',line_delimited=>1);
+        # Add some contextual data to the file metadata which shouldn't be
+        # stored in the database...
+        my $request_file_data = {
+            %$file_data ,
+            request => $opts
+        };
+
+        my $json = Catmandu->export_to_string($request_file_data, 'JSON',line_delimited=>1);
 
         h->log->debug("storing: $json");
 
