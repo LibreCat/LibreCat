@@ -17,4 +17,31 @@ lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $x, 'fix';
 
+# We don't test enything in this testst because the hook  only sends data
+# to the job queue which does the real work...
+
+note("fake test without doi config");
+{
+    ok $x->fix({});
+}
+
+note("fake test with doi config");
+{
+
+    LibreCat->config->{doi} = {
+        prefix => "0.000/test" ,
+        queue  => "test" ,
+        default_publisher => "LibreCat Publishing System"
+    };
+
+    ok $x->fix({});
+}
+
+note("fake test with even fake data");
+{
+    my $res = $x->fix({doi => '0.000/test/1234', status => 'public'});
+
+    is $res->{publisher} ,  "LibreCat Publishing System";
+}
+
 done_testing;
