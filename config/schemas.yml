@@ -15,11 +15,13 @@ publication:
         - type: integer
           minimum: 0
       description: "A general identifier scheme"
+
     iso_language: &iso_language
       type: object
       properties:
          iso:
              type: string
+      additionalProperties: false
 
     abstract: &abstract
       type: object
@@ -75,6 +77,7 @@ publication:
           type: string
           description: "Person's ORCID iD"
       required: ["first_name","last_name"]
+      additionalProperties: false
 
     related_link: &related_link
         type: object
@@ -111,6 +114,7 @@ publication:
                   - hidden
             description:
                 type: string
+        additionalProperties: false
 
     related_record:
         type: object
@@ -152,6 +156,7 @@ publication:
                   - hidden
             status:
                 enum: ["new","submitted","public","returned","private", "deleted"]
+        additionalProperties: false
 
     file:
         type: object
@@ -219,7 +224,13 @@ publication:
                     #- hidden
                 type: string
                 description: "Relation upload to main record"
+            success:
+                oneOf:
+                  - type: string
+                  - type: integer
+                description: "Deprecated field, will be deleted in the future"
         required: ["access_level","content_type","date_created","date_updated","file_id","relation"]
+        additionalProperties: false
 
     project: &project
       type: object
@@ -229,6 +240,7 @@ publication:
           type: string
           description: "Project name"
       required: ["_id"]
+      additionalProperties: false
 
     research_group: &research_group
       type: object
@@ -238,6 +250,7 @@ publication:
           type: string
           description: "Research group name"
       required: ["_id"]
+      additionalProperties: false
 
   properties:
     _id: *id
@@ -720,7 +733,7 @@ publication:
 
   # Requirements for absolute minimal record
   required: ["_id","type","title","status"]
-  additionalProperties: true
+  additionalProperties: false
 
 #used in LibreCat::Validator::User
 user:
@@ -879,7 +892,7 @@ user:
       description: "Flag if person should be displayed on /person list"
 
   required: ["_id","account_status","first_name","last_name","full_name"]
-  additionalProperties: true
+  additionalProperties: false
 
 department:
   type: object
@@ -1062,7 +1075,7 @@ project:
       description: "Flag of funding status"
 
   required: ["_id","name"]
-  additionalProperties: true
+  additionalProperties: false
 
 research_group:
   "$schema": "http://json-schema.org/draft-04/schema#"
@@ -1106,4 +1119,4 @@ research_group:
       description: "Affiliation of the research group"
 
   required: ["_id","name"]
-  additionalProperties: true
+  additionalProperties: false
