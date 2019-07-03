@@ -2,6 +2,16 @@
 
 librecat_uri_base('uri_base')
 
+add(resourceTypeGeneral, Text)
+
+if any_match(type, research_data)
+  add(resourceTypeGeneral, Dataset)
+end
+
+if any_match(type, software)
+  add(resourceTypeGeneral, Software)
+end
+
 if exists(license)
   move(license, tmp)
   lookup_in_config(tmp, locale.en.licenses)

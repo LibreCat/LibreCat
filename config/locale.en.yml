@@ -42,6 +42,10 @@ header:
     ger: "German"
   department_affiliation: "Department Affiliation"
   logged_in_as: "Logged in as"
+error:
+  version_conflict: "Could not save your changes. This publication was updated by someone else since you started editing."
+  update_failed: "Failed to update record %s. The admins have been notified."
+  contact_admin: "Please, contact %s when this problem persists."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 styles:

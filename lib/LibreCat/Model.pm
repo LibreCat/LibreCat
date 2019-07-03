@@ -132,13 +132,15 @@ sub add {
 sub _add {
     my ($self, $rec, %opts) = @_;
 
-    # TODO do we really need an id even before validation?
-    $rec->{_id} //= $self->generate_id;
+    # Set the record id (for validation reasons)
+    $rec->{_id} //= 'NEW';
 
     $rec = $self->apply_hooks_to_record($self->before_add, $rec,
         skip => $opts{skip_before_add});
 
     if ($self->is_valid($rec)) {
+        # Replace all 0-identifers with real new identifiers
+        $rec->{_id} = $self->generate_id if $rec->{_id} eq 'NEW';
         $self->store($rec, %opts);
         $self->index($rec, %opts) unless $opts{skip_index};
         $opts{on_success}->($rec) if $opts{on_success};
@@ -146,6 +148,8 @@ sub _add {
         return 1;
     }
     elsif ($opts{on_validation_error}) {
+        # Remove all 0-identifiers
+        delete $rec->{_id} if $rec->{_id} eq 'NEW';
         $opts{on_validation_error}->($rec, $self->validator->last_errors);
     }
     else {
@@ -153,6 +157,7 @@ sub _add {
             "record %s has errors no `on_validation_error` set: %s"
                 , $rec->{_id}
                 , $self->validator->last_errors);
+        delete $rec->{_id} if $rec->{_id} eq 'NEW';
     }
 
     0;

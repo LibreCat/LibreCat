@@ -35,4 +35,37 @@ is $u->{login}, 'einstein';
 
 ok !$user->get('unknown_ID');
 
+is_deeply(
+    +{ $user->to_session( $u ) },
+    +{
+        role => "super_admin",
+        user_id => "1234",
+        user => "einstein",
+        lang => "en"
+    }
+);
+
+ok(
+    $user->is_session({
+        role => "super_admin",
+        user_id => "1234",
+        user => "einstein",
+        lang => "en"
+    })
+);
+
+ok(
+    !($user->is_session({
+        role => "super_admin",
+        user_id => "1234",
+        lang => "en"
+    }))
+);
+
+is(
+    $user->find_by_username("mozart"),
+    undef,
+    "find_by_username may not return inactive users"
+);
+
 done_testing;
