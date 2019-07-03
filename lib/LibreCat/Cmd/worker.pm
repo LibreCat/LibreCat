@@ -20,6 +20,7 @@ Examples:
 librecat worker mailer start --workers 2 --supervise
 librecat worker mailer stop --workers 2 --supervise
 
+Options:
 EOF
 }
 

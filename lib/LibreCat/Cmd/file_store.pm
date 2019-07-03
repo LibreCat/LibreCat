@@ -28,15 +28,7 @@ librecat file_store import    [options] <key> <zip>
 librecat file_store copy      [options] <key|store_name> <store_name>
 librecat file_store thumbnail [options] <key> <file>
 
-options:
-    --store=...       - Store name
-    --file_store=...  - Catmandu::Store::File class
-    --file_opt=...    - Catmandu::Store::File option
-    --tmp_dir=...     - Temporary directory
-    --zip=...         - Zip program
-    --unzip=...       - Unzip program
-    --log=...         - Log message
-
+Options:
 EOF
 }
 
