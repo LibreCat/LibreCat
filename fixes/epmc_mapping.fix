@@ -2,28 +2,30 @@
 
 move_field(resultList.result.$first,.)
 
-add_field(status, new)
+add_field(x.status,       new)
+add_field(x.type,         journal_article)
 
-#default type
-add_field(type, journal_article)
+move_field(title,         x.title)
+move_field(issue,         x.issue)
+move_field(pubYear,       x.year)
+move_field(DOI,           x.doi)
+move_field(pmid,          x.external_id.pmid.$append)
+move_field(journalTitle,  x.publication)
+move_field(journalVolume, x.volume)
 
-move_field(DOI, doi)
-move_field(pmid, external_id.pmid.$append)
-move_field(journalTitle, publication)
-move_field(journalVolume, volume)
 split_field(journalIssn, ',|;')
 trim(journalIssn.*)
-move_field(journalIssn, publication_identifier.issn)
-move_field(pubYear, year)
-if all_match(isOpenAccess, 'N')
-    set_field(oa, 1)
-end
+move_field(journalIssn, x.publication_identifier.issn)
 
 join_field(pageInfo, '-')
-move_field(pageInfo, page)
+move_field(pageInfo, x.page)
 
 # authors
 move_field(authorString, author)
 split_field(author, ',|;')
 trim(author.*, nonword)
 split_author()
+move_field(author,x.author)
+
+retain(x)
+move_field(x,.)

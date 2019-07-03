@@ -24,7 +24,6 @@ abstract:
     of vascular and infected cells. The enzymes are probably involved in hormone and
     NO signalling, and may be regulated through nitrosylation of the peroxidatic cysteine
     essential for catalytic function.
-accept: '1'
 article_type: original
 author:
 - first_name: Manuel A.
@@ -65,7 +64,6 @@ author:
 creator:
   login: riedel
 date_created: 2015-05-22T08:35:10Z
-date_submitted: 2015-05-22T08:36:49Z
 date_updated: 2015-09-10T13:35:40Z
 department:
 - _id: '2685177'
@@ -80,7 +78,6 @@ isi: 1
 issue: '10'
 language:
 - iso: eng
-  name: English
 page: 2979-2990
 pmid: 1
 publication: Journal of Experimental Botany

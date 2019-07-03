@@ -612,7 +612,14 @@ sub _checksum_id {
     }
 
     if ($update) {
-        $pubs->add($rec);
+        $pubs->add($rec,
+            on_validation_error => sub {
+                my ($rec, $e) = @_;
+                $self->log->errorf("%s not a valid publication %s", $rec->{_id}, $e);
+                say STDERR join("\n",
+                    $rec->{_id}, "ERROR: not a valid publication", @$e);
+                    $errors++;
+            });
 
         if (my $msg = $self->opts->{log}) {
             $self->audit_message($rec->{_id}, 'add', $msg);

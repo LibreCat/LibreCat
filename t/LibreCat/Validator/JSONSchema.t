@@ -36,7 +36,6 @@ note("Validate user");
         {
             _id            => '1234',
             account_status => 'active',
-            account_type   => 'external',
             first_name     => 'Donald',
             last_name      => 'Duck',
             full_name      => 'Donald Fauntleroy Duck',
