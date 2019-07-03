@@ -391,11 +391,6 @@ publication:
     publication_status:
       enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
       description: "Publication status"
-    pubmedID:
-      oneOf:
-        - type: string
-        - type: integer
-      description: "PubMed identifier"
     popular_science:
       oneOf:
         - type: string
