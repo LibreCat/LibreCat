@@ -61,7 +61,7 @@ subtest "get non-existent user" => sub {
 };
 
 subtest "add/get/delete user" => sub {
-    my $user = Catmandu->importer('YAML', file => "t/records/valid-user.yml")
+    my $user = Catmandu->importer('YAML', file => 't/records/valid-user.yml')
         ->first;
 
     $t->post_ok('/api/v1/user' => {Authorization => $token} => json => $user)
@@ -89,7 +89,7 @@ subtest "add/get/delete user" => sub {
 
 subtest "add invalid user" => sub {
     my $user
-        = Catmandu->importer('YAML', file => "t/records/invalid-user.yml")
+        = Catmandu->importer('YAML', file => 't/records/invalid-user.yml')
         ->first;
 
     $t->post_ok('/api/v1/user' => {Authorization => $token} => json => $user)
@@ -161,7 +161,7 @@ subtest "add/get/delete publication" => sub {
     ok !librecat->publication->get(999111999), "publication  not in DB";
 };
 
-subtest "not_found" => sub {
+subtest "not found: onyl defined models are valid" => sub {
     $t->get_ok('/api/v1/projication' => {Authorization => $token})
         ->status_is(404)->content_like(qr/Page not found \(404\)/);
 };
@@ -171,28 +171,44 @@ subtest "filestore api protected" => sub {
 };
 
 subtest "list all containers" => sub {
-    $t->get_ok('/api/v1/file' => {Authorization => $token})
-        ->status_is(200)->content_like(qr/^[\d+\n]+/);
+    $t->get_ok('/api/v1/file' => {Authorization => $token})->status_is(200)
+        ->content_unlike(qr/^[\d+\n]+/);
 };
 
 subtest "create new container" => sub {
-    $t->post_ok('/api/v1/file' => {Authorization => $token}
-        => json => {data => { id => "123456", type => "container" }})
-        ->status_is(201)->json_is('/data', 'test');
+    $t->post_ok('/api/v1/file' => {Authorization => $token} => json =>
+            {data => {id => '123456', type => 'container'}})->status_is(201)
+        ->json_is('/data/type', 'container')->json_is('/data/id', '123456');
+
+    # try to recreate
+    $t->post_ok('/api/v1/file' => {Authorization => $token})->status_is(400)
+        ->json_has('/errors');
+
+    # container should be is list of containers
+    $t->get_ok('/api/v1/file' => {Authorization => $token})->status_is(200)
+        ->content_like(qr/123456/);
 };
 
-# subtest "add file" => sub {
-#     $t->get_ok('/api/v1/file/' => {Authorization => $token})
-#         ->status_is(200);
-# };
+subtest "add files" => sub {
+
+# my $upload = {foo => {content => 'bar', filename => 'baz.txt'}};
+#
+# $t->post_ok('/api/v1/file/' => {Authorization => $token} => form => $upload)
+#     ->status_is(200);
+    ok 1;    #TODO
+};
+
+subtest "get files" => sub {
+    ok 1;    #TODO
+};
 
 subtest "delete file" => sub {
-    ok 1;
+    ok 1;    #TODO
 };
 
 subtest "delete container" => sub {
-    $t->delete_ok('/api/v1/file/' => {Authorization => $token})
-        ->status_is(204)
+    $t->delete_ok('/api/v1/file/123456' => {Authorization => $token})
+        ->status_is(204);
 };
 
 done_testing;

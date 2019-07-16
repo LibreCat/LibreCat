@@ -37,7 +37,7 @@ sub show_filestore {
 
 }
 
-=head2 /api/v1/file/:container_id
+=head2 GET /api/v1/file/:container_id
 
     {
         "data" : {
@@ -574,6 +574,5 @@ sub validate_create_container {
     1;
 
 }
-
 
 1;

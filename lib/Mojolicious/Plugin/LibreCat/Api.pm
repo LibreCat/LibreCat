@@ -10,9 +10,9 @@ use namespace::clean;
 sub register {
     my ($self, $app, $conf) = @_;
 
-    my $models = librecat->models;
+    my $models       = librecat->models;
     my $token_secret = librecat->config->{api}{v1}{token_secret};
-    my $r = $app->routes;
+    my $r            = $app->routes;
 
     my $api = $r->any("/api/v1");
 
@@ -21,7 +21,7 @@ sub register {
 
     my $api_auth = $api->under(
         '/' => sub {
-            my $c = shift;
+            my $c     = shift;
             my $token = $c->req->headers->header('Authorization');
 
             # authorized
@@ -30,10 +30,7 @@ sub register {
             }
 
             # not authorized
-            $c->render(
-                json   => {errors => ["Not authorized"]},
-                status => 401
-            );
+            $c->render(json => {errors => ["Not authorized"]}, status => 401);
             0;
         }
     );
@@ -42,8 +39,8 @@ sub register {
         librecat_model_api => sub {
             my ($r, $model) = @_;
 
-            my $model_api
-                = $api_auth->any("/$model")->to('model_api#', model => $model);
+            my $model_api = $api_auth->any("/$model")
+                ->to('model_api#', model => $model);
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
@@ -87,13 +84,15 @@ sub register {
     $api_auth->get('/file/:container_id')->to('file_api#show_container');
 
     # GET /api/v1/file/:container_id/:file_name
-    $api_auth->get('/file/:container_id/#file_name')->to('file_api#show_file');
+    $api_auth->get('/file/:container_id/#file_name')
+        ->to('file_api#show_file');
 
     # DELETE /api/v1/file/:container_id
     $api_auth->delete('/file/:container_id')->to('file_api#remove_container');
 
     # DELETE /api/v1/file/:container_id/:file_name
-    $api_auth->delete('/file/:container_id/#file_name')->to('file_api#remove_file');
+    $api_auth->delete('/file/:container_id/#file_name')
+        ->to('file_api#remove_file');
 
     # POST /api/v1/file/:container_id
     $api_auth->post('/file/:container_id')->to('file_api#upload_file');
