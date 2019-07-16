@@ -37,12 +37,7 @@ sub show_filestore {
 
 }
 
-<<<<<<< HEAD
 =head2 GET /api/v1/file/:container_id
-=======
-=head2 /api/v1/file/:container_id
->>>>>>> ac5126bcadc2ae8e65cf272694b6f5c8169f2e22
-
     {
         "data" : {
             "type": "container",
@@ -317,19 +312,11 @@ sub upload_file {
         unless $store->index->exists( $container_id );
 
     my $files = $store->index->files( $container_id );
-<<<<<<< HEAD
 
     my $upload = $c->req->upload("file");
 
     unless( $upload ) {
 
-=======
-
-    my $upload = $c->req->upload("file");
-
-    unless( $upload ) {
-
->>>>>>> ac5126bcadc2ae8e65cf272694b6f5c8169f2e22
         return $c->do_error( 400, {
             status => "400",
             id     => "no_upload_file",
