@@ -161,16 +161,16 @@ subtest "add/get/delete publication" => sub {
     ok !librecat->publication->get(999111999), "publication  not in DB";
 };
 
-subtest "not found: onyl defined models are valid" => sub {
+subtest "not found: only defined models are valid" => sub {
     $t->get_ok('/api/v1/projication' => {Authorization => $token})
         ->status_is(404)->content_like(qr/Page not found \(404\)/);
 };
 
-subtest "filestore api protected" => sub {
+subtest "filestore api is protected" => sub {
     $t->get_ok('/api/v1/file')->status_is(401);
 };
 
-subtest "list all containers" => sub {
+subtest "list all containers: empty" => sub {
     $t->get_ok('/api/v1/file' => {Authorization => $token})->status_is(200)
         ->content_unlike(qr/^[\d+\n]+/);
 };
@@ -184,26 +184,46 @@ subtest "create new container" => sub {
     $t->post_ok('/api/v1/file' => {Authorization => $token})->status_is(400)
         ->json_has('/errors');
 
-    # container should be is list of containers
+    # now, get container
+    $t->get_ok('/api/v1/file/123456' => {Authorization => $token})
+        ->status_is(200)->json_is('/data/type', 'container')
+        ->json_hasnt('/data/attributes/file/0/id');
+
+    # container should be in list of containers
     $t->get_ok('/api/v1/file' => {Authorization => $token})->status_is(200)
         ->content_like(qr/123456/);
 };
 
-subtest "add files" => sub {
+subtest "get invalid containter or file" => sub {
+    $t->get_ok('/api/v1/file/9823213' => {Authorization => $token})
+        ->status_is(404)->json_has('/errors');
 
-# my $upload = {foo => {content => 'bar', filename => 'baz.txt'}};
-#
-# $t->post_ok('/api/v1/file/' => {Authorization => $token} => form => $upload)
-#     ->status_is(200);
-    ok 1;    #TODO
+    $t->get_ok('/api/v1/file/123456/file-does-not-exist.pdf' => {Authorization => $token})
+        ->status_is(404)->json_has('/errors');
+};
+
+
+subtest "add files" => sub {
+    my $upload = {file => {path => 't/records/poem.txt', filename => 'dream.txt'}};
+
+    $t->post_ok('/api/v1/file/123456' => {Authorization => $token} => form => $upload)
+        ->status_is(200);
 };
 
 subtest "get files" => sub {
-    ok 1;    #TODO
+    $t->get_ok('/api/v1/file/123456/dream.txt' => {Authorization => $token})
+        ->status_is(200);
 };
 
 subtest "delete file" => sub {
-    ok 1;    #TODO
+    $t->delete_ok('/api/v1/file/123456/does-not-exist.txt' => {Authorization => $token})
+        ->status_is(404);
+
+    $t->delete_ok('/api/v1/file/123456/dream.txt' => {Authorization => $token})
+        ->status_is(204);
+
+    $t->get_ok('/api/v1/file/123456/dream.txt' => {Authorization => $token})
+        ->status_is(404)->json_has('/errors');
 };
 
 subtest "delete container" => sub {
