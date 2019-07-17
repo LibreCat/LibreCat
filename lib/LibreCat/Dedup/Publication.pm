@@ -1,0 +1,56 @@
+package LibreCat::Dedup::Publication;
+
+use Catmandu::Sane;
+use LibreCat qw(searcher);
+use Moo;
+use namespace::clean;
+
+with 'LibreCat::Dedup';
+
+sub _find_duplicate {
+    my ($self, $data) = @_;
+
+    my @q;
+    push @q, "externalidentifier=$data->{isi}" if $data->{isi};
+    push @q, "externalidentifier=$data->{pmid}" if $data->{doi};
+    push @q, "doi=\"$data->{doi}\"" if $data->{doi};
+
+    my $dup = searcher->search("publication",
+        {cql => join(' OR ', @q), start => 0, limit => 5})->to_array // return [];
+
+    return map { $_->{_id} } @$dup;
+}
+
+1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+LibreCat::Dedup::Publication - a publication deduplicator
+
+=head1 SYNOPSIS
+
+    use LibeCat::Dedup::Publication;
+
+    my $detector = LibreCat::Dedup::Publication->new();
+
+    $detector->find_duplicate({doi => "10.2393/2342wneqe"});
+
+=head1 METHODS
+
+=head2 has_duplicate($data)
+
+Returns 0 or 1.
+
+=head2 find_duplicate($data)
+
+Returns an ARRAY with publication IDs or an empty ARRAY;
+
+=head1 SEE ALSO
+
+L<LibreCat>, L<LibreCat::Dedup>
+
+=cut
