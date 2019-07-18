@@ -12,13 +12,14 @@ sub _find_duplicate {
 
     my @q;
     push @q, "externalidentifier=$data->{isi}" if $data->{isi};
-    push @q, "externalidentifier=$data->{pmid}" if $data->{doi};
+    push @q, "externalidentifier=$data->{pmid}" if $data->{pmid};
     push @q, "doi=\"$data->{doi}\"" if $data->{doi};
 
     my $dup = searcher->search("publication",
-        {cql => join(' OR ', @q), start => 0, limit => 5})->to_array // return [];
+        {cql => join(' OR ', @q), start => 0, limit => 5})->to_array;
 
-    return map { $_->{_id} } @$dup;
+    my @ids = map { $_->{_id} } @$dup;
+    return \@ids;
 }
 
 1;

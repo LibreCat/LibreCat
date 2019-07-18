@@ -11,7 +11,9 @@ requires '_find_duplicate';
 sub has_duplicate {
     my ($self, $data) = @_;
 
-    if ($self->find_duplicate($data) ) {
+    my $dup = $self->find_duplicate($data);
+
+    if ($dup && $dup->[0]) {
         return 1;
     }
     else {

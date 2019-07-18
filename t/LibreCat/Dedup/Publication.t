@@ -31,10 +31,10 @@ my $data = {
     pmid => '25740929',
 };
 
-is $detector->has_duplicate($data), 1;
-is $detector->has_duplicate({pmid => '12345678'}), 0;
+is $detector->has_duplicate($data), 1, "has duplicate";
+is $detector->has_duplicate({pmid => '293874'}), 0, "has no duplicate";
 
-is_deeply $detector->find_duplicate($data), ("999999999");
+is_deeply $detector->find_duplicate($data), ["999999999"], "has correct ID of duplicate";
 
 END {
     # cleaning up
