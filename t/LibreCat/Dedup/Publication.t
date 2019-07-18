@@ -32,7 +32,7 @@ my $data = {
 };
 
 is $detector->has_duplicate($data), 1;
-is $detector->has_duplicate({omid => '12345678'}), 0;
+is $detector->has_duplicate({pmid => '12345678'}), 0;
 
 is_deeply $detector->find_duplicate($data), ("999999999");
 
