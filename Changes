@@ -2,7 +2,7 @@ Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
 
-2.0.0 2019-08-13
+2.0.1 2019-08-13
     - Fixing EPMC and making valid test records really valid
     - Adding missing copyright file
     - Adding strict metadata schema checks for all data types
