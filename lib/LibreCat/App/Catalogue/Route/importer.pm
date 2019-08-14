@@ -7,13 +7,14 @@ LibreCat::App::Catalogue::Route::importer - central handler for import routes
 =cut
 
 use Catmandu::Sane;
-use Catmandu::Util;
-use LibreCat qw(publication);
 use Catmandu::Fix::trim as => 'trim';
+use Catmandu::Util;
 use Dancer ':syntax';
+use LibreCat qw(publication);
 use LibreCat::App::Helper;
-use URL::Encode qw(url_decode);
+use LibreCat::Dedup::Publication;
 use Try::Tiny;
+use URL::Encode qw(url_decode);
 
 sub _fetch_record {
     my ($id, $source) = @_;
@@ -60,6 +61,20 @@ sub _fetch_record {
         h->log->error("Failed to fetch $id from $source");
         return undef;
     }
+}
+
+sub _check_for_duplicate {
+    my ($pub) = @_;
+
+    my $data;
+
+    $data->{doi} = $pub->{doi} if $pub->{doi};
+    $data->{isi} = $pub->{external_id}->{isi}->[0] if $pub->{external_id}->{isi}->[0];
+    $data->{pmid} = $pub->{external_id}->{pmid}->[0] if $pub->{external_id}->{pmid}->[0];
+
+    state $detector = LibreCat::Dedup::Publication->new();
+
+     $detector->
 }
 
 =head2 GET /librecat/record/import
