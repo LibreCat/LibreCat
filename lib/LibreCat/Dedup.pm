@@ -37,4 +37,24 @@ __END__
 
 LibreCat::Dedup - a LibreCat deduplication role
 
+=head1 SYNOPSIS
+
+    package LibreCat::Dedup::Foo;
+
+    use Moo;
+
+    with 'LibreCat::Dedup';
+
+    sub _find_duplicate {
+        my ($self, $data) = @_;
+
+        # deduplication logic...
+    }
+
+    1;
+
+=head1 SEE ALSO
+
+L<LibreCat::Dedup::Publication>
+
 =cut
