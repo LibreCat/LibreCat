@@ -20,7 +20,6 @@ use Plack::App::File;
 use Plack::App::Cascade;
 use Dancer;
 use LibreCat::App;
-use Mojo::Server::PSGI;
 
 # setup template paths
 config->{engines}{template_toolkit}{INCLUDE_PATH} = librecat->template_paths;
@@ -64,14 +63,6 @@ $app->add(map {Plack::App::File->new(root => $_)->to_app} @{librecat->public_pat
 $app->add(sub {
     Dancer->dance(Dancer::Request->new(env => $_[0]));
 });
-
-# mojo app
-{ 
-    my $server = Mojo::Server::PSGI->new;
-    my $script = Path::Tiny->new(__FILE__)->sibling('mojo_app.pl')->stringify;
-    $server->load_app($script);
-    $app->add($server->to_psgi_app);
-}
 
 # setup sessions
 my $config = config;
