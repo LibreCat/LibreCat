@@ -40,9 +40,10 @@ $(document).ready(function(){
                 var progresselement = progressbar.parentNode.parentNode;
                 $(progresselement).remove();
                 var resp = response;//JSON.parse(response);
+                console.log(response);
                 var modal = Dropzone.createElement(
-"<div class='well' id='" + htmlEscape(resp.tempname) + "'>" +
-"<form id='form_" + htmlEscape(resp.tempname) + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
+"<div class='well' id='" + htmlEscape(resp.tempid) + "'>" +
+"<form id='form_" + htmlEscape(resp.tempid) + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
 "<strong>" + htmlEscape(file.name) + "</strong>" +
 "<textarea class='form-control' placeholder='Type details about your publication here' name='description'>" +
 "</textarea>" +
@@ -52,7 +53,7 @@ $(document).ready(function(){
 "<input type='hidden' name='file_name' value='" + htmlEscape(resp.file_name) + "' />" +
 "<div class='checkbox'>" +
 "<label>" +
-"<input type='checkbox' required> I have read and accept the <a href='" + librecat.uri_base + "/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
+"<input type='checkbox' name='has_accepted_license' required> I have read and accept the <a href='" + librecat.uri_base + "/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
 "</label>" +
 "</div>" +
 "<input type='hidden' name='tempid' value='" + htmlEscape(resp.tempid) + "' />" +
