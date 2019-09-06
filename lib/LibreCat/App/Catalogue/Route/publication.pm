@@ -263,7 +263,7 @@ Checks if the user has the rights to update this record.
                 $error_messages  = [
                     sprintf(h->localize("error.update_failed"), $id) . " "
                         . sprintf(
-                        h->localize("error.contact_amdin"),
+                        h->localize("error.contact_admin"),
                         $admin_email
                         )
                 ];
