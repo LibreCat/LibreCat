@@ -405,7 +405,7 @@ publication:
           description: "electronic ISBN number"
       description: "Publication identifier"
     publication_status:
-      enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
+      enum: ["unpublished","draft","submitted","accepted","inpress","epub_ahead","published"]
       description: "Publication status"
     popular_science:
       oneOf:
