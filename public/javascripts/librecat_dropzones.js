@@ -40,7 +40,6 @@ $(document).ready(function(){
                 var progresselement = progressbar.parentNode.parentNode;
                 $(progresselement).remove();
                 var resp = response;//JSON.parse(response);
-                console.log(response);
                 var modal = Dropzone.createElement(
 "<div class='well' id='" + htmlEscape(resp.tempid) + "'>" +
 "<form id='form_" + htmlEscape(resp.tempid) + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
