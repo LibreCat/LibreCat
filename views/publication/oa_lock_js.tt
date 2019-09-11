@@ -6,5 +6,5 @@
     [%- CASE "request" -%]
         <img src="[% uri_base %]/images/access_restricted_blue.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access. Request a copy from the author." alt="Restricted">
     [%- CASE "closed" -%]
-        <img src="[% uri_base %]/images/access_restricted[% IF fi.request_a_copy %]_blue[% END %].png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access[% IF fi.request_a_copy %]. Request a copy from the author.[% ELSE %] for author/reviewer only.[% END %]" alt="Restricted">
+        <img src="[% uri_base %]/images/access_restricted.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Restricted access for author/reviewer only." alt="Restricted">
 [%- END -%]
