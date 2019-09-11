@@ -160,14 +160,14 @@ Checks if the user has the rights to update this record.
 
         h->log->debug("Params:" . to_dumper($p));
 
-        p->{finalSubmit} //= '';
+        $p->{finalSubmit} //= '';
 
         if ($p->{new_record}) {
 
             # ok
         }
         elsif (
-            p->{finalSubmit} eq 'recPublish'
+            $p->{finalSubmit} eq 'recPublish'
             && p->can_make_public(
                 $p->{_id},
                 {user_id => session("user_id"), role => session("role")}
