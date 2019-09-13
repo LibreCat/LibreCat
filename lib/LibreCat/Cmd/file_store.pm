@@ -25,18 +25,10 @@ librecat file_store delete    [options] <key> <file>
 librecat file_store purge     [options] <key>
 librecat file_store export    [options] <key> <zip>
 librecat file_store import    [options] <key> <zip>
-librecat file_store move      [options] <key|store_name> <store_name>
+librecat file_store copy      [options] <key|store_name> <store_name>
 librecat file_store thumbnail [options] <key> <file>
 
-options:
-    --store=...       - Store name
-    --file_store=...  - Catmandu::Store::File class
-    --file_opt=...    - Catmandu::Store::File option
-    --tmp_dir=...     - Temporary directory
-    --zip=...         - Zip program
-    --unzip=...       - Unzip program
-    --log=...         - Log message
-
+Options:
 EOF
 }
 
@@ -81,7 +73,7 @@ sub command {
     my ($self, $opts, $args) = @_;
 
     my $commands
-        = qr/list|exists|get|add|delete|purge|export|import|move|thumbnail/;
+        = qr/list|exists|get|add|delete|purge|export|import|copy|thumbnail/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -157,8 +149,8 @@ sub command {
     elsif ($cmd eq 'import') {
         return $self->_import(@$args);
     }
-    elsif ($cmd eq 'move') {
-        return $self->_move(@$args);
+    elsif ($cmd eq 'copy') {
+        return $self->_copy(@$args);
     }
     elsif ($cmd eq 'thumbnail') {
         return $self->_thumbnail(@$args);
@@ -324,13 +316,17 @@ sub _fetch {
 
     binmode(STDOUT, ':raw');
 
-    my $bytes = $files->stream(IO::File->new('>&STDOUT'), $file);
+    my $out = IO::File->new('>&STDOUT');
+
+    croak "get - failed to open stdout" unless $out;
+
+    my $bytes = $files->stream($out, $file);
 
     if (my $msg = $self->app->global_options->{log}) {
         $self->audit_message($key, "fetch $filename", $msg);
     }
 
-    $bytes > 0;
+    $bytes > 0 ? 0 : 1;
 }
 
 sub _add {
@@ -405,29 +401,29 @@ sub _purge {
     return 0;
 }
 
-sub _move {
+sub _copy {
     my ($self, $key, $name) = @_;
 
-    croak "move - need a key and file_store"
+    croak "copy - need a key and file_store"
         unless defined($key) && defined($name);
 
     my $file_store = $self->file_store($name);
     my $file_opt   = $self->file_opt($name);
 
-    croak "move - no `$name` defined as file_store" unless $file_store;
+    croak "copy - no `$name` defined as file_store" unless $file_store;
 
     my $target_store = $self->load($file_store, $file_opt);
 
-    croak "move - can't create `$name` store" unless $target_store;
+    croak "copy - can't create `$name` store" unless $target_store;
 
     my $source_store = $self->app->global_options->{store};
 
     if (-r $key) {
         local (*F);
-        open(F, $key) || croak "move - failed to open `$key` for reading";
+        open(F, $key) || croak "copy - failed to open `$key` for reading";
         while (<F>) {
             chomp;
-            $self->_move_files($source_store, $target_store, $_);
+            $self->_copy_files($source_store, $target_store, $_);
         }
         close(F);
     }
@@ -439,16 +435,16 @@ sub _move {
             sub {
                 my $file = shift;
                 my $key  = $file->{_id};
-                $self->_move_files($key_store, $target_store, $key);
+                $self->_copy_files($key_store, $target_store, $key);
             }
         );
     }
     else {
-        $self->_move_files($source_store, $target_store, $key);
+        $self->_copy_files($source_store, $target_store, $key);
     }
 
     if (my $msg = $self->app->global_options->{log}) {
-        $self->audit_message($key, "move $name", $msg);
+        $self->audit_message($key, "copy $name", $msg);
     }
 
     0;
@@ -468,7 +464,7 @@ sub _move {
     }
 }
 
-sub _move_files {
+sub _copy_files {
     my ($self, $source_store, $target_store, $key) = @_;
 
     my $curr_time = sub {
@@ -698,7 +694,7 @@ LibreCat::Cmd::file_store - manage librecat file stores
     librecat file_store purge     [options] <key>
     librecat file_store export    [options] <key> <zip>
     librecat file_store import    [options] <key> <zip>
-    librecat file_store move      [options] <key|store_name> <store_name>
+    librecat file_store copy      [options] <key|store_name> <store_name>
     librecat file_store thumbnail [options] <key> <file>
 
     options:
@@ -709,4 +705,5 @@ LibreCat::Cmd::file_store - manage librecat file stores
         --zip=...         - Zip program
         --unzip=...       - Unzip program
         --log=...         - Log message
+
 =cut

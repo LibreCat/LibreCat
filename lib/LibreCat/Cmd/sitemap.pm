@@ -14,12 +14,16 @@ Usage:
 
 librecat sitemap [-v] [-fix=...] <DIRECTORY>
 
+Options:
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['v', ""],['fix=s','']);
+    (
+        ['v',     "verbose"],
+        ['fix=s', "fix file"]
+    );
 }
 
 sub command {

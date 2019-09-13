@@ -81,6 +81,13 @@ function f_drop_reqcopy {
     echo "Done"
 }
 
+function f_drop_temp_files {
+    echo "Dropping temp_files..."
+    echo "temp_files"
+    carton exec "bin/librecat delete main --bag temp_files" || return $?
+    echo "Done"
+}
+
 function f_reindex {
     echo "Reindex:"
     carton exec "bin/librecat index switch" || return $?
@@ -191,6 +198,7 @@ case "${CMD}" in
             f_drop_version
         confirm "Drop audit data? [y/N]" && f_drop_audit
         confirm "Drop reqcopy data? [y/N]" && f_drop_reqcopy
+        confirm "Drop temp_files db? [y/N]" && f_drop_temp_files
         ;;
     reindex)
         f_reindex
