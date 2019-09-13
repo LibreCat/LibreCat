@@ -27,19 +27,6 @@ librecat publication fetch   [options] <source> <id>
 librecat publication embargo [options] ['update']
 librecat publication checksum [options] list|init|test|update <id> | <IDFILE>
 
-options:
-    --sort=STR         (sorting results [only in combination with cql-query])
-    --total=NUM        (total number of items to list/export)
-    --start=NUM        (start list/export at this item)
-    --version=NUM      (get a specific record version)
-    --previous-version (get previous record version)
-    --history          (get all record versions)
-    --log=STR          (write an audit message)
-    --with-citations   (process citations while adding records)
-    --with-files       (process files while addings records)
-    --no-check-version (add records without checking versions)
-    --csv              (import csv/tsv metadata in `files` command)
-
 E.g.
 
 # Search all publications with status 'private'
@@ -88,23 +75,24 @@ librecat publication checksum init ID
 # the data found in the file_store
 librecat publication checksum update ID
 
+Options:
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
     (
-        ['total=i',          ""],
-        ['start=i',          ""],
-        ['sort=s',           ""],
-        ['log=s',            ""],
-        ['version=i',        ""],
-        ['previous-version', ""],
-        ['history',          ""],
-        ['with-citations',   ""],
-        ['with-files',       ""],
-        ['no-check-version', ""],
-        ['csv',              ""],
+        ['total=i',          "total number of items to list/export"],
+        ['start=i',          "start list/export at this item"],
+        ['sort=s',           "sorting results [only in combination with cql-query]"],
+        ['log=s',            "write an audit message"],
+        ['version=i',        "get a specific record version"],
+        ['previous-version', "get previous record version"],
+        ['history',          "get all record versions"],
+        ['with-citations',   "process citations while adding records"],
+        ['with-files',       "process files while addings records"],
+        ['no-check-version', "add records without checking versions"],
+        ['csv',              "import csv/tsv metadata in `files` command"],
     );
 }
 
@@ -624,7 +612,14 @@ sub _checksum_id {
     }
 
     if ($update) {
-        $pubs->add($rec);
+        $pubs->add($rec,
+            on_validation_error => sub {
+                my ($rec, $e) = @_;
+                $self->log->errorf("%s not a valid publication %s", $rec->{_id}, $e);
+                say STDERR join("\n",
+                    $rec->{_id}, "ERROR: not a valid publication", @$e);
+                    $errors++;
+            });
 
         if (my $msg = $self->opts->{log}) {
             $self->audit_message($rec->{_id}, 'add', $msg);

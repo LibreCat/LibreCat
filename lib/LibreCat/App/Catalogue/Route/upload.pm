@@ -60,7 +60,7 @@ post '/librecat/upload' => sub {
         referer      => request->referer,
     });
 
-    ($res->{success} == 1) ? status(200) : status(500);
+    defined $res->{error_message} ? status(500) : status(200);
 
     return to_json($res);
 };

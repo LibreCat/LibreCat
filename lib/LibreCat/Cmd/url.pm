@@ -13,17 +13,16 @@ Usage:
 
 librecat url check [options] <FILE> [OUTFILE]
 
-options:
-
-    --importer=<...>
-    --exporter=<...>
-
+Options:
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['importer=s', ""], ['exporter=s', ""],);
+    (
+        ['importer=s', "importer module"],
+        ['exporter=s', "exporter module"],
+    );
 }
 
 sub command {

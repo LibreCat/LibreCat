@@ -18,22 +18,22 @@ librecat user delete [options] <id> | <IDFILE>
 librecat user valid  [options] <FILE>
 librecat user passwd [options] <id>
 
-options:
-    --sort=STR    (sorting results [only in combination with cql-query])
-    --total=NUM   (total number of items to list/export)
-    --start=NUM   (start list/export at this item)
-
 E.g.
 
 librecat user list 'id = 1234'
 librecat user --sort "lastname,,1" list ""  # force to use an empty query
 
+Options:
 EOF
 }
 
 sub command_opt_spec {
     my ($class) = @_;
-    (['total=i', ""], ['start=i', ""], ['sort=s', ""]);
+    (
+        ['total=i', "total number of items to list/export"],
+        ['start=i', "start list/export at this item"],
+        ['sort=s',  "sorting results [only in combination with cql-query]"]
+    );
 }
 
 sub opts {
