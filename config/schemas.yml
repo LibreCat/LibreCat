@@ -849,11 +849,6 @@ user:
        - type: string
        - type: integer
       description: "Researcher arXiv identifier"
-    authorClaim:
-      oneOf:
-       - type: string
-       - type: integer
-      description: "Researcher authorClaim identifier"
     github:
       oneOf:
        - type: string
