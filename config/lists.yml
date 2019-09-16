@@ -49,21 +49,18 @@ author_id:
     label: ArXiv ID
     url: "https://arxiv.org/a/"
   orcid:
-    label: ORCID
+    label: ORCID iD
     url: "https://orcid.org/"
     icon: " <sup><img src='/images/icon_orcid.png' /></sup>"
   googleScholar:
-    label: Google Scholar Profile
+    label: Google Scholar ID
     url: "https://scholar.google.com/citations?user="
   github:
-    label: GitHub
+    label: GitHub Username
     url: "https://github.com/"
   researcherId:
-    label: Researcher ID
+    label: ResearcherID
     url: "https://www.researcherid.com/rid/"
-  authorClaim:
-    label: Author Claim
-    url: "http://authorclaim.org/profile/"
   scopusId:
     label: Scopus Author ID
     url: "https://www.scopus.com/authid/detail.url?authorId="
