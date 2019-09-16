@@ -2,6 +2,23 @@ Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
 
+2.0.1 2019-08-13
+    - Fixing EPMC and making valid test records really valid
+    - Adding missing copyright file
+    - Adding strict metadata schema checks for all data types
+    - Fixing option section in help commands
+    - Fixing lingering file metadata when uploading new files #762
+    - Fixing single signon login
+    - Fixing schema.org json output
+    - All web edits must be valid against the JSON schema (+ added extra JS validation)
+    - Fixing datacite XML
+
+2.0.0_02 2019-06-17
+    - Adding specific facets
+    - Fixing locale issues
+    - Fixing licenses in exports
+    - Updating Catmandu::DBI to allow for lazy loading of database handles
+
 2.0.0_01 2019-06-03
     - Elasticsearch 6.5 support
     - Adding an LibreCat API for record and file management
