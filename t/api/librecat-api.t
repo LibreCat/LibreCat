@@ -198,31 +198,43 @@ subtest "get invalid containter or file" => sub {
     $t->get_ok('/api/v1/file/9823213' => {Authorization => $token})
         ->status_is(404)->json_has('/errors');
 
-    $t->get_ok('/api/v1/file/123456/file-does-not-exist.pdf' => {Authorization => $token})
-        ->status_is(404)->json_has('/errors');
+    $t->get_ok('/api/v1/file/123456/file-does-not-exist.pdf' =>
+            {Authorization => $token})->status_is(404)->json_has('/errors');
 };
 
-
 subtest "add files" => sub {
-    my $upload = {file => {path => 't/records/poem.txt', filename => 'dream.txt'}};
+    my $upload = {};
+    $t->post_ok(
+        '/api/v1/file/123456' => {Authorization => $token} => form => $upload)
+        ->status_is(400)->json_has('/errors/0/id')
+        ->json_is('/errors/0/id', 'no_upload_file');
 
-    $t->post_ok('/api/v1/file/123456' => {Authorization => $token} => form => $upload)
-        ->status_is(200);
+    $upload
+        = {
+        file => {path => 't/records/datacite.xml', filename => 'metadata.xml'}
+        };
+    t->post_ok(
+        '/api/v1/file/123456' => {Authorization => $token} => form => $upload)
+        ->status_is(201);
 };
 
 subtest "get files" => sub {
-    $t->get_ok('/api/v1/file/123456/dream.txt' => {Authorization => $token})
+    $t->get_ok(
+        '/api/v1/file/123456/metadata.xml' => {Authorization => $token})
         ->status_is(200);
 };
 
 subtest "delete file" => sub {
-    $t->delete_ok('/api/v1/file/123456/does-not-exist.txt' => {Authorization => $token})
+    $t->delete_ok(
+        '/api/v1/file/123456/does-not-exist.txt' => {Authorization => $token})
         ->status_is(404);
 
-    $t->delete_ok('/api/v1/file/123456/dream.txt' => {Authorization => $token})
+    $t->delete_ok(
+        '/api/v1/file/123456/metadata.xml' => {Authorization => $token})
         ->status_is(204);
 
-    $t->get_ok('/api/v1/file/123456/dream.txt' => {Authorization => $token})
+    $t->get_ok(
+        '/api/v1/file/123456/metadata.xml' => {Authorization => $token})
         ->status_is(404)->json_has('/errors');
 };
 
