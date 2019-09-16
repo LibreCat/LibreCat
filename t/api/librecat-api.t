@@ -213,7 +213,7 @@ subtest "add files" => sub {
         = {
         file => {path => 't/records/datacite.xml', filename => 'metadata.xml'}
         };
-    t->post_ok(
+    $t->post_ok(
         '/api/v1/file/123456' => {Authorization => $token} => form => $upload)
         ->status_is(201);
 };
