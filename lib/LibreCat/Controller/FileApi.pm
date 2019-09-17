@@ -332,7 +332,7 @@ sub upload_file {
 
     }
 
-    $files->upload(IO::File->new($upload->asset->path), $upload->filename);
+    $files->upload(IO::File->new($upload->asset->to_file->path), $upload->filename);
 
     my $file = $files->get($upload->filename);
 
