@@ -35,7 +35,7 @@ my $t = Test::Mojo->new('LibreCat::Application');
 
 subtest "get documentation" => sub {
     $t->get_ok('/api/v1/openapi.json')->status_is(200)->json_has('/basePath');
-    $t->get_ok('/api/v1/openapi.json')->status_is(200);
+    $t->get_ok('/api/v1/openapi.yml')->status_is(200);
 };
 
 subtest "authentication" => sub {
