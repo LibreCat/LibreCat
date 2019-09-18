@@ -427,23 +427,6 @@ sub get_file_store {
     };
 }
 
-sub get_access_store {
-    my $c = $_[0];
-
-    state $as = do {
-
-        my $config       = librecat->config->{filestore}->{access};
-        my $access_store = $config->{package};
-        my $access_opts  = $config->{options} // {};
-
-        my $pkg = Catmandu::Util::require_package($access_store,
-            "Catmandu::Store::File");
-        $pkg->new(%$access_opts);
-
-    };
-
-}
-
 sub get_io_writer {
     my $c = $_[0];
 
