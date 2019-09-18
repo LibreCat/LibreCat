@@ -427,8 +427,13 @@ Clones the record with ID :id and returns a form with a different ID.
                 {message => "No publication found with ID $id."};
         }
 
+        delete $rec->{_version};
+        delete $rec->{date_created};
+        delete $rec->{date_updated};
+        delete $rec->{doi};
         delete $rec->{file};
         delete $rec->{related_material};
+
         $rec->{_id}        = publication->generate_id;
         $rec->{new_record} = 1;
 
