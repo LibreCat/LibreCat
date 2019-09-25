@@ -49,7 +49,7 @@ requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
 requires 'Dancer';
 requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
-requires 'Dancer::Plugin::Catmandu::OAI', '>=0.0501';
+requires 'Dancer::Plugin::Catmandu::OAI', '>=0.0502';
 requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::StreamData';
