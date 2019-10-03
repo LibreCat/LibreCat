@@ -464,17 +464,17 @@ sub _remove_file {
 }
 
 sub _decode_file {
+
+    state $json = JSON::MaybeXS->new( utf8 => 0 );
+
     my $file = shift;
     $file = []      unless defined $file;
     $file = [$file] unless ref($file) eq 'ARRAY';
-    for my $fi (@$file) {
-        if (ref $fi ne 'HASH') {
-            $fi = encode("utf8", $fi);
-            $fi = decode_json($fi);
-        }
-
-    }
-    $file;
+    [
+        map {
+            is_string( $_ ) ? $json()->decode( $_ ) : $_;
+        } @$file
+    ];
 }
 
 sub _update_tech_metadata {

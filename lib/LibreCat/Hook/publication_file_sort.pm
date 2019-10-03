@@ -2,32 +2,14 @@ package LibreCat::Hook::publication_file_sort;
 use Catmandu::Sane;
 use Catmandu::Util qw(:is);
 use Moo;
-use JSON::MaybeXS qw();
+use LibreCat::App::Catalogue::Controller::File;
 
 with "Catmandu::Logger";
-
-has json => (
-    is => "ro",
-    lazy => 1,
-    default => sub {
-        JSON::MaybeXS->new( utf8 => 0 );
-    },
-    init_arg => undef
-);
 
 sub fix {
     my ($self, $data) = @_;
 
-    my @files;
-
-    for( @{ $data->{file} } ){
-        if( is_string( $_ ) ){
-            push @files, $self->json()->decode( $_ );
-        }
-        else {
-            push @files, $_;
-        }
-    }
+    $data->{file} = LibreCat::App::Catalogue::Controller::File::_decode_file( $data->{file} );
 
     @files = sort { $a->{file_name} cmp $b->{file_name} } @files;
 
