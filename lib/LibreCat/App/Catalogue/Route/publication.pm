@@ -16,6 +16,7 @@ use LibreCat::App::Catalogue::Controller::Permission;
 use Dancer qw(:syntax);
 use Dancer::Plugin::FlashMessage;
 use Encode qw(encode);
+use LibreCat::Hook::publication_decode_file;
 
 sub access_denied_hook {
     h->hook('publication-access-denied')
@@ -159,6 +160,12 @@ Checks if the user has the rights to update this record.
         my $return_url = $p->{return_url};
 
         h->log->debug("Params:" . to_dumper($p));
+
+        #unpack strange format of record.file
+        #TODO: this should not be necessary
+        $p = LibreCat::Hook::publication_decode_file
+            ->new()
+            ->fix( $p );
 
         p->{finalSubmit} //= '';
 
