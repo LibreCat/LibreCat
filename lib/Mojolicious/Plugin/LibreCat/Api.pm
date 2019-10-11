@@ -73,7 +73,23 @@ sub register {
         }
     );
 
+    $r->add_shortcut(
+        librecat_search_api => sub {
+            my ($r, $model) = @_;
+
+            my $search_api = $api_auth->any("/$model")
+                ->to('search_api#', model => $model);
+
+            $search_api->get('/search')->to('#search', model => $model)
+                ->name($model);
+
+            return $search_api;
+        }
+    );
+
     $r->librecat_model_api($_) for @$models;
+
+    $r->librecat_search_api($_) for @$models;
 }
 
 1;
