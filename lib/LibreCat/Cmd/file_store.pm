@@ -11,6 +11,7 @@ use File::Path;
 use File::Spec;
 use URI::Escape;
 use POSIX qw(strftime);
+use LibreCat qw(publication);
 use LibreCat::Audit;
 use parent qw(LibreCat::Cmd);
 
@@ -335,6 +336,10 @@ sub _add {
     croak "add - need a key and a file"
         unless defined($key) && defined($file) && -r $file;
 
+    #do not allow new files without the database to know about it
+    my $pub = publication()->get( $key )
+        or croak( "no publication found for id $key" );
+
     my $store = $self->app->global_options->{store};
 
     my $files;
@@ -353,11 +358,47 @@ sub _add {
 
     $files->upload(IO::File->new("<$path/$name"), $name);
 
+    my $store_file = $files->get( $name )
+        or croak( "unable to find newly uploaded file $name in container $key" );
+
+    my $idx_file;
+
+    $pub->{file} //= [];
+
+    for( my $i = 0; $i < scalar( @{ $pub->{file} } ); $i++ ) {
+
+        if( $pub->{file}->[$i]->{file_name} eq $name ) {
+
+            $idx_file = $i;
+            last;
+
+        }
+
+    }
+
+    my $new_publication_file = LibreCat::App::Catalogue::Controller::File::merge_file_metadata(
+        publication_file => defined( $idx_file ) ? $pub->{file}->[$idx_file] : { file_name => $name },
+        store_file => $store_file
+    );
+
+    if( defined($idx_file) ) {
+
+        $pub->{file}->[$idx_file] = $new_publication_file;
+
+    }
+    else {
+
+        push @{ $pub->{file} }, $new_publication_file;
+
+    }
+
+    publication()->add( $pub, skip_before_add => [ "file" ] );
+
     if (my $msg = $self->app->global_options->{log}) {
         $self->audit_message($key, "add $file", $msg);
     }
 
-    return $self->_get($key);
+    0;
 }
 
 sub _delete {
@@ -373,6 +414,28 @@ sub _delete {
     my $files = $store->index->files($key);
 
     $files->delete($name);
+
+    my $pub = publication()->get( $key );
+    $pub->{file} //= [];
+
+    if( $pub ){
+
+        my @files = grep {
+
+            $_->{file_name} ne $name;
+
+        } @{ $pub->{file} };
+
+        $pub->{file} = \@files;
+
+        publication()->add( $pub, skip_before_add => [ "file" ] );
+
+    }
+    else {
+
+        warn "no publication found with id $key";
+
+    }
 
     if (my $msg = $self->app->global_options->{log}) {
         $self->audit_message($key, "delete $name", $msg);
@@ -391,6 +454,19 @@ sub _purge {
     croak "purge - failed to find $key" unless $store->index->exists($key);
 
     $store->index->delete($key);
+
+    my $pub = publication()->get( $key );
+
+    if( $pub ){
+
+        $pub->{file} = [];
+        publication()->add( $pub, skip_before_add => [ "file" ] );
+
+    }
+    else {
+        warn "no publication found with id $key";
+
+    }
 
     if (my $msg = $self->app->global_options->{log}) {
         $self->audit_message($key, 'purge', $msg);

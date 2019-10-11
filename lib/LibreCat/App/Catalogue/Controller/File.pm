@@ -333,7 +333,7 @@ sub handle_file {
     }
 }
 
-=head2 update_file($file)
+=head2 update_file( $publication_id, $publication_file )
 
 Update one $pub->{file}->[<item>] with technical metadata found in
 the file store. Returns the updated file on success or undef on
@@ -372,25 +372,45 @@ sub update_file {
 
     my $files = $store->index->files($key);
 
-    my $res = $files->get($filename);
+    my $store_file = $files->get($filename);
 
-    unless ($res) {
+    unless ($store_file) {
         h->log->error("file $filename not found in container $key");
         return undef;
     }
 
-    $file->{file_size}    = int($res->{size});
-    $file->{content_type} = $res->{content_type};
-    $file->{date_created} = timestamp($res->{created});
-    $file->{date_updated} = timestamp($res->{modified});
-    $file->{checksum}     = $res->{md5} if ($res->{md5});
-    $file->{creator} //= 'system';
-    $file->{file_id} //= publication->generate_id;
+    merge_file_metadata(
+        publication_file => $file,
+        store_file => $store_file
+    );
+}
 
-    $file->{access_level} //= 'open_access';
-    $file->{relation}     //= 'main_file';
+=head2 merge_file_metadata( publication_file => $publication_file, store_file => $store_file )
 
-    return $file;
+Merge metadata from the publication file with data from the filestore.
+Returns publication_file
+
+=cut
+
+sub merge_file_metadata {
+
+    my( %opts ) = @_;
+
+    my $pub_file = delete $opts{publication_file};
+    my $store_file = delete $opts{store_file};
+
+    $pub_file->{file_size}    = int( $store_file->{size} );
+    $pub_file->{content_type} = $store_file->{content_type};
+    $pub_file->{date_created} = timestamp( $store_file->{created} );
+    $pub_file->{date_updated} = timestamp( $store_file->{modified} );
+    $pub_file->{checksum}     = $store_file->{md5} if $store_file->{md5};
+    $pub_file->{creator}    //= 'system';
+    $pub_file->{file_id}      //= publication->generate_id;
+    $pub_file->{access_level} //= 'open_access';
+    $pub_file->{relation}     //= 'main_file';
+
+    $pub_file;
+
 }
 
 sub _make_thumbnail {
