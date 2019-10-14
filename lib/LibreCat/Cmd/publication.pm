@@ -720,7 +720,7 @@ sub _files_load {
     my %allowed_fields = map {($_ => 1)} qw(
         id
         access_level creator content_type
-        date_created date_updated file_id
+        date_created date_updated
         file_name file_size request_a_copy checksum
         relation title description embargo embargo_to
     );

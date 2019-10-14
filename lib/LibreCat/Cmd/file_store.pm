@@ -441,7 +441,7 @@ sub _delete {
         $self->audit_message($key, "delete $name", $msg);
     }
 
-    return $self->_get($key);
+    0;
 }
 
 sub _purge {

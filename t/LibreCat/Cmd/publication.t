@@ -179,12 +179,15 @@ note("adding a file to the file store");
 
     ok !$result->error, 'add file threw no exception';
 
-    my $output = $result->stdout;
-    ok $output , 'got an output';
-
-    like $output , qr/^key: 999999999/, 'added cpanfile to 999999999';
-
     ok -r 't/data/999/999/999/cpanfile', 'got a file';
+}
+
+note("testing file metadata updates with file_id (adding files)");
+{
+    my $result = test_app(qq|LibreCat::CLI| =>
+            ['publication', 'files', 't/records/update_file_with_file_id.yml']);
+
+    ok $result->error, 'files threw exception';
 }
 
 note("testing file metadata updates (adding files)");
@@ -202,10 +205,8 @@ note("testing file metadata updates (adding files)");
 
     ok $record->{file}, 'record has files';
 
-    is $record->{file}->[0]->{file_id}, '2037', 'got a file_id';
-
-    is $record->{file}->[0]->{access_level}, 'open_access',
-        'got a access_level';
+    is $record->{file}->[0]->{access_level}, 'local',
+        'got a access_level local';
 
     is $record->{file}->[0]->{file_name}, 'cpanfile', 'got a file_name';
 }
@@ -246,7 +247,7 @@ note("testing file metadata updates (updates)");
 
     ok $record , 'got a record';
 
-    is $record->{file}->[0]->{access_level}, 'open_access',
+    is $record->{file}->[0]->{access_level}, 'local',
         'got a access_level';
 }
 
@@ -303,16 +304,14 @@ note("testing checksums update");
 
 note("testing file metadata updates (deletes)");
 {
-    my $record = get_publication('999999999');
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['file_store', 'add', '999999999', 'README.md']);
 
-    my $file_new = {%{$record->{file}->[0]}};
-    $file_new->{file_id} += 1;
+    ok !$result->error, 'add file threw no exception';
 
-    push @{$record->{file}}, $file_new;
+    ok -r 't/data/999/999/999/README.md', 'got a file';
 
-    add_publication($record);
-
-    my $result = test_app(qq|LibreCat::CLI| =>
+    $result = test_app(qq|LibreCat::CLI| =>
             ['publication', 'files', 't/records/update_file.yml']);
 
     ok $result->error, 'ok we get an exception';

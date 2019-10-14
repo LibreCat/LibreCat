@@ -364,8 +364,8 @@ sub update_file {
     h->log->info("loading container $key");
 
     unless ($store->index->exists($key)) {
-        h->log->error("container $key not found");
-        return undef;
+        h->log->error("adding container $key");
+        $store->index->add({ _id => $key });
     }
 
     h->log->info("searching $filename in container $key");

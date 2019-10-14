@@ -1,6 +1,6 @@
 use Catmandu::Sane;
 use Path::Tiny;
-use LibreCat -load => {layer_paths => [qw(t/layer)]};
+use LibreCat -self => -load => {layer_paths => [qw(t/layer)]};
 
 use LibreCat::CLI;
 use Test::More;
@@ -17,6 +17,9 @@ BEGIN {
 }
 
 require_ok $pkg;
+
+my $publications = librecat->model("publication");
+$publications->delete_all();
 
 {
     use_ok "LibreCat::Audit";
@@ -77,8 +80,20 @@ note("list wrong store");
     ok $result->error, 'ok threw an exception';
 }
 
+note("add 1234 poem.txt before adding publication record");
+{
+    my $result = test_app(
+        qq|LibreCat::CLI| => ['file_store', 'add', '1234', 't/records/poem.txt']);
 
-note("add 1234 poem.txt");
+    ok $result->exit_code, 'exit !0';
+
+    ok $result->error, 'ok threw an exception';
+
+}
+
+$publications->add({ type => "book", _id => "1234", title => "1234", status => "private" });
+
+note("add 1234 poem.txt after adding publication record");
 {
     my $result = test_app(
         qq|LibreCat::CLI| => ['file_store', 'add', '1234', 't/records/poem.txt']);
@@ -86,11 +101,6 @@ note("add 1234 poem.txt");
     ok !$result->exit_code, 'exit 0';
 
     ok !$result->error, 'add threw no exception';
-
-    my $output = $result->stdout;
-    ok $output , 'got an output';
-
-    like $output , qr/^key: 1234/, 'added 1234';
 
     ok -r 't/data/000/001/234/poem.txt', 'got a file';
 }
@@ -215,11 +225,6 @@ note("delete 1234 poem.txt");
 
     ok !$result->error, 'delete threw no exception';
 
-    my $output = $result->stdout;
-    ok $output , 'got an output';
-
-    like $output , qr/^key: 1234/, 'deleted 1234 poem.txt';
-
     ok !-r 't/data/000/001/234/poem.txt', 'file is gone';
 }
 
@@ -254,8 +259,8 @@ note("add with audit");
 
     is(
         LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
-        2,
-        "file_store add: adds message for add and get"
+        1,
+        "file_store add: adds message for add"
     );
 }
 
@@ -265,7 +270,7 @@ note("get with audit");
 
     is(
         LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
-        3,
+        2,
         "file_store get: add message for get"
     );
 }
@@ -276,7 +281,7 @@ note("fetch with audit");
 
     is(
         LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
-        4,
+        3,
         "file_store get: add message for get"
     );
 }
@@ -287,8 +292,8 @@ note("delete with audit");
 
     is(
         LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
-        6,
-        "file_store delete file: add message for delete and get"
+        4,
+        "file_store delete file: add message for delete"
     );
 }
 
@@ -298,7 +303,7 @@ note("purge with audit");
 
     is(
         LibreCat::Audit->new()->select( bag => "publication" )->select( id => 1234 )->count(),
-        7,
+        5,
         "file_store purge: add message for purge"
     );
 }
