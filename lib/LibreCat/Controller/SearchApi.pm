@@ -15,8 +15,10 @@ sub search {
     my $recs  = librecat->model($model) // return $c->not_found;
 
     my $hits = librecat->searcher->search($model, {
-            # cql_query => ,
-            # ...
+            cql_query => $query,
+            start => $c->param('start') // 0,
+            limit => $c->param('limit') // 20,
+
         }
     );
 
