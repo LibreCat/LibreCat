@@ -60,7 +60,7 @@ subtest "get non-existent user" => sub {
         ->json_is('/errors/0/title', 'user 91919192882 not found');
 };
 
-subtest "add/get/delete user" => sub {
+subtest "add/get/search/delete user" => sub {
     my $user = Catmandu->importer('YAML', file => "t/records/valid-user.yml")
         ->first;
 
@@ -71,6 +71,9 @@ subtest "add/get/delete user" => sub {
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id',                   999111999)
         ->json_is('/data/attributes/full_name', 'User, Test');
+
+    $t->get_ok('/api/v1/user/search?cql=...' ) => {Authorization => $token})
+        ->status_is(200)->json_has('/data/attributes');
 
     $t->get_ok('/api/v1/user/999111999/versions' => {Authorization => $token})
         ->status_is(404);
@@ -151,6 +154,9 @@ subtest "add/get/delete publication" => sub {
             {Authorization => $token})->status_is(200)
         ->json_is('/data/id',                  999999999)
         ->json_is('/data/attributes/_version', '1');
+
+    $t->get_ok('/api/v1/pulication/search'=> {Authorization => $token})
+    ->status_is(200)->json_has('/data/attributes');
 
     $t->delete_ok(
         '/api/v1/publication/999999999' => {Authorization => $token})
