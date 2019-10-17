@@ -20,12 +20,15 @@ on 'test' => sub {
 
 requires 'Business::ISBN', 0;
 
+# Fixing broken JSON::Validator error handling
+requires 'JSON::Validator','<=3.14';
+
 # Catmandu
 requires 'Catmandu', '>=1.2002';
 requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
-requires 'Catmandu::BibTeX';
+requires 'Catmandu::BibTeX', '>=0.14';
 requires 'Catmandu::DBI', '>=0.09';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Fix::Date';
