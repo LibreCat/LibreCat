@@ -20,6 +20,9 @@ on 'test' => sub {
 
 requires 'Business::ISBN', 0;
 
+# Fixing broken JSON::Validator error handling
+requires 'JSON::Validator','<=3.14';
+
 # Catmandu
 requires 'Catmandu', '>=1.2002';
 requires 'Catmandu::FileStore', '1.13';

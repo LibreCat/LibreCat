@@ -17,6 +17,8 @@ sub _build_whitelist {
 around last_errors => sub {
     my $orig   = shift;
     my $errors = $orig->(@_) // return;
+    use Data::Dumper;
+    warn Dumper($errors);
     [
       map {
         sprintf "%s: %s"
