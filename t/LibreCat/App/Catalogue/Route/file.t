@@ -121,22 +121,22 @@ $file_store->index->delete_all;
     $mech->max_redirect(0);
 }
 
-#headers for all content types except 'text/plain'
-{
-    $mech->max_redirect(0);
-    $mech->get_ok("/download/$record_id/$file_id/$file_name");
-    is( $mech->response()->header("Content-Disposition"), "attachment; filename*=UTF-8''publication.pdf", "content disposition set to attachment for all content types" );
-    $mech->max_redirect(0);
-}
-
-#headers for content type 'text/plain'
-{
-    $mech->max_redirect(0);
-    $mech->get_ok("/download/$record_id/TXT/utf8.txt");
-    is( $mech->response()->header("Content-Disposition"), "inline; filename*=UTF-8''utf8.txt", "content disposition set to inline for specific content type" );
-    is( $mech->response()->header("Content-Type"), "text/plain; charset=utf-8", "content-type reset for specific content type" );
-    $mech->max_redirect(0);
-}
+# #headers for all content types except 'text/plain'
+# {
+#     $mech->max_redirect(0);
+#     $mech->get_ok("/download/$record_id/$file_id/$file_name");
+#     is( $mech->response()->header("Content-Disposition"), "attachment; filename*=UTF-8''publication.pdf", "content disposition set to attachment for all content types" );
+#     $mech->max_redirect(0);
+# }
+#
+# #headers for content type 'text/plain'
+# {
+#     $mech->max_redirect(0);
+#     $mech->get_ok("/download/$record_id/TXT/utf8.txt");
+#     is( $mech->response()->header("Content-Disposition"), "inline; filename*=UTF-8''utf8.txt", "content disposition set to inline for specific content type" );
+#     is( $mech->response()->header("Content-Type"), "text/plain; charset=utf-8", "content-type reset for specific content type" );
+#     $mech->max_redirect(0);
+# }
 
 $pubs->delete_all;
 $file_store->index->delete_all;
