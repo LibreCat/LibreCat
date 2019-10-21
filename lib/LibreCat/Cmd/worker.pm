@@ -3,12 +3,18 @@ package LibreCat::Cmd::worker;
 use Catmandu::Sane;
 use Catmandu::Util qw(require_package check_maybe_hash_ref);
 use Catmandu;
-use GearmanX::Starter;
+use Gearman::XS qw(:constants);
+use Gearman::XS::Worker;
+use Perl::Unsafe::Signals;
+use POSIX;
 use String::CamelCase qw(camelize);
 use Log::Log4perl;
 use JSON::MaybeXS;
 
 use parent 'LibreCat::Cmd';
+
+our $GEARMAN_WORKER;
+our $QUIT = 0;
 
 sub description {
     return <<EOF;
@@ -24,29 +30,61 @@ Options:
 EOF
 }
 
-sub program_name {
+sub command_opt_spec {
+    my ($class) = @_;
+    (
+        ['program-name=s',  ""],
+        ['pid-file=s',  ""],
+        ['sleep-retry',  "", {default => 0}],
+    );
+}
+
+sub default_program_name {
     my ($self, $worker_name) = @_;
     "librecat-worker-$worker_name";
 }
 
+sub logger {
+    my ($self) = @_;
+    $self->{logger} //= Log::Log4perl->get_logger(ref $self);
+}
+
+# code mostly stolen from GearmanX::Starter
 sub command {
     my ($self, $opts, $args) = @_;
 
-    unless ($args->[0]) {
+    if (!$args->[0]) {
         $self->usage_error("worker name missing");
     }
 
-    my $worker_name  = camelize($args->[0]);
-    my $worker_class = require_package($worker_name, 'LibreCat::Worker');
+    my $logger          = $self->logger;
+    my $worker_name     = camelize($args->[0]);
+    my $worker_class    = require_package($worker_name, 'LibreCat::Worker');
+    my $program_name    = $opts->program_name // $self->default_program_name($worker_name);
+    my $gearman_servers = [['127.0.0.1', 4730]];
+    my $sleep           = $opts->sleep_retry;
+    my $error_method    = $sleep ? 'logwarn' : 'logdie';
 
-    # TODO these should not be workers at all
-    if ($worker_class->can('daemon') && ! $worker_class->daemon) {
-        $self->usage_error("$worker_class is flagged not to be used as daemon");
+    $logger->info("forking daemon for $worker_class");
+
+    _init() && return 1;
+
+    $SIG{TERM} = sub {
+        $QUIT = 1;
+    };
+
+    $logger->info("creating worker $program_name");
+
+    $0 = $program_name;
+
+    $GEARMAN_WORKER = Gearman::XS::Worker->new;
+
+    for my $server (@$gearman_servers) {
+        if ($GEARMAN_WORKER->add_server(@$server) != GEARMAN_SUCCESS) {
+            $logger->logdie("failed to add job server [@$server] to worker $program_name: " . $GEARMAN_WORKER->error);
+        }
     }
 
-    my $program_name    = $self->program_name($worker_name);
-    my $gearman_servers = [['127.0.0.1', 4730]]; # TODO make configurable
-    my $functions       = [];
     my $worker
         = $worker_class->new(Catmandu->config->{worker}{$worker_name}
             || {});
@@ -64,17 +102,71 @@ sub command {
             return;
         };
 
-        push @$functions, [$func_name, $func];
+        my $res = $GEARMAN_WORKER->add_function($func_name, 0, $func, {});
+        if ($res != GEARMAN_SUCCESS) {
+            $logger->logdie("failed to register function ($func_name) for worker $program_name:" . $GEARMAN_WORKER->error);
+        }
     }
 
-    my $gms = GearmanX::Starter->new;
-    $gms->start({
-        name       => $program_name,
-        servers    => $gearman_servers,
-        func_list  => $functions,
-        dereg_func => 'unregister:%PID%',
-        logger     => Log::Log4perl->get_logger(ref $self),
-    });
+    $logger->info("starting $program_name");
+    while (1) {
+        my $res = eval {
+            my $ret;
+            UNSAFE_SIGNALS {$ret = $GEARMAN_WORKER->work};
+            if ($ret != GEARMAN_SUCCESS) {
+                $logger->$error_method(
+                    'failed to initiate waiting for a job: ' . $GEARMAN_WORKER->error);
+                sleep $sleep;
+            }
+            1;
+        };
+        if (!$res && $@ !~ /GearmanXQuitLoop/) {
+            $logger->logdie("error running loop for worker $program_name [$@]:" . $GEARMAN_WORKER->error);
+        }
+
+        last if $QUIT;
+    }
+    $logger->info("exiting $program_name");
+    exit 0;
+}
+
+sub _fork {
+    my $pid;
+    if (defined($pid = fork)) {
+        return $pid;
+    }
+    die "can't fork: $!";
+}
+
+sub _open_max {
+    my $open_max = POSIX::sysconf(&POSIX::_SC_OPEN_MAX);
+    (!defined($open_max) || $open_max < 0) ? 64 : $open_max;
+}
+
+sub _init {
+    my $sid;
+
+    _fork() && return 1;
+
+    die "unable to detach from controlling terminal"
+      unless $sid = POSIX::setsid;
+
+    $SIG{HUP} = 'IGNORE';
+
+    _fork() && exit 0;
+
+    ## change working directory
+    chdir '/';
+    ## clear file creation mask
+    umask 0;
+    ## close open file descriptors
+    for my $i (0 .. _open_max()) { POSIX::close($i); }
+    ## reopen stderr, stdout, stdin to /dev/null
+    open(STDIN,  "+>/dev/null");
+    open(STDOUT, "+>&STDIN");
+    open(STDERR, "+>&STDIN");
+
+    0;
 }
 
 1;
