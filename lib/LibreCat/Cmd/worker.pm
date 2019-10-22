@@ -134,8 +134,7 @@ sub command {
 }
 
 sub _fork {
-    my $pid;
-    if (defined($pid = fork)) {
+    if (defined(my $pid = fork)) {
         return $pid;
     }
     die "can't fork: $!";
