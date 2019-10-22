@@ -14,6 +14,7 @@ use JSON::MaybeXS;
 use parent 'LibreCat::Cmd';
 
 our $GEARMAN_WORKER;
+our $PID_FILE;
 our $QUIT = 0;
 
 sub description {
@@ -64,6 +65,8 @@ sub command {
     my $gearman_servers = [['127.0.0.1', 4730]];
     my $sleep           = $opts->sleep_retry;
     my $error_method    = $sleep ? 'logwarn' : 'logdie';
+
+    $PID_FILE = $opts->pid_file;
 
     $logger->info("forking daemon for $worker_class");
 
@@ -143,6 +146,13 @@ sub _open_max {
     (!defined($open_max) || $open_max < 0) ? 64 : $open_max;
 }
 
+sub _write_pid_file {
+    my ($pid) = @_;
+    open(my $fh, '>', $PID_FILE) || die "could not open pid file '$PID_FILE' $!";
+    print $fh $pid;
+    close $fh;
+}
+
 sub _init {
     my $sid;
 
@@ -153,7 +163,10 @@ sub _init {
 
     $SIG{HUP} = 'IGNORE';
 
-    _fork() && exit 0;
+    if (my $pid = _fork()) {
+        _write_pid_file($pid) if defined $PID_FILE;
+        exit 0;
+    }
 
     ## change working directory
     chdir '/';
