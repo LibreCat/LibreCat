@@ -158,6 +158,15 @@ Checks if the user has the rights to update this record.
         my $p          = params;
         my $return_url = $p->{return_url};
 
+        if( $p->{_end_} ne '_end_' ){
+
+            flash danger => h->localize('error.preliminary_submit');
+            return redirect $return_url || uri_for('/librecat');
+
+        }
+
+        delete $p->{_end_};
+
         h->log->debug("Params:" . to_dumper($p));
 
         p->{finalSubmit} //= '';
