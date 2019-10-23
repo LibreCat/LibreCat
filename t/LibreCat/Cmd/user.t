@@ -74,7 +74,6 @@ subtest 'add valid' => sub {
     my $result = test_app(
         qq|LibreCat::CLI| => ['user', 'valid', 't/records/valid-user.yml']);
 
-warn $result->stderr;
     ok !$result->error, 'validate: threw no exception';
 
     $result = test_app(

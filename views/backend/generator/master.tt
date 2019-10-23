@@ -104,6 +104,10 @@
       {% INCLUDE fields/buttonrow_tab.tt %}
 
     </div><!-- tab-content -->
+
+    <!--this end input proves that page is fully loaded-->
+    <input type="hidden" id="_end_" name="_end_" value="_end_">
+
   </form>
 
 {%- IF fields.file_upload %}
@@ -114,6 +118,17 @@
 
 <script>
 {% INCLUDE fields/jquery_tab1.tt %}
+</script>
+
+<script type="text/javascript">
+
+  //release disabled submit buttons once page is fully loaded
+  $(document).ready(function(){
+
+    $("button[type=submit]").removeAttr("disabled");
+
+  });
+
 </script>
 
 <!-- END backend/generator/master.tt -->
