@@ -19,11 +19,13 @@ sub description {
     return <<EOF;
 Usage:
 
-librecat worker <worker>
+librecat worker <worker> [options]
 
 Examples:
 
 librecat worker mailer
+librecat worker mailer --workers 3
+librecat worker mailer -D --pid-file /var/run/worker-mailer.pid
 
 Options:
 EOF
@@ -34,9 +36,8 @@ sub command_opt_spec {
     (
         ['daemonize|D',    ""],
         ['workers=i',      "", {default => 1}],
-        ['program-name=s', ""],
         ['pid-file=s',     ""],
-        ['sleep-retry',    "", {default => 0}],
+        ['program-name=s', ""],
     );
 }
 
@@ -64,9 +65,9 @@ sub _fork {
     die "can't fork: $!";
 }
 
-sub _open_max {
-    my $open_max = POSIX::sysconf(&POSIX::_SC_OPEN_MAX);
-    (!defined($open_max) || $open_max < 0) ? 64 : $open_max;
+sub _max_open_files {
+    my $max = POSIX::sysconf(&POSIX::_SC_OPEN_MAX);
+    (!defined($max) || $max < 0) ? 64 : $max;
 }
 
 sub _daemonize {
@@ -88,7 +89,7 @@ sub _daemonize {
     umask 0;
 
     # close open file descriptors
-    for (0 .. _open_max) {POSIX::close($_);}
+    for (0 .. _max_open_files) { POSIX::close($_) }
 
     # reopen stderr, stdout, stdin to /dev/null
     open(STDIN,  "+>/dev/null");
