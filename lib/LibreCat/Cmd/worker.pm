@@ -5,7 +5,6 @@ use Catmandu::Util qw(require_package check_maybe_hash_ref);
 use Catmandu;
 use Gearman::Worker;
 use Parallel::ForkManager;
-# use Perl::Unsafe::Signals;
 use POSIX;
 use String::CamelCase qw(camelize);
 use Log::Log4perl;
@@ -174,89 +173,6 @@ sub command {
 
     $pm->wait_all_children;
 }
-
-# code mostly stolen from GearmanX::Starter
-# sub _command {
-#     my ($self, $opts, $args) = @_;
-
-#     if (!$args->[0]) {
-#         $self->usage_error("worker name missing");
-#     }
-
-#     my $logger          = $self->logger;
-#     my $worker_name     = camelize($args->[0]);
-#     my $worker_class    = require_package($worker_name, 'LibreCat::Worker');
-#     my $program_name    = $opts->program_name // $self->default_program_name($worker_name);
-#     my $gearman_servers = [['127.0.0.1', 4730]];
-#     my $sleep           = $opts->sleep_retry;
-#     my $error_method    = $sleep ? 'logwarn' : 'logdie';
-
-#     $PID_FILE = $opts->pid_file;
-
-#     $logger->info("forking daemon for $worker_class");
-
-#     _init() && return 1;
-
-#     $SIG{TERM} = sub {
-#         $QUIT = 1;
-#     };
-
-#     $logger->info("creating worker $program_name");
-
-#     $0 = $program_name;
-
-#     $GEARMAN_WORKER = Gearman::XS::Worker->new;
-
-#     for my $server (@$gearman_servers) {
-#         if ($GEARMAN_WORKER->add_server(@$server) != GEARMAN_SUCCESS) {
-#             $logger->logdie("failed to add job server [@$server] to worker $program_name: " . $GEARMAN_WORKER->error);
-#         }
-#     }
-
-#     my $worker
-#         = $worker_class->new(Catmandu->config->{worker}{$worker_name}
-#             || {});
-
-#     for my $func_name (@{$worker->worker_functions}) {
-#         my $method_name = $func_name;
-#         if (ref $func_name) {
-#             ($method_name) = values %$func_name;
-#             ($func_name)   = keys %$func_name;
-#         }
-
-#         my $func = sub {
-#             my ($job) = @_;
-#             $worker->$method_name(decode_json($job->workload), $job);
-#             return;
-#         };
-
-#         my $res = $GEARMAN_WORKER->add_function($func_name, 0, $func, {});
-#         if ($res != GEARMAN_SUCCESS) {
-#             $logger->logdie("failed to register function ($func_name) for worker $program_name:" . $GEARMAN_WORKER->error);
-#         }
-#     }
-
-#     $logger->info("starting $program_name");
-#     while (1) {
-#         my $res = eval {
-#             my $ret;
-#             UNSAFE_SIGNALS {$ret = $GEARMAN_WORKER->work};
-#             if ($ret != GEARMAN_SUCCESS) {
-#                 $logger->$error_method(
-#                     'failed to initiate waiting for a job: ' . $GEARMAN_WORKER->error);
-#                 sleep $sleep;
-#             }
-#             1;
-#         };
-#         if (!$res && $@ !~ /GearmanXQuitLoop/) {
-#             $logger->logdie("error running loop for worker $program_name [$@]:" . $GEARMAN_WORKER->error);
-#         }
-
-#         last if $QUIT;
-#     }
-#     $logger->info("exiting $program_name");
-#     exit 0;
-# }
 
 1;
 
