@@ -1,8 +1,7 @@
 package LibreCat::JobQueue;
 
 use Catmandu::Sane;
-use Gearman::XS qw(:constants);
-use Gearman::XS::Client;
+use Gearman::Client;
 use JSON::MaybeXS;
 use LibreCat::JobStatus;
 use Moo;
@@ -13,28 +12,25 @@ with 'Catmandu::Logger';
 has gearman => (is => 'lazy');
 
 sub _build_gearman {
-    my $client = Gearman::XS::Client->new;
-    $client->add_server('127.0.0.1', 4730);
+    my $client = Gearman::Client->new;
+    $client->job_servers({host => '127.0.0.1', port => 4730});
     $client;
 }
 
 sub add_job {
     my ($self, $func, $workload) = @_;
-    my ($ret, $job_id)
-        = $self->gearman->do_background($func, encode_json($workload));
-    if ($ret != GEARMAN_SUCCESS) {
-        Catmandu::Error->throw($self->gearman->error);
-    }
-    $job_id;
+    # TODO add callbacks in options hash
+    $self->gearman->dispatch_background($func, encode_json($workload), {}) //
+        Catmandu::Error->throw("couldn't dispatch job '$func'");
 }
 
 sub job_status {
     my ($self, $job_id) = @_;
-    my ($ret,  @status) = $self->gearman->job_status($job_id);
-    if ($ret != GEARMAN_SUCCESS) {
-        Catmandu::Error->throw($self->gearman->error);
+    my ($status) = $self->gearman->get_status($job_id);
+    if (!$status) {
+        Catmandu::Error->throw("couldn't get status for job '$job_id'");
     }
-    LibreCat::JobStatus->new(\@status);
+    LibreCat::JobStatus->new([$status->known, $status->running, $status->progress, $status->percent]);
 }
 
 1;
