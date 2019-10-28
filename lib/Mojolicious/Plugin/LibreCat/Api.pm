@@ -10,9 +10,9 @@ use namespace::clean;
 sub register {
     my ($self, $app, $conf) = @_;
 
-    my $models = librecat->models;
+    my $models       = librecat->models;
     my $token_secret = librecat->config->{api}{v1}{token_secret};
-    my $r = $app->routes;
+    my $r            = $app->routes;
 
     my $api = $r->any("/api/v1");
 
@@ -21,7 +21,7 @@ sub register {
 
     my $api_auth = $api->under(
         '/' => sub {
-            my $c = shift;
+            my $c     = shift;
             my $token = $c->req->headers->header('Authorization');
 
             # authorized
@@ -30,10 +30,7 @@ sub register {
             }
 
             # not authorized
-            $c->render(
-                json   => {errors => ["Not authorized"]},
-                status => 401
-            );
+            $c->render(json => {errors => ["Not authorized"]}, status => 401);
             0;
         }
     );
@@ -42,8 +39,8 @@ sub register {
         librecat_model_api => sub {
             my ($r, $model) = @_;
 
-            my $model_api
-                = $api_auth->any("/$model")->to('model_api#', model => $model);
+            my $model_api = $api_auth->any("/$model")
+                ->to('model_api#', model => $model);
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
@@ -77,11 +74,8 @@ sub register {
         librecat_search_api => sub {
             my ($r, $model) = @_;
 
-            my $search_api = $api_auth->any("/$model")
-                ->to('search_api#', model => $model);
-
-            $search_api->get('/search')->to('#search', model => $model)
-                ->name($model);
+            my $search_api = $api_auth->get("/search/$model")
+                ->to('search_api#search', model => $model);
 
             return $search_api;
         }
