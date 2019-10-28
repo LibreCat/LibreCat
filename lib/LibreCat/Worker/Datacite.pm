@@ -9,6 +9,7 @@ use HTTP::Request;
 use URI;
 use Encode qw(encode_utf8);
 use Try::Tiny;
+use IO::Socket::SSL;
 use Moo;
 use namespace::clean;
 
@@ -18,6 +19,7 @@ has base_url  => (is => 'lazy');
 has user      => (is => 'ro', required => 1);
 has password  => (is => 'ro', required => 1);
 has test_mode => (is => 'ro');
+has timeout   => (is => 'ro', default => sub {return 10});
 
 sub _build_base_url {
     my $self = shift;
@@ -30,7 +32,7 @@ sub work {
     my ($self, $opts) = @_;
 
     my $metadata = $self->metadata($opts->{doi}, $opts->{record});
-    my $mint = $self->mint($opts->{doi}, $opts->{landing_url});
+    my $mint     = $self->mint($opts->{doi}, $opts->{landing_url});
 
     return {metadata => $metadata, mint => $mint};
 }
@@ -58,7 +60,7 @@ sub metadata {
     my $datacite_xml = $self->_create_metadata($rec);
 
     my $uri = URI->new($self->base_url);
-    $uri->path("metadata");
+    $uri->path("/metadata");
     $uri->query_form(testMode => $self->test_mode ? 'true' : 'false',);
 
     $self->_do_request('POST', $uri->as_string, $datacite_xml,
@@ -72,6 +74,7 @@ sub _create_metadata {
     my $datacite_xml = Catmandu->export_to_string(
         {%$rec, uri_base => librecat->config->{uri_base}}, 'Template',
         template => 'views/export/datacite.tt',
+        fix      => librecat->fixer('to_datacite.fix'),
         xml      => 1
     );
     $self->log->error($datacite_xml);
@@ -94,7 +97,7 @@ sub _do_request {
     my $res;
     try {
         $req->authorization_basic($self->user, $self->password);
-        my $furl = Furl->new();
+        my $furl = Furl->new(timeout => $self->timeout);
         $res = $furl->request($req);
 
         my $status = $res->code();
