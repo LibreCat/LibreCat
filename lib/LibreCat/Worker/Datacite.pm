@@ -123,7 +123,12 @@ LibreCat::Worker::Datacite - a worker for registering and minting DOIs at DataCi
 
     use LibreCat::Worker::Datacite;
 
-    my $registry_worker = LibreCat::Worker::Datacite->new(user => 'me', password => 'secret');
+    my $registry_worker = LibreCat::Worker::Datacite->new(
+        user => 'me',
+        password => 'secret',
+        timeout => 20, # optional
+        test_mode => 0, # optional
+        );
 
     $registry_worker->work({
         doi          => '...' ,
