@@ -20,6 +20,7 @@ use Plack::App::File;
 use Plack::App::Cascade;
 use Dancer;
 use LibreCat::App;
+use Mojolicious::Commands;
 
 # setup template paths
 config->{engines}{template_toolkit}{INCLUDE_PATH} = librecat->template_paths;
@@ -112,4 +113,5 @@ builder {
     }
 
     mount '/' => $app->to_app;
+    mount '/api' => Mojolicious::Commands->start_app('LibreCat::Application');
 };

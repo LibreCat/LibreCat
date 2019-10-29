@@ -14,7 +14,7 @@ sub register {
     my $token_secret = librecat->config->{api}{v1}{token_secret};
     my $r = $app->routes;
 
-    my $api = $r->any("/api/v1");
+    my $api = $r->any("/v1");
 
     $api->get('/openapi.yml')->to('api#openapi_yml');
     $api->get('/openapi.json')->to('api#openapi_json');

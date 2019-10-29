@@ -32,30 +32,31 @@ my $token = librecat->token->encode({foo => 'bar'});
 
 # Start a Mojolicious app
 my $t = Test::Mojo->new('LibreCat::Application');
+my $api_mount = "/v1";
 
 subtest "get documentation" => sub {
-    $t->get_ok('/api/v1/openapi.json')->status_is(200)->json_has('/basePath');
-    $t->get_ok('/api/v1/openapi.json')->status_is(200);
+    $t->get_ok("$api_mount/openapi.json")->status_is(200)->json_has('/basePath');
+    $t->get_ok("$api_mount/openapi.json")->status_is(200);
 };
 
 subtest "authentication" => sub {
-    $t->get_ok('/api/v1/user/1')->status_is(401);
+    $t->get_ok("$api_mount/user/1")->status_is(401);
 
-    $t->get_ok('/api/v1/user/1' => {Authorization => 'invalid-key'})
+    $t->get_ok("$api_mount/user/1" => {Authorization => 'invalid-key'})
         ->status_is(401)->json_has('/errors');
 
     # authorization ok, but not user in DB
-    $t->get_ok('/api/v1/user/1' => {Authorization => $token})
+    $t->get_ok("$api_mount/user/1" => {Authorization => $token})
         ->status_is(404)->json_has('/errors');
 };
 
 subtest "invalid model" => sub {
-    $t->get_ok('/api/v1/ugly/123' => {Authorization => $token})
+    $t->get_ok("$api_mount/ugly/123" => {Authorization => $token})
         ->status_is(404);
 };
 
 subtest "get non-existent user" => sub {
-    $t->get_ok('/api/v1/user/91919192882' => {Authorization => $token})
+    $t->get_ok("$api_mount/user/91919192882" => {Authorization => $token})
         ->status_is(404)->json_has('/errors')
         ->json_is('/errors/0/title', 'user 91919192882 not found');
 };
@@ -65,23 +66,23 @@ subtest "add/get/delete user" => sub {
         ->first;
 
     $t->post_ok(
-        '/api/v1/user' => {Authorization => $token} => json => $user)
+        "$api_mount/user" => {Authorization => $token} => json => $user)
         ->status_is(201)->json_is('/data/id', 999111999);
 
-    $t->get_ok('/api/v1/user/999111999' => {Authorization => $token})
+    $t->get_ok("$api_mount/user/999111999" => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id',                   999111999)
         ->json_is('/data/attributes/full_name', 'User, Test');
 
     $t->get_ok(
-        '/api/v1/user/999111999/versions' => {Authorization => $token})
+        "$api_mount/user/999111999/versions" => {Authorization => $token})
         ->status_is(404);
 
     $t->get_ok(
-        '/api/v1/user/999111999/version/2' => {Authorization => $token})
+        "$api_mount/user/999111999/version/2" => {Authorization => $token})
         ->status_is(404);
 
-    $t->delete_ok('/api/v1/user/999111999' => {Authorization => $token})
+    $t->delete_ok("$api_mount/user/999111999" => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id'                => 999111999)
         ->json_is('/data/attributes/status' => 'deleted');
@@ -95,13 +96,13 @@ subtest "add invalid user" => sub {
         ->first;
 
     $t->post_ok(
-        '/api/v1/user' => {Authorization => $token} => json => $user)
+        "$api_mount/user" => {Authorization => $token} => json => $user)
         ->status_is(400)->json_has('/errors');
 };
 
 subtest "get non-existent publication" => sub {
 
-    $t->get_ok('/api/v1/publication/101010101' => {Authorization => $token})
+    $t->get_ok("$api_mount/publication/101010101" => {Authorization => $token})
         ->status_is(404)->json_has('/errors')
         ->json_is('/errors/0/title', 'publication 101010101 not found');
 };
@@ -111,50 +112,50 @@ subtest "add/get/delete publication" => sub {
         file => "t/records/valid-publication.yml")->first;
 
     $t->post_ok(
-        '/api/v1/publication' => {Authorization => $token} => json => $pub)
+        "$api_mount/publication" => {Authorization => $token} => json => $pub)
         ->status_is(201)->json_is('/data/id', 999999999);
 
     $t->put_ok(
-        '/api/v1/publication/999999999' => {Authorization => $token} => json => $pub)
+        "$api_mount/publication/999999999" => {Authorization => $token} => json => $pub)
         ->status_is(200)->json_is('/data/id', 999999999);
 
     # Change the pub record id and check for errors
     $pub->{_id} = '1234567890';
 
     $t->put_ok(
-        '/api/v1/publication/999999999' => {Authorization => $token} => json => $pub)
+        "$api_mount/publication/999999999" => {Authorization => $token} => json => $pub)
         ->status_is(400)
         ->json_is('/errors/0/validation_error/0', "id in request and data don't match");
 
-    $t->get_ok('/api/v1/publication/999999999' => {Authorization => $token})
+    $t->get_ok("$api_mount/publication/999999999" => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id',             999999999)
         ->json_is('/data/attributes/doi', '10.1093/jxb/erv066');
 
     $t->patch_ok(
-        '/api/v1/publication/999999999' => {Authorization => $token} =>
+        "$api_mount/publication/999999999" => {Authorization => $token} =>
             json => {title => 'Test patch request'})->status_is(200)
         ->json_is('/data/id',               999999999)
         ->json_is('/data/attributes/title', 'Test patch request');
 
     # Patch with a wrong id
     $t->patch_ok(
-        '/api/v1/publication/999999999' => {Authorization => $token} =>
+        "$api_mount/publication/999999999" => {Authorization => $token} =>
             json => {_id => '1234567890'})->status_is(400)
         ->json_is('/errors/0/validation_error/0', "id in request and data don't match");
 
-    $t->get_ok('/api/v1/publication/999999999/versions' =>
+    $t->get_ok("$api_mount/publication/999999999/versions" =>
             {Authorization => $token})->status_is(200)
         ->json_is('/data/id',                    999999999)
         ->json_is('/data/attributes/0/_version', '3');
 
-    $t->get_ok('/api/v1/publication/999999999/version/1' =>
+    $t->get_ok("$api_mount/publication/999999999/version/1" =>
             {Authorization => $token})->status_is(200)
         ->json_is('/data/id',                  999999999)
         ->json_is('/data/attributes/_version', '1');
 
     $t->delete_ok(
-        '/api/v1/publication/999999999' => {Authorization => $token})
+        "$api_mount/publication/999999999" => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes')
         ->json_is('/data/id'                => 999999999)
         ->json_is('/data/attributes/status' => 'deleted');
