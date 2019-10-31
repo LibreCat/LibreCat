@@ -66,7 +66,7 @@ $file_store->index->delete_all;
     my $r = {
         _id => $record_id,
         title => $file_name,
-        status => "published",
+        status => "public",
         type => "book",
         user_id => 1234,
         creator => {
