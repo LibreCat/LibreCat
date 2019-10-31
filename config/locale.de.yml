@@ -1303,6 +1303,7 @@ forms:
             local: "Local Access (Nur LibreCat)"
             closed: "Closed Access (Nur Autor/Reviewer)"
             request_a_copy: "Request a Copy (Closed Access au&szlig;er auf Anfrage)"
+            rac_email: "E-Mail Adresse, an die Anfragen gehen sollen (Standard: Record creator)"
             embargo: "Zu Open Access wechseln am:"
           additional_information:
             heading: "Zusätzliche Informationen"
