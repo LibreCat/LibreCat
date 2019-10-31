@@ -1,6 +1,16 @@
 Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
+    - Fixing clone record
+    - Improving datacite mappings
+    - Fixing request a copy
+    - Fixing adding metadata to files
+    - Fixing rac_email locale message
+    - Fixing broken CPAN dependencies
+    - Adding more robust OAI-PMH support for deep paging
+    - Adding `unpublished` publication status
+    - Adding support to prevent preliminary submission of forms
+    - Open access files of deleted records should not be available
 
 2.0.1 2019-08-13
     - Fixing EPMC and making valid test records really valid
