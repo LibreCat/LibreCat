@@ -4,7 +4,7 @@
     </div>
     <div class="form-group col-md-8">
       <div class="btn-group">
-        <button type="submit" name="finalSubmit" value="recSave" class="btn btn-success change_tab"><span class="fa fa-check"></span> [% h.loc("forms.button.save") %]</button>
+        <button disabled type="submit" name="finalSubmit" value="recSave" class="btn btn-success change_tab"><span class="fa fa-check"></span> [% h.loc("forms.button.save") %]</button>
 	      [%- IF title %]
           <button type="button" class="btn btn-warning cancel-button"><span class="fa fa-times"></span> [% h.loc("forms.button.cancel") %]</span></button>
 	      [%- ELSE %]
@@ -12,13 +12,13 @@
 	      [%- END %]
         [%- UNLESS new_record %]
             [% IF p.can_make_public( _id, user_id = session.user_id, role = session.role ) %]
-            <button type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="fa fa-cloud-upload"></span> [% h.loc("forms.button.publish") %]</button>
+            <button disabled type="submit" name="finalSubmit" value="recPublish" class="btn btn-success change_tab"><span class="fa fa-cloud-upload"></span> [% h.loc("forms.button.publish") %]</button>
             [%- END %]
             [% IF p.can_submit( _id, user_id = session.user_id, role = session.role ) %]
-            <button type="submit" name="finalSubmit" value="recSubmit" onclick="return confirm('[% h.loc("forms.confirm_submit") %]');" class="btn btn-success change_tab"><span class="fa fa-cloud-upload"></span> [% h.loc("forms.button.submitted") %]</button>
+            <button disabled type="submit" name="finalSubmit" value="recSubmit" onclick="return confirm('[% h.loc("forms.confirm_submit") %]');" class="btn btn-success change_tab"><span class="fa fa-cloud-upload"></span> [% h.loc("forms.button.submitted") %]</button>
             [%- END %]
             [% IF p.can_return( _id, user_id = session.user_id, role = session.role ) %]
-            <button type="submit" name="finalSubmit" value="recReturn" onclick="return confirm('[% h.loc("forms.confirm_return") %]');" class="btn btn-danger change_tab"><span class="fa fa-cloud-download"></span> [% h.loc("forms.button.return") %]</button>
+            <button disabled type="submit" name="finalSubmit" value="recReturn" onclick="return confirm('[% h.loc("forms.confirm_return") %]');" class="btn btn-danger change_tab"><span class="fa fa-cloud-download"></span> [% h.loc("forms.button.return") %]</button>
             [%- END %]
             [% IF p.can_delete( _id, user_id = session.user_id, role = session.role ) %]
             <a class="btn btn-danger" href="[% uri_base %]/librecat/record/delete/[% _id %]" onclick="return confirm('[% h.loc("forms.confirm_delete") %]');" name="delete"><span class="fa fa-trash"></span> [% h.loc("forms.button.delete") %]</a>

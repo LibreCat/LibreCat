@@ -37,9 +37,8 @@ note("edit 2737383");
     $mech->submit_form_ok(
         {
             form_id => 'edit_form',
-            button  => 'finalSubmit',
             fields  => {
-
+                finalSubmit => "recSave"
             },
         },
         'submitting the login form'

@@ -17,7 +17,13 @@ sub _build_whitelist {
 around last_errors => sub {
     my $orig   = shift;
     my $errors = $orig->(@_) // return;
-    [map {"$_->{property}: $_->{message}"} @$errors];
+    [
+      map {
+        sprintf "%s: %s"
+            , $_->{property} // '<null>'
+            , $_->{message}  // '<null>'
+      } @$errors
+    ];
 };
 
 1;
