@@ -220,7 +220,10 @@ Checks if the user has the rights to update this record.
 
         $params = h->nested_params($params);
 
-        if ($params->{finalSubmit} eq 'recSubmit') {
+        if (!$params->{finalSubmit}) {
+            librecat->log->warn("receiving an empty finalSubmit from the form");
+        }
+        elsif ($params->{finalSubmit} eq 'recSubmit') {
             $params->{status} = 'submitted';
         }
         elsif ($params->{finalSubmit} eq 'recPublish') {
@@ -228,6 +231,12 @@ Checks if the user has the rights to update this record.
         }
         elsif ($params->{finalSubmit} eq 'recReturn') {
             $params->{status} = 'returned';
+        }
+        else {
+            librecat->log->warnf(
+                "receiving an unknown finalSubmit `%s` from the form"
+                    , $params->{finalSubmit} 
+            );
         }
 
         $params->{user_id} = session("user_id");
