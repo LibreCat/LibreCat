@@ -69,6 +69,7 @@ plugins:
     repositoryIdentifier: pub.librecat.org
     get_record_cql_pattern: 'id exact "%s"'
     cql_filter: 'status exact public OR oai_deleted=1'
+    search_strategy: "es.scroll"
     limit: 200
     delimiter: ":"
     sampleIdentifier: "oai:pub.librecat.org:1585315"

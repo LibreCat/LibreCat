@@ -77,7 +77,7 @@
       <strong>[% fi.file_name | html %]</strong>
       [%- END %]
       </a><span class="text-muted"> [% h.pretty_byte_size(fi.file_size) %]</span>
-      [%- IF fi.request_a_copy %]
+      [%- IF fi.access_level == "request" %]
         [% PROCESS publication/modal_requestcopy.tt %]
       [%- END %]
     </div>
@@ -107,7 +107,9 @@
         [%- CASE 'local' %]
           [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
         [%- CASE 'closed' %]
-          [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
+          [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %]
+        [%- CASE 'request' %]
+          [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %]
       [%- END %]
     </div>
   </div>
@@ -174,7 +176,7 @@
         [%- CASE 'local' %]
           [% INCLUDE publication/oa_lock.tt %] [% h.loc("frontdoor.tabs.file_details.access_level.local") %]
         [%- CASE 'closed' %]
-          [% INCLUDE publication/oa_lock.tt %][% IF fi.request_a_copy %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
+          [% INCLUDE publication/oa_lock.tt %][% IF fi.access_level == "request" %] [% h.loc("frontdoor.tabs.file_details.access_level.request_a_copy") %][% ELSE %] [% h.loc("frontdoor.tabs.file_details.access_level.closed") %][% END %]
       [%- END %]
     </div>
   </div>

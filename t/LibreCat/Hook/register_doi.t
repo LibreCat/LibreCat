@@ -39,7 +39,7 @@ note("fake test with doi config");
 
 note("fake test with even fake data");
 {
-    my $res = $x->fix({doi => '0.000/test/1234', status => 'public'});
+    my $res = $x->fix({_id => 1234567890 , doi => '0.000/test/1234', status => 'public'});
 
     is $res->{publisher} ,  "LibreCat Publishing System";
 }

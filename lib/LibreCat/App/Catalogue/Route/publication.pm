@@ -155,21 +155,28 @@ Checks if the user has the rights to update this record.
 =cut
 
     post '/update' => sub {
-        my $p          = params;
-        my $return_url = $p->{return_url};
+        my $params     = params;
+        my $return_url = $params->{return_url};
 
-        h->log->debug("Params:" . to_dumper($p));
+        # When the form isnt fully loaded when the record is saved bail out and cry for help
+        if( $params ->{_end_} ne '_end_' ){
+            flash danger => h->localize('error.preliminary_submit');
+            return redirect $return_url || uri_for('/librecat');
+        }
 
-        p->{finalSubmit} //= '';
+        delete $params->{_end_};
 
-        if ($p->{new_record}) {
+        h->log->debug("Params:" . to_dumper($params));
 
+        $params->{finalSubmit} //= '';
+
+        if ($params->{new_record}) {
             # ok
         }
         elsif (
-            p->{finalSubmit} eq 'recPublish'
+            $params->{finalSubmit} eq 'recPublish'
             && p->can_make_public(
-                $p->{_id},
+                $params->{_id},
                 {user_id => session("user_id"), role => session("role")}
             )
             )
@@ -177,9 +184,9 @@ Checks if the user has the rights to update this record.
             # ok
         }
         elsif (
-            $p->{finalSubmit} eq 'recReturn'
+            $params->{finalSubmit} eq 'recReturn'
             && p->can_return(
-                $p->{_id},
+                $params->{_id},
                 {user_id => session("user_id"), role => session("role")}
             )
             )
@@ -187,9 +194,9 @@ Checks if the user has the rights to update this record.
             # ok
         }
         elsif (
-            $p->{finalSubmit} eq 'recSubmit'
+            $params->{finalSubmit} eq 'recSubmit'
             && p->can_submit(
-                $p->{_id},
+                $params->{_id},
                 {user_id => session("user_id"), role => session("role")}
             )
             )
@@ -198,10 +205,10 @@ Checks if the user has the rights to update this record.
         }
         elsif (
             p->can_edit(
-                $p->{_id},
+                $params->{_id},
                 {user_id => session("user_id"), role => session("role")}
             )
-            )
+        )
         {
             # ok
         }
@@ -211,31 +218,40 @@ Checks if the user has the rights to update this record.
             forward '/access_denied';
         }
 
-        $p = h->nested_params($p);
+        $params = h->nested_params($params);
 
-        if ($p->{finalSubmit} eq 'recSubmit') {
-            $p->{status} = 'submitted';
+        if (!$params->{finalSubmit}) {
+            librecat->log->warn("receiving an empty finalSubmit from the form");
         }
-        elsif ($p->{finalSubmit} eq 'recPublish') {
-            $p->{status} = 'public';
+        elsif ($params->{finalSubmit} eq 'recSubmit') {
+            $params->{status} = 'submitted';
         }
-        elsif ($p->{finalSubmit} eq 'recReturn') {
-            $p->{status} = 'returned';
+        elsif ($params->{finalSubmit} eq 'recPublish') {
+            $params->{status} = 'public';
+        }
+        elsif ($params->{finalSubmit} eq 'recReturn') {
+            $params->{status} = 'returned';
+        }
+        else {
+            librecat->log->warnf(
+                "receiving an unknown finalSubmit `%s` from the form"
+                    , $params->{finalSubmit} 
+            );
         }
 
-        $p->{user_id} = session("user_id");
+        $params->{user_id} = session("user_id");
 
         # Use config/hooks.yml to register functions
         # that should run before/after updating publications
         my $is_error_record = 0;
         my $error_messages  = '';
-        my $is_new_record   = $p->{new_record};
+        my $is_new_record   = $params->{new_record};
         try {
             h->hook('publication-update')->fix_around(
-                $p,
+                $params,
                 sub {
                     publication->add(
-                        $p,
+                        $params,
                         on_validation_error => sub {
                             my ($rec, $errors) = @_;
                             librecat->log->errorf(
@@ -253,7 +269,7 @@ Checks if the user has the rights to update this record.
                 flash warning => h->localize("error.version_conflict");
             }
             else {
-                my $id = $p->{_id};
+                my $id = $params->{_id};
                 h->log->fatal("failed to update record $id");
                 h->log->fatal($_);
 
@@ -263,7 +279,7 @@ Checks if the user has the rights to update this record.
                 $error_messages  = [
                     sprintf(h->localize("error.update_failed"), $id) . " "
                         . sprintf(
-                        h->localize("error.contact_amdin"),
+                        h->localize("error.contact_admin"),
                         $admin_email
                         )
                 ];
@@ -277,14 +293,14 @@ Checks if the user has the rights to update this record.
             # The new_record is a field not available in the schema
             # which will be removed after validation. We need to se
             # it again
-            $p->{new_record} = 1 if $is_new_record;
+            $params->{new_record} = 1 if $is_new_record;
 
             my $templatepath = "backend/forms";
-            my $template     = $p->{meta}->{template} // $p->{type};
+            my $template     = $params->{meta}->{template} // $params->{type};
 
             flash danger => join("<br>", @{$error_messages // []});
 
-            template "$templatepath/$template", $p;
+            template "$templatepath/$template", $params;
         }
 
         # Else we return to the return url

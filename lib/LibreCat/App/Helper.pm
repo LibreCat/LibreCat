@@ -400,16 +400,21 @@ sub locale_long {
 sub io_from_plack_writer {
     my ($self, $writer) = @_;
     return IO::Handle::Util::io_prototype write => sub {
-        my $self = shift;
-        $writer->write(@_);
+            my $self = shift;
+            my $scalar = shift;
+            $writer->write($scalar,@_);
+            length($scalar);
         },
         syswrite => sub {
-        my $self = shift;
-        $writer->write(@_);
+            my $self = shift;
+            my $scalar = shift;
+            $writer->write($scalar,@_);
+            length($scalar);
         },
         close => sub {
-        my $self = shift;
-        $writer->close;
+            my $self = shift;
+            $writer->close;
+            0;
         }
 }
 

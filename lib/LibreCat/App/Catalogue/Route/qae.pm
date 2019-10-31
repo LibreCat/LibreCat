@@ -29,7 +29,7 @@ Returns a form with imported data.
 post '/librecat/upload/qae/submit' => sub {
     my $submit_or_cancel = params->{submit_or_cancel} || "Cancel";
 
-    if ($submit_or_cancel eq "Submit") {
+    if ($submit_or_cancel eq "Submit" and params->{has_accepted_license}) {
         my $id = publication->generate_id;
         my $person = h->get_person(params->{delegate} || session->{user_id});
         my $department = department->get(params->{reviewer})
@@ -40,7 +40,7 @@ post '/librecat/upload/qae/submit' => sub {
             _id    => $id,
             status => "new"
             ,    # new is the status of records not checked by users/reviewers
-            accept      => 1,
+            has_accepted_license => 1,
             title       => h->loc('add_new.qae_title'),
             publication => "Quick And Easy Journal Title",
             type        => "journal_article",

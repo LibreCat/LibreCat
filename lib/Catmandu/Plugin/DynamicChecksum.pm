@@ -38,16 +38,22 @@ sub dynamic_checksum {
 
     my $md5 = Digest::MD5->new;
 
-    my $io  = IO::Handle::Util::io_prototype write => sub {
+    my $io  = IO::Handle::Util::io_prototype
+        write => sub {
             my $self = shift;
-            $md5->add(@_);
+            my $scalar = shift;
+            $md5->add($scalar,@_);
+            length($scalar);
         },
         syswrite => sub {
             my $self = shift;
-            $md5->add(@_);
+            my $scalar = shift;
+            $md5->add($scalar,@_);
+            length($scalar);
         },
         close => sub {
             my $self = shift;
+            0;
         };
 
     $files->stream($io,$file);

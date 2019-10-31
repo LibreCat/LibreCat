@@ -20,12 +20,15 @@ on 'test' => sub {
 
 requires 'Business::ISBN', 0;
 
+# Fixing broken JSON::Validator error handling
+requires 'JSON::Validator','<=3.14';
+
 # Catmandu
 requires 'Catmandu', '>=1.2002';
 requires 'Catmandu::FileStore', '1.13';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
-requires 'Catmandu::BibTeX';
+requires 'Catmandu::BibTeX', '>=0.14';
 requires 'Catmandu::DBI', '>=0.09';
 requires 'Catmandu::Exporter::Table';
 requires 'Catmandu::Fix::Date';
@@ -49,7 +52,7 @@ requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
 requires 'Dancer';
 requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
-requires 'Dancer::Plugin::Catmandu::OAI', '>=0.0501';
+requires 'Dancer::Plugin::Catmandu::OAI', '>=0.0502';
 requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::StreamData';

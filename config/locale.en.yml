@@ -46,6 +46,7 @@ error:
   version_conflict: "Could not save your changes. This publication was updated by someone else since you started editing."
   update_failed: "Failed to update record %s. The admins have been notified."
   contact_admin: "Please, contact %s when this problem persists."
+  preliminary_submit: "Form was submitted before it was fully loaded. All requested changes have been discarded to prevent data loss."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 styles:
@@ -1304,6 +1305,7 @@ forms:
             local: "Local Access (LibreCat only)"
             closed: "Closed Access (Author/Reviewer only)"
             request_a_copy: "Request a Copy (Closed Access except upon request)"
+            rac_email: "Enter the e-mail address, requests should be sent to (default: record creator)"
             embargo: "Switch to Open Access on:"
           additional_information:
             heading: "Additional Information"
