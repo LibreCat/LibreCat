@@ -1,6 +1,8 @@
 Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
+
+2.0.2 2019-10-31 
     - Fixing clone record
     - Improving datacite mappings
     - Fixing request a copy
