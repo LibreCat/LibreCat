@@ -23,12 +23,15 @@ prefix '/librecat/admin' => sub {
 
 =head2 GET /account
 
-Prints a search form for the authority database.
+Searches the authority database. Prints the search form + result list.
 
 =cut
 
     get '/account' => sub {
-        template 'admin/account';
+        my $p = params;
+        h->log->debug("query for researcher: " . to_dumper($p));
+        my $hits = searcher->search('user', $p);
+        template 'admin/account', $hits;
     };
 
 =head2 GET /account/new
@@ -39,19 +42,6 @@ Opens an empty form. The ID is automatically generated.
 
     get '/account/new' => sub {
         template 'admin/forms/edit_account', {};
-    };
-
-=head2 GET /account/search
-
-Searches the authority database. Prints the search form + result list.
-
-=cut
-
-    get '/account/search' => sub {
-        my $p = params;
-        h->log->debug("query for researcher: " . to_dumper($p));
-        my $hits = searcher->search('user', $p);
-        template 'admin/account', $hits;
     };
 
 =head2 GET /account/edit/:id
@@ -129,17 +119,11 @@ Deletes the account with ID :id.
         redirect uri_for('/librecat');
     };
 
-    get '/project' => sub {
-        my $hits = searcher->search('project',
-            {q => "", limit => 100, start => params->{start} || 0});
-        template 'admin/project', $hits;
-    };
-
     get '/project/new' => sub {
         template 'admin/forms/edit_project', {_id => project->generate_id};
     };
 
-    get '/project/search' => sub {
+    get '/project' => sub {
         my $p = h->extract_params();
 
         my $hits = searcher->search('project', $p);
@@ -158,18 +142,12 @@ Deletes the account with ID :id.
         redirect uri_for('/librecat/admin/project');
     };
 
-    get '/research_group' => sub {
-        my $hits = searcher->search('research_group',
-            {q => "", limit => 100, start => params->{start} || 0});
-        template 'admin/research_group', $hits;
-    };
-
     get '/research_group/new' => sub {
         template 'admin/forms/edit_research_group',
             {_id => research_group->generate_id};
     };
 
-    get '/research_group/search' => sub {
+    get '/research_group' => sub {
         my $p = h->extract_params();
 
         my $hits = searcher->search('research_group', $p);
