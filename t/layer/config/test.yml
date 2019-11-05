@@ -206,7 +206,6 @@ queue:
   workers:
     audit:
       count: 1
-      supervise: 1
 
 worker:
     logdir: /tmp

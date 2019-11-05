@@ -1,7 +1,10 @@
 _prefix:
   queue:
 
+servers:
+  - host: '127.0.0.1'
+    port: 4730
+
 workers:
   mailer:
     count: 1
-    supervise: 1
