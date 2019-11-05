@@ -10,6 +10,8 @@ admin_email: librecat@somewhere.org
 api:
   v1:
     token_secret: CHANGEME
+    #base path when served behind a proxy server
+    path: /api
 
 # Default interface options
 default_lang: en
