@@ -2,6 +2,7 @@ _prefix:
   route:
 
 exporter:
+  max_export_limit: 10
   publication:
     json:
       package: 'JSON'

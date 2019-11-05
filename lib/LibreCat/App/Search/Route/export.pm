@@ -25,22 +25,24 @@ sub _export {
 
     my $fmt = $params->{fmt};
 
-    my $export_config = h->config->{route}->{exporter}->{publication};
+    my $export_config = h->config->{route}->{exporter};
 
-    unless (is_hash_ref($export_config->{$fmt})) {
+    unless (is_hash_ref($export_config->{publication}->{$fmt})) {
         content_type 'application/json';
         status '406';
         return to_json {error => "Export format '$fmt' not supported."};
     }
 
-    my $spec = $export_config->{$fmt};
+    $params->{sort}  = h->config->{default_sort} unless $params->{sort};
+    $params->{limit} = $export_config->{max_export_limit} if defined($params->{limit}) && $params->{limit} > $export_config->{max_export_limit};
 
     h->log->debug("searching for publications:" . Dancer::to_json($params));
-    $params->{sort} = h->config->{default_sort} unless $params->{sort};
+
     my $hits = LibreCat->searcher->search('publication', $params);
 
     # We are changing the configurate options inline
     # A clone is required to work on a local version of these options
+    my $spec    = $export_config->{publication}->{$fmt};
     my $package = $spec->{package};
     my $options = clone($spec->{options}) || {};
 
@@ -75,7 +77,7 @@ sub _export {
             $send_params->{filename} = 'publication.' . $spec->{extension};
         }
 
-        h->log->debug($f);
+        h->log->trace($f);
         return Dancer::send_file(\$f, %$send_params);
     }
 }
