@@ -29,8 +29,5 @@ subtest '/oai' => sub {
     $mech->content_like(qr/\<repositoryName\>/);
 };
 
-subtest '/api/file' => sub {
-    $mech->get_ok('/api/v1/file');
-};
 
 done_testing;
