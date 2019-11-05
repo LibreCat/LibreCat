@@ -17,15 +17,23 @@ use LibreCat::App::Helper;
 sub _export {
     my $params = shift;
 
-    unless (is_string($params->{fmt})) {
+    my $export_config = h->config->{route}->{exporter};
+
+    # Only consider a these params
+    my $fmt   = $params->{fmt};
+    my $cql   = $params->{cql};
+    my $q     = $params->{q};
+    my $start = $params->{start} // 0;
+    my $limit = $params->{limit};
+    my $sort  = $params->{sort};
+
+    $sort  = h->config->{default_sort} unless $sort;
+
+    unless (is_string($fmt)) {
         content_type 'application/json';
         status '406';
         return to_json {error => "Parameter fmt is missing."};
     }
-
-    my $fmt = $params->{fmt};
-
-    my $export_config = h->config->{route}->{exporter};
 
     unless (is_hash_ref($export_config->{publication}->{$fmt})) {
         content_type 'application/json';
@@ -33,14 +41,17 @@ sub _export {
         return to_json {error => "Export format '$fmt' not supported."};
     }
 
-    $params->{sort}  = h->config->{default_sort} unless $params->{sort};
+    my $query_params = {
+        cql   => $cql   ,
+        q     => $q     ,
+        start => $start ,
+        limit => $limit ,
+        sort  => $sort  ,
+    };
 
-    # Set a maximum export limit that can be requested
-    $params->{limit} = $export_config->{max_export_limit} if defined($params->{limit}) && $params->{limit} > $export_config->{max_export_limit};
+    h->log->debug("searching for publications:" . Dancer::to_json($query_params));
 
-    h->log->debug("searching for publications:" . Dancer::to_json($params));
-
-    my $hits = LibreCat->searcher->search('publication', $params);
+    my $hits = LibreCat->searcher->search('publication', $query_params);
 
     # We are changing the configurate options inline
     # A clone is required to work on a local version of these options

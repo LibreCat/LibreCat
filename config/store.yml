@@ -48,6 +48,8 @@ search:
   package: ElasticSearch
   options:
     client: '6_0::Direct'
+    default_options:
+        maximum_limit: 100
     bags:
       project:
         fix:
