@@ -1,9 +1,52 @@
-# add OA flag for open access publications
+#####
+## fix publication data at indexing
+#####
 
+if exists(department)
+  do list(path:department, var:loop)
+    do identity()
+      copy_field(loop._id,loop.tmp)
+      lookup_in_store(loop.tmp, search, bag:department)
+      move_field(loop.tmp.tree, loop.tree)
+      remove_field(loop.tmp)
+    end
+  end
+end
+
+if exists(project)
+  do list(path:project, var:loop)
+    do identity()
+      copy_field(loop._id,loop.tmp)
+      lookup_in_store(loop.tmp, search, bag:project)
+      move_field(loop.tmp.call_identifier,loop.call_identifier)
+      move_field(loop.tmp.grant_number,loop.grant_number)
+      remove_field(loop.tmp)
+      if all_match(loop.call_identifier,'FP7|H2020')
+        add_field(ec_funded,1)
+      end
+    end
+  end
+end
+
+## add flags for ISI/PMID
+if all_match(external_id.isi.0, '^\w+$')
+  add_field(isi, 1)
+end
+if all_match(external_id.pmid.0, '^.+$')
+  add_field(pmid, 1)
+end
+
+## add OA flag for open access publications
 if any_match(file.*.access_level, open_access)
   add_field(oa, 1)
 end
-
 if any_match(main_file_link.*.open_access, 1)
   add_field(oa, 1)
+end
+
+## add flag for OAI output (deleting strategy)
+if all_match(status,"returned|deleted")
+  add_field(oai_deleted, 1)
+else
+  remove_field(oai_deleted)
 end
