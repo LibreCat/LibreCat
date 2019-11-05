@@ -26,7 +26,8 @@ sub create {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = $c->maybe_decode_json($c->req->body) // return $c->json_not_valid;
+    my $data  = $c->maybe_decode_json($c->req->body)
+        // return $c->json_not_valid;
 
     librecat->hook("api-$model-create")->fix_around(
         $data,
@@ -59,7 +60,8 @@ sub update {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = $c->maybe_decode_json($c->req->body) // return $c->json_not_valid;
+    my $data  = $c->maybe_decode_json($c->req->body)
+        // return $c->json_not_valid;
 
     # does record exist?
     unless ($recs->get($id)) {
@@ -69,6 +71,7 @@ sub update {
     # does the record contain an id and does it match the given id
     if ($data->{_id}) {
         if ($data->{_id} eq $id) {
+
             # ok
         }
         else {
@@ -108,7 +111,8 @@ sub update_fields {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
-    my $data  = $c->maybe_decode_json($c->req->body) // return $c->json_not_valid;
+    my $data  = $c->maybe_decode_json($c->req->body)
+        // return $c->json_not_valid;
 
     # does record exist?
     my $rec;
@@ -119,6 +123,7 @@ sub update_fields {
     # does the record contain an id and does it match the given id
     if ($data->{_id}) {
         if ($data->{_id} eq $id) {
+
             # ok
         }
         else {
@@ -175,6 +180,42 @@ sub remove {
         attributes => {status => 'deleted'},
         links      => {self => $c->url_for->to_abs,},
     };
+    $c->render(json => {data => $data});
+}
+
+sub search {
+    my $c     = $_[0];
+    my $model = $c->param('model');
+
+    my $recs = librecat->model($model) // return $c->not_found;
+
+    my $hits = librecat->searcher->search(
+        $model,
+        {
+            cql   => $c->param('cql'),
+            start => $c->param('start'),
+            limit => $c->param('limit'),
+            sort  => $c->param('sort'),
+        }
+    );
+
+    my $pagination;
+    foreach (qw(next_page last_page page previous_page pages_in_spread)) {
+        $pagination->{$_} = $hits->$_;
+    }
+
+    my $data = {
+        type       => $model,
+        query      => {cql => $c->param('cql')},
+        count      => $hits->total,
+        attributes => {
+            hits       => $hits->to_array,
+            aggs       => $hits->{aggregations},
+            pagination => $pagination
+        },
+        links => {self => $c->url_for->to_abs,},
+    };
+
     $c->render(json => {data => $data});
 }
 
