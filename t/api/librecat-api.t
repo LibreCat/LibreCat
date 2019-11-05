@@ -72,7 +72,7 @@ subtest "add/get/search/delete user" => sub {
         ->json_is('/data/id',                   999111999)
         ->json_is('/data/attributes/full_name', 'User, Test');
 
-    $t->get_ok('/api/v1/search/user' => {Authorization => $token})
+    $t->get_ok('/api/v1/user/search' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes');
 
     $t->get_ok('/api/v1/user/999111999/versions' => {Authorization => $token})
@@ -155,7 +155,7 @@ subtest "add/get/search/delete publication" => sub {
         ->json_is('/data/id',                  999999999)
         ->json_is('/data/attributes/_version', '1');
 
-    $t->get_ok('/api/v1/search/publication' => {Authorization => $token})
+    $t->get_ok('/api/v1/publication/search' => {Authorization => $token})
         ->status_is(200)->json_has('/data/attributes');
 
     $t->delete_ok(

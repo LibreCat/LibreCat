@@ -42,6 +42,9 @@ sub register {
             my $model_api = $api_auth->any("/$model")
                 ->to('model_api#', model => $model);
 
+            $model_api->get('/search')->to('#search', model => $model)
+                ->name($model);
+
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
             $model_api->get('/:id')->to('#show', model => $model)
@@ -70,20 +73,7 @@ sub register {
         }
     );
 
-    $r->add_shortcut(
-        librecat_search_api => sub {
-            my ($r, $model) = @_;
-
-            my $search_api = $api_auth->get("/search/$model")
-                ->to('search_api#search', model => $model);
-
-            return $search_api;
-        }
-    );
-
     $r->librecat_model_api($_) for @$models;
-
-    $r->librecat_search_api($_) for @$models;
 }
 
 1;
