@@ -1,4 +1,6 @@
 [%- USE XML::Strict -%]
+
+[% UNLESS headless == "true" %]
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:dc="http://purl.org/dc/terms/"
          xmlns:foaf="http://xmlns.com/foaf/0.1/"
@@ -7,6 +9,7 @@
          xmlns:owl="http://www.w3.org/2002/07/owl#"
          xmlns:event="http://purl.org/NET/c4dm/event.owl#"
          xmlns:ore="http://www.openarchives.org/ore/terms/">
+[% END %]
     <rdf:Description rdf:about="[% uri_base %]/record/[% _id %]">
         <ore:isDescribedBy rdf:resource="[% uri_base %]/record/[% _id %]"/>
         <dc:title>[% title | xml_strict %]</dc:title>
@@ -77,4 +80,6 @@
         <fabio:hasPubMedId>[% pmid %]</fabio:hasPubMedId>
         [% END %]
     </rdf:Description>
+[% UNLESS headless == "true" %]
 </rdf:RDF>
+[% END %]
