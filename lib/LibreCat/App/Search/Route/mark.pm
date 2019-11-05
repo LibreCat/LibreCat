@@ -27,10 +27,11 @@ get '/marked.:fmt' => sub {
     my $marked = session 'marked';
     $marked = is_array_ref($marked) ? $marked : [];
     my $params = params;
-    $params->{fmt} = "yaml" unless is_string($params->{fmt});
-    $params->{cql}  = ["(id=" . join(' OR id=', @$marked) . ")"];
-    $params->{sort} = "false";
-    $params->{bag}  = "publication";
+    $params->{fmt}   = "yaml" unless is_string($params->{fmt});
+    $params->{cql}   = ["(id=" . join(' OR id=', @$marked) . ")"];
+    $params->{sort}  = "false";
+    $params->{bag}   = "publication";
+    $params->{limit} = int(@$marked);
 
     forward "/export", $params;
 };

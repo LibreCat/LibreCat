@@ -34,6 +34,8 @@ sub _export {
     }
 
     $params->{sort}  = h->config->{default_sort} unless $params->{sort};
+
+    # Set a maximum export limit that can be requested
     $params->{limit} = $export_config->{max_export_limit} if defined($params->{limit}) && $params->{limit} > $export_config->{max_export_limit};
 
     h->log->debug("searching for publications:" . Dancer::to_json($params));
