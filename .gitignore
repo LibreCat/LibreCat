@@ -32,6 +32,7 @@ logs/*.log
 node_modules/
 nytprof*
 package.json
+package-lock.json
 pm_to_blib
 profiledata/
 public/images/dummy.jpg
