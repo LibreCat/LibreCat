@@ -102,7 +102,6 @@ $('#fileSubmit').click( function() {
   data.title          = $('#id_fileTitle').val();
   data.description    = $('#id_fileDescription').val();
   data.date_updated   = 'now';
-  data.request_a_copy = 0;
   data.rac_email      = $('#id_rac_email').val();
 
   // Open access
@@ -119,9 +118,7 @@ $('#fileSubmit').click( function() {
   }
   // Request a copy
   else if ($('#id_accessLevel_request').is(':checked')) {
-    data.access_level   = 'closed';
-    data.request_a_copy = 1;
-    data.open_access    = 0;
+    data.access_level = 'request';
     if ($('#id_rac_email').val()){
       data.rac_email = $('#id_rac_email').val();
     }
@@ -168,9 +165,19 @@ $('#fileSubmit').click( function() {
     }
   }
 
+  // rac
+  else if(data.access_level == "request"){
+    accessLevel = "[% lf.$type.field.dropzone.access.request_a_copy %]";
+
+    if (data.embargo) {
+      accessLevel += "<br />([% lf.$type.field.dropzone.access.until %] " +
+                     data.embargo +
+                     ")";
+    }
+  }
+
   var rac = "";
-  if(data.request_a_copy){
-    rac += "<div class=\"col-xs-12\">[% lf.$type.field.dropzone.access.request_a_copy %]";
+  if(data.access_level == 'request'){
     if(data.rac_email){
       rac += " (" + data.rac_email + ")";
     }
@@ -182,7 +189,7 @@ $('#fileSubmit').click( function() {
   $('#creator_'  + use_file_id).html(data.creator);
   $('#relation_' + use_file_id).html(data.relation);
   $('#file_'     + use_file_id).val(JSON.stringify(data));
-  if(!data.request_a_copy){
+  if(data.access_level != 'request'){
     $('#rac_' + use_file_id).html("");
   }
   else{

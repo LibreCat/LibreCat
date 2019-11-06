@@ -13,4 +13,6 @@ BEGIN {
 
 require_ok $pkg;
 
+ok p, "got permission object";
+
 done_testing;

@@ -2,13 +2,15 @@
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd">
   <identifier identifierType="DOI">[% doi | xml_strict %]</identifier>
   <creators>
-    [%- FOREACH a IN author %]
-    <creator>
-      <creatorName nameType="Personal">[% a.full_name | xml_strict %]</creatorName>
-      <givenName>[% a.first_name | xml_strict %]</givenName>
-      <familyName>[% a.last_name | xml_strict %]</familyName>
-      [%- IF a.orcid %]<nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">[% a.orcid | xml_strict %]</nameIdentifier>[% END %]
-    </creator>
+    [%- FOREACH entity IN ['author', 'editor'] %]
+      [%- FOREACH a IN $entity %]
+      <creator>
+        <creatorName nameType="Personal">[% a.full_name | xml_strict %]</creatorName>
+        <givenName>[% a.first_name | xml_strict %]</givenName>
+        <familyName>[% a.last_name | xml_strict %]</familyName>
+        [%- IF a.orcid %]<nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">[% a.orcid | xml_strict %]</nameIdentifier>[% END %]
+      </creator>
+      [%- END %]
     [%- END %]
   </creators>
   <titles>

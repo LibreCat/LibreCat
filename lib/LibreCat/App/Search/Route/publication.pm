@@ -23,7 +23,7 @@ get '/record/:id.:fmt' => sub {
     my $id  = params->{id};
     my $fmt = params->{fmt} // 'yaml';
 
-    forward "/export", {cql => "id=$id", fmt => $fmt};
+    forward "/export", {cql => "id=$id", fmt => $fmt , limit => 1};
 };
 
 =head2 GET /record/:id

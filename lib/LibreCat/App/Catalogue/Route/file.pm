@@ -293,7 +293,7 @@ Request a copy of the publication. Email will be sent to the author.
 any '/rc/:id/:file_id' => sub {
     my $bag = h->main_reqcopy;
     my $file = _get_file_info(params->{id}, params->{file_id});
-    unless ($file->{request_a_copy}) {
+    unless ($file->{access_level} eq "request") {
         forward '/record/' . params->{id}, {method => 'GET'};
     }
 

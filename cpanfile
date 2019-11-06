@@ -20,9 +20,6 @@ on 'test' => sub {
 
 requires 'Business::ISBN', 0;
 
-# Fixing broken JSON::Validator error handling
-requires 'JSON::Validator','<=3.14';
-
 # Catmandu
 requires 'Catmandu', '>=1.2002';
 requires 'Catmandu::FileStore', '1.13';
@@ -39,7 +36,7 @@ requires 'Catmandu::OAI' , '0.16';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::SRU','0.039';
 requires 'Catmandu::Store::ElasticSearch', '>=1.0';
-requires 'Catmandu::Validator::JSONSchema','0.11';
+requires 'Catmandu::Validator::JSONSchema','>=0.12';
 requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
@@ -48,11 +45,11 @@ requires 'Search::Elasticsearch::Client::6_0';
 requires 'Mojolicious', '>=7.70';
 requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
 
-#Dancer
+# Dancer
 requires 'Dancer';
 requires 'Dancer::Plugin';
 requires 'Dancer::FileUtils';
-requires 'Dancer::Plugin::Catmandu::OAI', '>=0.0501';
+requires 'Dancer::Plugin::Catmandu::OAI', '>=0.0502';
 requires 'Dancer::Plugin::Catmandu::SRU', '0.0403';
 requires 'Dancer::Plugin::Auth::Tiny';
 requires 'Dancer::Plugin::StreamData';
@@ -67,7 +64,7 @@ requires 'Furl';
 requires 'HTML::Entities';
 requires 'Syntax::Keyword::Junction';
 
-#Plack
+# Plack
 requires 'Plack';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Dancer::Middleware::Rebase';
@@ -79,7 +76,7 @@ requires 'Plack::Middleware::Session';
 requires 'Plack::Session::Store::Catmandu', '>= 0.03';
 requires 'Starman';
 
-# others
+# Others
 requires 'all';
 requires 'AnyEvent','7.13';
 requires 'AnyEvent::HTTP','2.23';

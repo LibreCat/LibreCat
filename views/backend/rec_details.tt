@@ -106,7 +106,7 @@
 [% IF entry.file %]
   <div id="[% tabmodus %]_rac_[% entry._id %]" class="collapse">
   [% FOREACH file in entry.file %]
-    [% IF file.request_a_copy %]
+    [% IF file.access_level == "request" %]
     <div class="row col-md-12">
       [% IF entry.status == "public" %]
       [% file.file_name %]

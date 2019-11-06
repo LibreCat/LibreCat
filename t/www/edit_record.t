@@ -41,10 +41,30 @@ note("edit 2737383");
                 finalSubmit => "recSave"
             },
         },
-        'submitting the login form'
+        'submitting the edit form'
     );
 
-    $mech->content_contains("(Admin)", "logged in successfully");
+    $mech->content_contains("(Admin)", "back on dashboard");
+}
+
+note("clone 2737383");
+{
+    $mech->get_ok('/librecat/record/clone/2737383');
+
+    $mech->has_tag('h1',
+        'Function of glutathione peroxidases in legume root nodules');
+
+    $mech->submit_form_ok(
+        {
+            form_id => 'edit_form',
+            fields  => {
+                finalSubmit => "recSave"
+            },
+        },
+        'submitting the edit form after cloning'
+    );
+
+    $mech->content_contains("(Admin)", "back on dashboard");
 }
 
 done_testing;
