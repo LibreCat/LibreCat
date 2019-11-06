@@ -3,6 +3,7 @@ package LibreCat::App::Catalogue::Controller::Permission::Permissions;
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util qw(:is);
+use LibreCat qw(publication);
 use LibreCat::App::Helper;
 use LibreCat::Access;
 use Carp;
@@ -29,7 +30,7 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = h->main_publication->get($id) or return 0;
+    my $pub   = publication->search_bag->->get($id) or return 0;
     my $user  = h->get_person($user_id);
 
     # do not touch deleted records
@@ -190,7 +191,7 @@ sub can_download {
     is_string($id)     or return (0, "");
     is_hash_ref($opts) or return (0, "");
 
-    my $pub = h->main_publication->get($id) or return (0, "");
+    my $pub = publication->search_bag->->get($id) or return (0, "");
 
     return (0, '') unless $pub->{status} && $pub->{status} eq "public";
 
