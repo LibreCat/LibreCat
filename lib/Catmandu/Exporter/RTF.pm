@@ -149,7 +149,7 @@ sub _add_citation {
     my $citestring = "{\\pard ";
 
     # in case you want the title displayed as link
-    if ($self->style eq "short") {
+    if ($self->style eq "short" or $self->style eq "default") {
         my $title = $pub->{title};
         $title =~ s/ /___/g if $title;
         $title
