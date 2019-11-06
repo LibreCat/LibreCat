@@ -150,7 +150,9 @@ $(document).ready(function(){
                         $('#licenses').find('#select_ddc_0').closest('div.input-group').addClass('mandatory');
                         $('#licenses').find('#select_ddc_0').addClass('has-error');
                         $('#licenses').find('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
-                        $('#licenses').find('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
+                        if(!$('#licenses').find('label[for="select_ddc_0"]').closest('div').has("span.starMandatory").length){
+                          $('#licenses').find('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
+                        }
                     }
 
                     file.previewElement.setAttribute("id", resp.tempid);
