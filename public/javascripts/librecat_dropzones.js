@@ -175,7 +175,14 @@ $(document).ready(function(){
                 }
             });
             this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + htmlEscape(errorMessage.error_message) + " This file will be ignored</div>");
+                var modal = Dropzone.createElement(
+                    "<div class='alert alert-danger'>" +
+                        htmlEscape(errorMessage.error_message) +
+                        " This file will be ignored" +
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">" +
+                        "<span>&times;</span>" +
+                        "</button>" +
+                    "</div>");
                 file.previewElement.appendChild(modal);
             });
             this.on("complete", function(file){
