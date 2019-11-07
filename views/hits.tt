@@ -1,6 +1,4 @@
 <!-- BEGIN hits.tt -->
-[% num = total; n = 0 -%]
-[%- UNLESS request.path_info.match("/marked") %]
 <div class="row">
   <div class="col-md-12[% UNLESS request.path_info.match("/person") OR total == 0 %] col-xs-8[% END %]">
     <h3 class="margin-top0">[% total %] [% IF total == 1 %][% h.loc("hits.publication") %][% ELSE %][% h.loc("hits.publications") %][% END %]
@@ -15,7 +13,6 @@
   </div>
   [%- END %]
 </div>
-[%- END -%]
 
 [%- IF !backend AND total AND total > 1 %]
 [%- IF request.path_info.match("/person") %]
@@ -27,12 +24,9 @@
       <a class="btn btn-xs mark_all padding0" data-marked="0"><span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.mark_all") %]</a>
       [%- END %]
     </p>
-[%- ELSIF request.path_info.match("/marked") %]
-  <p><a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.unmark_all") %]</a></p>
 [%- END %]
 [%- END %]
 
-[%- UNLESS request.path_info.match("/marked") %]
 [%- IF next_page or previous_page %]
 <div class="row">
   [% INCLUDE pagination.tt %]
@@ -40,14 +34,11 @@
 <div class="row margin-top1">
 [%- END %]
 </div>
-[%- END %]
 
 [%- style = style || h.config.citation.csl.default_style %]
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
-[% IF request.path_info == "/marked" %]<ul class="list-unstyled" id="sortable">[% END %]
 [% FOREACH entry IN hits %]
-[% IF request.path_info == "/marked" %]<li class="markedme" id="fade_[% n+1 %]">[% END %]
 <div class="row">
 [% IF backend  %]
   <div class="col-md-1[% IF loop.first %] helpme helpme-md[% END %]" data-placement="top" title="[% h.loc("help.statuses") %]">
@@ -66,14 +57,14 @@
       <span class="text-muted"><strong>[% h.loc("main_page.statuses.private") %]</strong></span>
     [% END %]
   </div>
-[% ELSIF request.path_info == "/marked" OR request.path_info.match("/person") OR request.path_info.match("/record") %]
+[% ELSIF request.path_info.match("/person") OR request.path_info.match("/record") %]
   <div class="col-md-1">
-    [% UNLESS request.path_info == "/marked" %][% UNLESS request.path_info.match("/record") %][[% num - n %]][% END %] [% n = n +1 %]<br>[% END %]
-    [% IF !backend %]<a [% IF request.path_info == "/marked" %]id="clickme_[% n %]" [% END %]class="mark btn btn-xs padding0" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %]</a>[% END %]
+    [% UNLESS request.path_info.match("/record") %][[% num - n %]][% END %] [% n = n +1 %]<br>
+    [% IF !backend %]<a class="mark btn btn-xs padding0" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id %]">[% IF h.is_marked(entry._id) %]<span class="fa fa-check-square-o fa-lg"></span>[% ELSE %]<span class="fa fa-square-o fa-lg"></span>[% END %]</a>[% END %]
   </div>
 [% ELSE %]
 [% END %]
-[% IF backend OR request.path_info == "/marked" OR request.path_info.match("/person") OR request.path_info.match("/record") %]
+[% IF backend OR request.path_info.match("/person") OR request.path_info.match("/record") %]
     <div class="col-md-11[% IF backend AND loop.first %] helpme" data-placement="top" title="[% h.loc("help.citation") %][% END %]">
 [% ELSE %]
     <div class="col-md-12">
@@ -104,9 +95,7 @@
 
 <div class="row">&nbsp;</div>
 
-[% IF request.path_info == "/marked" %]</li>[% END %]
 [% END %]
-[% IF request.path_info == "/marked" %]</ul>[% END %]
 
 [%- IF error %]
 <div class="row">

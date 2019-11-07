@@ -43,7 +43,7 @@
       <div class="tab-content">
         <div class="tab-pane active">
           <div class="col-sm-8">
-          [% INCLUDE hits.tt %]
+          [% INCLUDE inc/marked/hits.tt %]
           </div>
           <div class="col-md-3 col-md-offset-1 col-sm-4">
           [% PROCESS marked/filters.tt %]
