@@ -1,0 +1,44 @@
+<!-- BEGIN inc/marked/hits.tt -->
+
+<p>
+  <a class="btn btn-xs mark_all padding0" data-marked="1">
+    <span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.unmark_all") %]
+  </a>
+</p>
+
+[%- style = style || h.config.citation.csl.default_style %]
+
+<ul class="list-unstyled" id="sortable">
+[% FOREACH entry IN hits %]
+  <li class="markedme" id="fade_[% look.index %]">
+    <div class="row">
+      <div class="col-md-1">
+        <a id="clickme_[% loop.index %]" class="mark btn btn-xs padding0" data-marked="[% h.is_marked(entry._id) %]" data-id="[% entry._id | html %]">
+        [% IF h.is_marked(entry._id) %]
+          <span class="fa fa-check-square-o fa-lg"></span>
+        [% ELSE %]
+          <span class="fa fa-square-o fa-lg"></span>
+        [% END %]
+        </a>
+      </div>
+      <div class="col-md-11">
+        [% INCLUDE inc/hit/title.tt %]
+        <div class="citation-block-div">
+          [%- IF style == 'short' %]
+          <a href="[% uri_base %]/record/[% entry._id | uri %]"><strong>[% entry.title %]</strong></a><br>
+          [%- END %]
+          [%- IF h.config.citation.engine == 'csl' AND entry.citation.$style %]
+            [% entry.citation.$style %]
+          [%- ELSE %]
+            [% PROCESS citation.tt entry=entry %]
+          [%- END %]
+        </div>
+        [% INCLUDE links.tt %]
+      </div>
+    </div>
+    <div class="row">&nbsp;</div>
+  </li>
+[% END %]
+</ul>
+
+<!-- END inc/marked/hits.tt -->

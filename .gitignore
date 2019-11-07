@@ -25,7 +25,6 @@ cpanfile.snapshot
 data/file_uploads/**
 data/temp_uploads/**
 docs/
-inc/
 layers.yml
 local/
 logs/*.log
