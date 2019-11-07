@@ -26,6 +26,8 @@ librecat file_store purge     [options] <key>
 librecat file_store export    [options] <key> <zip>
 librecat file_store import    [options] <key> <zip>
 librecat file_store copy      [options] <key|store_name> <store_name>
+
+# recreate the thumbnail for a file
 librecat file_store thumbnail [options] <key> <file>
 
 Options:
@@ -695,6 +697,8 @@ LibreCat::Cmd::file_store - manage librecat file stores
     librecat file_store export    [options] <key> <zip>
     librecat file_store import    [options] <key> <zip>
     librecat file_store copy      [options] <key|store_name> <store_name>
+
+    # recreate the thumbnail for a file
     librecat file_store thumbnail [options] <key> <file>
 
     options:
