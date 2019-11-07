@@ -74,7 +74,7 @@ sub _check_for_duplicate {
 
     state $detector = LibreCat::Dedup::Publication->new();
 
-     $detector->
+    return $detector->find_duplicate($data);
 }
 
 =head2 GET /librecat/record/import
