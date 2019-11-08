@@ -1,0 +1,21 @@
+[% PROCESS header.tt %]
+
+<!-- BEGIN 403.tt -->
+
+<div class="row"><!-- outer border -->
+
+  <div class="col-md-11 col-sm-12"><!-- main content -->
+
+    <div id="banner">
+	<h1>
+	  [% h.loc("403.heading") %]
+	</h1>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- END 403.tt -->
+
+[% INCLUDE footer.tt %]
