@@ -162,7 +162,7 @@ sub _handle_download {
 
     unless ($ok) {
         status 403;
-        return template '403';
+        return template 'file/403';
     }
 
     if (my $file = _file_exists($id, $file_name)) {
@@ -170,8 +170,7 @@ sub _handle_download {
     }
     else {
         status 404;
-        template 'error',
-            {message => "The file does not exist anymore. We're sorry."};
+        template 'file/404';
     }
 }
 
@@ -293,7 +292,7 @@ Request a copy of the publication. Email will be sent to the author.
 any '/rc/:id/:file_id' => sub {
     my $bag = h->main_reqcopy;
     my $file = _get_file_info(params->{id}, params->{file_id});
-    unless ($file->{request_a_copy}) {
+    unless ($file->{access_level} eq "request") {
         forward '/record/' . params->{id}, {method => 'GET'};
     }
 

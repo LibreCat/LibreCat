@@ -41,8 +41,8 @@ $(document).ready(function(){
                 $(progresselement).remove();
                 var resp = response;//JSON.parse(response);
                 var modal = Dropzone.createElement(
-"<div class='well' id='" + htmlEscape(resp.tempname) + "'>" +
-"<form id='form_" + htmlEscape(resp.tempname) + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
+"<div class='well' id='" + htmlEscape(resp.tempid) + "'>" +
+"<form id='form_" + htmlEscape(resp.tempid) + "' action='" + librecat.uri_base + "/librecat/upload/qae/submit' method='post'>" +
 "<strong>" + htmlEscape(file.name) + "</strong>" +
 "<textarea class='form-control' placeholder='Type details about your publication here' name='description'>" +
 "</textarea>" +
@@ -52,7 +52,7 @@ $(document).ready(function(){
 "<input type='hidden' name='file_name' value='" + htmlEscape(resp.file_name) + "' />" +
 "<div class='checkbox'>" +
 "<label>" +
-"<input type='checkbox' required> I have read and accept the <a href='" + librecat.uri_base + "/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
+"<input type='checkbox' name='has_accepted_license' required> I have read and accept the <a href='" + librecat.uri_base + "/docs/howto/policy#depositpolicy' target='_blank'>PUB Deposit Policy</a>" +
 "</label>" +
 "</div>" +
 "<input type='hidden' name='tempid' value='" + htmlEscape(resp.tempid) + "' />" +
@@ -79,17 +79,29 @@ $(document).ready(function(){
         previewTemplate: '<div class=\"col-md-11 dz-preview dz-file-preview\"></div>',
         createImageThumbnails: false,
         addRemoveLinks: true,
-        init: function() {
-            $('.dz-default.dz-message').addClass('col-md-11');
-            this.on("addedfile", function(file) {
-                $('html').css({ cursor: "wait" });
+        accept: function(file,done) {
+            var found = $("#uploadFiles").find('input[name="file"]').toArray().find(function (element,index,rest) {
+                return JSON.parse(element.value).file_name === file.name;
+            });
+            if (found) {
+                done({error_message: htmlEscape(file.name) + " already exists."});
+            }
+            else {
+                // Show progressbar
                 var fileName = Dropzone.createElement("<div class=\"row\"><div class=\"progress progress-striped active\"><div class=\"progress-bar\" id=\"" + htmlEscape(file.name) + "_progress\" style=\"width:0;text-align:left;padding-left:10px;\">" + htmlEscape(file.name) + "</span></div></div></div>");
                 file.previewElement.appendChild(fileName);
-            });
+                done();
+            }
+        },
+        init: function() {
+            $('.dz-default.dz-message').addClass('col-md-11');
             this.on("uploadprogress", function(file,progress,bytesSent){
                 $('html').css({ cursor: "wait" });
-                var progressbar = document.getElementById(file.name + "_progress");
-                progressbar.style.width = progress + "%";
+                if (file['accepted'] === true) {
+                    // Update progressbar
+                    var progressbar = document.getElementById(file.name + "_progress");
+                    progressbar.style.width = progress + "%";
+                }
             });
             this.on("success", function(file,response){
                 var progressbar = document.getElementById(file.name + "_progress");
@@ -150,7 +162,9 @@ $(document).ready(function(){
                         $('#licenses').find('#select_ddc_0').closest('div.input-group').addClass('mandatory');
                         $('#licenses').find('#select_ddc_0').addClass('has-error');
                         $('#licenses').find('#select_ddc_0').closest('div.input-group.mandatory').addClass("has-error");
-                        $('#licenses').find('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
+                        if(!$('#licenses').find('label[for="select_ddc_0"]').closest('div').has("span.starMandatory").length){
+                          $('#licenses').find('label[for="select_ddc_0"]').closest('div').append('<span class="starMandatory"></span>');
+                        }
                     }
 
                     file.previewElement.setAttribute("id", resp.tempid);
@@ -161,7 +175,14 @@ $(document).ready(function(){
                 }
             });
             this.on("error", function(file, errorMessage){
-                var modal = Dropzone.createElement("<div class='alert alert-danger'>" + htmlEscape(errorMessage.error_message) + " This file will be ignored</div>");
+                var modal = Dropzone.createElement(
+                    "<div class='alert alert-danger'>" +
+                        htmlEscape(errorMessage.error_message) +
+                        " This file will be ignored" +
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">" +
+                        "<span>&times;</span>" +
+                        "</button>" +
+                    "</div>");
                 file.previewElement.appendChild(modal);
             });
             this.on("complete", function(file){

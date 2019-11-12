@@ -485,17 +485,16 @@ function edit_file(fileId){
                 $('#id_accessLevel_local').prop('checked',true);
                 $('#id_accessEmbargo').prop('disabled',false);
         }
+        else if(json.access_level == "request"){
+                $('#id_accessLevel_request').prop('checked',true);
+                $('#id_accessEmbargo').prop('disabled',false);
+                if(json.rac_email){
+  				        $('#id_rac_email').val(json.rac_email);
+  			        }
+        }
         else if(json.access_level == "closed"){
-                if(json.request_a_copy == "1"){
-                    $('#id_accessLevel_request').prop('checked',true);
-			        if(json.rac_email){
-				        $('#id_rac_email').val(json.rac_email);
-			        }
-                }
-                else {
-                        $('#id_accessLevel_admin').prop('checked',true);
-                }
-            $('#id_accessEmbargo').prop('disabled',false);
+                $('#id_accessLevel_admin').prop('checked',true);
+                $('#id_accessEmbargo').prop('disabled',false);
         }
 
         if(json.embargo && json.embargo != ""){

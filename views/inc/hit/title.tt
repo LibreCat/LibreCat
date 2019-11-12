@@ -1,0 +1,3 @@
+<!-- BEGIN inc/hit/title.tt -->
+<em>[% IF entry.year %][% entry.year %][% ELSE %][n.d.][% END %] | [% t = entry.type; %] [% h.loc("forms.${t}.label") %] | [% h.loc("hits.id") %]: <span class="pubid">[% entry._id %]</span> [% IF entry.oa %]| <img src="[% uri_base %]/images/access_open.png" class="description" data-toggle="tooltip" data-html="true" data-placement="bottom" rel="tooltip" title="Open access file" alt="OA">[% END %]</em>
+<!-- END inc/hit/title.tt -->

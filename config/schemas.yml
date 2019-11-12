@@ -181,6 +181,10 @@ publication:
                 type: string
                 pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
                 description: "Upload date"
+            date_deleted:
+                type: string
+                pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
+                description: "Deletion date"
             date_updated:
                 type: string
                 pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
@@ -405,7 +409,7 @@ publication:
           description: "electronic ISBN number"
       description: "Publication identifier"
     publication_status:
-      enum: ["draft","submitted","accepted","inpress","epub_ahead","published"]
+      enum: ["unpublished","draft","submitted","accepted","inpress","epub_ahead","published"]
       description: "Publication status"
     popular_science:
       oneOf:
@@ -605,18 +609,6 @@ publication:
             oneOf:
               - type: string
               - type: integer
-    pmid:
-      oneOf:
-        - type: string
-          pattern: "^[01]$"
-        - type: integer
-      description: "Flag of PubMed"
-    isi:
-      oneOf:
-        - type: string
-          pattern: "^[01]$"
-        - type: integer
-      description: "Flag of ISI/WoS"
     file:
       type: array
       minItems: 0
