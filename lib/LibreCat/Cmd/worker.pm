@@ -111,7 +111,7 @@ sub _start {
     my @worker_specs;
 
     for my $worker_name (keys %$worker_config) {
-        my $spec = $worker_config->{$worker_name}; 
+        my $spec = $worker_config->{$worker_name};
         my $n = $spec->{count} // 1;
         my $package = $spec->{package} // camelize($worker_name);
         my $options = $spec->{options} // {};
@@ -186,7 +186,7 @@ sub command {
 
     my $cmd = shift @$args;
 
-    unless ($cmd =~ /^$commands$/) {
+    unless ($cmd && $cmd =~ /^$commands$/) {
         $self->usage_error("should be one of $commands");
     }
 

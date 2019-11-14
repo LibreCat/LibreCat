@@ -36,11 +36,11 @@ EOF
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/status|add_job|start|stop/;
+    my $commands = qr/status|add_job/;
 
     my $cmd = shift @$args;
 
-    unless ($cmd =~ /^$commands$/) {
+    unless ($cmd && $cmd =~ /^$commands$/) {
         $self->usage_error("should be one of $commands");
     }
 
