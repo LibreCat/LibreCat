@@ -520,7 +520,7 @@ function edit_file(fileId){
  * @param fileId = file ID
  */
 function delete_file(fileId){
-        if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken!\nIf you need to update an existing file to a new version you should edit the corresponding entry in the list and re-upload the file.\n\nDelete this file?")) {
+        if (confirm("Are you sure you want to delete this uploaded document? Any external links will be broken!\n(If you want to upload a new version of your file, please create a new record.)\n\nDelete this file?")) {
             $('#' + fileId).remove();
             if($('#uploadFiles').children('.dz-file-preview').length == 0){
                 $('#ddc').find('div.mandatory').removeClass('mandatory');
