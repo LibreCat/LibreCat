@@ -112,6 +112,8 @@ publication:
                   - is_cited_by
                   - confirmation
                   - hidden
+                  - poster
+                  - slides
             description:
                 type: string
         additionalProperties: false
