@@ -162,7 +162,7 @@ sub _handle_download {
 
     unless ($ok) {
         status 403;
-        return template '403';
+        return template 'file/403';
     }
 
     if (my $file = _file_exists($id, $file_name)) {
@@ -170,8 +170,7 @@ sub _handle_download {
     }
     else {
         status 404;
-        template 'error',
-            {message => "The file does not exist anymore. We're sorry."};
+        template 'file/404';
     }
 }
 
