@@ -154,7 +154,7 @@ sub _start {
 
             my $func = sub {
                 my ($job) = @_;
-                $worker->$method_name(decode_json($job->workload), $job);
+                $worker->$method_name(decode_json($job->arg), $job);
                 return;
             };
 
