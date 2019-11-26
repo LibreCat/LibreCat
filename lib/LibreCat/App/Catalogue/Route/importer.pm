@@ -107,6 +107,18 @@ post '/librecat/record/import' => sub {
         : $p->{data};
     my $source = $p->{source};
 
+    my $dup = _check_for_duplicate({
+        $source eq "crossref" ? "doi" : external_id => $id,
+     });
+
+    if ($dup && $dup->[0]) {
+        return template "backend/add_new",
+            {
+            error    => sprintf(h->loc('error.duplicate_import'), $id, $source, $dup->[0]),
+            imported => []
+            };
+    }
+
     my $imported_records = _fetch_record($p->{id} // $data, $source);
 
     unless (Catmandu::Util::is_array_ref($imported_records)) {

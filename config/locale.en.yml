@@ -47,6 +47,7 @@ error:
   update_failed: "Failed to update record %s. The admins have been notified."
   contact_admin: "Please, contact %s when this problem persists."
   preliminary_submit: "Form was submitted before it was fully loaded. All requested changes have been discarded to prevent data loss."
+  duplicate_import: "There already is a record with ID %s from %s in the database: <a href='/librecat/record/edit/%s'>Entry</a>."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 styles:
