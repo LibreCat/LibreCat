@@ -10,8 +10,6 @@
   </div>
 [%- END %]
 
-[%- IF request.path_info != "/marked" -%]
-
   <h3>[%- IF bag == "person" %][% h.loc("facets.filter_authorlist") %]
       [%- ELSE %][% h.loc("facets.filter_publications") %][% END %]</h3>
 
@@ -40,5 +38,3 @@
     [% END %]
     </ul>
   [% END %]
-
-[%- END %]
