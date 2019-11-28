@@ -13,7 +13,6 @@
   [%- END %]
 [%- END -%]
 
-[%- UNLESS request.path_info.match('marked') %]
 <h3[%- IF qp.q.size == 0 %] class="margin-top0"[% END %]>[% h.loc("facets.search") %]</h3>
 <form
     id="backend_search_form"
@@ -44,5 +43,4 @@
     [%- END %]
   [%- END %]
 </form>
-[%- END -%]
 <!-- END search_box.tt -->
