@@ -79,9 +79,10 @@
 	     <h3 id="ModalExport">[% h.loc("facets.export_options") %]</h3>
       </div>
       <div class="modal-body">
-          [%- tmp.links=1 %]
+          [%- tmp.links=1 %][% tmp.style = qp.style %]
 	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('marked.rtf', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
-	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('marked.rtf') %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
+          [%- tmp.links=0 %]
+	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('marked.rtf', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
       </div>
     </div>
   </div>

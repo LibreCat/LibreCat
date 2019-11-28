@@ -28,7 +28,7 @@ my $app = eval {do './bin/app.pl';};
 my $mech = Test::WWW::Mechanize::PSGI->new( app => $app );
 $mech->max_redirect(0);
 
-#login
+note("login");
 {
     $mech->get_ok("/login");
     my $res = $mech->submit_form(
@@ -51,7 +51,8 @@ my $file_size = -s $source_file;
 $pubs->delete_all;
 $file_store->index->delete_all;
 
-#upload file
+my $r;
+note("upload some files");
 {
 
     $file_store->index->add({ _id => $record_id });
@@ -63,7 +64,7 @@ $file_store->index->delete_all;
         "utf8.txt"
     );
 
-    my $r = {
+    $r = {
         _id => $record_id,
         title => $file_name,
         status => "public",
@@ -99,7 +100,7 @@ $file_store->index->delete_all;
                 file_size => -s "t/data3/000/000/001/utf8.txt",
                 content_type => "text/plain",
                 creator => 1234,
-                access_level => "open_access",
+                access_level => "closed",
                 open_access => 1,
                 relation => "main_file",
                 date_created => "2018-08-06T11:46:00Z",
@@ -113,12 +114,55 @@ $file_store->index->delete_all;
     $pubs->search_bag->commit;
 }
 
-#get file
+note("download open access file");
 {
     $mech->max_redirect(0);
     $mech->get_ok("/download/$record_id/$file_id/$file_name");
     is( $mech->content_type, "application/pdf", "content type set correctly" );
+}
+
+
+note("download closed access file");
+{
     $mech->max_redirect(0);
+    $mech->get_ok("/download/$record_id/TXT/utf8.txt");
+    # is( $mech->content_type, "application/pdf", "content type set correctly" );
+}
+
+note("logout now");
+{
+    ok $mech->get("/logout"), "logged out";
+    is($mech->status, 302, "redirected after logout");
+}
+
+note("try downloads after logout");
+{
+    $mech->max_redirect(0);
+    ok $mech->get("/download/$record_id/TXT/utf8.txt"), "can get download";
+    is($mech->status, 403, "forbidden: status 403");
+
+    $mech->get_ok("/download/$record_id/$file_id/$file_name");
+}
+
+note("try to download missing file");
+{
+    $mech->max_redirect(0);
+    ok $mech->get("/download/$record_id/63245/missing.pdf"), "request to missing file";
+    is($mech->status, 404, "not found: status 404");
+}
+
+# TODO: download oa file, but record not private
+note("hide record from public and try to download");
+{
+    $r->{status} = "returned";
+    $pubs->bag->add($r);
+    $pubs->search_bag->add($r);
+    $pubs->bag->commit();
+    $pubs->search_bag->commit;
+
+    $mech->max_redirect(0);
+    $mech->get("/download/$record_id/$file_id/$file_name");
+    is ($mech->status, 403, "forbidden: status 403");
 }
 
 # #headers for all content types except 'text/plain'

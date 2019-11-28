@@ -100,7 +100,12 @@ end
 move_field(VL,_r.volume)
 move_field(IS,_r.issue)
 move_field(SE,_r.series_title)
-move_field(PY,_r.year)
+if exists(EY)
+  move_field(EY,_r.year)
+end
+if exists(PY)
+  move_field(PY,_r.year)
+end
 
 #if exists(PG)
 #  move_field(PG, _r.page)
