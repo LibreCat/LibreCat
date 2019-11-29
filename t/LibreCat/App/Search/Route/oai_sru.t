@@ -11,7 +11,7 @@ my $pkg;
 BEGIN {
     set plugins =>
         from_yaml(path("t/layer/config.yml")->slurp_utf8)->{plugins};
-    $pkg = 'LibreCat::App::Search::Route::api';
+    $pkg = 'LibreCat::App::Search::Route::oai_sru';
     use_ok $pkg;
 }
 
