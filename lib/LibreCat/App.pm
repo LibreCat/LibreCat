@@ -12,7 +12,6 @@ use LibreCat qw(user);
 use Dancer qw(:syntax);
 use LibreCat::App::Search;       # the frontend
 use LibreCat::App::Catalogue;    # the backend
-use LibreCat::App::Api;          # the api
 use LibreCat::App::Helper;
 use Dancer::Plugin::Auth::Tiny;
 
