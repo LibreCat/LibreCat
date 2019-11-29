@@ -1,0 +1,109 @@
+[%- USE XML::Strict -%]
+<resource xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:datacite="http://datacite.org/schema/kernel-4"
+  xmlns="http://namespace.openaire.eu/schema/oaire/"
+  xsi:schemaLocation="http://namespace.openaire.eu/schema/oaire/ https://www.openaire.eu/schema/repo-lit/4.0/openaire.xsd">
+
+  <datacite:title xml:lang="[% lang.0.iso | xml_strict %]">[% title | xml_strict %]</datacite:title>
+  [%- IF alternative_title %]
+  <datacite:title titleType="AlternativeTitle">[% alternative_title | xml_strict %]</datacite:title>
+  [%- END %]
+  <datacite:creators>
+    [%- FOREACH a IN author %]
+    <datacite:creator>
+      <datacite:creatorName nameType="Personal">[% a.full_name | xml_strict %]</datacite:creatorName>
+      [%- IF a.orcid %]<datacite:nameIdentifier schemeURI="https://orcid.org/" nameIdentifierScheme="ORCID">[% a.orcid | xml_strict %]</datacite:nameIdentifier>[% END %]
+    </datacite:creator>
+    [%- END %]
+  </datacite:creators>
+
+  <datacite:alternateIdentifiers>
+    <datacite:alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/record/[% _id %]</datacite:alternateIdentifier>
+  </datacite:alternateIdentifiers>
+  <datacite:elatedIdentifiers>
+    <datacite:relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/record/[% _id%].json</datacite:relatedIdentifier>
+    [%- IF publication_identifier.isbn %]
+    <datacite:relatedIdentifier relatedIdentifierType="ISBN" relationType="IsVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</datacite:relatedIdentifier>
+    [%- END %]
+    [%- IF publication_identifier.issn %]
+    <datacite:relatedIdentifier relatedIdentifierType="ISSN" relationType="IsVersionOf">[% publication_identifier.issn.0 | xml_strict %]</datacite:relatedIdentifier>
+    [%- END %]
+    [%- IF external_id.arxiv %]
+    <datacite:relatedIdentifier relatedIdentifierType="arXiv" relationType="IsVersionOf">[% external_id.arxiv.0 | xml_strict %]</datacite:relatedIdentifier>
+    [%- END %]
+    [%- IF external_id.pmid %]
+    <datacite:relatedIdentifier relatedIdentifierType="PMID" relationType="IsVersionOf">[% external_id.pmid.0 | xml_strict %]</datacite:relatedIdentifier>
+    [%- END %]
+    [%- IF urn %]
+    <datacite:relatedIdentifier relatedIdentifierType="URN" relationType="IsReviewedBy">[% urn | xml_strict %]</datacite:relatedIdentifier>
+    [%- END %]
+  </datacite:relatedIdentifiers>
+
+  [%- IF project %]
+  <oaire:fundingReferences>
+    [%- FOREACH proj IN project %]
+    <oaire:fundingReference>
+      <oaire:funderName>[% proj.funder | xml_strict %]</datacite:funderName>
+      [%- IF proj.fundref %]<oaire:funderIdentifier funderIdentifierType="Crossref Funder ID">[% proj.fundref | xml_strict %]</oaire:funderIdentifier>[% END %]
+      <oaire:awardNumber>[% grant_number | xml_strict %]</oaire:awardNumber>
+      <oaire:awardTitle>[% proj.name | xml_strict %]</oaire:awardTitle>
+    </oaire:fundingReference>
+    [%- END %]
+  </oaire:fundingReferences>
+  [%- END -%]
+
+  [%- IF embargo %]
+  <datacite:dates>
+    <datacite:date dateType="Accepted"></datacite:date>
+  </datacite:dates>
+  [%- END -%]
+
+  [%- FOREACH l in lang %]<dc:language>[% l.iso %]</dc:language>[% END %]
+  [%- IF publication %]<dc:publisher>[% publisher | xml_strict %]</dc:publisher>[% END %]
+  <datacite:date dateType="Issued">[% year %]</datacite:date>
+  <oaire:resourceType resourceTypeGeneral="literature" uri="http://purl.org/coar/resource_type/c_6501">journal article</oaire:resourceType>
+  [%- FOREACH a IN abstract %]
+    <dc:description>[% a.text | xml_strict %]</dc:description>
+  [%- END %]
+  [%- FOREACH f IN file %]
+    <dc:format>[% f.content_type | xml_strict %]</dc:format>
+  [%- END -%]
+  [%- IF urn %]<datacite:identifier identifierType="URN">[% urn | xml_strict %]</datacite:identifier>[% END %]
+  [%- IF doi %]<datacite:identifier identifierType="DOI">[% doi | xml_strict %]</datacite:identifier>[% END %]
+
+  <datacite:rights rightsURI="[% rights_uri | xml_strict %]">[% rights_text | xml_strict %]</datacite:rights>
+  <dc:source>[% citation.ama %]</dc:source>
+
+  [%- IF ddc OR keyword %]
+  <datacite:subjects>
+  [% ddc.0 %] subject: [% keyword.0 %]
+    [%- FOREACH d in ddc %]<datacite:subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d | xml_strict %]</datacite:subject>[% END%]
+    [%- FOREACH k in keyword %]<datacite:subject>[% k | xml_strict %]</datacite:subject>[% END %]
+  </datacite:subjects>
+  [%- END -%]
+
+  [%- IF license %]
+  <oaire:licenseCondition startDate="2019-02-01" uri="[% license_uri | xml_strict %]">[% license_text | xml_strict %]</oaire:licenseCondition>
+  [%- END -%]
+
+  [%- IF file %]<datacite.sizes>[% END %]
+  [%- FOREACH f IN file %]
+    <datacite:size>[% f.size %]</datacite:size>
+  [%- END %]
+  [%- IF file %]</datacite.sizes>[% END -%]
+
+  [%- FOREACH f IN file %]
+    <oaire:file accessRightsURI="[% f.acess_rights_uri | xml_strict %]" mimeType="[% f.content_type | xml_strict %]" objectType="[% f.object_type | xml_strict %]">[% f.link | xml_strict %]</oaire:file>
+  [%- END -%]
+
+  [%- IF publication %]<oaire:citationTitle>[% publication | xml_strict %]</oaire:citationTitle>[% END %]
+  [%- IF volume %]<oaire:citationVolume>[% volume | xml_strict %]</oaire:citationVolume>[% END %]
+  [%- IF issue %]<oaire:citationIssue>[% issue %]</oaire:citationIssue>[% END %]
+  [%- IF edition %]<oaire:citationEdition>[% edition | xml_strict %]</oaire:citationEdition>[% END %]
+  [%- IF conference AND conference.place %]<oaire:citationConferencePlace>[% conference.place %]</oaire:citationConferencePlace>[% END %]
+  [%- IF conference AND conference.start_date %]<oaire:citationConferenceDate>[% conference.start_date | xml_strict %][% IF conference.end_date %]-[% conference.end_date | xml_strict %][% END %]</oaire:citationConferenceDate>[% END %]
+
+</resource>

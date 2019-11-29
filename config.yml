@@ -61,7 +61,7 @@ plugins:
     store: search
     bag: publication
     datestamp_field: date_updated
-    repositoryName: 'PUB - Publications at LibreCat University'
+    repositoryName: 'LibeCat Open Access Repository'
     uri_base: "http://localhost:5001/oai"
     adminEmail: helpdesk@librecat.org
     earliestDatestamp: "1970-01-01T00:00:01Z"
@@ -96,6 +96,12 @@ plugins:
         template: views/export/datacite.tt
         cql: 'status exact public'
         fix: ["fixes/to_datacite.fix"]
+      -
+        metadataPrefix: oai_openaire
+        schema: https://www.openaire.eu/schema/repo-lit/4.0/openaire.xsd
+        metadataNamespace: http://namespace.openaire.eu/schema/oaire/
+        template: views/export/openaire.tt
+        fix: ['librecat_uri_base("uri_base")']
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt
