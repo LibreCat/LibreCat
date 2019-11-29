@@ -156,7 +156,13 @@ subtest "add/get/search/delete publication" => sub {
         ->json_is('/data/attributes/_version', '1');
 
     $t->get_ok('/api/v1/publication/search' => {Authorization => $token})
-        ->status_is(200)->json_has('/data/attributes');
+        ->status_is(200)->json_has('/data/attributes')
+        ->json_hasnt('/data/attributes/aggs');
+
+    $t->get_ok(
+        '/api/v1/publication/search?aggs=1' => {Authorization => $token})
+        ->status_is(200)->json_has('/data/attributes')
+        ->json_has('/data/attributes/aggs');
 
     $t->delete_ok(
         '/api/v1/publication/999999999' => {Authorization => $token})

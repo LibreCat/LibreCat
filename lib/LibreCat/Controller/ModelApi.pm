@@ -208,13 +208,13 @@ sub search {
         type       => $model,
         query      => {cql => $c->param('cql')},
         count      => $hits->total,
-        attributes => {
-            hits       => $hits->to_array,
-            aggs       => $hits->{aggregations},
-            pagination => $pagination
-        },
-        links => {self => $c->url_for->to_abs,},
+        attributes => {hits => $hits->to_array, pagination => $pagination},
+        links      => {self => $c->url_for->to_abs,},
     };
+
+    if ($c->param('aggs') && $c->param('aggs') == 1) {
+        $data->{attributes}->{aggs} = $hits->{aggregations};
+    }
 
     $c->render(json => {data => $data});
 }
