@@ -101,7 +101,7 @@ plugins:
         schema: https://www.openaire.eu/schema/repo-lit/4.0/openaire.xsd
         metadataNamespace: http://namespace.openaire.eu/schema/oaire/
         template: views/export/openaire.tt
-        fix: ['librecat_uri_base("uri_base")']
+        fix: ['fixes/to_openaire.fix']
       -
         metadataPrefix: rdf
         template: views/export/rdf.tt
