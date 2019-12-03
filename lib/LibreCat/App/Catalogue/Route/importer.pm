@@ -18,9 +18,9 @@ use URL::Encode qw(url_decode);
 
 my %SOURCE_MAP = (
     crossref => "doi",
-    epmc => "pmid",
-    arxiv => "arxiv",
-    inspire => "inspire",
+    epmc     => "pmid",
+    arxiv    => "arxiv",
+    inspire  => "inspire",
 );
 
 sub _fetch_record {
@@ -35,15 +35,16 @@ sub _fetch_record {
 
             my $data = Catmandu->importer(
                 'getJSON',
-                from    => url_decode("https://api.crossref.org/works/$id/agency"),
+                from =>
+                    url_decode("https://api.crossref.org/works/$id/agency"),
                 timeout => 10,
-                warn    => 0 ,
+                warn    => 0,
             )->first;
 
             if (!$data) {
                 $source = "crossref";
             }
-            elsif (   $data->{message}
+            elsif ($data->{message}
                 && $data->{message}->{agency}->{id} eq "datacite")
             {
                 $source = "datacite";
@@ -53,8 +54,8 @@ sub _fetch_record {
             }
         }
 
-        my $pkg
-            = Catmandu::Util::require_package($source, 'LibreCat::FetchRecord');
+        my $pkg = Catmandu::Util::require_package($source,
+            'LibreCat::FetchRecord');
 
         unless ($pkg) {
             h->log->error("failed to load LibreCat::FetchRecord::$source");
@@ -64,7 +65,8 @@ sub _fetch_record {
         h->log->debug("Processing LibreCat::FetchRecord::$source $id");
 
         return $pkg->new->fetch($id);
-    } catch {
+    }
+    catch {
         h->log->error("Failed to fetch $id from $source");
         return undef;
     }
@@ -75,9 +77,9 @@ sub _check_for_duplicate {
 
     my $data;
 
-    $data->{doi} = $pub->{doi} if $pub->{doi};
-    $data->{isi} = $pub->{isi} if $pub->{isi};
-    $data->{pmid} = $pub->{pmid} if $pub->{pmid};
+    $data->{doi}   = $pub->{doi}   if $pub->{doi};
+    $data->{isi}   = $pub->{isi}   if $pub->{isi};
+    $data->{pmid}  = $pub->{pmid}  if $pub->{pmid};
     $data->{arxiv} = $pub->{arxiv} if $pub->{arxiv};
 
     state $detector = LibreCat::Dedup::Publication->new();
@@ -90,7 +92,9 @@ sub _check_for_duplicate {
 Returns again to the add record page
 
 =cut
+
 get '/librecat/record/import' => sub {
+
     # Required route for 'return_url' mechanism...
     redirect h->uri_for('/librecat/record/new');
 };
@@ -115,14 +119,15 @@ post '/librecat/record/import' => sub {
         : $p->{data};
     my $source = $p->{source};
 
-    my $dup = _check_for_duplicate({
-        $SOURCE_MAP{$source} => $id,
-     });
+    my $dup = _check_for_duplicate({$SOURCE_MAP{$source} => $id,});
 
     if ($dup && $dup->[0]) {
         return template "backend/add_new",
             {
-            error    => sprintf(h->loc('error.duplicate_import'), $id, $source, $dup->[0]),
+            error => sprintf(
+                h->loc('error.duplicate_import'),
+                $id, $source, $dup->[0]
+            ),
             imported => []
             };
     }
@@ -132,7 +137,7 @@ post '/librecat/record/import' => sub {
     unless (Catmandu::Util::is_array_ref($imported_records)) {
         return template "backend/add_new",
             {
-            error    => "Import from $source failed - try later again" ,
+            error    => "Import from $source failed - try later again",
             imported => []
             };
     }
@@ -142,7 +147,7 @@ post '/librecat/record/import' => sub {
     for my $pub (@$imported_records) {
         $pub->{_id}    = $bag->generate_id;
         $pub->{status} = 'new'
-            ; # new is the status of records not checked by users/reviewers
+            ;    # new is the status of records not checked by users/reviewers
         $pub->{creator}
             = {id => session->{user_id}, login => session->{user}};
         $pub->{user_id}    = session->{user_id};
@@ -150,45 +155,49 @@ post '/librecat/record/import' => sub {
 
         # If we allow bulk imports, add all the imported records
         # otherwise return the first record
-        if(h->config->{web_bulk_import} or !exists h->config->{web_bulk_import}){
-          # Use config/hooks.yml to register functions
-          # that should run before/after importing publications
-          h->hook('import-new-' . $source)->fix_around(
-            $pub,
-            sub {
-                publication->add($pub ,
-                    on_success => sub {
-                        my ($rec) = @_;
-                        push @saved_records , $rec;
-                    }
-                );
-            }
-          );
+        if (h->config->{web_bulk_import}
+            or !exists h->config->{web_bulk_import})
+        {
+            # Use config/hooks.yml to register functions
+            # that should run before/after importing publications
+            h->hook('import-new-' . $source)->fix_around(
+                $pub,
+                sub {
+                    publication->add(
+                        $pub,
+                        on_success => sub {
+                            my ($rec) = @_;
+                            push @saved_records, $rec;
+                        }
+                    );
+                }
+            );
         }
         else {
-          my $type = $pub->{type} || 'journal_article';
-          my $templatepath = "backend/forms";
-          $pub->{new_record} = 1;
+            my $type         = $pub->{type} || 'journal_article';
+            my $templatepath = "backend/forms";
+            $pub->{new_record} = 1;
 
-          return template $templatepath . "/$type.tt", $pub;
+            return template "$templatepath/$type.tt", $pub;
         }
     }
 
     my $errors = int(@$imported_records) - int(@saved_records);
 
     if ($errors) {
-        return template "backend/add_new", {
-            error => $errors == 1 ? "1 import failed" : "$errors imports failed"
-        }
+        return template "backend/add_new",
+            {error => $errors == 1
+            ? "1 import failed"
+            : "$errors imports failed"};
     }
     else {
         return template "backend/add_new",
-        {
-        ok => "Imported "
-            . int(@saved_records)
-            . " record(s) from $source",
-        imported => \@saved_records ,
-        };
+            {
+            ok => "Imported "
+                . int(@saved_records)
+                . " record(s) from $source",
+            imported => \@saved_records,
+            };
     }
 };
 

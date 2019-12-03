@@ -11,9 +11,9 @@ sub _find_duplicate {
     my ($self, $data) = @_;
 
     my @q;
-    push @q, "doi=\"$data->{doi}\""             if $data->{doi};
-    push @q, "externalidentifier=$data->{isi}"  if $data->{isi};
-    push @q, "externalidentifier=$data->{pmid}" if $data->{pmid};
+    push @q, "doi=\"$data->{doi}\""              if $data->{doi};
+    push @q, "externalidentifier=$data->{isi}"   if $data->{isi};
+    push @q, "externalidentifier=$data->{pmid}"  if $data->{pmid};
     push @q, "externalidentifier=$data->{arxiv}" if $data->{arxiv};
 
     return [] unless @q;
