@@ -16,6 +16,13 @@ use LibreCat::Dedup::Publication;
 use Try::Tiny;
 use URL::Encode qw(url_decode);
 
+my %SOURCE_MAP = (
+    crossref => "doi",
+    epmc => "pmid",
+    arxiv => "arxiv",
+    inspire => "inspire",
+);
+
 sub _fetch_record {
     my ($id, $source) = @_;
 
@@ -69,8 +76,9 @@ sub _check_for_duplicate {
     my $data;
 
     $data->{doi} = $pub->{doi} if $pub->{doi};
-    $data->{isi} = $pub->{external_id}->{isi}->[0] if $pub->{external_id}->{isi}->[0];
-    $data->{pmid} = $pub->{external_id}->{pmid}->[0] if $pub->{external_id}->{pmid}->[0];
+    $data->{isi} = $pub->{isi} if $pub->{isi};
+    $data->{pmid} = $pub->{pmid} if $pub->{pmid};
+    $data->{arxiv} = $pub->{arxiv} if $pub->{arxiv};
 
     state $detector = LibreCat::Dedup::Publication->new();
 
@@ -108,7 +116,7 @@ post '/librecat/record/import' => sub {
     my $source = $p->{source};
 
     my $dup = _check_for_duplicate({
-        $source eq "crossref" ? "doi" : external_id => $id,
+        $SOURCE_MAP{$source} => $id,
      });
 
     if ($dup && $dup->[0]) {

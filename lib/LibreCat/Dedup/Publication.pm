@@ -11,10 +11,12 @@ sub _find_duplicate {
     my ($self, $data) = @_;
 
     my @q;
+    push @q, "doi=\"$data->{doi}\""             if $data->{doi};
     push @q, "externalidentifier=$data->{isi}"  if $data->{isi};
     push @q, "externalidentifier=$data->{pmid}" if $data->{pmid};
-    push @q, "doi=\"$data->{doi}\""             if $data->{doi};
     push @q, "externalidentifier=$data->{arxiv}" if $data->{arxiv};
+
+    return [] unless @q;
 
     my $dup = searcher->search("publication",
         {cql => join(' OR ', @q), start => 0, limit => 5})->to_array;
