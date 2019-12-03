@@ -12,7 +12,13 @@ copy(type, resourceTypeURI)
 lookup(resourceTypeURI, fixes/lookup/openaire_type_uri.csv, default: 'http://purl.org/coar/resource_type/c_1843') #other
 
 copy(type, resourceTypeLabel)
-lookup(resourceTypeURI, fixes/lookup/openaire_type_label.csv)
+lookup(resourceTypeLabel, fixes/lookup/openaire_type_label.csv)
+
+## funder information
+do list(path: project, var: loop)
+  lookup_in_store(loop._id, search, bag: project)
+end
+
 
 ## file: access rights
 do list(path: file, var: loop)
@@ -21,6 +27,7 @@ do list(path: file, var: loop)
   end
   if all_match(loop.embargo, '\d{4}-\d{2}.*')
     add(tmp_rights, 'embargoed access')
+    copy(loop.embargo, embargo_date)
   end
   if all_match(loop.access_level, 'local')
     add(tmp_rights, 'restricted access')
@@ -46,3 +53,13 @@ end
 
 copy(rights_label, rights_uri)
 lookup(rights_uri, fixes/lookup/openaire_rights_uri.csv)
+
+if exists(license)
+  copy(license, license_uri)
+  lookup(license_uri, fixes/lookup/license_uri.csv)
+  copy(license, license_label)
+  lookup(license_label, fixes/lookup/license_label.csv)
+else
+  add(license_uri, 'https://rightsstatements.org/page/InC/1.0/')
+  add(license_label, 'In Copyright')
+end

@@ -15,14 +15,11 @@
     [%- FOREACH a IN author %]
     <datacite:creator>
       <datacite:creatorName nameType="Personal">[% a.full_name | xml_strict %]</datacite:creatorName>
-      [%- IF a.orcid %]<datacite:nameIdentifier schemeURI="https://orcid.org/" nameIdentifierScheme="ORCID">[% a.orcid | xml_strict %]</datacite:nameIdentifier>[% END %]
+      [% IF a.orcid %]<datacite:nameIdentifier schemeURI="https://orcid.org/" nameIdentifierScheme="ORCID">[% a.orcid | xml_strict %]</datacite:nameIdentifier>[% END %]
     </datacite:creator>
     [%- END %]
   </datacite:creators>
 
-  <datacite:alternateIdentifiers>
-    <datacite:alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/record/[% _id %]</datacite:alternateIdentifier>
-  </datacite:alternateIdentifiers>
   <datacite:relatedIdentifiers>
     <datacite:relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/record/[% _id%].json</datacite:relatedIdentifier>
     [%- IF publication_identifier.isbn %]
@@ -46,18 +43,18 @@
   <fundingReferences>
     [%- FOREACH proj IN project %]
     <fundingReference>
-      <funderName>[% proj.funder | xml_strict %]</datacite:funderName>
+      [%- IF proj.funder.0 %]<funderName>[% proj.funder.0 | xml_strict %]</funderName>[% END %]
       [%- IF proj.fundref %]<funderIdentifier funderIdentifierType="Crossref Funder ID">[% proj.fundref | xml_strict %]</funderIdentifier>[% END %]
-      <awardNumber>[% grant_number | xml_strict %]</awardNumber>
+      [%- IF proj.grant_number %]<awardNumber>[% proj.grant_number | xml_strict %]</awardNumber>[% END %]
       <awardTitle>[% proj.name | xml_strict %]</awardTitle>
     </fundingReference>
     [%- END %]
   </fundingReferences>
   [%- END -%]
 
-  [%- IF embargo %]
+  [%- IF rights_label == 'embargoed access'%]
   <datacite:dates>
-    <datacite:date dateType="Accepted"></datacite:date>
+    <datacite:date dateType="Available">[% embargo_date | xml_strict %]</datacite:date>
   </datacite:dates>
   [%- END -%]
 
@@ -88,13 +85,11 @@
   </datacite:subjects>
   [%- END -%]
 
-  [%- IF license %]
-  <licenseCondition startDate="2019-02-01" uri="[% license_uri | xml_strict %]">[% license_text | xml_strict %]</licenseCondition>
-  [%- END -%]
+  <licenseCondition uri="[% license_uri | xml_strict %]">[% license_label | xml_strict %]</licenseCondition>
 
   [%- IF file %]<datacite:sizes>[% END %]
     [%- FOREACH f IN file %]
-      <datacite:size>[% f.size %]</datacite:size>
+      <datacite:size>[% f.size %] B</datacite:size>
     [%- END %]
   [%- IF file %]</datacite:sizes>[% END -%]
 
