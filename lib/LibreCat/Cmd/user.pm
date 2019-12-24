@@ -4,6 +4,7 @@ use Catmandu::Sane;
 use LibreCat qw(user);
 use App::bmkpasswd qw(passwdcmp mkpasswd);
 use Carp;
+use LibreCat::I18N;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -189,6 +190,16 @@ sub _get {
     return $data ? 0 : 2;
 }
 
+sub _localize {
+
+    state $i18n = LibreCat::I18N->new( locale => "en" );
+
+    my $self = shift;
+
+    $i18n->localize( @_ );
+
+}
+
 sub _add {
     my ($self, $file) = @_;
 
@@ -210,7 +221,9 @@ sub _add {
         on_validation_error => sub {
             my ($rec, $errors) = @_;
             say STDERR
-                join("\n", $rec->{_id}, "ERROR: not a valid user", @$errors);
+                join("\n", $rec->{_id}, "ERROR: not a valid user", map {
+                    $self->_localize( @{ $_->{i18n} } )
+                } @$errors);
             $ret = 2;
         },
         on_success => sub {
@@ -255,7 +268,7 @@ sub _valid {
                 my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        say STDERR "ERROR $id: $err";
+                        say STDERR "ERROR $id: ".$self->_localize( @{ $err->{i18n} } );
                     }
                 }
                 else {

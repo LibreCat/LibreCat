@@ -9,6 +9,7 @@ use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
 use LibreCat::Audit;
+use LibreCat::I18N;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -312,6 +313,16 @@ sub _get {
     return $rec ? 0 : 2;
 }
 
+sub _localize {
+
+    state $i18n = LibreCat::I18N->new( locale => "en" );
+
+    my $self = shift;
+
+    $i18n->localize( @_ );
+
+}
+
 sub _add {
     my ($self, $file, $out_file) = @_;
 
@@ -335,9 +346,14 @@ sub _add {
         skip_before_add     => $skip_before_add,
         on_validation_error => sub {
             my ($rec, $errors) = @_;
-            $self->log->errorf("%s not a valid publication %s", $rec->{_id}, $errors);
+
+            my @t_errors = map {
+                $self->_localize( @{ $_->{i18n} } )
+            } @$errors;
+
+            $self->log->errorf("%s not a valid publication %s", $rec->{_id}, \@t_errors);
             say STDERR join("\n",
-                $rec->{_id}, "ERROR: not a valid publication", @$errors);
+                $rec->{_id}, "ERROR: not a valid publication", @t_errors);
             $ret = 2;
         },
         on_success => sub {
@@ -425,7 +441,7 @@ sub _valid {
                 my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        print STDERR "ERROR $id: $err\n";
+                        say STDERR "ERROR $id: " . $self->_localize( @{ $err->{i18n} } );
                     }
                 }
                 else {
@@ -615,9 +631,14 @@ sub _checksum_id {
         $pubs->add($rec,
             on_validation_error => sub {
                 my ($rec, $e) = @_;
-                $self->log->errorf("%s not a valid publication %s", $rec->{_id}, $e);
+
+                my @t_errors = map {
+                    $self->_localize( @{ $_->{i18n} } )
+                } @$e;
+
+                $self->log->errorf("%s not a valid publication %s", $rec->{_id}, \@t_errors);
                 say STDERR join("\n",
-                    $rec->{_id}, "ERROR: not a valid publication", @$e);
+                    $rec->{_id}, "ERROR: not a valid publication", @t_errors);
                     $errors++;
             });
 

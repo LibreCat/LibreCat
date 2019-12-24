@@ -256,9 +256,11 @@ Checks if the user has the rights to update this record.
                             my ($rec, $errors) = @_;
                             librecat->log->errorf(
                                 "%s not a valid publication %s",
-                                $rec->{_id} // 'NEW', $errors);
+                                $rec->{_id} // 'NEW', [map { $_->{message} } @$errors]);
                             $is_error_record = 1;
-                            $error_messages  = $errors;
+                            $error_messages  = [ map {
+                                localize( @{ $_->{i18n} } );
+                            } @$errors ];
                         }
                     );
                 }

@@ -7,7 +7,7 @@ use Config::Onion;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Path::Tiny;
-use Catmandu::Util qw(is_ref require_package use_lib read_yaml);
+use Catmandu::Util qw(is_ref is_hash_ref require_package use_lib read_yaml);
 use List::MoreUtils qw(any);
 use String::CamelCase qw(camelize);
 use POSIX qw(strftime);
@@ -259,9 +259,52 @@ sub _new_model {
     if ($bag->does('Catmandu::Plugin::Versioning')) {
         $pkg = $pkg->with_plugins('Versioning');
     }
-    my $validator_pkg = require_package('LibreCat::Validator::JSONSchema');
-    my $validator
-        = $validator_pkg->new(schema => $self->config->{schemas}{$name});
+
+    my $validator;
+
+    if(
+        is_hash_ref( $self->config->{models}->{$name} ) &&
+        is_hash_ref( $self->config->{models}->{$name}->{validator} )
+    ){
+
+        my %validator_options = %{
+            $self->config->{models}->{$name}->{validator}->{options} // {}
+        };
+
+        if(
+            is_string( $validator_options{schema} ) &&
+            exists( $self->config->{schemas}{ $validator_options{schema} } )
+        ){
+
+            $validator_options{schema} = $self->config->{schemas}{ $validator_options{schema} };
+
+        }
+
+        my $validator_pkg = require_package(
+            $self->config->{models}->{$name}->{validator}->{package},
+            "LibreCat::Validator"
+        );
+
+        my $namespace = $validator_pkg;
+        $namespace    =~ s/^LibreCat::Validator:://o;
+        $namespace    = lc($namespace);
+        $namespace    = "validator.${namespace}.errors";
+
+        $validator = $validator_pkg->new(
+            namespace => $namespace,
+            %validator_options
+        );
+
+    }
+    else {
+
+        $validator = require_package("LibreCat::Validator::JSONSchema")->new(
+            namespace   => "validator.jsonschema.errors",
+            schema      => $self->config->{schemas}->{$name}
+        );
+
+    }
+
     my $update_fixer = $self->fixer("update_${name}.fix");
     my $index_fixer  = $self->fixer("index_${name}.fix");
 
