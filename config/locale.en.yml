@@ -1944,3 +1944,50 @@ licenses:
     short: "MPL 2.0"
     deed_url: "https://opensource.org/licenses/MPL-2.0"
     legal_code_url: "https://www.mozilla.org/en-US/MPL/2.0/"
+
+
+validator:
+  jsonschema:
+    errors:
+      object:
+        required: "[_1] is required"
+        additionalProperties: "properties not allowed: [_2]"
+        maxProperties: "too many properties for [_1]: got [_2], maximum [_3] allowed"
+        minProperties: "not enough properties for [_1]: got [_2], minimum [_3] required"
+      string:
+        type: "[_1] must be a string, got [_2]"
+        pattern: "[_1] does not match pattern [_2]"
+        maxLength: "[_1] is too long: got [_2], maximum [_3] allowed"
+        minLength: "[_1] is too short: got [_2], minimum [_3] required"
+      array:
+        type: "[_1] must be an array, got [_2]"
+        uniqueItems: "[_1] must contain unique items"
+        additionalItems: "[_1] contains an invalid number of items: got [_2], maximum [_3] allowed"
+        maxItems: "[_1] contains too many items: got [_2], maximum [_3] allowed"
+        minItems: "[_1] does not contain enough items: got [_2], minimum [_3] required"
+      oneOf:
+        type: "[_1] must be [_2], got [_3]"
+        all_rules_match: "only one rule may apply"
+      allOf:
+        type: "[_1] must be [_2], got [_3]"
+      anyOf:
+        type: "[_1] must be [_2], got [_3]"
+      enum:
+        enum: "allowed values for [_1]: [_2]"
+      const:
+        const: "[_1] does not match constant [_2]"
+      integer:
+        type: "[_1] must be an integer, got [_2]"
+        #[_2]: received value
+        maximum: "[_1] should not be bigger than [_3]"
+        minimum: "[_1] should not be smaller than [_3]"
+        multipleOf: "[_1 ] should contain a multiple of [_1]"
+      number:
+        type: "[_1] must be number, got [_2]"
+        maximum: "[_1] should not be bigger than [_3]"
+        minimum: "[_1] should not be smaller than [_3]"
+        multipleOf: "[_1 ] should contain a multiple of [_1]"
+      not:
+        not: "[_1] should not match"
+      "null":
+        "null": "[_1] should be null"
