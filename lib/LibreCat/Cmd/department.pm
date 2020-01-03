@@ -3,7 +3,6 @@ package LibreCat::Cmd::department;
 use Catmandu::Sane;
 use LibreCat qw(department);
 use Carp;
-use LibreCat::I18N;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -285,16 +284,6 @@ sub _get {
     return $data ? 0 : 2;
 }
 
-sub _localize {
-
-    state $i18n = LibreCat::I18N->new( locale => "en" );
-
-    my $self = shift;
-
-    $i18n->localize( @_ );
-
-}
-
 sub _add {
     my ($self, $file) = @_;
 
@@ -309,7 +298,7 @@ sub _add {
             my ($rec, $errors) = @_;
             say STDERR join("\n",
                 $rec->{_id}, "ERROR: not a valid department",map {
-                    $self->_localize( @{ $_->{i18n} } )
+                    $_->localize();
                 } @$errors);
             $ret = 2;
         },
@@ -355,7 +344,7 @@ sub _valid {
                 my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        say STDERR "ERROR $id: " . $self->_localize( @{ $err->{i18n} } );
+                        say STDERR "ERROR $id: " . $err->localize();
                     }
                 }
                 else {

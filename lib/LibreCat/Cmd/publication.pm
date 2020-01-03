@@ -9,7 +9,6 @@ use LibreCat::App::Catalogue::Controller::File;
 use Path::Tiny;
 use Carp;
 use LibreCat::Audit;
-use LibreCat::I18N;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -313,16 +312,6 @@ sub _get {
     return $rec ? 0 : 2;
 }
 
-sub _localize {
-
-    state $i18n = LibreCat::I18N->new( locale => "en" );
-
-    my $self = shift;
-
-    $i18n->localize( @_ );
-
-}
-
 sub _add {
     my ($self, $file, $out_file) = @_;
 
@@ -348,7 +337,7 @@ sub _add {
             my ($rec, $errors) = @_;
 
             my @t_errors = map {
-                $self->_localize( @{ $_->{i18n} } )
+                $_->localize();
             } @$errors;
 
             $self->log->errorf("%s not a valid publication %s", $rec->{_id}, \@t_errors);
@@ -441,7 +430,7 @@ sub _valid {
                 my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        say STDERR "ERROR $id: " . $self->_localize( @{ $err->{i18n} } );
+                        say STDERR "ERROR $id: " . $err->localize();
                     }
                 }
                 else {
@@ -633,7 +622,7 @@ sub _checksum_id {
                 my ($rec, $e) = @_;
 
                 my @t_errors = map {
-                    $self->_localize( @{ $_->{i18n} } )
+                    $_->localize();
                 } @$e;
 
                 $self->log->errorf("%s not a valid publication %s", $rec->{_id}, \@t_errors);
