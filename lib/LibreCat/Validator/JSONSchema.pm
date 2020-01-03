@@ -1,13 +1,32 @@
 package LibreCat::Validator::JSONSchema;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(is_natural);
+use Catmandu::Util qw(is_natural :check);
 use Moo;
+use LibreCat::Validation::Error;
+use Catmandu::Validator::JSONSchema;
 use namespace::clean;
 
-extends 'Catmandu::Validator::JSONSchema';
-
 with 'LibreCat::Validator';
+
+has schema => (
+    is => "ro",
+    isa => sub { check_hash_ref($_[0]); },
+    required => 1
+);
+
+has schema_validator => (
+    is => "lazy",
+    init_arg => undef
+);
+
+sub _build_schema_validator {
+
+    Catmandu::Validator::JSONSchema->new(
+        schema => $_[0]->schema()
+    );
+
+}
 
 sub _build_whitelist {
     my ($self) = @_;
@@ -40,9 +59,9 @@ sub _t_error {
     my $code = "${d_key1}.${d_key2}";
 
     #i18n
-    my $i18n = [ $self->namespace() . "." . $code, @d_args ];
+    my $i18n = [ $self->namespace() . "." . $code, $f, @d_args ];
 
-    +{
+    LibreCat::Validation::Error->new(
         #error code
         code      => $code,
         #list of arguments for localisation
@@ -51,20 +70,31 @@ sub _t_error {
         property  => $prop,
         #shorter field name
         field     => $f,
-        #name of validator
-        validator => "jsonschema",
-        message   => $error->{message}
-    };
+        validator => ref($self)
+    );
 }
 
-around last_errors => sub {
-    my $orig   = shift;
-    my $self   = shift;
-    my $errors = $orig->($self,@_) // return;
-    [
-      map { $self->_t_error($_) } @$errors
-    ];
-};
+sub validate_data {
+
+    my($self, $hash)=@_;
+
+    my $errors = undef;
+
+    unless(
+
+        $self->schema_validator->is_valid( $hash )
+
+    ){
+
+        $errors = [
+            map { $self->_t_error($_); } @{ $self->schema_validator->last_errors() }
+        ];
+
+    }
+
+    $errors;
+
+}
 
 1;
 

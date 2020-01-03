@@ -61,8 +61,9 @@ sub fix {
         $self->audit->add( $r )
     ){
 
+        my $current_locale = h->locale();
         h->log->error( "validation audit failed: ".join(",",map {
-            h->localize( @{ $_->{i18n}  } );
+            $_->localize( $current_locale );
         } @{ $self->audit()->last_errors() }). ". Record: " . to_yaml($r) );
 
     }

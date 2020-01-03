@@ -258,8 +258,9 @@ Checks if the user has the rights to update this record.
                                 "%s not a valid publication %s",
                                 $rec->{_id} // 'NEW', [map { $_->{message} } @$errors]);
                             $is_error_record = 1;
+                            my $current_locale = h->locale();
                             $error_messages  = [ map {
-                                localize( @{ $_->{i18n} } );
+                                $_->localize( $current_locale );
                             } @$errors ];
                         }
                     );

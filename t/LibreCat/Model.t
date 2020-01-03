@@ -31,7 +31,7 @@ require_ok $pkg;
 my $m = T::Model->new(
     bag        => Catmandu->store('main')->bag('model_test'),
     search_bag => Catmandu->store('search')->bag('model_test'),
-    validator  => T::Validator->new,
+    validator  => T::Validator->new(namespace => "validator.t.errors"),
 );
 
 ok $m->does('LibreCat::Model');
