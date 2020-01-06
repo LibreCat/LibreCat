@@ -24,7 +24,8 @@ hooks:
 
   # Code that runs when updating a publication
   publication-update:
-    before_fixes: []
+    before_fixes:
+        - publication_file_sort
     after_fixes: []
 
   # Code that runs at a 'Make public' action
