@@ -100,6 +100,12 @@ end
 move_field(VL,_r.volume)
 move_field(IS,_r.issue)
 move_field(SE,_r.series_title)
+if exists(EA)
+  if any_match(EA, '^\w{3} \d{4}')
+    replace_all(EA, '^\w{3} ','')
+    move_field(EA, _r.year)
+  end
+end
 if exists(EY)
   move_field(EY,_r.year)
 end
