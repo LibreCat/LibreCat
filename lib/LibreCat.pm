@@ -7,7 +7,7 @@ use Config::Onion;
 use Log::Log4perl;
 use Log::Any::Adapter;
 use Path::Tiny;
-use Catmandu::Util qw(is_ref is_hash_ref require_package use_lib read_yaml);
+use Catmandu::Util qw(is_ref is_hash_ref require_package use_lib read_yaml is_string);
 use List::MoreUtils qw(any);
 use String::CamelCase qw(camelize);
 use POSIX qw(strftime);
