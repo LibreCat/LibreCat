@@ -34,7 +34,7 @@ Project page with alphabetical browsing.
 
 =cut
 
-get "/project" => sub {
+get '/project' => sub {
     my $c             = params("query")->{browse} // 'a';
     my %search_params = (
         query        => {prefix => {'name.exact' => lc($c)}},

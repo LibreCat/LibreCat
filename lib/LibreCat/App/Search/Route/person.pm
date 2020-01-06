@@ -42,7 +42,7 @@ research data and author IDs.
 
 =cut
 
-get "/person/:id" => sub {
+get '/person/:id' => sub {
     my $id = params("route")->{id};
 
     # Redirect to the alias if the ID cannot be found
