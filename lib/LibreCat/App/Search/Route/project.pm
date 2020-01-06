@@ -34,8 +34,8 @@ Project page with alphabetical browsing.
 
 =cut
 
-get qr{/project/*} => sub {
-    my $c             = params->{browse} // 'a';
+get '/project' => sub {
+    my $c             = params("query")->{browse} // 'a';
     my %search_params = (
         query        => {prefix => {'name.exact' => lc($c)}},
         sru_sortkeys => "name,,1",

@@ -193,8 +193,6 @@ sub can_download {
 
     my $pub = publication->search_bag->get($id) or return (0, "");
 
-    return (0, '') unless $pub->{status} && $pub->{status} eq "public";
-
     my $file_id = $opts->{file_id};
     my $user_id = $opts->{user_id};
     my $role    = $opts->{role};
@@ -215,13 +213,13 @@ sub can_download {
     return (0, '') unless defined $file_name;
     return (0, '') unless defined $access;
 
-    if ($access eq 'open_access') {
+    if ($pub->{status} eq 'public' && $access eq 'open_access') {
         return (1, $file_name);
     }
-    elsif ($access eq 'local' && h->within_ip_range($ip, $ip_range)) {
+    elsif ($pub->{status} eq 'public' && $access eq 'local' && h->within_ip_range($ip, $ip_range)) {
         return (1, $file_name);
     }
-    elsif ($access eq 'closed') {
+    else {
         # closed documents can be downloaded by user
         # if and only if the user can edit the record
         my $can_download
