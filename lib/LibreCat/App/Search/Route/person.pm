@@ -18,8 +18,8 @@ List persons alphabetically
 
 =cut
 
-get qr{/person} => sub {
-    my $c = params->{browse} // 'a';
+get '/person' => sub {
+    my $c = params("query")->{browse} // 'a';
 
     my %search_params = (
         cql   => ["publication_count>0 AND lastname=" . lc $c . "*"],
