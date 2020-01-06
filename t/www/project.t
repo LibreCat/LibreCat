@@ -22,7 +22,6 @@ subtest 'project splash page' => sub {
 
 subtest 'project index page' => sub {
     $mech->get_ok('/project');
-    $mech->get_ok('/project/');
 
     $mech->page_links_ok('testing all the links');
 };
