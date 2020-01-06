@@ -34,7 +34,7 @@ sub decode_file {
     #a list of files were sent. Make sure this hook does not break a correct record.file
     $file = [
         map {
-            is_string( $_ ) ? from_json( $_ ) : $_;
+            is_string( $_ ) ? from_json( encode("utf8",$_) ) : $_;
         } @$file
     ];
 
