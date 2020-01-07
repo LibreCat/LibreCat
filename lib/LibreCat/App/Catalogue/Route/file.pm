@@ -160,18 +160,18 @@ sub _handle_download {
         }
     );
 
-    unless ($ok) {
-        status 403;
-        return template '403';
-    }
+    my $file = _file_exists($id, $file_name);
 
-    if (my $file = _file_exists($id, $file_name)) {
+    if ($file && $ok) {
         _send_it($id, $file);
+    }
+    elsif ($file && !$ok) {
+        status 403;
+        template 'file/403';
     }
     else {
         status 404;
-        template 'error',
-            {message => "The file does not exist anymore. We're sorry."};
+        template 'file/404';
     }
 }
 

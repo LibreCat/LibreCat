@@ -112,6 +112,8 @@ publication:
                   - is_cited_by
                   - confirmation
                   - hidden
+                  - poster
+                  - slides
             description:
                 type: string
         additionalProperties: false
@@ -181,6 +183,10 @@ publication:
                 type: string
                 pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
                 description: "Upload date"
+            date_deleted:
+                type: string
+                pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
+                description: "Deletion date"
             date_updated:
                 type: string
                 pattern: '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)'
@@ -605,18 +611,6 @@ publication:
             oneOf:
               - type: string
               - type: integer
-    pmid:
-      oneOf:
-        - type: string
-          pattern: "^[01]$"
-        - type: integer
-      description: "Flag of PubMed"
-    isi:
-      oneOf:
-        - type: string
-          pattern: "^[01]$"
-        - type: integer
-      description: "Flag of ISI/WoS"
     file:
       type: array
       minItems: 0

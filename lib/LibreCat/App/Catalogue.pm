@@ -16,31 +16,31 @@ use all qw(LibreCat::App::Catalogue::Route::*);
 
 =head2 GET /librecat
 
-The default route after logging in. Will be forwarded
+The default route after logging in. Will be redirected
 to default search page for current role.
 
 =cut
 
 get '/librecat' => sub {
-    my $params = params;
+    my $params = params("query");
 
     if (session->{role} eq "super_admin") {
-        forward '/librecat/search/admin', $params;
+        redirect( uri_for( '/librecat/search/admin', $params ) );
     }
     elsif (session->{role} eq "reviewer") {
-        forward '/librecat/search/reviewer', $params;
+        redirect( uri_for( '/librecat/search/reviewer', $params ) );
     }
     elsif (session->{role} eq "project_reviewer") {
-        forward '/librecat/search/project_reviewer', $params;
+        redirect( uri_for( '/librecat/search/project_reviewer', $params ) );
     }
     elsif (session->{role} eq "data_manager") {
-        forward '/librecat/search/data_manager', $params;
+        redirect( uri_for( '/librecat/search/data_manager', $params ) );
     }
     elsif (session->{role} eq "delegate") {
-        forward '/librecat/search/delegate', $params;
+        redirect( uri_for( '/librecat/search/delegate', $params ) );
     }
     else {
-        forward '/librecat/search', $params;
+        redirect( uri_for( '/librecat/search', $params ) );
     }
 };
 

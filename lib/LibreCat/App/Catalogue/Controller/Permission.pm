@@ -3,6 +3,7 @@ package LibreCat::App::Catalogue::Controller::Permission::Permissions;
 use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Util qw(:is);
+use LibreCat qw(publication);
 use LibreCat::App::Helper;
 use LibreCat::Access;
 use Carp;
@@ -29,7 +30,7 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = h->main_publication->get($id) or return 0;
+    my $pub   = publication->search_bag->get($id) or return 0;
     my $user  = h->get_person($user_id);
 
     # do not touch deleted records
@@ -190,9 +191,7 @@ sub can_download {
     is_string($id)     or return (0, "");
     is_hash_ref($opts) or return (0, "");
 
-    my $pub = h->main_publication->get($id) or return (0, "");
-
-    return (0, '') unless $pub->{status} && $pub->{status} eq "public";
+    my $pub = publication->search_bag->get($id) or return (0, "");
 
     my $file_id = $opts->{file_id};
     my $user_id = $opts->{user_id};
@@ -214,13 +213,13 @@ sub can_download {
     return (0, '') unless defined $file_name;
     return (0, '') unless defined $access;
 
-    if ($access eq 'open_access') {
+    if ($pub->{status} eq 'public' && $access eq 'open_access') {
         return (1, $file_name);
     }
-    elsif ($access eq 'local' && h->within_ip_range($ip, $ip_range)) {
+    elsif ($pub->{status} eq 'public' && $access eq 'local' && h->within_ip_range($ip, $ip_range)) {
         return (1, $file_name);
     }
-    elsif ($access eq 'closed') {
+    else {
         # closed documents can be downloaded by user
         # if and only if the user can edit the record
         my $can_download

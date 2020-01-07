@@ -19,7 +19,6 @@ use Path::Tiny;
 use Carp;
 use Encode qw(decode encode);
 use Clone 'clone';
-use JSON::MaybeXS qw(decode_json encode_json);
 use Exporter qw/import/;
 
 our @EXPORT = qw/handle_file upload_temp_file remove_temp_file/;
@@ -225,8 +224,6 @@ sub handle_file {
     my $key = $pub->{_id};
 
     h->log->debug("updating file metadata for record $key");
-
-    $pub->{file} = _decode_file($pub->{file});
 
     my $prev_pub = publication->get($key);
 
@@ -461,20 +458,6 @@ sub _remove_file {
     my $worker = $pkg->new(%$uploader_options);
 
     $worker->work({key => $key, filename => $filename, delete => 1});
-}
-
-sub _decode_file {
-    my $file = shift;
-    $file = []      unless defined $file;
-    $file = [$file] unless ref($file) eq 'ARRAY';
-    for my $fi (@$file) {
-        if (ref $fi ne 'HASH') {
-            $fi = encode("utf8", $fi);
-            $fi = decode_json($fi);
-        }
-
-    }
-    $file;
 }
 
 sub _update_tech_metadata {

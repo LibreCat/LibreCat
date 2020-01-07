@@ -33,6 +33,7 @@ do list (path => r.author)
     move(given, first_name)
     move(family, last_name)
     remove(affiliation)
+    remove(sequence)
   end
 end
 
@@ -43,6 +44,7 @@ do list (path => r.editor)
     move(given, first_name)
     move(family, last_name)
     remove(affiliation)
+    remove(sequence)
   end
 end
 
