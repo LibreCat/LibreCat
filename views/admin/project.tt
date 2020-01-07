@@ -1,8 +1,7 @@
-[% qp = request.params.hash %]
-[% qp.delete('splat') %]
+[%- qp = params_query -%]
 [% lang = h.locale() -%]
 [% lf = h.config.locale.$lang -%]
-[% backend = request.path_info.match('librecat') ? 1 : 0 %]
+[%- backend = 1 -%]
 
 [% INCLUDE header.tt %]
 
@@ -23,7 +22,7 @@
 	<div class="col-md-5">
 	  <label for="id_q">Search Projects</label>
 	  <div class="input-group">
-	    <input type="text" class="form-control" name="q" id="id_q" value="[% qp.q %]">
+	    <input type="text" class="form-control" name="q" id="id_q" value="[% qp.q | html %]">
 	    <span class="input-group-btn">
 	      <button type="submit" class="btn btn-default"><i><span class="fa fa-search"></span> </i>Search</button>
 	    </span>
@@ -50,7 +49,7 @@
     <dl class="hitlist">
     [%- FOREACH p IN hits %]
 	<dt>
-	<a href="[% uri_base %]/librecat/admin/project/edit/[% p._id %]"><span class="fa fa-pencil fw"></span>[% p.name %]</a>
+	<a href="[% uri_base %]/librecat/admin/project/edit/[% p._id | uri %]"><span class="fa fa-pencil fw"></span>[% p.name %]</a>
     | <span class="text-muted">ID: [% p._id %]</span>
     </dt>
 	<dd>
