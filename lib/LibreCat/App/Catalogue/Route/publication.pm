@@ -8,7 +8,7 @@ Route handler for publications.
 
 use Catmandu::Sane;
 use Catmandu;
-use LibreCat qw(:self publication);
+use LibreCat qw(:self publication searcher);
 use Catmandu::Fix qw(expand);
 use Catmandu::Util qw(is_instance);
 use LibreCat::App::Helper;
@@ -414,7 +414,14 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = publication->get($id);
+        my $rec; my $hits;
+        if(params->{searcher}){
+          $hits = searcher->search('publication', {cql => [ "id=$id"], limit => 1});
+          $rec = $hits->{hits}->[0] if $hits;
+        }
+        else {
+          $rec = publication->get($id);
+        }
 
         unless ($rec) {
             return template 'error',
