@@ -416,8 +416,7 @@ For admins only!
 
         my $rec; my $hits;
         if(params->{searcher}){
-          $hits = searcher->search('publication', {cql => [ "id=$id"], limit => 1});
-          $rec = $hits->{hits}->[0] if $hits;
+          $rec = publication->search_bag->get($id);
         }
         else {
           $rec = publication->get($id);
