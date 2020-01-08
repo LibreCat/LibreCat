@@ -2,7 +2,6 @@
 [%- qp = params_query %]
 [%- PROCESS header.tt %]
 <!-- BEGIN index.tt -->
-<span id="language_id" class="hidden">[% h.locale() %]</span>
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->
     <div id="banner">
