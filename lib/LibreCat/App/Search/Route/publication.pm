@@ -20,8 +20,9 @@ Export publication with ID :id in format :fmt
 =cut
 
 get '/record/:id.:fmt' => sub {
-    my $id  = params->{id};
-    my $fmt = params->{fmt} // 'yaml';
+    my $rparams = params("route");
+    my $id  = $rparams->{id};
+    my $fmt = $rparams->{fmt} // 'yaml';
 
     forward "/export", {cql => "id=$id", fmt => $fmt , limit => 1};
 };
@@ -70,7 +71,7 @@ Search API to (data) publications.
 
 =cut
 
-get qr{/record/*} => sub {
+get "/record" => sub {
     my $p = h->extract_params();
 
     push @{$p->{cql}}, "status=public";
