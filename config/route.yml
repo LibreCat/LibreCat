@@ -12,9 +12,11 @@ exporter:
       label: JSON
     jsonl:
       package: 'JSON'
-      content_type: 'application/json'
+      content_type: 'text/plain'
       options:
         fix: ["fixes/to_public.fix"]
+        array: 0
+        line_delimited: 1
       label: JSONLines
     yaml:
       package: 'YAML'
