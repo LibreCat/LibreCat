@@ -56,7 +56,9 @@ exporter:
       content_type: application/xml
       options:
         fix: ["fixes/to_mods.fix"]
+        template_before: views/export/mods_before.tt
         template: views/export/mods.tt
+        template_after: views/export/mods_after.tt
         xml: true
       label: MODS
     datacite:
