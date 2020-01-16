@@ -88,7 +88,7 @@ exporter:
         template: views/export/rdf.tt
         template_after: views/export/rdf_after.tt
         xml: true
-        fix: ["set_field(headless,true)","fixes/to_rdf.fix"]
+        fix: ["fixes/to_rdf.fix"]
       label: Dublin Core
     dc_json:
       package: 'JSON'
