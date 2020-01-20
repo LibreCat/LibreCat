@@ -1,7 +1,6 @@
 package LibreCat::Cmd::index;
 
 use Catmandu::Sane;
-use LibreCat::JobQueue;
 use LibreCat::Index;
 use LibreCat::App::Helper;
 use Fcntl qw(:flock);

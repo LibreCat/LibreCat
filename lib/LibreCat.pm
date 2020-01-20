@@ -5,11 +5,13 @@ use Catmandu::Sane;
 our $VERSION = '0.3.2';
 use Config::Onion;
 use Log::Log4perl;
+use Log::Any ();
 use Log::Any::Adapter;
 use Path::Tiny;
-use Catmandu::Util qw(is_ref require_package use_lib read_yaml);
+use Catmandu::Util qw(is_ref is_array_ref is_hash_ref require_package use_lib read_yaml);
 use List::MoreUtils qw(any);
 use String::CamelCase qw(camelize);
+use Minion;
 use POSIX qw(strftime);
 use LibreCat::Hook;
 use LibreCat::Token;
@@ -115,7 +117,8 @@ has _model_instances => (is => 'ro', init_arg => undef, default => sub {+{}});
 has _model_accessors => (is => 'ro', init_arg => undef, default => sub {+{}});
 has _hook_instances  => (is => 'ro', init_arg => undef, default => sub {+{}});
 has searcher         => (is => 'lazy');
-has queue            => (is => 'lazy');
+has minion           => (is => 'lazy');
+has worker_namespace => (is => 'lazy');
 has token            => (is => 'lazy');
 
 sub BUILD {
@@ -369,8 +372,38 @@ sub _build_searcher {
         ->new(store => Catmandu->store('search'));
 }
 
-sub _build_queue {
-    require_package('LibreCat::JobQueue')->new;
+sub _build_worker_namespace {
+    'LibreCat::Worker';
+}
+
+sub _build_minion {
+    my ($self) = @_;
+
+    my $minion = Minion->new(%{$self->config->{queue}{minion}});
+
+    for my $spec (@{$self->config->{queue}{workers}}) {
+        my $worker_class = require_package($spec->{package}, $self->worker_namespace);
+        my $worker = $worker_class->new($spec->{options} // {});
+        my $tasks = $spec->{tasks};
+        if (is_array_ref($tasks)) {
+            $tasks = {map { ($_ => $_) } @$tasks};
+        }
+        for my $task (keys %$tasks) {
+            my $method = $tasks->{$task};
+            my $log = Log::Any->get_logger(category => $worker_class);
+            if ($log->is_debug) {
+                $minion->add_task($task => sub {
+                  my $job = $_[0];
+                  $log->debugf("pid: $$ job: %s task: %s args: %s", $job->id, $job->task, $job->args);
+                  $worker->$method(@_);
+              });
+            } else {
+                $minion->add_task($task => sub { $worker->$method(@_) });
+            }
+        }
+    }
+
+    $minion;
 }
 
 sub _build_token {

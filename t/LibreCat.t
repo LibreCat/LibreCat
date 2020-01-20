@@ -171,7 +171,7 @@ isa_ok($instance->searcher, "LibreCat::Search",
 
 # queue
 
-isa_ok($instance->queue, "LibreCat::JobQueue");
+isa_ok($instance->minion, "Minion");
 
 # hooks
 

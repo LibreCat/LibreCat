@@ -1,10 +1,26 @@
 _prefix:
   queue:
 
-servers:
-  - host: '127.0.0.1'
-    port: 4730
+# Log directory for worker and supervisor log files
+# logdir: logs
+
+minion:
+  Pg: "postgresql://librecat@/librecat_production"
+
+minion_ui:
+  username: changeme
+  password: changeme
 
 workers:
-  mailer:
-    count: 1
+  - package: Datacite
+    options:
+      user: 'DEMO.XXX'
+      password: 'secret'
+    tasks:
+      datacite: work
+  - package: Mailer
+    options:
+      default_from: 'unknown@librecat.org'
+    tasks:
+      mailer: work
+

@@ -8,11 +8,6 @@ use Path::Tiny;
 use Moo;
 use namespace::clean;
 
-with 'LibreCat::Worker';
-
-# Flag this package as intended for standalone use, not to be used as daemon
-sub daemon { 0 }
-
 has files          => (is => 'ro', required => 1);
 has access         => (is => 'ro', required => 1);
 has tmpdir         => (is => 'ro', default  => sub {$ENV{'TMPDIR'} // '/tmp'});

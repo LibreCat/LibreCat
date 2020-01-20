@@ -14,7 +14,6 @@ use IO::Handle::Util;
 use JSON::MaybeXS qw(encode_json);
 use LibreCat qw(:self);
 use LibreCat::I18N;
-use LibreCat::JobQueue;
 use Log::Log4perl ();
 use NetAddr::IP::Lite;
 use URI::Escape qw(uri_escape_utf8);
@@ -43,8 +42,8 @@ sub hook {
     librecat->hook($_[1]);
 }
 
-sub queue {
-    librecat->queue;
+sub minion {
+    librecat->minion;
 }
 
 sub create_fixer {

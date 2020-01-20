@@ -5,8 +5,6 @@ log4perl: |
   log4perl.category.LibreCat::FetchRecord=INFO,FILE
   log4perl.category.LibreCat::Model=INFO,FILE
   log4perl.category.LibreCat::Search=INFO,FILE
-  log4perl.category.LibreCat::Queue=INFO,FILE2
-  log4perl.category.LibreCat::Worker=INFO,STDERR,FILE
   log4perl.category.LibreCat::App::Catalogue::Controller::File=INFO,STDERR,FILE
   log4perl.appender.STDERR=Log::Log4perl::Appender::Screen
   log4perl.appender.STDERR.stderr=1
@@ -18,8 +16,3 @@ log4perl: |
   log4perl.appender.FILE.utf8=1
   log4perl.appender.FILE.layout=PatternLayout
   log4perl.appender.FILE.layout.ConversionPattern=%d %p [%P] - %c[%L] : %m%n
-  log4perl.appender.FILE2=Log::Log4perl::Appender::File
-  log4perl.appender.FILE2.filename=./logs/queue.log
-  log4perl.appender.FILE2.utf8=1
-  log4perl.appender.FILE2.layout=PatternLayout
-  log4perl.appender.FILE2.layout.ConversionPattern=%d %p [%P] - %c[%L] : %m%n

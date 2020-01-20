@@ -5,8 +5,6 @@ use Email::Sender::Simple qw(sendmail);
 use Moo;
 use namespace::clean;
 
-with 'LibreCat::Worker';
-
 has default_from  => (is => 'ro', default => sub { 'unknown@librecat.org' });
 
 sub work {

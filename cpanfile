@@ -42,6 +42,8 @@ requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
 
 # Mojolicious
+requires 'Minion', '>=10.01';
+requires 'Mojo::Pg', '>=3.10.0';
 requires 'Mojolicious', '>=7.70';
 requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
 
@@ -98,8 +100,6 @@ requires 'Devel::REPL', '>= 1.003028';
 requires 'Email::Sender::Simple';
 requires 'Encode';
 requires 'File::Basename';
-requires 'Gearman::Client', '>= 2.004.015';
-requires 'Gearman::Worker', '>= 2.004.015';
 requires 'Getopt::Long';
 requires 'IO::All';
 requires 'JSON::MaybeXS';
@@ -112,8 +112,6 @@ requires 'MIME::Types','==1.38';
 requires 'Moo', '>= 2.003004';
 requires 'Net::LDAP';
 requires 'Net::LDAPS';
-requires 'Net::Telnet::Gearman';
-requires 'Parallel::ForkManager', '>= 2.02';
 requires 'Path::Tiny', '0.052';
 requires 'REST::Client';
 requires 'String::CamelCase';

@@ -29,7 +29,7 @@ is h->config->{store}->{main}->{options}->{data_source},
 
 isa_ok h->hook('publication-update'), 'LibreCat::Hook', 'h->hook';
 
-isa_ok h->queue, 'LibreCat::JobQueue', 'h->queue';
+isa_ok h->minion, 'Minion', 'h->minion';
 
 isa_ok h->create_fixer('blabalbla'), 'Catmandu::Fix',
     'h->create_fixer(blabalbla)';

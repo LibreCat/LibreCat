@@ -7,11 +7,6 @@ use File::Spec;
 use Moo;
 use namespace::clean;
 
-with 'LibreCat::Worker';
-
-# Flag this package as intended for standalone use, not to be used as daemon
-sub daemon { 0 }
-
 has files      => (is => 'ro', required => 1);
 has temp_files => (is => 'ro', required => 1);
 has file_store => (is => 'lazy');

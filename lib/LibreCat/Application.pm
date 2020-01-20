@@ -2,6 +2,7 @@ package LibreCat::Application;
 
 use Catmandu::Sane;
 use JSON::MaybeXS qw(decode_json);
+use Mojo::Util qw(secure_compare);
 use LibreCat -self;
 use Mojo::Base 'Mojolicious';
 use namespace::clean;
@@ -22,6 +23,19 @@ sub startup {
     $self->plugin('TemplateToolkit');
 
     push @{$self->renderer->paths}, @{librecat->template_paths};
+
+    # minion ->
+    push @{$self->commands->namespaces}, 'Minion::Command';
+    $self->helper(minion => sub { librecat->minion });
+    $self->plugin('Minion::Admin', route => $r->under('/minion' => sub {
+      my $c = shift;
+      my $userinfo = join(':', librecat->config->{queue}{minion_ui}, librecat->config->{queue}{minion_ui});
+      return 1 if secure_compare($c->req->url->to_abs->userinfo, $userinfo);
+      $c->res->headers->www_authenticate('Basic');
+      $c->render(text => 'Authentication required', status => 401);
+      return undef;
+    }));
+    # <- minion
 
     $r->any(
         '/*whatever' => {whatever => ''} => sub {
