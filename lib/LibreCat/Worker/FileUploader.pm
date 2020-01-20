@@ -7,6 +7,8 @@ use File::Spec;
 use Moo;
 use namespace::clean;
 
+with 'LibreCat::Logger';
+
 has files      => (is => 'ro', required => 1);
 has temp_files => (is => 'ro', required => 1);
 has file_store => (is => 'lazy');

@@ -13,6 +13,8 @@ use IO::Socket::SSL;
 use Moo;
 use namespace::clean;
 
+with 'LibreCat::Logger';
+
 has base_url  => (is => 'lazy');
 has user      => (is => 'ro', required => 1);
 has password  => (is => 'ro', required => 1);

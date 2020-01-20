@@ -8,6 +8,8 @@ use Path::Tiny;
 use Moo;
 use namespace::clean;
 
+with 'LibreCat::Logger';
+
 has files          => (is => 'ro', required => 1);
 has access         => (is => 'ro', required => 1);
 has tmpdir         => (is => 'ro', default  => sub {$ENV{'TMPDIR'} // '/tmp'});

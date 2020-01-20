@@ -202,14 +202,6 @@ locale:
   en:
     hello: How are you?
 
-queue:
-  workers:
-    audit:
-      count: 1
-
-worker:
-    logdir: /tmp
-
 helper_plugins:
   - MyHelperPlugin
 

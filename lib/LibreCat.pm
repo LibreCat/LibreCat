@@ -381,24 +381,26 @@ sub _build_minion {
 
     my $minion = Minion->new(%{$self->config->{queue}{minion}});
 
-    for my $spec (@{$self->config->{queue}{workers}}) {
-        my $worker_class = require_package($spec->{package}, $self->worker_namespace);
-        my $worker = $worker_class->new($spec->{options} // {});
-        my $tasks = $spec->{tasks};
-        if (is_array_ref($tasks)) {
-            $tasks = {map { ($_ => $_) } @$tasks};
-        }
-        for my $task (keys %$tasks) {
-            my $method = $tasks->{$task};
-            my $log = Log::Any->get_logger(category => $worker_class);
-            if ($log->is_debug) {
-                $minion->add_task($task => sub {
-                  my $job = $_[0];
-                  $log->debugf("pid: $$ job: %s task: %s args: %s", $job->id, $job->task, $job->args);
-                  $worker->$method(@_);
-              });
-            } else {
-                $minion->add_task($task => sub { $worker->$method(@_) });
+    if (my $specs = $self->config->{queue}{workers}) {
+        for my $spec (@$specs) {
+            my $worker_class = require_package($spec->{package}, $self->worker_namespace);
+            my $worker = $worker_class->new($spec->{options} // {});
+            my $tasks = $spec->{tasks};
+            if (is_array_ref($tasks)) {
+                $tasks = {map { ($_ => $_) } @$tasks};
+            }
+            for my $task (keys %$tasks) {
+                my $method = $tasks->{$task};
+                my $log = Log::Any->get_logger(category => $worker_class);
+                if ($log->is_debug) {
+                    $minion->add_task($task => sub {
+                      my $job = $_[0];
+                      $log->debugf("pid: $$ job: %s task: %s args: %s", $job->id, $job->task, $job->args);
+                      $worker->$method(@_);
+                  });
+                } else {
+                    $minion->add_task($task => sub { $worker->$method(@_) });
+                }
             }
         }
     }
