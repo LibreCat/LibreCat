@@ -93,30 +93,4 @@ is_deeply(
     }
 );
 
-#don't ask
-is_deeply(
-    $pkg->new()->fix({
-        _id  => 1,
-        type => "journal_article",
-        file => [
-            qq({ "file_name" : "10.tif", "title" : "café" }),
-            qq({ "file_name" : "09.tif", "title" : "café" })
-        ]
-    }),
-    {
-        _id  => 1,
-        type => "journal_article",
-        file => [
-            {
-                file_name => "09.tif",
-                title => "café"
-            },
-            {
-                file_name => "10.tif",
-                title => "café"
-            }
-        ]
-    }
-);
-
 done_testing;
