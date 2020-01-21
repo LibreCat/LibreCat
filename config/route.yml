@@ -63,10 +63,12 @@ exporter:
       label: MODS
     datacite:
       package: 'Template'
-      content_type: 'application/x-datacite+xml'
+      content_type: 'application/xml'
       options:
         fix: ["fixes/to_datacite.fix"]
+        template_before: views/export/datacite_before.tt
         template: views/export/datacite.tt
+        template_after: views/export/datacite_after.tt
         xml: true
       extension: xml
       label: 'Datacite XML'
