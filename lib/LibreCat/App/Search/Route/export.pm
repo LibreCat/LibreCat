@@ -77,9 +77,9 @@ sub _export {
     if ($@) {
         h->log->error("exporting $package: $@");
         content_type 'application/json';
-        status '404';
+        status '500';
         return to_json {
-            error => "Export $fmt is not available for this collection: $@"
+            error => "Export $fmt failed: $@"
         };
     }
     else {
