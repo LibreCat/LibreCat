@@ -98,18 +98,14 @@ sub _export {
         h->log->trace($f);
         $f = Encode::encode( $charset, $f );
         $headers{"Content-Length"} = length($f);
+
         #override weird Dancer reencoding behaviour
-        send_file(
-            \"",
-            streaming => 1,
-            callbacks => {
-                override => sub {
-                    my( $respond, $response ) = @_;
-                    my $writer = $respond->([ 200, [%headers] ]);
-                    $writer->write( $f );
-                    $writer->close;
-                }
-            }
+        Dancer::Response->new(
+            status => 200,
+            content => $f,
+            encoded => 1,
+            headers => [%headers],
+            forward => ""
         );
     }
 }
