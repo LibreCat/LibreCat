@@ -13,6 +13,7 @@ use Dancer qw/:syntax/;
 use Clone qw(clone);
 use LibreCat;
 use LibreCat::App::Helper;
+use Encode qw();
 
 sub _export {
     my $params = shift;
@@ -84,14 +85,32 @@ sub _export {
     }
     else {
         my $content_type = $spec->{content_type} || mime->for_name($fmt);
-        my $send_params = {content_type => $content_type};
+        my $charset = $spec->{charset} // "utf-8";
+        $content_type = "$content_type;charset=$charset";
+        my %headers   = (
+            "Content-Type" => $content_type
+        );
 
         if ($spec->{extension}) {
-            $send_params->{filename} = 'publication.' . $spec->{extension};
+            $headers{"Content-Disposition"} = "inline;filename=publication.".$spec->{extension};
         }
 
         h->log->trace($f);
-        return Dancer::send_file(\$f, %$send_params);
+        $f = Encode::encode( $charset, $f );
+        $headers{"Content-Length"} = length($f);
+        #override weird Dancer reencoding behaviour
+        send_file(
+            \"",
+            streaming => 1,
+            callbacks => {
+                override => sub {
+                    my( $respond, $response ) = @_;
+                    my $writer = $respond->([ 200, [%headers] ]);
+                    $writer->write( $f );
+                    $writer->close;
+                }
+            }
+        );
     }
 }
 
