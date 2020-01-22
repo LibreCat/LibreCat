@@ -36,6 +36,7 @@ before_script:
   - sudo sed -i -e 's/<\/policymap>/  <policy domain="coder" rights="read|write" pattern="PDF"\/>\n  <policy domain="coder" rights="read|write" pattern="LABEL"\/>\n\/policymap>/g' /etc/ImageMagick-6/policy.xml
 
 service:
+  - postgresql
   - sqlite3
   - docker
 
