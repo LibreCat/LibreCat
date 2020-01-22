@@ -192,6 +192,10 @@ hooks:
    before_fixes: [peckish, hungry]
    after_fixes: [satisfied]
 
+queue:
+  minion:
+    SQLite: 'sqlite:/tmp/librecat-minion-test.db'
+
 i18n:
   lexicon:
     en:
