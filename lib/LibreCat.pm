@@ -432,6 +432,22 @@ sub layers {
     $self;
 }
 
+sub add_job {
+    my ($self, $task, $args, $opts) = @_;
+    if (!$args) {
+        $args = [];
+    } elsif (is_hash_ref($args)) {
+        $args = [$args];
+    }
+    $self->minion->enqueue($task, $args, $opts // {});
+}
+
+sub job_info {
+    my ($self, $job_id) = @_;
+    my $job = $self->minion->job($job_id) // return;
+    $job->info;
+}
+
 # Backwards compatibility with the old config, hook and searcher class methods
 for my $method (qw(config hook searcher)) {
     around $method => sub {
@@ -544,7 +560,18 @@ variable, in which case the C<layers.yml> file will be ignored.
 
 =head2 searcher
 
-=head2 queue
+=head2 minion
+
+=head2 add_job($task, [$args, $job_opts])
+
+    librecat->add_job('long_running_task')
+    librecat->add_job('mailer', {from => "", to => ""})
+
+See L<Minion> documentation for possible job options.
+
+=head2 job_info($job_id)
+
+Returns the L<Minion> job info hash ref if the job is known, undef otherwise.
 
 =head2 hook
 

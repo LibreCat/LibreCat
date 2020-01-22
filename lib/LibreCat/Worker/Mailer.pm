@@ -10,7 +10,7 @@ with 'LibreCat::Logger';
 has default_from  => (is => 'ro', default => sub { 'unknown@librecat.org' });
 
 sub work {
-    my ($self, $opts) = @_;
+    my ($self, $job, $opts) = @_;
 
     $self->log->debugf("sending mail to: %s", $opts);
     my $mail = Email::Simple->create(

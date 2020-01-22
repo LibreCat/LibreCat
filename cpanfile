@@ -43,6 +43,7 @@ requires 'Search::Elasticsearch::Client::6_0';
 
 # Mojolicious
 requires 'Minion', '>=10.01';
+requires 'Minion::Backend::SQLite';
 requires 'Mojo::Pg', '>=3.10.0';
 requires 'Mojolicious', '>=7.70';
 requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
