@@ -418,11 +418,11 @@ sub io_from_plack_writer {
 }
 
 sub localize {
-    my ($self, $str) = @_;
+    my $self = shift;
     state $locales = {};
     my $loc = $self->locale;
     my $i18n = $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
-    $i18n->localize($str);
+    $i18n->localize(@_);
 }
 sub uri_for_locale {
     my ( $self, $locale ) = @_;
