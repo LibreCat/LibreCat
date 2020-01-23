@@ -16,6 +16,7 @@ require_ok $pkg;
 note("Validate user");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
+        namespace => "validator.jsonschema.errors",
         schema => librecat->config->{schemas}{user});
 
     ok $x , 'got a user validator';
@@ -48,6 +49,7 @@ note("Validate user");
 note("Validate research_group");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
+        namespace => "validator.jsonschema.errors",
         schema => librecat->config->{schemas}{research_group});
 
     ok $x , 'got a research_group validator';
@@ -73,6 +75,7 @@ note("Validate research_group");
 note("Validate department");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
+        namespace => "validator.jsonschema.errors",
         schema => librecat->config->{schemas}{department});
 
     ok $x , 'got a department validator';
@@ -104,6 +107,7 @@ note("Validate department");
 note("Validate project");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
+        namespace => "validator.jsonschema.errors",
         schema => librecat->config->{schemas}{project});
 
     ok $x , 'got a project validator';
@@ -128,6 +132,7 @@ note("Validate project");
 note("Validate publiction");
 {
     my $x = LibreCat::Validator::JSONSchema->new(
+        namespace => "validator.jsonschema.errors",
         schema => librecat->config->{schemas}{publication});
 
     ok $x , 'got a publication validator';
@@ -159,6 +164,7 @@ note("Validate publiction");
 
 {
     my $x = LibreCat::Validator::JSONSchema->new(
+        namespace => "validator.jsonschema.errors",
         schema => {unknown_schema => 1});
 
     ok $x , 'define unkown validator';

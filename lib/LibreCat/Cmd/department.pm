@@ -297,7 +297,9 @@ sub _add {
         on_validation_error => sub {
             my ($rec, $errors) = @_;
             say STDERR join("\n",
-                $rec->{_id}, "ERROR: not a valid department", @$errors);
+                $rec->{_id}, "ERROR: not a valid department",map {
+                    $_->localize();
+                } @$errors);
             $ret = 2;
         },
         on_success => sub {
@@ -342,7 +344,7 @@ sub _valid {
                 my $id     = $item->{_id} // '';
                 if ($errors) {
                     for my $err (@$errors) {
-                        say STDERR "ERROR $id: $err";
+                        say STDERR "ERROR $id: " . $err->localize();
                     }
                 }
                 else {
