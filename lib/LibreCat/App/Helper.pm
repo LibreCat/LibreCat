@@ -360,7 +360,11 @@ sub show_locale {
 }
 
 sub locale {
-    cookie('lang') // $_[0]->default_locale();
+    my $param_lang = params("query")->{lang};
+    $_[0]->locale_exists(
+        $param_lang
+    ) ? $param_lang :
+        cookie('lang') // $_[0]->default_locale();
 }
 
 sub set_locale {
