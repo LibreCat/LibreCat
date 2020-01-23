@@ -13,6 +13,7 @@ use Dancer qw/:syntax/;
 use Clone qw(clone);
 use LibreCat;
 use LibreCat::App::Helper;
+use Encode qw();
 
 sub _export {
     my $params = shift;
@@ -77,21 +78,35 @@ sub _export {
     if ($@) {
         h->log->error("exporting $package: $@");
         content_type 'application/json';
-        status '404';
+        status '500';
         return to_json {
-            error => "Export $fmt is not available for this collection: $@"
+            error => "Export $fmt failed: $@"
         };
     }
     else {
         my $content_type = $spec->{content_type} || mime->for_name($fmt);
-        my $send_params = {content_type => $content_type};
+        my $charset = $spec->{charset} // "utf-8";
+        $content_type = "$content_type;charset=$charset";
+        my %headers   = (
+            "Content-Type" => $content_type
+        );
 
         if ($spec->{extension}) {
-            $send_params->{filename} = 'publication.' . $spec->{extension};
+            $headers{"Content-Disposition"} = "inline;filename=publication.".$spec->{extension};
         }
 
         h->log->trace($f);
-        return Dancer::send_file(\$f, %$send_params);
+        $f = Encode::encode( $charset, $f );
+        $headers{"Content-Length"} = length($f);
+
+        #override weird Dancer reencoding behaviour
+        Dancer::Response->new(
+            status => 200,
+            content => $f,
+            encoded => 1,
+            headers => [%headers],
+            forward => ""
+        );
     }
 }
 

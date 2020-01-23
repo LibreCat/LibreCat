@@ -61,7 +61,10 @@ sub fix {
         $self->audit->add( $r )
     ){
 
-        h->log->error( "validation audit failed: ".join(",",@{ $self->audit()->last_errors() }). ". Record: " . to_yaml($r) );
+        my $current_locale = h->locale();
+        h->log->error( "validation audit failed: ".join(",",map {
+            $_->localize( $current_locale );
+        } @{ $self->audit()->last_errors() }). ". Record: " . to_yaml($r) );
 
     }
 
