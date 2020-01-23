@@ -13,6 +13,7 @@ sub description {
 Usage:
 
 librecat token encode
+librecat token encode '{"my": "payload"}'
 
 EOF
 }
