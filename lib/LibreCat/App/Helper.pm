@@ -501,20 +501,6 @@ hook before_template => sub {
     $_[0]->{uri_base} = $h->uri_base();
 
 };
-hook before => sub {
-
-    #set lang when sent
-    {
-        my $lang = param("lang");
-        if ( request->is_get() && $h->locale_exists( $lang ) ) {
-
-            $h->set_locale( $lang );
-
-        }
-
-    }
-
-};
 
 register_plugin;
 
