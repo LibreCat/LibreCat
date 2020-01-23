@@ -14,7 +14,8 @@ sub register {
     my $token_secret = librecat->config->{api}{v1}{token_secret};
     my $r            = $app->routes;
 
-    my $api = $r->any("/api/v1");
+    #Note: path /api only known by bin/app.pl
+    my $api = $r->any("/v1");
 
     $api->get('/openapi.yml')->to('api#openapi_yml');
     $api->get('/openapi.json')->to('api#openapi_json');
@@ -47,18 +48,23 @@ sub register {
 
             ## In Mojolicious HEAD requests are considered equal to GET,
             ## but content will not be sent with the response even if it is present.
+            # GET /api/v1/:model/:id
             $model_api->get('/:id')->to('#show', model => $model)
                 ->name($model);
 
+            # DELETE /api/v1/:model/:id
             $model_api->delete('/:id')->to('#remove', model => $model)
                 ->name($model);
 
+            # PUT /api/v1/:model/:id
             $model_api->put('/:id')->to('#update', model => $model)
                 ->name($model);
 
+            # PUT /api/v1/:model/:id
             $model_api->patch('/:id')->to('#update_fields', model => $model)
                 ->name($model);
 
+            # POST /api/v1/:model
             $model_api->post->to('#create', model => $model)->name($model);
 
             if (librecat->$model->does("LibreCat::Model::Plugin::Versioning"))

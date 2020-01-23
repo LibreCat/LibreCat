@@ -36,6 +36,7 @@ requires 'Catmandu::OAI' , '0.16';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::SRU','0.039';
 requires 'Catmandu::Store::ElasticSearch', '>=1.0';
+requires 'Catmandu::Template', '>=0.13';
 requires 'Catmandu::Validator::JSONSchema','>=0.13';
 requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
