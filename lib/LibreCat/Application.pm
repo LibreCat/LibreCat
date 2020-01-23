@@ -19,15 +19,18 @@ sub startup {
     # hardcoded for now
     $self->plugin('LibreCat::Api');
 
-    $self->plugin('TemplateToolkit');
-
-    push @{$self->renderer->paths}, @{librecat->template_paths};
-
     $r->any(
         '/*whatever' => {whatever => ''} => sub {
-            my $c        = shift;
-            my $whatever = $c->param('whatever');
-            $c->render(template => '404', handler => 'tt2', status => 404);
+            $_[0]->render(
+                json => {
+                    errors => [{
+                        status => 404,
+                        id => "route_not_found",
+                        title => "route not found"
+                    }]
+                },
+                status => 404
+            );
         }
     );
 
