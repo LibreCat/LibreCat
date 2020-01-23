@@ -61,17 +61,6 @@ exporter:
         template_after: views/export/mods_after.tt
         xml: true
       label: MODS
-    datacite:
-      package: 'Template'
-      content_type: 'application/xml'
-      options:
-        fix: ["fixes/to_datacite.fix"]
-        template_before: views/export/datacite_before.tt
-        template: views/export/datacite.tt
-        template_after: views/export/datacite_after.tt
-        xml: true
-      extension: xml
-      label: 'Datacite XML'
     dc:
       package: 'Template'
       content_type: application/xml
