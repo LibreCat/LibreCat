@@ -69,7 +69,6 @@ requires 'Syntax::Keyword::Junction';
 requires 'Plack';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Dancer::Middleware::Rebase';
-requires 'Plack::Middleware::Deflater';
 requires 'Plack::Middleware::Negotiate', '>= 0.20';
 requires 'Plack::Middleware::Debug';
 requires 'Plack::Middleware::Debug::Dancer::Settings';

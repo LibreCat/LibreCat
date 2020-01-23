@@ -109,7 +109,6 @@ builder {
             #DANCER APP
             mount "/" => builder {
 
-                enable "Deflater";
                 enable "Session",
                     store => require_package( $session_store_package )->new( %$session_store_options ),
                     state => require_package( $session_state_package )->new( %$session_state_options );
