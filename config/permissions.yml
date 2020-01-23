@@ -95,7 +95,6 @@ routes:
     - [ 'ANY'  , '/rc/'                          , 'default' ]
     - [ 'ANY'  , '/download/'                    , 'default' ]
     - [ 'ANY'  , '/thumbnail/'                   , 'default' ]
-    - [ 'ANY'  , '/livecitation'                 , 'default' ]
 
     - [ 'ANY'  , '/sru'                          , 'default' ]
     - [ 'ANY'  , '/oai'                          , 'default' ]
