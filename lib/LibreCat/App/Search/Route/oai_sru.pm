@@ -1,8 +1,8 @@
-package LibreCat::App::Search::Route::api;
+package LibreCat::App::Search::Route::oai_sru;
 
 =head1 NAME
 
-LibreCat::App::Search::Route::api - handles routes for SRU and OAI interfaces.
+LibreCat::App::Search::Route::oai_sru - handles routes for SRU and OAI interfaces.
 
 =cut
 
