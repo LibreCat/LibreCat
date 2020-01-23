@@ -712,11 +712,6 @@ publication:
           type: string
           description: "Conference end date"
       description: "Conference details"
-    message:
-      oneOf:
-        - type: string
-        - type: integer
-      description: "Notes, comments about this record"
     alternative_id:
       type: array
       item:

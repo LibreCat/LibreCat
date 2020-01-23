@@ -31,14 +31,14 @@ main:
         id_generator: Incremental
       project:
         plugins: ['Datestamps']
-        # id_generator: Incremental
       user:
         plugins: ['Datestamps']
       department:
         plugins: ['Datestamps']
       research_group:
         plugins: ['Datestamps']
-        # id_generator: Incremental
+      message:
+        plugins: ['Datestamps']
       reqcopy:
         plugins: []
       temp_files:

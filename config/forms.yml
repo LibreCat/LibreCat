@@ -104,7 +104,6 @@ field_order:
     - quality_controlled
     - popular_science_quality_controlled
     - external_id
-    - message
     - funded_apc
     - alternative_id
   related_material:
@@ -222,7 +221,6 @@ publication_types:
         external_id: &external_id
           mandatory: 0
           multiple: 1
-        message: &message
           multiple: 0
         popular_science_quality_controlled: &popular_science_quality_controlled
           multiple: 0
@@ -282,7 +280,6 @@ publication_types:
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
-        message: *message
         jel: *jel
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
@@ -329,7 +326,6 @@ publication_types:
         keyword: *keyword
         jel: *jel
         external_id: *external_id
-        message: *message
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -377,7 +373,6 @@ publication_types:
         keyword: *keyword
         external_id: *external_id
         jel: *jel
-        message: *message
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
         alternative_id: *alternative_id
@@ -415,7 +410,6 @@ publication_types:
         abstract: *abstract
         external_id: *external_id
         popular_science_quality_controlled: *popular_science_quality_controlled
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -456,7 +450,6 @@ publication_types:
         abstract: *abstract
         external_id: *external_id
         popular_science_quality_controlled: *popular_science_quality_controlled
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -492,7 +485,6 @@ publication_types:
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -525,7 +517,6 @@ publication_types:
       supplementary_fields:
         keyword: *keyword
         external_id: *external_id
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -566,7 +557,6 @@ publication_types:
           multiple: 0
         genbank: &genbank
           multiple: 0
-        message: *message
         jel: *jel
         funded_apc:
           multiple: 0
@@ -603,7 +593,6 @@ publication_types:
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
-        message: *message
         jel: *jel
         popular_science_quality_controlled: *popular_science_quality_controlled
         thematic_area: *thematic_area
@@ -634,7 +623,6 @@ publication_types:
         keyword: *keyword
         popular_science: &popular_science
           multiple: 0
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -668,7 +656,6 @@ publication_types:
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
-        message: *message
         thematic_area: *thematic_area
         alternative_id: *alternative_id
       related_material: *related_material
@@ -694,7 +681,6 @@ publication_types:
         abstract: *abstract
         keyword: *keyword
         external_id: *external_id
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -725,7 +711,6 @@ publication_types:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -757,7 +742,6 @@ publication_types:
         popular_science_quality_controlled: *popular_science_quality_controlled
         keyword: *keyword
         external_id: *external_id
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -901,7 +885,6 @@ publication_types:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         popular_science_quality_controlled: *popular_science_quality_controlled
@@ -948,7 +931,6 @@ publication_types:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
@@ -978,7 +960,6 @@ publication_types:
         external_id: *external_id
         abstract: *abstract
         keyword: *keyword
-        message: *message
         jel: *jel
         thematic_area: *thematic_area
         alternative_id: *alternative_id
