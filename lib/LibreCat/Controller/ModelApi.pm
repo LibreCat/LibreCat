@@ -3,6 +3,7 @@ package LibreCat::Controller::ModelApi;
 use Catmandu::Sane;
 use Hash::Merge::Simple qw(merge);
 use LibreCat -self;
+use LibreCat::App::Catalogue::Controller::Permission;
 use Mojo::Base 'Mojolicious::Controller';
 use namespace::clean;
 
@@ -10,6 +11,17 @@ sub show {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
+    # get user information from token
+
+    unless (
+        p->can_edit($id, $c->stash("token"))
+        )
+    {
+        access_denied_hook();
+        status '403';
+        forward '/access_denied', {referer => request->referer};
+    }
+
     my $recs  = librecat->model($model) // return $c->not_found;
     my $rec   = $recs->get($id) // return $c->not_found;
     delete $rec->{_id};

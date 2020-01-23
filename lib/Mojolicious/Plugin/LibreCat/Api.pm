@@ -26,7 +26,8 @@ sub register {
             my $token = $c->req->headers->header('Authorization');
 
             # authorized
-            if (librecat->token->decode($token)) {
+            if (my $t =librecat->token->decode($token)) {
+                $c->stash(token => $t);
                 return 1;
             }
 
