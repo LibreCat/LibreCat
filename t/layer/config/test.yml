@@ -194,6 +194,7 @@ hooks:
 
 queue:
   minion:
+    Pg: "!DELETE!"
     SQLite: 'sqlite:/tmp/librecat-minion-test.db'
 
 i18n:
