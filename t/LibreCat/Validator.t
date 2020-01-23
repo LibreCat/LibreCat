@@ -23,7 +23,7 @@ require_ok $pkg;
 }
 
 {
-    my $x = T::Validator->new();
+    my $x = T::Validator->new(namespace => "validator.t.errors");
     can_ok $x, $_ for qw(whitelist validate_data last_errors);
 
     is_deeply $x->whitelist, [], "default white list";
