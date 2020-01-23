@@ -31,7 +31,6 @@ hook before => sub {
         login      => _login_route($conf),
         redirect   => _redirect_route($conf),
         role       => _role_route($conf),
-        api_access => _api_route($conf),
         no_access  => sub {
             return redirect uri_for('/access_denied');
         },
@@ -39,7 +38,7 @@ hook before => sub {
     };
 
     for my $h (keys %{$conf->{handlers}}) {
-        next if $h =~ m{^(login|redirect|role|api_access|no_access|default)$};
+        next if $h =~ m{^(login|redirect|role|no_access|default)$};
         my $package_name = $conf->{handlers}->{$h};
 
         h->log->info("loading $package_name for $h");
@@ -127,32 +126,6 @@ sub _role_route {
             return redirect uri_for($conf->{login_route}, $data);
         }
     };
-}
-
-sub _api_route {
-    my $conf = shift;
-    sub {
-        my $role = shift // '';
-        if (_ip_match(request->address)) {
-
-            # ok
-        }
-        elsif (session->{role} && $role eq session->{role}) {
-
-            # ok
-        }
-        else {
-            return return redirect uri_for('/access_denied');
-        }
-    };
-}
-
-sub _ip_match {
-    my $ip       = shift;
-    my $access   = h->config->{filestore}->{api}->{access} // {};
-    my $ip_range = $access->{ip_range} // [];
-
-    h->within_ip_range($ip, $ip_range);
 }
 
 # custom authenticate routine

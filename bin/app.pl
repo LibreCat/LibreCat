@@ -65,12 +65,15 @@ $app->add(sub {
     Dancer->dance(Dancer::Request->new(env => $_[0]));
 });
 
+$app = $app->to_app();
+
 # mojo app
+my $mojo_app;
 { 
     my $server = Mojo::Server::PSGI->new;
     my $script = Path::Tiny->new(__FILE__)->sibling('mojo_app.pl')->stringify;
     $server->load_app($script);
-    $app->add($server->to_psgi_app);
+    $mojo_app = $server->to_psgi_app;
 }
 
 # setup sessions
@@ -90,35 +93,55 @@ my $auth_sso = is_array_ref( $config->{auth_sso} ) ? $config->{auth_sso} : [];
 my $session_sso = is_array_ref( $config->{session_sso} ) ? $config->{session_sso} : [];
 
 builder {
-    enable '+Dancer::Middleware::Rebase', base => $uri_base, strip => 0 if is_string( $uri_base );
-    enable_if { $_[0]->{REMOTE_ADDR} eq '127.0.0.1' }
-        "Plack::Middleware::ReverseProxy";
-    enable 'Deflater';
-    enable 'Session',
-        store => require_package( $session_store_package )->new( %$session_store_options ),
-        state => require_package( $session_state_package )->new( %$session_state_options );
-    enable 'MethodOverride';
 
-    for my $as ( @$auth_sso ) {
+    mount "/" => builder {
 
-        mount $as->{path} => require_package( $as->{package}, "Plack::Auth::SSO" )->new(
+        #Note: do not put these middleware inside any other path than "/"
+        enable "+Dancer::Middleware::Rebase", base => $uri_base, strip => 0 if is_string( $uri_base );
+        enable_if { $_[0]->{REMOTE_ADDR} eq "127.0.0.1" }
+            "Plack::Middleware::ReverseProxy";
 
-            %{ $as->{options} || {} },
-            uri_base => $uri_base
+        builder {
 
-        )->to_app();
+            #MOJO APP
+            mount "/api" => $mojo_app;
 
-    }
-    for my $as ( @$session_sso ) {
+            #DANCER APP
+            mount "/" => builder {
 
-        mount $as->{path} => require_package( $as->{package}, "LibreCat::Auth::SSO" )->new(
+                enable "Deflater";
+                enable "Session",
+                    store => require_package( $session_store_package )->new( %$session_store_options ),
+                    state => require_package( $session_state_package )->new( %$session_state_options );
+                enable "MethodOverride";
 
-            %{ $as->{options} || {} },
-            uri_base => $uri_base
+                for my $as ( @$auth_sso ) {
 
-        )->to_app();
+                    mount $as->{path} => require_package( $as->{package}, "Plack::Auth::SSO" )->new(
 
-    }
+                        %{ $as->{options} || {} },
+                        uri_base => $uri_base
 
-    mount '/' => $app->to_app;
+                    )->to_app();
+
+                }
+                for my $as ( @$session_sso ) {
+
+                    mount $as->{path} => require_package( $as->{package}, "LibreCat::Auth::SSO" )->new(
+
+                        %{ $as->{options} || {} },
+                        uri_base => $uri_base
+
+                    )->to_app();
+
+                }
+
+                mount "/" => $app;
+
+            };
+
+        };
+
+    };
+
 };
