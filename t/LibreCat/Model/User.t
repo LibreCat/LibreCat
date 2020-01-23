@@ -19,7 +19,8 @@ my $user = $pkg->new(
     bag        => Catmandu->store('main')->bag('user'),
     search_bag => Catmandu->store('search')->bag('user'),
     validator  => LibreCat::Validator::JSONSchema->new(
-        schema => Catmandu->config->{schemas}{user}
+        schema => Catmandu->config->{schemas}{user},
+        namespace => "validator.jsonschema.errors"
     )
 );
 

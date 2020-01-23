@@ -10,7 +10,7 @@ use Catmandu::Sane;
 use Catmandu;
 use LibreCat qw(:self publication searcher);
 use Catmandu::Fix qw(expand);
-use Catmandu::Util qw(is_instance);
+use Catmandu::Util qw(is_instance :is);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 use Dancer qw(:syntax);
@@ -20,6 +20,26 @@ use Encode qw(encode);
 sub access_denied_hook {
     h->hook('publication-access-denied')
         ->fix_around({_id => params->{id}, user_id => session->{user_id},});
+}
+
+sub decode_file {
+
+    my $file = $_[0];
+
+    $file = [] unless defined $file;
+
+    #a single file was sent
+    $file = [ $file ] if is_string( $file );
+
+    #a list of files were sent. Make sure this hook does not break a correct record.file
+    $file = [
+        map {
+            is_string( $_ ) ? from_json( encode("utf8",$_) ) : $_;
+        } @$file
+    ];
+
+    $file;
+
 }
 
 =head1 PREFIX /record
@@ -168,6 +188,10 @@ Checks if the user has the rights to update this record.
 
         h->log->debug("Params:" . to_dumper($params));
 
+        #unpack strange format of record.file
+        #TODO: this should not be necessary
+        $params->{file} = decode_file( $params->{file} );
+
         $params->{finalSubmit} //= '';
 
         if ($params->{new_record}) {
@@ -256,9 +280,12 @@ Checks if the user has the rights to update this record.
                             my ($rec, $errors) = @_;
                             librecat->log->errorf(
                                 "%s not a valid publication %s",
-                                $rec->{_id} // 'NEW', $errors);
+                                $rec->{_id} // 'NEW', [map { $_->{message} } @$errors]);
                             $is_error_record = 1;
-                            $error_messages  = $errors;
+                            my $current_locale = h->locale();
+                            $error_messages  = [ map {
+                                $_->localize( $current_locale );
+                            } @$errors ];
                         }
                     );
                 }

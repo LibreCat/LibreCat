@@ -1,9 +1,0 @@
-<html>
-<head>
-<title>Livecitation Test</title>
-<body>
-<h2>Citations directly from Citeproc Processor</h2>
-[% citation %]
-<hr/>
-</body>
-</html>
