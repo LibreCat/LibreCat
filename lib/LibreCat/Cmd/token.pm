@@ -1,8 +1,10 @@
 package LibreCat::Cmd::token;
 
 use Catmandu::Sane;
+use Catmandu::Util qw(is_string check_hash_ref);
 use Catmandu;
 use LibreCat -self;
+use JSON::MaybeXS qw(decode_json);
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -43,7 +45,12 @@ sub command {
 }
 
 sub _encode {
-    say librecat->token->encode;
+    my ($self, $json) = @_;
+    my $payload;
+    if (is_string($json)) {
+        $payload = check_hash_ref(decode_json($json));
+    }
+    say librecat->token->encode($payload);
     return 0;
 }
 
