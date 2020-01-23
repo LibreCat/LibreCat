@@ -458,7 +458,20 @@ For admins only!
         my $exporter = Catmandu->exporter('YAML', file => \$export_string);
         $exporter->add($rec);
 
-        return template 'backend/internal_view', {data => $export_string};
+        $export_string = Encode::encode( 'UTF-8', $export_string );
+
+        my %headers = (
+            'Content-Type'   => 'text/plain' ,
+            'Content-Length' => length($export_string) ,
+        );
+
+        Dancer::Response->new(
+           status => 200,
+           content => $export_string,
+           encoded => 1,
+           headers => [%headers],
+           forward => ""
+       );
     };
 
 =head2 GET /clone/:id
