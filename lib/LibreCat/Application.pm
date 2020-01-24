@@ -18,6 +18,7 @@ sub startup {
 
     # hardcoded for now
     $self->plugin('LibreCat::Api');
+    $self->plugin('LibreCat::Message');
 
     $r->any(
         '/*whatever' => {whatever => ''} => sub {
