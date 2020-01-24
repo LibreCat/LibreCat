@@ -360,7 +360,10 @@ sub show_locale {
 }
 
 sub locale {
-    my $param_lang = params("query")->{lang};
+    #no dancer request during test in t/LibreCat/App/Helper.t, so call to "params" fails
+    my $request = request();
+    my $param_lang = $request ?
+        params("query")->{lang} : undef;
     $_[0]->locale_exists(
         $param_lang
     ) ? $param_lang :
