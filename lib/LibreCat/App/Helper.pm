@@ -420,10 +420,7 @@ sub io_from_plack_writer {
 
 sub localize {
     my $self = shift;
-    state $locales = {};
-    my $loc = $self->locale;
-    my $i18n = $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
-    $i18n->localize(@_);
+    $self->i18n( $self->locale )->localize( @_ );
 }
 sub uri_for_locale {
     my ( $self, $locale ) = @_;
@@ -432,6 +429,16 @@ sub uri_for_locale {
     my %params = (params("query"),params("body"));
     $params{lang} = $locale;
     $request->uri_for( $path_info, \%params );
+}
+
+sub i18n {
+
+    my $self = shift;
+    my $loc  = shift // $self->locale;
+
+    state $locales = {};
+    $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
+
 }
 
 *loc = \&localize;
