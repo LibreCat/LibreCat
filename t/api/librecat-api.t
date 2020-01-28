@@ -28,7 +28,7 @@ for my $bag (qw(publication department project research_group user)) {
     }
 }
 
-my $token = librecat->token->encode({foo => 'bar'});
+my $token = librecat->token->encode({user_id => '1234', role => 'super_admin'});
 
 # Start a Mojolicious app
 my $t = Test::Mojo->new('LibreCat::Application');

@@ -11,16 +11,8 @@ sub show {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $id    = $c->param('id');
-    # get user information from token
 
-    unless (
-        p->can_edit($id, $c->stash("token"))
-        )
-    {
-        access_denied_hook();
-        status '403';
-        forward '/access_denied', {referer => request->referer};
-    }
+    return $c->access_denied unless p->can_edit($id, $c->stash("token"));
 
     my $recs  = librecat->model($model) // return $c->not_found;
     my $rec   = $recs->get($id) // return $c->not_found;
@@ -38,6 +30,9 @@ sub create {
     my $c     = $_[0];
     my $model = $c->param('model');
     my $recs  = librecat->model($model) // return $c->not_found;
+
+    # return $c->access_denied unless p->can_edit($id, $c->stash("token"));
+
     my $data  = $c->maybe_decode_json($c->req->body)
         // return $c->json_not_valid;
 
@@ -72,6 +67,9 @@ sub update {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
+
+    return $c->access_denied unless p->can_edit($id, $c->stash("token"));
+
     my $data  = $c->maybe_decode_json($c->req->body)
         // return $c->json_not_valid;
 
@@ -123,6 +121,9 @@ sub update_fields {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
+
+    return $c->access_denied unless p->can_edit($id, $c->stash("token"));
+
     my $data  = $c->maybe_decode_json($c->req->body)
         // return $c->json_not_valid;
 
@@ -177,6 +178,9 @@ sub remove {
     my $model = $c->param('model');
     my $id    = $c->param('id');
     my $recs  = librecat->model($model) // return $c->not_found;
+
+    return $c->access_denied unless p->can_delete($id, $c->stash("token"));
+
     my $rec   = $recs->get($id) // return $c->not_found;
 
     librecat->hook("api-$model-delete")->fix_around(
@@ -262,6 +266,14 @@ sub show_version {
         links      => {self => $c->url_for->to_abs,},
     };
     $c->render(json => {data => $data});
+}
+
+sub access_denied {
+    my $c = $_[0];
+    $c->render(json =>
+        {errors => ["Access denied: You don't have the rights to perform this action"]},
+        status => 403
+        );
 }
 
 sub not_found {
