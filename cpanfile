@@ -22,7 +22,7 @@ requires 'Business::ISBN', 0;
 
 # Catmandu
 requires 'Catmandu', '>=1.2002';
-requires 'Catmandu::FileStore', '1.13';
+requires 'Catmandu::FileStore', '1.16';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
 requires 'Catmandu::BibTeX', '>=0.14';
