@@ -8,7 +8,7 @@ Route handler for publications.
 
 use Catmandu::Sane;
 use Catmandu;
-use LibreCat qw(:self publication);
+use LibreCat qw(:self publication searcher);
 use Catmandu::Fix qw(expand);
 use Catmandu::Util qw(is_instance :is);
 use LibreCat::App::Helper;
@@ -441,7 +441,13 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec = publication->get($id);
+        my $rec; my $hits;
+        if(params->{searcher}){
+          $rec = publication->search_bag->get($id);
+        }
+        else {
+          $rec = publication->get($id);
+        }
 
         unless ($rec) {
             return template 'error',
@@ -452,7 +458,20 @@ For admins only!
         my $exporter = Catmandu->exporter('YAML', file => \$export_string);
         $exporter->add($rec);
 
-        return template 'backend/internal_view', {data => $export_string};
+        $export_string = Encode::encode( 'UTF-8', $export_string );
+
+        my %headers = (
+            'Content-Type'   => 'text/plain' ,
+            'Content-Length' => length($export_string) ,
+        );
+
+        Dancer::Response->new(
+           status => 200,
+           content => $export_string,
+           encoded => 1,
+           headers => [%headers],
+           forward => ""
+       );
     };
 
 =head2 GET /clone/:id

@@ -1,0 +1,13 @@
+[Unit]
+Description=LibreCat worker processes
+After=network.target
+
+[Service]
+Type=simple
+User=librecat
+ExecStart=/opt/librecat/bin/start_worker.sh
+KillMode=process
+PIDFile=/var/run/librecat-worker.pid
+
+[Install]
+WantedBy=multi-user.target
