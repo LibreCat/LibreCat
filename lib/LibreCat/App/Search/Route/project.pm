@@ -22,7 +22,7 @@ get qr{/project/([a-zA-Z0-9].*)} => sub {
     my $proj = h->project->get($id);
 
     my $pub = searcher->search('publication',
-        {cql => ["project=$id", "status=public"], limit => 100});
+        {cql => ["project=\"$id\"", "status=public"], limit => 100});
     $proj->{project_publication} = $pub if $pub->{total} > 0;
 
     template 'project/record', $proj;
