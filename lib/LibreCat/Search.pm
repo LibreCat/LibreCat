@@ -51,8 +51,46 @@ sub search {
 
     return undef unless $bag_name;
 
+    my $bag = $self->store->bag($bag_name);
+
+    my @filters = map {
+        $bag->translate_cql_query($_);
+    } @{ $p->{cql} // [] };
+
+    my $sub_query = {
+        match_all => {}
+    };
+
+    my $query_string = is_array_ref( $p->{q} ) ?
+        $p->{q}->[0] : is_string( $p->{q} ) ?
+            $p->{q} : undef;
+
+    #TODO: make this configurable
+    if( is_string( $query_string ) ){
+
+        $sub_query = {
+            simple_query_string => {
+                query => $query_string,
+                lenient => "true",
+                analyze_wildcard => "false",
+                default_operator => "OR",
+                minimum_should_match => "100%",
+                flags => "PHRASE|WHITESPACE",
+                fields => ["all"]
+            }
+        };
+
+    }
+
+    my $query = {
+        bool => {
+            filter => \@filters,
+            must => $sub_query
+        }
+    };
+
     my %search_params = (
-        cql_query    => $self->_cql_query($p),
+        query => $query,
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit        => $self->_set_limit($p->{limit}),
         start        => $p->{start} // 0,
@@ -85,40 +123,6 @@ sub search {
     }
 
     $hits;
-}
-
-sub _cql_query {
-    my ($self, $p) = @_;
-
-    my @cql;
-
-    my $q = is_array_ref($p->{q}) ? $p->{q} : [$p->{q}];
-
-    for my $part (@$q) {
-        if (defined($part) && length($part)) {
-
-            # auto-escape wildcards
-            my $mode   = '=';
-            my $search = '';
-
-            if ($part =~ /^"(.*)"$/) {
-                $mode   = 'exact';
-                $search = $1;
-            }
-            else {
-                $mode   = 'all';
-                $search = $part;
-            }
-
-            $search =~ s{(["\*\?])}{\\$1}g;
-            push @cql, "basic $mode \"$search\"";
-        }
-    }
-
-    $p->{cql} = $self->_string_array($p->{cql});
-    push @cql, @{$p->{cql}};
-
-    return join(' AND ', @cql) // '';
 }
 
 sub _set_limit {
