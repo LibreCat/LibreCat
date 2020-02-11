@@ -1,5 +1,5 @@
 journal_article,journal article
-review,book review
+review,review
 book_chapter,book part
 encyclopedia_article,book part
 book,book
@@ -8,7 +8,7 @@ preprint,preprint
 working_paper,working paper
 report,report
 patent,patent
-conference_abstract,conference poster
+conference_abstract,conference object
 conference,conference paper
 conference_editor,conference proceedings
 dissertation,thesis
