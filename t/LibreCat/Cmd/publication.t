@@ -62,7 +62,7 @@ note("testing valid");
             ['publication', 'valid', 't/records/invalid-publication.yml']);
     ok $result->error, 'invalid publication';
 
-    like $result->stderr, qr/type: Missing property/, 'missing title';
+    like $result->stderr, qr/type is required/, 'missing title';
 
     my $result2 = test_app(qq|LibreCat::CLI| =>
             ['publication', 'valid', 't/records/valid-publication.yml']);

@@ -12,9 +12,11 @@ exporter:
       label: JSON
     jsonl:
       package: 'JSON'
-      content_type: 'application/json'
+      content_type: 'text/plain'
       options:
         fix: ["fixes/to_public.fix"]
+        array: 0
+        line_delimited: 1
       label: JSONLines
     yaml:
       package: 'YAML'
@@ -54,18 +56,11 @@ exporter:
       content_type: application/xml
       options:
         fix: ["fixes/to_mods.fix"]
+        template_before: views/export/mods_before.tt
         template: views/export/mods.tt
+        template_after: views/export/mods_after.tt
         xml: true
       label: MODS
-    datacite:
-      package: 'Template'
-      content_type: 'application/x-datacite+xml'
-      options:
-        fix: ["fixes/to_datacite.fix"]
-        template: views/export/datacite.tt
-        xml: true
-      extension: xml
-      label: 'Datacite XML'
     dc:
       package: 'Template'
       content_type: application/xml
@@ -84,7 +79,7 @@ exporter:
         template: views/export/rdf.tt
         template_after: views/export/rdf_after.tt
         xml: true
-        fix: ["set_field(headless,true)","fixes/to_rdf.fix"]
+        fix: ["fixes/to_rdf.fix"]
       label: Dublin Core
     dc_json:
       package: 'JSON'
