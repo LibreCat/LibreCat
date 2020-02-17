@@ -11,7 +11,7 @@ use Dancer qw(:syntax);
 use Exporter qw/import/;
 use Moo;
 
-extends 'LibreCat::Permission';
+# with 'LibreCat::Permission';
 
 sub _can_do_action {
     my ($self, $action, $id, $opts) = @_;
