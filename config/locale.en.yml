@@ -186,7 +186,7 @@ facets:
     year: "Publishing Year"
     date_updated: "Date Updated"
     title: Title
-    author: "First Author"
+    first_contributor: "First Author/Editor"
     type: "Publication Type"
     publication: "Publ./ Series/ Journal"
     fullname: Alphabetically

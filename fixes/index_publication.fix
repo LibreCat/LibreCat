@@ -28,6 +28,19 @@ if exists(project)
   end
 end
 
+## add field for sorting by first author/editor
+if exists(author)
+  copy_field(author.0.full_name, first_contributor)
+else
+  if exists(translator)
+    copy_field(translator.0.full_name, first_contributor)
+  else
+    if exists(editor)
+      copy_field(editor.0.full_name, first_contributor)
+    end
+  end
+end
+
 ## add flags for ISI/PMID
 if all_match(external_id.isi.0, '^\w+$')
   add_field(isi, 1)
@@ -50,3 +63,4 @@ if all_match(status,"returned|deleted")
 else
   remove_field(oai_deleted)
 end
+

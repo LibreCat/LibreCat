@@ -339,6 +339,7 @@ search:
             editor: *personField
             translator: *personField
             supervisor: *personField
+            first_contributor: {type: keyword}
             creator:
               properties:
                 id: {type: keyword}
@@ -713,6 +714,14 @@ search:
                 '<>': true
                 'exact': {field: ['author.full_name.exact', 'author.id']}
               field: ['author.full_name', 'author.id']
+            first_contributor:
+              op:
+                'any': true
+                'all': true
+                '=': true
+                '<>': true
+              field: 'first_contributor'
+              sort: true
             editor:
               op:
                 'any': true

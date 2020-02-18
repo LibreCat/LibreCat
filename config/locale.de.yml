@@ -187,7 +187,7 @@ facets:
     year: Jahr
     date_updated: Änderungsdatum
     title: Titel
-    author: Erstautor/in
+    first_contributor: Erstautor*in/-editor*in
     type: Publikationstyp
     publication: "Publ./ Serie/ Journal"
     fullname: "Alphabetisch"
