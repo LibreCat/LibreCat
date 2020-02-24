@@ -464,7 +464,6 @@ search:
             defense_date: {type: date, index: 'false'}
             locked: {type: byte}
             user_id: {type: text, index: 'false'}
-            citation: {type: object, enabled: 'false'}
             license: {type: keyword}
         cql_mapping:
           default_index: basic

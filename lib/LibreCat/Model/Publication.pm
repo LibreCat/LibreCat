@@ -4,7 +4,6 @@ use Catmandu::Sane;
 use LibreCat qw(timestamp);
 use LibreCat::App::Catalogue::Controller::File     ();
 use LibreCat::App::Catalogue::Controller::Material ();
-use Catmandu::Fix::add_citation;
 use Moo;
 use namespace::clean;
 
@@ -17,13 +16,6 @@ sub BUILD {
             # TODO this is very dirty and executes even if validation fails
             file             => '_store_file',
             related_material => '_store_related_material',
-        ]
-    );
-
-    $self->append_before_add(
-        [
-            # TODO move to config
-            citation => Catmandu::Fix::add_citation->new,
         ]
     );
 }

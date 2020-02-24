@@ -89,7 +89,6 @@ sub command_opt_spec {
         ['version=i',        "get a specific record version"],
         ['previous-version', "get previous record version"],
         ['history',          "get all record versions"],
-        ['with-citations',   "process citations while adding records"],
         ['with-files',       "process files while addings records"],
         ['no-check-version', "add records without checking versions"],
         ['csv',              "import csv/tsv metadata in `files` command"],
@@ -326,7 +325,6 @@ sub _add {
     }
 
     my $skip_before_add = [];
-    push @$skip_before_add, "citation" unless $self->opts->{"with_citations"};
     push @$skip_before_add, "files"    unless $self->opts->{"with_files"};
     push @$skip_before_add, "check_version" if $self->opts->{"no_check_version"};
 
@@ -929,7 +927,6 @@ LibreCat::Cmd::publication - manage librecat publications
         --previous-version (get previous record version)
         --history          (get all record versions)
         --log=STR          (write an audit message)
-        --with-citations   (process citations while adding records)
         --with-files       (process files while addings records)
         --no-check-version (add records without checking versions)
         --csv              (import csv/tsv metadata in `files` command)
