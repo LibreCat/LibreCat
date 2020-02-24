@@ -16,48 +16,53 @@ require_ok $pkg;
 
 lives_ok {$pkg->new()} "lives ok";
 
-my $data
-    = Catmandu->importer('YAML', file => "t/records/valid-publication.yml")
-    ->first;
+SKIP: {
+    skip("No network. Set CSL_TEST to run these tests.", 5)
+        unless $ENV{CSL_TEST};
 
-{
-    my $file;
-    my $rtf = $pkg->new(file => \$file,);
+    my $data = Catmandu->importer('YAML',
+        file => "t/records/valid-publication.yml")->first;
 
-    $rtf->add($data);
-    $rtf->commit;
+    {
+        my $file;
+        my $rtf = $pkg->new(file => \$file,);
 
-    ok length($file) > 200, "content present";
-    like $file,   qr/HYPERLINK/, "linked title";
-    unlike $file, qr/WoS/,       "links";
-}
+        $rtf->add($data);
+        $rtf->commit;
 
-{
-    my $file;
-    my $rtf = $pkg->new(file => \$file, style => "ama", name => "MyRepo",);
+        ok length($file) > 200, "content present";
+        like $file,   qr/HYPERLINK/, "linked title";
+        unlike $file, qr/WoS/,       "links";
+    }
 
-    $rtf->add($data);
-    $rtf->commit;
+    {
+        my $file;
+        my $rtf
+            = $pkg->new(file => \$file, style => "ama", name => "MyRepo",);
 
-    ok length($file) > 200, "content present";
-    unlike $file, qr/HYPERLINK/, "linked title";
-}
+        $rtf->add($data);
+        $rtf->commit;
 
-{
-    my $file;
-    my $rtf = $pkg->new(
-        file  => \$file,
-        style => "ama",
-        links => 1,
-        name  => "MyRepo",
-    );
+        ok length($file) > 200, "content present";
+        unlike $file, qr/HYPERLINK/, "linked title";
+    }
 
-    $rtf->add($data);
-    $rtf->commit;
+    {
+        my $file;
+        my $rtf = $pkg->new(
+            file  => \$file,
+            style => "ama",
+            links => 1,
+            name  => "MyRepo",
+        );
 
-    ok length($file) > 200, "content present";
-    like $file, qr/WoS/,        "WoS link";
-    like $file, qr /HYPERLINK/, "links there"
+        $rtf->add($data);
+        $rtf->commit;
+
+        ok length($file) > 200, "content present";
+        like $file, qr/WoS/,        "WoS link";
+        like $file, qr /HYPERLINK/, "links there"
+    }
 }
 
 done_testing;
