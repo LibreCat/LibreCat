@@ -4,7 +4,7 @@ use Catmandu::Sane;
 use Moo::Role;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 requires '_find_duplicate';
 
