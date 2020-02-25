@@ -47,7 +47,6 @@ error:
   update_failed: "Publikation %s konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
   contact_admin: "Bitte kontaktieren Sie %s, falls das Problem bestehen bleibt."
   preliminary_submit: "Das Formular wurde abgschickt bevor diese volständig geladen wurde. Alle Änderungen wurden verworfen."
-  duplicate_import: "Es gibt bereits einen Datensatz mit ID %s aus %s in der Datenbank: <a href='/librecat/record/edit/%s'>Eintrag</a>."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
 styles:
