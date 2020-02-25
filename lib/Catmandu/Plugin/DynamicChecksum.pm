@@ -5,7 +5,7 @@ use Digest::MD5;
 use IO::Handle::Util;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 sub BUILD {
     my ($self) = @_;
