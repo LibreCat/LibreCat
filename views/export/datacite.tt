@@ -23,8 +23,8 @@
   <publicationYear>[% year | xml_strict %]</publicationYear>
   [%- IF ddc OR keyword %]
   <subjects>
-    [%- FOREACH d in ddc %]<subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d | xml_strict %]</subject>[% END%]
-    [%- FOREACH k in keyword%]<subject>[% k | xml_strict %]</subject>[% END %]
+    [%- FOREACH d IN ddc %]<subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d | xml_strict %]</subject>[% END%]
+    [%- FOREACH k IN keyword %]<subject>[% k | xml_strict %]</subject>[% END %]
   </subjects>
   [%- END %]
   <dates>
