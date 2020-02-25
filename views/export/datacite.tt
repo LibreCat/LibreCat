@@ -44,7 +44,7 @@
     <relatedIdentifier relatedIdentifierType="ISBN" relationType="IsVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF publication_identifier.issn %]
-    <relatedIdentifier relatedIdentifierType="ISNN" relationType="IsVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="ISSN" relationType="IsVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF external_id.arxiv %]
     <relatedIdentifier relatedIdentifierType="arXiv" relationType="IsVersionOf">[% external_id.arxiv.0 | xml_strict %]</relatedIdentifier>
