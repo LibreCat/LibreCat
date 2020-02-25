@@ -23,8 +23,8 @@
   <publicationYear>[% year | xml_strict %]</publicationYear>
   [%- IF ddc OR keyword %]
   <subjects>
-    [%- FOREACH d in ddc %]<subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d | xml_strict %]</subject>[% END%]
-    [%- FOREACH k in keyword%]<subject>[% k | xml_strict %]</subject>[% END %]
+    [%- FOREACH d IN ddc %]<subject schemeURI="http://dewey.info/" subjectScheme="dewey">[% d | xml_strict %]</subject>[% END %]
+    [%- FOREACH k IN keyword %]<subject>[% k | xml_strict %]</subject>[% END %]
   </subjects>
   [%- END %]
   <dates>
@@ -39,12 +39,12 @@
     <alternateIdentifier alternateIdentifierType="URL">[% uri_base %]/record/[% _id %]</alternateIdentifier>
   </alternateIdentifiers>
   <relatedIdentifiers>
-    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/record/[% _id%].json</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata">[% uri_base %]/record/[% _id %].json</relatedIdentifier>
     [%- IF publication_identifier.isbn %]
     <relatedIdentifier relatedIdentifierType="ISBN" relationType="IsVersionOf">[% publication_identifier.isbn.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF publication_identifier.issn %]
-    <relatedIdentifier relatedIdentifierType="ISNN" relationType="IsVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="ISSN" relationType="IsVersionOf">[% publication_identifier.issn.0 | xml_strict %]</relatedIdentifier>
     [%- END %]
     [%- IF external_id.arxiv %]
     <relatedIdentifier relatedIdentifierType="arXiv" relationType="IsVersionOf">[% external_id.arxiv.0 | xml_strict %]</relatedIdentifier>
@@ -54,6 +54,13 @@
     [%- END %]
     [%- IF urn %]
     <relatedIdentifier relatedIdentifierType="URN" relationType="IsReviewedBy">[% urn | xml_strict %]</relatedIdentifier>
+    [%- END %]
+    [%- FOREACH r IN rm %]
+      [%- IF r.doi %]
+      <relatedIdentifier relatedIdentifierType="DOI" relationType="[% r.relation %]">[% r.doi | xml_strict %]</relatedIdentifier>
+      [%- ELSE %]
+      <relatedIdentifier relatedIdentifierType="URL" relationType="[% r.relation %]">[% uri_base %]/record/[% id %]</relatedIdentifier>
+      [% END %]
     [%- END %]
   </relatedIdentifiers>
   [%- IF file %]

@@ -1,0 +1,17 @@
+earlier_version,IsPreviousVersionOf
+later_version,IsNewVersionOf
+contains,HasPart
+published_in,IsPartOf
+dissertation_contains,HasPart
+part_of_dissertation,IsPartOf
+old_edition,IsPreviousVersionOf
+new_edition,IsNewVersionOf
+continues,Continues
+is_continued_by,IsContinuedBy
+popular_science,isVariantFormOf
+research_paper,isOriginalFormOf
+translation,isVariantFormOf
+original,isOriginalFormOf
+is_cited_by,IsCitedBy
+cites,Cites
+other,IsSupplementTo
