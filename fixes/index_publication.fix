@@ -28,6 +28,17 @@ if exists(project)
   end
 end
 
+add(engine, engine)
+# look up a key named 'engine' in config->citation
+lookup_in_config(engine, citation)
+if any_match(engine, "csl")
+  copy(_id, tmp)
+  lookup_in_store(tmp, main, bag:citation)
+  move(tmp.citation, citation)
+  rm(tmp)
+end
+
+
 ## add flags for ISI/PMID
 if all_match(external_id.isi.0, '^\w+$')
   add_field(isi, 1)
