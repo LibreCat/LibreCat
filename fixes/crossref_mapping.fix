@@ -46,6 +46,14 @@ end
 
 add(r.publication_status, published)
 
+move(volume, r.volume)
+move(issue, r.issue)
+move(publisher, r.publisher)
+move(subtitle, r.alternative_title)
+move(subject, r.keyword)
+join(r.keyword,' ; ')
+trim(r.keyword)
+
 # type mapping
 if all_match(r.type, 'journal_article')
     move(container-title.0, r.publication)
@@ -54,6 +62,7 @@ if all_match(r.type, 'journal_article')
     else
       move(page, r.article_number)
     end
+    move(article-number, r.article_number)
 end
 
 # book
@@ -94,3 +103,5 @@ lookup(r.language.0.iso, fixes/lookup/cr_lang_iso.csv, default: eng)
 
 retain(r)
 move(r, .)
+
+vacuum()
