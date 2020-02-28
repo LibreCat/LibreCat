@@ -59,7 +59,7 @@
       [%- IF r.doi %]
       <relatedIdentifier relatedIdentifierType="DOI" relationType="[% r.relation %]">[% r.doi | xml_strict %]</relatedIdentifier>
       [%- ELSE %]
-      <relatedIdentifier relatedIdentifierType="URL" relationType="[% r.relation %]">[% uri_base %]/record/[% id %]</relatedIdentifier>
+      <relatedIdentifier relatedIdentifierType="URL" relationType="[% r.relation %]">[% uri_base %]/record/[% _id %]</relatedIdentifier>
       [% END %]
     [%- END %]
   </relatedIdentifiers>
