@@ -5,7 +5,7 @@ use Digest::MD5;
 use IO::Handle::Util;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 sub BUILD {
     my ($self) = @_;
@@ -42,13 +42,13 @@ sub dynamic_checksum {
         write => sub {
             my $self = shift;
             my $scalar = shift;
-            $md5->add($scalar,@_);
+            $md5->add($scalar);
             length($scalar);
         },
         syswrite => sub {
             my $self = shift;
             my $scalar = shift;
-            $md5->add($scalar,@_);
+            $md5->add($scalar);
             length($scalar);
         },
         close => sub {

@@ -5,7 +5,7 @@ use Catmandu::Util qw(array_includes);
 use Moo::Role;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 requires '_authenticate';
 

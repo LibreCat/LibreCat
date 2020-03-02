@@ -22,7 +22,7 @@ requires 'Business::ISBN', 0;
 
 # Catmandu
 requires 'Catmandu', '>=1.2002';
-requires 'Catmandu::FileStore', '1.13';
+requires 'Catmandu::FileStore', '1.16';
 requires 'Catmandu::ArXiv', '0.211';
 requires 'Catmandu::BagIt' , '0.234';
 requires 'Catmandu::BibTeX', '>=0.14';
@@ -36,7 +36,8 @@ requires 'Catmandu::OAI' , '0.16';
 requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::SRU','0.039';
 requires 'Catmandu::Store::ElasticSearch', '>=1.0';
-requires 'Catmandu::Validator::JSONSchema','>=0.12';
+requires 'Catmandu::Template', '>=0.13';
+requires 'Catmandu::Validator::JSONSchema','>=0.13';
 requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
@@ -68,7 +69,6 @@ requires 'Syntax::Keyword::Junction';
 requires 'Plack';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Dancer::Middleware::Rebase';
-requires 'Plack::Middleware::Deflater';
 requires 'Plack::Middleware::Negotiate', '>= 0.20';
 requires 'Plack::Middleware::Debug';
 requires 'Plack::Middleware::Debug::Dancer::Settings';

@@ -27,26 +27,32 @@ move(ISBN, r.publication_identifier.isbn)
 replace_all(r.publication_identifier.isbn.*, '^http://id.crossref.org/isbn/(.*)',$1)
 
 # authors
-move(author, r.author)
-do list (path => r.author)
+do list (path => author, var:loop)
   do identity ()
-    move(given, first_name)
-    move(family, last_name)
-    remove(affiliation)
+    move(loop.given, tmp.first_name)
+    move(loop.family, tmp.last_name)
+    move(tmp,r.author.$append)
   end
 end
 
 # editors
-move(editor, r.editor)
-do list (path => r.editor)
+do list (path => editor, var:loop)
   do identity ()
-    move(given, first_name)
-    move(family, last_name)
-    remove(affiliation)
+    move(loop.given, tmp.first_name)
+    move(loop.family, tmp.last_name)
+    move(tmp,r.editor.$append)
   end
 end
 
 add(r.publication_status, published)
+
+move(volume, r.volume)
+move(issue, r.issue)
+move(publisher, r.publisher)
+move(subtitle, r.alternative_title)
+move(subject, r.keyword)
+join(r.keyword,' ; ')
+trim(r.keyword)
 
 # type mapping
 if all_match(r.type, 'journal_article')
@@ -56,6 +62,7 @@ if all_match(r.type, 'journal_article')
     else
       move(page, r.article_number)
     end
+    move(article-number, r.article_number)
 end
 
 # book
@@ -96,3 +103,5 @@ lookup(r.language.0.iso, fixes/lookup/cr_lang_iso.csv, default: eng)
 
 retain(r)
 move(r, .)
+
+vacuum()

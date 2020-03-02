@@ -2,6 +2,7 @@ use Catmandu::Sane;
 use Test::More;
 use Test::Exception;
 use IO::File;
+use Path::Tiny;
 use Catmandu;
 use Catmandu::DirectoryIndex::Map;
 use Catmandu::Store::DBI;
@@ -14,6 +15,8 @@ BEGIN {
 }
 
 require_ok $pkg;
+
+path('t/tmp/temp_index.db')->remove;
 
 my $temp_directory = Catmandu::DirectoryIndex::Map->new(
     base_dir => "t/tmp",

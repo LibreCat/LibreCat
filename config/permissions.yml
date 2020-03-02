@@ -17,8 +17,6 @@ handlers:
     login: internal
     # role: requires a valid login and a user in a specific role
     role: internal
-    # api_access: requires api credentials (see filestore.api.access config)
-    api_access: internal
     # no_access: this route is denied for all
     no_access: internal
     # default: no login or role requires
@@ -69,8 +67,6 @@ routes:
 
     - [ 'GET'  , '/librecat/export' , 'login'  ]
 
-    - [ 'ANY'  , '/librecat/api'                 , 'api_access' ]
-
     # catch all for security reasons
     - [ 'ANY'  , '/librecat'                     , 'login' ]
 
@@ -99,7 +95,6 @@ routes:
     - [ 'ANY'  , '/rc/'                          , 'default' ]
     - [ 'ANY'  , '/download/'                    , 'default' ]
     - [ 'ANY'  , '/thumbnail/'                   , 'default' ]
-    - [ 'ANY'  , '/livecitation'                 , 'default' ]
 
     - [ 'ANY'  , '/sru'                          , 'default' ]
     - [ 'ANY'  , '/oai'                          , 'default' ]

@@ -8,6 +8,12 @@ use namespace::clean;
 
 extends "LibreCat::Validator::JSONSchema";
 
+has namespace => (
+    is => "ro",
+    default => sub { "validator.audit.errors" },
+    init_arg => undef
+);
+
 has schema => (
     is => "ro",
     lazy => 1,
