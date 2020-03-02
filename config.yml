@@ -18,6 +18,7 @@ session_state:
     ## Turn in in https installations
     # secure: 1
     expires: 1209600
+    samesite: Strict
 session_store:
   package: "Plack::Session::Store::Catmandu"
   options:
@@ -61,7 +62,7 @@ plugins:
     store: search
     bag: publication
     datestamp_field: date_updated
-    repositoryName: 'PUB - Publications at LibreCat University'
+    repositoryName: 'LibeCat Open Access Repository'
     uri_base: "http://localhost:5001/oai"
     adminEmail: helpdesk@librecat.org
     earliestDatestamp: "1970-01-01T00:00:01Z"
@@ -80,15 +81,7 @@ plugins:
         schema: "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
         metadataNamespace: "http://www.openarchives.org/OAI/2.0/oai_dc/"
         template: views/export/oai_dc.tt
-        #cql: '(status exact public OR status exact deleted)'
         fix: ["fixes/to_dc.fix"]
-      -
-        metadataPrefix: mods
-        schema: "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"
-        metadataNamespace: "http://www.loc.gov/mods/v3"
-        template: views/export/mods.tt
-        cql: 'status exact public'
-        fix: ["fixes/to_mods.fix"]
       -
         metadataPrefix: oai_datacite
         schema: http://schema.datacite.org/meta/kernel-4.1/metadata.xsd
@@ -97,6 +90,19 @@ plugins:
         cql: 'status exact public'
         fix: ["fixes/to_datacite.fix"]
       -
+        metadataPrefix: oai_openaire
+        schema: https://www.openaire.eu/schema/repo-lit/4.0/openaire.xsd
+        metadataNamespace: http://namespace.openaire.eu/schema/oaire/
+        template: views/export/openaire.tt
+        fix: ['fixes/to_openaire.fix']
+      -
+        metadataPrefix: mods
+        schema: "http://www.loc.gov/standards/mods/v3/mods-3-0.xsd"
+        metadataNamespace: "http://www.loc.gov/mods/v3"
+        template: views/export/mods.tt
+        cql: 'status exact public'
+        fix: ["fixes/to_mods.fix"]
+      -
         metadataPrefix: rdf
         template: views/export/rdf.tt
         fix: ["fixes/to_rdf.fix"]
@@ -104,53 +110,217 @@ plugins:
         schema: http://www.openarchives.org/OAI/2.0/rdf.xsd
         metadataNamespace: http://www.openarchives.org/OAI/2.0/rdf/
     sets:
-      - setSpec: openaire_data
-        setName: OpenAire_data
-        cql: 'type exact researchData'
       -
-        setSpec: bookChapterFtxt
-        setName: Book Chapter with fulltext
-        cql: 'type exact bookChapter AND fulltext exact 1'
-      -
-        setSpec: bookEditor
-        setName: Book Editor
-        cql: 'type exact bookEditor'
-      -
-        setSpec: bookEditorFtxt
-        setName: Book Editor with fulltext
-        cql: 'type exact bookEditor AND fulltext exact 1'
+        setSpec: book
+        setName: Book
+        cql: 'type exact book'
       -
         setSpec: bookFtxt
-        setName: Book
-        cql: 'type exact book AND fulltext exact 1'
+        setName: Book with fulltext
+        cql: 'type exact book and fulltext exact 1'
       -
-        setSpec: caseStudy
-        setName: Case Study
-        cql: 'type exact caseStudy'
+        setSpec: book_editor
+        setName: Edited book
+        cql: 'type exact book_editor'
       -
-        setSpec: caseStudyFtxt
-        setName: Case Study with fulltext
-        cql: 'type exact caseStudy AND fulltext exact 1'
+        setSpec: book_editorFtxt
+        setName: Edited book with fulltext
+        cql: 'type exact book_editor and fulltext exact 1'
       -
-        setSpec: conferenceAbstracFtxt
-        setName: Conference Abstract with fulltext
-        cql: 'type exact conferenceAbstract AND fulltext exact 1'
+        setSpec: book_chapter
+        setName: Book chapter
+        cql: 'type exact book_chapter'
       -
-        setSpec: conferenceAbstract
-        setName: Conference Abstract
-        cql: 'type exact conferenceAbstract'
+        setSpec: book_chapterFtxt
+        setName: Book chapter with fulltext
+        cql: 'type exact book_chapter and fulltext exact 1'
       -
-        setSpec: conferenceEditor
-        setName: Conference Editor
-        cql: 'type exact conferenceEditor'
+        setSpec: review
+        setName: Book review
+        cql: 'type exact review'
       -
-        setSpec: conferenceEditorFtxt
-        setName: Conference Editor with fulltext
-        cql: 'type exact conferenceEditor AND fulltext exact 1'
+        setSpec: reviewFtxt
+        setName: Book review with fulltext
+        cql: 'type exact review and fulltext exact 1'
+      -
+        setSpec: conference_abstract
+        setName: Conference abstract
+        cql: 'type exact conference_abstract'
+      -
+        setSpec: conference_abstractFtxt
+        setName: Conference abstract with fulltext
+        cql: 'type exact conference_abstract and fulltext exact 1'
+      -
+        setSpec: conference_editor
+        setName: Edited conference volume
+        cql: 'type exact conference_editor'
+      -
+        setSpec: conference_editorFtxt
+        setName: Edited conference volume with fulltext
+        cql: 'type exact conference_editor and fulltext exact 1'
+      -
+        setSpec: conference
+        setName: Conference paper
+        cql: 'type exact conference'
       -
         setSpec: conferenceFtxt
-        setName: Conference Proceeding/Paper with fulltext
-        cql: 'type exact conference AND fulltext exact 1'
+        setName: Conference paper with fulltext
+        cql: 'type exact conference and fulltext exact 1'
+      -
+        setSpec: dissertation
+        setName: Dissertation
+        cql: 'type exact dissertation'
+      -
+        setSpec: dissertationFtxt
+        setName: Dissertation with fulltext
+        cql: 'type exact dissertation and fulltext exact 1'
+      -
+        setSpec: encyclopedia_article
+        setName: Encyclopedia article
+        cql: 'type exact encyclopedia_article'
+      -
+        setSpec: encyclopedia_articleFtxt
+        setName: Encyclopedia article with fulltext
+        cql: 'type exact encyclopedia_article and fulltext exact 1'
+      -
+        setSpec: journal_article
+        setName: Journal article
+        cql: 'type exact journal_article'
+      -
+        setSpec: journal_articleFtxt
+        setName: Journal article with fulltext
+        cql: 'type exact journal_article and fulltext exact 1'
+      -
+        setSpec: journal_editor
+        setName: Special issue
+        cql: 'type exact journal_editor'
+      -
+        setSpec: journal_editorFtxt
+        setName: Special issue with fulltext
+        cql: 'type exact journal_editor and fulltext exact 1'
+      -
+        setSpec: newspaper_article
+        setName: Newspaper article
+        cql: 'type exact newspaper_article'
+      -
+        setSpec: newspaper_articleFtxt
+        setName: Newspaper article with fulltext
+        cql: 'type exact newspaper_article and fulltext exact 1'
+      -
+        setSpec: patent
+        setName: Patent
+        cql: 'type exact patent'
+      -
+        setSpec: patentFtxt
+        setName: Patent with fulltext
+        cql: 'type exact patent and fulltext exact 1'
+      -
+        setSpec: preprint
+        setName: Preprint
+        cql: 'type exact preprint'
+      -
+        setSpec: preprintFtxt
+        setName: Preprint with fulltext
+        cql: 'type exact preprint and fulltext exact 1'
+      -
+        setSpec: report
+        setName: Report
+        cql: 'type exact report'
+      -
+        setSpec: reportFtxt
+        setName: Report with fulltext
+        cql: 'type exact report and fulltext exact 1'
+      -
+        setSpec: software
+        setName: Software
+        cql: 'type exact software'
+      -
+        setSpec: softwareFtxt
+        setName: Software with fulltext
+        cql: 'type exact software and fulltext exact 1'
+      -
+        setSpec: translation
+        setName: book translation
+        cql: 'type exact translation'
+      -
+        setSpec: translationFtxt
+        setName: Book translation with fulltext
+        cql: 'type exact translation and fulltext exact 1'
+      -
+        setSpec: translation_chapter
+        setName: Chapter translation
+        cql: 'type exact translation_chapter'
+      -
+        setSpec: translation_chapterFtxt
+        setName: Chapter translation with fulltext
+        cql: 'type exact translation_chapter and fulltext exact 1'
+      -
+        setSpec: working_paper
+        setName: Working paper
+        cql: 'type exact working_paper'
+      -
+        setSpec: working_paperFtxt
+        setName: Working paper with fulltext
+        cql: 'type exact working_paper and fulltext exact 1'
+      -
+        setSpec: research_data
+        setName: Research data
+        cql: 'type exact research_data'
+      -
+        setSpec: research_dataFtxt
+        setName: Research data with fulltext
+        cql: 'type exact research_data and fulltext exact 1'
+      # doc-type sets
+      -
+        setSpec: doc-type:article
+        setName: Article
+        cql: 'type exact journal_article'
+      -
+        setSpec: doc-type:book
+        setName: Book
+        cql: 'type exact book'
+      -
+        setSpec: doc-type:bookPart
+        setName: BookPart
+        cql: 'type exact book_chapter'
+      -
+        setSpec: doc-type:conferenceObject
+        setName: ConferenceObject
+        cql: 'type exact conference'
+      -
+        setSpec: doc-type:doctoralThesis
+        setName: DoctoralThesis
+        cql: 'type exact dissertation'
+      -
+        setSpec: doc-type:preprint
+        setName: Preprint
+        cql: 'type exact preprint'
+      -
+        setSpec: doc-type:report
+        setName: Report
+        cql: 'type exact report'
+      -
+        setSpec: doc-type:review
+        setName: Review
+        cql: 'type exact review'
+      -
+        setSpec: doc-type:workingPaper
+        setName: Working Paper
+        cql: 'type exact working_paper'
+      # Sets for aggregators like BASE or OpenAIRE
+      -
+        setSpec: open_access
+        setName: All documents with fulltext
+        cql: 'fulltext exact 1'
+      -
+        setSpec: openaire
+        setName: EC funded or open access
+        cql: '(ecfunded=1 OR fulltext exact 1) AND type<>research_data'
+      -
+        setSpec: openaire_data
+        setName: OpenAire_data
+        cql: 'type exact research_data'
+      # DDC sets
       -
         setSpec: ddc:000
         setName: Generalities, knowledge, the book
@@ -531,103 +701,3 @@ plugins:
         setSpec: ddc:990
         setName: History of other areas
         cql: 'fulltext exact 1 AND ddc exact 990'
-      -
-        setSpec: dissertationFtxt
-        setName: Dissertation with fulltext
-        cql: 'type exact dissertation AND fulltext exact 1'
-      -
-        setSpec: doc-type:article
-        setName: Article
-        cql: 'type exact journalArticle'
-      -
-        setSpec: doc-type:book
-        setName: Book
-        cql: 'type exact book'
-      -
-        setSpec: doc-type:bookPart
-        setName: BookPart
-        cql: 'type exact bookChapter'
-      -
-        setSpec: doc-type:conferenceObject
-        setName: ConferenceObject
-        cql: 'type exact conference'
-      -
-        setSpec: doc-type:doctoralThesis
-        setName: DoctoralThesis
-        cql: 'type exact dissertation'
-      -
-        setSpec: doc-type:preprint
-        setName: Preprint
-        cql: 'type exact preprint'
-      -
-        setSpec: doc-type:report
-        setName: Report
-        cql: 'type exact report'
-      -
-        setSpec: doc-type:review
-        setName: Review
-        cql: 'type exact review'
-      -
-        setSpec: doc-type:workingPaper
-        setName: Working Paper
-        cql: 'type exact workingPaper'
-      -
-        setSpec: driver
-        setName: All documents with fulltext
-        cql: 'fulltext exact 1'
-      -
-        setSpec: ec_fundedresources
-        setName: EC funded (OpenAire)
-        cql: 'ecfunded=1'
-      -
-        setSpec: openaire
-        setName: EC funded or open access
-        cql: '(ecfunded=1 OR fulltext exact 1) AND type<>researchData'
-      -
-        setSpec: journalArticleFtxt
-        setName: Journal Article with fulltext
-        cql: 'type exact journalArticle AND fulltext exact 1'
-      -
-        setSpec: licentiateThesis
-        setName: Licentiate Thesis
-        cql: 'type exact licentiateThesis'
-      -
-        setSpec: licentiateThesisFtxt
-        setName: Licentiate Thesis with fulltext
-        cql: 'type exact licentiateThesis AND fulltext exact 1'
-      -
-        setSpec: newspaperArticle
-        setName: Newspaper Article
-        cql: 'type exact newspaperArticle'
-      -
-        setSpec: newspaperArticleFtxt
-        setName: Newspaper Article with fulltext
-        cql: 'type exact newspaperArticle AND fulltext exact 1'
-      -
-        setSpec: open_access
-        setName: All documents with fulltext
-        cql: 'fulltext exact 1'
-      -
-        setSpec: preprintFtxt
-        setName: Preprint with fulltext
-        cql: 'type exact preprint AND fulltext exact 1'
-      -
-        setSpec: reportFtxt
-        setName: Report with fulltext
-        cql: 'type exact report AND fulltext exact 1'
-      -
-        setSpec: reviewFtxt
-        setName: Book Review with fulltext
-        cql: 'type exact review AND fulltext exact 1'
-      -
-        setSpec: translation
-        setName: Translation
-        cql: 'type exact translation'
-      -
-        setSpec: translationFtxt
-        setName: Translation with fulltext
-        cql: 'type exact translation AND fulltext exact 1'
-      -
-        setSpec: workingPaperFtxt
-        setName: Working Paper with fulltext
-        cql: 'type exact workingPaper AND fulltext exact 1'

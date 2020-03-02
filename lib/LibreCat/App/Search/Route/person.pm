@@ -22,7 +22,7 @@ get '/person' => sub {
     my $c = params("query")->{browse} // 'a';
 
     my %search_params = (
-        cql   => ["publication_count>0 AND lastname=" . lc $c . "*"],
+        cql   => ["publication_count>0 AND lastname_browse=" . lc $c . "*"],
         sort  => h->config->{default_person_sort},
         start => 0,
         limit => 1000

@@ -8,7 +8,7 @@ use LibreCat::JobStatus;
 use Moo;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 has gearman => (is => 'lazy');
 

@@ -360,7 +360,14 @@ sub show_locale {
 }
 
 sub locale {
-    cookie('lang') // $_[0]->default_locale();
+    #no dancer request during test in t/LibreCat/App/Helper.t, so call to "params" fails
+    my $request = request();
+    my $param_lang = $request ?
+        params("query")->{lang} : undef;
+    $_[0]->locale_exists(
+        $param_lang
+    ) ? $param_lang :
+        cookie('lang') // $_[0]->default_locale();
 }
 
 sub set_locale {
@@ -499,20 +506,6 @@ register h => sub {$h};
 hook before_template => sub {
     $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
-
-};
-hook before => sub {
-
-    #set lang when sent
-    {
-        my $lang = param("lang");
-        if ( request->is_get() && $h->locale_exists( $lang ) ) {
-
-            $h->set_locale( $lang );
-
-        }
-
-    }
 
 };
 
