@@ -1,4 +1,4 @@
-package LibreCat::Hook::check_publication_duplicates:
+package LibreCat::Hook::check_publication_duplicates;
 
 use Catmandu::Sane;
 use LibreCat::Dedup::Publication;
