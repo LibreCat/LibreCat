@@ -3,7 +3,7 @@ use Catmandu::Sane;
 use Catmandu::Util qw(:is);
 use Moo;
 
-with "Catmandu::Logger";
+with "LibreCat::Logger";
 
 sub fix {
     my ($self, $data) = @_;

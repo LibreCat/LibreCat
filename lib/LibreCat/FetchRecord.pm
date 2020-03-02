@@ -6,7 +6,7 @@ use LibreCat qw(:self);
 use Moo::Role;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 requires 'fetch';
 

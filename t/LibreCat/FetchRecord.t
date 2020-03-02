@@ -53,7 +53,7 @@ qr/missing fetch/;
 
 {
     my $fetcher = T::FetchRecord->new;
-    ok $fetcher->does('Catmandu::Logger');
+    ok $fetcher->does('LibreCat::Logger');
     can_ok $fetcher, 'fetch';
 
     my $res = $fetcher->fetch(1);
@@ -64,7 +64,7 @@ qr/missing fetch/;
 
 {
     my $fetcher = T::FetchRecordWithoutFix->new;
-    ok $fetcher->does('Catmandu::Logger');
+    ok $fetcher->does('LibreCat::Logger');
     can_ok $fetcher, 'fetch';
 
     my $res = $fetcher->fetch(1);
