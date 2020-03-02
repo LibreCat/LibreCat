@@ -18,6 +18,7 @@ session_state:
     ## Turn in in https installations
     # secure: 1
     expires: 1209600
+    samesite: Strict
 session_store:
   package: "Plack::Session::Store::Catmandu"
   options:
