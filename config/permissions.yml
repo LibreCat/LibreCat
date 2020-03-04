@@ -1,6 +1,9 @@
 _prefix:
   permissions:
 
+# Cache duration : how long can we keep cached permissions in memory
+cache_duration: 10 seconds
+
 # Route to the login screen
 login_route: /login
 # Cookie key that contains the logged in user details

@@ -9,11 +9,26 @@ use LibreCat::Access;
 use Carp;
 use Dancer qw(:syntax);
 use Exporter qw/import/;
+use CHI;
 
 use Moo;
 
 sub _can_do_action {
     my ($self, $action, $id, $opts) = @_;
+
+    state $pub_cache  = CHI->new(
+            driver     => 'Memory',
+            expires_in => h->config->{permissions}->{cache_duration} // 10,
+            datastore  => {} ,
+            namespace  => 'pub_cache'
+    );
+
+    state $user_cache = CHI->new(
+            driver => 'Memory',
+            expires_in => h->config->{permissions}->{cache_duration} // 10, 
+            datastore => {} ,
+            namespace => 'user_cache'
+    );
 
     unless (defined($action)) {
         h->log->fatal("whoops! an action role needs to be filled in");
@@ -30,8 +45,19 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = publication->search_bag->get($id) or return 0;
-    my $user  = h->get_person($user_id);
+    my $pub   = $pub_cache->get($id);
+
+    unless ($pub) {
+         $pub = publication->search_bag->get($id) or return 0;
+         $pub_cache->set($id,$pub);
+    }
+
+    my $user  = $user_cache->get($user_id);
+
+    unless ($user) {
+         $user = h->get_person($user_id);
+         $user_cache->set($user_id,$user);
+    }
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';
