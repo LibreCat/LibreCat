@@ -13,22 +13,40 @@ use CHI;
 
 use Moo;
 
+sub cache {
+    state $cache = CHI->new(
+        driver => "Memory",
+        datastore => +{},
+        expires_in => h->config->{permissions}->{cache}->{expires_in} // 5,
+    );
+}
+
+sub get_cached_publication {
+    my $id = $_[0];
+
+    my $pub = cache()->get( "RECORD_${id}" );
+    my $set_cache = !$pub;
+    $pub //= h->main_publication->get($id);
+
+    cache()->set( "RECORD_${id}", $pub) if $set_cache;
+
+    $pub;
+}
+
+sub get_cached_user {
+    my $user_id = $_[0];
+
+    my $user = cache()->get( "USER_${user_id}" );
+    my $set_cache = !$user;
+    $user //= h->get_person( $user_id );
+
+    cache()->set("USER_${user_id}", $user) if $set_cache;
+
+    $user;
+}
+
 sub _can_do_action {
     my ($self, $action, $id, $opts) = @_;
-
-    state $pub_cache  = CHI->new(
-            driver     => 'Memory',
-            expires_in => h->config->{permissions}->{cache_duration} // 10,
-            datastore  => {} ,
-            namespace  => 'pub_cache'
-    );
-
-    state $user_cache = CHI->new(
-            driver => 'Memory',
-            expires_in => h->config->{permissions}->{cache_duration} // 10, 
-            datastore => {} ,
-            namespace => 'user_cache'
-    );
 
     unless (defined($action)) {
         h->log->fatal("whoops! an action role needs to be filled in");
@@ -45,19 +63,8 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = $pub_cache->get($id);
-
-    unless ($pub) {
-         $pub = publication->search_bag->get($id) or return 0;
-         $pub_cache->set($id,$pub);
-    }
-
-    my $user  = $user_cache->get($user_id);
-
-    unless ($user) {
-         $user = h->get_person($user_id);
-         $user_cache->set($user_id,$user);
-    }
+    my $pub   = get_cached_publication($id) or return 0;
+    my $user  = get_cached_user($user_id);
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';
@@ -217,7 +224,7 @@ sub can_download {
     is_string($id)     or return (0, "");
     is_hash_ref($opts) or return (0, "");
 
-    my $pub = publication->search_bag->get($id) or return (0, "");
+    my $pub = get_cached_publication($id) or return (0, "");
 
     my $file_id = $opts->{file_id};
     my $user_id = $opts->{user_id};
