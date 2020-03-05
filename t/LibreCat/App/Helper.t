@@ -300,4 +300,9 @@ is h->uri_for("/librecat",{ a => "a" }), "http://localhost:5001/librecat?a=a";
 
 }
 
+h->set_locale("de");
+is h->i18n("en")->localize("login.password"),"Password";
+is h->i18n("de")->localize("login.password"),"Passwort";
+is h->i18n()->localize("login.password"),"Passwort";
+
 done_testing;
