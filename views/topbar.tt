@@ -1,6 +1,5 @@
 [%- thisPerson = h.get_person(session.user_id) -%]
-[%- qp = request.params.hash %]
-[%- qp.delete('splat') %]
+[%- qp = params_query %]
 [%- lang = h.locale() %]
 [% lf = h.config.locale.$lang -%]
 [%- style = qp.style || h.config.citation.csl.default_style -%]
@@ -20,7 +19,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                [%- style = h.extract_params.style; sort = h.extract_params.item('sort') %]
+                [%- sort = h.extract_params.item('sort') %]
                 <li class="[% IF request.path_info == "/" %] active[% END%]"><a href="[% uri_base %]/"><span class="fa fa-home"></span>[% IF session.role == 'super_admin' %]<span class="hidden-sm">[% END %][% h.loc("header.brand") %][% IF session.role == 'super_admin' %]</span>[% END %]</a></li>
                 [%- IF session.user %]
                 <li class="[% IF request.path_info.match("/librecat") AND NOT  request.path_info.match("/librecat/admin")%] active[% END%]" title="[% h.loc("help.my_dashboard") %]"><a href="[% uri_base %]/librecat?[% IF style %]style=[% style %]&[% END %][% IF sort AND sort.0 %][% FOREACH s IN sort %]sort=[% s %]&[% END %][% END %]"><span class="fa fa-edit"></span>[% h.loc("header.my_dashboard") %]</a></li>
@@ -52,13 +51,7 @@
                 [%- END %]
             </ul>
         </div><!-- /.navbar-collapse -->
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-1 col-sm-2 col-md-offset-1">
-                    [% thisLang = h.locale() %]
-                </div>
-            </div>
-        </div><!-- /container -->
+        <!-- /container -->
     </nav>
     <div class="modal" id="selectAFF">
         <div class="modal-dialog">

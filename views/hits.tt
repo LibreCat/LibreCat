@@ -16,7 +16,7 @@
 
 [%- IF !backend AND total AND total > 1 %]
 [%- IF request.path_info.match("/person") %]
-[%- all_marked = h.all_marked(request.params) %]
+[%- all_marked = h.all_marked() %]
     <p>
       [%- IF all_marked %]
       <a class="btn btn-xs mark_all padding0" data-marked="1"><span class="fa fa-check-square-o fa-lg"></span> [% h.loc("mark.unmark_all") %]</a>

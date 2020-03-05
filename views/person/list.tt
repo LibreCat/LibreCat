@@ -1,9 +1,7 @@
-[%- qp = request.params.hash %]
-[%- qp.delete('splat') %]
+[%- qp = params_query %]
 [%- PROCESS header.tt %]
 
 <!-- BEGIN person/list.tt -->
-<span id="language_id" class="hidden">[% lang %]</span>
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->
     <div id="banner">

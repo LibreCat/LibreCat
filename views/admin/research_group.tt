@@ -1,8 +1,7 @@
-[% qp = request.params.hash %]
-[% qp.delete('splat') %]
+[%- qp = params_query -%]
 [% lang = h.locale() -%]
 [% lf = h.config.locale.$lang -%]
-[% backend = request.path_info.match('librecat') ? 1 : 0 %]
+[%- backend = 1 -%]
 
 [% INCLUDE header.tt %]
 

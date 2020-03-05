@@ -1,7 +1,6 @@
-[% qp = request.params.hash %]
-[% qp.delete('splat') %]
+[%- qp = params_query -%]
 [% lang = h.locale() -%]
-[% backend = request.path_info.match('librecat') ? 1 : 0 %]
+[%- backend = 1 -%]
 
 [% INCLUDE header.tt %]
 
@@ -31,7 +30,7 @@
     </form>
 
     [%- IF error %]
-      <p class="text-danger">[% error %] <a href="[% uri_base %]/librecat/admin/account/edit/[% qp.id %]"><span class="fa fa-pencil fw"></span>Edit</a></p>
+      <p class="text-danger">[% error %] <a href="[% uri_base %]/librecat/admin/account/edit/[% qp.id | uri %]"><span class="fa fa-pencil fw"></span>Edit</a></p>
     [%- END %]
 
     <div class="row col-md-12 margin-top1 margin-bottom2">

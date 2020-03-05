@@ -72,6 +72,17 @@ hook before => sub {
     }
 };
 
+hook before_template_render => sub {
+
+    my $tokens = $_[0];
+
+    #params in TT is hash resulted from call to "params()"
+    $tokens->{params_query} = params("query");
+    $tokens->{params_body} = params("body");
+    $tokens->{params_route} = params("route");
+
+};
+
 sub _login_route {
     my $conf = shift;
     sub {
