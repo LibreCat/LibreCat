@@ -63,8 +63,11 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = get_cached_publication($id) or return 0;
-    my $user  = get_cached_user($user_id);
+    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
+
+    is_hash_ref($pub) or return 0;
+
+    my $user  = $opts->{live} ? h->get_person( $user_id ) : get_cached_user($user_id);
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';
@@ -102,7 +105,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+ * user_id
+ * role
+ * [live=1]
 
 =back
 
@@ -123,7 +128,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -144,7 +151,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -165,7 +174,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -186,7 +197,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -213,6 +226,7 @@ Hash reference containing:
     * role (string)
     * file_id (string)
     * ip (string)
+    * [live=1]
 
 =back
 
@@ -224,8 +238,10 @@ sub can_download {
     is_string($id)     or return (0, "");
     is_hash_ref($opts) or return (0, "");
 
-    my $pub = get_cached_publication($id) or return (0, "");
+    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
 
+    is_hash_ref($pub) or retur (0,"");
+    
     my $file_id = $opts->{file_id};
     my $user_id = $opts->{user_id};
     my $role    = $opts->{role};
