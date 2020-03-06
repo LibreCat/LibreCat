@@ -15,8 +15,6 @@ my $mech = Test::WWW::Mechanize::PSGI->new(app => $app);
 subtest '/record/:id.:fmt' => sub {
     $mech->get_ok('/record/2737384.json');
 
-    $mech->get_ok('/record/2737384.rtf');
-
     $mech->get_ok('/record/2737384.yaml');
 
     $mech->get_ok('/record/2737384.bibtex');

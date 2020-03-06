@@ -38,13 +38,6 @@ exporter:
         fix: ["fixes/to_ris.fix"]
       label: 'RIS (reference software)'
       extension: ris
-    rtf:
-      package: RTF
-      content_type: 'application/rtf'
-      options:
-        fix: ["nothing()"]
-      extension: rtf
-      label: RTF
     aref:
       package: YAML
       content_type: 'text/x-yaml'

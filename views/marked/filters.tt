@@ -60,7 +60,6 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_facet" class="collapse">
-      <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
       <li><a href="[% request.uri_for('marked.bibtex') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
       <li><a href="[% request.uri_for('marked.ris') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.ris") %]</a></li>
       <li><a href="[% request.uri_for('marked.json') %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.json") %]</a></li>
@@ -70,32 +69,10 @@
   </li>
 </ul>
 
-<!-- Modal -->
-<div id="modal" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-	     <button type="button" class="close" data-dismiss="modal"><span class="fa fa-fw fa-times"></span></button>
-	     <h3 id="ModalExport">[% h.loc("facets.export_options") %]</h3>
-      </div>
-      <div class="modal-body">
-          [%- tmp.links=1 %][% tmp.style = qp.style %]
-	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('marked.rtf', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
-          [%- tmp.links=0 %]
-	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for('marked.rtf', tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withoutlinks") %]</a></p>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="[% uri_base %]/javascripts/clipboard.min.js">
 </script>
 <script>
 var clipboard = new Clipboard('.btn');
-
-$('.rtfmodal').click(function(){
-  $('myModal').modal('hide');
-});
 
 $('button.collapse').click(function(e){
   e.preventDefault();

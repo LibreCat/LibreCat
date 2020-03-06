@@ -178,7 +178,6 @@ facets:
   export_withlinks: "Liste mit Links exportieren (LibreCat | DOI | WoS etc.)"
   export_withoutlinks: "Liste ohne Links exportieren"
   exports:
-    rtf: "RTF (z.B. Word, Office)"
     bibtex: "BibTeX (z.B. Citavi)"
     ris: "RIS"
     json: "JSON"
