@@ -34,8 +34,8 @@ my $token = librecat->token->encode({foo => 'bar'});
 my $t = Test::Mojo->new('LibreCat::Application');
 
 subtest "get documentation" => sub {
-    $t->get_ok('/v1/openapi.json')->status_is(200)->json_has('/basePath');
-    $t->get_ok('/v1/openapi.json')->status_is(200);
+    $t->get_ok('/openapi.json')->status_is(200)->json_has('/basePath');
+    $t->get_ok('/openapi.json')->status_is(200);
 };
 
 subtest "authentication" => sub {
