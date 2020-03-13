@@ -106,8 +106,9 @@ subtest 'jsonapi' => sub{
         }
     }
 
-    my $uri_base = librecat->config->{uri_base};
-    my $token = librecat->token->encode({foo => "bar"});
+    my $librecat = librecat();
+    my $uri_base = $librecat->config->{uri_base};
+    my $token = $librecat->token->encode({foo => "bar"});
     my $err_auth_required = {
        errors => [
           {
@@ -124,6 +125,8 @@ subtest 'jsonapi' => sub{
           }
        ]
     };
+
+    my %headers = ( Authorization => "Bearer $token" );
 
     # model authentication: JWT
     {
@@ -151,7 +154,7 @@ subtest 'jsonapi' => sub{
 
         is( $mech->status, 403, "header Authorization with correct token, but without type Bearer: status 403" );
 
-        $mech->get( "/api/v1", Authorization => "Bearer $token" );
+        $mech->get( "/api/v1", %headers );
 
         #catch all route returns a 404
         is( $mech->status, 404, "authentication ok, but record not found" );
@@ -175,13 +178,13 @@ subtest 'jsonapi' => sub{
     {
         # GET /api/v1/user/:id
 
-        my $model_users = librecat->model( "user" );
+        my $model = $librecat->model( "user" );
 
-        $mech->get( "/api/v1/user/njfranck", Authorization => "Bearer $token" );
+        $mech->get( "/api/v1/user/njfranck", %headers );
 
-        is( $mech->status(), 404, "GET /api/v1/user/njfranck -> status 404" );
+        is( $mech->status(), 404, "GET /api/v1/user/:id -> status 404" );
 
-        $model_users->add({
+        $model->add({
             _id         => "njfranck",
             login       => "njfranck",
             password    => '$2a$08$p1zhJInkNqy9nvMFsEPde./hU4ERNQuX2UQUjZA/ddrp1uUXikn/6',
@@ -190,16 +193,13 @@ subtest 'jsonapi' => sub{
             full_name => "Nicolas Franck",
             first_name => "Nicolas",
             last_name => "Franck"
-        }, on_validation_error => sub {
-            my($r,$errors) = @_;
-            say STDERR "error during add: $_" for @$errors;
         });
 
-        my $test_user = $model_users->get( "njfranck" );
+        my $test_user = $model->get( "njfranck" );
 
-        $mech->get( "/api/v1/user/njfranck", Authorization => "Bearer $token" );
+        $mech->get( "/api/v1/user/njfranck", %headers );
 
-        is( $mech->status(), 200, "GET /api/v1/user/njfranck -> status 200" );
+        is( $mech->status(), 200, "GET /api/v1/user/:id -> status 200" );
 
         is_deeply(
             maybe_decode_json( $mech->content() ),
@@ -213,7 +213,7 @@ subtest 'jsonapi' => sub{
                     }
                 }
             },
-            "GET /api/v1/user/:id -> content"
+            "GET /api/v1/user/:id -> response body ok"
         );
 
         # PUT /api/v1/user/:id
@@ -221,13 +221,13 @@ subtest 'jsonapi' => sub{
 
         $mech->put(
             "/api/v1/user/njfranck",
-            Authorization => "Bearer $token",
+            %headers,
             Content => encode_json( $test_user )
         );
 
-        is( $mech->status(), 200, "PUT /api/v1/user/njfranck -> status 200" );
+        is( $mech->status(), 200, "PUT /api/v1/user/:id -> status 200" );
 
-        $test_user = $model_users->get("njfranck"); #get updated user
+        $test_user = $model->get("njfranck"); #get updated user
 
         is_deeply(
             maybe_decode_json( $mech->content ),
@@ -241,19 +241,19 @@ subtest 'jsonapi' => sub{
                     }
                 }
             },
-            "PUT /api/v1/user/njfranck -> content"
+            "PUT /api/v1/user/:id -> response body ok"
         );
 
         # PATCH /api/v1/user/:id
         $mech->patch(
             "/api/v1/user/njfranck",
-            Authorization => "Bearer $token",
+            %headers,
             Content => encode_json({ account_status => "active" })
         );
 
-        is( $mech->status(), 200, "PATCH /api/v1/user/njfranck -> status 200" );
+        is( $mech->status(), 200, "PATCH /api/v1/user/:id -> status 200" );
 
-        $test_user = $model_users->get("njfranck"); #get updated user
+        $test_user = $model->get("njfranck"); #get updated user
 
         is_deeply(
             maybe_decode_json( $mech->content ),
@@ -267,13 +267,13 @@ subtest 'jsonapi' => sub{
                     }
                 }
             },
-            "PATCH /api/v1/user/njfranck -> content"
+            "PATCH /api/v1/user/:id -> response body ok"
         );
 
         # POST /api/v1/user
         $mech->post(
             "/api/v1/user",
-            Authorization => "Bearer $token",
+            %headers,
             Content => encode_json({
                 account_status => "active",
                 first_name => "Patrick"
@@ -296,12 +296,12 @@ subtest 'jsonapi' => sub{
                     }
                 ]
             },
-            "POST /api/v1/user -> content"
+            "POST /api/v1/user -> response body ok"
         );
 
         $mech->post(
             "/api/v1/user",
-            Authorization => "Bearer $token",
+            %headers,
             Content => encode_json({
                 _id => "phochste",
                 account_status => "active",
@@ -312,7 +312,7 @@ subtest 'jsonapi' => sub{
 
         is( $mech->status(), 201, "POST /api/v1/user -> status 201" );
 
-        $test_user = $model_users->get( "phochste" );
+        $test_user = $model->get( "phochste" );
 
         is_deeply(
             maybe_decode_json( $mech->content ),
@@ -326,15 +326,18 @@ subtest 'jsonapi' => sub{
                     }
                 }
             },
-            "POST /api/v1/user -> content"
+            "POST /api/v1/user -> response body ok"
         );
 
-        my $versioning_enabled = $model_users->does("LibreCat::Model::Plugin::Versioning");
+        my $versioning_enabled = $model->does("LibreCat::Model::Plugin::Versioning");
 
         # GET /api/v1/user/:id/versions
-        $mech->get( "/api/v1/user/njfranck/versions", Authorization => "Bearer $token" );
+        $mech->get( "/api/v1/user/njfranck/versions", %headers );
 
-        unless( $versioning_enabled ){
+        if( $versioning_enabled ){
+
+        }
+        else {
 
             is( $mech->status, 400, "GET /api/v1/user/:id/versions -> status 400" );
 
@@ -354,6 +357,94 @@ subtest 'jsonapi' => sub{
         }
 
     }
+
+    # model publication: specific tests for this type of model -> versioning and file
+    {
+        # GET /api/v1/publication/:id/versions
+
+        my $model = $librecat->model( "publication" );
+
+        $model->add({
+            _id     => 1,
+            type    => "book",
+            status  => "new",
+            title   => "my little pony"
+        });
+
+        my $test_record = $model->get( 1 );
+
+        $mech->get( "/api/v1/publication/1/versions", %headers );
+
+        is( $mech->status, 200, "GET /api/v1/publication/:id/versions -> status 200" );
+
+        is_deeply(
+            maybe_decode_json( $mech->content() ),
+            {
+                data => [{
+                    type    => "publication",
+                    id      => "1",
+                    links   => {
+                        self => "${uri_base}/api/v1/publication/1/versions/1"
+                    },
+                    attributes => {
+                        _id         => "1",
+                        _version    => "1"
+                    }
+                }]
+            },
+            "GET /api/v1/publication/:id/versions -> response body ok"
+        );
+
+        # GET /api/v1/publication/:id/versions/:version
+        $mech->get( "/api/v1/publication/1/versions/1", %headers );
+
+        is( $mech->status, 200, "GET /api/v1/publication/:id/versions/:version -> status 200" );
+
+        is_deeply(
+            maybe_decode_json( $mech->content() ),
+            {
+                data => {
+                    type    => "publication",
+                    id      => "1",
+                    links   => {
+                        self => "${uri_base}/api/v1/publication/1/versions/1"
+                    },
+                    attributes => $test_record
+                }
+            },
+            "GET /api/v1/publication/:id/versions/:version -> response body ok"
+        );
+
+        # POST /api/v1/publication with forbidden attribute "file"
+        $mech->post(
+            "/api/v1/publication",
+            %headers,
+            Content => encode_json({
+                _id     => 1,
+                type    => "book",
+                status  => "new",
+                title   => "my little pony: part 2",
+                file    => []
+            })
+        );
+
+        is( $mech->status(), 403, "POST /api/v1/publication with forbidden attribute file -> status 403" );
+
+        is_deeply(
+            maybe_decode_json( $mech->content() ),
+            {
+                errors => [{
+                    status => "403",
+                    title  => "Forbidden to update attribute file in this route",
+                    source => { pointer => "/file" }
+                }]
+            },
+            "POST /api/v1/publication with forbidden attribute file -> response body ok"
+        );
+
+
+    }
+
 };
 
 done_testing;
