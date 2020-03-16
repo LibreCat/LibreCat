@@ -82,30 +82,6 @@ subtest 'openapi' => sub {
 
 subtest 'jsonapi' => sub{
 
-    # clean DBs
-    for my $bag (qw(publication department project research_group user)) {
-        note("deleting main $bag");
-        {
-            my $store = Catmandu->store("main")->bag($bag);
-            $store->delete_all;
-            $store->commit;
-        }
-
-        note("deleting version $bag");
-        {
-            my $store = Catmandu->store("main")->bag("$bag\_version");
-            $store->delete_all;
-            $store->commit;
-        }
-
-        note("deleting search $bag");
-        {
-            my $store = Catmandu->store("search")->bag($bag);
-            $store->delete_all;
-            $store->commit;
-        }
-    }
-
     my $librecat = librecat();
     my $uri_base = $librecat->config->{uri_base};
     my $token = $librecat->token->encode({foo => "bar"});
