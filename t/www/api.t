@@ -110,6 +110,7 @@ subtest 'jsonapi' => sub{
     my $uri_base = $librecat->config->{uri_base};
     my $token = $librecat->token->encode({foo => "bar"});
     my $err_auth_required = {
+       jsonapi => { version => "1.0" },
        errors => [
           {
              title => "authorization required",
@@ -118,6 +119,7 @@ subtest 'jsonapi' => sub{
        ]
     };
     my $err_access_denied = {
+       jsonapi => { version => "1.0" },
        errors => [
           {
              title => "access denied",
@@ -126,7 +128,11 @@ subtest 'jsonapi' => sub{
        ]
     };
 
-    my %headers = ( Authorization => "Bearer $token" );
+    my %headers = (
+        Authorization => "Bearer $token",
+        Accept => "application/vnd.api+json",
+        "Content-Type" => "application/vnd.api+json"
+    );
 
     # model authentication: JWT
     {
@@ -162,6 +168,7 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content() ),
             {
+               jsonapi => { version => "1.0" },
                errors => [
                   {
                      title => "route not found",
@@ -204,6 +211,7 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content() ),
             {
+                jsonapi => { version => "1.0" },
                 data => {
                     id => $test_user->{_id},
                     type => "user",
@@ -225,6 +233,38 @@ subtest 'jsonapi' => sub{
             Content => encode_json( $test_user )
         );
 
+        is( $mech->status(), 400, "PUT /api/v1/user/:id -> status 400");
+
+        is_deeply(
+            maybe_decode_json( $mech->content()),
+            {
+               jsonapi => { version => "1.0" },
+               errors => [
+                  {
+                     status => "400",
+                     title => "properties not allowed: _id/account_status/date_created/date_updated/first_name/full_name/last_name/login/password/super_admin",
+                     source => {
+                        pointer => "/"
+                     },
+                     code => "object.additionalProperties"
+                  }
+               ]
+            },
+            "PUT /api/v1/user/:id -> incorrect request body"
+        );
+
+        $mech->put(
+            "/api/v1/user/njfranck",
+            %headers,
+            Content => encode_json({
+                data => {
+                    type => "user",
+                    id   => $test_user->{_id},
+                    attributes => $test_user
+                }
+            })
+        );
+
         is( $mech->status(), 200, "PUT /api/v1/user/:id -> status 200" );
 
         $test_user = $model->get("njfranck"); #get updated user
@@ -232,6 +272,7 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content ),
             {
+                jsonapi => { version => "1.0" },
                 data => {
                     id => $test_user->{_id},
                     type => "user",
@@ -248,7 +289,15 @@ subtest 'jsonapi' => sub{
         $mech->patch(
             "/api/v1/user/njfranck",
             %headers,
-            Content => encode_json({ account_status => "active" })
+            Content => encode_json({
+                data => {
+                    id => $test_user->{_id},
+                    type => "user",
+                    attributes => {
+                        account_status => "active"
+                    }
+                }
+            })
         );
 
         is( $mech->status(), 200, "PATCH /api/v1/user/:id -> status 200" );
@@ -258,6 +307,7 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content ),
             {
+                jsonapi => { version => "1.0" },
                 data => {
                     id => $test_user->{_id},
                     type => "user",
@@ -275,8 +325,14 @@ subtest 'jsonapi' => sub{
             "/api/v1/user",
             %headers,
             Content => encode_json({
-                account_status => "active",
-                first_name => "Patrick"
+                data => {
+                    id   => "phochste",
+                    type => "user",
+                    attributes => {
+                        account_status => "active",
+                        first_name => "Patrick"
+                    }
+                }
             })
         );
 
@@ -285,12 +341,13 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content ),
             {
+                jsonapi => { version => "1.0" },
                 errors => [
                     {
                         title => "last_name is required",
                         code => "object.required",
                         source => {
-                            pointer => "/last_name"
+                            pointer => "/data/attributes/last_name"
                         },
                         status => "400"
                     }
@@ -303,10 +360,15 @@ subtest 'jsonapi' => sub{
             "/api/v1/user",
             %headers,
             Content => encode_json({
-                _id => "phochste",
-                account_status => "active",
-                first_name => "Patrick",
-                last_name => "Hochstenbach"
+                data => {
+                    id => "phochste",
+                    type => "user",
+                    attributes => {
+                        account_status => "active",
+                        first_name => "Patrick",
+                        last_name => "Hochstenbach"
+                    }
+                }
             })
         );
 
@@ -317,6 +379,7 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content ),
             {
+                jsonapi => { version => "1.0" },
                 data => {
                     id => $test_user->{_id},
                     type => "user",
@@ -344,6 +407,7 @@ subtest 'jsonapi' => sub{
             is_deeply(
                 maybe_decode_json( $mech->content ),
                 {
+                    jsonapi => { version => "1.0" },
                     errors => [
                       {
                           title => "no versioning is enabled for model user",
@@ -358,7 +422,7 @@ subtest 'jsonapi' => sub{
 
     }
 
-    # model publication: specific tests for this type of model -> versioning and file
+    # model publication: specific tests for this type of model
     {
         # GET /api/v1/publication/:id/versions
 
@@ -380,6 +444,7 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content() ),
             {
+                jsonapi => { version => "1.0" },
                 data => [{
                     type    => "publication",
                     id      => "1",
@@ -403,6 +468,7 @@ subtest 'jsonapi' => sub{
         is_deeply(
             maybe_decode_json( $mech->content() ),
             {
+                jsonapi => { version => "1.0" },
                 data => {
                     type    => "publication",
                     id      => "1",
@@ -414,34 +480,6 @@ subtest 'jsonapi' => sub{
             },
             "GET /api/v1/publication/:id/versions/:version -> response body ok"
         );
-
-        # POST /api/v1/publication with forbidden attribute "file"
-        $mech->post(
-            "/api/v1/publication",
-            %headers,
-            Content => encode_json({
-                _id     => 1,
-                type    => "book",
-                status  => "new",
-                title   => "my little pony: part 2",
-                file    => []
-            })
-        );
-
-        is( $mech->status(), 403, "POST /api/v1/publication with forbidden attribute file -> status 403" );
-
-        is_deeply(
-            maybe_decode_json( $mech->content() ),
-            {
-                errors => [{
-                    status => "403",
-                    title  => "Forbidden to update attribute file in this route",
-                    source => { pointer => "/file" }
-                }]
-            },
-            "POST /api/v1/publication with forbidden attribute file -> response body ok"
-        );
-
 
     }
 

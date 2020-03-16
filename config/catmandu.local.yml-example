@@ -7,13 +7,12 @@ admin_email: librecat@somewhere.org
 # API configuration
 # change at least the token secret! This should be a long random string
 # E.g. see https://onlinerandomtools.com/generate-random-string
-api:
-  v1:
-    token_secret: CHANGEME
-    #ip ranges that can access the json api
-    #note that it is better to restrict access in the proxy server or in a firewall
-    ip_range:
-        - 157.193.0.0/16
+json_api_v1:
+  token_secret: CHANGEME
+  #ip ranges that can access the json api
+  #note that it is better to restrict access in the proxy server or in a firewall
+  ip_range:
+    - 157.193.0.0/16
 
 # Default interface options
 default_lang: en
