@@ -42,10 +42,6 @@ requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
 
-# Mojolicious
-requires 'Mojolicious', '>=7.70';
-requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
-
 # Dancer
 requires 'Dancer';
 requires 'Dancer::Plugin';
