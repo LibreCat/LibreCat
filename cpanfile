@@ -122,3 +122,6 @@ requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
 requires 'Date::Simple';
 requires 'Tie::IxHash', '1.23';
+
+#LWP::UserAgent has method "patch" since version 6.42
+requires "LWP::UserAgent","6.42";
