@@ -29,7 +29,7 @@ has search_bag => (
 has validator => (
     is       => 'ro',
     required => 1,
-    handles  => [qw(is_valid whitelist)],
+    handles  => [qw(is_valid whitelist last_errors)],
     isa      => ConsumerOf ['LibreCat::Validator']
 );
 has before_add   => (is => 'lazy', init_arg => undef, isa => Pairs);
@@ -480,11 +480,13 @@ Commit any unsaved changes, for example after C<skip_commit => 1>. Always return
 
 =head2 validator
 
-Returns the validator for this model.
+Returns the validator for this model, which is a subclass of L<LibreCat::Validator>
 
 =head2 is_valid($rec)
 
 Return 1 if the given C<$rec> is valid, C<0> otherwise.
+
+Shortcut for C<< $model->validator->is_valid() >>.
 
 =head2 whitelist
 
@@ -492,6 +494,14 @@ Returns all whitelisted field names for this model. Any fields not in this list
 will be removed before adding the record. C<skip_before_filter> can be used to used to override this:
 
     $model->add($rec, skip_before_add => ['whitelist']);
+
+Shortcut for C<< $model->validator->whitelist() >>
+
+=head2 last_errors()
+
+Returns an array ref of errors. Each error is an instance of L<LibreCat::Validation::Error>.
+
+Shortcut for C<< $model->validator->last_errors() >>
 
 =head2 bag
 
