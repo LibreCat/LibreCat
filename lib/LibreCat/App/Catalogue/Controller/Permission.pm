@@ -9,8 +9,41 @@ use LibreCat::Access;
 use Carp;
 use Dancer qw(:syntax);
 use Exporter qw/import/;
+use CHI;
 
 use Moo;
+
+sub cache {
+    state $cache = CHI->new(
+        driver => "Memory",
+        datastore => +{},
+        expires_in => h->config->{permissions}->{cache}->{expires_in} // 5,
+    );
+}
+
+sub get_cached_publication {
+    my $id = $_[0];
+
+    my $pub = cache()->get( "RECORD_${id}" );
+    my $set_cache = !$pub;
+    $pub //= h->main_publication->get($id);
+
+    cache()->set( "RECORD_${id}", $pub) if $set_cache;
+
+    $pub;
+}
+
+sub get_cached_user {
+    my $user_id = $_[0];
+
+    my $user = cache()->get( "USER_${user_id}" );
+    my $set_cache = !$user;
+    $user //= h->get_person( $user_id );
+
+    cache()->set("USER_${user_id}", $user) if $set_cache;
+
+    $user;
+}
 
 sub _can_do_action {
     my ($self, $action, $id, $opts) = @_;
@@ -30,8 +63,11 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = publication->search_bag->get($id) or return 0;
-    my $user  = h->get_person($user_id);
+    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
+
+    is_hash_ref($pub) or return 0;
+
+    my $user  = $opts->{live} ? h->get_person( $user_id ) : get_cached_user($user_id);
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';
@@ -69,7 +105,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+ * user_id
+ * role
+ * [live=1]
 
 =back
 
@@ -90,7 +128,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -111,7 +151,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -132,7 +174,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -153,7 +197,9 @@ Publication identifier
 
 =item opts
 
-Hash reference containing "user_id" and "role". Both must be a string
+* user_id
+* role
+* [live=1]
 
 =back
 
@@ -180,6 +226,7 @@ Hash reference containing:
     * role (string)
     * file_id (string)
     * ip (string)
+    * [live=1]
 
 =back
 
@@ -191,8 +238,10 @@ sub can_download {
     is_string($id)     or return (0, "");
     is_hash_ref($opts) or return (0, "");
 
-    my $pub = publication->search_bag->get($id) or return (0, "");
+    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
 
+    is_hash_ref($pub) or retur (0,"");
+    
     my $file_id = $opts->{file_id};
     my $user_id = $opts->{user_id};
     my $role    = $opts->{role};
