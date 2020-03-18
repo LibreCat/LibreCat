@@ -143,7 +143,7 @@ join_field(_r.conference.name, ' ')
 # message
 timestamp(timestamp)
 datetime_format(timestamp, source_pattern: '%s', destination_pattern:    '%Y-%m-%d',)
-move_field(timestamp, _r.message.$append)
+#move_field(timestamp, _r.message.$append)
 prepend(_r.message.0, 'WoS Import ')
 
 upcase(LA)
