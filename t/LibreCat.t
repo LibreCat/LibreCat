@@ -173,6 +173,10 @@ isa_ok($instance->searcher, "LibreCat::Search",
 
 isa_ok($instance->queue, "LibreCat::JobQueue");
 
+# message
+
+isa_ok($instance->message, "LibreCat::Message");
+
 # hooks
 
 {
