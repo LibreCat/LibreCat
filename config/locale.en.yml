@@ -116,6 +116,7 @@ main_page:
     arxiv: "arXiv"
     inspire: "Inspire"
     scoap3: "SCOAP-3"
+    message: "Message"
 person_profile:
   id_not_found: "Person ID not found."
   former_researcher: "Former LibreCat University Researcher"
