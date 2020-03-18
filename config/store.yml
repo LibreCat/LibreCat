@@ -10,20 +10,32 @@ main:
     bags:
       audit:
         mapping:
-            id:
-                type: string
-                column: pid
-                index: 1
-            bag:
-                type: string
-            process:
-                type: string
-            action:
-                type: string
-            message:
-                type: string
-            time:
-                type: integer
+          id:
+            type: string
+            column: pid
+            index: 1
+          bag:
+            type: string
+          process:
+            type: string
+          action:
+            type: string
+          message:
+            type: string
+          time:
+            type: integer
+      message:
+        mapping:
+          record_id:
+            type: string
+            column: pid
+            index: 1
+          user_id:
+            type: string
+          message:
+            type: string
+          time:
+            type: integer
       session:
         plugins: ['Datestamps']
       publication:
@@ -36,8 +48,6 @@ main:
       department:
         plugins: ['Datestamps']
       research_group:
-        plugins: ['Datestamps']
-      message:
         plugins: ['Datestamps']
       reqcopy:
         plugins: []
