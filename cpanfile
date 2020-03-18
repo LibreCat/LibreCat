@@ -84,6 +84,7 @@ requires 'App::bmkpasswd', '2.010001';
 requires 'Autoload::AUTOCAN', '0.005';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
+requires 'CHI','0.60';
 requires 'Clone';
 requires 'Code::TidyAll', 0;
 requires 'Config::Onion', '>= 1.007';
