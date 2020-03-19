@@ -291,6 +291,22 @@ Deletes record with id. For admins only.
         redirect uri_for('/librecat');
     };
 
+=head2 GET /preview/:id.:fmt
+
+Export publication with ID :id in format :fmt
+
+Only publications with status C<deleted> are not visible.
+
+=cut
+
+get '/preview/:id.:fmt' => sub {
+    my $rparams = params("route");
+    my $id  = $rparams->{id};
+    my $fmt = $rparams->{fmt} // 'yaml';
+
+    forward "/librecat/export", {cql => "id=$id", fmt => $fmt , limit => 1};
+};
+
 =head2 GET /preview/id
 
 Prints the frontdoor for every record.
