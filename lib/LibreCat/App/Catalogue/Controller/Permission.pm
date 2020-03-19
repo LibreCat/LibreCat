@@ -240,8 +240,8 @@ sub can_download {
 
     my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
 
-    is_hash_ref($pub) or retur (0,"");
-    
+    is_hash_ref($pub) or return (0,"");
+
     my $file_id = $opts->{file_id};
     my $user_id = $opts->{user_id};
     my $role    = $opts->{role};
