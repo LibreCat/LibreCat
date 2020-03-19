@@ -52,7 +52,7 @@ All actions related to a publication record are handled under this prefix.
 
 prefix '/librecat/record' => sub {
 
-=head2 GET /librecat/record/new
+=head2 GET /new
 
 Prints a list of available publication types + import form.
 
@@ -61,18 +61,13 @@ Some fields are pre-filled.
 =cut
 
     get '/new' => sub {
-        my $params_body = params("body");
-        my $params_query = params("query");
-        my $h = h();
-        my $type = $params_query->{type};
+        my $params_query= params("query");
+        my $h           = h();
+        my $type        = $params_query->{type};
         my $user_id     = session("user_id");
         my $user_login  = session("user");
         my $user_role   = session("role");
-        my $user = $h->get_person($user_id);
-
-        var form_action => uri_for( "/librecat/record" );
-        var form_method => "POST";
-        var new_record  => 1;
+        my $user        = $h->get_person($user_id);
 
         return template 'backend/add_new' unless $type;
 
@@ -121,13 +116,19 @@ Some fields are pre-filled.
             }
         }
 
-        if ($h->locale_exists(param('lang'))) {
-            $data->{lang} = param('lang');
+        if( $h->locale_exists( $params_query->{lang} ) ){
+            $data->{lang} = $params_query->{lang};
         }
 
         # -- end default fields ---
 
         $hook->fix_after($data);
+
+        #important values and flags for the form in order to distinguish between the contexts
+        #it is used in
+        var form_action => uri_for( "/librecat/record" );
+        var form_method => "POST";
+        var new_record  => 1;
 
         my $template = File::Spec->catfile(
             "backend","forms",$type
@@ -146,7 +147,8 @@ Checks if the user has permission the see/edit this record.
 
     get '/edit/:id' => sub {
 
-        my $rec = publication->get(param("id")) or pass;
+        my $id  = params("route")->{id};
+        my $rec = publication->get($id) or pass;
 
         unless (
             p->can_edit(
@@ -176,8 +178,10 @@ Checks if the user has permission the see/edit this record.
 
         $hook->fix_after($rec);
 
+        #important values and flags for the form in order to distinguish between the contexts
+        #it is used in
         var form_action => uri_for(
-            "/librecat/record/".uri_escape(params("route")->{id}),{ "x-tunneled-method" => "PUT" }
+            "/librecat/record/".uri_escape($id),{ "x-tunneled-method" => "PUT" }
         );
         var form_method => "POST";
         var new_record  => 0;
@@ -375,7 +379,7 @@ Clones the record with ID :id and returns a form with a different ID.
 =cut
 
     get '/clone/:id' => sub {
-        my $id  = params->{id};
+        my $id  = params("route")->{id};
         my $rec = publication->get($id);
 
         unless ($rec) {
@@ -391,11 +395,18 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{related_material};
 
         $rec->{_id}        = publication->generate_id;
-        $rec->{new_record} = 1;
 
-        my $template = $rec->{type} . ".tt";
+        #important values and flags for the form in order to distinguish between the contexts
+        #it is used in
+        var form_action => uri_for( "/librecat/record" );
+        var form_method => "POST";
+        var new_record  => 1;
 
-        return template "backend/forms/$template", $rec;
+        my $template = File::Spec->catfile(
+            "backend","forms",$rec->{type}
+        );
+
+        template $template, $rec;
     };
 
 =head2 GET /publish/:id
@@ -449,37 +460,57 @@ Publishes private records, returns to the list.
         redirect $return_url || uri_for('/librecat');
     };
 
-=head2 POST /change_mode
+=head2 POST /change_type
 
 Changes the type of the publication.
+
+The record is not stored yet.
 
 =cut
 
     post '/change_type' => sub {
-        my $params = params;
+        my $params_body = params("body");
+        my $h = h();
 
-        $params->{file} = [$params->{file}]
-            if ($params->{file} and ref $params->{file} ne "ARRAY");
+        #unpack strange format of record.file
+        #TODO: this should not be necessary
+        $params_body->{file} = decode_file( $params_body->{file} );
 
-        $params = h->nested_params($params);
-        if ($params->{file}) {
-            foreach my $fi (@{$params->{file}}) {
-                $fi              = encode('UTF-8', $fi);
-                $fi              = from_json($fi);
-                $fi->{file_json} = to_json($fi);
-            }
-        }
+        my $body = $h->nested_params( $params_body );
 
         # Use config/hooks.yml to register functions
         # that should run before/after changing the edit mode
-        state $hook = h->hook('publication-change-type');
-        $hook->fix_before($params);
-        $hook->fix_after($params);
+        state $hook = $h->hook('publication-change-type');
+        $hook->fix_before($body);
+        $hook->fix_after($body);
 
-        template "backend/forms/$params->{type}", $params;
+        #important values and flags for the form in order to distinguish between the contexts
+        #it is used in
+        if( publication()->get( $body->{_id} ) ){
+
+            var form_action => uri_for(
+                "/librecat/record/".uri_escape( $body->{_id} ),{ "x-tunneled-method" => "PUT" }
+            );
+            var form_method => "POST";
+            var new_record  => 0;
+
+        }
+        else {
+
+            var form_action => uri_for( "/librecat/record" );
+            var form_method => "POST";
+            var new_record  => 1;
+
+        }
+
+        my $template = File::Spec->catfile(
+            "backend","forms",$body->{type}
+        );
+
+        template $template, $body;
     };
 
-=head2 POST /librecat/record
+=head2 POST /
 
 Saves a new record in the database.
 
@@ -574,6 +605,8 @@ Saves a new record in the database.
 
         flash danger => join( "<br>", @error_messages );
 
+        #important values and flags for the form in order to distinguish between the contexts
+        #it is used in
         var form_action => $request->uri_for( "/librecat/record" );
         var form_method => "POST";
         var new_record  => 1;
@@ -582,7 +615,7 @@ Saves a new record in the database.
 
     };
 
-=head2 PUT /librecat/record/:id
+=head2 PUT /:id
 
 Updates an existing record in the database
 
@@ -748,6 +781,8 @@ If record does not exist, then this route does not match
 
         flash danger => join( "<br>", @error_messages );
 
+        #important values and flags for the form in order to distinguish between the contexts
+        #it is used in
         var form_action => $request->uri_for(
             "/librecat/record/".uri_escape($id),{ "x-tunneled-method" => "PUT" }
         );
