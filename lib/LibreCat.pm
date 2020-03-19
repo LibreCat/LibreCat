@@ -64,7 +64,7 @@ sub _exporter_expand_sub {
         return $name => sub {state $memo = $class->instance};
     }
     if (any {$_ eq $name}
-        qw(log config fixer hook queue model root_path searcher timestamp token))
+        qw(log config fixer hook queue model root_path searcher timestamp token message))
     {
         return $name =>
             sub {state $memo = $class->instance; $memo->$name(@_)};
