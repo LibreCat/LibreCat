@@ -27,6 +27,11 @@ hooks:
     before_fixes: []
     after_fixes: []
 
+  # Code that runs when creating a publication
+  publication-create:
+    before_fixes: []
+    after_fixes: []
+
   # Code that runs at a 'Make public' action
   publication-publish:
     before_fixes: []
