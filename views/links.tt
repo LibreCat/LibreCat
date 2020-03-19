@@ -47,7 +47,8 @@
   [%- IF session.role == "super_admin" %]
   | <a href='[% uri_base %]/librecat/search/admin?q="[% entry.title.replace("[\'\"\,\;\:\.]+","") %]"&similar_search=1'>[% h.loc("main_page.links.search_similar") %]</a>
   [%- END %]
-  | <a href="#" data-record_id="[% entry._id %]">[% h.loc("main_page.links.message") %]</a>
+  | <a href="#" onclick="message_modal(this);" data-record_id="[% entry._id %]">[% h.loc("main_page.links.message") %]</a>
   <span class="pull-right">[% entry.date_updated.replace('(T|Z)',' ') %] (GMT)</span>
 [%- END %]
+
 <!-- END links.tt -->
