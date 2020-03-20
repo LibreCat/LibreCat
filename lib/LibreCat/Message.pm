@@ -8,53 +8,38 @@ use namespace::clean;
 extends "LibreCat::Validator::JSONSchema";
 
 has namespace => (
-    is => "ro",
-    default => sub { "validator.message.errors" },
+    is       => "ro",
+    default  => sub {"validator.message.errors"},
     init_arg => undef
 );
 
 has schema => (
-    is => "ro",
-    lazy => 1,
+    is      => "ro",
+    lazy    => 1,
     default => sub {
 
         # attribuut 'time' should NOT be added by a user
         # TODO: restrict to these attributes only?
         +{
-            '$schema'   => "http://json-schema.org/draft-04/schema#",
-            title       => "librecat message record",
-            type        => "object",
-            properties  => {
+            '$schema'  => "http://json-schema.org/draft-04/schema#",
+            title      => "librecat message record",
+            type       => "object",
+            properties => {
                 record_id => {
                     oneOf => [
-                        {
-                            type => "string",
-                            minLength => 1
-                        },
-                        {
-                            type => "integer",
-                            minimum => 0
-                        }
+                        {type => "string",  minLength => 1},
+                        {type => "integer", minimum   => 0}
                     ]
                 },
                 user_id => {
                     oneOf => [
-                        {
-                            type => "string",
-                            minLength => 1
-                        },
-                        {
-                            type => "integer",
-                            minimum => 0
-                        }
+                        {type => "string",  minLength => 1},
+                        {type => "integer", minimum   => 0}
                     ]
                 },
-                message => {
-                    type => "string",
-                    minLength => 2
-                }
+                message => {type => "string", minLength => 2}
             },
-            required => ["record_id","user_id","message"],
+            required             => ["record_id", "user_id", "message"],
             additionalProperties => 0
         };
     }
@@ -62,24 +47,24 @@ has schema => (
 );
 
 has bag => (
-    is => "ro",
-    lazy => 1,
+    is      => "ro",
+    lazy    => 1,
     default => sub {
         Catmandu->store("main")->bag("message");
     },
     init_arg => undef,
-    handles => "Catmandu::Bag"
+    handles  => "Catmandu::Bag"
 );
 
 around "add" => sub {
 
     my ($orig, $self, $rec) = @_;
 
-    return unless $self->is_valid( $rec );
+    return unless $self->is_valid($rec);
 
     $rec->{time} = time;
 
-    $orig->($self,$rec);
+    $orig->($self, $rec);
 
 };
 
@@ -156,7 +141,7 @@ checks the validity of the input record before adding it to the bag.
     $rec should like this:
 
         {
-            record_id      => "my_id",
+            record_id => "my_id",
             user _id => 1234,
             message => "some random message"
         }
