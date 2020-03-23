@@ -139,7 +139,7 @@ Checks if the user has permission the see/edit this record.
         unless (
             p->can_edit(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
             )
         {
@@ -201,7 +201,7 @@ Checks if the user has the rights to update this record.
             $params->{finalSubmit} eq 'recPublish'
             && p->can_make_public(
                 $params->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
             )
         {
@@ -211,7 +211,7 @@ Checks if the user has the rights to update this record.
             $params->{finalSubmit} eq 'recReturn'
             && p->can_return(
                 $params->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
             )
         {
@@ -221,7 +221,7 @@ Checks if the user has the rights to update this record.
             $params->{finalSubmit} eq 'recSubmit'
             && p->can_submit(
                 $params->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
             )
         {
@@ -230,7 +230,7 @@ Checks if the user has the rights to update this record.
         elsif (
             p->can_edit(
                 $params->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
         )
         {
@@ -352,7 +352,7 @@ Checks if the user has the rights to edit this record.
         unless (
             p->can_return(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
             )
         {
@@ -390,7 +390,7 @@ Deletes record with id. For admins only.
         unless (
             p->can_delete(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
             )
         {
@@ -412,6 +412,22 @@ Deletes record with id. For admins only.
 
         redirect uri_for('/librecat');
     };
+
+=head2 GET /preview/:id.:fmt
+
+Export publication with ID :id in format :fmt
+
+Only publications with status C<deleted> are not visible.
+
+=cut
+
+get '/preview/:id.:fmt' => sub {
+    my $rparams = params("route");
+    my $id  = $rparams->{id};
+    my $fmt = $rparams->{fmt} // 'yaml';
+
+    forward "/librecat/export", {cql => "id=$id", fmt => $fmt , limit => 1};
+};
 
 =head2 GET /preview/id
 
@@ -518,7 +534,7 @@ Publishes private records, returns to the list.
         unless (
             p->can_make_public(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role")}
+                {user_id => session("user_id"), role => session("role"), live=>1}
             )
             )
         {

@@ -159,7 +159,6 @@ note("hide record from public and try to download");
     $pubs->search_bag->add($r);
     $pubs->bag->commit();
     $pubs->search_bag->commit;
-
     $mech->max_redirect(0);
     $mech->get("/download/$record_id/$file_id/$file_name");
     is ($mech->status, 403, "forbidden: status 403");
