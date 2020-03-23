@@ -21,26 +21,26 @@ has schema => (
         # attribuut 'time' should NOT be added by a user
         # TODO: restrict to these attributes only?
         +{
-            '$schema'  => "http://json-schema.org/draft-04/schema#",
-            title      => "librecat message record",
-            type       => "object",
-            properties => {
-                record_id => {
-                    oneOf => [
-                        {type => "string",  minLength => 1},
-                        {type => "integer", minimum   => 0}
-                    ]
-                },
-                user_id => {
-                    oneOf => [
-                        {type => "string",  minLength => 1},
-                        {type => "integer", minimum   => 0}
-                    ]
-                },
-                message => {type => "string", minLength => 2}
-            },
-            required             => ["record_id", "user_id", "message"],
-            additionalProperties => 0
+            # '$schema'  => "http://json-schema.org/draft-04/schema#",
+            # title      => "librecat message record",
+            # type       => "object",
+            # properties => {
+            #     record_id => {
+            #         oneOf => [
+            #             {type => "string",  minLength => 1},
+            #             {type => "integer", minimum   => 0}
+            #         ]
+            #     },
+            #     user_id => {
+            #         oneOf => [
+            #             {type => "string",  minLength => 1},
+            #             {type => "integer", minimum   => 0}
+            #         ]
+            #     },
+            #     message => {type => "string", minLength => 2}
+            # },
+            # required             => ["record_id", "user_id", "message"],
+            # additionalProperties => 0
         };
     }
 

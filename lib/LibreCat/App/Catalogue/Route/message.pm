@@ -7,15 +7,32 @@ Route handler for messages.
 =cut
 
 use Catmandu::Sane;
-use LibreCat qw(message);
-
-# use Catmandu::Fix qw(expand);
 use Dancer qw(:syntax);
+use LibreCat qw(message);
+use LibreCat::App::Helper;
+use POSIX qw(strftime);
 
 get "/librecat/message/:record_id" => sub {
-    my $msg = librecat->message->select(record_id => params->{record_id})
-        // [];
-    return to_json($msg);
+    my $record_id = params->{record_id};
+
+    $record_id or pass;
+
+    my $it = message->select( record_id => $record_id )->sorted(
+            sub {
+                $_[0]->{time} <=> $_[1]->{time};
+            }
+        )->map(
+            sub {
+                $_[0]->{date} = strftime("%Y-%m-%dT%H:%M:%SZ",
+                    gmtime($_[0]->{time} // 0));
+                $_[0]->{user} = h->get_person($_[0]->{user_id})->{full_name};
+                $_[0];
+            }
+        );
+
+    my $array = $it->to_array;
+
+    to_json({message => $array});
 };
 
 post "/librecat/message" => sub {
@@ -48,7 +65,6 @@ post "/librecat/message" => sub {
 
     }
 
-    # return to_json({ _id => $msg_recr->{_id} });
     redirect "/librecat";
 };
 

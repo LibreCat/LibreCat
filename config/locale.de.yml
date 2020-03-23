@@ -118,6 +118,9 @@ main_page:
     inspire: "Inspire"
     scoap3: "SCOAP-3"
     message: "Nachricht"
+    message_for: "Notizen für ID: "
+    your_message: "Ihre Notiz"
+    message_history: "Historie"
 person_profile:
   id_not_found: "ID nicht gefunden."
   former_researcher: "Ehemaliger LibreCat Forscher"
