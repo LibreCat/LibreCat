@@ -42,10 +42,6 @@ requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
 
-# Mojolicious
-requires 'Mojolicious', '>=7.70';
-requires 'Mojolicious::Plugin::TemplateToolkit', '>=0.005';
-
 # Dancer
 requires 'Dancer';
 requires 'Dancer::Plugin';
@@ -84,6 +80,7 @@ requires 'App::bmkpasswd', '2.010001';
 requires 'Autoload::AUTOCAN', '0.005';
 requires 'Business::ISBN10';
 requires 'Business::ISBN13';
+requires 'CHI','0.60';
 requires 'Clone';
 requires 'Code::TidyAll', 0;
 requires 'Config::Onion', '>= 1.007';
@@ -126,3 +123,6 @@ requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
 requires 'Date::Simple';
 requires 'Tie::IxHash', '1.23';
+
+#LWP::UserAgent has method "patch" since version 6.42
+requires "LWP::UserAgent","6.42";

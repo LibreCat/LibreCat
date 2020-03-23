@@ -419,7 +419,7 @@ sub _build_queue {
 
 sub _build_token {
     my ($self) = @_;
-    LibreCat::Token->new(secret => $self->config->{api}{v1}{token_secret});
+    LibreCat::Token->new(secret => $self->config->{json_api_v1}{token_secret});
 }
 
 sub _build_message {
