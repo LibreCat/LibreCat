@@ -12,7 +12,8 @@ json_api_v1:
   #ip ranges that can access the json api
   #note that it is better to restrict access in the proxy server or in a firewall
   ip_range:
-    - 157.193.0.0/16
+      - 127.0.0.0/16
+      - 10.0.0.0/16
 
 # Default interface options
 default_lang: en
