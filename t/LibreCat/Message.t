@@ -57,7 +57,6 @@ is scalar(@{$msg->last_errors() // []}), 1;
 $msg->add({record_id => 1, user_id => 1234, message => "added publication"});
 is scalar(@{$msg->last_errors() // []}), 0;
 
-# attribute 'time' may never be present
 $msg->add(
     {
         record_id => 1,
