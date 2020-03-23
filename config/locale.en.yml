@@ -1948,7 +1948,7 @@ licenses:
 
 validator:
   jsonschema:
-    errors:
+    errors: &jsonschema_errors
       object:
         required: "[_1] is required"
         additionalProperties: "properties not allowed: [_2]"
@@ -1991,3 +1991,6 @@ validator:
         not: "[_1] should not match"
       "null":
         "null": "[_1] should be null"
+
+  json_api_v1:
+    errors: *jsonschema_errors
