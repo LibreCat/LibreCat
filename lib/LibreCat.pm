@@ -9,7 +9,7 @@ use Log::Any::Adapter;
 use Path::Tiny;
 use Catmandu::Util qw(is_ref is_hash_ref require_package use_lib read_yaml is_string);
 use List::MoreUtils qw(any);
-use String::CamelCase qw(camelize);
+use String::CamelCase qw(camelize decamelize);
 use POSIX qw(strftime);
 use LibreCat::Hook;
 use LibreCat::Token;
@@ -18,6 +18,7 @@ use Catmandu;
 use Exporter::Shiny;
 use Moo;
 use Autoload::AUTOCAN;
+use Module::Find;
 use namespace::clean -except => 'AUTOLOAD';
 
 # class methods (load and access singleton)
@@ -240,9 +241,13 @@ sub _setup_lib {
     }
 }
 
-# TODO load from config
 sub _build_models {
-    [qw(publication department research_group user project)];
+    [
+        map {
+            $_ =~ s/^LibreCat::Model:://o;
+            decamelize($_);
+        } Module::Find::findsubmod("LibreCat::Model")
+    ];
 }
 
 sub _new_model {
