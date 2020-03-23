@@ -25,17 +25,7 @@ main:
           time:
             type: integer
       message:
-        mapping:
-          record_id:
-            type: string
-            column: pid
-            index: 1
-          user_id:
-            type: string
-          message:
-            type: string
-          time:
-            type: integer
+        plugins: []
       session:
         plugins: ['Datestamps']
       publication:
