@@ -40,7 +40,7 @@ post "/librecat/message" => sub {
 
     my $user_id   = session->{user_id};
     my $record_id = params->{record_id};
-    my $message   = params->{new_message};
+    my $message   = params->{message};
 
     unless ($message) {
         content_type 'json';
