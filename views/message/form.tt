@@ -54,6 +54,7 @@ function message_modal(modal){
           date = date.replace('Z', '');
           $('#all_messages').append('<strong>' + r.user + ' (' + date + ')</strong><br />' + r.message + '<br /><br />');
       }
+      $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
   });
 
   $('#message_modal').modal('show');
