@@ -65,7 +65,12 @@ post "/librecat/message" => sub {
 
     }
 
-    redirect "/librecat";
+    if($params->{return_url}){
+      redirect $params->{return_url};
+    }
+    else {
+      redirect "/librecat";
+    }
 };
 
 1;
