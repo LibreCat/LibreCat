@@ -41,7 +41,7 @@ my \$pkg;
 BEGIN {
     \$pkg = '$package_name';
     use_ok \$pkg;
-};
+}
 
 require_ok \$pkg;
 
