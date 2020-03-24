@@ -13,14 +13,14 @@
           <div class="form-group">
             <label for="id_message" class="col-sm-2 control-label">[% h.loc("main_page.links.message_history") %]</label>
             <div class="col-sm-10">
-              <div class="well" id="all_messages"></div>
-              <!-- <textarea id="all_messages" class="form-control"></textarea> -->
+              <div style="max-height:200px;overflow: auto;" class="well" id="all_messages"></div>
             </div>
           </div>
           <div class="form-group">
             <label for="new_msg" class="col-sm-2 control-label">[% h.loc("main_page.links.your_message") %]</label>
             <div class="col-sm-10">
               <input type="hidden" name="record_id" id="message_record_id"/>
+              <input type="hidden" name="return_url" id="message_return_url" />
               <input type="text" name="message" id="new_msg" class="form-control" required />
             </div>
           </div>
@@ -40,15 +40,19 @@
 
 <script>
 function message_modal(modal){
-  console.log("got here");
   var rec_id = $(modal).data("record_id");
   $('#message_modal_label').text('[% h.loc("main_page.links.message_for") %]' + rec_id);
   $('#message_record_id').val(rec_id);
+  $('#message_return_url').val('[% request.request_uri %]');
+  $('#all_messages').text('');
 
   $.get('/librecat/message/' + rec_id, function (res) {
       for (r of res.message) {
           console.log(r);
-          $('#all_messages').append(r.date + ', ' + r.user + ': ' + r.message + '<br />');
+          var date = r.date;
+          date = date.replace('T', ' ');
+          date = date.replace('Z', '');
+          $('#all_messages').append('<strong>' + r.user + ' (' + date + ')</strong><br />' + r.message + '<br /><br />');
       }
   });
 
