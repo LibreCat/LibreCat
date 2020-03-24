@@ -17,18 +17,18 @@ get "/librecat/message/:record_id" => sub {
 
     $record_id or pass;
 
-    my $it = message->select( record_id => $record_id )->sorted(
-            sub {
-                $_[0]->{time} <=> $_[1]->{time};
-            }
-        )->map(
-            sub {
-                $_[0]->{date} = strftime("%Y-%m-%dT%H:%M:%SZ",
-                    gmtime($_[0]->{time} // 0));
-                $_[0]->{user} = h->get_person($_[0]->{user_id})->{full_name};
-                $_[0];
-            }
-        );
+    my $it = message->select(record_id => $record_id)->sorted(
+        sub {
+            $_[0]->{time} <=> $_[1]->{time};
+        }
+    )->map(
+        sub {
+            $_[0]->{date}
+                = strftime("%Y-%m-%dT%H:%M:%SZ", gmtime($_[0]->{time} // 0));
+            $_[0]->{user} = h->get_person($_[0]->{user_id})->{full_name};
+            $_[0];
+        }
+    );
 
     my $array = $it->to_array;
 
@@ -65,11 +65,11 @@ post "/librecat/message" => sub {
 
     }
 
-    if($params->{return_url}){
-      redirect $params->{return_url};
+    if ($params->{return_url}) {
+        redirect $params->{return_url};
     }
     else {
-      redirect "/librecat";
+        redirect "/librecat";
     }
 };
 
