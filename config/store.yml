@@ -454,7 +454,6 @@ search:
                 title: {type: text}
                 description: {type: text}
                 creator: {type: keyword}
-                request_a_copy: {type: byte}
             main_file_link:
               properties:
                 url: {type: text, analyzer: tag}
