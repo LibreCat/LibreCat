@@ -35,4 +35,37 @@ require_ok $pkg;
     ok length $result->output > 40, 'output looks good';
 }
 
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['token','encode','rubbish']);
+    ok(
+        index( $result->stderr, "unable to parse json" ) >= 0,
+        "supply valid json object"
+    );
+}
+
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['token','encode','[]']);
+    ok(
+        index( $result->stderr, "supplied payload should be a hash" ) >= 0,
+        "supplied payload should be a hash"
+    );
+}
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['token','encode','{}']);
+    is( $result->exit_code, 0, "empty payload is ok" );
+    ok( length( $result->stdout ) > 1, "empty payload returns a valid token" );
+}
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['token','encode','{ "model":"publication" }']);
+    is( $result->exit_code, 0, "payload.model=publication is ok" );
+}
+{
+    my $result = test_app(qq|LibreCat::CLI| => ['token','encode','{ "model":"rubbish" }']);
+    ok(
+        index( $result->stderr, "jwt payload not accepted" ) >= 0 &&
+        index( $result->stderr, "allowed values for model" ) >= 0,
+        "payload.model=rubbish is not ok"
+    );
+}
+
 done_testing;
