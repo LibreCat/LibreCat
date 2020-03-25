@@ -1,11 +1,11 @@
 package LibreCat::Cmd::token;
 
 use Catmandu::Sane;
-use Catmandu::Util qw(is_string check_hash_ref);
-use Catmandu;
-use LibreCat -self;
+use Catmandu::Util qw(is_string check_hash_ref is_hash_ref);
 use JSON::MaybeXS qw(decode_json);
 use Carp;
+use Try::Tiny;
+use LibreCat;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -47,11 +47,47 @@ sub command {
 
 sub _encode {
     my ($self, $json) = @_;
+
     my $payload;
+
     if (is_string($json)) {
-        $payload = check_hash_ref(decode_json($json));
+
+        my $parse_error;
+
+        try {
+            $payload = decode_json($json);
+        }catch {
+            $parse_error = $_;
+        };
+
+        if( $parse_error ){
+            say STDERR "unable to parse json: $parse_error";
+            return 1;
+        }
+
+        unless( is_hash_ref( $payload ) ){
+            say STDERR "supplied payload should be a hash";
+            return 1;
+        }
+
     }
-    say librecat->token->encode($payload);
+    else {
+
+        $payload = {};
+
+    }
+
+    my( $token,@errors ) = LibreCat->instance()->token()->encode( $payload );
+
+    unless( $token ){
+
+        say STDERR "jwt payload not accepted:";
+        say STDERR " * $_" for @errors;
+        return 1;
+
+    }
+
+    say $token;
     return 0;
 }
 

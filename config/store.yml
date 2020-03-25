@@ -43,6 +43,24 @@ main:
         plugins: []
       temp_files:
         plugins: []
+      tokens:
+        plugins: ['Datestamps']
+        id_generator: UUID
+        mapping:
+          _id:
+            type: string
+            column: id
+            required: 1
+            unique: 1
+            index: 1
+          date_created:
+            type: string
+          date_updated:
+            type: string
+          _data:
+            column: data
+            type: binary
+            serialize: all
 
 search:
   package: ElasticSearch

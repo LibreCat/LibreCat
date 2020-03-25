@@ -56,17 +56,20 @@ hook before => sub {
             }
 
             my($bearer,$token) = split( /\s+/o, $auth );
+            my $jwt_payload;
 
             unless(
                 is_string( $bearer ) &&
                 is_string( $token ) &&
                 lc( $bearer ) eq "bearer" &&
-                librecat->token->decode( $token )
+                ($jwt_payload = librecat->token->decode( $token ))
             ){
 
                 return $request->path_info( "/api/v1/_access_denied" );
 
             }
+
+            var jwt_payload => $jwt_payload;
 
             #Content-Negotiation
             #cf. https://jsonapi.org/format/#content-negotiation-servers
@@ -214,6 +217,15 @@ sub show_model_record {
         links      => { self => $self_uri },
     };
 
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => var("jwt_payload"),
+            model   => $model,
+            action  => "show",
+            id      => $id
+        );
+
     if( $model->does("LibreCat::Model::Plugin::Versioning") ){
 
         $data->{relationships} = {
@@ -238,6 +250,14 @@ sub create_model_record {
     my $model = librecat->model( $model_name ) // return not_found( title => "model $model_name not found" );
     my $parse_error;
     my $req   = request();
+
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => var("jwt_payload"),
+            model   => $model,
+            action  => "create"
+        );
 
     #validate request body against json api v1 spec
     my($body,@body_errors) = validate_request_body();
@@ -392,6 +412,15 @@ sub update_model_record {
     my $model = librecat->model( $model_name ) // return not_found( title => "model $model_name not found" );
     my $parse_error;
     my $req   = request();
+
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => var("jwt_payload"),
+            model   => $model,
+            action  => "update",
+            id      => $route_id
+        );
 
     #validate request according to JSON API
     my($body,@body_errors) = validate_request_body();
@@ -558,6 +587,15 @@ sub patch_model_record {
     my $model = librecat->model( $model_name ) // return not_found( title => "model $model_name not found" );
     my $parse_error;
     my $req   = request();
+
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => var("jwt_payload"),
+            model   => $model,
+            action  => "patch",
+            id      => $route_id
+        );
 
     #validate request according to JSON API
     my($body,@body_errors) = validate_request_body();
@@ -730,6 +768,15 @@ sub delete_model_record {
     my $rec   = $model->get( $id ) // return not_found( title => "record $id not found in model $model_name" );
     my $req   = request();
 
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => var("jwt_payload"),
+            model   => $model,
+            action  => "delete",
+            id      => $id
+        );
+
     librecat->hook("json-api-v1-${model_name}-delete")->fix_around(
         $rec,
         sub {
@@ -766,6 +813,15 @@ sub show_model_record_history {
         );
 
     }
+
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => var("jwt_payload"),
+            model   => $model,
+            action  => "show",
+            id      => $id
+        );
 
     my $versions = $model->get_history( $id ) // return not_found( title => "record $id not found in model $model_name" );
     my $req = request();
@@ -811,6 +867,15 @@ sub show_model_version {
         );
 
     }
+
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => var("jwt_payload"),
+            model   => $model,
+            action  => "show",
+            id      => $id
+        );
 
     my $rec     = $model->get_version( $id, $version ) // return not_found( title => "version $version not found for record $id of model $model_name" );
     my $req     = request();
@@ -941,6 +1006,59 @@ sub validate_request_body {
     my @errors = map { librecat_error_to_json_error( $_ ); } @{ $v->last_errors() };
 
     undef, @errors;
+}
+
+sub jwt_valid {
+
+    my(%args) = @_;
+
+    my $payload     = delete $args{payload};
+    my $model       = delete $args{model};
+    my $id          = delete $args{id};
+    my $action      = delete $args{action};
+
+    if( is_string( $payload->{model} ) && lc($payload->{model}) ne lc($model->name) ){
+
+        return 0;
+
+    }
+    elsif( is_array_ref( $payload->{action} ) && !array_includes( $payload->{action}, $action ) ){
+
+        return 0;
+
+    }elsif(
+        is_string( $payload->{cql} ) &&
+        is_string( $id )
+    ){
+
+        my $query;
+        my $parse_error;
+        try {
+            $query = $model->search_bag()->translate_cql_query( $payload->{cql} );
+        }catch{
+            $parse_error = $_;
+            h->log->error("unable to convert cql from jwt into ES query: $parse_error");
+        };
+        return 0 if defined( $parse_error );
+
+        my $hits  = $model->search_bag()->search(
+            query => {
+                bool => {
+                    must => $query,
+                    filter => {
+                        term => {
+                            _id => $id
+                        }
+                    }
+                }
+            },
+            limit => 0
+        );
+        return $hits->total() > 0;
+
+    }
+
+    1;
 }
 
 =head1 NAME

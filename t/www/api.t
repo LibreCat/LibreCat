@@ -84,7 +84,7 @@ subtest 'jsonapi' => sub{
 
     my $librecat = librecat();
     my $uri_base = $librecat->config->{uri_base};
-    my $token = $librecat->token->encode({foo => "bar"});
+    my($token) = $librecat->token->encode({});
     my $err_auth_required = {
        jsonapi => { version => "1.0" },
        errors => [
@@ -456,6 +456,46 @@ subtest 'jsonapi' => sub{
             },
             "GET /api/v1/publication/:id/versions/:version -> response body ok"
         );
+
+    }
+
+    #special tokens
+    {
+
+        #only access to model "department"
+        ($token) = $librecat->token()->encode({ model => "department" } );
+        $headers{Authorization} = "Bearer $token";
+
+        $mech->get( "/api/v1/publication/1", %headers );
+
+        is( $mech->status, 403, "GET /api/v1/publication/:id with restricted token -> status 403" );
+
+        is_deeply(
+            maybe_decode_json( $mech->content() ),
+            $err_access_denied,
+            "GET /api/v1/publication/:id with restricted token -> content is access denied"
+        );
+
+    }
+    {
+
+        #only access to model publication and filtered by cql query
+        ($token) = $librecat->token()->encode({ model => "publication", cql => "id<>1" });
+        $headers{Authorization} = "Bearer $token";
+
+        $mech->get( "/api/v1/publication/1", %headers );
+
+        is( $mech->status, 403, "GET /api/v1/publication/:id with restricted token -> status 403" );
+
+        is_deeply(
+            maybe_decode_json( $mech->content() ),
+            $err_access_denied,
+            "GET /api/v1/publication/:id with restricted token -> content is access denied"
+        );
+
+        $mech->get( "/api/v1/publication/2737383", %headers );
+
+        is( $mech->status, 200 );
 
     }
 
