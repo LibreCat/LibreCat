@@ -266,6 +266,15 @@ LibreCat::Token - manage json web tokens
         * required: false
         * description: time before which the token cannot be used, expressed as number of seconds since the Epoch.
 
+* effect of each payload attribute:
+
+    * an empty hash means no restrictions
+    * when C<model> is given, then only this model is accessable
+    * when C<action> is given, then only actions in this array are accessable
+    * when C<cql> (and also C<model>), then only records from this model and filtered by cql are accessable
+    * when C<exp> is given, the token can only be used before this time
+    * when C<nbf> is given, the token can only be used after this time
+
 =head2 encode( $payload ) : $token, @errors
 
 * argument C<$payload> must be a hash reference
