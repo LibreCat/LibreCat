@@ -17,4 +17,6 @@ lives_ok {$x = $pkg->new()} 'lives_ok';
 
 can_ok $x, 'fix';
 
+ok $x->fix({foo => 'bar'}), 'sleep';
+
 done_testing;
