@@ -38,6 +38,16 @@ has schema => (
                 },
                 message => {type => "string", minLength => 2}
             },
+            date_created => {
+                type => "string",
+                pattern => '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)',
+                description => "Upload date",
+            },
+            date_updated => {
+                type => "string",
+                pattern => '\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)',
+                description => "Last modification date",
+            },
             required             => ["record_id", "user_id", "message"],
             additionalProperties => 0
         };
@@ -60,8 +70,6 @@ around "add" => sub {
     my ($orig, $self, $rec) = @_;
 
     return unless $self->is_valid($rec);
-
-    $rec->{time} = time;
 
     $orig->($self, $rec);
 

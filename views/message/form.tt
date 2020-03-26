@@ -49,7 +49,7 @@ function message_modal(modal){
   $.get('/librecat/message/' + rec_id, function (res) {
       for (r of res.message) {
           console.log(r);
-          var date = r.date;
+          var date = r.date_created;
           date = date.replace('T', ' ');
           date = date.replace('Z', '');
           $('#all_messages').append('<strong>' + r.user + ' (' + date + ')</strong><br />' + r.message + '<br /><br />');

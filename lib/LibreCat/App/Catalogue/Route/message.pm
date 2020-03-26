@@ -10,7 +10,6 @@ use Catmandu::Sane;
 use Dancer qw(:syntax);
 use LibreCat qw(message);
 use LibreCat::App::Helper;
-use POSIX qw(strftime);
 
 get "/librecat/message/:record_id" => sub {
     my $record_id = params->{record_id};
@@ -19,12 +18,10 @@ get "/librecat/message/:record_id" => sub {
 
     my $it = message->select(record_id => $record_id)->sorted(
         sub {
-            $_[0]->{time} <=> $_[1]->{time};
+            $_[0]->{date_created} cmp $_[1]->{date_created};
         }
     )->map(
         sub {
-            $_[0]->{date}
-                = strftime("%Y-%m-%dT%H:%M:%SZ", gmtime($_[0]->{time} // 0));
             $_[0]->{user} = h->get_person($_[0]->{user_id})->{full_name};
             $_[0];
         }

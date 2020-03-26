@@ -25,7 +25,7 @@ main:
           time:
             type: integer
       message:
-        plugins: []
+        plugins: ['Datestamps']
       session:
         plugins: ['Datestamps']
       publication:

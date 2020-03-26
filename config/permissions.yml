@@ -58,6 +58,7 @@ routes:
     - [ 'ANY'  , '/librecat/admin'               , 'role' , 'super_admin' ]
 
     - [ 'ANY'  , '/librecat/audit'               , 'role' , 'super_admin' ]
+    - [ 'ANY'  , '/librecat/message'               , 'login' ]
 
     - [ 'GET'  , '/librecat/person/preference/\S+' , 'role' , 'delegate' ]
     - [ 'GET'  , '/librecat/person/preference'   , 'login'  ]
