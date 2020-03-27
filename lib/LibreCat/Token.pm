@@ -24,7 +24,7 @@ has bag => (
     is => "ro",
     lazy => 1,
     default => sub {
-        Catmandu->store("main")->bag("tokens");
+        Catmandu->store("main")->bag("jwt");
     },
     init_arg => undef
 );
@@ -228,7 +228,7 @@ LibreCat::Token - manage json web tokens
 
 * is: ro
 
-* description: internal method that loads C<< Catmandu->store("main")->bag("tokens") >>. This bag stores the payload of all the generated tokens
+* description: internal method that loads C<< Catmandu->store("main")->bag("jwt") >>. This bag stores the payload of all the generated tokens
 
 =head2 validator()
 
@@ -283,7 +283,7 @@ LibreCat::Token - manage json web tokens
 
 * if C<$payload> contains the attribute C<cql>, then the corresponding model tests if the query is valid.
 
-* the C<$payload> is added to the database table "tokens" that adds the extra attribute C<_id> to the payload
+* the C<$payload> is added to the database table "jwt" that adds the extra attribute C<_id> to the payload
 
 * the C<$payload> is encrypted into a token
 
@@ -302,7 +302,7 @@ LibreCat::Token - manage json web tokens
 
     * the token is ready to be used (if applicable). See payload attribute C<nbf>
 
-    * the C<_id> in the payload corresponds to a record in the table tokens. If not, the token is considered "revoked".
+    * the C<_id> in the payload corresponds to a record in the table "jwt". If not, the token is considered "revoked".
 
 * further validation of the payload must be done by a specific application.
 

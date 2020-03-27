@@ -43,7 +43,8 @@ main:
         plugins: []
       temp_files:
         plugins: []
-      tokens:
+      jwt:
+        #please do not override these settings in your own layer
         plugins: ['Datestamps']
         id_generator: UUID
         mapping:
