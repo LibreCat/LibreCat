@@ -1947,7 +1947,7 @@ validator:
         uniqueItems: "[_1] muss eindeutige Werte enthalten"
         additionalItems: "[_1] enthält eine ungültige Anzahl an Einträgen: [_2] Einträge, maximal [_3] Einträge erlaubt"
         maxItems: "[_1] hat zu viele Einträge: [_2] Einträge, maximal [_3] Einträge erlaubt"
-        minItems: "[_1] hat z wenige Einträge: [_2] Einträge, mindestens [_3] erforderlich"
+        minItems: "[_1] hat zu wenige Einträge: [_2] Einträge, mindestens [_3] erforderlich"
       oneOf:
         type: "[_1] muss [_2] sein, ist aber [_3]"
         all_rules_match: "Es kann nur eine Regel zutreffen"
