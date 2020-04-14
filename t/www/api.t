@@ -218,7 +218,7 @@ subtest 'jsonapi' => sub{
                errors => [
                   {
                      status => "400",
-                     title => "properties not allowed: _id/account_status/date_created/date_updated/first_name/full_name/last_name/login/password/super_admin",
+                     title => "properties not allowed: _id, account_status, date_created, date_updated, first_name, full_name, last_name, login, password, super_admin",
                      source => {
                         pointer => "/"
                      },
