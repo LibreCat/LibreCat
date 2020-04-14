@@ -32,6 +32,9 @@ template_debug: 0
 traces: 0
 warnings: 0
 
+#cf. https://metacpan.org/pod/Dancer::Request#body()
+raw_request_body_in_ram: true
+
 auth_sso: []
 session_sso: []
 

@@ -1950,7 +1950,7 @@ licenses:
 
 validator:
   jsonschema:
-    errors:
+    errors: &jsonschema_errors
       object:
         required: "[_1] is required"
         additionalProperties: "properties not allowed: [_2]"
@@ -1983,13 +1983,38 @@ validator:
         #[_2]: received value
         maximum: "[_1] should not be bigger than [_3]"
         minimum: "[_1] should not be smaller than [_3]"
-        multipleOf: "[_1 ] should contain a multiple of [_1]"
+        multipleOf: "[_1] should contain a multiple of [_1]"
+        ex_minimum: "[_1] should contain a value bigger than exclusive minimum [_3], got [_2]"
+        ex_maximum: "[_1] should contain a value smaller than exclusive maximum [_3], got [_2]"
       number:
         type: "[_1] must be number, got [_2]"
         maximum: "[_1] should not be bigger than [_3]"
         minimum: "[_1] should not be smaller than [_3]"
         multipleOf: "[_1 ] should contain a multiple of [_1]"
+        ex_minimum: "[_1] should contain a value bigger than exclusive minimum [_3], got [_2]"
+        ex_maximum: "[_1] should contain a value smaller than exclusive maximum [_3], got [_2]"
       not:
         not: "[_1] should not match"
       "null":
         "null": "[_1] should be null"
+      format:
+        email: "[_1] does not match email format"
+        idn-email: "[_1] does not match idn-email format"
+        hostname: "[_1] does not match hostname format"
+        idn-hostname: "[_1] does not match idn-hostname format"
+        time: "[_1] does not match time format"
+        date: "[_1] is not a valid date"
+        date-time: "[_1] is not a valid date-time"
+        ipv4: "[_1] is not a valid ipv4 address"
+        ipv6: "[_1] is not a valid ipv6 address"
+        uri-reference: "[_1] is not a valid URI-REFERENCE"
+        uri: "[_1] is not a valid URI"
+        iri: "[_1] is not a valid IRI"
+        iri-reference: "[_1] is not a valid IRI-REFERENCE"
+        regex: "[_1] is not a valid regular expression"
+        json-pointer: "[_1] is not a valid json-pointer"
+        relative-json-pointer: "[_1] is not a valid relative-json-pointer"
+        uri-template: "[_1] is not a valid URI-TEMPLATE"
+
+  json_api_v1:
+    errors: *jsonschema_errors

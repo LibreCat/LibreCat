@@ -2,9 +2,9 @@ audit: 1
 
 uri_base: "http://localhost:5001"
 
-api:
-  v1:
-    token_secret: testsecret
+json_api_v1:
+  token_secret: testsecret
+  ip_range: ["0.0.0.0/0"]
 
 default_lang: en
 default_page_size: 20

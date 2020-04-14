@@ -1930,3 +1930,74 @@ licenses:
     short: "MPL 2.0"
     deed_url: "https://opensource.org/licenses/MPL-2.0"
     legal_code_url: "https://www.mozilla.org/en-US/MPL/2.0/"
+
+validator:
+  jsonschema:
+    errors: &jsonschema_errors
+      object:
+        required: "[_1] ist ein Pflichtattribut"
+        additionalProperties: "Attribut nicht erlaubt: [_2]"
+        maxProperties: "Zu viele Attribute in [_1]: erhalten [_2], maximal [_3] erlaubt"
+        minProperties: "Zu wenige Attribute in [_1]: erhalten [_2], mindestens [_3] erforderlich"
+      string:
+        type: "[_1] muss String sein, ist aber [_2]"
+        pattern: "[_1] passt nicht auf Muster [_2]"
+        maxLength: "[_1] ist zu lang: [_2] Zeichen, maximal [_3] Zeichen erlaubt"
+        minLength: "[_1] ist zu kurz: [_2] Zeichen, mindestens [_3] Zeichen erforderlich"
+      array:
+        type: "[_1] muss ein Array sein, ist aber ein [_2]"
+        uniqueItems: "[_1] muss eindeutige Werte enthalten"
+        additionalItems: "[_1] enthält eine ungültige Anzahl an Einträgen: [_2] Einträge, maximal [_3] Einträge erlaubt"
+        maxItems: "[_1] hat zu viele Einträge: [_2] Einträge, maximal [_3] Einträge erlaubt"
+        minItems: "[_1] hat zu wenige Einträge: [_2] Einträge, mindestens [_3] erforderlich"
+      oneOf:
+        type: "[_1] muss [_2] sein, ist aber [_3]"
+        all_rules_match: "Es kann nur eine Regel zutreffen"
+      allOf:
+        type: "[_1] muss [_2] sein, ist aber [_3]"
+      anyOf:
+        type: "[_1] muss [_2] sein, ist aber [_3]"
+      enum:
+        enum: "Erlaubte Werte für [_1]: [_2]"
+      const:
+        const: "[_1] ist nicht der konstante Wert [_2]"
+      integer:
+        type: "[_1] muss Integer sein, ist aber [_2]"
+        #[_2]: received value
+        maximum: "[_1] darf nicht größer als [_3] sein"
+        minimum: "[_1] darf nicht kleiner als [_3] sein"
+        multipleOf: "[_1] muss ein Vielfaches von [_1] sein"
+        ex_minimum: "[_1] muss echt größer als [_3] sein, ist aber [_2]"
+        ex_maximum: "[_1] muss echt kleiner als [_3] sein, ist aber [_2]"
+      number:
+        type: "[_1] muss Number sein, ist aber [_2]"
+        maximum: "[_1] darf nicht größer als [_3] sein"
+        minimum: "[_1] darf nicht kleiner als [_3] sein"
+        multipleOf: "[_1] muss ein Vielfaches von [_1] sein"
+        ex_minimum: "[_1] muss echt größer als [_3] sein, ist aber [_2]"
+        ex_maximum: "[_1] muss echt kleiner als [_3] sein, ist aber [_2]"
+      not:
+        not: "[_1] darf nicht vorkommen"
+      "null":
+        "null": "[_1] muss 'null' sein"
+      format:
+        email: "[_1] ist nicht im Email-Format"
+        idn-email: "[_1] ist nicht im IDN-Email-Format"
+        hostname: "[_1] ist nicht im Hostname-Format"
+        idn-hostname: "[_1] ist nicht im IDN-Hostname-Format"
+        time: "[_1] ist nicht im Zeit-Format"
+        date: "[_1] ist kein valides Datum"
+        date-time: "[_1] ist kein valides 'Date-Time'"
+        ipv4: "[_1] ist keine valide IPv4-Adresse"
+        ipv6: "[_1] ist keine valide IPv6-Adresse"
+        uri-reference: "[_1] ist keine valide URI-REFERENCE"
+        uri: "[_1] ist kein valider URI"
+        iri: "[_1] ist kein valider IRI"
+        iri-reference: "[_1] is keine valide IRI-REFERENCE"
+        regex: "[_1] ist kein valider regulärer Ausdruck"
+        json-pointer: "[_1] ist kein valider json-pointer"
+        relative-json-pointer: "[_1] ist kein valider relative-json-pointer"
+        uri-template: "[_1] ist kein valides URI-TEMPLATE"
+
+  json_api_v1:
+    errors: *jsonschema_errors
