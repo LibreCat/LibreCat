@@ -44,8 +44,10 @@ header:
   logged_in_as: "Eingeloggt als"
 error:
   version_conflict: "Ihre Änderungen konnten nicht gespeichert werden. Diese Publikation wurde in der Zwischenzeit von jemand anderem bearbeitet."
-  update_failed: "Publikation %s konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
-  contact_admin: "Bitte kontaktieren Sie %s, falls das Problem bestehen bleibt."
+  update_failed: "Publikation [_1] konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
+  create_failed: "Publikation [_1] konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
+  record_id_taken: "Record [_1] has already been taken. Please reload this form to create a new record"
+  contact_admin: "Bitte kontaktieren Sie [_id], falls das Problem bestehen bleibt."
   preliminary_submit: "Das Formular wurde abgschickt bevor diese volständig geladen wurde. Alle Änderungen wurden verworfen."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
