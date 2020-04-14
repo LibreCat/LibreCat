@@ -41,6 +41,7 @@ can_ok $m, 'add';
 can_ok $m, 'add_many';
 can_ok $m, 'delete';
 can_ok $m, 'is_valid';
+can_ok $m, 'last_errors';
 can_ok $m, 'store';
 can_ok $m, 'purge';
 can_ok $m, 'generator';
