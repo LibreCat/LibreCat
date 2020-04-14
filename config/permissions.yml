@@ -21,7 +21,7 @@ handlers:
     no_access: internal
     # default: no login or role requires
     default: internal
-    # demo: demonstration extension, redirects a path to Google
+    # demo: demonstration extension, allows local access without password
     demo: LibreCat::App::Permission::demo
 
 # List of all the routes that need authentication (or not)
