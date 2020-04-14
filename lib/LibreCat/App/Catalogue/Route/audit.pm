@@ -71,6 +71,7 @@ List all audit messages for an :id in the store :bag
         my $id  = params("route")->{id};
 
         my $user_id = session->{user_id} // '<unknown>';
+        my $action  = params->{action};
         my $message = params->{message};
         my $login   = '<unknown>';
 
@@ -79,18 +80,22 @@ List all audit messages for an :id in the store :bag
             $login = $person->{login} if $person;
         }
 
-        unless ($message) {
+        unless ($action) {
             content_type 'json';
             status '406';
-            return to_json {error => "Parameter message is missing."};
+            return to_json {error => "Parameter action is missing."};
+        }
+
+        unless ($message) {
+            $message = "activated by $login ($user_id)";
         }
 
         my $ar = audit()->add({
             id      => $id,
             bag     => $bag,
             process => 'LibreCat::App::Catalogue::Route::audit',
-            action  => $message,
-            message => "activated by $login ($user_id)",
+            action  => $action,
+            message => $message,
         });
 
         unless($ar){
