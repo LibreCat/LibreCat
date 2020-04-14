@@ -9,8 +9,7 @@ hooks:
   # Code that runs when creating a new publication
   publication-new:
     before_fixes: []
-    after_fixes:
-        - audit_message
+    after_fixes: []
 
   # Code that runs when viewing a publication edit form
   publication-edit:
@@ -33,7 +32,8 @@ hooks:
   # Code that runs when creating a publication
   publication-create:
     before_fixes: []
-    after_fixes: []
+    after_fixes:
+        - audit_message
 
   # Code that runs at a 'Make public' action
   publication-publish:

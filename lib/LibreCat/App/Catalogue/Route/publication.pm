@@ -124,8 +124,8 @@ Some fields are pre-filled.
 
         $hook->fix_after($data);
 
-        #important values and flags for the form in order to distinguish between the contexts
-        #it is used in
+        # Important values and flags for the form in order to distinguish between the contexts
+        # it is used in
         var form_action => uri_for( "/librecat/record" );
         var form_method => "POST";
         var new_record  => 1;
@@ -178,8 +178,8 @@ Checks if the user has permission the see/edit this record.
 
         $hook->fix_after($rec);
 
-        #important values and flags for the form in order to distinguish between the contexts
-        #it is used in
+        # Important values and flags for the form in order to distinguish between the contexts
+        # it is used in
         var form_action => uri_for(
             "/librecat/record/".uri_escape($id),{ "x-tunneled-method" => "PUT" }
         );
@@ -484,8 +484,8 @@ The record is not stored yet.
         $hook->fix_before($body);
         $hook->fix_after($body);
 
-        #important values and flags for the form in order to distinguish between the contexts
-        #it is used in
+        # Important values and flags for the form in order to distinguish between the contexts
+        # it is used in
         if( publication()->get( $body->{_id} ) ){
 
             var form_action => uri_for(
@@ -545,16 +545,16 @@ Saves a new record in the database.
         }
         delete $params_body->{_end_};
 
-        #unpack strange format of record.file
-        #TODO: this should not be necessary
+        # Unpack strange format of record.file
+        # TODO: this should not be necessary
         $params_body->{file} = decode_file( $params_body->{file} );
 
         my $body = $h->nested_params( $params_body );
 
-        #user that last updated this record
+        # User that last updated this record
         $body->{user_id} = session("user_id");
 
-        #this used to live in the form..
+        # This used to live in the form..
         $body->{status} = "private";
 
         # Use config/hooks.yml to register functions
@@ -594,7 +594,7 @@ Saves a new record in the database.
 
         };
 
-        #all is well
+        # All is well
         return redirect $return_url if scalar( @error_messages ) == 0;
 
         # When we have an error record we return to the edit form and show
@@ -605,8 +605,8 @@ Saves a new record in the database.
 
         flash danger => join( "<br>", @error_messages );
 
-        #important values and flags for the form in order to distinguish between the contexts
-        #it is used in
+        # Important values and flags for the form in order to distinguish between the contexts
+        # it is used in
         var form_action => $request->uri_for( "/librecat/record" );
         var form_method => "POST";
         var new_record  => 1;
@@ -653,16 +653,16 @@ If record does not exist, then this route does not match
         }
         delete $params_body->{_end_};
 
-        #unpack strange format of record.file
-        #TODO: this should not be necessary
+        # Unpack strange format of record.file
+        # TODO: this should not be necessary
         $params_body->{file} = decode_file( $params_body->{file} );
 
         my $body = $h->nested_params( $params_body );
 
-        #just to make sure..
+        # Just to make sure..
         $body->{_id} = $id;
 
-        #user that last updated this record
+        # User that last updated this record
         $body->{user_id} = session("user_id");
 
         my $finalSubmit = delete $body->{finalSubmit};
@@ -770,7 +770,7 @@ If record does not exist, then this route does not match
 
         };
 
-        #all is well
+        # All is well
         return redirect( $return_url ) if scalar( @error_messages ) == 0;
 
         # When we have an error record we return to the edit form and show
@@ -781,8 +781,8 @@ If record does not exist, then this route does not match
 
         flash danger => join( "<br>", @error_messages );
 
-        #important values and flags for the form in order to distinguish between the contexts
-        #it is used in
+        # Important values and flags for the form in order to distinguish between the contexts
+        # it is used in
         var form_action => $request->uri_for(
             "/librecat/record/".uri_escape($id),{ "x-tunneled-method" => "PUT" }
         );
