@@ -130,11 +130,9 @@ dropzone_fields:
     descriptive:
         - relation
         - access_level
-        - request_a_copy
         - rac_email
         - title
         - description
-        - open_access
         - embargo
         - embargo_to
 
