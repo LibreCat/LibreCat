@@ -66,12 +66,18 @@ List all audit messages for an :id in the store :bag
             return template 'error',
                 {message => "Not allowed: audit is not activated."};
         }
-        
+
         my $bag = params("route")->{bag};
         my $id  = params("route")->{id};
 
-        my $user_id = session->{user_id};
+        my $user_id = session->{user_id} // '<unknown>';
         my $message = params->{message};
+        my $login   = '<unknown>';
+
+        if (defined session->{user_id}) {
+            my $person = h->get_person($user_id);
+            $login = $person->{login} if $person;
+        }
 
         unless ($message) {
             content_type 'json';
@@ -83,17 +89,15 @@ List all audit messages for an :id in the store :bag
             id      => $id,
             bag     => $bag,
             process => 'LibreCat::App::Catalogue::Route::audit',
-            action  => "post /librecat/audit/$bag/$id",
-            message => "$user_id says '$message'",
+            action  => $message,
+            message => "activated by $login ($user_id)",
         });
 
         unless($ar){
-
             #is not supposed to fail as all attributes are given
             content_type 'json';
             status 500;
             return to_json({ error => "unexpected error" });
-
         }
 
         return to_json({ _id => $ar->{_id} });
