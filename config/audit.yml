@@ -3,4 +3,4 @@
 ## as before_fixes / after_fixes. See:
 ##    https://github.com/LibreCat/LibreCat/wiki/Audit-messages
 # audit: 1
-audit: 0
+audit: 1
