@@ -690,6 +690,7 @@ sub _files_list {
                     embargo      => $file->{embargo} // 'NA',
                     embargo_to   => $file->{embargo_to} // 'NA',
                     file_name    => $file->{file_name},
+                    data         => $file->{data},
                 }
             );
         }
@@ -721,7 +722,18 @@ sub _files_load {
     my $update_file = sub {
         my ($id, $files) = @_;
         if (my $data = publication->get($id)) {
-            $self->_file_process($data, $files) && publication->add($data);
+            $self->_file_process($data, $files) && publication->add($data,
+                    on_validation_error => sub {
+                        my ($rec, $errors) = @_;
+
+                        my @t_errors = map {$_->localize();} @$errors;
+
+                        $self->log->errorf("%s not a valid publication %s",
+                            $rec->{_id}, \@t_errors);
+                        say STDERR join("\n",
+                            "ERROR: " . $rec->{_id} . " not a valid publication", @t_errors);
+                    }
+            );
         }
         else {
             warn "$id - no such publication";
@@ -738,6 +750,7 @@ sub _files_load {
         date_created date_updated file_id
         file_name file_size checksum
         relation title description embargo embargo_to
+        data
     );
 
     my $current_id;

@@ -125,7 +125,8 @@ dropzone_fields:
         - checksum
         - date_created
         - date_updated
-    # all the descriptive fields below can be edited
+        - data
+    # all the descriptive fields below can be edited in web forms
     # all other fields not in these two lists will be deleted
     descriptive:
         - relation
