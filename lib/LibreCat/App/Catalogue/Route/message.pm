@@ -10,11 +10,29 @@ use Catmandu::Sane;
 use Dancer qw(:syntax);
 use LibreCat qw(message);
 use LibreCat::App::Helper;
+use LibreCat::App::Catalogue::Controller::Permission;
+
+sub access_denied_hook {
+    h->hook('message-access-denied')
+        ->fix_around({_id => params->{record_id}, user_id => session->{user_id},});
+}
 
 get "/librecat/message/:record_id" => sub {
     my $record_id = params->{record_id};
 
     $record_id or pass;
+
+    unless (
+        p->can_edit(
+            $record_id,
+            {user_id => session("user_id"), role => session("role"), live=>1}
+        )
+        )
+    {
+        access_denied_hook();
+        status '403';
+        forward '/access_denied', {referer => request->referer};
+    }
 
     my $it = message->select(record_id => $record_id)->sorted(
         sub {
@@ -39,6 +57,16 @@ post "/librecat/message" => sub {
     my $record_id = params->{record_id};
     my $message   = params->{message};
 
+    unless (
+        p->can_edit(
+            $params->{_id},
+            {user_id => $user_id, role => session("role"), live=>1})
+        ) {
+            access_denied_hook();
+            status '403';
+            forward '/access_denied';
+    }
+
     unless ($message) {
         content_type 'json';
         status '406';
@@ -50,7 +78,7 @@ post "/librecat/message" => sub {
 
     unless ($msg_rec) {
 
-        #is not supposed to fail as all attributes are given
+        # is not supposed to fail as all attributes are given
         content_type 'json';
         status 500;
         return to_json(

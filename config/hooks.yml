@@ -86,3 +86,8 @@ hooks:
   import-new-wos:
     before_fixes: []
     after_fixes: []
+
+  # Code that runs when a message access is tried without credentials
+  message-access-denied:
+    before_fixes: []
+    after_fixes: []
