@@ -34,15 +34,18 @@ note("add / get message");
     $mech->submit_form_ok(
         {
             form_id => 'message_form',
-            fields =>
-                {record_id => 1, user_id => 1234, message => "Test message."},
+            fields  => {
+                record_id => 2737383,
+                user_id   => 1234,
+                message   => "Test message."
+            },
         },
         'submitting the message form'
     );
 
     $mech->content_contains("(Admin)", "back on dashboard");
 
-    $mech->get_ok('/librecat/message/1');
+    $mech->get_ok('/librecat/message/2737383');
 
     $mech->content_like(qr(Test message));
 }

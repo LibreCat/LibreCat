@@ -14,7 +14,8 @@ use LibreCat::App::Catalogue::Controller::Permission;
 
 sub access_denied_hook {
     h->hook('message-access-denied')
-        ->fix_around({_id => params->{record_id}, user_id => session->{user_id},});
+        ->fix_around(
+        {_id => params->{record_id}, user_id => session->{user_id},});
 }
 
 get "/librecat/message/:record_id" => sub {
@@ -25,7 +26,11 @@ get "/librecat/message/:record_id" => sub {
     unless (
         p->can_edit(
             $record_id,
-            {user_id => session("user_id"), role => session("role"), live=>1}
+            {
+                user_id => session("user_id"),
+                role    => session("role"),
+                live    => 1
+            }
         )
         )
     {
@@ -59,12 +64,14 @@ post "/librecat/message" => sub {
 
     unless (
         p->can_edit(
-            $params->{_id},
-            {user_id => $user_id, role => session("role"), live=>1})
-        ) {
-            access_denied_hook();
-            status '403';
-            forward '/access_denied';
+            $record_id,
+            {user_id => $user_id, role => session("role"), live => 1}
+        )
+        )
+    {
+        access_denied_hook();
+        status '403';
+        forward '/access_denied';
     }
 
     unless ($message) {
