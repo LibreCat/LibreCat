@@ -8,7 +8,7 @@ Route handler for messages.
 
 use Catmandu::Sane;
 use Dancer qw(:syntax);
-use LibreCat qw(message);
+use LibreCat::Message;
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
 
@@ -16,6 +16,10 @@ sub access_denied_hook {
     h->hook('message-access-denied')
         ->fix_around(
         {_id => params->{record_id}, user_id => session->{user_id},});
+}
+
+sub message {
+    state $msg = LibreCat::Message->new();
 }
 
 get "/librecat/message/:record_id" => sub {

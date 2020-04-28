@@ -64,7 +64,7 @@ sub _exporter_expand_sub {
         return $name => sub {state $memo = $class->instance};
     }
     if (any {$_ eq $name}
-        qw(log config fixer hook queue model root_path searcher timestamp token message))
+        qw(log config fixer hook queue model root_path searcher timestamp token))
     {
         return $name =>
             sub {state $memo = $class->instance; $memo->$name(@_)};
@@ -117,7 +117,6 @@ has _hook_instances  => (is => 'ro', init_arg => undef, default => sub {+{}});
 has searcher         => (is => 'lazy');
 has queue            => (is => 'lazy');
 has token            => (is => 'lazy');
-has message => (is => 'lazy');
 
 sub BUILD {
     my ($self) = @_;
@@ -422,10 +421,6 @@ sub _build_token {
     LibreCat::Token->new(secret => $self->config->{json_api_v1}{token_secret});
 }
 
-sub _build_message {
-    require_package('LibreCat::Message')->new;
-}
-
 sub timestamp {
     my ($self, $time) = @_;
     $time //= time;
@@ -566,8 +561,6 @@ variable, in which case the C<layers.yml> file will be ignored.
 =head2 timestamp($time)
 
 =head2 token
-
-=head2 message
 
 =head2 root_path
 

@@ -2,6 +2,7 @@ package LibreCat::Message;
 
 use Catmandu::Sane;
 use Catmandu;
+use LibreCat qw(hook);
 use Moo;
 use namespace::clean;
 
@@ -69,9 +70,13 @@ around "add" => sub {
 
     my ($orig, $self, $rec) = @_;
 
-    return unless $self->is_valid($rec);
-
-    $orig->($self, $rec);
+    hook('message-add')->fix_around(
+        $rec,
+        sub {
+            return unless $self->is_valid($rec);
+            $orig->($self, $rec);
+        }
+    );
 
 };
 

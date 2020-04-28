@@ -91,3 +91,8 @@ hooks:
   message-access-denied:
     before_fixes: []
     after_fixes: []
+
+  # Code that runs when adding a message
+  message-add:
+    before_fixes: []
+    after_fixes: []
