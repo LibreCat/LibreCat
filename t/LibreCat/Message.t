@@ -2,6 +2,7 @@ use Catmandu::Sane;
 use LibreCat -self => -load => {layer_paths => [qw(t/layer)]};
 use Test::More;
 use Test::Exception;
+use Data::Dumper;
 
 my $pkg;
 
@@ -45,19 +46,20 @@ dies_ok(
 $msg->bag->delete_all();
 
 # all attributes must be present in the record
-is $msg->add({}), undef;
+ok $msg->add({});
 is scalar(@{$msg->last_errors() // []}), 3;
+is $msg->select(record_id => 1)->count, 0;
 
-is $msg->add({record_id => 1}), undef;
+ok $msg->add({record_id => 1});
 is scalar(@{$msg->last_errors() // []}), 2;
+is $msg->select(record_id => 1)->count, 0;
 
-is $msg->add({record_id => 1, message => "added publication"}), undef;
+ok $msg->add({record_id => 1, message => "added publication"});
 is scalar(@{$msg->last_errors() // []}), 1;
+is $msg->select(record_id => 1)->count, 0;
 
-$msg->add({record_id => 1, user_id => 1234, message => "added publication"});
+ok $msg->add({record_id => 1, user_id => 1234, message => "added publication"});
 is scalar(@{$msg->last_errors() // []}), 0;
-
-# acts like a Catmandu::Bag
 is $msg->select(record_id => 1)->count, 1;
 
 END {
