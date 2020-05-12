@@ -38,7 +38,7 @@ is(
 
 is(
     $errors[0],
-    "properties not allowed: role/user",
+    "properties not allowed: role, user",
     "encode: no custom attributes allowed in payload"
 );
 
