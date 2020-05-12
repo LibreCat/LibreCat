@@ -6,6 +6,7 @@ use JSON::MaybeXS qw(decode_json);
 use Carp;
 use Try::Tiny;
 use LibreCat;
+use Catmandu::Exporter::YAML;
 use parent qw(LibreCat::Cmd);
 
 sub description {
@@ -13,7 +14,8 @@ sub description {
 Usage:
 
 librecat token encode
-librecat token encode '{"my": "payload"}'
+librecat token encode '{ "action": ["show","index"], "model": "publication", "cql" : "status=public" }'
+librecat token export
 
 EOF
 }
@@ -26,7 +28,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/(encode)/;
+    my $commands = qr/(encode|decode|reencode|export)/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -43,6 +45,16 @@ sub command {
     if ($cmd eq 'encode') {
         return $self->_encode(@$args);
     }
+    elsif( $cmd eq 'decode' ){
+        return $self->_decode(@$args);
+    }
+    elsif( $cmd eq 'export' ){
+        return $self->_export(@$args);
+    }
+    elsif( $cmd eq 'reencode' ){
+        return $self->_reencode(@$args);
+    }
+
 }
 
 sub _encode {
@@ -82,6 +94,65 @@ sub _encode {
     unless( $token ){
 
         say STDERR "jwt payload not accepted:";
+        say STDERR " * $_" for @errors;
+        return 1;
+
+    }
+
+    say $token;
+    return 0;
+}
+
+sub _decode {
+
+    my( $self, $token ) = @_;
+
+    my $payload = LibreCat->instance()->token()->decode( $token );
+
+    unless( defined( $payload ) ){
+        say STDERR "unable to decode token $token";
+        exit 1;
+    }
+
+    my $exporter = Catmandu::Exporter::YAML->new();
+
+    $exporter->add( $payload );
+
+    $exporter->commit();
+
+    0;
+
+}
+
+sub _export {
+
+    my $self = $_[0];
+
+    my $exporter = Catmandu::Exporter::YAML->new();
+
+    $exporter->add_many( LibreCat->instance()->token()->bag() );
+
+    $exporter->commit();
+
+    0;
+
+}
+
+sub _reencode {
+    my ($self, $id) = @_;
+
+    my $payload = LibreCat->instance()->token()->bag()->get( $id );
+
+    unless( $payload ){
+        say STDERR "no jwt payload for id $id";
+        exit 1;
+    }
+
+    my( $token,@errors ) = LibreCat->instance()->token()->payload_encode( $payload );
+
+    unless( $token ){
+
+        say STDERR "strange, old jwt payload not accepted:";
         say STDERR " * $_" for @errors;
         return 1;
 

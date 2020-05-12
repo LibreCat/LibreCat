@@ -218,7 +218,7 @@ subtest 'jsonapi' => sub{
                errors => [
                   {
                      status => "400",
-                     title => "properties not allowed: _id/account_status/date_created/date_updated/first_name/full_name/last_name/login/password/super_admin",
+                     title => "properties not allowed: _id, account_status, date_created, date_updated, first_name, full_name, last_name, login, password, super_admin",
                      source => {
                         pointer => "/"
                      },
@@ -497,6 +497,33 @@ subtest 'jsonapi' => sub{
 
         is( $mech->status, 200 );
 
+    }
+    {
+
+        ($token) = $librecat->token()->encode({ model => "publication", cql => "id<>1", action => ["index"] });
+        $headers{Authorization} = "Bearer $token";
+
+        $mech->get( "/api/v1/publication", %headers );
+
+        is( $mech->status, 200, "GET /api/v1/publication -> status 200" );
+
+        $mech->get( "/api/v1/publication?cql=id%3D1", %headers );
+
+        is( $mech->status, 200, "GET /api/v1/publication with query parameter -> status 200" );
+
+        is_deeply(
+            maybe_decode_json( $mech->content() ),
+            +{
+                jsonapi => { "version" => "1.0" },
+                data => [],
+                links => {
+                    last => "http://localhost:5001/api/v1/publication?page=0",
+                    self => "http://localhost:5001/api/v1/publication?page=0",
+                    first => "http://localhost:5001/api/v1/publication?page=1"
+                }
+            },
+            "GET /api/v1/publication with query parameter -> response is filtered"
+        );
     }
 
 };

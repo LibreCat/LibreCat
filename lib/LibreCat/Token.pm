@@ -45,6 +45,14 @@ sub _build_validator {
             title       => "librecat audit record",
             type        => "object",
             properties  => {
+                iss => {
+                    type => "string",
+                    minimum => 0
+                },
+                sub => {
+                    type => "string",
+                    minimum => 0
+                },
                 exp => {
                     type => "integer",
                     minimum => 0
@@ -63,7 +71,7 @@ sub _build_validator {
                     minItems => 1,
                     items => {
                         type => "string",
-                        enum => [qw(create show update patch delete)]
+                        enum => [qw(index create show update patch delete)]
                     }
                 },
                 cql => {
@@ -136,12 +144,20 @@ sub encode {
     #this way we can provoke tokens: tokens that can be decrypted but for which no payload can be found are interpreted as revoked.
     $payload = $self->bag()->add( $payload );
 
-    my $token = encode_jwt(payload => $payload, key => $self->secret, alg => 'HS512');
+    my $token = $self->payload_encode( $payload );
     if ($self->log->is_debug) {
         $self->log->debugf("Encoded JWT token $token %s", $payload);
     }
 
     wantarray ? ($token) : $token;
+
+}
+
+sub payload_encode {
+
+    my( $self, $payload ) = @_;
+
+    encode_jwt(payload => $payload, key => $self->secret, alg => 'HS512');
 
 }
 
@@ -242,7 +258,7 @@ LibreCat::Token - manage json web tokens
 
     * attribute C<action>:
         * type: array of strings
-        * each string is an enum: "show", "create", "update" or "patch"
+        * each string is an enum: "show", "create", "update", "index" or "patch"
         * required: false
 
     * attribute C<model>:

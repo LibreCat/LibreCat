@@ -140,6 +140,16 @@ prefix "/api/v1" => sub {
 
     };
 
+    # GET /api/v1/:model
+    get "/:model" => sub {
+
+        list_model_record(
+            params("query"),
+            params("route")
+        );
+
+    };
+
     # GET /api/v1/:model/:id
     get "/:model/:id" => sub {
 
@@ -198,6 +208,157 @@ prefix "/api/v1" => sub {
     };
 
 };
+
+sub list_model_record {
+
+    my(%args) = @_;
+
+    my $model_name = delete $args{model};
+
+    my $page = delete $args{page};
+    $page = is_array_ref( $page ) ? $page->[0] : $page;
+    $page = is_natural( $page ) && $page > 0 ? $page : 0;
+    my $limit = 5;
+    my $start = ( $page - 1 ) * $limit;
+
+    my $model = librecat->model( $model_name ) // return not_found( title => "model $model_name not found" );
+    my $jwt_payload = var("jwt_payload");
+
+    #jwt validation
+    forward( "/api/v1/_access_denied" )
+        unless jwt_valid(
+            payload => $jwt_payload,
+            model   => $model,
+            action  => "index"
+        );
+
+    my %search_arguments = ( start => $start, limit => $limit );
+
+    my $filter_query;
+    my $query;
+
+    # cql as stored in the jwt payload: acts as a pre-filter
+    if( is_string( $jwt_payload->{cql} ) ){
+
+        my $parse_error;
+
+        try {
+
+            $filter_query = $model->search_bag()->translate_cql_query( $jwt_payload->{cql} );
+
+        }catch {
+
+            $parse_error = $_;
+
+        };
+
+        if( defined( $parse_error ) ){
+
+            return json_errors(
+                400,
+                [{
+                    status => "400",
+                    title  => "invalid cql in payload cql"
+                }]
+            );
+
+        }
+
+    }
+    # cql as provided in the URL query parameter
+    if( is_string( $args{cql} ) ){
+
+        my $parse_error;
+
+        try {
+
+            $query = $model->search_bag()->translate_cql_query( $args{cql} );
+
+        }catch {
+
+            $parse_error = $_;
+
+        };
+
+        if( defined( $parse_error ) ){
+
+            return json_errors(
+                400,
+                [{
+                    status => "400",
+                    title  => "invalid cql in query parameters"
+                }]
+            );
+
+        }
+
+
+    }
+    if( defined($query) && defined( $filter_query ) ){
+
+        $query = +{
+            bool => {
+                must => $query,
+                #jwt query should not influence scoring
+                filter => $filter_query
+            }
+        };
+
+    }
+    elsif( defined( $query ) ){
+
+        #ok
+
+    }
+    elsif( defined( $filter_query ) ){
+
+        #jwt query should not influence scoring
+        $query = {
+            bool => {
+                filter => $filter_query
+            }
+        };
+
+    }
+    $search_arguments{query} = $query if defined( $query );
+
+    my $hits = $model->search_bag()->search(
+        %search_arguments
+    );
+
+    #TODO: note in api that it supports pagination
+    my $req = request();
+    my $parent_uri_base = $req->uri_for( $req->path_info() )->as_string();
+
+    my $data = [
+        map {
+
+            +{
+                type => $model_name,
+                id => $_->{_id},
+                attributes => $_,
+                links => {
+                    self => "${parent_uri_base}/".$_->{_id}
+                }
+            };
+
+        } @{ $hits->hits() }
+    ];
+    my $links = {
+        self  => "${parent_uri_base}?page=$page",
+        first => "${parent_uri_base}?page=1"
+    };
+    my $last_page = $hits->last_page();
+    my $previous_page = $hits->previous_page();
+    my $next_page = $hits->next_page();
+
+    $links->{last} = "${parent_uri_base}?page=$last_page" if $last_page != 1;
+    $links->{prev} = "${parent_uri_base}?page=$previous_page" if defined $previous_page;
+    $links->{next} = "${parent_uri_base}?page=$next_page" if defined $next_page;
+
+    json_response( 200, { data => $data, links => $links } );
+
+}
 
 sub show_model_record {
 
