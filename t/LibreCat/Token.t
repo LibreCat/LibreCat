@@ -36,10 +36,15 @@ is(
     "encode: no custom attributes allowed in payload"
 );
 
-is(
+like(
     $errors[0],
-    "properties not allowed: role, user",
+    qr/properties\snot\sallowed/,
     "encode: no custom attributes allowed in payload"
+);
+like(
+    $errors[0],
+    qr/(role|user)/,
+    "encode: no custom attributes allowed in payload: role, user"
 );
 
 ($jwt,@errors) = $t->encode( {} );
@@ -50,9 +55,14 @@ ok( scalar( @errors ) == 0, "encode: incorrect payload returns errors" );
 ($jwt,@errors) = $t->encode( { model => "rubbish" } );
 
 ok( !is_string( $jwt ), "encode: attribute model is restricted to existing model names" );
-is(
+like(
     $errors[0],
-    "allowed values for model: publication, department, research_group, user, project",
+    qr/allowed\svalues\sfor\smodel/,
+    "encode: attribute model is restricted to existing model names"
+);
+like(
+    $errors[0],
+    qr/(publication|department|research_group|user|project)/,
     "encode: attribute model is restricted to existing model names"
 );
 
