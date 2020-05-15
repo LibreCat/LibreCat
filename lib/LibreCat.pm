@@ -12,7 +12,6 @@ use List::MoreUtils qw(any);
 use String::CamelCase qw(camelize);
 use POSIX qw(strftime);
 use LibreCat::Hook;
-use LibreCat::Token;
 use Catmandu::Fix;
 use Catmandu;
 use Exporter::Shiny;
@@ -64,7 +63,7 @@ sub _exporter_expand_sub {
         return $name => sub {state $memo = $class->instance};
     }
     if (any {$_ eq $name}
-        qw(log config fixer hook queue model root_path searcher timestamp token))
+        qw(log config fixer hook queue model root_path searcher timestamp))
     {
         return $name =>
             sub {state $memo = $class->instance; $memo->$name(@_)};
@@ -116,7 +115,6 @@ has _model_accessors => (is => 'ro', init_arg => undef, default => sub {+{}});
 has _hook_instances  => (is => 'ro', init_arg => undef, default => sub {+{}});
 has searcher         => (is => 'lazy');
 has queue            => (is => 'lazy');
-has token            => (is => 'lazy');
 
 sub BUILD {
     my ($self) = @_;
@@ -416,14 +414,6 @@ sub _build_queue {
     require_package('LibreCat::JobQueue')->new;
 }
 
-sub _build_token {
-    my ($self) = @_;
-    LibreCat::Token->new(
-        secret => $self->config->{json_api_v1}{token_secret},
-        librecat => ref($self)->instance()
-    );
-}
-
 sub timestamp {
     my ($self, $time) = @_;
     $time //= time;
@@ -562,8 +552,6 @@ variable, in which case the C<layers.yml> file will be ignored.
 =head2 fixer
 
 =head2 timestamp($time)
-
-=head2 token
 
 =head2 root_path
 

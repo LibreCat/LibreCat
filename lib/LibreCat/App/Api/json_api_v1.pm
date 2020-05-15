@@ -10,10 +10,15 @@ use Dancer qw(:script);
 use LibreCat::App::Helper;
 use Try::Tiny;
 use LibreCat::Validator::JSONSchema;
+use LibreCat::JWTPayload;
 use URI::Escape qw(uri_escape_utf8 uri_escape);
 
 my $JSON_API_MIMETYPE = "application/vnd.api+json";
 my $JSON_API_VERSION   = "1.0";
+
+sub jwt_payloads {
+    state $j = LibreCat::JWTPayload->new(); 
+}
 
 # /api/v1
 hook before => sub {
@@ -62,7 +67,7 @@ hook before => sub {
                 is_string( $bearer ) &&
                 is_string( $token ) &&
                 lc( $bearer ) eq "bearer" &&
-                ($jwt_payload = librecat->token->decode( $token ))
+                ($jwt_payload = jwt_payloads()->decode( $token, validate => 1 ))
             ){
 
                 return $request->path_info( "/api/v1/_access_denied" );

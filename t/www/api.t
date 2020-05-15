@@ -11,6 +11,7 @@ use Test::WWW::Mechanize::PSGI;
 use JSON::MaybeXS qw();
 use Catmandu::Util qw();
 use Catmandu::Importer::YAML;
+use LibreCat::JWTPayload;
 use Try::Tiny;
 
 sub maybe_decode_json {
@@ -84,7 +85,8 @@ subtest 'jsonapi' => sub{
 
     my $librecat = librecat();
     my $uri_base = $librecat->config->{uri_base};
-    my($token) = $librecat->token->encode({});
+    my $jwt = LibreCat::JWTPayload->new();
+    my $token = $jwt->encode( $jwt->add({}) );
     my $err_auth_required = {
        jsonapi => { version => "1.0" },
        errors => [
@@ -463,7 +465,7 @@ subtest 'jsonapi' => sub{
     {
 
         #only access to model "department"
-        ($token) = $librecat->token()->encode({ model => "department" } );
+        $token = $jwt->encode( $jwt->add({ model => "department" }) );
         $headers{Authorization} = "Bearer $token";
 
         $mech->get( "/api/v1/publication/1", %headers );
@@ -480,7 +482,7 @@ subtest 'jsonapi' => sub{
     {
 
         #only access to model publication and filtered by cql query
-        ($token) = $librecat->token()->encode({ model => "publication", cql => "id<>1" });
+        $token = $jwt->encode( $jwt->add({ model => "publication", cql => "id<>1" }) );
         $headers{Authorization} = "Bearer $token";
 
         $mech->get( "/api/v1/publication/1", %headers );
@@ -500,7 +502,7 @@ subtest 'jsonapi' => sub{
     }
     {
 
-        ($token) = $librecat->token()->encode({ model => "publication", cql => "id<>1", action => ["index"] });
+        $token = $jwt->encode( $jwt->add({ model => "publication", cql => "id<>1", action => ["index"] }) );
         $headers{Authorization} = "Bearer $token";
 
         $mech->get( "/api/v1/publication", %headers );
