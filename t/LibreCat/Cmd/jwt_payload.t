@@ -29,24 +29,15 @@ require_ok $pkg;
 }
 
 {
-    my $stderr = <<EOF;
-jwt payload not accepted:
- * allowed values for model: publication, department, research_group, user, project
-jwt payload not accepted:
- * model is required
-jwt payload not accepted:
- * properties not allowed: rubbish
-jwt payload not accepted:
- * exp must be an integer, got string
-jwt payload not accepted:
- * nbf must be an integer, got string
-EOF
     my $result = test_app( qq|LibreCat::CLI| => ['jwt_payload','add','t/records/jwt-payloads-error.yml'] );
-    is(
-        $result->stderr,
-        $stderr,
-        "add: invalid records are reported on stderr"
-    );
+    my $tests = [
+        qr/allowed values for model:/,
+        qr/model is required/,
+        qr/properties not allowed: rubbish/,
+        qr/exp must be an integer, got string/,
+        qr/nbf must be an integer, got string/
+    ];
+    like( $result->stderr, $_ ) for @$tests;
 }
 
 my $payloads;
