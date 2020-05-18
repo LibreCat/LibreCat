@@ -117,8 +117,9 @@ sub _role_route {
     my $conf = shift;
     sub {
         my (@roles) = @_;
+        my $role = session->{role};
         if (session $conf->{logged_in_key}) {
-            if (session->{role} && grep(session->{role},@roles)) {
+            if (session->{role} && grep(/^$role$/,@roles)) {
                 # ok
             }
             else {
