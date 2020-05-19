@@ -18,7 +18,7 @@ librecat jwt_payload add \$yaml_file_with_payloads
 librecat jwt_payload get \$payload_id
 librecat jwt_payload export
 librecat jwt_payload decode \$token
-librecat jwt_payload encode \$playload_id
+librecat jwt_payload encode \$payload_id
 
 EOF
 }
@@ -204,7 +204,7 @@ LibreCat::Cmd::jwt_payload - manage json web tokens
     librecat jwt_payload get $payload_id
     librecat jwt_payload export
     librecat jwt_payload decode $token
-    librecat jwt_payload encode $playload_id
+    librecat jwt_payload encode $payload_id
 
 =head1 commands
 
