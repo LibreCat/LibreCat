@@ -16,6 +16,7 @@ Usage:
 
 librecat jwt_payload add \$yaml_file_with_payloads
 librecat jwt_payload get \$payload_id
+librecat jwt_payload delete \$payload_id
 librecat jwt_payload export
 librecat jwt_payload decode \$token
 librecat jwt_payload encode \$payload_id
@@ -31,7 +32,7 @@ sub command_opt_spec {
 sub command {
     my ($self, $opts, $args) = @_;
 
-    my $commands = qr/(add|get|decode|encode|export)/;
+    my $commands = qr/(add|get|delete|decode|encode|export)/;
 
     unless (@$args) {
         $self->usage_error("should be one of $commands");
@@ -48,6 +49,9 @@ sub command {
     }
     elsif( $cmd eq 'get' ){
         return $self->_get(@$args);
+    }
+    elsif( $cmd eq 'delete' ){
+        return $self->_delete(@$args);
     }
     elsif( $cmd eq 'export' ){
         return $self->_export(@$args);
@@ -120,7 +124,31 @@ sub _get {
 
     my $payload = LibreCat::JWTPayload->new()->get( $payload_id );
 
-    to_yaml( $payload ) if defined( $payload );
+    unless( defined( $payload ) ){
+
+        say STDERR "no jwt payload for id $payload_id";
+        exit 1;
+
+    }
+
+    to_yaml( $payload );
+
+    0;
+
+}
+
+sub _delete {
+
+    my( $self, $payload_id ) = @_;
+
+    unless( is_string( $payload_id ) ){
+
+        say STDERR "payload identifier is not given";
+        exit 1;
+
+    }
+
+    LibreCat::JWTPayload->new()->delete( $payload_id );
 
     0;
 

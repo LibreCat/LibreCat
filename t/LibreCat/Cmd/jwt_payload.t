@@ -124,5 +124,19 @@ if( $payloads ){
     is( $result->stderr, "unable to decode token $payloads->[0]->{_id}\n", "decode: cannot decoded expired tokens" );
 
 }
+{
+    my $result = test_app( qq|LibreCat::CLI| => ['jwt_payload','delete',$payloads->[0]->{_id}] );
+    is( $result->exit_code, 0 );
+    my $stdout = $result->stdout();
+    chomp($stdout);
+    is( $stdout, "" );
+}
+{
+    my $result = test_app( qq|LibreCat::CLI| => ['jwt_payload','get',$payloads->[0]->{_id}] );
+    is( $result->exit_code, 1 );
+    my $stderr = $result->stderr();
+    chomp($stderr);
+    is( $stderr, "no jwt payload for id $payloads->[0]->{_id}" );
+}
 
 done_testing;
