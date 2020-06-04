@@ -8,6 +8,7 @@ Route handler for messages.
 
 use Catmandu::Sane;
 use Dancer qw(:syntax);
+use Dancer::Plugin::Ajax;
 use LibreCat::Message;
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
@@ -22,16 +23,34 @@ sub message {
     state $msg = LibreCat::Message->new();
 }
 
+ajax "/librecat/messages/unread/:record_id" => sub {
+    my $record_id = params->{record_id};
+    $record_id or pass;
+    my $user_id   = session->{user_id};
+
+    my $it = message->select(record_id => $record_id)->map(
+        sub {
+            unless (grep ($user_id, @{$_[0]->{read}})) {
+                return $_[0];
+            }
+        }
+    );
+
+    return to_json({unread_msg => $it->count});
+};
+
 get "/librecat/message/:record_id" => sub {
     my $record_id = params->{record_id};
 
     $record_id or pass;
 
+    my $user_id = session("user_id");
+
     unless (
         p->can_edit(
             $record_id,
             {
-                user_id => session("user_id"),
+                user_id => $user_id,
                 role    => session("role"),
                 live    => 1
             }
@@ -53,6 +72,12 @@ get "/librecat/message/:record_id" => sub {
             $_[0];
         }
     );
+
+    # store information that logged-in user already read the message
+    $it->each(sub {
+        push $user_id, @{$_[0]->{read}} unless grep($user_id, @{$_[0]->{read});
+        message->add($_[0]);
+    });
 
     my $array = $it->to_array;
 
@@ -85,7 +110,7 @@ post "/librecat/message" => sub {
     }
 
     my $msg_rec = message->add(
-        {record_id => $record_id, user_id => $user_id, message => $message,});
+        {record_id => $record_id, user_id => $user_id, message => $message});
 
     unless ($msg_rec) {
 
