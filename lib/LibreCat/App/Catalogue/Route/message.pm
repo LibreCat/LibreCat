@@ -75,7 +75,7 @@ get "/librecat/message/:record_id" => sub {
 
     # store information that logged-in user already read the message
     $it->each(sub {
-        push $user_id, @{$_[0]->{read}} unless grep($user_id, @{$_[0]->{read});
+        push @{$_[0]->{read}}, $user_id unless grep($user_id, @{$_[0]->{read}});
         message->add($_[0]);
     });
 
