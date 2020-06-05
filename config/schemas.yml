@@ -233,6 +233,11 @@ publication:
                     #- hidden
                 type: string
                 description: "Relation upload to main record"
+            data:
+                type: string
+                # Fool's JSON match
+                pattern: '^{.*}$'
+                description: "Free JSON structured metadata (not indexed) for local usage"
             success:
                 oneOf:
                   - type: string

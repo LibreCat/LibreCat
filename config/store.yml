@@ -454,7 +454,6 @@ search:
                 title: {type: text}
                 description: {type: text}
                 creator: {type: keyword}
-                request_a_copy: {type: byte}
             main_file_link:
               properties:
                 url: {type: text, analyzer: tag}
@@ -1063,6 +1062,10 @@ search:
                 'exact': true
               field: ["first_name","old_name.first_name"]
               sort: {field: 'first_name.sort'}
+            lastname_browse:
+              op:
+                '=': true
+              field: ['last_name']
             id:
               op:
                 '=': true

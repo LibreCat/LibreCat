@@ -14,18 +14,28 @@ LibreCat::App::Permission::demo - Demonstration permission handler
       - [ 'ANY'  , '/demo$', 'demo' ]
 
   # Now every route to /demo will be checked via the LibreCat::App::Permission::demo
-  # package (and redirected to Google)
-  
+  # package if the access is from a local system, then allow access, otherwise
+  # deny all access.
+
 =cut
 
 use Moo;
+use LibreCat::App::Helper;
 use Dancer qw(:syntax);
 
 sub route {
     my ($self, $conf) = @_;
 
     sub {
-        return redirect("http://www.google.com");
+        my $ip_range = [qw(127.0.0.1 10.0.2.1)];
+        my $ip = request->address;
+        if (h->within_ip_range($ip, $ip_range)) {
+            h->log->debug("allow access for $ip");
+        }
+        else {
+            h->log->error("deny access for $ip");
+            return redirect uri_for('/access_denied');
+        }
     };
 }
 

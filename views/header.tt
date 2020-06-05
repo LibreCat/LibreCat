@@ -2,6 +2,7 @@
 <html lang="[% h.loc('language_code') %]">
 [% lang = h.locale() -%]
 [% lf = h.config.locale.$lang -%]
+[% qp = params_query %]
 [% path_info = request.path_info -%]
 
 <!-- BEGIN header.tt -->
@@ -44,13 +45,13 @@
     [% personid = path_info.search('person/(\d{1,})') -%]
     [% query = qp.q | replace('"', '&quot;') -%]
     [%- IF path_info.match("person/") %]
-      [%- qp.q = "person%2D$personid"%]
-      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/daily', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (today)">
-      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/weekly', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last week)">
-      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/monthly', qp) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last month)">
+      [%- query = "person%2D$personid"%]
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/daily', q = query) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (today)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/weekly', q = query) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last week)">
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/monthly', q = query) %]" title="[% thisPerson.first_name | html %] [% thisPerson.last_name | html %]'s Publication (last month)">
     [%- ELSIF path_info.match("text") %]
       [%- qp.q = query %]
-      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/monthly', qp) %]" title="Publications last month">
+      <link rel="alternate" type="application/rss+xml" href="[% h.uri_for('/feed/monthly', q = query) %]" title="Publications last month">
     [%- END %]
     [% UNLESS backend %]
     <meta name="robots" content="index,follow,noimageindex" />

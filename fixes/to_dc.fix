@@ -17,6 +17,11 @@ prepend(dini_type,'doc-type:')
 copy_field(dini_type, dc.type.$append)
 add_field(dc.type.$append, text)
 
+## COAR resourceTypes
+copy(type, coar_type)
+lookup(coar_type, fixes/lookup/openaire_type_uri.csv, default: 'http://purl.org/coar/resource_type/c_1843')
+move(coar_type, dc.type.$append)
+
 move_field(title,dc.title.$append)
 move_field(alternative_title.0,dc.title.$append)
 

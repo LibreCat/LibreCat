@@ -1,12 +1,11 @@
 <!-- BEGIN inc/marked/hits.tt -->
-
+[%- qp = params_query -%]
+[%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
 <p>
   <a class="btn btn-xs mark_all padding0" data-marked="1">
     <span class="fa fa-square-o fa-lg"></span> [% h.loc("mark.unmark_all") %]
   </a>
 </p>
-
-[%- style = style || h.config.citation.csl.default_style %]
 
 <ul class="list-unstyled" id="sortable">
 [% FOREACH entry IN hits %]

@@ -12,6 +12,7 @@ use LibreCat qw(user);
 use Dancer qw(:syntax);
 use LibreCat::App::Search;       # the frontend
 use LibreCat::App::Catalogue;    # the backend
+use LibreCat::App::Api;          # the api
 use LibreCat::App::Helper;
 use Dancer::Plugin::Auth::Tiny;
 
@@ -54,22 +55,33 @@ hook before => sub {
     }
 
     for my $route (@$routes) {
-        my ($_method, $_regex, $_role, @_params) = @$route;
+        my ($_method, $_regex, $_handler, @_handler_params) = @$route;
 
-        $_role = 'default' unless defined($_role) && $_role =~ /\S+/;
+        $_handler = 'default' unless defined($_handler) && $_handler =~ /\S+/;
 
         next unless $_method eq 'ANY' || $_method eq $method;
         next unless $path_info =~ /^${_regex}/;
 
-        if (my $h = $handlers->{$_role}) {
-            h->log->info("executing handler $_role for $_regex");
-            $h->(@_params);
+        if (my $h = $handlers->{$_handler}) {
+            h->log->info("executing handler $_handler for $_regex");
+            $h->(@_handler_params);
             last;
         }
         else {
-            h->log->error("no handler found for $_role");
+            h->log->error("no handler found for $_handler");
         }
     }
+};
+
+hook before_template_render => sub {
+
+    my $tokens = $_[0];
+
+    #params in TT is hash resulted from call to "params()"
+    $tokens->{params_query} = params("query");
+    $tokens->{params_body} = params("body");
+    $tokens->{params_route} = params("route");
+
 };
 
 sub _login_route {
@@ -104,10 +116,10 @@ sub _redirect_route {
 sub _role_route {
     my $conf = shift;
     sub {
-        my $role = shift;
+        my (@roles) = @_;
+        my $role = session->{role};
         if (session $conf->{logged_in_key}) {
-            if (session->{role} && $role eq session->{role}) {
-
+            if (session->{role} && grep(/^$role$/,@roles)) {
                 # ok
             }
             else {

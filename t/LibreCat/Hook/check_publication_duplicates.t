@@ -7,7 +7,7 @@ use warnings FATAL => 'all';
 my $pkg;
 
 BEGIN {
-    $pkg = 'LibreCat::Controller::Api';
+    $pkg = 'LibreCat::Hook::check_publication_duplicates';
     use_ok $pkg;
 };
 

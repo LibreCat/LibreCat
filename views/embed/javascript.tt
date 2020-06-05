@@ -1,5 +1,5 @@
 <!-- BEGIN embed/javascript.tt -->
-[% qp = request.params.hash -%]
+[%- qp = params_query -%]
 [% lang = h.locale() -%]
 document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
 [%- style = qp.style %]

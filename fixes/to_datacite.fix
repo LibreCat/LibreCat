@@ -18,3 +18,19 @@ if exists(license)
   copy(tmp.deed_url, license.uri)
   copy(tmp.name, license.name)
 end
+
+if exists(related_material.record)
+  do list(path:related_material.record, var:loop)
+    if all_match(loop.status, public)
+      cp(loop.id, tmp.id)
+      cp(loop.id, rec)
+      lookup_in_store(rec, search, bag: publication, delete: 1)
+      if exists(rec.doi)
+        cp(rec.doi, tmp.doi)
+      end
+      cp(loop.relation, tmp.relation)
+      lookup(tmp.relation, fixes/lookup/datacite_relations.csv)
+      mv(tmp, rm.$append)
+    end
+  end
+end

@@ -26,6 +26,23 @@ Endpoint of the OAI interface.
 
 =cut
 
+hook before => sub {
+
+    my $request     = request();
+    my $env         = $request->env();
+    my $path_info   = $request->path_info();
+
+    #disable storing of sessions for /oai or /sru
+    #note that the cookie is still sent
+    if( $path_info eq "/oai" || $path_info eq "/sru" ){
+
+        $env->{'psgix.session.options'} //= {};
+        $env->{'psgix.session.options'}->{no_store} = 1;
+
+    }
+
+};
+
 oai_provider '/oai', deleted => sub {
     defined $_[0]->{oai_deleted};
     },

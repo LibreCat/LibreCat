@@ -1,0 +1,16 @@
+journal_article,journal article
+review,review
+book_chapter,book part
+encyclopedia_article,book part
+book,book
+book_editor,book
+preprint,preprint
+working_paper,working paper
+report,report
+patent,patent
+conference_abstract,conference object
+conference,conference paper
+conference_editor,conference proceedings
+dissertation,thesis
+software,software
+research_data,dataset

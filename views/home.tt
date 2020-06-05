@@ -1,5 +1,4 @@
-[% qp = request.params.hash -%]
-[% qp.delete('splat') -%]
+[%- qp = params_query -%]
 [%- style = qp.style || style || h.config.citation.csl.default_style %]
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
 [% thisPerson = backend ? h.get_person(session.user_id) : h.get_person(id) -%]
@@ -59,7 +58,7 @@
                     [% END %]
                     [% IF backend AND session.role == "project_reviewer" %]
                     [% FOREACH project IN thisPerson.project_reviewer %]
-                    <li class="helpme[% IF modus.match(project._id) %] active[% END %]" title="[% lf.help.publication_project_reviewer %]"><a href="[% uri_base %]/librecat/search/project_reviewer/[% project._id %]">[% h.get_project(project._id).name %]</a></li>
+                    <li class="helpme[% IF modus.match(project._id) %] active[% END %]" title="[% h.loc('help.publication_project_reviewer') | html %]"><a href="[% uri_base %]/librecat/search/project_reviewer/[% project._id %]">[% h.get_project(project._id).name %]</a></li>
                     [% END %]
                     [% END %]
                     [% IF backend AND session.role == "data_manager" %]

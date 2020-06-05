@@ -42,7 +42,7 @@ use URI ();
 use Moo;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 has style  => (is => 'ro');
 has locale => (is => 'ro', default => sub {'en'});

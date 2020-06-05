@@ -8,7 +8,7 @@ use Moo;
 use Try::Tiny;
 use namespace::clean;
 
-with 'Catmandu::Logger';
+with 'LibreCat::Logger';
 
 has store => (is => 'ro', required => 1,);
 

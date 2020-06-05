@@ -360,7 +360,14 @@ sub show_locale {
 }
 
 sub locale {
-    cookie('lang') // $_[0]->default_locale();
+    #no dancer request during test in t/LibreCat/App/Helper.t, so call to "params" fails
+    my $request = request();
+    my $param_lang = $request ?
+        params("query")->{lang} : undef;
+    $_[0]->locale_exists(
+        $param_lang
+    ) ? $param_lang :
+        cookie('lang') // $_[0]->default_locale();
 }
 
 sub set_locale {
@@ -420,10 +427,7 @@ sub io_from_plack_writer {
 
 sub localize {
     my $self = shift;
-    state $locales = {};
-    my $loc = $self->locale;
-    my $i18n = $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
-    $i18n->localize(@_);
+    $self->i18n( $self->locale )->localize( @_ );
 }
 sub uri_for_locale {
     my ( $self, $locale ) = @_;
@@ -432,6 +436,16 @@ sub uri_for_locale {
     my %params = (params("query"),params("body"));
     $params{lang} = $locale;
     $request->uri_for( $path_info, \%params );
+}
+
+sub i18n {
+
+    my $self = shift;
+    my $loc  = shift // $self->locale;
+
+    state $locales = {};
+    $locales->{$loc} //= LibreCat::I18N->new(locale => $loc);
+
 }
 
 *loc = \&localize;
@@ -499,20 +513,6 @@ register h => sub {$h};
 hook before_template => sub {
     $_[0]->{h}        = $h;
     $_[0]->{uri_base} = $h->uri_base();
-
-};
-hook before => sub {
-
-    #set lang when sent
-    {
-        my $lang = param("lang");
-        if ( request->is_get() && $h->locale_exists( $lang ) ) {
-
-            $h->set_locale( $lang );
-
-        }
-
-    }
 
 };
 
