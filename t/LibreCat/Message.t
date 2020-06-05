@@ -62,6 +62,10 @@ ok $msg->add({record_id => 1, user_id => 1234, message => "added publication"});
 is scalar(@{$msg->last_errors() // []}), 0;
 is $msg->select(record_id => 1)->count, 1;
 
+ok $msg->add({record_id => 1, user_id => 999, message => "updated field foo", read => ["1234"]});
+is scalar(@{$msg->last_errors() // []}), 0;
+is $msg->select(record_id => 1)->count, 2;
+
 END {
     # cleanup test data
     Catmandu->store('main')->bag('message')->delete_all;
