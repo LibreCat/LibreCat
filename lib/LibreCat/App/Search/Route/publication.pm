@@ -77,6 +77,7 @@ get "/record" => sub {
     push @{$p->{cql}}, "status=public";
 
     $p->{sort} = $p->{sort} // h->config->{default_sort};
+    $p->{facets} = h->config->{facets}->{publication};
 
     my $hits = searcher->search('publication', $p);
 
@@ -97,6 +98,7 @@ get '/embed' => sub {
     $p->{sort}  = $p->{sort} // h->config->{default_sort};
     $p->{start} = params->{start};
     $p->{limit} = h->config->{maximum_page_size};
+    $p->{facets} = h->config->{facets}->{publication};
 
     my $hits = searcher->search('publication', $p);
 
