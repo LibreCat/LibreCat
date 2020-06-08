@@ -182,3 +182,18 @@
 
 [% INCLUDE mark_all_js.tt %]
 [% INCLUDE footer.tt %]
+
+<script>
+$(document).ready(function(){
+  $('span.message').each(function(index){
+    var myspan = $(this);
+    $.ajax({ url: "/librecat/messages/unread/" + myspan.attr('data-id'),
+        context: document.body,
+        success: function(result){
+           myspan.text(result.unread_msg);
+        }
+    });
+  });
+});
+
+</script>
