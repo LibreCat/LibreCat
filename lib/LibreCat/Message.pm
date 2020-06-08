@@ -25,6 +25,7 @@ has schema => (
             title      => "librecat message record",
             type       => "object",
             properties => {
+                _id => {type => "string", minLength => 1},
                 record_id => {
                     oneOf => [
                         {type => "string",  minLength => 1},
@@ -37,6 +38,7 @@ has schema => (
                         {type => "integer", minimum   => 0}
                     ]
                 },
+                user => {type => "string", minLength => 2},
                 message => {type => "string", minLength => 2},
                 read    => {
                     type  => "array",
