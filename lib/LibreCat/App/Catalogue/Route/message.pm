@@ -27,16 +27,22 @@ ajax "/librecat/messages/unread/:record_id" => sub {
     my $record_id = params->{record_id};
     $record_id or pass;
     my $user_id   = session->{user_id};
+    my $unread = 0;
 
-    my $it = message->select(record_id => $record_id)->map(
+    message->select(record_id => $record_id)->each(
         sub {
-            unless (grep ($user_id, @{$_[0]->{read}})) {
-                return $_[0];
+          my $message = $_[0];
+          if($message->{read}){
+            my $read = 0;
+            foreach my $user (@{$message->{read}}){
+              $read = 1 if $user eq $user_id;
             }
+            $unread = $unread + 1 unless $read;
+          }
         }
     );
 
-    return to_json({unread_msg => $it->count});
+    return to_json({unread_msg => $unread});
 };
 
 get "/librecat/message/:record_id" => sub {
@@ -75,8 +81,21 @@ get "/librecat/message/:record_id" => sub {
 
     # store information that logged-in user already read the message
     $it->each(sub {
-        push @{$_[0]->{read}}, $user_id unless grep($user_id, @{$_[0]->{read}});
-        message->add($_[0]);
+        my $message = $_[0];
+        if($message->{read}){
+          my $read = 0;
+          foreach my $user (@{$message->{read}}){
+            if ($user eq $user_id){
+              $read = 1;
+            }
+          }
+          push @{$message->{read}}, $user_id unless $read;
+        }
+        else {
+          $message->{read} = [];
+          push @{$message->{read}}, $user_id;
+        }
+        message->add($message);
     });
 
     my $array = $it->to_array;
@@ -110,7 +129,7 @@ post "/librecat/message" => sub {
     }
 
     my $msg_rec = message->add(
-        {record_id => $record_id, user_id => $user_id, message => $message});
+        {record_id => $record_id, user_id => $user_id, message => $message, read => [$user_id]});
 
     unless ($msg_rec) {
 
