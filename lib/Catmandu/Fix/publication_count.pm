@@ -10,19 +10,16 @@ Catmandu::Fix::publication_count - add a 'publication_count' field calculated fr
 
 use Catmandu::Sane;
 use Catmandu::Util qw(:is);
-use LibreCat qw(searcher);
+use LibreCat qw(:self);
 use Moo;
 
 sub fix {
     my ($self, $data) = @_;
 
-    my $id  = $data->{_id};
-    my $pub = searcher->search('publication',
-        {cql => ["person=$id", "status=public"], start => 0, limit => 1});
-
-    if (is_number($pub->{total}) && $pub->{total} > 0) {
-        $data->{publication_count} = $pub->{total};
-    }
+    $data->{publication_count} = librecat->model("publication")->search(
+        cql_query => "person=".$data->{_id}." AND status=public",
+        limit => 0
+    )->total();
 
     $data;
 }
