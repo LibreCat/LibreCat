@@ -34,7 +34,7 @@ sub fix {
     my $login   = '<unknown>';
 
     if (defined $data->{user_id}) {
-        my $person = h->get_person($user_id);
+        my $person = h->main_user->get($data->{user_id});
         $login = $person->{login} if $person;
     }
 

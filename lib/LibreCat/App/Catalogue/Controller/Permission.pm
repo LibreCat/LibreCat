@@ -38,7 +38,7 @@ sub get_cached_user {
 
     my $user = cache()->get( "USER_${user_id}" );
     my $set_cache = !$user;
-    $user //= h->get_person( $user_id );
+    $user //= h->main_user()->get( $user_id );
 
     cache()->set("USER_${user_id}", $user) if $set_cache;
 
@@ -67,7 +67,7 @@ sub _can_do_action {
 
     is_hash_ref($pub) or return 0;
 
-    my $user  = $opts->{live} ? h->get_person( $user_id ) : get_cached_user($user_id);
+    my $user  = $opts->{live} ? h->main_user()->get( $user_id ) : get_cached_user($user_id);
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';

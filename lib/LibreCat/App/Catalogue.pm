@@ -51,7 +51,7 @@ Let the user change his role.
 =cut
 
 get '/librecat/change_role/:role' => sub {
-    my $user = h->get_person(session->{user});
+    my $user = h->main_user->get(session("user_id"));
 
     # is user allowed to take this role?
 

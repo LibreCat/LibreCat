@@ -76,7 +76,7 @@ List all audit messages for an :id in the store :bag
         my $login   = '<unknown>';
 
         if (defined session->{user_id}) {
-            my $person = h->get_person($user_id);
+            my $person = h->main_user->get($user_id);
             $login = $person->{login} if $person;
         }
 

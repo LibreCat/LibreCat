@@ -1,7 +1,7 @@
 [%- qp = params_query -%]
 [%- style = qp.style || style || h.config.citation.csl.default_style %]
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
-[% thisPerson = backend ? h.get_person(session.user_id) : h.get_person(id) -%]
+[% thisPerson = backend ? h.main_user.get(session.user_id) : h.get_person(id) -%]
 [% menu = "" -%]
 [% lang = h.locale() -%]
 [% lf = h.config.locale.$lang -%]

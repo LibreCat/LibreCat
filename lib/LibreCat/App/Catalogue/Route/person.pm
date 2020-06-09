@@ -37,7 +37,7 @@ for his own publication list.
 
     get '/preference' => sub {
         my $person
-            = h->get_person(params->{delegate_id} || session('user_id'));
+            = h->main_user->get(params->{delegate_id} || session('user_id'));
         my $sort;
         my $tmp;
         if (params->{'sort'}) {
@@ -84,7 +84,7 @@ be displayed on author's profile page.
     post '/author_id' => sub {
 
         my $id         = params->{_id};
-        my $person     = h->get_person($id) || {_id => $id};
+        my $person     = h->main_user->get($id) || {_id => $id};
         my @identifier = keys %{h->config->{lists}->{author_id}};
 
         map {$person->{$_} = params->{$_} ? params->{$_} : ""} @identifier;
@@ -105,7 +105,7 @@ User can choose default language for the librecat backend
     get '/set_language' => sub {
 
         my $h = h();
-        my $person = $h->get_person(session('user_id'));
+        my $person = $h->main_user->get(session('user_id'));
         my $lang   = param('lang');
         if ( $h->locale_exists( $lang ) ) {
             $person->{lang} = $lang;
@@ -132,7 +132,7 @@ new publication form.
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
-        my $person = h->get_person(session('user_id'));
+        my $person = h->main_user->get(session('user_id'));
         $person->{department} = $p->{department} // [];
         user->add($person);
 

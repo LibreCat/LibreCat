@@ -82,7 +82,7 @@ Performs search for reviewer.
 =cut
 
     get '/reviewer' => sub {
-        my $account = h->get_person(session->{user});
+        my $account = h->main_user->get(session("user_id"));
         redirect uri_for(
             "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
     };
@@ -90,8 +90,7 @@ Performs search for reviewer.
     get '/reviewer/:department_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'user_id';
-        my $account = h->get_person(session->{user});
+        my $account = h->main_user->get(session("user_id"));
 
         # if user not reviewer or not allowed to access chosen department
         unless ($account->{reviewer}
@@ -123,7 +122,7 @@ Performs search for reviewer.
 =cut
 
     get '/project_reviewer' => sub {
-        my $account = h->get_person(session->{user});
+        my $account = h->main_user->get(session("user_id"));
         redirect uri_for(
             "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}"
         );
@@ -132,8 +131,7 @@ Performs search for reviewer.
     get '/project_reviewer/:project_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'user_id';
-        my $account = h->get_person(session->{user});
+        my $account = h->main_user->get(session("user_id"));
 
         # if user not project_reviewer or not allowed to access chosen project
         unless ($account->{project_reviewer}
@@ -166,7 +164,7 @@ Performs search for data manager.
 =cut
 
     get '/data_manager' => sub {
-        my $account = h->get_person(session->{user});
+        my $account = h->main_user->get(session("user_id"));
         redirect uri_for(
             "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}"
         );
@@ -174,8 +172,6 @@ Performs search for data manager.
 
     get '/data_manager/:department_id' => sub {
         my $p         = h->extract_params();
-        my $id        = session 'user_id';
-        my $account   = h->get_person(session->{user});
         my $dep_query = "department=" . params->{department_id};
 
         push @{$p->{cql}}, "status<>deleted";
@@ -199,7 +195,7 @@ according to first delegate ID.
 =cut
 
     get '/delegate' => sub {
-        my $account = h->get_person(session->{user});
+        my $account = h->main_user->get(session("user_id"));
         redirect uri_for(
             "/librecat/search/delegate/$account->{delegate}->[0]");
     };

@@ -67,7 +67,7 @@ sub is_admin {
     return undef unless $user_id;
 
     h->log->debug("finding user credentials for `$user_id'");
-    my $person = h->get_person($user_id);
+    my $person = h->main_user->get($user_id);
 
     my $super_admin = $person->{super_admin} ? 1 : 0;
 

@@ -1,4 +1,4 @@
-[%- thisPerson = h.get_person(session.user_id) -%]
+[%- thisPerson = h.main_user.get(session.user_id) -%]
 [%- qp = params_query %]
 [%- lang = h.locale() %]
 [% lf = h.config.locale.$lang -%]
