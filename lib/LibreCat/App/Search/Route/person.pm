@@ -11,6 +11,7 @@ use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 use LibreCat qw(searcher);
 use URI::Escape;
+use LibreCat::CQL::Util qw(:escape);
 
 =head2 GET /person
 
@@ -51,7 +52,7 @@ get '/person/:id' => sub {
     unless ($user) {
         h->log->debug("trying to find user alias $id");
 
-        my %search_params = (cql => ["alias=$id"]);
+        my %search_params = (cql => ["alias=".cql_escape($id)]);
 
         my $hits = searcher->search('user', \%search_params);
 

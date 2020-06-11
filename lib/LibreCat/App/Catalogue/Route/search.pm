@@ -11,6 +11,7 @@ use Dancer qw/:syntax/;
 use LibreCat qw(searcher);
 use LibreCat::App::Helper;
 use LibreCat::App::Catalogue::Controller::Permission;
+use LibreCat::CQL::Util qw(:escape);
 
 =head2 PREFIX /librecat/search
 
@@ -92,6 +93,7 @@ Performs search for reviewer.
         my $p       = h->extract_params();
         my $id      = session 'user_id';
         my $account = h->get_person(session->{user});
+        my $department_id = params("route")->{department_id};
 
         # if user not reviewer or not allowed to access chosen department
         unless ($account->{reviewer}
@@ -105,12 +107,12 @@ Performs search for reviewer.
         push @{$p->{cql}}, "status<>deleted";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
-        my $dep_query = "department=" . params->{department_id};
+        my $dep_query = "department=" . cql_escape($department_id);
         push @{$p->{cql}}, $dep_query;
 
         my $hits = searcher->search('publication', $p);
-        $hits->{modus}         = "reviewer_" . params->{department_id};
-        $hits->{department_id} = params->{department_id};
+        $hits->{modus}         = "reviewer_" . $department_id;
+        $hits->{department_id} = $department_id;
 
         template "home", $hits;
 
@@ -134,10 +136,11 @@ Performs search for reviewer.
         my $p       = h->extract_params();
         my $id      = session 'user_id';
         my $account = h->get_person(session->{user});
+        my $project_id = params("route")->{project_id};
 
         # if user not project_reviewer or not allowed to access chosen project
         unless ($account->{project_reviewer}
-            and grep {params->{project_id} eq $_->{_id}}
+            and grep {$project_id eq $_->{_id}}
             @{$account->{project_reviewer}})
         {
             return redirect uri_for(
@@ -148,12 +151,12 @@ Performs search for reviewer.
         push @{$p->{cql}}, "status<>deleted";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
-        my $dep_query = "project=" . params->{project_id};
+        my $dep_query = "project=" . cql_escape($project_id);
         push @{$p->{cql}}, $dep_query;
 
         my $hits = searcher->search('publication', $p);
-        $hits->{modus}      = "project_reviewer_" . params->{project_id};
-        $hits->{project_id} = params->{project_id};
+        $hits->{modus}      = "project_reviewer_" . $project_id;
+        $hits->{project_id} = $project_id;
 
         template "home", $hits;
 
@@ -176,7 +179,8 @@ Performs search for data manager.
         my $p         = h->extract_params();
         my $id        = session 'user_id';
         my $account   = h->get_person(session->{user});
-        my $dep_query = "department=" . params->{department_id};
+        my $department_id = params("route")->{department_id};
+        my $dep_query = "department=" . cql_escape($department_id);
 
         push @{$p->{cql}}, "status<>deleted";
         push @{$p->{cql}}, "type=research_data";
@@ -184,8 +188,8 @@ Performs search for data manager.
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
         my $hits = searcher->search('publication', $p);
-        $hits->{modus}         = "data_manager_" . params->{department_id};
-        $hits->{department_id} = params->{department_id};
+        $hits->{modus}         = "data_manager_" . $department_id;
+        $hits->{department_id} = $department_id;
 
         template "home", $hits;
 
@@ -213,13 +217,14 @@ publications.
 
     get '/delegate/:delegate_id' => sub {
         my $p  = h->extract_params();
-        my $id = params->{delegate_id};
+        my $id = params("route")->{delegate_id};
+        my $escaped_id = cql_escape( $id );
 
         my $perm_by_user_identity = p->all_author_types;
 
         my @type_query = ();
         for (@$perm_by_user_identity) {
-            push @type_query , "$_=$id";
+            push @type_query , "$_=$escaped_id";
         }
 
         push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";
@@ -242,12 +247,13 @@ Performs search for user.
     get '/' => sub {
         my $p  = h->extract_params();
         my $id = session 'user_id';
+        my $escaped_id = cql_escape( $id );
 
         my $perm_by_user_identity = p->all_author_types;
 
         my @type_query = ();
         for (@$perm_by_user_identity) {
-            push @type_query , "$_=$id";
+            push @type_query , "$_=$escaped_id";
         }
 
         push @{$p->{cql}}, "(" . join(" OR ",@type_query) . ")";

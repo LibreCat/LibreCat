@@ -16,6 +16,7 @@ use List::Util;
 use DateTime;
 use LibreCat::App::Helper;
 use LibreCat qw(searcher);
+use LibreCat::CQL::Util qw(:escape);
 
 =head2 GET /marked.:fmt
 
@@ -80,7 +81,7 @@ Mark the record with ID :id.
 
 post '/mark/:id' => sub {
     my $id = param 'id';
-    forward '/marked', {cql => "id=$id"};
+    forward '/marked', {cql => "id=".cql_escape($id)};
 };
 
 del '/mark/:id' => sub {
