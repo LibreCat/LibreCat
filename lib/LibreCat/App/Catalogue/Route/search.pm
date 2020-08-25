@@ -67,6 +67,7 @@ Performs search for admin.
             push @{$p->{cql}}, "status<>deleted";
 
             $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
+            $p->{facets} = h->config->{facets}->{publication};
 
             $hits = searcher->search('publication', $p);
 
@@ -109,6 +110,8 @@ Performs search for reviewer.
 
         my $dep_query = "department=" . cql_escape($department_id);
         push @{$p->{cql}}, $dep_query;
+
+        $p->{facets} = h->config->{facets}->{publication};
 
         my $hits = searcher->search('publication', $p);
         $hits->{modus}         = "reviewer_" . $department_id;
@@ -154,6 +157,8 @@ Performs search for reviewer.
         my $dep_query = "project=" . cql_escape($project_id);
         push @{$p->{cql}}, $dep_query;
 
+        $p->{facets} = h->config->{facets}->{publication};
+
         my $hits = searcher->search('publication', $p);
         $hits->{modus}      = "project_reviewer_" . $project_id;
         $hits->{project_id} = $project_id;
@@ -186,6 +191,8 @@ Performs search for data manager.
         push @{$p->{cql}}, "type=research_data";
         push @{$p->{cql}}, $dep_query;
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
+
+        $p->{facets} = h->config->{facets}->{publication};
 
         my $hits = searcher->search('publication', $p);
         $hits->{modus}         = "data_manager_" . $department_id;
@@ -231,6 +238,8 @@ publications.
         push @{$p->{cql}}, "status<>deleted";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
 
+        $p->{facets} = h->config->{facets}->{publication};
+
         my $hits = searcher->search('publication', $p);
         $hits->{modus}       = "delegate_" . $id;
         $hits->{delegate_id} = $id;
@@ -261,6 +270,8 @@ Performs search for user.
         push @{$p->{cql}}, "status=public"
             if $p->{fmt} and $p->{fmt} eq "autocomplete";
         $p->{sort} = $p->{sort} // h->config->{default_sort_backend};
+
+        $p->{facets} = h->config->{facets}->{publication};
 
         my $hits = searcher->search('publication', $p);
 

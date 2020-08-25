@@ -72,6 +72,7 @@ get '/person/:id' => sub {
     push @{$p->{cql}}, ("person=$id", "status=public");
 
     $p->{limit} = h->config->{maximum_page_size};
+    $p->{facets} = h->config->{facets}->{publication};
 
     h->log->debug("executing publication->search: " . to_dumper($p));
     my $hits = searcher->search('publication', $p);

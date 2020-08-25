@@ -56,7 +56,7 @@ sub search {
         sru_sortkeys => $self->_sru_sort($p->{sort}) // '',
         limit        => $self->_set_limit($p->{limit}),
         start        => $p->{start} // 0,
-        aggs => librecat->config->{facets}->{$bag_name} // {},
+        aggs         => $p->{facets} // {},
     );
 
     $self->log->debug(
