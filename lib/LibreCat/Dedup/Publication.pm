@@ -3,6 +3,7 @@ package LibreCat::Dedup::Publication;
 use Catmandu::Sane;
 use LibreCat qw(searcher);
 use Moo;
+use LibreCat::CQL::Util qw(:escape);
 use namespace::clean;
 
 with 'LibreCat::Dedup';
@@ -11,10 +12,10 @@ sub _find_duplicate {
     my ($self, $data) = @_;
 
     my @q;
-    push @q, "doi=\"$data->{doi}\""              if $data->{doi};
-    push @q, "externalidentifier=$data->{isi}"   if $data->{isi};
-    push @q, "externalidentifier=$data->{pmid}"  if $data->{pmid};
-    push @q, "externalidentifier=$data->{arxiv}" if $data->{arxiv};
+    push @q, "doi=".cql_escape($data->{doi})                  if $data->{doi};
+    push @q, "externalidentifier=".cql_escape($data->{isi})   if $data->{isi};
+    push @q, "externalidentifier=".cql_escape($data->{pmid})  if $data->{pmid};
+    push @q, "externalidentifier=".cql_escape($data->{arxiv}) if $data->{arxiv};
 
     return [] unless @q;
 

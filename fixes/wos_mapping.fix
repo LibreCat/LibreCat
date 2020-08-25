@@ -75,7 +75,11 @@ split_field(_r.keyword.*, ';')
 flatten(_r.keyword)
 trim(_r.keyword.*)
 
-move_field('DI','_r.doi')
+copy_field('DI','_r.doi')
+# in case DI is an array with multiple dois
+move_field('DI.0','DOI')
+split_field('DOI', '; ')
+move_field('DOI.0', '_r.doi')
 
 # use maybe lookup via issn in crossref journal list
 move_field('SO','_r.publication')
