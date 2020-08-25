@@ -51,7 +51,8 @@ Opens the record with ID id.
 =cut
 
     get '/account/edit/:id' => sub {
-        my $person = user->get(params->{id});
+        #temporary hack to make sure the main user table is used
+        my $person = user->bag->get(params->{id});
         template 'admin/forms/edit_account', $person;
     };
 
@@ -66,7 +67,8 @@ Redirects to /librecat/admin/account
     put '/account/:id' => sub {
 
         my $id = param("id");
-        my $user = user->get($id) or pass;
+        #temporary hack to make sure the main user table is used
+        my $user = user->bag->get($id) or pass;
 
         my $p = params("body");
         $p = h->nested_params($p);
