@@ -85,7 +85,8 @@ requires 'Clone';
 requires 'Code::TidyAll', 0;
 requires 'Config::Onion', '>= 1.007';
 requires 'Crypt::Digest::MD5';
-requires 'Crypt::JWT';
+#default claims must be valid if present in payload since 0.024
+requires 'Crypt::JWT','0.024';
 requires 'Crypt::SSLeay';
 requires 'Data::Uniqid';
 requires 'DateTime';
