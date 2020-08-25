@@ -29,7 +29,7 @@ has search_bag => (
 has validator => (
     is       => 'ro',
     required => 1,
-    handles  => [qw(is_valid whitelist)],
+    handles  => [qw(is_valid whitelist last_errors)],
     isa      => ConsumerOf ['LibreCat::Validator']
 );
 has before_add   => (is => 'lazy', init_arg => undef, isa => Pairs);
@@ -109,7 +109,8 @@ sub add_many {
 
     $recs->each(
         sub {
-            $n += $self->add($_[0], %opts, skip_commit => 1);
+            my $new_rec = $self->add($_[0], %opts, skip_commit => 1);
+            $n++ if $new_rec;
         }
     );
     $self->bag->commit;
@@ -121,12 +122,13 @@ sub add_many {
 sub add {
     my ($self, $rec, %opts) = @_;
     if ($opts{skip_transaction}) {
-        $self->_add($rec, %opts);
+        $rec = $self->_add($rec, %opts);
     } else {
         $self->bag->store->transaction(sub {
-            $self->_add($rec, %opts);
+            $rec = $self->_add($rec, %opts);
         });
     }
+    $rec;
 }
 
 sub _add {
@@ -141,11 +143,11 @@ sub _add {
     if ($self->is_valid($rec)) {
         # Replace all 0-identifers with real new identifiers
         $rec->{_id} = $self->generate_id if $rec->{_id} eq 'NEW';
-        $self->store($rec, %opts);
+        $rec = $self->store($rec, %opts);
         $self->index($rec, %opts) unless $opts{skip_index};
         $opts{on_success}->($rec) if $opts{on_success};
 
-        return 1;
+        return $rec;
     }
     elsif ($opts{on_validation_error}) {
         # Remove all 0-identifiers
@@ -160,7 +162,7 @@ sub _add {
         delete $rec->{_id} if $rec->{_id} eq 'NEW';
     }
 
-    0;
+    undef;
 }
 
 sub delete_all {
@@ -176,7 +178,7 @@ sub delete {
 sub store {
     my ($self, $rec, %opts) = @_;
 
-    $self->bag->add($rec);
+    $rec = $self->bag->add($rec);
     $self->bag->commit unless $opts{skip_commit};
     $rec;
 }
@@ -357,8 +359,8 @@ with the record and an arrayref of errors if validation fails.
 =head2 add($rec, %opts)
 
 Insert or update the record identified by it's C<_id> key. If no C<_id> is given, a
-new one will be generated for you. Returns C<1> if the record was valid and
-succesfully stored and indexed, C<0> otherwise.
+new one will be generated for you. Returns the newly updated record if the record was valid and
+succesfully stored and indexed, C<undef> otherwise.
 
 Any C<before_add> hooks will be applied before validation.
 
@@ -480,11 +482,13 @@ Commit any unsaved changes, for example after C<skip_commit => 1>. Always return
 
 =head2 validator
 
-Returns the validator for this model.
+Returns the validator for this model, which is a subclass of L<LibreCat::Validator>
 
 =head2 is_valid($rec)
 
 Return 1 if the given C<$rec> is valid, C<0> otherwise.
+
+Shortcut for C<< $model->validator->is_valid() >>.
 
 =head2 whitelist
 
@@ -492,6 +496,14 @@ Returns all whitelisted field names for this model. Any fields not in this list
 will be removed before adding the record. C<skip_before_filter> can be used to used to override this:
 
     $model->add($rec, skip_before_add => ['whitelist']);
+
+Shortcut for C<< $model->validator->whitelist() >>
+
+=head2 last_errors()
+
+Returns an array ref of errors. Each error is an instance of L<LibreCat::Validation::Error>.
+
+Shortcut for C<< $model->validator->last_errors() >>
 
 =head2 bag
 

@@ -44,8 +44,10 @@ header:
   logged_in_as: "Logged in as"
 error:
   version_conflict: "Could not save your changes. This publication was updated by someone else since you started editing."
-  update_failed: "Failed to update record %s. The admins have been notified."
-  contact_admin: "Please, contact %s when this problem persists."
+  update_failed: "Failed to update record [_1]. The admins have been notified."
+  create_failed: "Failed to create record [_1]. The admins have been notified."
+  record_id_taken: "Record [_1] has already been taken. Please reload this form to create a new record"
+  contact_admin: "Please, contact [_1] when this problem persists."
   preliminary_submit: "Form was submitted before it was fully loaded. All requested changes have been discarded to prevent data loss."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"
@@ -1985,16 +1987,38 @@ validator:
         #[_2]: received value
         maximum: "[_1] should not be bigger than [_3]"
         minimum: "[_1] should not be smaller than [_3]"
-        multipleOf: "[_1 ] should contain a multiple of [_1]"
+        multipleOf: "[_1] should contain a multiple of [_1]"
+        ex_minimum: "[_1] should contain a value bigger than exclusive minimum [_3], got [_2]"
+        ex_maximum: "[_1] should contain a value smaller than exclusive maximum [_3], got [_2]"
       number:
         type: "[_1] must be number, got [_2]"
         maximum: "[_1] should not be bigger than [_3]"
         minimum: "[_1] should not be smaller than [_3]"
         multipleOf: "[_1 ] should contain a multiple of [_1]"
+        ex_minimum: "[_1] should contain a value bigger than exclusive minimum [_3], got [_2]"
+        ex_maximum: "[_1] should contain a value smaller than exclusive maximum [_3], got [_2]"
       not:
         not: "[_1] should not match"
       "null":
         "null": "[_1] should be null"
+      format:
+        email: "[_1] does not match email format"
+        idn-email: "[_1] does not match idn-email format"
+        hostname: "[_1] does not match hostname format"
+        idn-hostname: "[_1] does not match idn-hostname format"
+        time: "[_1] does not match time format"
+        date: "[_1] is not a valid date"
+        date-time: "[_1] is not a valid date-time"
+        ipv4: "[_1] is not a valid ipv4 address"
+        ipv6: "[_1] is not a valid ipv6 address"
+        uri-reference: "[_1] is not a valid URI-REFERENCE"
+        uri: "[_1] is not a valid URI"
+        iri: "[_1] is not a valid IRI"
+        iri-reference: "[_1] is not a valid IRI-REFERENCE"
+        regex: "[_1] is not a valid regular expression"
+        json-pointer: "[_1] is not a valid json-pointer"
+        relative-json-pointer: "[_1] is not a valid relative-json-pointer"
+        uri-template: "[_1] is not a valid URI-TEMPLATE"
 
   json_api_v1:
     errors: *jsonschema_errors

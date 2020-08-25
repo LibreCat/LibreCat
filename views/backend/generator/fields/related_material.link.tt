@@ -104,7 +104,7 @@
       </div>
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
-          <textarea name="related_material.link.0.description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" class="form-control sticky"></textarea>
+          <textarea name="related_material.link.0.description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" class="form-control sticky">[% IF related_material.link.0.title %][% related_material.link.0.title %] [% END %][% related_material.link.0.description %]</textarea>
           <!-- <input type="text" name="related_material.link.0.title" placeholder="[% lf.$type.field.item('related_material.link').title.placeholder %]" id="relurl_title" class="form-control sticky" value="[% related_material.link.0.title %]" /> -->
           <div class="input-group-addon"></div>
         </div>

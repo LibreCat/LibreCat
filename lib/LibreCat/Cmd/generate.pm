@@ -5,6 +5,7 @@ use Path::Tiny;
 use Template;
 use LibreCat::App::Helper;
 use LibreCat qw(:self);
+use LibreCat::CQL::Util qw(:escape);
 use Carp;
 use parent qw(LibreCat::Cmd);
 
@@ -245,7 +246,7 @@ sub _generate_departments {
             return unless defined($id) && $id =~ /\S+/;
 
             my $hits = $pubs->search(
-                cql_query => "department=$id AND status=public");
+                cql_query => "department=".cql_escape($id)." AND status=public");
             my $total = $hits->{total};
 
             $root->{tree}->{$id}->{name}    = $item->{name};
@@ -293,7 +294,7 @@ sub _template_printer {
     {
         print $io "<li>\n";
         printf $io "<a href=\"${uri_base}/%s?cql=department=%s\">%s</a> %d\n",
-            $path, $node, $nodes->{$node}->{display},
+            $path, cql_escape($node), $nodes->{$node}->{display},
             $nodes->{$node}->{total};
         $self->_template_printer($nodes->{$node}, $path, $io);
         print $io "</li>\n";

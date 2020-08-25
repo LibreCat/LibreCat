@@ -13,15 +13,24 @@ passthrough:
 # Handlers available to test user credentials for a path
 # Demo is a demonstration how the internal handler can be extended
 handlers:
+    #################################################################
+    # Internal defined credential handlers                          #
+    #################################################################
     # login: requires a valid login
     login: internal
-    # role: requires a valid login and a user in a specific role
+    # role: requires a valid login and a user in a specific role (or a list of
+    # roles) E.g.
+    #   'role' , 'data_manager' , 'reviewer' , 'super_admin'
     role: internal
     # no_access: this route is denied for all
     no_access: internal
-    # default: no login or role requires
+    # default: no login or role required
     default: internal
-    # demo: demonstration extension, redirects a path to Google
+    #################################################################
+    # Local defined handlers                                        #
+    #################################################################
+    # demo: demonstration extension, allows local access without password
+    # see lib/LibreCat/App/Permission/demo.pm for an example
     demo: LibreCat::App::Permission::demo
 
 # List of all the routes that need authentication (or not)

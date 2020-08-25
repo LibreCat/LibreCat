@@ -82,11 +82,11 @@ EOF
 sub command_opt_spec {
     my ($class) = @_;
     (
-        ['total=i',          "total number of items to list/export"],
-        ['start=i',          "start list/export at this item"],
-        ['sort=s',           "sorting results [only in combination with cql-query]"],
-        ['log=s',            "write an audit message"],
-        ['version=i',        "get a specific record version"],
+        ['total=i',   "total number of items to list/export"],
+        ['start=i',   "start list/export at this item"],
+        ['sort=s',    "sorting results [only in combination with cql-query]"],
+        ['log=s',     "write an audit message"],
+        ['version=i', "get a specific record version"],
         ['previous-version', "get previous record version"],
         ['history',          "get all record versions"],
         ['with-citations',   "process citations while adding records"],
@@ -186,20 +186,22 @@ sub audit {
 }
 
 sub audit_message {
-    my ($self,$id, $action, $message) = @_;
-    $self->audit()->add({
-        id      => $id,
-        bag     => 'publication',
-        process => 'librecat publication',
-        action  => $action,
-        message => $message,
-    });
+    my ($self, $id, $action, $message) = @_;
+    $self->audit()->add(
+        {
+            id      => $id,
+            bag     => 'publication',
+            process => 'librecat publication',
+            action  => $action,
+            message => $message,
+        }
+    );
 }
 
 sub _list {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort} // undef;
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -222,15 +224,15 @@ sub _list {
 
     my $count = $it->each(
         sub {
-            my ($item)  = @_;
-            my $id      = $item->{_id};
-            my $title   = $item->{title} // '---';
+            my ($item) = @_;
+            my $id = $item->{_id};
+            my $title   = $item->{title}            // '---';
             my $creator = $item->{creator}->{login} // '---';
             my $status  = $item->{status};
-            my $type    = $item->{type} // '---';
+            my $type    = $item->{type}             // '---';
 
-            printf "%-40.40s %-10.10s %-60.60s %-10.10s %s\n",
-                , $id, $creator, $title, $status, $type;
+            printf "%-40.40s %-10.10s %-60.60s %-10.10s %s\n", $id, $creator,
+                $title, $status, $type;
         }
     );
 
@@ -247,7 +249,7 @@ sub _list {
 sub _export {
     my ($self, $query) = @_;
 
-    my $sort  = $self->opts->{sort} // undef;
+    my $sort  = $self->opts->{sort}  // undef;
     my $total = $self->opts->{total} // undef;
     my $start = $self->opts->{start} // undef;
 
@@ -272,7 +274,8 @@ sub _export {
     $exporter->commit;
 
     if (!defined($query) && defined($sort)) {
-        print STDERR "warning: sort only active in combination with a query\n";
+        print STDERR
+            "warning: sort only active in combination with a query\n";
     }
 
     return 0;
@@ -317,7 +320,7 @@ sub _add {
 
     croak "usage: $0 add <FILE>" unless defined($file) && -r $file;
 
-    my $ret = 0;
+    my $ret      = 0;
     my $importer = Catmandu->importer('YAML', file => $file);
     my $exporter;
 
@@ -328,7 +331,8 @@ sub _add {
     my $skip_before_add = [];
     push @$skip_before_add, "citation" unless $self->opts->{"with_citations"};
     push @$skip_before_add, "files"    unless $self->opts->{"with_files"};
-    push @$skip_before_add, "check_version" if $self->opts->{"no_check_version"};
+    push @$skip_before_add, "check_version"
+        if $self->opts->{"no_check_version"};
 
     publication->add_many(
         $importer,
@@ -336,11 +340,10 @@ sub _add {
         on_validation_error => sub {
             my ($rec, $errors) = @_;
 
-            my @t_errors = map {
-                $_->localize();
-            } @$errors;
+            my @t_errors = map {$_->localize();} @$errors;
 
-            $self->log->errorf("%s not a valid publication %s", $rec->{_id}, \@t_errors);
+            $self->log->errorf("%s not a valid publication %s",
+                $rec->{_id}, \@t_errors);
             say STDERR join("\n",
                 $rec->{_id}, "ERROR: not a valid publication", @t_errors);
             $ret = 2;
@@ -480,7 +483,7 @@ sub _embargo {
     $now =~ s/T.*//;
 
     my $query = "embargo < $now";
-    my $it = publication->searcher(cql_query => $query);
+    my $it    = publication->searcher(cql_query => $query);
 
     my $exporter = Catmandu->exporter('YAML');
 
@@ -510,8 +513,7 @@ sub _embargo {
                     access_level => $process
                     ? $embargo_to
                     : $file->{access_level},
-                    request_a_copy => $process ? 0 : $file->{request_a_copy},
-                    embargo    => $process ? 'NA' : $embargo // 'NA',
+                    embargo    => $process ? 'NA' : $embargo    // 'NA',
                     embargo_to => $process ? 'NA' : $embargo_to // 'NA',
                     file_name  => $file->{file_name},
                 }
@@ -526,13 +528,14 @@ sub _embargo {
 sub _checksum {
     my ($self, $action, $id) = @_;
 
-    croak "usage: $0 checksum initialize|test|update <id>" unless defined($action) && $action =~ /^(list|init|test|update)$/;
+    croak "usage: $0 checksum initialize|test|update <id>"
+        unless defined($action) && $action =~ /^(list|init|test|update)$/;
     croak "usage: $0 checksum $action <id>" unless defined($id);
 
     return $self->id_or_file(
         $id,
         sub {
-            $self->_checksum_id($action,shift);
+            $self->_checksum_id($action, shift);
         }
     );
 }
@@ -544,7 +547,7 @@ sub _checksum_id {
     my $file_opt   = Catmandu->config->{filestore}->{default}->{options};
 
     my $pkg = Catmandu::Util::require_package($file_store,
-                                        'Catmandu::Store::File');
+        'Catmandu::Store::File');
 
     my $pubs = publication;
 
@@ -563,10 +566,10 @@ sub _checksum_id {
     my $errors = 0;
 
     for my $fi (@$pub_files) {
-        my ($msg,$stored_checksum);
-        my $file_name       = $fi->{file_name};
-        my $file_checksum   = $fi->{checksum} // '';
-        my $si              = $files->get($file_name);
+        my ($msg, $stored_checksum);
+        my $file_name     = $fi->{file_name};
+        my $file_checksum = $fi->{checksum} // '';
+        my $si            = $files->get($file_name);
 
         if (!$si) {
             $msg = 'NOT_FOUND';
@@ -580,14 +583,18 @@ sub _checksum_id {
                 $msg = 'OK';
             }
             else {
-                $file_checksum = $fi->{checksum} = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+                $file_checksum = $fi->{checksum}
+                    = Catmandu::Plugin::DynamicChecksum::dynamic_checksum(
+                    $files, $si);
                 $update++;
                 $msg = 'OK';
             }
         }
         elsif ($action eq 'test') {
             if (Catmandu::Util::is_string($file_checksum)) {
-                my $stored_checksum = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+                my $stored_checksum
+                    = Catmandu::Plugin::DynamicChecksum::dynamic_checksum(
+                    $files, $si);
                 if ($file_checksum eq $stored_checksum) {
                     $msg = 'OK';
                 }
@@ -601,7 +608,9 @@ sub _checksum_id {
             }
         }
         elsif ($action eq 'update') {
-            $file_checksum = $fi->{checksum} = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,$si);
+            $file_checksum = $fi->{checksum}
+                = Catmandu::Plugin::DynamicChecksum::dynamic_checksum($files,
+                $si);
             $update++;
             $msg = 'OK';
         }
@@ -609,27 +618,24 @@ sub _checksum_id {
             croak "$0 : unknown action $action";
         }
 
-        printf "%s %-9s %-32s %s\n"
-                , $id
-                , $msg
-                , $file_checksum
-                , $file_name;
+        printf "%s %-9s %-32s %s\n", $id, $msg, $file_checksum, $file_name;
     }
 
     if ($update) {
-        $pubs->add($rec,
+        $pubs->add(
+            $rec,
             on_validation_error => sub {
                 my ($rec, $e) = @_;
 
-                my @t_errors = map {
-                    $_->localize();
-                } @$e;
+                my @t_errors = map {$_->localize();} @$e;
 
-                $self->log->errorf("%s not a valid publication %s", $rec->{_id}, \@t_errors);
+                $self->log->errorf("%s not a valid publication %s",
+                    $rec->{_id}, \@t_errors);
                 say STDERR join("\n",
                     $rec->{_id}, "ERROR: not a valid publication", @t_errors);
-                    $errors++;
-            });
+                $errors++;
+            }
+        );
 
         if (my $msg = $self->opts->{log}) {
             $self->audit_message($rec->{_id}, 'add', $msg);
@@ -664,11 +670,11 @@ sub _files {
 sub _files_list {
     my ($self, $id) = @_;
 
-    my $fields = [qw(id file_id access_level request_a_copy
-                    relation embargo embargo_to file_name)];
+    my $fields
+        = [qw(id file_id access_level relation embargo embargo_to file_name)];
 
-    my $exporter = Catmandu->exporter(
-                    $self->opts->{csv} ? 'TSV' : 'YAML', fields => $fields);
+    my $exporter = Catmandu->exporter($self->opts->{csv} ? 'TSV' : 'YAML',
+        fields => $fields);
 
     my $printer = sub {
         my ($item) = @_;
@@ -677,14 +683,14 @@ sub _files_list {
         for my $file (@{$item->{file}}) {
             $exporter->add(
                 {
-                    id             => $item->{_id},
-                    file_id        => $file->{file_id},
-                    access_level   => $file->{access_level},
-                    request_a_copy => $file->{request_a_copy} // 'NA',
-                    relation       => $file->{relation},
-                    embargo        => $file->{embargo} // 'NA',
-                    embargo_to     => $file->{embargo_to} // 'NA',
-                    file_name      => $file->{file_name},
+                    id           => $item->{_id},
+                    file_id      => $file->{file_id},
+                    access_level => $file->{access_level},
+                    relation     => $file->{relation},
+                    embargo      => $file->{embargo} // 'NA',
+                    embargo_to   => $file->{embargo_to} // 'NA',
+                    file_name    => $file->{file_name},
+                    data         => $file->{data},
                 }
             );
         }
@@ -710,13 +716,24 @@ sub _files_load {
     croak "list - can't open $filename for reading" unless -r $filename;
     local (*FH);
 
-    my $importer = Catmandu->importer(
-                        $self->opts->{csv} ? 'TSV' : 'YAML' , file => $filename);
+    my $importer = Catmandu->importer($self->opts->{csv} ? 'TSV' : 'YAML',
+        file => $filename);
 
     my $update_file = sub {
         my ($id, $files) = @_;
         if (my $data = publication->get($id)) {
-            $self->_file_process($data, $files) && publication->add($data);
+            $self->_file_process($data, $files) && publication->add($data,
+                    on_validation_error => sub {
+                        my ($rec, $errors) = @_;
+
+                        my @t_errors = map {$_->localize();} @$errors;
+
+                        $self->log->errorf("%s not a valid publication %s",
+                            $rec->{_id}, \@t_errors);
+                        say STDERR join("\n",
+                            "ERROR: " . $rec->{_id} . " not a valid publication", @t_errors);
+                    }
+            );
         }
         else {
             warn "$id - no such publication";
@@ -731,8 +748,9 @@ sub _files_load {
         id
         access_level creator content_type
         date_created date_updated file_id
-        file_name file_size request_a_copy checksum
+        file_name file_size checksum
         relation title description embargo embargo_to
+        data
     );
 
     my $current_id;
@@ -777,7 +795,7 @@ sub _file_process {
     return undef unless $data;
     return $data unless $files;
 
-    my $id = $data->{_id};
+    my $id       = $data->{_id};
     my %file_map = map {$_->{file_name} => $_} @{$data->{file}};
 
     # Update the files with stored data
@@ -810,7 +828,8 @@ sub _file_process {
         }
 
         unless (defined $file) {
-            croak "FATAL - failed to update `$name' for $id (does it exist in the file store?)";
+            croak
+                "FATAL - failed to update `$name' for $id (does it exist in the file store?)";
         }
     }
 
@@ -854,7 +873,8 @@ sub _files_reporter {
 
     my $fields = [qw(container status filename error)];
 
-    my $exporter = Catmandu->exporter($self->opts->{csv} ? 'TSV' : 'YAML', fields => $fields);
+    my $exporter = Catmandu->exporter($self->opts->{csv} ? 'TSV' : 'YAML',
+        fields => $fields);
 
     publication->each(
         sub {
