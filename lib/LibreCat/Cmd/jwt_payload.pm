@@ -250,7 +250,14 @@ For requirements for the JWT payload, see L<LibreCat::JWTPayload>
 
 Example:
 
-    $ ./bin/librecat jwt_payload add <<- "EOF"
+    # Add a token that can do everything (empty payload)
+    $ ./bin/librecat jwt_payload add << "EOF"
+    ---{}
+    ...
+    EOF
+
+
+    $ ./bin/librecat jwt_payload add << "EOF"
     ---
     {}
     ...
@@ -319,7 +326,7 @@ The payload is only returned when the following requirements are met:
 
 Example:
 
-    $ ./bin/librecat token decode eyJhbGciOiJIUzUxMiJ9.eyJtb2RlbCI6InB1YmxpY2F0aW9uIiwiZGF0ZV9jcmVhdGVkIjoiMjAyMC0wNS0xMlQxNDowMzowNVoiLCJjcWwiOiJzdGF0dXM9cmV0dXJuZWQiLCJfaWQiOiI0Y2ZkNGRiOC05NDU5LTExZWEtYTdkNS04NjhhNTNkMDhkODciLCJhY3Rpb24iOlsiaW5kZXgiXSwiZGF0ZV91cGRhdGVkIjoiMjAyMC0wNS0xMlQxNDowMzowNVoifQ.G55CDyYOHsw4m_v0QaUAb_BX3kLJmLIzJEIR6WpfASIo-aR1GXJnjEbryTk-wFeE0Qtta_PbjY6C7PttA9Evlw
+    $ ./bin/librecat jwt_payload decode eyJhbGciOiJIUzUxMiJ9.eyJtb2RlbCI6InB1YmxpY2F0aW9uIiwiZGF0ZV9jcmVhdGVkIjoiMjAyMC0wNS0xMlQxNDowMzowNVoiLCJjcWwiOiJzdGF0dXM9cmV0dXJuZWQiLCJfaWQiOiI0Y2ZkNGRiOC05NDU5LTExZWEtYTdkNS04NjhhNTNkMDhkODciLCJhY3Rpb24iOlsiaW5kZXgiXSwiZGF0ZV91cGRhdGVkIjoiMjAyMC0wNS0xMlQxNDowMzowNVoifQ.G55CDyYOHsw4m_v0QaUAb_BX3kLJmLIzJEIR6WpfASIo-aR1GXJnjEbryTk-wFeE0Qtta_PbjY6C7PttA9Evlw
     ---
     _id: 4cfd4db8-9459-11ea-a7d5-868a53d08d87
     action:
