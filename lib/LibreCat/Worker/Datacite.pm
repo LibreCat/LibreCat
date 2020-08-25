@@ -74,7 +74,7 @@ sub _create_metadata {
     my $datacite_xml = Catmandu->export_to_string(
         {%$rec, uri_base => librecat->config->{uri_base}}, 'Template',
         template => 'views/export/datacite.tt',
-        fix      => librecat->fixer('to_datacite.fix'),
+        fix      => 'fixes/to_datacite.fix',
         xml      => 1
     );
     $self->log->error($datacite_xml);
