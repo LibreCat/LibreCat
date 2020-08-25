@@ -2,7 +2,26 @@ Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
 
-2.0.2 2019-10-31 
+2.0.3 2020-08-25
+    - Adding support for JWT payload authentorization of REST-API
+    - Making facets not implicit in every query (speed up of interface)
+    - Better support of identifiers in CQL escaping
+    - Fixing admin record editing
+    - Throw errors when ElasticSearch issues happen (no silent die)
+    - Fixing DOI handling in WOS mapper
+    - Fixing related material description in the interface
+    - Adding a free from file.data section where any type of file metadata can be stored
+    - Disable storing of (unused) cookies for /oai and /sru
+    - Autodiscover new Librecat models at loading time (no hardcoded models)
+    - New method last_errors in LibreCat::Model
+    - LibreCat::Model->add will always return the updated model
+    - Fixing ORCID selection for authors
+    - Fixing popup "Open data librecat"
+    - Improving speed of My Publications page (using short caching of repeated queries)
+    - Support of OpenAIRE Guidelines v4
+    - Fixing crossref mapping
+    
+2.0.2 2019-10-31
     - Fixing clone record
     - Improving datacite mappings
     - Fixing request a copy
