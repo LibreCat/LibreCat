@@ -71,6 +71,7 @@ search:
         maximum_limit: 100
     bags:
       project:
+        on_error: throw
         fix:
           - remove_field(_version)
         index: librecat_project
@@ -327,6 +328,7 @@ search:
                 '=': true
               field: 'project_type'
       publication:
+        on_error: throw
         index: librecat_publication
         fix:
             - remove_field(_version)
@@ -473,7 +475,6 @@ search:
                 title: {type: text}
                 description: {type: text}
                 creator: {type: keyword}
-                request_a_copy: {type: byte}
             main_file_link:
               properties:
                 url: {type: text, analyzer: tag}
@@ -955,6 +956,7 @@ search:
                 'exact': true
               field: thematic_area
       user:
+        on_error: throw
         fix:
             - remove_field(_version)
         index: librecat_user
@@ -1122,6 +1124,7 @@ search:
                 '<>': true
               field: publication_count
       department:
+        on_error: throw
         fix:
             - remove_field(_version)
         index: librecat_department
@@ -1201,6 +1204,7 @@ search:
               field: display
               sort: {field: 'display.sort'}
       research_group:
+        on_error: throw
         fix:
             - remove_field(_version)
         index: librecat_research_group

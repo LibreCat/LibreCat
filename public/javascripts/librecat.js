@@ -325,7 +325,7 @@ function link_person(element){
                                 var old_lastname = last_name;
                                 if (old_name[j].first_name) {old_firstname = old_name[j].first_name;}
                                 if (old_name[j].last_name) {old_lastname = old_name[j].last_name;}
-                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                                rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                             }
                         }
                     }
@@ -337,19 +337,19 @@ function link_person(element){
                                 var old_lastname = last_name;
                                 if (old_name[j].first_name) {old_firstname = old_name[j].first_name;}
                                 if (old_name[j].last_name) {old_lastname = old_name[j].last_name;}
-                                rows += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                                rows += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                             }
                         }
                     }
                     else {
-                        rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
+                        rows2 += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + first_name + '" data-lastname="' + last_name + '"><a href="#" class="person_link">' + first_name + " " + last_name + '</a></td></tr>';
                         if(old_name[0]){
                             $.each(old_name, function(j){
                                 var old_firstname = first_name;
                                 var old_lastname = last_name;
                                 if ($(this)[0].first_name) {old_firstname = $(this)[0].first_name;}
                                 if ($(this)[0].last_name) {old_lastname = $(this)[0].last_name;}
-                                rows2 += '<tr data-id="' + personId + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
+                                rows2 += '<tr data-id="' + personId + '" data-orcid="' + orcid + '"><td><a href="' + librecat.uri_base + '/staffdirectory/' + personId + '" target="_blank">' + personId + '</a></td><td class="name" data-firstname="' + old_firstname + '" data-lastname="' + old_lastname + '"><a href="#" class="person_link">' + old_firstname + " " + old_lastname + '</a> (now ' + first_name + ' ' + last_name + ')</td></tr>';
                             });
                         }
                     }

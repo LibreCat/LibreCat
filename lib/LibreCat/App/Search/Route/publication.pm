@@ -12,6 +12,7 @@ use Clone qw(clone);
 use Dancer qw/:syntax/;
 use LibreCat::App::Helper;
 use LibreCat qw(searcher);
+use LibreCat::CQL::Util qw(:escape);
 
 =head2 GET /record/:id.:fmt
 
@@ -24,7 +25,7 @@ get '/record/:id.:fmt' => sub {
     my $id  = $rparams->{id};
     my $fmt = $rparams->{fmt} // 'yaml';
 
-    forward "/export", {cql => "id=$id", fmt => $fmt , limit => 1};
+    forward "/export", {cql => "id=".cql_escape($id), fmt => $fmt , limit => 1};
 };
 
 =head2 GET /record/:id
@@ -37,9 +38,10 @@ state $jsonld_fix = h->create_fixer('fixes/to_json_ld.fix');
 
 get "/record/:id" => sub {
     my $id = params("route")->{id};
+    my $escaped_id = cql_escape( $id );
 
     my $p = +{
-        cql => [ "status=public", "id=$id" ],
+        cql => [ "status=public", "id=$escaped_id" ],
         limit => 1
     };
 
@@ -47,7 +49,7 @@ get "/record/:id" => sub {
 
     unless ($hits->{total}) {
         $p->{cql} = [];
-        push @{$p->{cql}}, ("status=public", "altid=$id");
+        push @{$p->{cql}}, ("status=public", "altid=$escaped_id");
 
         $hits = searcher->search('publication', $p);
         return redirect "/record/" . $hits->first->{_id}, 301
@@ -77,6 +79,7 @@ get "/record" => sub {
     push @{$p->{cql}}, "status=public";
 
     $p->{sort} = $p->{sort} // h->config->{default_sort};
+    $p->{facets} = h->config->{facets}->{publication};
 
     my $hits = searcher->search('publication', $p);
 
@@ -97,6 +100,7 @@ get '/embed' => sub {
     $p->{sort}  = $p->{sort} // h->config->{default_sort};
     $p->{start} = params->{start};
     $p->{limit} = h->config->{maximum_page_size};
+    $p->{facets} = h->config->{facets}->{publication};
 
     my $hits = searcher->search('publication', $p);
 

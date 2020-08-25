@@ -37,7 +37,7 @@ requires 'Catmandu::RIS', '>=0.04';
 requires 'Catmandu::SRU','0.039';
 requires 'Catmandu::Store::ElasticSearch', '>=1.0';
 requires 'Catmandu::Template', '>=0.13';
-requires 'Catmandu::Validator::JSONSchema','>=0.13';
+requires 'Catmandu::Validator::JSONSchema','>=0.15';
 requires 'Catmandu::XML';
 requires 'Search::Elasticsearch', '>=6.00';
 requires 'Search::Elasticsearch::Client::6_0';
@@ -124,6 +124,7 @@ requires 'Plack::Auth::SSO','0.0132';
 requires 'Plack::Middleware::MethodOverride';
 requires 'Date::Simple';
 requires 'Tie::IxHash', '1.23';
+requires 'Module::Find','0.15';
 
 #LWP::UserAgent has method "patch" since version 6.42
 requires "LWP::UserAgent","6.42";
