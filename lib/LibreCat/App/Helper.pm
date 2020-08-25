@@ -245,19 +245,28 @@ sub get_relation {
 sub get_statistics {
     my ($self) = @_;
 
-    my $hits = librecat->searcher->search('publication',
-        {cql => ["status=public"]});
+    my $publications = librecat->model("publication");
+    my $users = librecat->model("user");
 
-    my $people = librecat->searcher->search('user',
-        {cql => ["publication_count>0"]});
+    my $public_pubs = $publications->search(
+        cql_query => "status=public",
+        limit => 0
+    );
 
-    my $oahits = librecat->searcher->search('publication',
-        {cql => ["status=public", "oa=1"]});
+    my $users_with_pubs = $users->search(
+        cql_query => "publication_count>0",
+        limit => 0
+    );
+
+    my $oahits = $publications->search(
+        cql_query => "status=public AND oa=1",
+        limit => 0
+    );
 
     return {
-        publications => $hits->{total},
-        researcher   => $people->{total},
-        oahits       => $oahits->{total},
+        publications => $public_pubs->total(),
+        researcher   => $users_with_pubs->total(),
+        oahits       => $oahits->total(),
         projects     => $self->project->count(),
     };
 }
