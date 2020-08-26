@@ -1,0 +1,33 @@
+---
+# allow all actions on all models
+{}
+...
+---
+# allow all action on model publication
+model: publication
+...
+---
+# only allow action "show" on any publication
+model: publication
+action: ["show"]
+...
+---
+# allow listing of any model
+action: ["index"]
+...
+---
+# only allow action "show" on publication with id "1"
+model: publication
+action: ["show"]
+cql: "id=1"
+...
+---
+# allow listing publication, but filter the results with cql
+model: publication
+action: ["index"]
+cql: "id=1"
+...
+---
+# expired payload
+exp: 0
+...

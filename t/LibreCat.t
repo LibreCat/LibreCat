@@ -32,9 +32,6 @@ ok(
     "LibreCat and Catmandu share a config hash"
 );
 
-# token
-isa_ok($instance->token, 'LibreCat::Token');
-
 # models
 ok($instance->has_model('user') == 1);
 ok($instance->has_model('gremlin') == 0);

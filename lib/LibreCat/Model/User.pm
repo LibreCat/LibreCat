@@ -5,6 +5,7 @@ use LibreCat qw(:self);
 use Catmandu;
 use Catmandu::Util qw(:is);
 use Moo;
+use LibreCat::CQL::Util qw(:escape);
 use namespace::clean;
 
 with 'LibreCat::Model';
@@ -53,8 +54,9 @@ sub get {
 sub find {
     my ($self, $id) = @_;
     if ($id) {
-        my $hits = librecat->searcher->search('user', {cql => ["id=$id"]});
-        $hits = librecat->searcher->search('user', {cql => ["login=$id"]})
+        my $escaped_id = cql_escape( $id );
+        my $hits = librecat->searcher->search('user', {cql => ["id=$escaped_id"]});
+        $hits = librecat->searcher->search('user', {cql => ["login=$escaped_id"]})
             if !$hits->{total};
         return $hits->{hits}->[0] if $hits->{total};
         if (my $user = $self->get($id) || $self->find_by_username($id)) {

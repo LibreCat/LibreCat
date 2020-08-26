@@ -1,0 +1,20 @@
+---
+# model does not exist
+model: rubbish
+...
+---
+# cql requires attribute model
+cql: "id=1"
+...
+---
+# forbidden attributes
+rubbish: rubbish
+...
+---
+# invalid expiration time
+exp: mytime
+...
+---
+# invalid not before time
+nbf: mytime
+...
