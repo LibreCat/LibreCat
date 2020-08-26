@@ -53,9 +53,13 @@ sub search {
 
     my $bag = $self->store->bag($bag_name);
 
+    my $cql = is_array_ref( $p->{cql} ) ?
+        $p->{cql} : is_string( $p->{cql} ) ?
+            [ $p->{cql} ] : [];
+
     my @filters = map {
         $bag->translate_cql_query($_);
-    } @{ $p->{cql} // [] };
+    } @$cql;
 
     my $sub_query = {
         match_all => {}
