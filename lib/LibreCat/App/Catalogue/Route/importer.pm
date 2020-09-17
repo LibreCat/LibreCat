@@ -14,6 +14,7 @@ use Dancer ':syntax';
 use LibreCat::App::Helper;
 use URL::Encode qw(url_decode);
 use Try::Tiny;
+use File::Spec;
 
 sub _fetch_record {
     my ($id, $source) = @_;
@@ -132,10 +133,15 @@ post '/librecat/record/import' => sub {
         }
         else {
           my $type = $pub->{type} || 'journal_article';
-          my $templatepath = "backend/forms";
-          $pub->{new_record} = 1;
+          var form_action => uri_for( "/librecat/record" );
+          var form_method => "POST";
+          var new_record  => 1;
 
-          return template $templatepath . "/$type.tt", $pub;
+          my $template = File::Spec->catfile(
+              "backend","forms",$type
+          );
+
+          return template $template, $pub;
         }
     }
 
