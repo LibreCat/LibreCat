@@ -93,7 +93,7 @@ ajax '/authority_user/:id' => sub {
 
 ajax '/get_alias/:id/:alias' => sub {
     my $term = params->{'alias'} || "";
-    my $id = params->{'id'};
+    my $id   = params->{'id'};
 
     my %search_params = (cql => ["alias=$term", "id<>$id"]);
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
@@ -127,13 +127,12 @@ ajax '/get_project' => sub {
 
     if ($hits->{total}) {
         my $map;
-        @$map
-            = map {
-                my $label;
-                $label .= "$_->{acronym}: " if $_->{acronym};
-                $label .= $_->{name};
-                return {id => $_->{_id}, label => $_->{name}};
-            } @{$hits->{hits}};
+        @$map = map {
+            my $label;
+            $label .= "$_->{acronym}: " if $_->{acronym};
+            $label .= $_->{name};
+            return {id => $_->{_id}, label => $_->{name}};
+        } @{$hits->{hits}};
         return to_json $map;
     }
     else {
@@ -146,7 +145,7 @@ ajax '/get_project' => sub {
 =cut
 
 ajax '/get_department' => sub {
-    my $term = params->{term} // '';
+    my $term  = params->{term} // '';
     my $limit = length($term) ? 100 : 1000;
 
     my @terms = split('\s', $term);
