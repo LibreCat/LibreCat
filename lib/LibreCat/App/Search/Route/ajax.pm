@@ -128,7 +128,12 @@ ajax '/get_project' => sub {
     if ($hits->{total}) {
         my $map;
         @$map
-            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
+            = map {
+                my $label;
+                $label .= "$_->{acronym}: " if $_->{acronym};
+                $label .= $_->{name};
+                return {id => $_->{_id}, label => $_->{name}};
+            } @{$hits->{hits}};
         return to_json $map;
     }
     else {
