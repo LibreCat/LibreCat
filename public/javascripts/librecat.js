@@ -566,6 +566,12 @@ $(function () {
                                 var newname = $(this).attr('name').replace(/\d+/g,index);
                                 $(this).attr('name', newname);
                         }
+                        if($(this).attr('checked') || $(this).prop('checked')){
+                              $(this).removeProp('checked');
+                              $(this).removeAttr('checked');
+                              $(this).prop('checked',true);
+                              $(this).attr('checked','checked');
+                        }
                     });
                 });
                 ui.item.removeClass("dragged").removeAttr("style");
