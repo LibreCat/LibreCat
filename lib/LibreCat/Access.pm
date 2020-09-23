@@ -48,7 +48,7 @@ sub by_user_id {
 sub by_user_role {
     my ($self, $pub, $user, $role) = @_;
 
-    return 0 unless $pub && $user;
+    return 0 unless $pub && $user && $role;
 
     return 0 unless $self->is_publication_allowed($pub);
     return 0 if $self->is_publication_denied($pub);
