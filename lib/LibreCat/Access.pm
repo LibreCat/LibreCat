@@ -76,12 +76,12 @@ sub by_user_role {
             }
         }
         elsif ($role eq 'data_manager') {
-            return 0 unless is_same($pub->{type},'research_data');
             for my $id (@{$user->{data_manager}}) {
                 for my $iid (@{$pub->{department} // []}) {
                     return 1 if $id->{_id} eq $iid->{_id};
                     for my $tree (@{$iid->{tree} // []}) {
-                        return 1 if $id->{_id} eq $tree->{_id};
+                        return 1 if $id->{_id} eq $tree->{_id} &&
+                        (is_same($pub->{type},'research_data') || is_same($pub->{type}, 'software'));
                     }
                 }
             }
