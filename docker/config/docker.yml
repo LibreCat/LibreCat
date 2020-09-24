@@ -1,0 +1,8 @@
+uri_base: "http://localhost:5001"
+store:
+    main:
+        options:
+            data_source: "DBI:mysql:database=librecat_main;host=mysql;port=3306"
+    search:
+        options:
+            nodes: "elasticsearch:9200"

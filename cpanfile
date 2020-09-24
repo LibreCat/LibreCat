@@ -96,7 +96,6 @@ requires 'Devel::REPL', '>= 1.003028';
 requires 'Email::Sender::Simple';
 requires 'Encode';
 requires 'File::Basename';
-requires 'Gearman::XS', '0.15';
 requires 'Getopt::Long';
 requires 'IO::All';
 requires 'JSON::MaybeXS';
@@ -128,3 +127,6 @@ requires 'Module::Find','0.15';
 
 #LWP::UserAgent has method "patch" since version 6.42
 requires "LWP::UserAgent","6.42";
+
+# Gearman test
+requires 'Gearman::XS', '0.15';
