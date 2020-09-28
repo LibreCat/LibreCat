@@ -24,7 +24,7 @@ After the first initial run LIBRECAT_INIT can be set to 0.
 
 5) Connect to the command line
 
-docker run -it [docker_image] "/bin/bash -l"
+docker exec -it [docker_image] "/usr/bin/bash -l"
 
 check the docker_image with
 

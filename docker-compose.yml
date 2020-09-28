@@ -36,6 +36,11 @@ services:
   #        LIBRECAT_INIT: 1
   #        LIBRECAT_DEMO: 1
   #        LIBRECAT_ENV: deployment
+  #        LIBRECAT_LAYER: mylayer
+  #        WAIT_HOSTS: mysql:3306, elasticsearch:9200
+  #        WAIT_HOSTS_TIMEOUT: 60
+  #    volumes:
+  #      - ./mylayer:/opt/librecat/mylayer
 
 volumes:
     esdata:

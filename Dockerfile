@@ -34,6 +34,10 @@ RUN chown -R librecat:librecat /opt/librecat/docker
 RUN mkdir -p /etc/sudoers.d/
 RUN echo "librecat     ALL=(ALL)       ALL" > /etc/sudoers.d/10_librecat
 
+# Wait for stuff
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+RUN chmod +x /wait
+
 # Start
 USER librecat
-CMD ["bash","-l","/opt/librecat/docker/boot.sh"]
+CMD /wait && bash -l /opt/librecat/docker/boot.sh
