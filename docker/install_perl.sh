@@ -6,15 +6,18 @@ echo 'export PATH="$HOME/.plenv/bin:$PATH"' >> /opt/librecat/.bash_profile
 echo 'eval "$(plenv init -)"' >> /opt/librecat/.bash_profile
 source /opt/librecat/.bash_profile
 git clone https://github.com/tokuhirom/Perl-Build.git ~/.plenv/plugins/perl-build/
-plenv install -j 9 -D usethreads 5.28.2
-plenv global 5.28.2
+plenv install -j 9 -D usethreads --noman 5.32.0
+plenv global 5.32.0
 plenv install-cpanm
 cpanm Carton LWP::Protocol::https
 plenv rehash
 
+# do a cleanup
+rm .plenv/cache/*
+
 # Install all carton dependencies
 cd /opt/librecat
-carton
+carton install
 
 echo 'export LIBRECATHOME=/opt/librecat' >> /opt/librecat/.bash_profile
 echo 'export PATH=${LIBRECATHOME}/local/bin:${PATH}' >> /opt/librecat/.bash_profile
