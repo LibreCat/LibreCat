@@ -7,13 +7,13 @@ RUN yum install -y gcc make patch automake autoconf ; \
     yum install -y expat-devel expat openssl-devel openssl libxml2 libxml2-devel ; \
     yum install -y automake libxslt libxslt-devel gdbm gdbm-devel ImageMagick ghostscript ; \
     yum install -y libgearman libgearman-devel gearmand java-1.8.0-openjdk ; \
-    yum install -y mailx git mariadb mariadb-devel which sudo
+    yum install -y mailx git mariadb mariadb-devel which sudo psmisc
 
 # Copy the source code
 ADD . /opt/librecat
 
-# Create users
-RUN useradd --home-dir /opt/librecat --password=librecat librecat
+# Create user librecat/librecat
+RUN useradd --home-dir /opt/librecat --password='$1$uRpVBuK8$TiWQStBKbKIDkovAoZnOo.' librecat
 
 # Set file ownership
 RUN chown -R librecat:librecat /opt/librecat
@@ -34,6 +34,10 @@ RUN chown -R librecat:librecat /opt/librecat/docker
 RUN mkdir -p /etc/sudoers.d/
 RUN echo "librecat     ALL=(ALL)       ALL" > /etc/sudoers.d/10_librecat
 
+# Wait for stuff
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+RUN chmod +x /wait
+
 # Start
 USER librecat
-CMD ["bash","-l","/opt/librecat/docker/boot.sh"]
+CMD /wait && bash -l /opt/librecat/docker/boot.sh
