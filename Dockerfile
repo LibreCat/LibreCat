@@ -20,6 +20,8 @@ RUN chown -R librecat:librecat /opt/librecat
 
 WORKDIR /opt/librecat
 
+RUN mkdir -p logs && touch logs/app.log
+
 # Install perl
 USER librecat
 ADD docker/install_perl.sh /tmp/install_perl.sh
@@ -35,9 +37,9 @@ RUN mkdir -p /etc/sudoers.d/
 RUN echo "librecat     ALL=(ALL)       ALL" > /etc/sudoers.d/10_librecat
 
 # Wait for stuff
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
-RUN chmod +x /wait
+#ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+#RUN chmod +x /wait
 
 # Start
 USER librecat
-CMD /wait && bash -l /opt/librecat/docker/boot.sh
+CMD bash -l /opt/librecat/docker/boot.sh

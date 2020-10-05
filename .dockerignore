@@ -4,3 +4,7 @@ config/catmandu.local.yml
 local
 Dockerfile
 docker-compose.yml
+logs
+etc
+scss
+vagrant

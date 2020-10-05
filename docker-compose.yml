@@ -11,34 +11,55 @@ services:
       - 9300:9300
     environment:
       discovery.type: single-node
+    healthcheck:
+      start_period: 15s
+      test: curl localhost:9200
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
     volumes:
       - "esdata:/usr/share/elasticsearch/data"
 
   mysql:
-      image: mysql:5.7
-      command: --default-authentication-plugin=mysql_native_password
-      restart: always
-      ports:
-          - 3306:3306
-      environment:
-          MYSQL_ROOT_PASSWORD: librecat
-      volumes:
-        - "mydata:/var/lib/mysql"
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: librecat
+    healthcheck:
+      start_period: 20s
+      test: ["CMD", "mysqladmin", "-uroot", "-plibrecat", "ping"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - "mydata:/var/lib/mysql"
 
-  # librecat:
-  #    image: librecat/librecat:latest
-  #    hostname: librecat
-  #    ports:
-  #      - 5002:5002
-  #    environment:
-  #        MYSQL_ROOT_PASSWORD: librecat
-  #        LIBRECAT_PORT: 5002
-  #        LIBRECAT_INIT: 1
-  #        LIBRECAT_DEMO: 1
-  #        LIBRECAT_ENV: deployment
-  #        LIBRECAT_LAYER: mylayer
-  #        WAIT_HOSTS: mysql:3306, elasticsearch:9200
-  #        WAIT_HOSTS_TIMEOUT: 60
+  librecat:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+#    image: librecat/librecat:latest
+    hostname: librecat
+    ports:
+      - 5002:5002
+    environment:
+      MYSQL_ROOT_PASSWORD: librecat
+      LIBRECAT_PORT: 5002
+      LIBRECAT_INIT: 1
+      LIBRECAT_DEMO: 1
+      LIBRECAT_ENV: deployment
+      #LIBRECAT_LAYER: mylayer
+      #WAIT_HOSTS: mysql:3306, elasticsearch:9200
+      #WAIT_HOSTS_TIMEOUT: 60
+    depends_on:
+      - mysql
+          # condition: service_healthy
+      - elasticsearch
+          # condition: service_healthy
   #    volumes:
   #      - ./mylayer:/opt/librecat/mylayer
 
