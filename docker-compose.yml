@@ -25,22 +25,21 @@ services:
       volumes:
         - "mydata:/var/lib/mysql"
 
-  # librecat:
-  #    image: librecat/librecat:latest
-  #    hostname: librecat
-  #    ports:
-  #      - 5002:5002
-  #    environment:
-  #        MYSQL_ROOT_PASSWORD: librecat
-  #        LIBRECAT_PORT: 5002
-  #        LIBRECAT_INIT: 1
-  #        LIBRECAT_DEMO: 1
-  #        LIBRECAT_ENV: deployment
-  #        LIBRECAT_LAYER: mylayer
-  #        WAIT_HOSTS: mysql:3306, elasticsearch:9200
-  #        WAIT_HOSTS_TIMEOUT: 60
-  #    volumes:
-  #      - ./mylayer:/opt/librecat/mylayer
+  librecat:
+     image: librecat/librecat:latest
+     hostname: librecat
+     ports:
+       - 5002:5002
+     environment:
+         MYSQL_ROOT_PASSWORD: librecat
+         LIBRECAT_ENV: development
+         WAIT_HOSTS: mysql:3306, elasticsearch:9200
+         WAIT_HOSTS_TIMEOUT: 60
+         LIBRECAT_PLACKUP: 1
+         LIBRECAT_INIT: 1
+         LIBRECAT_DEMO: 1
+     volumes:
+       - ".:/opt/librecat"
 
 volumes:
     esdata:

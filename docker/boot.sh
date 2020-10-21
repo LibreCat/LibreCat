@@ -1,5 +1,8 @@
 #!/bin/bash
 
+. /home/librecat/.bash_profile
+
+PLACKUP=${LIBRECAT_PLACKUP:-1}
 INIT=${LIBRECAT_INIT:-1}
 DEMO=${LIBRECAT_DEMO:-1}
 L_ENV=${LIBRECAT_ENV:-development}
@@ -11,12 +14,16 @@ M_HOST=${MYSQL_HOST:-mysql}
 M_PORT=${MYSQL_PORT:-3306}
 M_PASS=${MYSQL_ROOT_PASSWORD:-librecat}
 
-DOCKER_YML=/opt/librecat/docker/config/docker.yml
+DOCKER_YML=/tmp/docker/config/docker.yml
+TEST_YML=/opt/librecat/t/layer/config/docker.yml
 
 # Change local host settings
 sed -i "s/uri_base: .*/uri_base: http:\/\/${L_HOST}:${L_PORT}/" ${DOCKER_YML}
 sed -i "s/data_source: .*/data_source: \"DBI:mysql:database=librecat_main;host=${M_HOST};port=${M_PORT}\"/" ${DOCKER_YML}
 sed -i "s/nodes: .*/nodes: ${E_HOST}:${E_PORT}/"  ${DOCKER_YML}
+
+# Copy these changes also to the test layer
+cp ${DOCKER_YML} ${TEST_YML}
 
 # Initialize MySQL and ElasticSearch
 if [[ ${INIT} == 1 ]]; then
@@ -30,6 +37,10 @@ if [[ ${INIT} == 1 ]]; then
     if [[ ${DEMO} == 1 ]]; then
         /opt/librecat/index.sh demo
     fi
+
+    # Generate all forms
+    /opt/librecat/bin/librecat generate forms
+    /opt/librecat/bin/librecat generate departments
 fi
 
 # Install environments
@@ -48,9 +59,9 @@ if [[ "${LIBRECAT_LAYER}" != "" ]]; then
     echo "- ${LIBRECAT_LAYER}" >> /opt/librecat/layers.yml
 fi
 
-# Generate all forms
-/opt/librecat/bin/librecat generate forms
-/opt/librecat/bin/librecat generate departments
-
 # Boot application
-plackup -E ${L_ENV} -R lib -s Starman --port ${L_PORT} bin/app.pl
+if [[ ${PLACKUP} == 1 ]]; then
+    plackup -E ${L_ENV} -R lib,config -s Starman --port ${L_PORT} bin/app.pl
+else
+    bash -l
+fi

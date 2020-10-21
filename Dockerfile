@@ -9,28 +9,37 @@ RUN yum install -y gcc make patch automake autoconf ; \
     yum install -y libgearman libgearman-devel gearmand java-1.8.0-openjdk ; \
     yum install -y mailx git mariadb mariadb-devel which sudo psmisc
 
-# Copy the source code
-ADD . /opt/librecat
-
 # Create user librecat/librecat
-RUN useradd --home-dir /opt/librecat --password='$1$uRpVBuK8$TiWQStBKbKIDkovAoZnOo.' librecat
+RUN useradd --home-dir /home/librecat --password='$1$uRpVBuK8$TiWQStBKbKIDkovAoZnOo.' librecat
 
-# Set file ownership
+# Create install directory
+RUN mkdir -p /opt/librecat
+RUN mkdir -p /home/librecat
 RUN chown -R librecat:librecat /opt/librecat
-
-WORKDIR /opt/librecat
+RUN chown -R librecat:librecat /home/librecat
 
 # Install perl
 USER librecat
 ADD docker/install_perl.sh /tmp/install_perl.sh
 RUN bash /tmp/install_perl.sh
 
-# Configuration
+# Install perl dependencies
+WORKDIR /opt/librecat
+ADD cpanfile /opt/librecat/cpanfile
+RUN bash -l carton
+
+# ---End slow part -------------------------------------------------------------
+
 USER root
-COPY docker /opt/librecat/docker
-RUN echo "- /opt/librecat/docker" > /opt/librecat/layers.yml
-RUN mv /opt/librecat/config/catmandu.local.yml-example /opt/librecat/docker/config/a_local_config.yml
-RUN chown -R librecat:librecat /opt/librecat/docker
+
+# Copy the source code
+COPY --chown=librecat:librecat . /opt/librecat
+
+# Configuration
+COPY docker /tmp/docker
+RUN echo "- /tmp/docker" > /opt/librecat/layers.yml
+RUN mv /opt/librecat/config/catmandu.local.yml-example /tmp/docker/config/a_local_config.yml
+RUN chown -R librecat:librecat /tmp/docker
 RUN mkdir -p /etc/sudoers.d/
 RUN echo "librecat     ALL=(ALL)       ALL" > /etc/sudoers.d/10_librecat
 
