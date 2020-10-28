@@ -31,14 +31,11 @@ sub decode_file {
     $file = [] unless defined $file;
 
     #a single file was sent
-    $file = [ $file ] if is_string( $file );
+    $file = [$file] if is_string($file);
 
-    #a list of files were sent. Make sure this hook does not break a correct record.file
-    $file = [
-        map {
-            is_string( $_ ) ? from_json( encode("utf8",$_) ) : $_;
-        } @$file
-    ];
+#a list of files were sent. Make sure this hook does not break a correct record.file
+    $file
+        = [map {is_string($_) ? from_json(encode("utf8", $_)) : $_;} @$file];
 
     $file;
 
@@ -61,13 +58,13 @@ Some fields are pre-filled.
 =cut
 
     get '/new' => sub {
-        my $params_query= params("query");
-        my $h           = h();
-        my $type        = $params_query->{type};
-        my $user_id     = session("user_id");
-        my $user_login  = session("user");
-        my $user_role   = session("role");
-        my $user        = $h->get_person($user_id);
+        my $params_query = params("query");
+        my $h            = h();
+        my $type         = $params_query->{type};
+        my $user_id      = session("user_id");
+        my $user_login   = session("user");
+        my $user_role    = session("role");
+        my $user         = $h->get_person($user_id);
 
         return template 'backend/add_new' unless $type;
 
@@ -80,8 +77,8 @@ Some fields are pre-filled.
             _id        => $id,
             type       => $type,
             department => $user->{department},
-            creator => { id => $user_id, login => $user_login },
-            user_id => $user_id,
+            creator    => {id => $user_id, login => $user_login},
+            user_id    => $user_id,
         };
 
         # Use config/hooks.yml to register functions
@@ -93,7 +90,7 @@ Some fields are pre-filled.
 
         #-- Fill out default fields ---
 
-        if ( $user_role eq "user") {
+        if ($user_role eq "user") {
             my $person = {
                 first_name => $user->{first_name},
                 last_name  => $user->{last_name},
@@ -116,7 +113,7 @@ Some fields are pre-filled.
             }
         }
 
-        if( $h->locale_exists( $params_query->{lang} ) ){
+        if ($h->locale_exists($params_query->{lang})) {
             $data->{lang} = $params_query->{lang};
         }
 
@@ -124,15 +121,13 @@ Some fields are pre-filled.
 
         $hook->fix_after($data);
 
-        # Important values and flags for the form in order to distinguish between the contexts
-        # it is used in
-        var form_action => uri_for( "/librecat/record" );
+# Important values and flags for the form in order to distinguish between the contexts
+# it is used in
+        var form_action => uri_for("/librecat/record");
         var form_method => "POST";
         var new_record  => 1;
 
-        my $template = File::Spec->catfile(
-            "backend","forms",$type
-        );
+        my $template = File::Spec->catfile("backend", "forms", $type);
 
         template $template, $data;
     };
@@ -153,7 +148,11 @@ Checks if the user has permission the see/edit this record.
         unless (
             p->can_edit(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
             )
         {
@@ -168,9 +167,7 @@ Checks if the user has permission the see/edit this record.
 
         $hook->fix_before($rec);
 
-        my $template = File::Spec->catfile(
-            "backend","forms", $rec->{type}
-        );
+        my $template = File::Spec->catfile("backend", "forms", $rec->{type});
 
         $rec->{return_url} = request->referer if request->referer;
 
@@ -178,10 +175,11 @@ Checks if the user has permission the see/edit this record.
 
         $hook->fix_after($rec);
 
-        # Important values and flags for the form in order to distinguish between the contexts
-        # it is used in
+# Important values and flags for the form in order to distinguish between the contexts
+# it is used in
         var form_action => uri_for(
-            "/librecat/record/".uri_escape($id),{ "x-tunneled-method" => "PUT" }
+            "/librecat/record/" . uri_escape($id),
+            {"x-tunneled-method" => "PUT"}
         );
         var form_method => "POST";
         var new_record  => 0;
@@ -202,19 +200,20 @@ Deprecated route: all trafic is internally forwarded to
     post '/update' => sub {
         my $params_body = params("body");
 
-        if( $params_body->{new_record} ){
+        if ($params_body->{new_record}) {
 
-            forward "/librecat/record",{},{ method => "POST" };
-
-        }
-
-        if( is_string( $params_body->{_id} ) ){
-
-            forward "/librecat/record/".uri_escape( $params_body->{_id} ),{},{ method => "PUT" };
+            forward "/librecat/record", {}, {method => "POST"};
 
         }
 
-        forward "/librecat/record",{},{ method => "POST" };
+        if (is_string($params_body->{_id})) {
+
+            forward "/librecat/record/" . uri_escape($params_body->{_id}),
+                {}, {method => "PUT"};
+
+        }
+
+        forward "/librecat/record", {}, {method => "POST"};
 
     };
 
@@ -234,7 +233,11 @@ Checks if the user has the rights to edit this record.
         unless (
             p->can_return(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
             )
         {
@@ -272,7 +275,11 @@ Deletes record with id. For admins only.
         unless (
             p->can_delete(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
             )
         {
@@ -303,13 +310,14 @@ Only publications with status C<deleted> are not visible.
 
 =cut
 
-get '/preview/:id.:fmt' => sub {
-    my $rparams = params("route");
-    my $id  = $rparams->{id};
-    my $fmt = $rparams->{fmt} // 'yaml';
+    get '/preview/:id.:fmt' => sub {
+        my $rparams = params("route");
+        my $id      = $rparams->{id};
+        my $fmt     = $rparams->{fmt} // 'yaml';
 
-    forward "/librecat/export", {cql => "id=$id", fmt => $fmt , limit => 1};
-};
+        forward "/librecat/export",
+            {cql => "id=$id", fmt => $fmt, limit => 1};
+    };
 
 =head2 GET /preview/id
 
@@ -339,12 +347,13 @@ For admins only!
     get '/internal_view/:id' => sub {
         my $id = params->{id};
 
-        my $rec; my $hits;
-        if(params->{searcher}){
-          $rec = publication->search_bag->get($id);
+        my $rec;
+        my $hits;
+        if (params->{searcher}) {
+            $rec = publication->search_bag->get($id);
         }
         else {
-          $rec = publication->get($id);
+            $rec = publication->get($id);
         }
 
         unless ($rec) {
@@ -356,20 +365,20 @@ For admins only!
         my $exporter = Catmandu->exporter('YAML', file => \$export_string);
         $exporter->add($rec);
 
-        $export_string = Encode::encode( 'UTF-8', $export_string );
+        $export_string = Encode::encode('UTF-8', $export_string);
 
         my %headers = (
-            'Content-Type'   => 'text/plain' ,
-            'Content-Length' => length($export_string) ,
+            'Content-Type'   => 'text/plain',
+            'Content-Length' => length($export_string),
         );
 
         Dancer::Response->new(
-           status => 200,
-           content => $export_string,
-           encoded => 1,
-           headers => [%headers],
-           forward => ""
-       );
+            status  => 200,
+            content => $export_string,
+            encoded => 1,
+            headers => [%headers],
+            forward => ""
+        );
     };
 
 =head2 GET /clone/:id
@@ -382,8 +391,8 @@ Clones the record with ID :id and returns a form with a different ID.
         my $id  = params("route")->{id};
         my $rec = publication->get($id);
 
-        my $user_id     = session("user_id");
-        my $user_login  = session("user");
+        my $user_id    = session("user_id");
+        my $user_login = session("user");
 
         unless ($rec) {
             return template 'error',
@@ -398,19 +407,17 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{file};
         delete $rec->{related_material};
 
-        $rec->{_id}        = publication->generate_id;
-        $rec->{status} = "new";
-        $rec->{creator} = { id => $user_id, login => $user_login };
+        $rec->{_id}     = publication->generate_id;
+        $rec->{status}  = "new";
+        $rec->{creator} = {id => $user_id, login => $user_login};
 
-        #important values and flags for the form in order to distinguish between the contexts
-        #it is used in
-        var form_action => uri_for( "/librecat/record" );
+#important values and flags for the form in order to distinguish between the contexts
+#it is used in
+        var form_action => uri_for("/librecat/record");
         var form_method => "POST";
         var new_record  => 1;
 
-        my $template = File::Spec->catfile(
-            "backend","forms",$rec->{type}
-        );
+        my $template = File::Spec->catfile("backend", "forms", $rec->{type});
 
         template $template, $rec;
     };
@@ -429,7 +436,11 @@ Publishes private records, returns to the list.
         unless (
             p->can_make_public(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
             )
         {
@@ -476,13 +487,13 @@ The record is not stored yet.
 
     post '/change_type' => sub {
         my $params_body = params("body");
-        my $h = h();
+        my $h           = h();
 
         #unpack strange format of record.file
         #TODO: this should not be necessary
-        $params_body->{file} = decode_file( $params_body->{file} );
+        $params_body->{file} = decode_file($params_body->{file});
 
-        my $body = $h->nested_params( $params_body );
+        my $body = $h->nested_params($params_body);
 
         # Use config/hooks.yml to register functions
         # that should run before/after changing the edit mode
@@ -490,28 +501,26 @@ The record is not stored yet.
         $hook->fix_before($body);
         $hook->fix_after($body);
 
-        # Important values and flags for the form in order to distinguish between the contexts
-        # it is used in
-        if( publication()->get( $body->{_id} ) ){
+# Important values and flags for the form in order to distinguish between the contexts
+# it is used in
+        if (publication()->get($body->{_id})) {
 
-            var form_action => uri_for(
-                "/librecat/record/".uri_escape( $body->{_id} ),{ "x-tunneled-method" => "PUT" }
-            );
+            var form_action =>
+                uri_for("/librecat/record/" . uri_escape($body->{_id}),
+                {"x-tunneled-method" => "PUT"});
             var form_method => "POST";
             var new_record  => 0;
 
         }
         else {
 
-            var form_action => uri_for( "/librecat/record" );
+            var form_action => uri_for("/librecat/record");
             var form_method => "POST";
             var new_record  => 1;
 
         }
 
-        my $template = File::Spec->catfile(
-            "backend","forms",$body->{type}
-        );
+        my $template = File::Spec->catfile("backend", "forms", $body->{type});
 
         template $template, $body;
     };
@@ -527,25 +536,28 @@ Saves a new record in the database.
         my $params_query = params("query");
         my $params_body  = params("body");
         my $request      = request();
-        my $return_url   = is_string( $params_body->{return_url} ) ?
-            $params_body->{return_url} : $request->uri_for("/librecat");
+        my $return_url
+            = is_string($params_body->{return_url})
+            ? $params_body->{return_url}
+            : $request->uri_for("/librecat");
         delete $params_body->{return_url};
-        my $h = h();
+        my $h        = h();
         my $librecat = librecat();
-        my $model = publication();
+        my $model    = publication();
 
-        $h->log->debug( "Body parameters:" . to_dumper($params_body) );
+        $h->log->debug("Body parameters:" . to_dumper($params_body));
 
         #record should not be present
-        if( $model->get( $params_body->{_id} ) ){
+        if ($model->get($params_body->{_id})) {
 
-            flash danger => $h->localize( "error.record_id_taken", $params_body->{_id} );
+            flash danger =>
+                $h->localize("error.record_id_taken", $params_body->{_id});
             return redirect $return_url;
 
         }
 
-        # When the form isn't fully loaded when the record is saved bail out and cry for help
-        if( $params_body->{_end_} ne "_end_" ){
+# When the form isn't fully loaded when the record is saved bail out and cry for help
+        if ($params_body->{_end_} ne "_end_") {
             flash danger => $h->localize("error.preliminary_submit");
             return redirect $return_url;
         }
@@ -553,9 +565,9 @@ Saves a new record in the database.
 
         # Unpack strange format of record.file
         # TODO: this should not be necessary
-        $params_body->{file} = decode_file( $params_body->{file} );
+        $params_body->{file} = decode_file($params_body->{file});
 
-        my $body = $h->nested_params( $params_body );
+        my $body = $h->nested_params($params_body);
 
         # User that last updated this record
         $body->{user_id} = session("user_id");
@@ -574,16 +586,14 @@ Saves a new record in the database.
                     $model->add(
                         $body,
                         on_validation_error => sub {
-                            my($rec, $errors) = @_;
+                            my ($rec, $errors) = @_;
                             $librecat->log->errorf(
                                 "%s not a valid publication %s",
-                                $rec->{_id},
-                                [map { $_->localize() } @$errors]
-                            );
+                                $rec->{_id}, [map {$_->localize()} @$errors]);
                             my $current_locale = $h->locale();
-                            @error_messages  = map {
-                                $_->localize( $current_locale );
-                            } @$errors;
+                            @error_messages
+                                = map {$_->localize($current_locale);}
+                                @$errors;
                         }
                     );
                 }
@@ -595,25 +605,24 @@ Saves a new record in the database.
             $h->log->fatal($_);
 
             push @error_messages,
-                $h->localize( "error.create_failed", $body->{_id} ) . " " .
-                $h->localize( "error.contact_admin",$h->config->{admin_email} );
+                $h->localize("error.create_failed", $body->{_id}) . " "
+                . $h->localize("error.contact_admin",
+                $h->config->{admin_email});
 
         };
 
         # All is well
-        return redirect $return_url if scalar( @error_messages ) == 0;
+        return redirect $return_url if scalar(@error_messages) == 0;
 
         # When we have an error record we return to the edit form and show
         # all errors...
-        my $template = File::Spec->catfile(
-            "backend","forms", $body->{type}
-        );
+        my $template = File::Spec->catfile("backend", "forms", $body->{type});
 
-        flash danger => join( "<br>", @error_messages );
+        flash danger => join("<br>", @error_messages);
 
-        # Important values and flags for the form in order to distinguish between the contexts
-        # it is used in
-        var form_action => $request->uri_for( "/librecat/record" );
+# Important values and flags for the form in order to distinguish between the contexts
+# it is used in
+        var form_action => $request->uri_for("/librecat/record");
         var form_method => "POST";
         var new_record  => 1;
 
@@ -635,25 +644,27 @@ If record does not exist, then this route does not match
 
     put "/:id" => sub {
 
-        my $id = params("route")->{id};
+        my $id           = params("route")->{id};
         my $params_query = params("query");
         my $params_body  = params("body");
         my $request      = request();
-        my $return_url   = is_string( $params_body->{return_url} ) ?
-            $params_body->{return_url} : $request->uri_for("/librecat");
+        my $return_url
+            = is_string($params_body->{return_url})
+            ? $params_body->{return_url}
+            : $request->uri_for("/librecat");
         delete $params_body->{return_url};
-        my $h       = h();
-        my $p       = p();
-        my $model   = publication();
+        my $h        = h();
+        my $p        = p();
+        my $model    = publication();
         my $librecat = librecat();
 
         #record not found
-        pass unless $model->get( $id );
+        pass unless $model->get($id);
 
-        $h->log->debug( "Body parameters:" . to_dumper($params_body) );
+        $h->log->debug("Body parameters:" . to_dumper($params_body));
 
-        # When the form isn't fully loaded when the record is saved bail out and cry for help
-        if( $params_body->{_end_} ne "_end_" ){
+# When the form isn't fully loaded when the record is saved bail out and cry for help
+        if ($params_body->{_end_} ne "_end_") {
             flash danger => $h->localize("error.preliminary_submit");
             return redirect $return_url;
         }
@@ -661,9 +672,9 @@ If record does not exist, then this route does not match
 
         # Unpack strange format of record.file
         # TODO: this should not be necessary
-        $params_body->{file} = decode_file( $params_body->{file} );
+        $params_body->{file} = decode_file($params_body->{file});
 
-        my $body = $h->nested_params( $params_body );
+        my $body = $h->nested_params($params_body);
 
         # Just to make sure..
         $body->{_id} = $id;
@@ -672,40 +683,61 @@ If record does not exist, then this route does not match
         $body->{user_id} = session("user_id");
 
         my $finalSubmit = delete $body->{finalSubmit};
-        $finalSubmit    = is_string( $finalSubmit ) ? $finalSubmit : "";
+        $finalSubmit = is_string($finalSubmit) ? $finalSubmit : "";
 
-        if(
-            $finalSubmit eq "recPublish" &&
-            $p->can_make_public(
+        if (
+            $finalSubmit eq "recPublish"
+            && $p->can_make_public(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
-        ){
+            )
+        {
             # ok
         }
-        elsif(
-            $finalSubmit eq "recReturn" &&
-            $p->can_return(
+        elsif (
+            $finalSubmit eq "recReturn"
+            && $p->can_return(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
-        ){
+            )
+        {
             # ok
         }
-        elsif(
-            $finalSubmit eq "recSubmit" && $p->can_submit(
+        elsif (
+            $finalSubmit eq "recSubmit"
+            && $p->can_submit(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
-        ){
+            )
+        {
             # ok
         }
-        elsif(
+        elsif (
             $p->can_edit(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                {
+                    user_id => session("user_id"),
+                    role    => session("role"),
+                    live    => 1
+                }
             )
-        ){
+            )
+        {
             # ok
         }
         else {
@@ -714,22 +746,23 @@ If record does not exist, then this route does not match
             forward "/access_denied";
         }
 
-        if( $finalSubmit eq "" ){
-            $librecat->log->warn("receiving an empty finalSubmit from the form");
+        if ($finalSubmit eq "") {
+            $librecat->log->warn(
+                "receiving an empty finalSubmit from the form");
         }
-        elsif( $finalSubmit eq "recSubmit" ){
+        elsif ($finalSubmit eq "recSubmit") {
             $body->{status} = "submitted";
         }
-        elsif( $finalSubmit eq "recPublish" ){
+        elsif ($finalSubmit eq "recPublish") {
             $body->{status} = "public";
         }
-        elsif( $finalSubmit eq "recReturn" ){
+        elsif ($finalSubmit eq "recReturn") {
             $body->{status} = "returned";
         }
-        else{
+        else {
             $librecat->log->warnf(
-                "receiving an unknown finalSubmit `%s` from the form", $finalSubmit
-            );
+                "receiving an unknown finalSubmit `%s` from the form",
+                $finalSubmit);
         }
 
         # Use config/hooks.yml to register functions
@@ -743,16 +776,14 @@ If record does not exist, then this route does not match
                     publication->add(
                         $body,
                         on_validation_error => sub {
-                            my($rec, $errors) = @_;
+                            my ($rec, $errors) = @_;
                             $librecat->log->errorf(
                                 "%s not a valid publication %s",
-                                $id,
-                                [map { $_->localize() } @$errors]
-                            );
+                                $id, [map {$_->localize()} @$errors]);
                             my $current_locale = $h->locale();
-                            @error_messages  = map {
-                                $_->localize( $current_locale );
-                            } @$errors;
+                            @error_messages
+                                = map {$_->localize($current_locale);}
+                                @$errors;
                         }
                     );
                 }
@@ -760,37 +791,37 @@ If record does not exist, then this route does not match
         }
         catch {
 
-            if( is_instance($_, "LibreCat::Error::VersionConflict") ){
+            if (is_instance($_, "LibreCat::Error::VersionConflict")) {
                 flash warning => $h->localize("error.version_conflict");
             }
-            else{
+            else {
 
                 $h->log->fatal("failed to update record $id");
                 $h->log->fatal($_);
 
                 push @error_messages,
-                    $h->localize( "error.update_failed",$id ) . " " .
-                    $h->localize( "error.contact_admin",$h->config->{admin_email} );
+                    $h->localize("error.update_failed", $id) . " "
+                    . $h->localize("error.contact_admin",
+                    $h->config->{admin_email});
 
             }
 
         };
 
         # All is well
-        return redirect( $return_url ) if scalar( @error_messages ) == 0;
+        return redirect($return_url) if scalar(@error_messages) == 0;
 
         # When we have an error record we return to the edit form and show
         # all errors...
-        my $template = File::Spec->catfile(
-            "backend","forms", $body->{type}
-        );
+        my $template = File::Spec->catfile("backend", "forms", $body->{type});
 
-        flash danger => join( "<br>", @error_messages );
+        flash danger => join("<br>", @error_messages);
 
-        # Important values and flags for the form in order to distinguish between the contexts
-        # it is used in
+# Important values and flags for the form in order to distinguish between the contexts
+# it is used in
         var form_action => $request->uri_for(
-            "/librecat/record/".uri_escape($id),{ "x-tunneled-method" => "PUT" }
+            "/librecat/record/" . uri_escape($id),
+            {"x-tunneled-method" => "PUT"}
         );
         var form_method => "POST";
         var new_record  => 0;
