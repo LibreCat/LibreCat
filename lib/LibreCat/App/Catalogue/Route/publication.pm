@@ -382,6 +382,9 @@ Clones the record with ID :id and returns a form with a different ID.
         my $id  = params("route")->{id};
         my $rec = publication->get($id);
 
+        my $user_id     = session("user_id");
+        my $user_login  = session("user");
+
         unless ($rec) {
             return template 'error',
                 {message => "No publication found with ID $id."};
@@ -397,6 +400,7 @@ Clones the record with ID :id and returns a form with a different ID.
 
         $rec->{_id}        = publication->generate_id;
         $rec->{status} = "new";
+        $rec->{creator} = { id => $user_id, login => $user_login };
 
         #important values and flags for the form in order to distinguish between the contexts
         #it is used in
