@@ -97,7 +97,7 @@ post '/librecat/record/import' => sub {
     unless (Catmandu::Util::is_array_ref($imported_records)) {
         return template "backend/add_new",
             {
-            error    => "Import from $source failed - try later again" ,
+            error    => "Import from $source failed - try again later" ,
             imported => []
             };
     }
