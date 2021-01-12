@@ -1,85 +1,298 @@
 # mapping data from CrossRef to the local repository
 
-retain(message)
-move(message, '')
+move(doi_record.crossref.journal,w)
+move(doi_record.crossref.book,w)
+move(doi_record.crossref.conference,w.conference)
+move(doi_record.crossref.posted_content,w.posted_content)
+#move(doi_record.crossref.dissertation,w)
 
-add('r.status','new')
+move(crm_item.0.text,w.r.publisher)
+move(crm_item.2.text,w.member)
+move(doi.text,w.r.doi)
+move(doi.type,w.r.type)
+lookup(w.r.type, fixes/lookup/cr_type_mapping.csv, default: journal_article)
 
-# look up publication type
-move(type, r.type)
-lookup(r.type, fixes/lookup/cr_type_mapping.csv, default: journal_article)
+move(w,.)
 
-#title
-move(title, r.title)
-join(r.title,' ')
-trim(r.title)
 
-#year
-move(issued.date-parts.0.0, r.year)
-move(deposited.date-parts.0.0, r.year)
-move(created.date-parts.0.0, r.year)
-trim(r.year)
+add(r.status,'new')
 
-# identifier
-move(DOI, r.doi)
-move(ISSN, r.publication_identifier.issn)
-move(ISBN, r.publication_identifier.isbn)
-replace_all(r.publication_identifier.isbn.*, '^http://id.crossref.org/isbn/(.*)',$1)
+if exists(journal_article)
+  #set(r.type, journal_article)
+  move(journal_article.contributors.person_name.*,tmp.contributors.person_name.$append)
+  move(journal_article.contributors.person_name,tmp.contributors.person_name.$append)
+  move(journal_article,main)
+end
+if exists(content_item)
+  if any_match(content_item.component_type,chapter)
+    set(r.type, book_chapter)
+    move(content_item.contributors.person_name,tmp.contributors.person_name)
+  end
+  move(content_item,main) #book_chapter
+end
+if exists(conference.conference_paper)
+  #set(r.type, conference)
+  move(conference.conference_paper.contributors.person_name.*,tmp.contributors.person_name.$append)
+  move(conference.conference_paper.contributors.person_name,tmp.contributors.person_name.$append)
+  move(conference.conference_paper,main)
+end
+if exists(conference)
+  move(conference.contributors.person_name.*,tmp.contributors.person_name.$append)
+  move(conference.contributors.person_name,tmp.contributors.person_name.$append)
+  move(conference.event_metadata,event_metadata)
+  move(conference.proceedings_metadata,proceedings_metadata)
+  move(conference.proceedings_series_metadata,proceedings_metadata)
+end
 
-# authors
-do list (path => author, var:loop)
-  do identity ()
-    move(loop.given, tmp.first_name)
-    move(loop.family, tmp.last_name)
-    move(tmp,r.author.$append)
+##########
+# journal
+##########
+move(journal_issue.journal_volume.volume.text, r.volume)
+if any_match(r.type,journal_editor)
+  move(journal_metadata.full_title.text,r.title)
+else
+  move(journal_metadata.full_title.text, r.publication)
+end
+move(journal_metadata.issn, main.issn)
+move(journal_metadata.language,journal_issue.language)
+
+move(journal_issue,metadata)
+
+#######
+# book
+#######
+if any_match(book_type,edited_book)
+  unless any_match(main.component_type,chapter)
+    set(r.type,book_editor)
+  end
+end
+if exists(book_series_metadata)
+  move(book_series_metadata,book_metadata)
+end
+move(book_metadata.isbn, main.isbn)
+if any_match(book_type, monograph|edited_book)
+  unless any_match(main.component_type,chapter)
+    move(book_metadata.titles.title.text,r.title)
+    move(book_metadata.titles.subtitle.text,r.alternative_title.$append)
+  end
+end
+move(book_metadata.titles.title.text, r.publication.$append)
+move(book_metadata.titles.subtitle.text,r.publication.$append)
+join(r.publication,". ")
+
+move(book_metadata.series_metadata.titles.title.text, r.series_title)
+move(book_metadata.series_metadata.issn, main.issn)
+move(book_metadata.abstract.p,main.abstract)
+move(book_metadata.abstract,main.abstract)
+
+move(book_metadata, metadata)
+
+#############
+# conference
+#############
+if any_match(r.type, conference_editor)
+  move(proceedings_metadata.proceedings_title.text, r.title)
+else
+  move(proceedings_metadata.proceedings_title.text, r.publication)
+end
+move(proceedings_metadata.series_metadata.titles.title.text,r.series_title)
+move(proceedings_metadata.volume.text, r.volume)
+move(proceedings_metadata.issn, main.issn)
+move(proceedings_metadata.isbn, main.isbn)
+move(event_metadata.conference_name.text, r.conference.name)
+move(event_metadata.conference_location.text, r.conference.location)
+if any_match(event_metadata.conference_date.text,'\d{2} \d{2} \d{4} \d{2} \d{2} \d{4}')
+  split(event_metadata.conference_date.text," ")
+  move(event_metadata.conference_date.text.5,r.conference.end_date.$append)
+  move(event_metadata.conference_date.text.4,r.conference.end_date.$append)
+  move(event_metadata.conference_date.text.3,r.conference.end_date.$append)
+  join(r.conference.end_date,"-")
+  move(event_metadata.conference_date.text.2,r.conference.start_date.$append)
+  move(event_metadata.conference_date.text.1,r.conference.start_date.$append)
+  move(event_metadata.conference_date.text.0,r.conference.start_date.$append)
+  join(r.conference.start_date,"-")
+end
+move(proceedings_metadata, metadata)
+
+###########
+# preprint
+###########
+move(posted_content.language, metadata.language)
+move(posted_content.contributors.person_name,tmp.contributors.person_name)
+move(posted_content.program.license_ref.0.text, posted_content.crossmark.custom_metadata.ai_program.ai_license_ref.0.text)
+move(posted_content.program.license_ref.text, posted_content.crossmark.custom_metadata.ai_program.ai_license_ref.0.text)
+move(posted_content,main)
+
+###############################
+# Fixes for container metadata
+###############################
+move(metadata.publication_date.0.year.text, r.year)
+move(metadata.publication_date.year.text, r.year)
+move(metadata.publisher.publisher_name.text,r.publisher)
+move(metadata.publisher.publisher_place.text, r.place)
+move(metadata.language, r.language.0.iso)
+lookup(r.language.0.iso, fixes/lookup/cr_lang_iso.csv, default: eng)
+move(metadata.issue.text, r.issue)
+if exists(tmp.contributors.person_name)
+  move(tmp.contributors.person_name.*,metadata.contributors.person_name.$append)
+  move(tmp.contributors.person_name,metadata.contributors.person_name.$append)
+end
+if exists(metadata.contributors.person_name)
+  unless exists(metadata.contributors.person_name.0)
+    move(metadata.contributors.person_name,metadata.contributors.person_name.$append)
+  end
+  do list (path => metadata.contributors.person_name, var:loop)
+    do identity ()
+      move(loop.given_name.text, tmp.first_name)
+      move(loop.surname.text, tmp.last_name)
+      if any_match(loop.contributor_role,editor)
+        move(tmp,r.editor.$append)
+      end
+      if any_match(loop.contributor_role,author)
+        move(tmp,r.author.$append)
+      end
+    end
   end
 end
 
-# editors
-do list (path => editor, var:loop)
-  do identity ()
-    move(loop.given, tmp.first_name)
-    move(loop.family, tmp.last_name)
-    move(tmp,r.editor.$append)
+if exists(metadata.program.license_ref)
+  move(metadata.program.license_ref.0, tmp)
+  move(tmp,metadata.program.license_ref)
+  if any_match(metadata.program.license_ref.text, '^http(s)*://creativecommons.org/')
+    move(metadata.program.license_ref.text, tmp.license)
+    replace_all(tmp.license, 'http(s)*://creativecommons.org/(licenses|publicdomain)/','')
+    replace_all(tmp.license, '[/.-]','_')
+    replace_all(tmp.license, '_$','')
+    replace_all(tmp.license, '^zero','0')
+    prepend(tmp.license, "cc_")
+    move(tmp.license, r.license)
+  end
+end
+
+############################
+#Fixes for all types - main
+############################
+move(main.titles.0.title.text,r.title)
+move(main.titles.title.text, r.title)
+move(main.titles.0.subtitle.text,r.alternative_title.$append)
+move(main.titles.subtitle.text, r.alternative_title.$append)
+
+move(main.pages.first_page.text, r.page)
+if exists(main.pages.last_page)
+  move(r.page, tmp.page.$append)
+  move(main.pages.last_page.text, tmp.page.$append)
+  join(tmp.page, "-")
+  move(tmp.page, r.page)
+else
+  if any_match(r.type, journal_article)
+    move(r.page, r.article_number)
+    if any_match(main.publisher_item.item_number.item_number_type,article-number)
+      move(main.publisher_item.item_number.text,r.article_number)
+    end
+  end
+end
+
+unless exists(r.year)
+  move(main.acceptance_date.year.text, r.year)
+  move(main.posted_date.year.text, r.year)
+  move(main.publication_date.0.year.text,r.year)
+  move(main.publication_date.year.text,r.year)
+end
+
+if exists(main.abstract)
+  if exists(main.abstract.0)
+    move(main.abstract, tmp.abstract)
+  else
+    move(main.abstract, tmp.abstract.$append)
+  end
+  do list (path => tmp.abstract, var:loop)
+    do identity ()
+      move(loop.xml_lang,tmp.loopabstract.lang)
+      lookup(tmp.loopabstract.lang, fixes/lookup/cr_lang_iso.csv, default: eng)
+      unless exists(loop.sec)
+        move(loop.text,loop.sec.0.text)
+      end
+      do list (path => loop.sec, var:secloop)
+        do identity ()
+          move(secloop.text,tmp.loopabstract.text.$append)
+        end
+      end
+      join(tmp.loopabstract.text,"<br />")
+      move(tmp.loopabstract,r.abstract.$append)
+    end
+  end
+end
+
+if exists(main.issn)
+  if exists(main.issn.0)
+    move(main.issn, tmp.issn)
+  else
+    move(main.issn, tmp.issn.$append)
+  end
+  do list (path => tmp.issn, var:loop)
+    do identity ()
+      unless exists(loop.media_type)
+        move(loop.text, r.publication_identifier.issn.$append)
+      end
+      if any_match(loop.media_type,electronic)
+        move(loop.text, r.publication_identifier.eissn.$append)
+      end
+      if any_match(loop.media_type,print)
+        move(loop.text, r.publication_identifier.issn.$append)
+      end
+    end
+  end
+end
+if exists(main.isbn)
+  if exists(main.isbn.0)
+    move(main.isbn, tmp.isbn)
+  else
+    move(main.isbn, tmp.isbn.$append)
+  end
+  do list (path => tmp.isbn, var:loop)
+    do identity ()
+      unless exists(loop.media_type)
+        move(loop.text, r.publication_identifier.isbn.$append)
+      end
+      if any_match(loop.media_type,electronic)
+        move(loop.text, r.publication_identifier.eisbn.$append)
+      end
+      if any_match(loop.media_type,print)
+        move(loop.text, r.publication_identifier.isbn.$append)
+      end
+    end
+  end
+end
+
+move(main.ai_program.ai_license_ref.0,main.crossmark.custom_metadata.ai_program.ai_license_ref.0)
+move(main.ai_program.ai_license_ref,main.crossmark.custom_metadata.ai_program.ai_license_ref.0)
+if exists(main.crossmark.custom_metadata.ai_program.ai_license_ref.0.text)
+  if any_match(main.crossmark.custom_metadata.ai_program.ai_license_ref.0.text, '^http(s)*://creativecommons.org/')
+    move(main.crossmark.custom_metadata.ai_program.ai_license_ref.0.text, tmp.license)
+    replace_all(tmp.license, 'http(s)*://creativecommons.org/(licenses|publicdomain)/','')
+    replace_all(tmp.license, '[/.-]','_')
+    replace_all(tmp.license, '_$','')
+    replace_all(tmp.license, '^zero','0')
+    prepend(tmp.license, "cc_")
+    move(tmp.license, r.license)
   end
 end
 
 add(r.publication_status, published)
 
-move(volume, r.volume)
-move(issue, r.issue)
-move(publisher, r.publisher)
-move(subtitle, r.alternative_title)
-move(subject, r.keyword)
-join(r.keyword,' ; ')
-trim(r.keyword)
-
-# type mapping
-if all_match(r.type, 'journal_article')
-    move(container-title.0, r.publication)
-    if any_match(page, '-')
-      move(page, r.page)
-    else
-      move(page, r.article_number)
-    end
-    move(article-number, r.article_number)
-end
+#move(subject, r.keyword)
+#join(r.keyword,' ; ')
+#trim(r.keyword)
 
 # book
-if all_match(r.type, 'book')
+if all_match(r.type, 'book$')
     move(publisher-location, r.place)
     if exists(r.editor)
       set(r.type, book_editor)
     end
-end
-
-if all_match(r.type, 'book_chapter')
-    move(container-title.0, r.publication)
-    move(container-title.1, r.series_title)
-end
-
-if all_match(r.type, 'conference')
-    move(container-title.0, r.publication)
+    unless exists(r.title)
+      move(r.publication,r.title)
+    end
 end
 
 if all_match(r.type, preprint)
@@ -89,17 +302,6 @@ if all_match(r.type, preprint)
   end
 end
 
-move(abstract, r.abstract)
-if exists(r.abstract)
-  unless is_array(r.abstract)
-    move(r.abstract, r.abstract.0.text)
-    add(r.abstract.0.lang, eng)
-  end
-end
-
-# fix language and map to iso
-move(language, r.language.0.iso)
-lookup(r.language.0.iso, fixes/lookup/cr_lang_iso.csv, default: eng)
 
 retain(r)
 move(r, .)
