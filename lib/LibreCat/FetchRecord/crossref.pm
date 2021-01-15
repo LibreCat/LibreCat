@@ -2,13 +2,16 @@ package LibreCat::FetchRecord::crossref;
 
 use Catmandu::Util qw(:io :hash);
 use LibreCat -self;
+use LibreCat::App::Helper;
 use URI::Escape;
 use Moo;
+use XML::Hash;
+use Furl;
 
 with 'LibreCat::FetchRecord';
 
 has 'baseurl' =>
-    (is => 'ro', default => sub {"https://api.crossref.org/works/"});
+    (is => 'ro', default => sub {"https://www.crossref.org/openurl/?format=unixsd"});
 
 sub fetch {
     my ($self, $id) = @_;
@@ -18,23 +21,41 @@ sub fetch {
 
     $self->log->debug("requesting $id from crossref");
 
-    my $url = sprintf "%s%s", $self->baseurl, uri_escape_utf8($id);
+    my $url = sprintf "%s&pid=%s&id=doi:%s", $self->baseurl, h->config->{admin_email}, $id;
+    my $result;
+    my $xml_converter; my $xml_hash; my $data;
 
-    my $data = Catmandu->importer('getJSON', from => $url, warn => 0)->to_array;
+    my $furl = Furl->new(
+      agent => "Chrome 35.1",
+      headers => ['Content-type' => 'application/xml'],
+    );
 
-    unless (@$data) {
-        $self->log->error(
-            "failed to request https://api.crossref.org/works/$id");
-        return ();
+    $result = $furl->get($url);
+
+    my $xml = $result->content;
+    $xml =~ s/crm-item/crm_item/g;
+    $xml =~ s/jats:(abstract|sec)/$1/g;
+    $xml =~ s/\<jats:\w+\>//g;
+    $xml =~ s/\<\/jats:title\>/ - /g;
+    $xml =~ s/\<\/jats:\w+\>//g;
+    $xml =~ s/(xml|ai):(lang|program|license_ref)/$1_$2/g;
+    $xml =~ s/\<sup\>/&lt;sup&gt;/g;
+    $xml =~ s/\<\/sup\>/&lt;\/sup&gt;/g;
+
+    $xml_converter = XML::Hash->new();
+    $xml_hash = $xml_converter->fromXMLStringtoHash($xml);
+    $data = $xml_hash->{crossref_result}->{query_result}->{body}->{query};
+
+    if($data->{status} eq "resolved"){
+      my $fixer = librecat->fixer('crossref_mapping.fix');
+
+      $data = $fixer->fix($data);
+
+      return [$data];
     }
-
-    my $fixer = librecat->fixer('crossref_mapping.fix');
-
-    $data = $fixer->fix($data);
-
-    $self->log->debugf("data: %s", $data);
-
-    return $data;
+    else {
+      return [{agency => "unresolved"}];
+    }
 }
 
 1;
