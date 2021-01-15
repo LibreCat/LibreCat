@@ -302,6 +302,11 @@ if all_match(r.type, preprint)
   end
 end
 
+# Something that often throws an error:
+if exists(r.title.0)
+  trim(r.title.*)
+  join(r.title," ")
+end
 
 retain(r)
 move(r, .)
