@@ -218,7 +218,12 @@ post '/login' => sub {
 
     if ($user) {
         h->login_user($user);
-        redirect uri_for($return_url);
+        if($return_url =~ /\?/){
+          redirect $return_url;
+        }
+        else {
+          redirect uri_for($return_url);
+        }
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'},
