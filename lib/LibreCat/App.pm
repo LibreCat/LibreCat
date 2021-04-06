@@ -211,19 +211,15 @@ Route where login data is sent to. On success redirects to
 
 post '/login' => sub {
     my $user = _authenticate(params->{user}, params->{pass});
-    my $return_url = params->{return_url} || '/librecat';
+    my $return_url = params->{return_url} || uri_for("/librecat")->as_string();
 
     # Deleting bad urls to external websites
-    $return_url =~ s{^[a-zA-Z:]+(\/\/)[^\/]+}{};
+    $return_url = uri_for("/librecat")->as_string()
+        unless index($return_url, request->uri_base()) == 0;
 
     if ($user) {
         h->login_user($user);
-        if($return_url =~ /\?/){
-          redirect $return_url;
-        }
-        else {
-          redirect uri_for($return_url);
-        }
+        redirect $return_url;
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'},
