@@ -80,10 +80,10 @@ sub by_user_role {
             for my $id (@{$user->{data_manager}}) {
                 for my $iid (@{$pub->{department} // []}) {
                     return 1 if $id->{_id} eq $iid->{_id} &&
-                    (is_same($pub->{type},'research_data') || is_same($pub->{type}, 'software'));
+                    ($pub->{type} eq 'research_data' || $pub->{type} eq 'software');
                     for my $tree (@{$iid->{tree} // []}) {
                         return 1 if $id->{_id} eq $tree->{_id} &&
-                        (is_same($pub->{type},'research_data') || is_same($pub->{type}, 'software'));
+                        ($pub->{type} eq 'research_data' || $pub->{type} eq 'software');
                     }
                 }
             }
