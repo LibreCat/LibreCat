@@ -31,7 +31,8 @@ handlers:
     #################################################################
     # demo: demonstration extension, allows local access without password
     # see lib/LibreCat/App/Permission/demo.pm for an example
-    demo: LibreCat::App::Permission::demo
+    # 
+    # demo: LibreCat::App::Permission::demo
 
 # List of all the routes that need authentication (or not)
 # Syntax:

@@ -128,8 +128,6 @@ LibreCat::Cmd::index - manage index jobs
 =head1 SYNOPSIS
 
     librecat index initialize
-    librecat index create BAG
-    librecat index drop BAG
     librecat index purge
     librecat index status
     librecat index switch
