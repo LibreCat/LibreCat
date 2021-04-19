@@ -190,7 +190,7 @@ Route the user will be sent to if login is required.
 get '/login' => sub {
 
     # what are you doing? you're already in.
-    redirect '/librecat' if session('user');
+    return redirect uri_for('/librecat') if session('user');
 
     # not logged in yet
     template 'login',
@@ -236,7 +236,7 @@ any '/logout' => sub {
 
     h->logout_user();
 
-    redirect '/';
+    redirect uri_for('/');
 };
 
 =head2 GET /set_language
