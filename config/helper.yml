@@ -11,3 +11,4 @@ extract_params:
   cql: "string_array"
   sort: "string_array"
   fmt: exists
+  similar_search: exists
