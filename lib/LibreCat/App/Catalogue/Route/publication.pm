@@ -390,6 +390,7 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{_version};
         delete $rec->{date_created};
         delete $rec->{date_updated};
+        delete $rec->{urn};
         delete $rec->{doi};
         delete $rec->{file};
         delete $rec->{related_material};
