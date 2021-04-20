@@ -395,7 +395,9 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{file};
         delete $rec->{related_material};
 
-        $rec->{_id}        = publication->generate_id;
+        $rec->{_id}     = publication->generate_id;
+        $rec->{status}  = "new";
+        $rec->{creator} = {id => $user_id, login => $user_login};
 
         #important values and flags for the form in order to distinguish between the contexts
         #it is used in
