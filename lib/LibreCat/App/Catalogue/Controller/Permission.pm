@@ -87,7 +87,7 @@ sub _can_do_action {
     if ($action_access->by_user_id($pub,$user)) {
         return 1;
     }
-    elsif ($action_access->by_user_role($pub,$user)) {
+    elsif ($action_access->by_user_role($pub,$user,$role)) {
         return 1;
     }
     else {
