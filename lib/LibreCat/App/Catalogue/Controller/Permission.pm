@@ -63,7 +63,7 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
+    my $pub = $opts->{live} ? h->publication->get($id) : get_cached_publication($id);
 
     is_hash_ref($pub) or return 0;
 

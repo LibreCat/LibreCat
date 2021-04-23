@@ -19,7 +19,7 @@
 
 [% IF backend %]
   <br />
-  [% IF p.can_edit( entry._id, user_id = session.user_id, role = session.role ) %]
+  [% IF p.can_edit( entry._id, user_id = session.user_id, role = session.role, live = 1 ) %]
   <a href="[% uri_base %]/librecat/record/edit/[% entry._id %]">[% h.loc("main_page.links.edit") %]</a>
   [% ELSE %]
   <strong>[% h.loc("main_page.links.edit") %]</strong>
@@ -38,10 +38,10 @@
     [% LAST %]
     [% END %]
   [% END %]
-  [% IF p.can_make_public( entry._id, user_id = session.user_id, role = session.role ) %]
+  [% IF p.can_make_public( entry._id, user_id = session.user_id, role = session.role, live = 1 ) %]
   | <a href="[% uri_base %]/librecat/record/publish/[% entry._id %]?return_url=[% request.uri | uri %]">[% h.loc("main_page.links.publish") %]</a>
   [% END %]
-  [% IF p.can_return( entry._id, user_id = session.user_id, role = session.role ) %]
+  [% IF p.can_return( entry._id, user_id = session.user_id, role = session.role, live = 1 ) %]
   | <a href="[% uri_base %]/librecat/record/return/[% entry._id %]?return_url=[% request.uri | uri %]">[% h.loc("main_page.links.return") %]</a>
   [% END %]
   [% IF session.role == "super_admin" %]
