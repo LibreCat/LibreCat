@@ -67,7 +67,7 @@ Some fields are pre-filled.
         my $user_id     = session("user_id");
         my $user_login  = session("user");
         my $user_role   = session("role");
-        my $user        = $h->get_person($user_id);
+        my $user        = $h->current_user;
 
         return template 'backend/add_new' unless $type;
 

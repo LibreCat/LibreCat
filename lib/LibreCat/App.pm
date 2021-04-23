@@ -73,6 +73,14 @@ hook before => sub {
     }
 };
 
+hook before => sub {
+
+    # conditionally reloads session based on timestamp
+    # also load current user record into memory. see h->current_user
+    h->maybe_reload_session();
+
+};
+
 hook before_template_render => sub {
 
     my $tokens = $_[0];

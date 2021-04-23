@@ -75,9 +75,8 @@ List all audit messages for an :id in the store :bag
         my $message = params->{message};
         my $login   = '<unknown>';
 
-        if (defined session->{user_id}) {
-            my $person = h->get_person($user_id);
-            $login = $person->{login} if $person;
+        if (my $person = h->current_user) {
+            $login = $person->{login};
         }
 
         unless ($action) {
