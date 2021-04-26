@@ -17,7 +17,7 @@ sub cache {
     state $cache = CHI->new(
         driver => "Memory",
         datastore => +{},
-        expires_in => h->config->{permissions}->{cache}->{expires_in} // 5,
+        expires_in => 5,
     );
 }
 
