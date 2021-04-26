@@ -510,10 +510,11 @@ sub maybe_reload_session {
 
     return unless is_string($user_id);
 
+    # use method "find" for now, as there are still applications that
+    # use "store.builtin_users"
     my $user = LibreCat->instance
                         ->model("user")
-                        ->bag()
-                        ->get($user_id);
+                        ->find($user_id);
 
     return unless $user;
 
