@@ -17,8 +17,7 @@ sub cache {
     var("cache") or
     var cache => CHI->new(
         driver => "Memory",
-        datastore => +{},
-        expires_in => 5,
+        datastore => +{}
     );
 }
 
