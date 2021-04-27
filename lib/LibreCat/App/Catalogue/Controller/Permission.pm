@@ -14,7 +14,8 @@ use CHI;
 use Moo;
 
 sub cache {
-    state $cache = CHI->new(
+    var("cache") or
+    var cache => CHI->new(
         driver => "Memory",
         datastore => +{},
         expires_in => 5,
