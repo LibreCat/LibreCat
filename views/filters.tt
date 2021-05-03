@@ -4,8 +4,9 @@
 
 <!-- BEGIN filters.tt -->
 [%- USE JSON.Escape %]
-<div id="filters" class="anchor"></div>
-<div id="export"></div>
+<!--these are anchors-->
+<span id="filters"></span>
+<span id="export"></span>
 
 <div class="hidden-sm hidden-md hidden-lg"><hr></div>
 
