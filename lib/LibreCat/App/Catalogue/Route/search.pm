@@ -7,6 +7,7 @@ LibreCat::App::Catalog::Route::search
 =cut
 
 use Catmandu::Sane;
+use Catmandu::Util qw(:is);
 use Dancer qw/:syntax/;
 use LibreCat qw(searcher);
 use LibreCat::App::Helper;
@@ -84,7 +85,9 @@ Performs search for reviewer.
 =cut
 
     get '/reviewer' => sub {
-        my $account = h->get_person(session->{user});
+        my $user    = session("user") or forward("/access_denied");
+        my $account = h->get_person($user) or forward("/access_denied");
+        is_array_ref($account->{reviewer}) && scalar(@{ $account->{reviewer} }) or forward("/access_denied");
         redirect uri_for(
             "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
     };
@@ -92,17 +95,16 @@ Performs search for reviewer.
     get '/reviewer/:department_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'user_id';
-        my $account = h->get_person(session->{user});
+        my $user    = session("user") or forward("/access_denied");
+        my $account = h->get_person($user) or forward("/access_denied");
         my $department_id = params("route")->{department_id};
 
         # if user not reviewer or not allowed to access chosen department
         unless ($account->{reviewer}
-            and grep {params->{department_id} eq $_->{_id}}
+            and grep {$department_id eq $_->{_id}}
             @{$account->{reviewer}})
         {
-            return redirect uri_for(
-                "/librecat/search/reviewer/$account->{reviewer}->[0]->{_id}");
+            forward("/access_denied");
         }
 
         push @{$p->{cql}}, "status<>deleted";
@@ -128,7 +130,9 @@ Performs search for reviewer.
 =cut
 
     get '/project_reviewer' => sub {
-        my $account = h->get_person(session->{user});
+        my $user    = session("user") or forward("/access_denied");
+        my $account = h->get_person($user) or forward("/access_denied");
+        is_array_ref($account->{project_reviewer}) && scalar(@{ $account->{project_reviewer} }) or forward("/access_denied");
         redirect uri_for(
             "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}"
         );
@@ -137,8 +141,8 @@ Performs search for reviewer.
     get '/project_reviewer/:project_id' => sub {
 
         my $p       = h->extract_params();
-        my $id      = session 'user_id';
-        my $account = h->get_person(session->{user});
+        my $user    = session("user") or forward("/access_denied");
+        my $account = h->get_person($user) or forward("/access_denied");
         my $project_id = params("route")->{project_id};
 
         # if user not project_reviewer or not allowed to access chosen project
@@ -146,9 +150,7 @@ Performs search for reviewer.
             and grep {$project_id eq $_->{_id}}
             @{$account->{project_reviewer}})
         {
-            return redirect uri_for(
-                "/librecat/search/project_reviewer/$account->{project_reviewer}->[0]->{_id}"
-            );
+            forward("/access_denied");
         }
 
         push @{$p->{cql}}, "status<>deleted";
@@ -174,17 +176,28 @@ Performs search for data manager.
 =cut
 
     get '/data_manager' => sub {
-        my $account = h->get_person(session->{user});
+        my $user    = session("user") or forward("/access_denied");
+        my $account = h->get_person($user) or forward("/access_denied");
+        is_array_ref($account->{data_manager}) && scalar(@{$account->{data_manager}}) or forward("/access_denied");
         redirect uri_for(
             "/librecat/search/data_manager/$account->{data_manager}->[0]->{_id}"
         );
     };
 
     get '/data_manager/:department_id' => sub {
-        my $p         = h->extract_params();
-        my $id        = session 'user_id';
-        my $account   = h->get_person(session->{user});
+        my $p       = h->extract_params();
+        my $user    = session("user") or forward("/access_denied");
+        my $account = h->get_person($user) or forward("/access_denied");
         my $department_id = params("route")->{department_id};
+
+        # if user not data_manager or not allowed to access chosen department
+        unless ($account->{data_manager}
+            and grep {$department_id eq $_->{_id}}
+            @{$account->{department}})
+        {
+            forward("/access_denied");
+        }
+
         my $dep_query = "department=" . cql_escape($department_id);
 
         push @{$p->{cql}}, "status<>deleted";
@@ -210,7 +223,9 @@ according to first delegate ID.
 =cut
 
     get '/delegate' => sub {
-        my $account = h->get_person(session->{user});
+        my $user    = session("user") or forward("/access_denied");
+        my $account = h->get_person($user) or forward("/access_denied");
+        is_array_ref($account->{delegate}) && scalar(@{$account->{delegate}}) or forward("/access_denied");
         redirect uri_for(
             "/librecat/search/delegate/$account->{delegate}->[0]");
     };
@@ -226,6 +241,17 @@ publications.
         my $p  = h->extract_params();
         my $id = params("route")->{delegate_id};
         my $escaped_id = cql_escape( $id );
+
+        my $user    = session("user");
+        my $account = h->get_person($user) or forward("/access_denied");
+
+        # if user not delegate or not allowed to access chosen delegate_id
+        unless ($account->{delegate}
+            and grep {$id eq $_}
+            @{$account->{delegate}})
+        {
+            forward("/access_denied");
+        }
 
         my $perm_by_user_identity = p->all_author_types;
 
