@@ -7,7 +7,7 @@ LibreCat::App::Search::Route::ajax - handles routes for  asynchronous requests
 =cut
 
 use Catmandu::Sane;
-use Catmandu::Util qw(join_path);
+use Catmandu::Util qw(join_path :is);
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
 use HTML::Entities;
@@ -126,14 +126,12 @@ ajax '/get_project' => sub {
     h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
-        my $map;
-        @$map = map {
-            my $label;
-            $label .= "$_->{acronym}: " if $_->{acronym};
-            $label .= $_->{name};
-            return {id => $_->{_id}, label => $_->{name}};
+        my @map = map {
+            my $label = $_->{name};
+            $label    = "$_->{acronym}: $label" if is_string($_->{acronym});
+            +{ id => $_->{_id}, label => $label };
         } @{$hits->{hits}};
-        return to_json $map;
+        return to_json \@map;
     }
     else {
         return to_json [];
