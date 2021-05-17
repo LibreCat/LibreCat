@@ -47,7 +47,7 @@ error:
   update_failed: "Publikation [_1] konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
   create_failed: "Publikation [_1] konnte nicht gespeichert werden. Das Support-Team wurde benachrichtigt."
   record_id_taken: "Record [_1] has already been taken. Please reload this form to create a new record"
-  contact_admin: "Bitte kontaktieren Sie [_id], falls das Problem bestehen bleibt."
+  contact_admin: "Bitte kontaktieren Sie [_1], falls das Problem bestehen bleibt."
   preliminary_submit: "Das Formular wurde abgschickt bevor diese volständig geladen wurde. Alle Änderungen wurden verworfen."
 footer:
   powered_by: "Powered by <a href='http://www.librecat.org/'>LibreCat</a>"

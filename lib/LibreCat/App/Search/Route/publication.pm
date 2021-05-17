@@ -52,7 +52,7 @@ get "/record/:id" => sub {
         push @{$p->{cql}}, ("status=public", "altid=$escaped_id");
 
         $hits = searcher->search('publication', $p);
-        return redirect "/record/" . $hits->first->{_id}, 301
+        return redirect uri_for("/record/" . $hits->first->{_id}), 301
             if $hits->{total};
     }
 

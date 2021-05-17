@@ -18,7 +18,7 @@ note("basic test");
     my $x = LibreCat::Access->new;
     ok $x;
     ok !$x->by_user_id({},{});
-    ok !$x->by_user_role({},{});
+    ok !$x->by_user_role({},{},"");
 }
 
 note("user_id test");
@@ -83,7 +83,8 @@ note("user_role test");
             reviewer => [
                 { _id => 8008 }
             ]
-        }
+        },
+        'reviewer'
     );
     ok $x->by_user_role(
         {
@@ -93,17 +94,32 @@ note("user_role test");
             project_reviewer => [
                 { _id => 8008 }
             ]
-        }
+        },
+        'project_reviewer'
     );
-    ok ! $x->by_user_role(
+    ok !$x->by_user_role(
         {
-            department => [{_id => 8008}]
+            department => [{ _id => 8008, tree => [ { _id => 8008 } ] }],
+            type => 'journal_article'
         } ,
         {
             data_manager => [
                 { _id => 8008 }
             ]
-        }
+        },
+        'data_manager'
+    );
+    ok !$x->by_user_role(
+        {
+            department => [{ _id => 8008 }],
+            type => 'journal_article'
+        } ,
+        {
+            data_manager => [
+                { _id => 8008 }
+            ]
+        },
+        'data_manager'
     );
     ok $x->by_user_role(
         {
@@ -114,7 +130,8 @@ note("user_role test");
             data_manager => [
                 { _id => 8008 }
             ]
-        }
+        },
+        'data_manager'
     );
     ok $x->by_user_role(
         {
@@ -124,7 +141,19 @@ note("user_role test");
         } ,
         {
             delegate => [ 8008 ]
-        }
+        },
+        'delegate'
+    );
+    ok !$x->by_user_role(
+        {
+            creator => {
+                id => 8008
+            },
+        },
+        {
+            delegate => [ 8008 ]
+        },
+        'reviewer'
     );
 }
 
