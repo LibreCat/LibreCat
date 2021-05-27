@@ -6,7 +6,7 @@ use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:io :is :array :hash :human trim);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
-use Dancer qw(:syntax params request session vars cookie);
+use Dancer qw(:syntax params request session vars cookie var);
 use Dancer::FileUtils qw(path);
 use File::Basename;
 use POSIX qw(strftime);
@@ -489,6 +489,47 @@ sub logout_user {
     session role     => undef;
     session user     => undef;
     session user_id  => undef;
+    session user_last_updated => undef;
+
+}
+
+sub current_user {
+
+    my $self = shift;
+
+    var(current_user => shift) if @_;
+
+    var("current_user");
+}
+
+sub maybe_reload_session {
+
+    my $self = $_[0];
+
+    my $user_id = session("user_id");
+
+    return unless is_string($user_id);
+
+    # use method "find" for now, as there are still applications that
+    # use "store.builtin_users"
+    my $user = LibreCat->instance
+                        ->model("user")
+                        ->find($user_id);
+
+    return unless $user;
+
+    # set current_user based on session("user_id")
+    $self->current_user($user);
+
+    # overwrite session only if timestamp of user is newer
+    if(
+        is_string($user->{date_updated}) &&
+        $user->{date_updated} gt (session("user_last_updated") // Catmandu::Util::now("iso_date_time"))
+    ){
+
+        $self->login_user($user);
+
+    };
 
 }
 

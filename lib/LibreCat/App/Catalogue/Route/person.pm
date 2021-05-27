@@ -105,11 +105,13 @@ User can choose default language for the librecat backend
     get '/set_language' => sub {
 
         my $h = h();
-        my $person = $h->get_person(session('user_id'));
+        my $person = $h->current_user;
         my $lang   = param('lang');
         if ( $h->locale_exists( $lang ) ) {
-            $person->{lang} = $lang;
-            user->add($person);
+            if( $person ){
+                $person->{lang} = $lang;
+                user->add($person);
+            }
             $h->set_locale( $lang );
         }
 
@@ -132,9 +134,11 @@ new publication form.
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
-        my $person = h->get_person(session('user_id'));
-        $person->{department} = $p->{department} // [];
-        user->add($person);
+        my $person = h->current_user;
+        if( $person ){
+            $person->{department} = $p->{department} // [];
+            user->add($person);
+        }
 
         redirect uri_for('/librecat');
 

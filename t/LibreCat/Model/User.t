@@ -42,7 +42,8 @@ is_deeply(
         role => "super_admin",
         user_id => "1234",
         user => "einstein",
-        lang => "en"
+        lang => "en",
+        user_last_updated => $u->{date_updated}
     }
 );
 
