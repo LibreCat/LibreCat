@@ -36,11 +36,11 @@ sub cache_set {
 sub get_cached_publication {
     my($self, $id) = @_;
 
-    my $pub = $self->cache_get( "RECORD_${id}" );
+    my $pub = $self->cache_get( "PUBLICATION_${id}" );
     my $set_cache = !$pub;
     $pub //= h->publication->get($id);
 
-    $self->cache_set( "RECORD_${id}", $pub) if $set_cache;
+    $self->cache_set( "PUBLICATION_${id}", $pub) if $set_cache;
 
     $pub;
 }
