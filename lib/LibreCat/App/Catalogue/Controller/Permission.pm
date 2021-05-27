@@ -26,7 +26,7 @@ sub get_cached_publication {
 
     my $pub = cache()->get( "RECORD_${id}" );
     my $set_cache = !$pub;
-    $pub //= h->main_publication->get($id);
+    $pub //= h->publication->get($id);
 
     cache()->set( "RECORD_${id}", $pub) if $set_cache;
 
@@ -63,7 +63,7 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
+    my $pub = $opts->{live} ? h->publication->get($id) : get_cached_publication($id);
 
     is_hash_ref($pub) or return 0;
 
@@ -238,7 +238,7 @@ sub can_download {
     is_string($id)     or return (0, "");
     is_hash_ref($opts) or return (0, "");
 
-    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
+    my $pub   = $opts->{live} ? h->publication->get($id) : get_cached_publication($id);
 
     is_hash_ref($pub) or return (0,"");
 
