@@ -153,7 +153,7 @@ Checks if the user has permission the see/edit this record.
         unless (
             p->can_edit(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -234,7 +234,7 @@ Checks if the user has the rights to edit this record.
         unless (
             p->can_return(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -272,7 +272,7 @@ Deletes record with id. For admins only.
         unless (
             p->can_delete(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -426,7 +426,7 @@ Publishes private records, returns to the list.
         unless (
             p->can_make_public(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -675,7 +675,7 @@ If record does not exist, then this route does not match
             $finalSubmit eq "recPublish" &&
             $p->can_make_public(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok
@@ -684,7 +684,7 @@ If record does not exist, then this route does not match
             $finalSubmit eq "recReturn" &&
             $p->can_return(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok
@@ -692,7 +692,7 @@ If record does not exist, then this route does not match
         elsif(
             $finalSubmit eq "recSubmit" && $p->can_submit(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok
@@ -700,7 +700,7 @@ If record does not exist, then this route does not match
         elsif(
             $p->can_edit(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok

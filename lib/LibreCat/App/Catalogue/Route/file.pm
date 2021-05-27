@@ -156,8 +156,7 @@ sub _handle_download {
             file_id => $file_id,
             user_id => session->{user_id},
             role    => session->{role},
-            ip      => request->address,
-            live    => 1
+            ip      => request->address
         }
     );
 
