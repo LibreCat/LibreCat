@@ -2,7 +2,7 @@
 
 <div class="row innerrow">
   <div class="col-md-2 hidden-xs hidden-sm">
-    <label for="relurl_url" class="helpme" data-placement="bottom" title="[% h.loc("forms.form_relmat_link") %]">
+    <label for="relurl_url" class="helpme" data-placement="bottom" title="[% h.loc("forms.form_relmat_link") | html %]">
     [% lf.$type.field.item('related_material.link').label %]
     </label>
     {% IF fields.related_material.item('related_material.link').mandatory %}<span class="starMandatory"></span>{% END %}
@@ -14,7 +14,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
-          <input type="text" name="related_material.link.0.url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder %]" id="relurl_url" class="form-control sticky" value="" />
+          <input type="text" name="related_material.link.0.url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder | html %]" id="relurl_url" class="form-control sticky" value="" />
           <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="fa fa-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
@@ -27,7 +27,7 @@
           </div>
           <select class="sticky form-control" name="related_material.link.0.relation" id="select_external_id">
             [% FOREACH entry IN h.config.lists.relations_link %]
-            <option value="[% entry.relation %]">[% lf.relation.${entry.relation}.select %]</option>
+            <option value="[% entry.relation | html %]">[% lf.relation.${entry.relation}.select %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>
@@ -35,7 +35,7 @@
       </div>
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
-          <textarea name="related_material.link.0.description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" class="form-control sticky"></textarea>
+          <textarea name="related_material.link.0.description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder | html %]" class="form-control sticky"></textarea>
           <!-- <input type="text" name="related_material.link.0.title" placeholder="[% lf.$type.field.item('related_material.link').title.placeholder %]" id="relurl_title" class="form-control sticky" value="" /> -->
           <div class="input-group-addon"></div>
         </div>
@@ -48,7 +48,7 @@
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
             <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
-            <input type="text" name="related_material.link.[% loop.index %].url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder %]" id="relurl_url" class="form-control sticky" value="[% rel_link.url %]" />
+            <input type="text" name="related_material.link.[% loop.index %].url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder | html %]" id="relurl_url" class="form-control sticky" value="[% rel_link.url %]" />
             <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="fa fa-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
@@ -61,7 +61,7 @@
             </div>
             <select class="sticky form-control" name="related_material.link.[% loop.index %].relation" id="select_external_id">
               [% FOREACH entry IN h.config.lists.relations_link %]
-              <option value="[% entry.relation %]"[% IF entry.relation == rel_link.relation %] selected="selected"[% END %]>[% lf.relation.${entry.relation}.select %]</option>
+              <option value="[% entry.relation | html %]"[% IF entry.relation == rel_link.relation %] selected="selected"[% END %]>[% lf.relation.${entry.relation}.select %]</option>
               [% END %]
             </select>
             <div class="input-group-addon"></div>
@@ -69,7 +69,7 @@
         </div>
         <div class="form-group col-md-10 col-xs-11">
           <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
-            <textarea name="related_material.link.[% loop.index %].description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" class="form-control sticky">[% IF rel_link.title %][% rel_link.title %] [% END %][% rel_link.description %]</textarea>
+            <textarea name="related_material.link.[% loop.index %].description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder | html %]" class="form-control sticky">[% IF rel_link.title %][% rel_link.title %] [% END %][% rel_link.description %]</textarea>
             <!-- <input type="text" name="related_material.link.[% loop.index %].title" placeholder="[% lf.$type.field.item('related_material.link').title.placeholder %]" id="relurl_title" class="form-control sticky" value="[% rel_link.title %]" /> -->
             <div class="input-group-addon"></div>
           </div>
@@ -83,7 +83,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.item('related_material.link').label_short || lf.$type.field.item('related_material.link').label %]</div>
-          <input type="text" name="related_material.link.0.url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder %]" id="relurl_url" class="form-control sticky" value="[% related_material.link.0.url %]" />
+          <input type="text" name="related_material.link.0.url" placeholder="[% lf.$type.field.item('related_material.link').url.placeholder | html %]" id="relurl_url" class="form-control sticky" value="[% related_material.link.0.url %]" />
           <div class="input-group-addon" onclick="add_field('rel_mat_link');"><span class="fa fa-plus"{% IF fields.related_material.item('related_material.link').mandatory %} data-mandatory="yes"{% END %}></span></div>
           <div class="input-group-addon" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
         </div>
@@ -96,7 +96,7 @@
           </div>
           <select class="sticky form-control" name="related_material.link.0.relation" id="select_external_id">
             [% FOREACH entry IN h.config.lists.relations_link %]
-            <option value="[% entry.relation %]"[% IF entry.relation == related_material.link.0.relation %] selected="selected"[% END %]>[% lf.relation.${entry.relation}.select %]</option>
+            <option value="[% entry.relation | html %]"[% IF entry.relation == related_material.link.0.relation %] selected="selected"[% END %]>[% lf.relation.${entry.relation}.select %]</option>
             [% END %]
           </select>
           <div class="input-group-addon"></div>
@@ -104,7 +104,7 @@
       </div>
       <div class="form-group col-md-10 col-xs-11">
         <div class="input-group sticky{% IF fields.related_material.item('related_material.link').mandatory %} mandatory{% END %}">
-          <textarea name="related_material.link.0.description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder %]" class="form-control sticky">[% IF related_material.link.0.title %][% related_material.link.0.title %] [% END %][% related_material.link.0.description %]</textarea>
+          <textarea name="related_material.link.0.description" placeholder="[% lf.$type.field.item('related_material.link').description.placeholder | html %]" class="form-control sticky">[% IF related_material.link.0.title %][% related_material.link.0.title %] [% END %][% related_material.link.0.description %]</textarea>
           <!-- <input type="text" name="related_material.link.0.title" placeholder="[% lf.$type.field.item('related_material.link').title.placeholder %]" id="relurl_title" class="form-control sticky" value="[% related_material.link.0.title %]" /> -->
           <div class="input-group-addon"></div>
         </div>

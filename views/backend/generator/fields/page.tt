@@ -21,7 +21,7 @@
           {% ELSE %}
           <div class="input-group-addon hidden-lg hidden-md">[% lf.$type.field.page.label_short || lf.$type.field.page.label %]</div>
           {% END %}
-          <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="[% h.loc("forms.${type}.field.page.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}"{% IF fields.basic_fields.page.readonly OR fields.supplementary_fields.page.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="page" id="id_page" value="[% page | html %]" placeholder="[% h.loc("forms.${type}.field.page.placeholder") | html %]" class="sticky form-control{% IF fields.basic_fields.page.mandatory OR fields.supplementary_fields.page.mandatory %} required{% END %}"{% IF fields.basic_fields.page.readonly OR fields.supplementary_fields.page.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

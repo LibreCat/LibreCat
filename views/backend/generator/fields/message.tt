@@ -9,7 +9,7 @@
       <div class="form-group col-md-10 col-xs-11">
         <div class="sticky">
           <div class="input-group-addon hidden-lg hidden-md">[% h.loc("forms.${type}.field.message.label") %]</div>
-          <textarea rows="3" name="message" id="id_message" placeholder="[% h.loc("forms.${type}.field.message.placeholder") %]" class="sticky form-control">[% message | html %]</textarea>
+          <textarea rows="3" name="message" id="id_message" placeholder="[% h.loc("forms.${type}.field.message.placeholder") | html %]" class="sticky form-control">[% message | html %]</textarea>
         </div>
       </div>
     </div>

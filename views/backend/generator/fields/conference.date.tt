@@ -13,7 +13,7 @@
             <span class="hidden-xs hidden-sm">[% lf.$type.field.item('conference.date').label_start %]</span>
             <span class="hidden-lg hidden-md">[% lf.$type.field.item('conference.date').label_start_short %]</span>
           </div>
-          <input type="text" name="conference.start_date" id="id_conference_start_date" value="[% conference.start_date | html %]" placeholder="[% lf.$type.field.item('conference.date').placeholder_start %]" class="sticky form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
+          <input type="text" name="conference.start_date" id="id_conference_start_date" value="[% conference.start_date | html %]" placeholder="[% lf.$type.field.item('conference.date').placeholder_start | html %]" class="sticky form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
           <div class="input-group-addon"></div>
         </div>
       </div>
@@ -23,7 +23,7 @@
             <span class="hidden-xs hidden-sm">[% lf.$type.field.item('conference.date').label_end %]</span>
             <span class="hidden-lg hidden-md">[% lf.$type.field.item('conference.date').label_end_short %]</span>
           </div>
-          <input type="text" name="conference.end_date" id="id_conference_end_date" value="[% conference.end_date | html %]" placeholder="[% lf.$type.field.item('conference.date').placeholder_end %]" class="sticky form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
+          <input type="text" name="conference.end_date" id="id_conference_end_date" value="[% conference.end_date | html %]" placeholder="[% lf.$type.field.item('conference.date').placeholder_end | html %]" class="sticky form-control{% IF fields.basic_fields.item('conference.date').mandatory OR fields.supplementary_fields.item('conference.date').mandatory %} required{% END %}">
           <div class="input-group-addon"></div>
         </div>
       </div>

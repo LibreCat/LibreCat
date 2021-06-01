@@ -27,7 +27,7 @@
           <select name="relation" class="form-control" id="id_select_relation">
             <option value="main_file"[% IF !relation %] selected="selected"[% END %]>[% lf.relation.main_file.select %]</option>
             [% FOREACH rel IN h.config.lists.relations_file %]
-              <option value="[% rel.relation %]"[% IF rel.relation == relation %] selected="selected"[% END %]>[% lf.relation.${rel.relation}.select %]</option>
+              <option value="[% rel.relation | html %]"[% IF rel.relation == relation %] selected="selected"[% END %]>[% lf.relation.${rel.relation}.select %]</option>
             [% END %]
           </select>
         </div>
@@ -60,7 +60,7 @@
           <label class="radio">
             <input type="radio" name="accessLevel" id="id_accessLevel_request" value="request" onclick="oamode(this.form,false);" /> [% h.loc("forms.${type}.field.dropzone.edit_modal.access.request_a_copy") %]
           </label>
-          <input type="email" class="form-control" name="rac_email" id="id_rac_email" placeholder="[% h.loc("forms.${type}.field.dropzone.edit_modal.access.rac_email") %]" value="">
+          <input type="email" class="form-control" name="rac_email" id="id_rac_email" placeholder="[% h.loc("forms.${type}.field.dropzone.edit_modal.access.rac_email") | html %]" value="">
           <label class="checkbox control-label">
             <input type="checkbox" name="accessEmbargo" id="id_accessEmbargo" value="1" />[% h.loc("forms.${type}.field.dropzone.edit_modal.access.embargo") %]<br />
           </label>
