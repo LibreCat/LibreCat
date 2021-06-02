@@ -12,15 +12,15 @@ cache:
     - perl_modules
     - es_download
 
-env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=0 THUMBNAIL_TEST=0 CSL_TEST=1 DEVEL_COVER=0 ES_VERSION=6.5.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
+env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=0 THUMBNAIL_TEST=0 CSL_TEST=0 DEVEL_COVER=0 ES_VERSION=6.5.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 matrix:
   include:
-    - perl: "5.30"
-      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=0 THUMBNAIL_TEST=0 CSL_TEST=1 DEVEL_COVER=1 ES_VERSION=6.5.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
+    - perl: "5.32"
+      env: GEARMAN_NETWORK_TEST=1 NETWORK_TEST=0 THUMBNAIL_TEST=0 CSL_TEST=0 DEVEL_COVER=1 ES_VERSION=6.5.0 ES_DOWNLOAD_URL=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
 
 before_install:
-  - docker pull librecat/citeproc-node
-  - docker run -d -p 8085:8085 librecat/citeproc-node
+  # - docker pull librecat/citeproc-node
+  # - docker run -d -p 8085:8085 librecat/citeproc-node
   - test -e es_download/elasticsearch-* || wget -P es_download/ ${ES_DOWNLOAD_URL}
   - cd es_download && tar -xzf elasticsearch-${ES_VERSION}.tar.gz && ./elasticsearch-${ES_VERSION}/bin/elasticsearch &
   - sudo apt-get install --yes --force-yes gearman gearman-tools gearman-job-server libgearman-dev imagemagick ghostscript
