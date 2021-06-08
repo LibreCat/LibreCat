@@ -17,8 +17,8 @@
               <span class="hidden-xs hidden-sm">[% lf.$type.field.editor.first_name.label || lf.$type.field.editor_solo.first_name.label %]</span>
               <span class="hidden-lg hidden-md">[% lf.$type.field.editor.first_name.label_short || lf.$type.field.editor_solo.first_name.label_short %]</span>
             </div>
-            <input type="text" id="editor_first_name_0" name="editor.0.first_name" placeholder="[% lf.$type.field.editor.first_name.placeholder || lf.$type.field.editor_solo.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="" />
-            <div class="input-group-addon hidden-lg hidden-md helpme" data-placement="top" title="[% lf.form_add_field %]" onclick="add_field('editor');"><span class="fa fa-plus"></span></div>
+            <input type="text" id="editor_first_name_0" name="editor.0.first_name" placeholder="[% lf.$type.field.editor.first_name.placeholder || lf.$type.field.editor_solo.first_name.placeholder | html %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="" />
+            <div class="input-group-addon hidden-lg hidden-md helpme" data-placement="top" title="[% lf.form_add_field | html %]" onclick="add_field('editor');"><span class="fa fa-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
@@ -29,7 +29,7 @@
               <span class="hidden-xs hidden-sm">[% lf.$type.field.editor.last_name.label || lf.$type.field.editor_solo.last_name.label %]</span>
               <span class="hidden-lg hidden-md">[% lf.$type.field.editor.last_name.label_short || lf.$type.field.editor_solo.last_name.label_short %]</span>
             </div>
-            <input type="text" id="editor_last_name_0" name="editor.0.last_name" placeholder="[% lf.$type.field.editor.last_name.placeholder || lf.$type.field.editor_solo.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="" />
+            <input type="text" id="editor_last_name_0" name="editor.0.last_name" placeholder="[% lf.$type.field.editor.last_name.placeholder || lf.$type.field.editor_solo.last_name.placeholder | html %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="" />
             {% IF fields.basic_fields.editor.idm OR fields.basic_fields.editor_solo.idm OR fields.supplementary_fields.editor.idm OR fields.supplementary_fields.editor_solo.idm %}
             <div class="input-group-addon">
               <span id="editor_link_person_0" onclick="link_person(this);" data-type="editor_">
@@ -37,7 +37,7 @@
                 <input type="radio" name="editor_idm.0" id="editor_idm_extern_0" checked="checked"> [% lf.$type.field.editor.idm_extern || lf.$type.field.editor_solo.idm_extern %]
               </label>
               <label class="radio-inline">
-                <input type="radio" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="[% uri_base %]/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
+                <input type="radio" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="[% uri_base %]/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip | html %]" />
               </label>
               </span>
             </div>
@@ -67,7 +67,7 @@
               <span class="hidden-lg hidden-md">[% lf.$type.field.editor.first_name.label_short || lf.$type.field.editor_solo.first_name.label %]</span>
             </div>
             <input type="text" id="editor_first_name_[% loop.index %]" name="editor.[% loop.index %].first_name" placeholder="{% lf.$type.field.editor.first_name.placeholder || lf.$type.field.editor_solo.first_name.placeholder %}" class="form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %}[% IF loop.first %] required[% END %]{% END %}" value="[% name.first_name | html %]" [% IF name.id %]readonly="readonly"[% END %] />
-            <div class="input-group-addon hidden-lg hidden-md[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('editor');"><span class="fa fa-plus"></span></div>
+            <div class="input-group-addon hidden-lg hidden-md[% IF loop.index == '0' %] helpme" data-placement="top" title="[% lf.form_add_field | html %][% END %]" onclick="add_field('editor');"><span class="fa fa-plus"></span></div>
             <div class="input-group-addon hidden-lg hidden-md" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
             <div class="input-group-addon hidden-xs hidden-sm"></div>
           </div>
@@ -86,12 +86,12 @@
                 <input type="radio" name="editor_idm.[% loop.index %]" id="editor_idm_extern_[% loop.index %]"[% IF !name.id %] checked="checked"[% END %]> [% lf.$type.field.editor.idm_extern || lf.$type.field.editor_solo.idm_extern %]
               </label>
               <label class="radio-inline">
-                <input type="radio" name="editor_idm.[% loop.index %]" id="editor_idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="[% uri_base %]/images/authorized_yes.png"[% ELSE %]src="[% uri_base %]/images/authorized_no.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
+                <input type="radio" name="editor_idm.[% loop.index %]" id="editor_idm_intern_[% loop.index %]"[% IF name.id %] checked="checked"[% END %]> <img id="editor_Authorized[% loop.index %]" [% IF name.id %]src="[% uri_base %]/images/authorized_yes.png"[% ELSE %]src="[% uri_base %]/images/authorized_no.png"[% END %] [% IF name.id %]alt="Authorized"[% ELSE %]alt="Not Authorized"[% END %] data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip | html %]" />
               </label>
               </span>
             </div>
             {% END %}
-            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.first %] helpme" data-placement="top" title="[% lf.form_add_field %][% END %]" onclick="add_field('editor');"><span class="fa fa-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
+            <div class="input-group-addon hidden-xs hidden-sm[% IF loop.first %] helpme" data-placement="top" title="[% lf.form_add_field | html %][% END %]" onclick="add_field('editor');"><span class="fa fa-plus"{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} data-mandatory="yes"{% END %}></span></div>
             <div class="input-group-addon hidden-xs hidden-sm" onclick="remove_field(this);"><span class="fa fa-minus"></span></div>
           </div>
         </div>
@@ -99,8 +99,8 @@
           <script>
             $('#editor_Authorized[% loop.index %]').tooltip();
           </script>
-        <input type="hidden" id="editor_id_[% loop.index %]" name="editor.[% loop.index %].id" value="[% name.id %]" />
-        <input type="hidden" id="editor_orcid_[% loop.index %]" name="editor.[% loop.index %].orcid" value="[% name.orcid %]" />
+        <input type="hidden" id="editor_id_[% loop.index %]" name="editor.[% loop.index %].id" value="[% name.id | html %]" />
+        <input type="hidden" id="editor_orcid_[% loop.index %]" name="editor.[% loop.index %].orcid" value="[% name.orcid | html %]" />
         {% END %}
       </div>
     [% END %]
@@ -116,7 +116,7 @@
             <span class="hidden-xs hidden-sm">[% lf.$type.field.editor.first_name.label || lf.$type.field.editor_solo.first_name.label %]</span>
             <span class="hidden-lg hidden-md">[% lf.$type.field.editor.first_name.label_short || lf.$type.field.editor_solo.first_name.label_short %]</span>
           </div>
-          <input type="text" id="editor_first_name_0" name="editor.0.first_name" placeholder="[% lf.$type.field.editor.first_name.placeholder || lf.$type.field.editor_solo.first_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="[% editor.0.first_name | html %]" />
+          <input type="text" id="editor_first_name_0" name="editor.0.first_name" placeholder="[% lf.$type.field.editor.first_name.placeholder || lf.$type.field.editor_solo.first_name.placeholder | html %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="[% editor.0.first_name | html %]" />
           <div class="input-group-addon"></div>
         </div>
       </div>
@@ -126,7 +126,7 @@
             <span class="hidden-xs hidden-sm">[% lf.$type.field.editor.last_name.label || lf.$type.field.editor_solo.last_name.label %]</span>
             <span class="hidden-lg hidden-md">[% lf.$type.field.editor.last_name.label_short || lf.$type.field.editor_solo.last_name.label_short %]</span>
           </div>
-          <input type="text" id="editor_last_name_0" name="editor.0.last_name" placeholder="[% lf.$type.field.editor.last_name.placeholder || lf.$type.field.editor_solo.last_name.placeholder %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="[% editor.0.last_name | html %]" />
+          <input type="text" id="editor_last_name_0" name="editor.0.last_name" placeholder="[% lf.$type.field.editor.last_name.placeholder || lf.$type.field.editor_solo.last_name.placeholder | html %]" class="sticky form-control{% IF fields.basic_fields.editor.mandatory OR fields.basic_fields.editor_solo.mandatory OR fields.supplementary_fields.editor.mandatory OR fields.supplementary_fields.editor_solo.mandatory %} required{% END %}" value="[% editor.0.last_name | html %]" />
           {% IF fields.basic_fields.editor.idm OR fields.basic_fields.editor_solo.idm OR fields.supplementary_fields.editor.idm OR fields.supplementary_fields.editor_solo.idm %}
           <div class="input-group-addon">
             <span id="editor_link_person_0" onclick="link_person(this);" data-type="editor_">
@@ -134,7 +134,7 @@
               <input type="radio" name="editor_idm.0" id="editor_idm_extern_0" checked="checked"> [% lf.$type.field.editor.idm_extern || lf.$type.field.editor_solo.idm_extern %]
             </label>
             <label class="radio-inline">
-              <input type="radio" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="[% uri_base %]/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip %]" />
+              <input type="radio" name="editor_idm.0" id="editor_idm_intern_0"> <img id="editor_Authorized0" src="[% uri_base %]/images/authorized_no.png" alt="Not Authorized" data-toggle="tooltip" data-html="true" data-placement="bottom" title="[% lf.$type.field.editor.tooltip || lf.$type.field.editor_solo.tooltip | html %]" />
             </label>
             </span>
           </div>
@@ -147,8 +147,8 @@
       <script>
         $('#editor_Authorized0').tooltip();
       </script>
-      <input type="hidden" id="editor_id_0" name="editor.0.id" value="[% editor.0.id %]" />
-      <input type="hidden" id="editor_orcid_0" name="editor.0.orcid" value="[% editor.0.orcid %]" />
+      <input type="hidden" id="editor_id_0" name="editor.0.id" value="[% editor.0.id | html %]" />
+      <input type="hidden" id="editor_orcid_0" name="editor.0.orcid" value="[% editor.0.orcid | html %]" />
       {% END %}
     </div>
     {% END %}
