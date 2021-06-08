@@ -146,7 +146,7 @@ ti: [% rw.reviewedWorkTitle | xml_strict %]
   <physicalDescription><internetMediaType>[% fi.content_type | xml_strict %]</internetMediaType></physicalDescription>
   [%- END %]
   [%- IF fi.embargo %]<accessCondition type="allowOAdate">[% fi.embargo | xml_strict %]</accessCondition>[% END %]
-  [%- IF fi.access_level == 'open_access' %]<accessCondition type="restrictionOnAccess">no</accessCondition>[% END %]
+  <accessCondition type="restrictionOnAccess">[% fi.accessRestriction | xml_strict %]</accessCondition>
 </relatedItem>
 [%- END %]
 [%- END %]

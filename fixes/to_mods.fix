@@ -8,9 +8,7 @@ include(fixes/licenses.fix)
 
 do list(path => file)
   do identity()
-    if any_match(access_level,admin)
-      add_field(accessRestriction,yes)
-    end
+    add_field(accessRestriction,yes)
     if any_match(access_level,local)
       add_field(accessRestriction,'local access only')
     end
