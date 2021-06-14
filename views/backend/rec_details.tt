@@ -70,7 +70,7 @@
       [% ELSE %]
         <a href='[% uri_base %]/librecat?q=person="[% sv.full_name %]"'>[% sv.full_name %]</a>
       [% END %]
-      [% IF tr.orcid %]
+      [% IF sv.orcid %]
         <a href="https://orcid.org/[% sv.orcid %]"><sup><img src="[% uri_base %]/images/orcid_icon_16x16.png" /></sup></a>
       [% END %]
       <br>
