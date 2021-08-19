@@ -160,7 +160,7 @@ sub _handle_download {
         }
     );
 
-    my $file = _file_exists($id, $file_name);
+    my $file = $file_name ? _file_exists($id, $file_name) : undef;
 
     if ($file && $ok) {
         _send_it($id, $file);
