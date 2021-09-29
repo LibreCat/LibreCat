@@ -2,7 +2,11 @@
 [%- qp = params_query %]
 [%- lang = h.locale() %]
 [% lf = h.config.locale.$lang -%]
-[%- style = qp.style || h.config.citation.csl.default_style -%]
+[%- IF qp.style AND !h.config.citation.csl.styles.${qp.style} %]
+[%- style = h.config.citation.csl.default_style %]
+[%- ELSE %]
+[%- style = qp.style || h.config.citation.csl.default_style %]
+[% END %]
 
 <!-- BEGIN navbar.tt -->
 <header>

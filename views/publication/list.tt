@@ -1,7 +1,11 @@
 [%- path_info = request.path_info %]
 [%- qp = params_query -%]
 [%- PROCESS header.tt %]
-[%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
+[%- IF qp.style AND !h.config.citation.csl.styles.${qp.style} %]
+[%- style = h.config.citation.csl.default_style %]
+[%- ELSE %]
+[%- style = qp.style || h.config.citation.csl.default_style %]
+[% END %]
 <!-- BEGIN publication/list.tt -->
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->
