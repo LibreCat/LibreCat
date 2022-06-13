@@ -6,6 +6,7 @@ use List::Util qw(pairs);
 use Types::Standard qw(Str ConsumerOf);
 use LibreCat::Types qw(+Pairs);
 use Moo::Role;
+use Clone qw();
 use namespace::clean;
 
 with 'Catmandu::Pluggable', 'LibreCat::Logger';
@@ -144,7 +145,8 @@ sub _add {
         # Replace all 0-identifers with real new identifiers
         $rec->{_id} = $self->generate_id if $rec->{_id} eq 'NEW';
         $rec = $self->store($rec, %opts);
-        $self->index($rec, %opts) unless $opts{skip_index};
+        # make sure fix index_<model> does not influence the returned record
+        $self->index(Clone::clone($rec), %opts) unless $opts{skip_index};
         $opts{on_success}->($rec) if $opts{on_success};
 
         return $rec;
