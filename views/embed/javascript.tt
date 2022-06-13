@@ -1,8 +1,8 @@
 <!-- BEGIN embed/javascript.tt -->
 [%- qp = params_query -%]
 [% lang = h.locale() -%]
-document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle %]"[% END %]>') ;
-[%- style = qp.style %]
+document.write ('<ul[% IF qp.listyle %] style="[% qp.listyle | html %]"[% END %]>') ;
+[%- style = h.current_style() || h.default_style() %]
 [%- FOREACH entry IN hits %]
 document.write('<li>');
   [%- IF entry.citation.$style %]

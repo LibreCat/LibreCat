@@ -533,6 +533,56 @@ sub maybe_reload_session {
 
 }
 
+# TODO: sort order ok?
+sub available_styles {
+
+    my $self = $_[0];
+    state $csl_styles = [
+        sort keys %{ $self->config->{citation}{csl}{styles} || [] }
+    ];
+
+}
+
+sub default_style {
+
+    $_[0]->config->{citation}{csl}{default_style};
+
+}
+
+sub current_style {
+
+    my $self = $_[0];
+
+    my $current_style = var("current_style");
+
+    unless( defined($current_style) ){
+
+        my $p = params("query");
+        my $style = $p->{style};
+        $style = is_array_ref($style) ?
+            $style->[0] :
+            is_string($style) ? $style : undef;
+
+        if( is_string($style) ){
+
+            $style =
+                Catmandu::Util::array_includes($self->available_styles, $style) ?
+                    $style : ""; # return empty to differentiate from undef (already parsed vs not found)
+
+        }
+        else {
+
+            $style = "";
+        }
+
+        var(current_style => $style);
+        $current_style = $style;
+
+    }
+
+    is_string($current_style) ? $current_style : undef;
+}
+
 package LibreCat::App::Helper;
 
 =head1 NAME
