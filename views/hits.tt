@@ -74,16 +74,22 @@
     [%- IF style == 'short' %]
 	  <a href="[% uri_base %]/[% IF backend %]librecat/record/edit[% ELSE %]record[% END %]/[% entry._id %]"[% IF request.path_info.match("/embed") %] target="_blank"[% END %]><strong>[% entry.title %]</strong></a><br>
     [%- END %]
+    [% has_edit_link = 0 %]
     [%- IF backend AND session.role == "super_admin" %]
-      <a href="[% uri_base %]/librecat/record/edit/[% entry._id %]" onclick="window.top.location='/librecat/record/edit/[% entry._id %]'" class="citation-block-link"></a>
+      <a href="[% uri_base %]/librecat/record/edit/[% entry._id %]" target="_top" class="citation-block-link">
+      [% has_edit_link = 1 %]
     [%- ELSIF backend AND entry.status != "public" %]
-      <a href="[% uri_base %]/librecat/record/preview/[% entry._id %]" onclick="window.top.location='/librecat/record/preview/[% entry._id %]'" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% h.loc("main_page.links.view_details") %]"></a>
+      <a href="[% uri_base %]/librecat/record/preview/[% entry._id %]" target="_top" class="citation-block-link" data-toggle="tooltip" data-html="true" data-placement="top" title="[% h.loc("main_page.links.view_details") %]">
+      [% has_edit_link = 1 %]
     [%- END %]
     [%- IF h.config.citation.engine == 'csl' AND entry.citation.$style %]
       [% entry.citation.$style %]
     [%- ELSE %]
     [% PROCESS citation.tt entry=entry %]
     [%- END %]
+    [% IF has_edit_link %]
+      </a>
+    [% END %]
     </div>
     [% INCLUDE links.tt %]
     [%- IF backend %]
