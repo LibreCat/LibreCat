@@ -25,7 +25,7 @@
 
 [%- IF qp.item('sort') %]
   <div class="text-muted">
-    [%- tmp = {}; tmp.import(qp); tmp.delete('sort') %]
+    [%- tmp = h.dup(qp); tmp.delete('sort') %]
     <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
     <strong>[% h.loc("facets.sorted_by") %]:</strong>
     [% IF bag == "person" %]
@@ -42,7 +42,7 @@
 
 [%- IF h.config.citation.engine == 'csl' AND qp.style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
-    [%- tmp = {}; tmp.import(qp); tmp.delete('style') %]
+    [%- tmp = h.dup(qp); tmp.delete('style') %]
     <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
     [% h.loc("styles.${qp.style}") %]
@@ -59,7 +59,7 @@
         [%- IF (qp.limit AND qp.limit == lim) OR (!qp.limit AND lim == h.config.default_page_size) %]
         <li>[% lim %]</li>
         [%- ELSE %]
-          [%- tmp = {}; tmp.import(qp); tmp.limit = lim %]
+          [%- tmp = h.dup(qp); tmp.limit = lim %]
           <li><a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow">[% lim %]</a></li>
         [%- END %]
       [%- END %]
@@ -102,7 +102,7 @@
         [%- IF dstyle == style %]
           <li><span class="text-muted">[% h.loc("styles.${dstyle}") %]</span></li>
         [%- ELSE %]
-          [%- tmp = {}; tmp.import(qp); tmp.style = dstyle %]
+          [%- tmp = h.dup(qp); tmp.style = dstyle %]
           <li><a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow">[% h.loc("styles.${dstyle}") %]</a></li>
         [%- END %]
       [%- END %]
@@ -123,10 +123,10 @@
     </button>
     <div class="facettecollapse">
     <ul id="export_facet" class="collapse">
-      [%- tmp = {}; tmp.import(qp); export_path = backend == 1 ? 'librecat/export' : 'export' %]
+      [%- tmp = h.dup(qp); export_path = backend == 1 ? 'librecat/export' : 'export' %]
       [%- IF request.path_info.match("person") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- tmp.cql.push("person=$id") %][%- END %]
-      [%- IF request.path_info.match("reviewer") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- dept = request.path_info.match('\/reviewer\/(\d{1,})'); tmp.cql.push("department=$dept.0") %][%- END %]
-      [%- IF request.path_info.match("delegate") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = request.path_info.match('\/delegate\/(\d{1,})'); tmp.cql.push("person=$pers.0") %][%- END %]
+      [%- IF request.path_info.match("reviewer") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- dept = request.path_info().split("/").last; tmp.cql.push("department=$dept") %][%- END %]
+      [%- IF request.path_info.match("delegate") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = request.path_info().split("/").last; tmp.cql.push("person=$pers") %][%- END %]
       [%- IF request.path_info.match("librecat$") AND session.role == "user" %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = session.user_id; tmp.cql.push("person=$pers") %][% END %]
       <li><a href="#modal" data-toggle="modal" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.rtf") %]</a></li>
       <li><a href="[% tmp.fmt='bibtex'; request.uri_for(export_path, tmp) %]" rel="nofollow"><span class="fa fa-fw fa-share-square-o"></span>[% h.loc("facets.exports.bibtex") %]</a></li>
@@ -174,10 +174,10 @@
 	     <h3 id="ModalExport">[% h.loc("facets.export_options") %]</h3>
       </div>
       <div class="modal-body">
-        [%- tmp = {}; tmp.import(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.links = '1' %]
+        [%- tmp = h.dup(qp); tmp.bag = 'publication'; tmp.fmt = 'rtf'; tmp.links = '1' %]
         [%- IF request.path_info.match("person") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- tmp.cql.push("person=$id") %][%- END %]
-        [%- IF request.path_info.match("reviewer") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- dept = request.path_info.match('\/reviewer\/(\d{1,})'); tmp.cql.push("department=$dept.0") %][%- END %]
-        [%- IF request.path_info.match("delegate") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = request.path_info.match('\/delegate\/(\d{1,})'); tmp.cql.push("person=$pers.0") %][%- END %]
+        [%- IF request.path_info.match("reviewer") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- dept = request.path_info().split("/").last; tmp.cql.push("department=$dept") %][%- END %]
+        [%- IF request.path_info.match("delegate") %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = request.path_info().split("/").last; tmp.cql.push("person=$pers") %][%- END %]
         [%- IF request.path_info.match("librecat$") AND session.role == "user" %][%- tmp.cql = !tmp.cql ? [] : tmp.cql %][%- pers = session.user_id; tmp.cql.push("person=$pers") %][% END %]
 	     <p><span class="fa fa-chevron-right"></span><a href="[% request.uri_for(export_path, tmp) %]" class="rtfmodal" rel="nofollow">[% h.loc("facets.export_withlinks") %]</a></p>
          [%-  tmp.delete('links') %]
