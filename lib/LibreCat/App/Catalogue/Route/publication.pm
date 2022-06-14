@@ -322,7 +322,7 @@ Prints the frontdoor for every record.
 
         my $hits = publication->get($id);
 
-        $hits->{style}  = h->config->{citation}->{csl}->{default_style};
+        $hits->{style}  = h->default_style;
         $hits->{marked} = 0;
 
         template 'publication/record.tt', $hits;

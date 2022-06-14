@@ -2,7 +2,7 @@
 [%- qp = params_query %]
 [%- lang = h.locale() %]
 [% lf = h.config.locale.$lang -%]
-[%- style = qp.style || h.config.citation.csl.default_style -%]
+[%- style = h.current_style || h.default_style() -%]
 
 <!-- BEGIN navbar.tt -->
 <header>

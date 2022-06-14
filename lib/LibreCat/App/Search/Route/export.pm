@@ -61,7 +61,8 @@ sub _export {
     my $options = clone($spec->{options}) || {};
 
     # Adding csl specific parameters via URL?
-    $options->{style} = $params->{style} if $params->{style};
+    my $current_style = h->current_style;
+    $options->{style} = $current_style if $current_style;
     $options->{links} = $params->{links} // 0;
 
     h->log->debug("exporting $package:" . Dancer::to_json($options));

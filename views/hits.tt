@@ -35,7 +35,7 @@
 [%- END %]
 </div>
 
-[%- style = style || h.config.citation.csl.default_style %]
+[%- style = h.current_style || h.default_style %]
 <!-- This publication list is displayed in "[% style %]" style and sorted "[% sorto %]" -->
 [% num = total; n = 0 %]
 [% FOREACH entry IN hits %]

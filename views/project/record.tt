@@ -51,7 +51,7 @@
 	[% INCLUDE project/record_details.tt %]
 	<div class="tab-pane" id="project_publications">
          [%- IF project_publication %]
-           [%- style = h.config.citation.csl.default_style %]
+           [%- style = h.default_style() %]
            [%- limit = project_publication.limit %]
            [%- hits = project_publication.hits %]
            [%- total = project_publication.total %]
