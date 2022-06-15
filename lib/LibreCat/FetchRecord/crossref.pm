@@ -7,11 +7,12 @@ use URI::Escape;
 use Moo;
 use XML::Hash;
 use Furl;
+use URI;
 
 with 'LibreCat::FetchRecord';
 
 has 'baseurl' =>
-    (is => 'ro', default => sub {"https://www.crossref.org/openurl/?format=unixsd"});
+    (is => 'ro', default => sub {"https://www.crossref.org/openurl"});
 
 sub fetch {
     my ($self, $id) = @_;
@@ -21,7 +22,15 @@ sub fetch {
 
     $self->log->debug("requesting $id from crossref");
 
-    my $url = sprintf "%s&pid=%s&id=doi:%s", $self->baseurl, h->config->{admin_email}, $id;
+    my $uri = URI->new($self->baseurl);
+    $uri->query_form(
+        pid => h->config->{admin_email},
+        id  => "doi:".$id,
+        format => "unixsd",
+        redirect => "false",
+    );
+    my $url = $uri->as_string();
+
     my $result;
     my $xml_converter; my $xml_hash; my $data;
 
@@ -31,6 +40,16 @@ sub fetch {
     );
 
     $result = $furl->get($url);
+
+    # status for some always 200
+    # even when no resource is found
+    unless( $result->code eq "200" ){
+        die("invalid status code ".$result->code." from crossref url $url");
+    }
+
+    unless( index($result->content_type, "text/xml") >= 0 ){
+        die("invalid content type ".$result->content_type." from crossref url $url");
+    }
 
     my $xml = $result->content;
     $xml =~ s/jats:(abstract|sec)/$1/g;
