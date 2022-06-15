@@ -46,19 +46,20 @@ sub by_user_id {
 #  then the department id of the publication should match
 #  the publication record
 sub by_user_role {
-    my ($self, $pub, $user) = @_;
+    my ($self, $pub, $user, $role) = @_;
 
-    return 0 unless $pub && $user;
+    return 0 unless $pub && $user && $role;
 
     return 0 unless $self->is_publication_allowed($pub);
     return 0 if $self->is_publication_denied($pub);
 
     my $perm_by_user_role = $self->allowed_user_role // [];
 
-    for my $role (@$perm_by_user_role) {
-        next unless $user->{$role};
+    for my $urole (@$perm_by_user_role) {
+        next unless $user->{$urole};
+        next unless $role eq $urole;
 
-        if ($role eq 'reviewer') {
+        if ($urole eq 'reviewer') {
             for my $id (@{$user->{reviewer}}) {
                 for my $iid (@{$pub->{department} // []}) {
                     return 1 if $id->{_id} eq $iid->{_id};
@@ -68,25 +69,26 @@ sub by_user_role {
                 }
             }
         }
-        elsif ($role eq 'project_reviewer') {
+        elsif ($urole eq 'project_reviewer') {
             for my $id (@{$user->{project_reviewer}}) {
                 for my $iid (@{$pub->{project} // []}) {
                     return 1 if $id->{_id} eq $iid->{_id};
                 }
             }
         }
-        elsif ($role eq 'data_manager') {
-            return 0 unless is_same($pub->{type},'research_data');
+        elsif ($urole eq 'data_manager') {
             for my $id (@{$user->{data_manager}}) {
                 for my $iid (@{$pub->{department} // []}) {
-                    return 1 if $id->{_id} eq $iid->{_id};
+                    return 1 if $id->{_id} eq $iid->{_id} &&
+                    ($pub->{type} eq 'research_data' || $pub->{type} eq 'software');
                     for my $tree (@{$iid->{tree} // []}) {
-                        return 1 if $id->{_id} eq $tree->{_id};
+                        return 1 if $id->{_id} eq $tree->{_id} &&
+                        ($pub->{type} eq 'research_data' || $pub->{type} eq 'software');
                     }
                 }
             }
         }
-        elsif ($role eq 'delegate') {
+        elsif ($urole eq 'delegate') {
             my @user_ids = $self->all_user_ids($pub);
 
             for my $id (@{$user->{delegate}}) {
@@ -98,7 +100,7 @@ sub by_user_role {
             }
         }
         else {
-            $self->log->error("no role_permission_map for $role!");
+            $self->log->error("no role_permission_map for $urole!");
         }
     }
 

@@ -67,7 +67,7 @@ Some fields are pre-filled.
         my $user_id     = session("user_id");
         my $user_login  = session("user");
         my $user_role   = session("role");
-        my $user        = $h->get_person($user_id);
+        my $user        = $h->current_user;
 
         return template 'backend/add_new' unless $type;
 
@@ -153,7 +153,7 @@ Checks if the user has permission the see/edit this record.
         unless (
             p->can_edit(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -234,7 +234,7 @@ Checks if the user has the rights to edit this record.
         unless (
             p->can_return(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -272,7 +272,7 @@ Deletes record with id. For admins only.
         unless (
             p->can_delete(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -322,7 +322,7 @@ Prints the frontdoor for every record.
 
         my $hits = publication->get($id);
 
-        $hits->{style}  = h->config->{citation}->{csl}->{default_style};
+        $hits->{style}  = h->default_style;
         $hits->{marked} = 0;
 
         template 'publication/record.tt', $hits;
@@ -390,11 +390,14 @@ Clones the record with ID :id and returns a form with a different ID.
         delete $rec->{_version};
         delete $rec->{date_created};
         delete $rec->{date_updated};
+        delete $rec->{urn};
         delete $rec->{doi};
         delete $rec->{file};
         delete $rec->{related_material};
 
-        $rec->{_id}        = publication->generate_id;
+        $rec->{_id}     = publication->generate_id;
+        $rec->{status}  = "new";
+        $rec->{creator} = {id => session("user_id"), login => session("user")};
 
         #important values and flags for the form in order to distinguish between the contexts
         #it is used in
@@ -423,7 +426,7 @@ Publishes private records, returns to the list.
         unless (
             p->can_make_public(
                 $rec->{_id},
-                {user_id => session("user_id"), role => session("role"), live=>1}
+                {user_id => session("user_id"), role => session("role")}
             )
             )
         {
@@ -672,7 +675,7 @@ If record does not exist, then this route does not match
             $finalSubmit eq "recPublish" &&
             $p->can_make_public(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok
@@ -681,7 +684,7 @@ If record does not exist, then this route does not match
             $finalSubmit eq "recReturn" &&
             $p->can_return(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok
@@ -689,7 +692,7 @@ If record does not exist, then this route does not match
         elsif(
             $finalSubmit eq "recSubmit" && $p->can_submit(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok
@@ -697,7 +700,7 @@ If record does not exist, then this route does not match
         elsif(
             $p->can_edit(
                 $id,
-                { user_id => session("user_id"), role => session("role"), live => 1 }
+                { user_id => session("user_id"), role => session("role")}
             )
         ){
             # ok

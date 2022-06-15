@@ -28,24 +28,28 @@ for his own publication list.
 =cut
 
     get '/preference/:delegate_id' => sub {
-        my $params;
-        $params->{delegate_id} = params->{delegate_id};
-        $params->{style} = params->{style} if params->{style};
-        $params->{'sort'} = params->{'sort'} if params->{'sort'};
+        my $qparams = params("query");
+        my $rparams = params("route");
+        my $params = +{};
+        my $current_style = h->current_style;
+        $params->{delegate_id} = $rparams->{delegate_id};
+        $params->{style} = $current_style if defined $current_style;
+        $params->{'sort'} = $qparams->{'sort'} if $qparams->{'sort'};
         forward '/librecat/person/preference', $params;
     };
 
     get '/preference' => sub {
+        my $qparams = params("query");
         my $person
-            = h->get_person(params->{delegate_id} || session('user_id'));
+            = h->get_person($qparams->{delegate_id} || session('user_id'));
         my $sort;
         my $tmp;
-        if (params->{'sort'}) {
-            if (ref params->{'sort'} ne "ARRAY") {
-                $sort = [params->{sort}];
+        if ($qparams->{'sort'}) {
+            if (ref $qparams->{'sort'} ne "ARRAY") {
+                $sort = [$qparams->{sort}];
             }
             else {
-                $sort = params->{sort};
+                $sort = $qparams->{sort};
             }
 
             foreach my $s (@$sort) {
@@ -59,11 +63,9 @@ for his own publication list.
             $person->{'sort'} = undef;
         }
 
-        if (params->{style}) {
-            $person->{style} = params->{style}
-                if array_includes(
-                keys %{h->config->{citation}->{csl}->{styles}},
-                params->{style});
+        my $current_style = h->current_style;
+        if (defined($current_style)) {
+            $person->{style} = $current_style;
         }
         else {
             $person->{style} = undef;
@@ -105,11 +107,13 @@ User can choose default language for the librecat backend
     get '/set_language' => sub {
 
         my $h = h();
-        my $person = $h->get_person(session('user_id'));
+        my $person = $h->current_user;
         my $lang   = param('lang');
         if ( $h->locale_exists( $lang ) ) {
-            $person->{lang} = $lang;
-            user->add($person);
+            if( $person ){
+                $person->{lang} = $lang;
+                user->add($person);
+            }
             $h->set_locale( $lang );
         }
 
@@ -132,9 +136,11 @@ new publication form.
         my $p = params;
         $p = h->nested_params($p);
         $fix->fix($p);
-        my $person = h->get_person(session('user_id'));
-        $person->{department} = $p->{department} // [];
-        user->add($person);
+        my $person = h->current_user;
+        if( $person ){
+            $person->{department} = $p->{department} // [];
+            user->add($person);
+        }
 
         redirect uri_for('/librecat');
 

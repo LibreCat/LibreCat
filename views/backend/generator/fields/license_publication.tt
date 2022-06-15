@@ -7,7 +7,7 @@
   <select name="license" id="id_license_publication" class="form-control">
     <option value="">[% h.loc("forms.${type}.field.license.license_publication.select_a_license") %]</option>
     [% FOR lic IN licenses_publication %]
-    <option value="[% lic %]"[% IF license == lic %] selected="selected"[% END %]>[% h.loc("licenses.${lic}.short") %]</option>
+    <option value="[% lic | html %]"[% IF license == lic %] selected="selected"[% END %]>[% h.loc("licenses.${lic}.short") %]</option>
     [% END %]
   </select><br />
 

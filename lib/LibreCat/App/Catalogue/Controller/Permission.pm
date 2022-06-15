@@ -9,38 +9,50 @@ use LibreCat::Access;
 use Carp;
 use Dancer qw(:syntax);
 use Exporter qw/import/;
-use CHI;
 
 use Moo;
 
 sub cache {
-    state $cache = CHI->new(
-        driver => "Memory",
-        datastore => +{},
-        expires_in => h->config->{permissions}->{cache}->{expires_in} // 5,
-    );
+    var("cache") or
+    var cache => +{};
+}
+
+sub cache_get {
+
+    my($self, $key) = @_;
+    my $cache   = $self->cache();
+    exists($cache->{$key}) ? $cache->{$key} : undef;
+
+}
+
+sub cache_set {
+
+    my($self, $key, $val) = @_;
+    my $cache = cache();
+    $cache->{$key} = $val;
+
 }
 
 sub get_cached_publication {
-    my $id = $_[0];
+    my($self, $id) = @_;
 
-    my $pub = cache()->get( "RECORD_${id}" );
+    my $pub = $self->cache_get( "PUBLICATION_${id}" );
     my $set_cache = !$pub;
-    $pub //= h->main_publication->get($id);
+    $pub //= h->publication->get($id);
 
-    cache()->set( "RECORD_${id}", $pub) if $set_cache;
+    $self->cache_set( "PUBLICATION_${id}", $pub) if $set_cache;
 
     $pub;
 }
 
 sub get_cached_user {
-    my $user_id = $_[0];
+    my($self, $user_id) = @_;
 
-    my $user = cache()->get( "USER_${user_id}" );
+    my $user = $self->cache_get( "USER_${user_id}" );
     my $set_cache = !$user;
     $user //= h->get_person( $user_id );
 
-    cache()->set("USER_${user_id}", $user) if $set_cache;
+    $self->cache_set("USER_${user_id}", $user) if $set_cache;
 
     $user;
 }
@@ -63,11 +75,11 @@ sub _can_do_action {
 
     return 0 unless defined($user_id) && defined($role);
 
-    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
+    my $pub = $self->get_cached_publication($id);
 
     is_hash_ref($pub) or return 0;
 
-    my $user  = $opts->{live} ? h->get_person( $user_id ) : get_cached_user($user_id);
+    my $user  = $self->get_cached_user($user_id);
 
     # do not touch deleted records
     return 0 if $pub->{status} && $pub->{status} eq 'deleted';
@@ -87,7 +99,7 @@ sub _can_do_action {
     if ($action_access->by_user_id($pub,$user)) {
         return 1;
     }
-    elsif ($action_access->by_user_role($pub,$user)) {
+    elsif ($action_access->by_user_role($pub,$user,$role)) {
         return 1;
     }
     else {
@@ -107,7 +119,6 @@ Publication identifier
 
  * user_id
  * role
- * [live=1]
 
 =back
 
@@ -130,7 +141,6 @@ Publication identifier
 
 * user_id
 * role
-* [live=1]
 
 =back
 
@@ -153,7 +163,6 @@ Publication identifier
 
 * user_id
 * role
-* [live=1]
 
 =back
 
@@ -176,7 +185,6 @@ Publication identifier
 
 * user_id
 * role
-* [live=1]
 
 =back
 
@@ -199,7 +207,6 @@ Publication identifier
 
 * user_id
 * role
-* [live=1]
 
 =back
 
@@ -226,7 +233,6 @@ Hash reference containing:
     * role (string)
     * file_id (string)
     * ip (string)
-    * [live=1]
 
 =back
 
@@ -238,7 +244,7 @@ sub can_download {
     is_string($id)     or return (0, "");
     is_hash_ref($opts) or return (0, "");
 
-    my $pub   = $opts->{live} ? h->main_publication->get($id) : get_cached_publication($id);
+    my $pub   = $self->get_cached_publication($id);
 
     is_hash_ref($pub) or return (0,"");
 

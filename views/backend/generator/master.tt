@@ -1,5 +1,5 @@
 [% backend = request.path_info.match('librecat') ? 1 : 0 -%]
-[% thisPerson = h.get_person(session.user_id) -%]
+[% thisPerson = h.current_user -%]
 [% lang = h.locale() -%]
 [% lf = h.config.locale.$lang.forms -%]
 
@@ -32,7 +32,7 @@
     <input type="hidden" name="type" value="[% type %]" id="id_type"/>
     <input type="hidden" name="_id" value="[% _id %]"/>
     <input type="hidden" name="_version" value="[% _version %]"/>
-    <input type="hidden" name="status" value="[% status %]"/>
+    <input type="hidden" name="status" value="[% IF !status OR status == "new" %]private[% ELSE %][% status %][% END %]"/>
     <input type="hidden" name="date_created" value="[% date_created %]" />
     <input type="hidden" name="creator.login" value="[% creator ? creator.login : thisPerson.login %]" />
     <input type="hidden" name="creator.id" value="[% creator ? creator.id : thisPerson._id %]" />

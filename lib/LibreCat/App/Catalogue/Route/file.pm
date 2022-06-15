@@ -156,12 +156,11 @@ sub _handle_download {
             file_id => $file_id,
             user_id => session->{user_id},
             role    => session->{role},
-            ip      => request->address,
-            live    => 1
+            ip      => request->address
         }
     );
 
-    my $file = _file_exists($id, $file_name);
+    my $file = $file_name ? _file_exists($id, $file_name) : undef;
 
     if ($file && $ok) {
         _send_it($id, $file);

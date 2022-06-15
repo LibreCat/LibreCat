@@ -23,12 +23,12 @@
   </div>
 [%- END %]
 
-[%- IF qp.style AND !user_settings.style_eq_userstyle %]
+[%- IF h.current_style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
     [%- tmp = {}; tmp.import(qp); tmp.delete('style') %]
     <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
-    [% h.loc("styles.${qp.style}") %]
+    [% h.loc("styles.${h.current_style}") %]
   </div>
 [%- END %]
 
@@ -37,7 +37,7 @@
     <button data-toggle="collapse" data-target="#style" class="btn-link"><span class="fa fa-chevron-down fw"></span>[% h.loc("facets.citation_style") %]</button>
     <div class="facettecollapse">
     <ul id="style" class="collapse">
-      [%- FOREACH dstyle IN h.config.citation.csl.styles.keys %]
+      [%- FOREACH dstyle IN h.available_styles %]
         [%- IF dstyle == style %]
           <li><span class="text-muted">[% h.loc("styles.${dstyle}") %]</span></li>
         [%- ELSE %]

@@ -73,6 +73,14 @@ hook before => sub {
     }
 };
 
+hook before => sub {
+
+    # conditionally reloads session based on timestamp
+    # also load current user record into memory. see h->current_user
+    h->maybe_reload_session();
+
+};
+
 hook before_template_render => sub {
 
     my $tokens = $_[0];
@@ -190,7 +198,7 @@ Route the user will be sent to if login is required.
 get '/login' => sub {
 
     # what are you doing? you're already in.
-    redirect '/librecat' if session('user');
+    return redirect uri_for('/librecat') if session('user');
 
     # not logged in yet
     template 'login',
@@ -211,14 +219,15 @@ Route where login data is sent to. On success redirects to
 
 post '/login' => sub {
     my $user = _authenticate(params->{user}, params->{pass});
-    my $return_url = params->{return_url} || '/librecat';
+    my $return_url = params->{return_url} || uri_for("/librecat")->as_string();
 
     # Deleting bad urls to external websites
-    $return_url =~ s{^[a-zA-Z:]+(\/\/)[^\/]+}{};
+    $return_url = uri_for("/librecat")->as_string()
+        unless index($return_url, request->uri_base()) == 0;
 
     if ($user) {
         h->login_user($user);
-        redirect uri_for($return_url);
+        redirect $return_url;
     }
     else {
         forward '/login', {error_message => 'Wrong username or password!'},
@@ -236,7 +245,7 @@ any '/logout' => sub {
 
     h->logout_user();
 
-    redirect '/';
+    redirect uri_for('/');
 };
 
 =head2 GET /set_language

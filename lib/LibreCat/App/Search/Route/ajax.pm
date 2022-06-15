@@ -7,7 +7,7 @@ LibreCat::App::Search::Route::ajax - handles routes for  asynchronous requests
 =cut
 
 use Catmandu::Sane;
-use Catmandu::Util qw(join_path);
+use Catmandu::Util qw(join_path :is);
 use Dancer qw/:syntax/;
 use Dancer::Plugin::Ajax;
 use HTML::Entities;
@@ -93,7 +93,7 @@ ajax '/authority_user/:id' => sub {
 
 ajax '/get_alias/:id/:alias' => sub {
     my $term = params->{'alias'} || "";
-    my $id = params->{'id'};
+    my $id   = params->{'id'};
 
     my %search_params = (cql => ["alias=$term", "id<>$id"]);
     h->log->debug("executing user->search: " . to_dumper(\%search_params));
@@ -126,10 +126,12 @@ ajax '/get_project' => sub {
     h->log->debug($hits->{total} . " hits");
 
     if ($hits->{total}) {
-        my $map;
-        @$map
-            = map {{id => $_->{_id}, label => $_->{name}};} @{$hits->{hits}};
-        return to_json $map;
+        my @map = map {
+            my $label = $_->{name};
+            $label    = "$_->{acronym}: $label" if is_string($_->{acronym});
+            +{ id => $_->{_id}, label => $label };
+        } @{$hits->{hits}};
+        return to_json \@map;
     }
     else {
         return to_json [];
@@ -141,7 +143,7 @@ ajax '/get_project' => sub {
 =cut
 
 ajax '/get_department' => sub {
-    my $term = params->{term} // '';
+    my $term  = params->{term} // '';
     my $limit = length($term) ? 100 : 1000;
 
     my @terms = split('\s', $term);

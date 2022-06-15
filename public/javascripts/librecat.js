@@ -566,6 +566,16 @@ $(function () {
                                 var newname = $(this).attr('name').replace(/\d+/g,index);
                                 $(this).attr('name', newname);
                         }
+                        /* when we change "name", radiobuttons/checkbuttons loose their flag
+                           but the old value is still traceable..
+                           this is just a temporary fix
+                        */
+                        if($(this).attr('checked') || $(this).prop('checked')){
+                              $(this).removeProp('checked');
+                              $(this).removeAttr('checked');
+                              $(this).prop('checked',true);
+                              $(this).attr('checked','checked');
+                        }
                     });
                 });
                 ui.item.removeClass("dragged").removeAttr("style");

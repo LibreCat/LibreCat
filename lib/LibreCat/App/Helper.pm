@@ -6,7 +6,7 @@ use Catmandu qw(export_to_string);
 use Catmandu::Util qw(:io :is :array :hash :human trim);
 use Catmandu::Fix qw(expand);
 use Catmandu::Store::DBI;
-use Dancer qw(:syntax params request session vars cookie);
+use Dancer qw(:syntax params request session vars cookie var);
 use Dancer::FileUtils qw(path);
 use File::Basename;
 use POSIX qw(strftime);
@@ -489,7 +489,98 @@ sub logout_user {
     session role     => undef;
     session user     => undef;
     session user_id  => undef;
+    session user_last_updated => undef;
 
+}
+
+sub current_user {
+
+    my $self = shift;
+
+    var(current_user => shift) if @_;
+
+    var("current_user");
+}
+
+sub maybe_reload_session {
+
+    my $self = $_[0];
+
+    my $user_id = session("user_id");
+
+    return unless is_string($user_id);
+
+    # use method "find" for now, as there are still applications that
+    # use "store.builtin_users"
+    my $user = LibreCat->instance
+                        ->model("user")
+                        ->find($user_id);
+
+    return unless $user;
+
+    # set current_user based on session("user_id")
+    $self->current_user($user);
+
+    # overwrite session only if timestamp of user is newer
+    if(
+        is_string($user->{date_updated}) &&
+        $user->{date_updated} gt (session("user_last_updated") // Catmandu::Util::now("iso_date_time"))
+    ){
+
+        $self->login_user($user);
+
+    };
+
+}
+
+# TODO: sort order ok?
+sub available_styles {
+
+    my $self = $_[0];
+    state $csl_styles = [
+        sort keys %{ $self->config->{citation}{csl}{styles} || [] }
+    ];
+
+}
+
+sub default_style {
+
+    $_[0]->config->{citation}{csl}{default_style};
+
+}
+
+sub current_style {
+
+    my $self = $_[0];
+
+    my $current_style = var("current_style");
+
+    unless( defined($current_style) ){
+
+        my $p = params("query");
+        my $style = $p->{style};
+        $style = is_array_ref($style) ?
+            $style->[0] :
+            is_string($style) ? $style : undef;
+
+        if( is_string($style) ){
+
+            $style =
+                Catmandu::Util::array_includes($self->available_styles, $style) ?
+                    $style : ""; # return empty to differentiate from undef (already parsed vs not found)
+
+        }
+        else {
+
+            $style = "";
+        }
+
+        var(current_style => $style);
+        $current_style = $style;
+
+    }
+
+    is_string($current_style) ? $current_style : undef;
 }
 
 package LibreCat::App::Helper;

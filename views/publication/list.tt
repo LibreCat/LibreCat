@@ -1,7 +1,7 @@
 [%- path_info = request.path_info %]
 [%- qp = params_query -%]
 [%- PROCESS header.tt %]
-[%- style = qp.style ? qp.style : h.config.citation.csl.default_style %]
+[%- style = h.current_style() || h.default_style() %]
 <!-- BEGIN publication/list.tt -->
 <div class="row"><!-- outer border -->
   <div class="col-md-11 col-sm-12"><!-- main content -->

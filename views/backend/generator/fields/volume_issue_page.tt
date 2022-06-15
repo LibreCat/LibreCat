@@ -13,7 +13,7 @@
             <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.volume_issue_page.volume.label") %]</span>
             <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.volume_issue_page.volume.label_short") %]</span>
           </div>
-          <input type="text" name="volume" id="id_volume" value="[% volume | html %]" placeholder="[% h.loc("forms.${type}.field.volume_issue_page.volume.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.volume.mandatory OR fields.supplementary_fields.volume.mandatory %} required{% END %}"{% IF fields.basic_fields.volume.readonly OR fields.supplementary_fields.volume.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="volume" id="id_volume" value="[% volume | html %]" placeholder="[% h.loc("forms.${type}.field.volume_issue_page.volume.placeholder") | html %]" class="sticky form-control{% IF fields.basic_fields.volume.mandatory OR fields.supplementary_fields.volume.mandatory %} required{% END %}"{% IF fields.basic_fields.volume.readonly OR fields.supplementary_fields.volume.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>
@@ -23,7 +23,7 @@
             <span class="hidden-xs hidden-sm">[% h.loc("forms.${type}.field.volume_issue_page.issue.label") %]</span>
             <span class="hidden-lg hidden-md">[% h.loc("forms.${type}.field.volume_issue_page.issue.label_short") %]</span>
           </div>
-          <input type="text" name="issue" id="id_issue" value="[% issue | html %]" placeholder="[% h.loc("forms.${type}.field.volume_issue_page.issue.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}/>
+          <input type="text" name="issue" id="id_issue" value="[% issue | html %]" placeholder="[% h.loc("forms.${type}.field.volume_issue_page.issue.placeholder") | html %]" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}/>
           <div class="input-group-addon"></div>
         </div>
       </div>
@@ -41,7 +41,7 @@
           {% ELSE %}
           <div class="input-group-addon">[% lf.$type.field.volume_issue_page.page.label_short || lf.$type.field.volume_issue_page.page.label %]</div>
           {% END %}
-          <input type="text" name="page_range_number.value" id="id_page" value="[% page || article_number %]" placeholder="[% h.loc("forms.${type}.field.volume_issue_page.page.placeholder") %]" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}>
+          <input type="text" name="page_range_number.value" id="id_page" value="[% page || article_number | html %]" placeholder="[% h.loc("forms.${type}.field.volume_issue_page.page.placeholder") | html %]" class="sticky form-control{% IF fields.basic_fields.volume_issue_page.mandatory OR fields.supplementary_fields.volume_issue_page.mandatory %} required{% END %}"{% IF fields.basic_fields.volume_issue_page.readonly OR fields.supplementary_fields.volume_issue_page.readonly %} readonly="readonly"{% END %}>
           <div class="input-group-addon"></div>
         </div>
       </div>

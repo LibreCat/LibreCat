@@ -2,6 +2,33 @@ Revision history for LibreCat
 
 {{NEXT}} {{DATE}} # DO THIS MANUALLY
 
+2.0.4 2021-06-10
+    - new: use elasticsearch query type "simple_query_string" to parse query parameter "q"
+    - new: use query parameter "cql" for filtering only, no longer adding to the document score
+    - bugfix: add missing variables for edit form in case of non-bulk imports.
+    - new: display project acronyms in autocomplete if available
+    - bugfix: fix radiobuttons unchecking when sorting author fields with drag and drop
+    - bugfix: add parameter similar_search to helper.yml for helper extract_params
+    - bugfix: change value of hidden input field 'status' to private when editing a publication record with status "new"
+    - bugfix: make sure that roles "Delegate" and "Data Manager" no longer get mixed up
+    - bugfix: make sure that only the current selected role is checked for permissions, not all roles in user account.
+    - new: comment out demo permissions app
+    - bugfix: query parameter "return_url" must be full url
+    - bugfix: query parameter "return_url" should start with request.uri_base, to prevent links to (possible bad) external sites
+    - bugfix: always return from route after "redirect"
+    - bugfix: fix arxiv import
+    - bugfix: when a publication record is cloned, the field "urn" must be deleted, status set to new, and creator set to the current user
+    - new: add helper method "current_user" (h->current_user), that holds the full user record in memory
+    - new: "current_user" is reloaded at the start of every request to reflect changes
+    - security fix: search routes below /librecat should check if user has rights to access it.
+    - internal fix: LibreCat::App::Catalogue::Controller::Permission::Permissions now loads publications from the index into the cache,
+      to reflect additional attributes, only present in the index.
+    - internal fix: LibreCat::App::Catalogue::Controller::Permission::Permissions clears cache after every request
+    - bugfix: hidden and unused "div" covered tab titles in /librecat
+    - new: update BibTex, SRU and OAI in cpanfile
+    - new: use docker file from Bielefeld's gitlab for travis, instead of the global one, to prevent hitting rate limits
+    - bugfix: use TT filter "html" when inserting variables into html attributes
+
 2.0.3 2020-08-25
     - Adding support for JWT payload authentorization of REST-API
     - Making facets not implicit in every query (speed up of interface)

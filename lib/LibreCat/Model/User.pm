@@ -144,7 +144,9 @@ sub to_session {
             || "user",
         user    => $user->{login},
         user_id => $user->{_id},
-        lang    => $user->{lang} || Catmandu->config->{default_lang}
+        lang    => $user->{lang} || Catmandu->config->{default_lang},
+        # 'date_updated' is already used by Dancer::Session::PSI
+        user_last_updated => $user->{date_updated}
     );
 
 }

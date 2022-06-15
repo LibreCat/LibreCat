@@ -57,7 +57,7 @@ get '/marked' => sub {
             $hits = searcher->search('publication', $p);
             push @tmp_hits, @{$hits->{hits}};
         }
-        $hits->{style} = params->{style} || h->config->{default_style};
+        $hits->{style} = h->current_style || h->default_style;
 
 # sort hits according to id-order in session (making drag and drop sorting possible)
         foreach my $sh (@{session 'marked'}) {

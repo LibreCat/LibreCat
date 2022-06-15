@@ -7,10 +7,12 @@
   xmlns="http://namespace.openaire.eu/schema/oaire/"
   xsi:schemaLocation="http://namespace.openaire.eu/schema/oaire/ https://www.openaire.eu/schema/repo-lit/4.0/openaire.xsd">
 
-  <datacite:title xml:lang="[% language.0.iso | xml_strict %]">[% title | xml_strict %]</datacite:title>
-  [%- IF alternative_title %]
-  <datacite:title titleType="AlternativeTitle">[% alternative_title | xml_strict %]</datacite:title>
-  [%- END %]
+  <datacite:titles>
+    <datacite:title xml:lang="[% language.0.iso | xml_strict %]">[% title | xml_strict %]</datacite:title>
+    [%- IF alternative_title %]
+    <datacite:title titleType="AlternativeTitle">[% alternative_title | xml_strict %]</datacite:title>
+    [%- END %]
+  </datacite:titles>
   <datacite:creators>
     [%- FOREACH a IN author %]
     <datacite:creator>

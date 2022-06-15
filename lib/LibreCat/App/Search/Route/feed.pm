@@ -7,6 +7,7 @@ LibreCat::App::Search::Route::feed - provides routes for RSS feeds
 =cut
 
 use Catmandu::Sane;
+use Catmandu::Util qw(:is);
 use Catmandu::Fix qw(publication_to_dc);
 use Dancer qw(:syntax);
 use DateTime;
@@ -16,7 +17,7 @@ use LibreCat::App::Helper;
 use LibreCat qw(searcher);
 
 sub feed {
-    my $q = shift // [];
+    my $q = shift;
     my $period = shift // 'weekly';
 
     state $fixer = h->create_fixer('to_dc.fix');
@@ -38,10 +39,10 @@ sub feed {
     }
 
     my $query = [
-        $q,
         "status exact public",
         "date_updated>" . $now->strftime('"%FT%H:%M:00Z"')
     ];
+    unshift @$query, $q if is_string($q);
 
     my $rss      = XML::RSS->new;
     my $uri_base = h->uri_base();
@@ -83,8 +84,7 @@ E.g to retrieve a researcher's publication feed go to
 =cut
 
 get '/feed' => sub {
-    my $param = h->extract_params;
-    return feed($param->{q});
+    return feed(params("query")->{q});
 };
 
 =head2 GET /feed/:period
@@ -98,9 +98,8 @@ Other possible values for :period are 'daily' and 'weekly'.
 =cut
 
 get '/feed/:period' => sub {
-    my $param  = h->extract_params;
-    my $period = param('period');
-    return feed($param->{q}, $period);
+    my $period = params("route")->{period};
+    return feed(params("query")->{q}, $period);
 };
 
 1;
