@@ -6,13 +6,8 @@ move(doi_record.crossref.conference,w.conference)
 move(doi_record.crossref.posted_content,w.posted_content)
 #move(doi_record.crossref.dissertation,w)
 
-do list('path' => 'crm-item', 'var' => 'ci')
-  if all_equal('ci.text', 'publisher-name')
-    copy('ci.text','w.r.publisher')
-  elsif all_equal('ci.text','member-id')
-    copy('ci.text','w.member')
-  end
-end
+move('crm-item.0.text',w.r.publisher)
+move('crm-item.2.text',w.member)
 move(doi.text,w.r.doi)
 move(doi.type,w.r.type)
 lookup(w.r.type, fixes/lookup/cr_type_mapping.csv, default: journal_article)
