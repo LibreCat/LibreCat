@@ -14,9 +14,6 @@
 /_build*
 Build
 Build*
-MANIFEST.bak
-META*
-MYMETA.*
 Vagrantfile
 blib/
 config/catmandu.local.yml
