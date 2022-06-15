@@ -52,6 +52,7 @@ sub fetch {
     }
 
     my $xml = $result->content;
+    $xml =~ s/crm-item/crm_item/g;
     $xml =~ s/jats:(abstract|sec)/$1/g;
     $xml =~ s/\<jats:\w+\>//g;
     $xml =~ s/\<\/jats:title\>/ - /g;
