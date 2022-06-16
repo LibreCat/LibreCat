@@ -122,7 +122,7 @@ sub add_many {
 
 sub add {
     my ($self, $rec, %opts) = @_;
-    if ($opts{skip_transaction}) {
+    if ($opts{skip_commit}) {
         $rec = $self->_add($rec, %opts);
     } else {
         $self->bag->store->transaction(sub {
