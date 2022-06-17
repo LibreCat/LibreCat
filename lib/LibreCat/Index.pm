@@ -157,21 +157,16 @@ Remove the alias for $index
 
 sub remove_alias {
     my ($self, $index, $alias) = @_;
-    my $ok = 1;
     if ($self->es->indices->exists(index => $index)) {
-        try {
-            $self->es->indices->update_aliases(
-                body => {
-                    actions =>
-                        [{remove => {index => $index, alias => $alias}}]
-                }
-            );
-        }
-        catch {
-            $ok = 0;
-        };
+        $self->es->indices->update_aliases(
+            body => {
+                actions =>
+                    [{remove => {index => $index, alias => $alias}}]
+            }
+        );
+        return 1;
     }
-    $ok;
+    return 0;
 }
 
 =head2 remove_index($index)
@@ -415,55 +410,45 @@ sub _do_index {
     my $main_bag = $self->main_store->bag($info->{bag});
     my $fixer = fixer("index_$info->{bag}.fix");
 
-    my $ok = 1;
+    my $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
 
-    try {
-        my $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
+    say "Index starts at: $now";
+    say "Indexing $info->{bag} into $index...";
 
-        say "Index starts at: $now";
-        say "Indexing $info->{bag} into $index...";
+    $bag_n->add_many($fixer->fix($main_bag->benchmark));
+    $bag_n->commit;
+    # Check for records changed during the previous indexation...
+    my $has_changes;
+    do {
+        $has_changes = 0;
 
-        $bag_n->add_many($fixer->fix($main_bag->benchmark));
-        $bag_n->commit;
-        # Check for records changed during the previous indexation...
-        my $has_changes;
-        do {
-            $has_changes = 0;
+        say "Checking index for updates changed since $now...";
+        say "Checking $info->{bag}...";
 
-            say "Checking index for updates changed since $now...";
-            say "Checking $info->{bag}...";
+        my $it = $bag->searcher(query => {range => {date_updated => {gte => $now}}});
+        $it->each(
+            sub {
+                my $item         = $_[0];
+                my $id           = $item->{_id};
+                my $date_updated = $item->{date_updated};
+                my $rec          = $main_bag->get($id);
 
-            my $it = $bag->searcher(query => {range => {date_updated => {gte => $now}}});
-            $it->each(
-                sub {
-                    my $item         = $_[0];
-                    my $id           = $item->{_id};
-                    my $date_updated = $item->{date_updated};
-                    my $rec          = $main_bag->get($id);
-
-                    if ($rec) {
-                        say "Adding $id changed on $date_updated";
-                        $bag_n->add($fixer->fix($rec));
-                    }
-                    else {
-                        carp "main database lost id '$id'?";
-                    }
-
-                    $has_changes = 1;
+                if ($rec) {
+                    say "Adding $id changed on $date_updated";
+                    $bag_n->add($fixer->fix($rec));
                 }
-            );
+                else {
+                    carp "main database lost id '$id'?";
+                }
 
-            $bag_n->commit;
-            $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
-        } while ($has_changes);
-    }
-    catch {
-        say STDERR "Failed to create the index $index";
-        warn $_;
-        $ok = 0;
-    };
+                $has_changes = 1;
+            }
+        );
 
-    $ok;
+        $bag_n->commit;
+        $now = strftime "%Y-%m-%dT%H:%M:%SZ", gmtime(time);
+    } while ($has_changes);
+    return 1;
 }
 
 sub _do_switch {
