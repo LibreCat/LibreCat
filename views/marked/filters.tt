@@ -12,7 +12,7 @@
 
 [%- IF qp.item('sort') %]
   <div class="text-muted">
-    [%- tmp = {}; tmp.import(qp); tmp.delete('sort') %]
+    [%- tmp = h.dup(qp); tmp.delete('sort') %]
     <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
     <strong>[% h.loc("facets.sorted_by") %]:</strong>
     [% sort_options = h.config.sort_options %]
@@ -25,7 +25,7 @@
 
 [%- IF h.current_style AND !user_settings.style_eq_userstyle %]
   <div class="text-muted">
-    [%- tmp = {}; tmp.import(qp); tmp.delete('style') %]
+    [%- tmp = h.dup(qp); tmp.delete('style') %]
     <a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow"><span class="fa fa-times"></span></a>
     <strong>[% h.loc("facets.citation_style") %]:</strong>
     [% h.loc("styles.${h.current_style}") %]
@@ -41,7 +41,7 @@
         [%- IF dstyle == style %]
           <li><span class="text-muted">[% h.loc("styles.${dstyle}") %]</span></li>
         [%- ELSE %]
-          [%- tmp = {}; tmp.import(qp); tmp.style = dstyle %]
+          [%- tmp = h.dup(qp); tmp.style = dstyle %]
           <li><a href="[% request.uri_for(request.path_info, tmp) %]" rel="nofollow">[% h.loc("styles.${dstyle}") %]</a></li>
         [%- END %]
       [%- END %]

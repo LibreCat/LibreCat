@@ -278,6 +278,12 @@ sub uri_base {
         // "http://localhost:5001";
 }
 
+sub dup {
+
+    Clone::clone($_[1]);
+
+}
+
 sub uri_for {
     my ($self, $path, $params) = @_;
 
