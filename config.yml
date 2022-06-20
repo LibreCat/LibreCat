@@ -9,6 +9,9 @@ engines:
     encoding:  'utf8'
     start_tag: '[%'
     end_tag:   '%]'
+    # IMPORTANT: keep this so insertion of html into javascript works
+    # otherwise you'll get text with newlines
+    TRIM: 1
 
 session: "PSGI"
 session_state:
