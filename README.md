@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/LibreCat/LibreCat.svg?branch=master)](https://travis-ci.org/LibreCat/LibreCat)
 [![Coverage Status](https://coveralls.io/repos/github/LibreCat/LibreCat/badge.svg?branch=master)](https://coveralls.io/github/LibreCat/LibreCat?branch=master)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
 
