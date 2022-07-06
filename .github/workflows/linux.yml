@@ -12,7 +12,7 @@ jobs:
   perl-test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         perl-version:
         - '5.20'
