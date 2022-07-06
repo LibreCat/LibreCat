@@ -1,0 +1,44 @@
+name: linux
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ main, dev ]
+  workflow_dispatch:
+    branches: [ '*' ]
+
+jobs:
+  perl-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        perl-version:
+        - '5.20'
+        - '5.24'
+        - '5.28'
+        - '5.32'
+        include:
+          - perl-version: '5.36'
+            coverage: true
+    container:
+      image: perl:${{ matrix.perl-version }}
+    services:
+      elasticsearch:
+        image: elasticsearch:6.8.23
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install dependencies
+      run: cpanm -n --installdeps .
+    - name: Run tests (no coverage)
+      if: ${{ !matrix.coverage }}
+      run: prove -lr t/
+    - name: Run tests (with coverage)
+      if: ${{ matrix.coverage }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cpanm -n Devel::Cover::Report::Coveralls
+        cover -t +select ^lib +ignore ^ -make 'prove -Ilib -j 1 -r t; exit $?'
