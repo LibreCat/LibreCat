@@ -23,15 +23,13 @@ jobs:
           - perl-version: '5.36'
             coverage: true
     container:
-      image: perl:${{ matrix.perl-version }}
+      image: perl:${{ matrix.perl-version }}-bullseye
     services:
       elasticsearch:
         image: elasticsearch:6.8.23
     steps:
     - name: Install OS dependencies
-      uses: ConorMacBride/install-package@v1
-      with:
-        apt: gearman gearman-tools gearman-job-server libgearman-dev
+      run: apt-get update && apt-get install -y gearman gearman-tools gearman-job-server libgearman-dev
     - name: Check out repository code
       uses: actions/checkout@v3
     - name: Install dependencies
