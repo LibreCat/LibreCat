@@ -30,6 +30,8 @@ jobs:
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
+    - name: Install OS dependencies
+      run: sudo apt-get install --yes --force-yes gearman gearman-tools gearman-job-server libgearman-dev
     - name: Install dependencies
       run: cpanm -n --installdeps .
     - name: Run tests (no coverage)
