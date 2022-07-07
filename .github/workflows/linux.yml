@@ -15,13 +15,13 @@ jobs:
       fail-fast: false
       matrix:
         perl-version:
-        - '5.20'
-        - '5.24'
-        - '5.28'
+#        - '5.20'
+#        - '5.24'
+#        - '5.28'
         - '5.32'
-        include:
-          - perl-version: '5.36'
-            coverage: true
+        # include:
+        #   - perl-version: '5.36'
+        #     coverage: true
     container:
       image: perl:${{ matrix.perl-version }}-bullseye
     services:
