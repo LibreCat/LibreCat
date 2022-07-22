@@ -466,6 +466,7 @@ forms:
         label: "Abstract"
         label2: "Sprache"
         placeholder: "Abstract Text"
+        explain: "Verwenden Sie Markdown für Formatierungen. Klicken Sie nach dem Speichern auf den Link 'LibreCat', um sich eine Vorschau anzuzeigen und die Formatierungen zu prüfen."
       keyword: &keyword
         label: "Stichworte"
         placeholder: "Stichworte (mehrere Einträge durch Semikolon trennen, z.B. Stichwort1 ; Stichwort 2 ; Stichwort3)"
