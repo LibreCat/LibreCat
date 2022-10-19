@@ -60,6 +60,6 @@ if exists(license)
   copy(license, license_label)
   lookup(license_label, fixes/lookup/license_label.csv)
 else
-  add(license_uri, 'https://rightsstatements.org/page/InC/1.0/')
+  add(license_uri, 'http://rightsstatements.org/page/InC/1.0/')
   add(license_label, 'In Copyright')
 end
