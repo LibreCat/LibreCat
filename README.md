@@ -34,6 +34,7 @@ Project, Award, Research Group
 * Command line support using 'Catmandu'
 * OAI-PMH and SRU
 * REST / content negotiation
+* [Signposting](https://signposting.org)
 * The LibreCat is open source and shipped with the same license as the Perl language: http://dev.perl.org/licenses/
 
 ## Install
