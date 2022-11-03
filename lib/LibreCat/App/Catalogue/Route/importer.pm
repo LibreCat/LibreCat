@@ -12,9 +12,15 @@ use LibreCat qw(publication);
 use Catmandu::Fix::trim as => 'trim';
 use Dancer ':syntax';
 use LibreCat::App::Helper;
-use URL::Encode qw(url_decode);
+use URI::Escape;
 use Try::Tiny;
 use File::Spec;
+use Furl;
+
+my $furl = Furl->new(
+    agent => 'LibreCat/Importer 2.x',
+    timeout => '10',
+);
 
 sub _fetch_record {
     my ($id, $source) = @_;
@@ -26,12 +32,11 @@ sub _fetch_record {
         if ($source eq 'crossref') {
             $id =~ s{^\D+[:\/]}{};
 
-            my $data = Catmandu->importer(
-                'getJSON',
-                from    => url_decode("https://api.crossref.org/works/$id/agency"),
-                timeout => 10,
-                warn    => 0 ,
-            )->first;
+            my $mail_to = h->config->{admin_email} // 'mail@librecat.org';
+            my $url = sprintf "%s%s%s%s", 'https://api.crossref.org/works/', uri_escape_utf8($id), '/agency?mailto=', $mail_to;
+            my $res = $furl->get($url);
+
+            my $data = $res->is_success ? from_json($res->content) : +{};
 
             if (!$data) {
                 $source = "crossref";

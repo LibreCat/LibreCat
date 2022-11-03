@@ -1,6 +1,8 @@
 package LibreCat::FetchRecord::crossref;
 
 use Catmandu::Util qw(:io :hash);
+use Catmandu qw(importer);
+use Furl;
 use LibreCat -self;
 use URI::Escape;
 use Moo;
@@ -10,6 +12,15 @@ with 'LibreCat::FetchRecord';
 has 'baseurl' =>
     (is => 'ro', default => sub {"https://api.crossref.org/works/"});
 
+has 'furl' => (is => 'lazy');
+
+sub _build_furl {
+    Furl->new(
+        agent => 'LibreCat/Importer 2.x',
+        timeout => '10',
+    );
+}
+
 sub fetch {
     my ($self, $id) = @_;
 
@@ -18,11 +29,18 @@ sub fetch {
 
     $self->log->debug("requesting $id from crossref");
 
-    my $url = sprintf "%s%s", $self->baseurl, uri_escape_utf8($id);
+    my $mail_to = librecat->config->{admin_email} // 'mail@librecat.org';
+    my $url = sprintf "%s%s%s%s", $self->baseurl, uri_escape_utf8($id), '?mailto=', $mail_to;
 
-    my $data = Catmandu->importer('getJSON', from => $url, warn => 0)->to_array;
+    my $furl = $self->furl;
+    my $res = $furl->get($url);
 
-    unless (@$data) {
+    my $data;
+    if ($res->is_success) {
+       my $content = $res->content;
+       $data = Catmandu->importer("JSON", file => \$content)->to_array;
+    }
+    else {
         $self->log->error(
             "failed to request https://api.crossref.org/works/$id");
         return ();
