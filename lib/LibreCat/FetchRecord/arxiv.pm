@@ -16,7 +16,7 @@ sub fetch {
     my ($self, $id) = @_;
 
     # Clean the identifier and keep only the part with the id
-    $id =~ s{\S+[:\/]}{};
+    $id =~ s{\S+[:\/];}{};
 
     $self->log->debug("requesting $id from arXiv");
 
